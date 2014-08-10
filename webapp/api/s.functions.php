@@ -76,8 +76,8 @@ function rd($dir) {
 	$filter = array(".","..","Thumbs.db");
 	$od = @opendir($dir);
 	while ($rd = @readdir($od)) {
-		// if (is_dir("$dir/$rd")) { continue; }
 		if (in_array($rd,$filter)) { continue; }
+		// if (is_dir("$dir/$rd")) { continue; }
 		if (is_dir("$dir/$rd")) {
 			$res[$rd] = rd("$dir/$rd");
 		} else {

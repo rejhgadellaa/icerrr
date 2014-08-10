@@ -4,5 +4,5 @@ addEventListener("load", function(event){
 });
 
 document.write('<script type="text/javascript" charset="utf-8" src="' +
-	(navigator.userAgent.match(/Android/) ? "js/cordova/cordova-2.7.0-android.js" : "js/cordova/cordova-2.7.0-ios.js") + '"></script>');
+	(navigator.userAgent.match(/Android/) ? "js/cordova/cordova-2.7.0-android-min.js" : "js/cordova/cordova-2.7.0-ios.js") + '"></script>');
  

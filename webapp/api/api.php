@@ -2,8 +2,7 @@
 
 /*
 
-	BetterBatteryStats JSON Api
-	REJH Gadellaa 2014
+	Icerrr API
 
 */
 
@@ -34,15 +33,22 @@ switch($action) {
 		$queryobj = json_decode($query,true);
 		switch($queryobj["get"]) {
 		
-			// file list
+			// file list -- example
 			case "filelist":
 				$files = rd($cfg["path_to_folder_containing_json_files"]);
 				$jsons = json_encode($files);
 				echo $jsons;
 				break;
+			
+			// default	
+			default:
+				error("Error in query: '$query', {$queryobj['get']}, {$queryobj}");
+				break;
 
 
 		}
+		
+	// POST ...
 	
 	// Default
 	default:
