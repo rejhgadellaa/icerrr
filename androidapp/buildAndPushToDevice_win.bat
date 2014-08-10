@@ -1,0 +1,58 @@
+@echo off
+
+:config
+set path_prj=com.rejh.icerrr.droidapp
+set name_prj=Icerrr
+
+:findandroidbat
+if exist C:\android\android-sdk\tools\android.bat set androidsdk=C:\android\android-sdk\
+if exist C:\android\sdk\tools\android.bat set androidsdk=C:\android\sdk\
+REM --> Add more paths here :)
+
+:checkandroidbat
+if exist %androidsdk% goto sdkfound
+echo.
+echo Error: could not locate android.bat
+echo Please edit this batch file and under 'findandroidbat' add the path to your copy of [android-sdk]/tools/android.bat
+goto error
+
+:sdkfound
+cd %path_prj%
+
+echo.
+echo Updating project
+echo.
+call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
+if not errorlevel 0 goto error
+
+echo.
+echo Building project
+echo.
+call ant clean debug
+if not errorlevel 0 goto error
+
+REM pause
+
+echo.
+echo Installing app...
+echo.
+
+REM C:\Android\android-sdk\platform-tools\adb -d uninstall org.z25.weckerapp
+REM if not errorlevel 0 goto error
+
+%androidsdk%platform-tools\adb -d install -r bin\%name_prj%-debug.apk
+if not errorlevel 0 goto error
+
+%androidsdk%platform-tools\adb -d shell am start %path_prj%/.%name_prj%
+if not errorlevel 0 goto error
+goto end
+
+:error
+echo.
+echo Error!
+goto end
+
+:end
+cd ..
+echo.
+pause
