@@ -1,0 +1,220 @@
+
+<!--
+
+	ICERRR
+	
+	REJH Gadellaa 2014
+
+--> 
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	
+    <!-- Title + Info -->
+    <title>ICERRR</title>
+    
+    <meta name="title" content="ICERRR" />
+    <meta name="description" content="The html5(ish) icecast streaming app">
+	<meta name="author" content="REJH Gadellaa">
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta content="True" name="HandheldFriendly" />
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    
+    <!-- Javascript -->
+    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
+    <script language="javascript" type="text/javascript" src="js/plugs/hsvtorgb.js"></script>
+    <script language="javascript" type="text/javascript" src="js/plugs/dateformat.js"></script>
+    <script language="javascript" type="text/javascript" src="js/script.js"></script>
+    
+    <!-- Style / base -->
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
+    
+    <!-- Webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
+    
+    <!--[if lt IE 9]>
+    	<script src="js/plugs/html5shiv.js"></script>
+    <![endif]-->
+	
+</head>
+
+<body onLoad="site.init();" onResize="site.onresize();">
+
+<!-- Section -->
+<section id="otherStats">
+	
+	<!-- Results -->
+	<div class="results">
+		
+		<div class="resultHeader">
+			<div class="title">BetterBatteryStats Visualizer</div>
+		</div>
+		
+		<div class="resultPieChart">
+			<canvas class="resultPieChartCanvas"></canvas>
+			<div class="resultStuff">
+            	<div class="select_stat_file"></div>
+				<div class="select_stat_type"></div>
+				<div class="bottom_left"></div>
+				<div class="top_right"></div>
+				<div class="bottom_right"></div>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+<!-- Section -->
+<section id="alarmStats">
+	
+	<!-- Results -->
+	<div class="results">
+		
+		<div class="resultHeader">
+			<div class="title">BetterBatteryStats Visualizer</div>
+		</div>
+		
+		<div class="resultPieChart">
+			<canvas class="resultPieChartCanvas"></canvas>
+			<div class="resultStuff">
+            	<div class="select_stat_file"></div>
+				<div class="select_stat_type"></div>
+				<div class="bottom_left"></div>
+				<div class="top_right"></div>
+				<div class="bottom_right"></div>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+<!-- Section -->
+<section id="partialWakelockStats">
+	
+	<!-- Results -->
+	<div class="results">
+		
+		<div class="resultHeader">
+			<div class="title">BetterBatteryStats Visualizer</div>
+		</div>
+		
+		<div class="resultPieChart">
+			<canvas class="resultPieChartCanvas"></canvas>
+			<div class="resultStuff">
+            	<div class="select_stat_file"></div>
+				<div class="select_stat_type"></div>
+				<div class="bottom_left"></div>
+				<div class="top_right"></div>
+				<div class="bottom_right"></div>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+<!-- Section -->
+<section id="kernelWakelockStats">
+	
+	<!-- Results -->
+	<div class="results">
+		
+		<div class="resultHeader">
+			<div class="title">BetterBatteryStats Visualizer</div>
+		</div>
+		
+		<div class="resultPieChart">
+			<canvas class="resultPieChartCanvas"></canvas>
+			<div class="resultStuff">
+            	<div class="select_stat_file"></div>
+				<div class="select_stat_type"></div>
+				<div class="bottom_left"></div>
+				<div class="top_right"></div>
+				<div class="bottom_right"></div>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+<!-- Section -->
+<section id="networkStats">
+	
+	<!-- Results -->
+	<div class="results">
+		
+		<div class="resultHeader">
+			<div class="title">BetterBatteryStats Visualizer</div>
+		</div>
+		
+		<div class="resultPieChart">
+			<canvas class="resultPieChartCanvas"></canvas>
+			<div class="resultStuff">
+            	<div class="select_stat_file"></div>
+				<div class="select_stat_type"></div>
+				<div class="bottom_left"></div>
+				<div class="top_right"></div>
+				<div class="bottom_right"></div>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+<!-- Section -->
+<section id="cpuStateStats">
+	
+	<!-- Results -->
+	<div class="results">
+		
+		<div class="resultHeader">
+			<div class="title">BetterBatteryStats Visualizer</div>
+		</div>
+		
+		<div class="resultPieChart">
+			<canvas class="resultPieChartCanvas"></canvas>
+			<div class="resultStuff">
+            	<div class="select_stat_file"></div>
+				<div class="select_stat_type"></div>
+				<div class="bottom_left"></div>
+				<div class="top_right"></div>
+				<div class="bottom_right"></div>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+<!-- Section -->
+<section id="processStats">
+	
+	<!-- Results -->
+	<div class="results">
+		
+		<div class="resultHeader">
+			<div class="title">BetterBatteryStats Visualizer</div>
+		</div>
+		
+		<div class="resultPieChart">
+			<canvas class="resultPieChartCanvas"></canvas>
+			<div class="resultStuff">
+            	<div class="select_stat_file"></div>
+				<div class="select_stat_type"></div>
+				<div class="bottom_left"></div>
+				<div class="top_right"></div>
+				<div class="bottom_right"></div>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+
+</body>
+
+</html>
