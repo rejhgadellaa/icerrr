@@ -53,6 +53,7 @@ switch($action) {
 				if (!$queryobj["station_id"]) { error("Error: 'station_id' not defined for get:station_info"); }
 				$json["data"] = readJsonsFile("../json/station_info.".$queryobj["station_id"].".json");
 				if (!$json["data"]) { error("Error: file '../json/station_info.".$queryobj["station_id"].".json"); } // TODO: Generate file :D
+				break;
 			
 			// checkforupdates
 			case "checkforupdates":
