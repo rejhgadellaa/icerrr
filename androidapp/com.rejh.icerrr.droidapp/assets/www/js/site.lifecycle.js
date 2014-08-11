@@ -37,6 +37,9 @@ site.lifecycle.init = function() {
 	console.log(" > Device: "+ site.vars.deviceDesc);
 	console.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
 	
+	// Defaults..
+	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
+	
 	// Attach 'onDeviceReady' event listener (cordova)
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
 	
@@ -52,6 +55,11 @@ site.lifecycle.onDeviceReady = function() {
 	document.addEventListener('resume', site.lifecycle.onResume, false);
 	document.addEventListener('pause', site.lifecycle.onPause, false);
 	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
+	
+	// Firstlaunch...
+	if (!site.cookies.get("app_is_installed")) {
+		
+	}
 	
 }
 

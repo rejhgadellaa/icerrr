@@ -16,6 +16,8 @@ if (!site) { var site = {}; }
 
 site.cfg = {};
 
+// ---> Important stuff
+
 // Urls
 // Note: url paths should end with / if folder || TODO: check this..
 site.cfg.urls = {};
@@ -33,3 +35,12 @@ site.cfg.paths.other = "__ROOT__/other";
 
 // Files
 site.cfg.files = {};
+
+// ---> Defaults
+
+site.cfg.defaults = {};
+
+// Strings
+site.cfg.defaults.strings = {};
+site.cfg.defaults.strings.loading = ["Loading...","Hold on...","Just a sec...","Working..."];
+

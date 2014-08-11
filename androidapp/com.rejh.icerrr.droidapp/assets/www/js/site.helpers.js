@@ -18,12 +18,21 @@ site.helpers = {};
 
 // ---> Various
 
+// Count stuff
+
 site.helpers.countObj = function(obj) {
 	if (obj instanceof Array) { return obj.length; }
 	if (typeof(obj)!="object") { return -1; }
 	var n = 0;
 	for (var key in obj) { n++; }
 	return n;
+}
+
+// Get random stuff
+
+site.helpers.getRandomListEntry = function(list) {
+	var randomIndex = Math.ceil(Math.random()*list.length)-1;
+	return list[randomIndex];
 }
 
 // ---> Debugging
