@@ -27,7 +27,7 @@ function error($message) {
 // ---> File i/o
 
 function readJsonsFile($file) {
-	// Reads file, strips comments and other non-json stuff, json_decodes it
+	// Reads file, strips comments and other non-json stuff, json_decodes it -> Returns a json object (array), not json string!
 	$jsons = fr($file);
 	if (!$jsons) { return false; }
 	$linebreaks = goFigureLinebreaks($jsons);
