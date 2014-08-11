@@ -20,6 +20,7 @@ site.lifecycle = {};
 
 site.lifecycle.init = function() {
 	
+	console.log("\n==================================================================================\n\n");
 	console.log("site.lifecycle.init()");
 	
 	// Detect android/ios
@@ -40,8 +41,28 @@ site.lifecycle.init = function() {
 	// Defaults..
 	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
 	
+	// Vars..
+	site.vars.currentSection = "#home";
+	
 	// Attach 'onDeviceReady' event listener (cordova)
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
+	
+	// TODO: tmp code!
+	// site.installer.init();
+	
+}
+
+// Resize 
+
+site.lifecycle.onResize = function() {
+	
+	console.log("site.lifecycle.onResize()");
+	
+	// TODO: figure out if orientation change..
+	
+	$(".main").css("height",
+		$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .footer").height())
+	);
 	
 }
 
@@ -58,7 +79,10 @@ site.lifecycle.onDeviceReady = function() {
 	
 	// Firstlaunch...
 	if (!site.cookies.get("app_is_installed")) {
-		
+		if (site.vars.currentSection!="#install") { 
+			site.installer.init(); 
+			return; // <- important stuff yes
+			}
 	}
 	
 }
@@ -85,4 +109,47 @@ site.lifecycle.onBackButton = function() {
 	
 	console.log("site.lifecycle.onBackButton()");
 	
+	// List of selectors that when display==block, then ignore back!
+	var thedonts = {
+		"section#install" 			: ($("section#install").css("display")=="block"),
+		""							: false // stop it
+	}
+	
+	// TODO: needs some building in so we don't hit back in the middle of an operation..
+	if (thedonts[site.vars.currentSection]) { console.log(" > Ignore '<' button, we're working here..."); return; }
+	if (site.vars.isloading) { console.log(" > Ignore '<' button, we're working here..."); return; }
+	
+	
+	// Okay, that out of the way...
+	switch(site.vars.currentSection) {
+		
+		case "":
+		case "#exit":
+		case "#home":
+			navigator.app.exitApp();
+			break;
+			
+		default:
+			console.log(" > '<' button on unhandled section: "+ site.vars.currentSection);
+			break;
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -49,10 +49,10 @@ site.helpers.arrToString = function(arr,depth,newline) {
 	} else {
 		for (var i in arr) {
 			if (typeof(arr[i])=="object" || typeof(arr[i])=="array") {
-				res += viewr.getIndents(depth,char) + i + newline;
-				res += viewr.arrToString(arr[i],depth,newline) + newline;
+				res += site.helpers.getIndents(depth,char) + i + newline;
+				res += site.helpers.arrToString(arr[i],depth,newline) + newline;
 			} else {
-				res += viewr.getIndents(depth,char) + i +" = "+ arr[i] + newline;
+				res += site.helpers.getIndents(depth,char) + i +" = "+ arr[i] + newline;
 			}
 		}
 	}
