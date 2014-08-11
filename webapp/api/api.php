@@ -4,6 +4,12 @@
 
 	Icerrr API
 	
+	Examples:
+	- GET
+		- ?a=get&q={"get":"stations"[,"last_update_time_ms":[ms]]}
+		- ?a=get&q={"get":"station_info","station_id":"[station_id]"[,"last_update_time_ms":[ms]]}
+		- ?a=get&q={"get":"station_nowplaying","station_id":"[station_id]"[,"last_update_time_ms":[ms]]}
+	
 	Todos:
 	- Implement HTTP 304 not modified
 	- Error: also mail (me)?
@@ -39,10 +45,12 @@ switch($action) {
 		
 			// stations
 			// TODO: status 304 if not modified
+			// TODO: work in queues? list may become quite large...
 			case "stations":
-				$json["data"] = readJsonsFile("../json/stations.json");
-				if (!$json["data"]) { error("Error: file '../json/stations.json' not found"); }
-				$json["info"]["last_update_time_ms"] = time()*1000; // TODO: More info?
+				$filename = "../json/stations.json";
+				$json["data"] = readJsonsFile($filename);
+				if (!$json["data"]) { error("Error: file '$filename' not found"); }
+				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
 				echo $jsons;
@@ -50,9 +58,26 @@ switch($action) {
 				
 			// station_info
 			case "station_info":
+				$filename = "../json/station_info.".$queryobj["station_id"].".json"
 				if (!$queryobj["station_id"]) { error("Error: 'station_id' not defined for get:station_info"); }
-				$json["data"] = readJsonsFile("../json/station_info.".$queryobj["station_id"].".json");
-				if (!$json["data"]) { error("Error: file '../json/station_info.".$queryobj["station_id"].".json"); } // TODO: Generate file :D
+				$json["data"] = readJsonsFile($filename);
+				if (!$json["data"]) { error("Error: file '$filename' not found"); } // TODO: Generate file :D
+				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
+				
+			// station_nowplaying
+			case "station_nowplaying":
+				$filename = "../json/station_nowplaying.".$queryobj["station_id"].".json"
+				if (!$queryobj["station_id"]) { error("Error: 'station_id' not defined for get:station_info"); }
+				$json["data"] = readJsonsFile($filename);
+				if (!$json["data"]) { error("Error: file '$filename' not found"); } // TODO: Generate file :D
+				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
 				break;
 			
 			// checkforupdates
