@@ -1,0 +1,12 @@
+[
+	// A list of stations as follows:
+	{
+		"station_id":"unique-station-identifier", // May implement uniqid
+		"station_name":"Example",
+		"station_url":"http://full.url.to/icecast/stream",
+		"station_icon":"http://full.url.to/icon.png",
+		"station_host":"full.url.to",
+		"station_port":80,
+		"station_path":"/icecast/stream"
+	}
+]
