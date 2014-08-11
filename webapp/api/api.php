@@ -3,6 +3,10 @@
 /*
 
 	Icerrr API
+	
+	Todos:
+	- Implement HTTP 304 not modified
+	- Error: also mail (me)?
 
 */
 
