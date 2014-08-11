@@ -1,12 +1,75 @@
 [
 	// A list of stations as follows:
 	{
-		"station_id":"unique-station-identifier", // May implement uniqid
+		"station_id":"radio1", // May implement uniqid
 		"station_name":"Example",
-		"station_url":"http://full.url.to/icecast/stream",
+		"station_url":"http://icecast.omroep.nl/radio1-bb-mp3",
 		"station_icon":"http://full.url.to/icon.png",
-		"station_host":"full.url.to",
+		"station_host":"icecast.omroep.nl",
 		"station_port":80,
-		"station_path":"/icecast/stream"
+		"station_path":"/radio1-bb-mp3",
+		"rating_custom":-1,
+		"rating_soundcloud":-1,
+		"rating_average":-1
+	},
+	{
+		"station_id":"radio2", // May implement uniqid
+		"station_name":"Example",
+		"station_url":"http://icecast.omroep.nl/radio2-bb-mp3",
+		"station_icon":"http://full.url.to/icon.png",
+		"station_host":"icecast.omroep.nl",
+		"station_port":80,
+		"station_path":"/radio2-bb-mp3",
+		"rating_custom":-1,
+		"rating_soundcloud":-1,
+		"rating_average":-1
+	},
+	{
+		"station_id":"radio3fm", // May implement uniqid
+		"station_name":"Example",
+		"station_url":"http://icecast.omroep.nl/3fm-sb-mp3",
+		"station_icon":"http://full.url.to/icon.png",
+		"station_host":"icecast.omroep.nl",
+		"station_port":80,
+		"station_path":"/3fm-bb-mp3",
+		"rating_custom":-1,
+		"rating_soundcloud":-1,
+		"rating_average":-1
+	},
+	{
+		"station_id":"radio4", // May implement uniqid
+		"station_name":"Example",
+		"station_url":"http://icecast.omroep.nl/radio4-bb-mp3",
+		"station_icon":"http://full.url.to/icon.png",
+		"station_host":"icecast.omroep.nl",
+		"station_port":80,
+		"station_path":"/radio4-bb-mp3",
+		"rating_custom":-1,
+		"rating_soundcloud":-1,
+		"rating_average":-1
+	},
+	{
+		"station_id":"radio5", // May implement uniqid
+		"station_name":"Example",
+		"station_url":"http://icecast.omroep.nl/radio5-bb-mp3",
+		"station_icon":"http://full.url.to/icon.png",
+		"station_host":"icecast.omroep.nl",
+		"station_port":80,
+		"station_path":"/radio5-bb-mp3",
+		"rating_custom":-1,
+		"rating_soundcloud":-1,
+		"rating_average":-1
+	},
+	{
+		"station_id":"radio6", // May implement uniqid
+		"station_name":"Example",
+		"station_url":"http://icecast.omroep.nl/radio6-bb-mp3",
+		"station_icon":"http://full.url.to/icon.png",
+		"station_host":"icecast.omroep.nl",
+		"station_port":80,
+		"station_path":"/radio6-bb-mp3",
+		"rating_custom":-1,
+		"rating_soundcloud":-1,
+		"rating_average":-1
 	}
 ]

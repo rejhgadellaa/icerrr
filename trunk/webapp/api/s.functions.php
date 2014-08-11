@@ -27,7 +27,7 @@ function error($message) {
 // ---> File i/o
 
 function readJsonsFile($file) {
-	// Reads file, strips comments and other non-json stuff, json_decodes it -> Returns a json object (array), not json string!
+	// Reads file, strips comments and other non-json stuff, json_decodes it -> Returns a json STRING not an object
 	$jsons = fr($file);
 	if (!$jsons) { return false; }
 	$linebreaks = goFigureLinebreaks($jsons);
@@ -38,6 +38,8 @@ function readJsonsFile($file) {
 		$comment_pos = strpos($line,"//");
 		if ($comment_pos!==FALSE) { 
 			$line = substr($line,0,$comment_pos);
+			$line = str_replace("  "," ",$line);
+			if ($line=="" || $line==" ") { continue; }
 		}
 		// remove/skip tabs
 		$line = str_replace("\t","",$line);
@@ -101,7 +103,15 @@ function fr($file) {
 	return $fr;
 }
 
+// ---> Other helpers
 
+function goFigureLinebreaks($str) {
+	$linebreaks = "\r\n";
+	if (strpos($str,$linebreaks)===FALSE && strpos($str,"\n")!==FALSE) {
+		$linebreaks = "\n";
+	}
+	return $linebreaks;
+}
 
 
 
