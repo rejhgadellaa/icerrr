@@ -105,7 +105,7 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 // - Opts: opts.path are passed to getDirectory function, opts.file are passed to getFile function
 // - Returns: evt? TODO: figure out!
 
-site.storage.writefile = function(path,filename,data,cb,errcb) {
+site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	
 	console.log("site.storage.writefile(): "+path+", "+filename);
 	
@@ -156,7 +156,7 @@ site.storage.writefile = function(path,filename,data,cb,errcb) {
 // - Opts: opts.path are passed to getDirectory function, opts.file are passed to getFile function
 // - Returns: string of file contents
 
-site.storage.readfile = function(path,filename,cb,errcb) {
+site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	
 	console.log("site.storage.readfile(): "+path+", "+filename);
 	
@@ -210,7 +210,7 @@ site.storage.readfile = function(path,filename,cb,errcb) {
 // - Opts: opts.path are passed to getDirectory and/or getFile function, opts.type: 0=autodetect, 1=files, 2=folders || TODO: autodetect!
 // - Returns: MetaData object: http://docs.phonegap.com/en/2.7.0/cordova_file_file.md.html#Metadata
 
-site.storage.getmetadata = function(path,fileOrFolder,opts,cb,errcb) {
+site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
 	
 	console.log("site.storage.getmetadata(): "+path+", "+fileOrFolder);
 	
@@ -237,7 +237,7 @@ site.storage.getmetadata = function(path,fileOrFolder,opts,cb,errcb) {
 					opts.path,
 					function(directoryEntry) {
 						directoryEntry.getMetadata(cb,errcb);
-					}
+					},
 					errcb
 				);
 			} else if (opts.type==2) { // folder
@@ -245,7 +245,7 @@ site.storage.getmetadata = function(path,fileOrFolder,opts,cb,errcb) {
 					opts.path,
 					function(directoryEntry) {
 						directoryEntry.getMetadata(cb,errcb);
-					}
+					},
 					errcb
 				);
 			}
@@ -312,6 +312,9 @@ site.storage.getErrorType = function(error) {
 
 site.cookies = {};
 
+// Note: If testing for true/false, use 1/0 values when putting... ;)
+//  -> this way you can simply test cookie as follows: if(site.cookies.get('barbapappa')){/*do stuff if true*/}
+
 // Put
 
 site.cookies.put = function(name,value) {
@@ -322,7 +325,7 @@ site.cookies.put = function(name,value) {
 
 // Get
 
-site.cookies.get = function() {
+site.cookies.get = function(name) {
 	var res = false;
 	try { res = window.localStorage.getItem(name); }
 	catch(e) { res = false; }

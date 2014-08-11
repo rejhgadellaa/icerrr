@@ -23,7 +23,7 @@
     <!-- Meta -->
     <meta charset="utf-8">
     <meta content="True" name="HandheldFriendly" />
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
     
     <!-- Javascript : Cordova -->
     <script language="javascript" type="text/javascript" src="js/cordova/cordova-2.7.0.js"></script>
@@ -33,6 +33,7 @@
 	
 	<!-- Javascript: Other -->
     <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
+    <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
 	
 	<!-- Javascript: icerrr -->
     <script language="javascript" type="text/javascript" src="js/site.base.js"></script>
@@ -41,6 +42,7 @@
     <script language="javascript" type="text/javascript" src="js/site.install.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.lifecycle.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.storage.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.ui.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.webapi.js"></script>
         
     <!-- Style / base -->
@@ -58,10 +60,32 @@
 	
 </head>
 
-<body>
+<body onResize="site.lifecycle.onResize();">
 
 <!-- Section -->
 <section id="splash"></section>
+
+<!-- Install -->
+<section id="install">
+	
+    <div class="actionbar shadow_z1">
+    	
+        <div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+        	
+        </div>
+        
+    </div>
+    
+    <div class="main">
+	
+    	<div class="log"><strong>Installing...</strong></div>
+		
+    </div>
+
+</section>
 
 <!-- Section -->
 <section id="firstlaunch"></section>

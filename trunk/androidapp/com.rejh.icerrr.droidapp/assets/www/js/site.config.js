@@ -28,10 +28,10 @@ site.cfg.urls.api = "http://94.208.216.239/icerrr/api/?";
 // Note: storage paths should NOT end with / || TODO: check this..
 site.cfg.paths = {};
 site.cfg.paths.root = "Icerrr";
-site.cfg.paths.json = "__ROOT__/json";
-site.cfg.paths.images = "__ROOT__/images";
-site.cfg.paths.logs = "__ROOT__/logs";
-site.cfg.paths.other = "__ROOT__/other";
+site.cfg.paths.json = "Icerrr/json";
+site.cfg.paths.images = "Icerrr/images";
+site.cfg.paths.logs = "Icerrr/logs";
+site.cfg.paths.other = "Icerrr/other";
 
 // Files
 site.cfg.files = {};
