@@ -12,9 +12,18 @@ if (!console.log) { console.log = function(str) { }; }
 if (!site) { var site = {}; }
 
 // ---------------------------------------------
-// BASE
+// LIFECYCLE
 
-// nuff said.
+site.webapi = {};
 
-site.vars = {};
-site.data = {};
+// Load stations
+
+site.webapi.loadStations = function() {
+	
+	console.log("site.webapi.loadStations()");
+	
+	var apiquery = JSON.stringify({
+		
+	});
+	
+}
