@@ -191,7 +191,9 @@ section {
 	.resultitem .resulticon {
 		position:absolute;
 		top:0; left:0;
-		width:72px; height:72px;
+		width:40px; 
+		height:40px;
+		padding:16px;
 	}
 	
 	.resultitem .resultname {
