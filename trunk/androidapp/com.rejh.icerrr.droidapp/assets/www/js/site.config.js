@@ -18,6 +18,9 @@ site.cfg = {};
 
 // ---> Important stuff
 
+// App
+site.cfg.app_version = 0.003;
+
 // Urls
 // Note: url paths should end with / if folder || TODO: check this..
 site.cfg.urls = {};
@@ -44,3 +47,14 @@ site.cfg.defaults = {};
 site.cfg.defaults.strings = {};
 site.cfg.defaults.strings.loading = ["Loading...","Hold on...","Just a sec...","Working..."];
 
+// Userprefs
+site.cfg.defaults.userprefs = {}
+
+// ---> Other stuff
+
+site.cfg.chlist = {};
+site.cfg.chlist.maxItemsPerBatch = 16;
+
+site.cfg.googleapis = {};
+site.cfg.googleapis.searchapi = {};
+site.cfg.googleapis.searchapi.clientid = "178363199832-dfee06qa7o58vjontdeb0ku89qhm3c0f.apps.googleusercontent.com";

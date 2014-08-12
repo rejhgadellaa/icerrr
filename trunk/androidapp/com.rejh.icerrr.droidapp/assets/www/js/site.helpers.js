@@ -18,6 +18,51 @@ site.helpers = {};
 
 // ---> Various
 
+// Flag dirty
+
+site.helpers.flagdirtyfile = function(filepathandname) {
+	var dirtyfiles = site.session.dirtyfiles;
+	if (!dirtyfiles) { dirtyfiles = []; }
+	dirtyfiles.push(filepathandname);
+	site.helpers.session.put("dirtyfiles",dirtyfiles);
+	console.log(site.helpers.arrToString(site.session,0,"\n"));
+}
+
+// Session stuff
+
+site.helpers.session = {};
+site.helpers.session.put = function(key,data) {
+	sessionelem = site.session[key];
+	var newsessionelem = site.helpers.session.putRecursive(sessionelem,data);
+	site.session[key] = newsessionelem;
+	site.cookies.put("site.session",JSON.stringify(site.session)); // TODO: restore at startup..
+}
+
+site.helpers.session.putRecursive = function(sessionelem,data) {
+	var newsessionelem = jQuery.extend(true, {}, sessionelem);
+	if (!newsessionelem) { newsessionelem = {}; }
+	// Walk..
+	for (var elemkey in data) {
+		// build newsessionelem
+		if (data[elemkey] instanceof Object || data[elemkey] instanceof Array) {
+			newsessionelem[elemkey] = site.helpers.session.putRecursive(sessionelem[elemkey],data[elemkey]); // recursive magic
+		} else {
+			newsessionelem[elemkey] = data[elemkey];
+		}
+	}
+	return newsessionelem;
+}
+
+// Get station index by id
+
+site.helpers.getStationIndexById = function(station_id) {
+	if (!site.data.stations) { console.log("site.helpers.getStationIndexById().Error: !site.data.stations"); }
+	for (var index in site.data.stations) {
+		if (site.data.stations[index].station_id == station_id) { return index; }
+	}
+	return -1;
+}
+
 // Count stuff
 
 site.helpers.countObj = function(obj) {

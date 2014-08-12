@@ -47,8 +47,8 @@ site.lifecycle.init = function() {
 	// Attach 'onDeviceReady' event listener (cordova)
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
 	
-	// TODO: tmp code!
-	// site.installer.init();
+	// Google Loader
+	google.load("search", "1", {"callback" : function(){console.log(" > Loaded: google.load(search,1)");} });
 	
 }
 
@@ -77,13 +77,32 @@ site.lifecycle.onDeviceReady = function() {
 	document.addEventListener('pause', site.lifecycle.onPause, false);
 	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
 	
-	// Firstlaunch...
-	if (!site.cookies.get("app_is_installed")) {
-		if (site.vars.currentSection!="#install") { 
-			site.installer.init(); 
-			return; // <- important stuff yes
+	// Give splash some time...
+	setTimeout(function() {
+	
+		// Firstlaunch...
+		if (!site.cookies.get("app_is_installed") || site.cookies.get("app_version")<site.cfg.app_version) {
+			if (site.vars.currentSection!="#install") { 
+				site.installer.init(); 
+				return; // <- important stuff yes
 			}
-	}
+		}
+		
+		// Restore user preferences
+		site.data.userprefs = JSON.parse(site.cookies.get("userprefs"));
+		if (!site.data.userprefs) {
+			console.log(" > No userprefs found, copying defaults...");
+			site.data.userprefs = jQuery.extend(true, {}, site.cfg.defaults.userprefs);
+		}
+		
+		// Restore user session
+		site.session = JSON.parse(site.cookies.get("site.session"));
+		if (!site.session) { site.session = {}; }
+		
+		// Home
+		site.home.init();
+		
+	},2500);
 	
 }
 
