@@ -16,6 +16,80 @@ if (!site) { var site = {}; }
 
 site.helpers = {};
 
+// ---> Images
+
+// Store image
+// - create canvas, draw image on canvas, get base64, write to disk
+
+site.helpers.storeImageLocally = function(imgobj,path,name,opts) {
+	// TODO: Do we need this?
+}
+
+// imageToBase64
+// - Returns FALSE if something has gone wrong...
+
+site.helpers.imageToBase64 = function(imgobj,cb,opts) {
+	
+	// Handle opts
+	if (!opts) { opts = {}; }
+	if (!opts.maxwidth) { opts.maxwidth = imgobj.width; } // Note: dev is responsible for handling aspect!
+	if (!opts.maxheight) { opts.maxheight = imgobj.height; }
+	if (!opts.zoomcrop) { opts.zoomcrop = false; } // TODO: implement
+	
+	// Create canvas
+	var canvas = document.createElement("canvas");
+	ctx = canvas.getContext("2d");
+	
+	// Set width/height to match imageObj
+	canvas.width = imgobj.width;
+	canvas.height = imgobj.height;
+	
+	// Draw image
+	ctx.drawImage(imgobj, 0, 0, imgobj.width, imgobj.height, 0, 0, opts.maxwidth, opts.maxheight);
+	
+	// Now get the base64...
+	var base64 = canvas.toDataURL("image/png");
+	
+	if (base64.indexOf("image/png") == -1) {
+		console.log("site.helpers.imageToBase64.Error: Unexpected base64 string for "+imgobj.src);
+		console.log(base64);
+		try {
+			var imgData = ctx.getImageData(0,0,canvas.width,canvas.height)
+			pngFile = generatePng(canvas.width, canvas.height, imgData.data);
+			base64 = 'data:image/png;base64,' + btoa(pngFile);
+		} catch(e) { 
+			// I've really tried everyting, didn't I?
+			console.log(e);
+			base64 = false;
+		}
+		
+	}
+	
+	// Callback!
+	cb(base64);
+	
+}
+
+// Create thumb/icon
+
+// TODO: todo
+
+// AspectCalc
+
+site.helpers.calcImageAspect = function(imageObjOrWidth,height) {
+	var width;
+	if (imageObjOrWidth instanceof Object) {
+		width = imageObjOrWidth.width;
+		height = imageObjOrWidth.height;
+	} else {
+		width = imageObjOrWidth;
+	}
+	// Always return float >= 1.0
+	if (width==height) { return 1.0; } // square
+	else if (width>height) { return width/height; }
+	else { return height/width; }
+}
+
 // ---> Various
 
 // Flag dirty

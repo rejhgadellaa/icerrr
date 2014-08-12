@@ -147,6 +147,10 @@ site.lifecycle.onBackButton = function() {
 		case "#home":
 			navigator.app.exitApp();
 			break;
+		
+		case "#channellist":
+			site.home.init();
+			break;
 			
 		default:
 			console.log(" > '<' button on unhandled section: "+ site.vars.currentSection);
