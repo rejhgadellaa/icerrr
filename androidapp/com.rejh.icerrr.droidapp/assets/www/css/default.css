@@ -70,6 +70,7 @@ select {
 /* Common */
 
 section {
+	overflow:hidden;
 	display:none;
 	position:absolute;
 	top:0; left:0; right:0; bottom:0;
@@ -83,7 +84,7 @@ section {
 		top:0; left:0; right:0;
 		width:100%;
 		height:56px;
-		background-color:#61AE24;
+		background-color:#2D6073; /* #61AE24; */
 	}
 	
 		.actionbar .icon_app {
@@ -129,8 +130,18 @@ section {
 		position:relative;
 		top:0; left:0; right:0;
 		width:100%;
-		height:*; /* TODO: smart way to set height dynamically so it uses all available space? */
+		xheight:*; /* TODO: smart way to set height dynamically so it uses all available space? */
+		border:-1px solid #f00;
 	}
+	
+		.main .header {
+			position:absolute;
+			top:0; left:0; right:0;
+			height:16px;
+			padding:16px;
+			border-bottom:1px solid #ccc;
+			text-transform:capitalize;
+		}
 	
 	.footer {
 		position:absolute;
@@ -138,7 +149,45 @@ section {
 		width:100%;
 		height:56px;
 		background-color:#616161;
+		transition:top 1000ms;
 	}
+	
+		.footer .button {
+			width:33.3%;
+			height:24px;
+			color:rgba(255,255,255,0.87);
+		}
+		
+		.footer .button.left {
+			position:absolute;
+			left:0; top:0;
+		}
+		
+		.footer .button.center {
+			position:absolute;
+			left:33.3%; top:0;
+		}
+		
+		.footer .button.right {
+			position:absolute;
+			right:0; top:0;
+		}
+		
+		.footer .button_inner {
+			position:absolute;
+			width:100%; height:100%;
+			padding:16px;
+			text-align:center;
+		}
+		
+		.footer .button_inner img {
+			width:40px;
+			height:40px;
+			margin:-8px 0 0 -8px;
+		}
+		.footer .button_inner.active {
+			background-color:rgba(0,0,0,0.25);
+		}
 
 /* Specific */
 
@@ -228,6 +277,19 @@ section {
 
 #dialog.overlay_wrap {
 	
+}
+
+/* Other */
+
+#overlay_toast {
+	z-index:99;
+	display:none;
+	position:absolute;
+	left:32px; right:32px; bottom:32px;
+	height:auto;
+	padding:16px;
+	color:rgba(255,255,255,0.87);
+	background-color:rgba(0,0,0,0.5);
 }
 
 /* -- COMMON */

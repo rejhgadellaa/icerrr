@@ -52,7 +52,7 @@
     <script language="javascript" type="text/javascript" src="js/site.webapi.js"></script>
         
     <!-- Style / base -->
-    <link rel="stylesheet" type="text/css" href="css/default.css?c=1" />
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
     
     <!-- Style / responsive -->
     <link rel="stylesheet" type="text/css" href="css/size.phone.css" media="screen and (max-width: 480px)" />
@@ -72,8 +72,7 @@
 <section id="splash">
 	<div class="center_table">
 	<div class="center_td">
-		<img src="img/web_hi_res_512_001.png" />
-	</div>
+		<img src="img/web_hi_res_512_001.png" />	</div>
 	</div>
 </section>
 
@@ -85,18 +84,13 @@
         <div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
         <div class="title">ICERRR</div>
         
-		<div class="actions">
-        	
-        </div>
-        
+		<div class="actions">        </div>
     </div>
     
     <div class="main">
 	
     	<div class="log"><strong>Installing...</strong></div>
-		
     </div>
-
 </section>
 
 <!-- Section -->
@@ -114,19 +108,25 @@
         	<div class="action activatablel"><img src="img/icons-48/ic_action_core_overflow.png" /></div>
             <div class="action activatablel"></div>
         </div>
-        
     </div>
     
     <div class="main">
-    
-    </div>
+		
+	</div>
     
     <div class="footer shadow_z1u">
-    	<!--
-        <img class="play ispaused" src="img/ic_play_w.png" />
-        -->
+    	<div class="button left">
+			<div class="button_inner"></div>
+		</div>
+    	<div class="button center" id="home_play">
+			<div class="button_inner activatablel" onclick="console.log('tap! '+this.innerHTML); $(this).toggleClass('active'); site.home.mp_toggle();">
+				<img src="img/icons-96/ic_play_w.png" />
+			</div>
+		</div>
+		<div class="button right">
+			<div class="button_inner activatablel" onclick="site.chlist.init();">STATIONS</div>
+		</div>
     </div>
-    
 </section>
 
 <!-- Section -->
@@ -141,11 +141,10 @@
         	<div class="action activatablel"><img src="img/icons-48/ic_action_core_overflow.png" /></div>
             <div class="action activatablel"></div>
         </div>
-        
     </div>
     
     <div class="main">
-    
+		
     </div>
 
 </section>
@@ -169,9 +168,11 @@
 </div>
 
 <!-- Overlay: Dialog -->
-<div id="dialog" class="overlay_wrap">
+<div id="dialog" class="overlay_wrap"></div>
 
-</div>
+<!-- Overlay: Toast -->
+
+<div id="overlay_toast">Toast!</body>
 
 <!-- Script: init! -->
 <script>

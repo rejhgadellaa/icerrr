@@ -16,6 +16,9 @@ if (!site) { var site = {}; }
 
 site.lifecycle = {};
 
+site.session.lifecycle = {};
+site.session.lifecycle.section_history = [];
+
 // Init
 
 site.lifecycle.init = function() {
@@ -42,7 +45,7 @@ site.lifecycle.init = function() {
 	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
 	
 	// Vars..
-	site.vars.currentSection = "#home";
+	site.lifecycle.add_section_history("#home");
 	
 	// Attach 'onDeviceReady' event listener (cordova)
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
@@ -96,6 +99,7 @@ site.lifecycle.onDeviceReady = function() {
 		}
 		
 		// Restore user session
+		console.log(" > Restore site.session: "+ site.cookies.get("site.session"));
 		site.session = JSON.parse(site.cookies.get("site.session"));
 		if (!site.session) { site.session = {}; }
 		
@@ -112,6 +116,12 @@ site.lifecycle.onResume = function() {
 	
 	console.log("site.lifecycle.onResume()");
 	
+	// set timeout now so we have little delay for async shit to rain down upon us
+	if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
+	site.timeouts.storage_queue = setTimeout(function(){
+		site.storage.runqueue();
+	},1000); // TODO: determine update freq
+	
 }
 
 // Pause
@@ -119,6 +129,29 @@ site.lifecycle.onResume = function() {
 site.lifecycle.onPause = function() {
 	
 	console.log("site.lifecycle.onPause()");
+	
+	// Store some stuff
+	site.cookies.put("site.session",JSON.stringify(site.session));
+	
+	// Cancel timeouts
+	for(var i=0; i<site.timeouts.length; i++) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
+	for(var i=0; i<site.loops.length; i++) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }
+	
+}
+
+// Destroy
+// - Note: simulated
+
+site.lifecycle.onDestroy = function() {
+	
+	console.log("site.lifecycle.onDestroy()");
+	
+	// Store some stuff
+	site.cookies.put("site.session",JSON.stringify(site.session));
+	
+	// Cancel timeouts
+	for(var i=0; i<site.timeouts.length; i++) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
+	for(var i=0; i<site.loops.length; i++) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }
 	
 }
 
@@ -138,14 +171,16 @@ site.lifecycle.onBackButton = function() {
 	if (thedonts[site.vars.currentSection]) { console.log(" > Ignore '<' button, we're working here..."); return; }
 	if (site.vars.isloading) { console.log(" > Ignore '<' button, we're working here..."); return; }
 	
+	var currentBackKey = site.lifecycle.get_section_history_item();
+	console.log(currentBackKey);
 	
 	// Okay, that out of the way...
-	switch(site.vars.currentSection) {
+	switch(currentBackKey) {
 		
 		case "":
 		case "#exit":
 		case "#home":
-			navigator.app.exitApp();
+			site.lifecycle.exit();
 			break;
 		
 		case "#channellist":
@@ -153,14 +188,48 @@ site.lifecycle.onBackButton = function() {
 			break;
 			
 		default:
-			console.log(" > '<' button on unhandled section: "+ site.vars.currentSection);
+			console.log(" > '<' button on unhandled section: "+ currentBackKey);
 			break;
 		
 	}
 	
 }
 
+// ---> ACTIONS
 
+// Exit, ..
+
+site.lifecycle.exit = function() {
+	console.log("site.lifecycle.exit()");
+	site.lifecycle.onDestroy();
+	navigator.app.exitApp();
+}
+
+// Section history
+
+site.lifecycle.add_section_history = function(selector) {
+	console.log("site.lifecycle.add_section_history()");
+	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
+	if (!site.session.lifecycle.section_history) { site.session.lifecycle.section_history = []; }
+	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] == selector) { return; }
+	site.session.lifecycle.section_history.push(selector);
+	console.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
+}
+
+site.lifecycle.clear_section_history = function() {
+	console.log("site.lifecycle.clear_section_history()");
+	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
+	site.session.lifecycle.section_history = [];
+}
+
+site.lifecycle.get_section_history_item = function() {
+	console.log("site.lifecycle.get_section_history_item()");
+	console.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
+	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
+	if (!site.session.lifecycle.section_history) { return false; }
+	console.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
+	return site.session.lifecycle.section_history.pop();
+}
 
 
 

@@ -75,7 +75,7 @@ site.installer.init = function() {
 	site.installer.vars = {};
 	
 	// Initiate first step: create folders
-	setTimeout(function(){site.installer.createfolders_init();},500);
+	setTimeout(function(){site.installer.createfolders_init();},1000);
 	
 }
 
@@ -133,7 +133,7 @@ site.installer.createfolders_errcb = function(error) {
 
 site.installer.downloadjson_init = function() {
 	site.installer.logger("Download json...");
-	setTimeout(function(){site.installer.downloadjson_next();},500);
+	setTimeout(function(){site.installer.downloadjson_next();},1000);
 }
 
 site.installer.downloadjson_next = function() {
@@ -297,7 +297,7 @@ site.installer.logger = function(msg,opts) {
 	
 	// hidden function: if 'e' set #exit
 	if (opts.is_e) {
-		site.vars.currentSection = "#exit";
+		site.lifecycle.add_section_history("#exit");
 	}
 	
 }
