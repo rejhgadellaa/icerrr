@@ -33,17 +33,21 @@
 	
 	<!-- Javascript: Other -->
     <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
-    <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
+    <script language="javascript" type="text/javascript" src="js/plugs/masonry.pkgd.min.js"></script>
 	
 	<!-- Javascript: icerrr -->
     <script language="javascript" type="text/javascript" src="js/site.base.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.chlist.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.config.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.helpers.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.home.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.install.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.lifecycle.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.storage.js"></script>
 	<script language="javascript" type="text/javascript" src="js/site.ui.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.webapi.js"></script>
+    
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         
     <!-- Style / base -->
     <link rel="stylesheet" type="text/css" href="css/default.css?c=1" />
@@ -63,7 +67,13 @@
 <body onResize="site.lifecycle.onResize();">
 
 <!-- Section -->
-<section id="splash"></section>
+<section id="splash">
+	<div class="center_table">
+	<div class="center_td">
+		<img src="img/web_hi_res_512_001.png" />
+	</div>
+	</div>
+</section>
 
 <!-- Install -->
 <section id="install">
@@ -118,7 +128,25 @@
 </section>
 
 <!-- Section -->
-<section id="channellist"></section>
+<section id="channellist">
+	
+    <div class="actionbar shadow_z1">
+    	
+        <div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+        	<div class="action activatablel"><img src="img/icons-48/ic_action_core_overflow.png" /></div>
+            <div class="action activatablel"></div>
+        </div>
+        
+    </div>
+    
+    <div class="main">
+    
+    </div>
+
+</section>
 
 <!-- Section -->
 <section id="alarmconfig"></section>

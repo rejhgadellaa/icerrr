@@ -24,9 +24,31 @@ function error($message) {
 	die();
 }
 
+// ---> Json
+
+function getJsonError($code) {
+	
+	switch($code) {
+		
+		case JSON_ERROR_NONE: return "JSON_ERROR_NONE";
+		case JSON_ERROR_DEPTH: return "JSON_ERROR_DEPTH";
+		case JSON_ERROR_STATE_MISMATCH: return "JSON_ERROR_STATE_MISMATCH";
+		case JSON_ERROR_CTRL_CHAR: return "JSON_ERROR_CTRL_CHAR";
+		case JSON_ERROR_SYNTAX: return "JSON_ERROR_SYNTAX";
+		case JSON_ERROR_UTF8: return "JSON_ERROR_UTF8";
+		case JSON_ERROR_RECURSION: return "JSON_ERROR_RECURSION";
+		case JSON_ERROR_INF_OR_NAN: return "JSON_ERROR_INF_OR_NAN";
+		case JSON_ERROR_UNSUPPORTED_TYPE: return "JSON_ERROR_UNSUPPORTED_TYPE";
+		default: return "UNKNOWN";
+		
+	}
+	
+}
+
 // ---> File i/o
 
 function readJsonsFile($file) {
+	// It's dead, jim? TODO: FIXME: IMPORTANT?
 	// Reads file, strips comments and other non-json stuff, json_decodes it -> Returns a json STRING not an object
 	$jsons = fr($file);
 	if (!$jsons) { return false; }

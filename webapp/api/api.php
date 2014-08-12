@@ -48,9 +48,10 @@ switch($action) {
 			// TODO: work in queues? list may become quite large...
 			case "stations":
 				$filename = "../json/stations.json";
-				$json["data"] = readJsonsFile($filename);
+				$json["data"] = fr($filename);
 				if (!$json["data"]) { error("Error: file '$filename' not found"); }
-				//$json["data"] = json_decode($json["data"],true);
+				$json["data"] = json_decode($json["data"],true);
+				if (!$json["data"]) { error("Error decoding json string: ". getJsonError(json_last_error())); }
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
@@ -61,7 +62,7 @@ switch($action) {
 			case "station_info":
 				$filename = "../json/station_info.".$queryobj["station_id"].".json";
 				if (!$queryobj["station_id"]) { error("Error: 'station_id' not defined for get:station_info"); }
-				$json["data"] = readJsonsFile($filename);
+				$json["data"] = fr($filename);
 				if (!$json["data"]) { error("Error: file '$filename' not found"); } // TODO: Generate file :D
 				//$json["data"] = json_decode($json["data"],true);
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
@@ -74,7 +75,7 @@ switch($action) {
 			case "station_nowplaying":
 				$filename = "../json/station_nowplaying.".$queryobj["station_id"].".json";
 				if (!$queryobj["station_id"]) { error("Error: 'station_id' not defined for get:station_info"); }
-				$json["data"] = readJsonsFile($filename);
+				$json["data"] = fr($filename);
 				if (!$json["data"]) { error("Error: file '$filename' not found"); } // TODO: Generate file :D
 				//$json["data"] = json_decode($json["data"],true);
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
@@ -93,6 +94,11 @@ switch($action) {
 				else { $json["data"] = 0; }
 				$jsons = json_encode($json);
 				echo $json;
+				break;
+			
+			// strings
+			case "strings":
+				error("Not implemented yet"); // TODO: todo
 				break;
 			
 			// default	

@@ -34,18 +34,23 @@ site.storage.createfolder = function(path,cb,errcb) {
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.createfolder().Error: Will not write outside of root directory: '"+path+"'"});
+		return; // <- important...
 	}
+	
+	// Check busy
+	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	site.storage.isBusy = true;
 	
 	// Run
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
             fileSystem.root.getDirectory(path,
                 { create: true, exclusive: false },
-                cb,
-                errcb
+                function(entry) { site.storage.isBusy=false; cb(entry); },
+                function(error) { site.storage.isBusy=false; errcb(error); }
             );
         },
-        errcb
+        function(error) { site.storage.isBusy=false; errcb(error); }
     );
 	
 }
@@ -61,7 +66,12 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.readfolder().Error: Will not read outside of root directory: '"+path+"'"});
+		return; // <- important...
 	}
+	
+	// Check busy
+	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	site.storage.isBusy = true;
 	
 	// Handle opts
 	if (!opts) { opts = {}; }
@@ -85,15 +95,16 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 								if (opts.mode==2 && fileAndDirectoryEntries[i].isFile) { continue; } // mode 2: skip files
 								res.push(fileAndDirectoryEntries[i]);
 							}
+							site.storage.isBusy = false;
 							cb(res);
 						},
-						errcb
+						function(error) { site.storage.isBusy=false; errcb(error); }
 					);
 				},
-                errcb
+                function(error) { site.storage.isBusy=false; errcb(error); }
             );
         },
-        errcb
+        function(error) { site.storage.isBusy=false; errcb(error); }
     );
 	
 }
@@ -112,7 +123,12 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.writefile().Error: Will not write outside of root directory: '"+path+"'"});
+		return; // <- important...
 	}
+	
+	// Check busy
+	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	site.storage.isBusy = true;
 	
 	// Handle opts
 	if (!opts) { opts = {}; }
@@ -133,21 +149,21 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 						function(fileEntry) {
 							var fileWriter = fileEntry.createWriter(
 								function(fileWriter) {
-									fileWriter.onwrite = cb;
-									fileWriter.onabort = errcb; // TODO: onabort != error..?
-									fileWriter.onerror = errcb;
+									fileWriter.onwrite = function(evt) { site.storage.isBusy=false; cb(evt); };
+									fileWriter.onabort = function(error) { site.storage.isBusy=false; errcb(error); }; // TODO: onabort != error..?
+									fileWriter.onerror = function(error) { site.storage.isBusy=false; errcb(error); };
 									fileWriter.write(data);
 								},
-								errcb
+								function(error) { site.storage.isBusy=false; errcb(error); }
 							);
 						},
-						errcb
+						function(error) { site.storage.isBusy=false; errcb(error); }
 					);
 				},
-                errcb
+                function(error) { site.storage.isBusy=false; errcb(error); }
             );
         },
-        errcb
+        function(error) { site.storage.isBusy=false; errcb(error); }
     );
 	
 }
@@ -163,7 +179,12 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.readfile().Error: Will not read outside of root directory: '"+path+"'"});
+		return; // <- important...
 	}
+	
+	// Check busy
+	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	site.storage.isBusy = true;
 	
 	// Handle opts
 	if (!opts) { opts = {}; }
@@ -173,6 +194,7 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	if (!opts.file) { opts.file = {}; }
 	if (opts.file.create!==true) { opts.file.create = false; } // Note: defaults to FALSE - most other storage methods don't!
 	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
+	if (opts.file.readAsDataUrl!==true) { opts.file.readAsDataUrl = false; }
 	
 	// Run
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
@@ -185,21 +207,22 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 							fileEntry.file(
 								function(file) {
 									var fileReader = new FileReader();
-									fileReader.onload = function(evt) { cb(evt.target.result); }
-									fileReader.onabort = errcb; // TODO: onabort != error..?
-									fileReader.onerror = errcb;
-									fileReader.readAsDataURL(file);
+									fileReader.onload = function(evt) { site.storage.isBusy=false; cb(evt.target.result); }
+									fileReader.onabort = function(error) { site.storage.isBusy=false; errcb(error); }; // TODO: onabort != error..?
+									fileReader.onerror = function(error) { site.storage.isBusy=false; errcb(error); };
+									if (opts.file.readAsDataUrl) { fileReader.readAsDataURL(file); }
+									else { fileReader.readAsText(file); }
 								},
-								errcb
+								function(error) { site.storage.isBusy=false; errcb(error); }
 							);
 						},
-						errcb
+						function(error) { site.storage.isBusy=false; errcb(error); }
 					);
 				},
-                errcb
+                function(error) { site.storage.isBusy=false; errcb(error); }
             );
         },
-        errcb
+        function(error) { site.storage.isBusy=false; errcb(error); }
     );
 	
 }
@@ -217,7 +240,12 @@ site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.getmetadata().Error: Will not read outside of root directory: '"+path+"'"});
+		return; // <- important...
 	}
+	
+	// Check busy
+	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	site.storage.isBusy = true;
 	
 	// Handle opts
 	if (!opts) { opts = {}; }
@@ -235,22 +263,22 @@ site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
 			} else if (opts.type==1) { // file
 				fileSystem.root.getFile(path,
 					opts.path,
-					function(directoryEntry) {
-						directoryEntry.getMetadata(cb,errcb);
+					function(entry) {
+						entry.getMetadata(function (metadata) { site.storage.isBusy=false; cb(metadata); } ,function(error) { site.storage.isBusy=false; errcb(error); });
 					},
-					errcb
+					function(error) { site.storage.isBusy=false; errcb(error); }
 				);
 			} else if (opts.type==2) { // folder
 				fileSystem.root.getDirectory(path,
 					opts.path,
-					function(directoryEntry) {
-						directoryEntry.getMetadata(cb,errcb);
+					function(entry) {
+						entry.getMetadata(function (metadata) { site.storage.isBusy=false; cb(metadata); } ,function(error) { site.storage.isBusy=false; errcb(error); });
 					},
-					errcb
+					function(error) { site.storage.isBusy=false; errcb(error); }
 				);
 			}
         },
-        errcb
+        function(error) { site.storage.isBusy=false; errcb(error); }
     );
 	
 }

@@ -260,6 +260,7 @@ site.installer.finishup = function() {
 			site.ui.showloading("Restarting...");
 			setTimeout(function() {
 				
+				site.cookies.put("app_version",site.cfg.app_version);
 				site.cookies.put("app_is_installed",1);
 				window.location.reload(); // TODO: replace all 'window.location.reload();' with window.location.href=[current_host]/[path-to-file]
 				
