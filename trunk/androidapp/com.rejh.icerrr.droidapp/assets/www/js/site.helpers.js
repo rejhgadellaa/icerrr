@@ -90,21 +90,12 @@ site.helpers.calcImageAspect = function(imageObjOrWidth,height) {
 	else { return height/width; }
 }
 
-// ---> Various
-
-// Flag dirty
-
-site.helpers.flagdirtyfile = function(filepathandname) {
-	var dirtyfiles = site.session.dirtyfiles;
-	if (!dirtyfiles) { dirtyfiles = []; }
-	dirtyfiles.push(filepathandname);
-	site.helpers.session.put("dirtyfiles",dirtyfiles);
-	console.log(site.helpers.arrToString(site.session,0,"\n"));
-}
-
-// Session stuff
+// --- > Session stuff
 
 site.helpers.session = {};
+
+// TODO: I want this function for other places too, not just session data
+
 site.helpers.session.put = function(key,data) {
 	sessionelem = site.session[key];
 	var newsessionelem = site.helpers.session.putRecursive(sessionelem,data);
@@ -118,7 +109,7 @@ site.helpers.session.putRecursive = function(sessionelem,data) {
 	// Walk..
 	for (var elemkey in data) {
 		// build newsessionelem
-		if (data[elemkey] instanceof Object || data[elemkey] instanceof Array) {
+		if (typeof(data[elemkey])=="object" || typeof(data[elemkey])=="array") {
 			newsessionelem[elemkey] = site.helpers.session.putRecursive(sessionelem[elemkey],data[elemkey]); // recursive magic
 		} else {
 			newsessionelem[elemkey] = data[elemkey];
@@ -129,12 +120,37 @@ site.helpers.session.putRecursive = function(sessionelem,data) {
 
 // Get station index by id
 
-site.helpers.getStationIndexById = function(station_id) {
+site.helpers.session.getStationIndexById = function(station_id) {
 	if (!site.data.stations) { console.log("site.helpers.getStationIndexById().Error: !site.data.stations"); }
 	for (var index in site.data.stations) {
 		if (site.data.stations[index].station_id == station_id) { return index; }
 	}
 	return -1;
+}
+
+// ---> Various
+
+// Flag dirty
+
+site.helpers.flagdirtyfile = function(filepathandname) {
+	var dirtyfiles = site.session.dirtyfiles;
+	if (typeof(dirtyfiles)=="object" && site.helpers.countObj(dirtyfiles)>0) { // TODO: dirtyfiles is not an object.. is it?
+		console.log(" > site.helpers.flagdirtyfile.Huh? 'dirtyfiles'==object?");
+		if (site.helpers.countObj(dirtyfiles)>0) {
+			var newdirtyfiles = [];
+			for (var intstr in dirtyfiles) {
+				newdirtyfiles.push(dirtyfiles[i]);
+			}
+			dirtyfiles = newdirtyfiles;
+			console.log(" >> Solved it: "+ dirtyfiles.length +" result(s) in 'dirtyfiles'");
+		} else {
+			console.log(" >> Just create a new list");
+			dirtyfiles = false;
+		}
+	}
+	if (!dirtyfiles) { dirtyfiles = []; }
+	dirtyfiles.push(filepathandname);
+	site.helpers.session.put("dirtyfiles",dirtyfiles);
 }
 
 // Count stuff

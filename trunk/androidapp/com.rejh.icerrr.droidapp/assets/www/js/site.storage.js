@@ -21,6 +21,105 @@ site.storage = {};
 
 // TODO: Check if opts.bla are setting default correctly
 
+// ---> Queue
+
+site.session.storage = {};
+site.session.storage.queue = [];
+
+// QueueStuff
+// - Args: action='createfolder', 
+
+
+site.storage.enqueue = function(action,args) {
+	
+	console.log("site.storage.enqueue(): "+action);
+	console.log(" > "+ JSON.stringify(args));
+	
+	// Check for duplicates
+	for (var i=0; i<site.session.storage.queue.length; i++) {
+		var queue_item = site.session.storage.queue[i];
+		if (queue_item.action==action && JSON.stringify(queue_item.args)==JSON.stringify(args)) {
+			console.log(" > Duplicate exists.. what now? we dont want UNLIMITED LOOPS!");
+		}
+	}
+	
+	// Push
+	site.session.storage.queue.push({"action":action,"args":jQuery.extend(true, {}, args)});
+	
+	// Run queue if needed
+	if (!site.timeouts.storage_queue) {
+		site.timeouts.storage_queue = setTimeout(function(){
+			site.storage.runqueue();
+		},1);
+	}
+	
+}
+
+site.storage.runqueue = function() {
+	
+	console.log("site.storage.runqueue(): "+action);
+	
+	// Stop when we can
+	if (site.session.storage.queue.length<1) {
+		console.log(" > Queue empty, stop...");
+		if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
+		return;
+	}
+	
+	// Get queue item
+	var queue_item = site.session.storage.queue[0];
+	var action = queue_item.action;
+	var args = queue_item.args;
+	
+	// set timeout now so we have little delay for async shit to rain down upon us
+	if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
+	site.timeouts.storage_queue = setTimeout(function(){
+		site.storage.runqueue();
+	},1000); // TODO: determine update freq
+	
+	if (!site.storage.isBusy) {
+	
+		switch(action) {
+			
+				// site.session.storage.queue
+			case "createfolder":
+				site.storage.createfolder(args.path,args.cb,args.errcb);
+				break;
+				
+			case "readfolder":
+				site.storage.readfolder(args.path,args.cb,args.errcb,args.opts);
+				break;
+				
+			case "writefile":
+				site.storage.writefile(args.path,args.filename,args.data,args.cb,args.errcb,args.opts);
+				break;
+				
+			case "readfile":
+				site.storage.readfile(args.path,args.filename,args.cb,args.errcb,args.opts);
+				break;
+				
+			case "getmetadata":
+				site.storage.getmetadata(args.path,args.fileOrFolder,args.cb,args.errcb,args.opts);
+				break;
+			
+			default:
+				alert("site.storage.runqueue().Error: invalid value for 'action': "+ action);
+				console.log("site.storage.runqueue().Error: invalid value for 'action': "+ action);
+				console.log(action+", "+JSON.stringify(args));
+				break;
+			
+		}
+		
+		site.session.storage.queue.shift();
+		
+	}
+	
+}
+
+site.storage.runqueue_cb = function() {
+	
+}
+
 // ---> Folders
 
 // Create folder
@@ -38,7 +137,12 @@ site.storage.createfolder = function(path,cb,errcb) {
 	}
 	
 	// Check busy
-	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	if (site.storage.isBusy) { 
+		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+		var args = {path:path,cb:cb,errcb:errcb};
+		site.storage.enqueue("createfolder",args);
+		return; 
+	}
 	site.storage.isBusy = true;
 	
 	// Run
@@ -70,7 +174,12 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 	}
 	
 	// Check busy
-	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	if (site.storage.isBusy) { 
+		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+		var args = {path:path,cb:cb,errcb:errcb,opts:opts};
+		site.storage.enqueue("readfolder",args);
+		return; 
+	}
 	site.storage.isBusy = true;
 	
 	// Handle opts
@@ -127,7 +236,12 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	}
 	
 	// Check busy
-	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	if (site.storage.isBusy) { 
+		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+		var args = {path:path,filename:filename,data:data,cb:cb,errcb:errcb,opts:opts};
+		site.storage.enqueue("writefile",args);
+		return; 
+	}
 	site.storage.isBusy = true;
 	
 	// Handle opts
@@ -183,7 +297,12 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	}
 	
 	// Check busy
-	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	if (site.storage.isBusy) { 
+		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+		var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
+		site.storage.enqueue("readfile",args);
+		return; 
+	}
 	site.storage.isBusy = true;
 	
 	// Handle opts
@@ -244,7 +363,12 @@ site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
 	}
 	
 	// Check busy
-	if (site.storage.isBusy) { errcb({code:-1,message:"site.storage.error: isBusy"}); return; }
+	if (site.storage.isBusy) { 
+		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+		var args = {path:path,fileOrFolder:fileOrFolder,cb:cb,errcb:errcb,opts:opts};
+		site.storage.enqueue("getmetadata",args);
+		return; 
+	}
 	site.storage.isBusy = true;
 	
 	// Handle opts
