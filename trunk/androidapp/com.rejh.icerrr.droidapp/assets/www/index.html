@@ -117,15 +117,15 @@
     
     <div class="footer shadow_z1u">
     	<div class="button left">
-			<div class="button_inner"></div>
+			<!-- ... -->
 		</div>
-    	<div class="button center" id="home_play">
-			<div class="button_inner activatablel" onClick="site.mp.playToggle();$(this).toggleClass('active');">
+    	<div class="button center activatablel" id="home_play" onClick="site.mp.playToggle();$(this).toggleClass('active');">
+			<div class="button_inner">
 				<div class="center_table"><div class="center_td"><img src="img/icons-96/ic_play_w.png" /></div></div>
 			</div>
 		</div>
-		<div class="button right">
-			<div class="button_inner activatablel" onClick="site.chlist.init();">
+		<div class="button right activatablel" onClick="site.chlist.init();">
+			<div class="button_inner">
             	<div class="center_table"><div class="center_td">STATIONS</div></div>
             </div>
 		</div>
