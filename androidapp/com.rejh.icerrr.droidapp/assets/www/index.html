@@ -121,11 +121,13 @@
 		</div>
     	<div class="button center" id="home_play">
 			<div class="button_inner activatablel" onClick="site.mp.playToggle();$(this).toggleClass('active');">
-				<img src="img/icons-96/ic_play_w.png" />
+				<div class="center_table"><div class="center_td"><img src="img/icons-96/ic_play_w.png" /></div></div>
 			</div>
 		</div>
 		<div class="button right">
-			<div class="button_inner activatablel" onClick="site.chlist.init();">STATIONS</div>
+			<div class="button_inner activatablel" onClick="site.chlist.init();">
+            	<div class="center_table"><div class="center_td">STATIONS</div></div>
+            </div>
 		</div>
     </div>
 </section>
@@ -173,7 +175,7 @@
 
 <!-- Overlay: Toast -->
 
-<div id="overlay_toast">Toast!</body>
+<div id="overlay_toast" class="round4">Toast!</body>
 
 <!-- Script: init! -->
 <script>
