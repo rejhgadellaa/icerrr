@@ -35,6 +35,8 @@ site.storage.enqueue = function(action,args) {
 	console.log("site.storage.enqueue(): "+action);
 	console.log(" > "+ JSON.stringify(args));
 	
+	if (!site.session.storage) { site.session.storage = {}; }
+	
 	// Check for duplicates
 	for (var i=0; i<site.session.storage.queue.length; i++) {
 		var queue_item = site.session.storage.queue[i];
@@ -58,6 +60,8 @@ site.storage.enqueue = function(action,args) {
 site.storage.runqueue = function() {
 	
 	console.log("site.storage.runqueue(): "+action);
+	
+	if (!site.session.storage) { return; }
 	
 	// Stop when we can
 	if (site.session.storage.queue.length<1) {

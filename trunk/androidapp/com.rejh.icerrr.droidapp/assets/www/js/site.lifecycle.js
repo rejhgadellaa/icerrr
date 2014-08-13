@@ -153,6 +153,9 @@ site.lifecycle.onDestroy = function() {
 	for(var i=0; i<site.timeouts.length; i++) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
 	for(var i=0; i<site.loops.length; i++) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }
 	
+	// Release some stuff
+	site.mp.destroy();
+	
 }
 
 // Back button (android)
