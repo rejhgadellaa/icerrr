@@ -21,6 +21,8 @@ package com.rejh.icerrr.droidapp;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
+import android.os.Build;
+import android.webkit.WebView;
 
 public class Icerrr extends DroidGap
 {
@@ -31,6 +33,9 @@ public class Icerrr extends DroidGap
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
+        if(Build.VERSION.SDK_INT >= 19) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
     }
 }
 

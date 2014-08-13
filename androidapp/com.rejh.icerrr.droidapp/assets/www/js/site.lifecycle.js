@@ -53,6 +53,9 @@ site.lifecycle.init = function() {
 	// Google Loader
 	google.load("search", "1", {"callback" : function(){console.log(" > Loaded: google.load(search,1)");} });
 	
+	// Hacks..
+	site.ui.hackActiveCssRule();
+	
 }
 
 // Resize 

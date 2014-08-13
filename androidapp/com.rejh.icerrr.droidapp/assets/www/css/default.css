@@ -158,6 +158,10 @@ section {
 			color:rgba(255,255,255,0.87);
 		}
 		
+		.footer .button.active {
+			background-color:rgba(0,0,0,0.25);
+		}
+		
 		.footer .button.left {
 			position:absolute;
 			left:0; top:0;
@@ -182,10 +186,7 @@ section {
 		.footer .button_inner img {
 			width:40px;
 			height:40px;
-			margin:-8px 0 0 -12px;
-		}
-		.footer .button_inner.active {
-			background-color:rgba(0,0,0,0.25);
+			margin:-8px 0 0 0;
 		}
 
 /* Specific */
