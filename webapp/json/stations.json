@@ -28,9 +28,9 @@
   {
     "station_id": "radio3fm",
     "station_name": "Radio 3fm",
-    "station_url": "http://www.3fm.nl/static/img/header/logo-icons.png",
+    "station_url": "http://icecast.omroep.nl/3fm-bb-mp3",
     "station_image": 0,
-    "station_icon": "http://full.url.to/icon.png",
+    "station_icon": "http://www.3fm.nl/static/img/header/logo-icons.png",
     "station_host": "icecast.omroep.nl",
     "station_port": 80,
     "station_path": "/3fm-bb-mp3",
