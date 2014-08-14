@@ -67,7 +67,7 @@ site.lifecycle.onResize = function() {
 	// TODO: figure out if orientation change..
 	
 	$(".main").css("height",
-		$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .footer").height())
+		$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height() + $(site.vars.currentSection+" .footer").height())
 	);
 	
 }
