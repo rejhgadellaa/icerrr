@@ -1,12 +1,12 @@
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
-icy-br:96
-ice-audio-info: bitrate=96
-icy-br:96
-icy-genre:Pop
-icy-name:3FM Serious Radio
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Talk
+icy-name:Radio 1
 icy-pub:0
-icy-url:http://www.3fm.nl
+icy-url:http://www.radio1.nl
 Server: ics2ess.omroep.nl
 Cache-Control: no-cache
 icy-metaint:16000
