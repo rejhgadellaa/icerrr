@@ -125,6 +125,9 @@ site.lifecycle.onResume = function() {
 		site.storage.runqueue();
 	},1000); // TODO: determine update freq
 	
+	// Re-init ui updates.. || TODO: we really need a better way to do this..
+	site.home.init_ui_updates();
+	
 }
 
 // Pause
@@ -137,8 +140,8 @@ site.lifecycle.onPause = function() {
 	site.cookies.put("site.session",JSON.stringify(site.session));
 	
 	// Cancel timeouts
-	for(var i=0; i<site.timeouts.length; i++) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
-	for(var i=0; i<site.loops.length; i++) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }
+	for (var i in site.timeouts) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
+	for (var i in site.loops) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }
 	
 }
 
@@ -149,12 +152,8 @@ site.lifecycle.onDestroy = function() {
 	
 	console.log("site.lifecycle.onDestroy()");
 	
-	// Store some stuff
-	site.cookies.put("site.session",JSON.stringify(site.session));
-	
-	// Cancel timeouts
-	for(var i=0; i<site.timeouts.length; i++) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
-	for(var i=0; i<site.loops.length; i++) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }
+	// Call pause..
+	site.lifecycle.onPause();
 	
 	// Release some stuff
 	site.mp.destroy();
