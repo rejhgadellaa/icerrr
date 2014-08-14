@@ -90,6 +90,19 @@ site.helpers.calcImageAspect = function(imageObjOrWidth,height) {
 	else { return height/width; }
 }
 
+// ---> Calculators
+
+// String to bytes and such
+
+site.helpers.calcStringToKbytes = function(str) {
+	return Math.ceil(site.helpers.calcStringToBytes(str)/1024);
+}
+
+site.helpers.calcStringToBytes = function(str) {
+	var bytes = str.length*8;
+	return bytes;
+}
+
 // --- > Session stuff
 
 site.helpers.session = {};

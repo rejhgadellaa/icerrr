@@ -80,7 +80,8 @@ section {
 }
 
 	.actionbar {
-		position:relative;
+		z-index:3;
+		position:absolute;
 		top:0; left:0; right:0;
 		width:100%;
 		height:56px;
@@ -126,8 +127,9 @@ section {
 				}
 				
 	.tabbar {
-		position:relative;
-		top:0; left:0; right:0;
+		z-index:2;
+		position:absolute;
+		top:56px; left:0; right:0;
 		width:100%;
 		height:48px;
 		background-color:#616161;
@@ -152,9 +154,10 @@ section {
 		}
 	
 	.main {
+		z-index:1;
 		overflow:auto;
 		position:relative;
-		top:0; left:0; right:0;
+		top:56px; left:0; right:0;
 		width:100%;
 		xheight:*; /* TODO: smart way to set height dynamically so it uses all available space? */
 		border:-1px solid #f00;
@@ -170,6 +173,7 @@ section {
 		}
 	
 	.footer {
+		z-index:2;
 		position:absolute;
 		bottom:0; left:0; right:0;
 		width:100%;
@@ -189,6 +193,7 @@ section {
 		}
 		
 		.footer .button.busy {
+			background-color:rgba(0,0,0,0.25);
 			opacity:0.5;
 		}
 		
@@ -285,7 +290,7 @@ section {
 }
 
 	#channellist .main {
-	
+		top:104px;
 	}
 	
 	/* TODO: Fow now let's keep this universal? */

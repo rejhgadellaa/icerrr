@@ -106,6 +106,11 @@ site.lifecycle.onDeviceReady = function() {
 		site.session = JSON.parse(site.cookies.get("site.session"));
 		if (!site.session) { site.session = {}; }
 		
+		// Add some events to ui || TODO: move this to site.ui ?
+		$(".actionbar .icon_app").on("click", function() {
+			site.lifecycle.onBackButton
+		});
+		
 		// Home
 		site.home.init();
 		
@@ -138,6 +143,16 @@ site.lifecycle.onPause = function() {
 	
 	// Store some stuff
 	site.cookies.put("site.session",JSON.stringify(site.session));
+	
+	// Write some stuff
+	site.storage.writefile(site.cfg.paths.json,"local.site_session.json",site.cookies.get("site.session"),
+		function() {
+			console.log("site.lifecycle.onPause > write local site.session OK");
+		},
+		function(err) {
+			console.log("site.lifecycle.onPause > write local site.session Error");
+		}
+	);
 	
 	// Cancel timeouts
 	for (var i in site.timeouts) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
