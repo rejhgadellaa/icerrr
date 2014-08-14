@@ -124,6 +124,32 @@ section {
 				.actionbar .actions .action img {
 					width:24px; height:24px;
 				}
+				
+	.tabbar {
+		position:relative;
+		top:0; left:0; right:0;
+		width:100%;
+		height:48px;
+		background-color:#616161;
+		color:rgba(255,255,255,0.87);
+		text-transform:uppercase;
+	}
+	
+		.tab {
+			float:left;
+			width:49%;
+			height:48px;
+		}
+		.tab.active {
+			background:rgba(0,0,0,0.25);
+		}
+		
+		.tab_sep {
+			float:left;
+			width:2%;
+			height:48px;
+			background:rgba(0,0,0,0.25);
+		}
 	
 	.main {
 		overflow:auto;
@@ -226,8 +252,8 @@ section {
 	}
 	
 	#home .main .station_image {
-		width:300px; 
-		height:300px;
+		width:256px; 
+		height:256px;
 		margin:32px auto 0 auto;
 	}
 	
@@ -251,7 +277,7 @@ section {
 	}
 
 #channellist {
-
+	display:block;
 }
 
 	#channellist .main {
