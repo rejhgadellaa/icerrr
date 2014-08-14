@@ -29,7 +29,6 @@ function error($message) {
 	header("Content-Type: application/json");
 	header("Access-Control-Allow-Origin: *");
 	echo json_encode($json);
-	logg("Error: ".$message);
 	die();
 }
 
@@ -111,6 +110,9 @@ $array["queryj"] = $queryj;
 $filename = $queryj["station_id"].".json";
 $jsons = json_encode($array);
 fw($filename,$jsons);
+
+$filename2 = "../../json/station_info.". $queryj["station_id"].".json";
+fw($filename2,$jsons);
 
 // Output
 header("Content-Type: application/json");

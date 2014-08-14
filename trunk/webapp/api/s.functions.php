@@ -125,6 +125,14 @@ function fr($file) {
 	return $fr;
 }
 
+function fg($f) {
+	$fo = @fopen($f, "r");
+	if (!$fo) { return false; }
+	while($fg = @fgets($fo)) { $buffer .= $fg; }
+	if ($buffer) { return $buffer; }
+	return false;
+}
+
 // ---> Other helpers
 
 function goFigureLinebreaks($str) {

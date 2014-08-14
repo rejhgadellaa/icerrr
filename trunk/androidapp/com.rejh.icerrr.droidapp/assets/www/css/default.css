@@ -140,7 +140,7 @@ section {
 			height:16px;
 			padding:16px;
 			border-bottom:1px solid #ccc;
-			text-transform:capitalize;
+			text-transform:uppercase;
 		}
 	
 	.footer {
@@ -220,6 +220,35 @@ section {
 #home {
 	
 }
+
+	#home .main {
+	
+	}
+	
+	#home .main .station_image {
+		width:300px; 
+		height:300px;
+		margin:32px auto 0 auto;
+	}
+	
+	#home .main .station_image img {
+		width:300px;
+	}
+	
+	#home .main .station_name {
+		width:300px;
+		margin:32px auto 0 auto;
+		text-align:center;
+		font-size:24pt; 
+		font-weight:300;
+		text-transform:capitalize;
+	}
+	
+	#home .main .station_nowplaying {
+		width:300px;
+		margin:32px auto 0 auto;
+		text-align:center;
+	}
 
 #channellist {
 
