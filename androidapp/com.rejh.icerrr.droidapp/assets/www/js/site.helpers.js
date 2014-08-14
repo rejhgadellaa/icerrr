@@ -170,6 +170,15 @@ site.helpers.getRandomListEntry = function(list) {
 	return list[randomIndex];
 }
 
+// ---> Formatting
+
+// Capitalize
+
+site.helpers.capitalize = function(str) {
+	str = str.substr(0,1).toUpperCase() + str.substr(1);
+	return str;
+}
+
 // ---> Debugging
 
 site.helpers.arrToString = function(arr,depth,newline) {
