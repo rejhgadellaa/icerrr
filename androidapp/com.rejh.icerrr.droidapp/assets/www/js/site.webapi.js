@@ -34,6 +34,7 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 	
 	var apiurl = site.cfg.urls.api +"a="+ apiaction +"&q="+ apiquery +"&cache="+(new Date().getTime());
 	console.log(" > "+apiurl);
+	console.log(" > "+apiquerystr);
 	
 	$.getJSON(apiurl, function(results) {
 		// ok
@@ -41,7 +42,7 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 			errcb({code:-1,message:results["errormsg"]});
 			return;
 		} else {
-			results.info.size_kb = Math.ceil((JSON.stringify(results).length*8)/1024);
+			results.info.size_kb = Math.ceil((JSON.stringify(results).length*8)/1024/10);
 			console.log(" > site.webapi.exec().results: ~"+ results.info.size_kb +" kb");
 			cb(results);
 			return;

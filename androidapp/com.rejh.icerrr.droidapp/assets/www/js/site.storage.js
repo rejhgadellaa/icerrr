@@ -231,7 +231,7 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 
 site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	
-	console.log("site.storage.writefile(): "+path+", "+filename);
+	console.log("site.storage.writefile(): "+path+", "+filename+", ~"+site.helpers.calcStringToKbytes(data)+" kb");
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
