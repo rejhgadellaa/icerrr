@@ -47,7 +47,7 @@ $fsock = @fsockopen($queryj["host"],$queryj["port"]);
 if (!fsock) { error("Could not open socket: '".$queryj["host"]."', '".$queryj["port"]); }
 
 // Create http_request
-$request = "GET /3fm-sb-mp3 HTTP/1.0\r\nIcy-MetaData:1\r\n\r\n";
+$request = "GET ".$queryj["path"]." HTTP/1.0\r\nIcy-MetaData:1\r\n\r\n";
 
 // Request a-go-go
 $res = "";
