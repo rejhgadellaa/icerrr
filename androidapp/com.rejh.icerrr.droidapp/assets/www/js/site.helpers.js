@@ -103,6 +103,54 @@ site.helpers.calcStringToBytes = function(str) {
 	return bytes;
 }
 
+// ---> Sort stuff
+
+site.sorts = {};
+
+// Stations..
+
+// None
+site.sorts.station_by_none = function(stations) {
+	return stations;
+}
+
+// Id
+site.sorts.station_by_id = function(stations) {
+	var newlist = [];
+	var station_ids = [];
+	var station_sort_indexes = {};
+	for (var i=0; i<stations.length; i++) {
+		station_ids.push(stations[i].station_id);
+		station_sort_indexes[stations[i].station_id] = i;
+	}
+	station_ids.sort();
+	for (var i=0; i<station_ids.length; i++) {
+		newlist.push(
+			stations[ station_sort_indexes[station_ids[i]] ]
+		);
+	}
+	return newlist;
+}
+
+// Name
+site.sorts.station_by_name = function(stations) {
+	var newlist = [];
+	var station_ids = [];
+	var station_sort_indexes = {};
+	for (var i=0; i<stations.length; i++) {
+		station_ids.push(stations[i].station_name);
+		station_sort_indexes[stations[i].station_name] = i;
+	}
+	station_ids.sort();
+	for (var i=0; i<station_ids.length; i++) {
+		newlist.push(
+			stations[ station_sort_indexes[station_ids[i]] ]
+		);
+	}
+	return newlist;
+}
+
+
 // --- > Session stuff
 
 site.helpers.session = {};
@@ -134,7 +182,7 @@ site.helpers.session.putRecursive = function(sessionelem,data) {
 // Get station index by id
 
 site.helpers.session.getStationIndexById = function(station_id) {
-	if (!site.data.stations) { console.log("site.helpers.getStationIndexById().Error: !site.data.stations"); }
+	if (!site.data.stations) { console.log("site.helpers.getStationIndexById().Error: !site.data.stations"); return -1; }
 	for (var index in site.data.stations) {
 		if (site.data.stations[index].station_id == station_id) { return index; }
 	}
@@ -188,6 +236,10 @@ site.helpers.getRandomListEntry = function(list) {
 // Capitalize
 
 site.helpers.capitalize = function(str) {
+	if(!str) { 
+		console.error("site.helpers.capitalize().err: !str");
+		return "<span style='color:#f00;'>Null</span>"; 
+	}
 	str = str.substr(0,1).toUpperCase() + str.substr(1);
 	return str;
 }

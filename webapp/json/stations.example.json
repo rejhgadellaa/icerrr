@@ -72,4 +72,18 @@
 		"rating_soundcloud":-1,
 		"rating_average":-1
 	}
+  {
+    "station_id": "example",
+    "station_name": "radio_name",
+    "station_url": "http_full_url_to_stream",
+    "station_icon": "http_full_url_to_icon",
+    "station_image": 0,
+    "station_host": "www_host_com",
+    "station_port": 80,
+    "station_path": "slash_path",
+    "rating_custom": -1,
+    "rating_soundcloud": -1,
+    "rating_average": -1
+  },
+  {}
 ]

@@ -139,7 +139,7 @@ section {
 	
 		.tab {
 			float:left;
-			width:49%;
+			width:50%;
 			height:48px;
 		}
 		.tab.active {
@@ -313,6 +313,18 @@ section {
 		position:absolute;
 		top:20px; left:88px;
 		font-size:16pt;
+	}
+	
+	.resultitem .resultstar {
+		position:absolute;
+		top:0; right:0;
+		width:24px;
+		height:24px;
+		padding:24px;
+	}
+	
+	.resultitem .resultstarred {
+		
 	}
 
 /* -- OVERLAYS */
