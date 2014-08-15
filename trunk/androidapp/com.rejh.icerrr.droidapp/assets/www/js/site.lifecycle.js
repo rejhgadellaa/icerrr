@@ -83,38 +83,33 @@ site.lifecycle.onDeviceReady = function() {
 	document.addEventListener('pause', site.lifecycle.onPause, false);
 	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
 	
-	// Give splash some time...
-	setTimeout(function() {
+	// Firstlaunch...
+	if (!site.cookies.get("app_is_installed") || site.cookies.get("app_version")<site.cfg.app_version) {
+		if (site.vars.currentSection!="#install") { 
+			setTimeout(function() { site.installer.init(); },2500);
+			return; // <- important stuff yes
+		}
+	}
 	
-		// Firstlaunch...
-		if (!site.cookies.get("app_is_installed") || site.cookies.get("app_version")<site.cfg.app_version) {
-			if (site.vars.currentSection!="#install") { 
-				site.installer.init(); 
-				return; // <- important stuff yes
-			}
-		}
+	// Restore user preferences
+	site.data.userprefs = JSON.parse(site.cookies.get("userprefs"));
+	if (!site.data.userprefs) {
+		console.log(" > No userprefs found, copying defaults...");
+		site.data.userprefs = jQuery.extend(true, {}, site.cfg.defaults.userprefs);
+	}
+	
+	// Restore user session
+	console.log(" > Restore site.session: "+ site.cookies.get("site.session"));
+	site.session = JSON.parse(site.cookies.get("site.session"));
+	if (!site.session) { site.session = {}; }
+	
+	// UI Init
+	site.ui.init
+	
+	// Home
+	setTimeout(function() { site.home.init(); },1000);
 		
-		// Restore user preferences
-		site.data.userprefs = JSON.parse(site.cookies.get("userprefs"));
-		if (!site.data.userprefs) {
-			console.log(" > No userprefs found, copying defaults...");
-			site.data.userprefs = jQuery.extend(true, {}, site.cfg.defaults.userprefs);
-		}
-		
-		// Restore user session
-		console.log(" > Restore site.session: "+ site.cookies.get("site.session"));
-		site.session = JSON.parse(site.cookies.get("site.session"));
-		if (!site.session) { site.session = {}; }
-		
-		// Add some events to ui || TODO: move this to site.ui ?
-		$(".actionbar .icon_app").on("click", function() {
-			site.lifecycle.onBackButton
-		});
-		
-		// Home
-		site.home.init();
-		
-	},2500);
+	
 	
 }
 
@@ -130,8 +125,13 @@ site.lifecycle.onResume = function() {
 		site.storage.runqueue();
 	},1000); // TODO: determine update freq
 	
-	// Re-init ui updates.. || TODO: we really need a better way to do this..
-	site.home.init_ui_updates();
+	// Re-init ui updates.. || TODO: we really need a better way to do this..	
+	// Call UI close function
+	if (!site.session.ui_init_callbacks) { site.session.ui_init_callbacks = []; }
+	while (site.session.ui_init_callbacks.length>0) {
+		var func = site.session.ui_init_callbacks.shift(); // same order as incoming..
+		func();
+	}
 	
 }
 
@@ -157,6 +157,13 @@ site.lifecycle.onPause = function() {
 	// Cancel timeouts
 	for (var i in site.timeouts) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
 	for (var i in site.loops) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }
+	
+	// Call UI close function
+	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
+	while (site.session.ui_pause_callbacks.length>0) {
+		var func = site.session.ui_pause_callbacks.shift(); // same order as incoming..
+		func();
+	}
 	
 }
 

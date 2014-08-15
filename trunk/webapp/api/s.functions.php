@@ -127,9 +127,10 @@ function fr($file) {
 
 function fg($f) {
 	$fo = @fopen($f, "r");
-	if (!$fo) { return false; }
+	if (!$fo) { @fclose($fo); return false; }
 	while($fg = @fgets($fo)) { $buffer .= $fg; }
-	if ($buffer) { return $buffer; }
+	if ($buffer) { @fclose($fo); return $buffer; }
+	@fclose($fo);
 	return false;
 }
 
