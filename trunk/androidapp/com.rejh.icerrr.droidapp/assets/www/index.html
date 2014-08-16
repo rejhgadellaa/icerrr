@@ -139,17 +139,21 @@
 	
     <div class="actionbar shadow_z1">
     	
-        <div class="icon_app"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
         <div class="title">ICERRR</div>
         
 		<div class="actions">
-        	<div class="action activatablel"><img src="img/icons-48/ic_action_core_overflow.png" /></div>
-            <div class="action activatablel"></div>
+        	<div class="action activatablel">
+				<img src="img/icons-48/ic_action_core_overflow.png" />
+			</div>
+            <div class="action activatablel" onclick="site.ui.showtoast('Not yet available..');">
+				<img src="img/icons-48/ic_add_green.png" />
+			</div>
         </div>
     </div>
     
     <div class="tabbar shadow_z1">
-    	<div class="tab activatablel stations active" onclick="site.chlist.ontabclick(this)">
+    	<div class="tab activatablel stations active" onClick="site.chlist.ontabclick(this)">
         	<div class="center_table"><div class="center_td">All stations</div></div>
         </div>
     	<div class="tab activatablel starred" onClick="site.chlist.ontabclick(this);">
@@ -160,6 +164,11 @@
     <div class="main">
 		
     </div>
+
+</section>
+
+<!-- Section -->
+<section id="editstation">
 
 </section>
 
