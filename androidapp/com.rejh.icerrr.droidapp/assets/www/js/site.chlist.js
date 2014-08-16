@@ -1,0 +1,523 @@
+
+// ---------------------------------------------
+// BZZ
+
+// ---> Compat
+
+if (!console) { var console = {}; }
+if (!console.log) { console.log = function(str) { }; }
+
+// ---> Site
+
+if (!site) { var site = {}; }
+
+// ---------------------------------------------
+// CHANNEL LIST
+
+site.chlist = {};
+
+// ---> Init
+
+site.chlist.init = function() {
+	
+	console.log("site.chlist.init()");
+	
+	// Add lifecycle history
+	site.lifecycle.add_section_history("#channellist");
+	
+	// Show UI
+	site.ui.gotosection("#channellist");
+	
+	// Load data (only when needed..)
+	if (!site.data.stations) {
+		site.chlist.readstations();
+		return; // <- important
+	}
+	
+	// Prep some stuff
+	site.chlist.currenttab = site.session.chlist_currenttab;
+	if (!site.chlist.currenttab) { site.chlist.currenttab = "stations"; }
+	
+	// Draw results
+	site.chlist.drawResults();
+	
+	// hacks..
+	site.ui.hackActiveCssRule();
+	
+}
+
+// ---> Tabs
+
+site.chlist.ontabclick = function(tabObj) {
+	
+	console.log("site.chlist.ontabclick(): "+ tabObj.className);
+	
+	// Detect
+	var tab = "stations";
+	if (tabObj.className.indexOf("stations")>=0) {
+		tab = "stations";
+	}
+	if (tabObj.className.indexOf("starred")>=0) {
+		tab = "starred";
+	}
+	
+	$("#channellist .tabbar .tab").removeClass("active");
+	$(tabObj).addClass("active");
+	
+	site.chlist.currenttab = tab;
+	site.chlist.drawResults(0,true);
+	
+	site.lifecycle.onResize();
+	
+}
+
+// ---> Draw results..
+
+site.chlist.drawResults = function(pagenum,forcerun) {
+	
+	console.log("site.chlist.drawResults()");
+	
+	// Check if needs to run..
+	if (!forcerun) {
+		if (site.session.chlist_pagenum || $("#channellist .main div").length > 0) {
+			site.ui.hackActiveCssRule();
+			return;
+		}
+	}
+	
+	// Determine sorting..
+	var sorter = function(stations) { return stations; };
+	if (site.session.sorting=="id") {
+		sorter = site.sorts.station_by_id;
+	}
+	if (site.session.sorting=="name") {
+		sorter = site.sorts.station_by_name;
+	}
+	
+	// Results: stations (all) or starred?
+	var stations = {};
+	if (site.chlist.currenttab=="stations") {
+		console.log(" > Draw stations");
+		stations = sorter(site.data.stations);
+	}
+	if (site.chlist.currenttab=="starred") {
+		console.log(" > Draw starred");
+		stations = sorter(site.chlist.getStarred());
+		if (!stations.length) { 
+			console.log(" > Nothin' starred..");
+			$("#channellist .main").html('<div class="center_table"><div class="center_td">NOTHING HERE</div></div>');
+			return;
+		}
+	}
+	
+	// Clean main
+	$("#channellist .main").html("");
+	
+	// Set header
+	// $("#channellist .main").append('<div class="header">Choose a radio station:</div>');
+	
+	// Handle page(s)
+	if (!pagenum && pagenum!==0) { pagenum = 0; }
+	site.session.chlist_pagenum = pagenum;
+	
+	// (!) Don't draw ALL results, do it in batches...
+	// -> TODO: yea but how are we navigating this?
+	var maxitems = site.cfg.chlist.maxItemsPerBatch;
+	var ibgn = pagenum*site.cfg.chlist.maxItemsPerBatch;
+	var imax = (pagenum+1)*site.cfg.chlist.maxItemsPerBatch;
+	
+	// Init masonry || TODO: handle opts for other formfactors
+	site.chlist.masonryinit("#channellist .main");
+	site.chlist.masonryupdate();
+	
+	// Fragment
+	var fragment = document.createDocumentFragment();
+	var elems = [];
+	
+	// For loop!
+	for (i=ibgn; i<imax; i++) {
+		
+		// check if i>stations.length
+		if (i>=stations.length) {
+			console.log(" > End of list");
+			break;
+		}
+		
+		// station..
+		var station = stations[i];
+		
+		// begin creating elements
+		var resultitem = document.createElement("div");
+		resultitem.className = "resultitem activatabled";
+		resultitem.id = "chlist_resultitem_"+ station.station_id;
+		resultitem.station_id = station.station_id;
+		
+		var resulticon = document.createElement("img");
+		resulticon.className = "resulticon";
+		resulticon.addEventListener("load",function(ev){ /*...*/ });
+		resulticon.addEventListener("error",function(ev){ 
+			console.log(" > Could not load "+ ev.target.src);
+			var station_data = stations[site.helpers.session.getStationIndexById(ev.target.parentNode.station_id)];
+			site.chlist.imagesearch(station_data);
+			ev.target.removeEventListener("error");
+			ev.target.addEventListener("error",function(ev){ 
+				$(ev.target).attr("src","img/icons-48/ic_launcher.png?c="+(new Date().getTime()));
+			});
+		});
+		resulticon.src = station.station_icon;
+		
+		var resultname = document.createElement("div");
+		resultname.className = "resultname";
+		resultname.innerHTML = station.station_name;
+		
+		var resultstar = document.createElement("img");
+		resultstar.className = "resultstar activatabled";
+		resultstar.onclick = function(event) {
+			event.preventDefault(); 
+			event.stopPropagation();
+			if (site.chlist.toggleStarred(this.parentNode.station_id)) {
+				this.src = "img/icons-48/ic_starred_green.png";
+			} else {
+				this.src = "img/icons-48/ic_star.png";
+			}
+			return false;
+		}
+		if (site.chlist.isStarred(station.station_id)) {
+			resultstar.src = "img/icons-48/ic_starred_green.png";
+		} else {
+			resultstar.src = "img/icons-48/ic_star.png";
+		}
+		
+		// TODO: events.. anyone?
+		resultitem.onclick = function(){
+			site.chlist.selectstation(this); // well, here's one..
+		};
+		
+		// add elements..
+		resultitem.appendChild(resulticon);
+		resultitem.appendChild(resultname);
+		resultitem.appendChild(resultstar);
+		fragment.appendChild(resultitem);
+		
+		// Store elem
+		elems.push(resultitem);
+		
+	}
+	
+	// add list
+	$("#channellist .main").append(fragment);
+	
+	// masonry!
+	$("#channellist .main").masonry( 'appended', elems )
+	
+	// TODO: how to load more pages...?
+	
+}
+
+// ---> Select station
+
+site.chlist.selectstation = function(resultitem) {
+	
+	console.log("site.chlist.selectstation()");
+	
+	console.log(" > "+ resultitem.station_id);
+	
+	site.session.currentstation_id = resultitem.station_id;
+	site.session.currentstation = site.data.stations[site.helpers.session.getStationIndexById(resultitem.station_id)];
+	console.log(" > "+ JSON.stringify(site.session.currentstation));
+	site.mp.destroy(); // should be destroyed whenever currentstation changes!
+	site.home.init();
+	
+}
+
+// ---> Find images
+
+site.chlist.imagesearch = function(station_data,fullSizeImage) {
+	
+	console.log("site.chlist.imagesearch()");
+	
+	// HELP: https://developers.google.com/image-search/v1/devguide
+	
+	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
+	var searchstring = ""
+		+ station_data.station_name +" "
+		+ station_data.station_host +" "
+		+ "logo icon";
+		
+	console.log(" > Search: "+searchstring);
+	
+	// New imagesearch
+	if (!site.chlist.thesearch) { site.chlist.thesearch = {}; }
+	site.chlist.thesearch[station_data.station_id] = new google.search.ImageSearch();
+	
+	// Set some properties
+	// -> Restrictions
+	site.chlist.thesearch[station_data.station_id].setRestriction(
+		google.search.ImageSearch.RESTRICT_FILETYPE,
+		google.search.ImageSearch.FILETYPE_PNG
+	);
+	
+	// Callback
+	site.chlist.thesearch[station_data.station_id].setSearchCompleteCallback(this, 
+		function() {
+			// TODO: have placeholder ready, if no results then set that and write to disk..
+			// TODO: Use colorthief to check if the image is not too light/bright?..
+			
+			// Results?
+			if (site.chlist.thesearch[station_data.station_id].results && site.chlist.thesearch[station_data.station_id].results.length > 0) {
+				
+				console.log(" > "+ site.chlist.thesearch[station_data.station_id].results.length +" result(s)");
+				
+				// TODO: let user pick image? Nah, we're going with the first one for now
+				// --> Find square image(s)
+				var theresult = false;
+				for (var i=0; i<site.chlist.thesearch[station_data.station_id].results.length; i++) {
+					var result = site.chlist.thesearch[station_data.station_id].results[i];
+					var aspect = site.helpers.calcImageAspect(result["width"],result["height"]);
+					if (aspect<1.1) { 
+						console.log(" > Found square(ish) result: "+ aspect);
+						theresult = result; break; 
+					}
+					
+				}
+				// Okat just use some image if we can't find a suitable one.. || TODO: fix this
+				if (!theresult) { theresult = site.chlist.thesearch[station_data.station_id].results[0]; }
+				
+				console.log(" > Result info:");
+				console.log(" >> tbw/tbh: "+ result.tbWidth +" x "+ result.tbHeight);
+				console.log(" >> w/h: "+ result.width +" x "+ result.height);
+				
+				// Set src
+				console.log(" > Pick: "+theresult.url);
+				$("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src",theresult.url);
+				
+				// And save to stations stuff
+				station_data.station_icon = theresult.tbUrl;
+				if (!station_data.station_image) { station_data.station_image = theresult.url; } // also finds image.. should do this for all?
+				var station_index = site.helpers.session.getStationIndexById(station_data.station_id);
+				site.data.stations[station_index] = jQuery.extend(true, {}, station_data);
+				
+				// Write file
+				// TODO: problem with site.storage.isBusy: what do we do when it's busy? retry?
+				site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+					function(evt) { 
+						site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
+					},
+					function(e){ 
+						alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
+						console.log(site.storage.getErrorType(e)); 
+					}
+				);
+				/**/
+				
+			} 
+			// Nope
+			else {
+				
+				console.log(" > No image found...");
+				console.log(" > remove: "+ "#chlist_resultitem_"+ station_data.station_id);
+				$("#chlist_resultitem_"+ station_data.station_id).remove(".resulticon");
+				
+			}
+		},
+		null
+	);
+	
+	// Execute
+	site.chlist.thesearch[station_data.station_id].execute(searchstring);
+	
+}
+
+site.chlist.imagesearch_cb = function() {
+	
+	alert("SHOULD NOT FIRE!");
+	
+}
+
+// ---> Masonry
+
+site.chlist.masonryinit = function(selector,opts) {
+	console.log("site.chlist.masonryinit()");
+	if (!opts) { 
+		opts = {
+			itemSelector : '.resultitem',
+			columnWidth : 1,
+			isAnimated : true,
+			isResizable : true
+		};
+	}
+	$(function(){
+	  $(selector).masonry();
+	});
+}
+
+site.chlist.masonryupdate = function(selector) {
+	console.log("site.chlist.masonryupdate()");
+	$(selector).masonry();
+}
+
+// ---> Load data
+
+site.chlist.readstations = function(customCB) {
+	console.log("site.chlist.readstations()");
+	if (!customCB) { customCB = site.chlist.readstations_cb; }
+	site.storage.readfile(site.cfg.paths.json,"stations.json",customCB,site.chlist.readstations_errcb)
+}
+
+site.chlist.readstations_cb = function(resultstr) {
+	console.log("site.chlist.loadstations_cb()");
+	resultjson = JSON.parse(resultstr);
+	if (!resultjson) { alert("site.chlist.readstations_cb().Error: !resultjson"); }
+	// console.log(site.helpers.arrToString(resultjson,0,"\n"));
+	site.data.stations = resultjson;
+	site.chlist.init();
+}
+
+site.chlist.readstations_errcb = function(error) {
+	console.log("site.chlist.loadstations_errcb()");
+	alert("site.chlist.readstations_errcb().Error: "+site.storage.getErrorType(error));
+	// TODO: YES.. What now..
+}
+
+// ---> Stars
+
+// Is starred
+
+site.chlist.isStarred = function(station_id) {
+	
+	console.log("site.chlist.getStarred(): "+station_id);
+	
+	console.log(" > "+ JSON.stringify(site.session.starred));
+	
+	if (!site.session.starred) { return false; }
+	
+	for (var i=0; i<site.session.starred.length; i++) {
+		if (site.session.starred[i].station_id==station_id) {
+			return true;
+		}
+	}
+	
+	return false;
+	
+	
+}
+
+// Toggle Starred
+// -> convenience :)
+
+site.chlist.toggleStarred = function(station_id) {
+	
+	console.log("site.chlist.toggleStarred(): "+station_id);
+	
+	if (site.chlist.isStarred(station_id)) {
+		site.chlist.unsetStarred(station_id);
+		return false // now unstarred
+	} else {
+		site.chlist.setStarred(station_id);
+		return true; // now starred
+	}
+	
+}
+
+// Store starred
+
+site.chlist.setStarred = function(station_id) {
+	
+	console.log("site.chlist.setStarred(): "+station_id);
+	
+	// Create list if it doesn't exist
+	if (!site.session.starred) { site.session.starred = []; }
+	
+	// Add on TOP of stack :D
+	// -> Disadventage of site.data.stations: it's only available when in chlist.. should maybe load this anyway?
+	site.session.starred.unshift({
+		station_id:station_id
+	});
+	
+}
+
+// Remove starred
+
+site.chlist.unsetStarred = function(station_id) {
+	
+	console.log("site.chlist.unsetStarred(): "+station_id);
+	
+	var newlist = [];
+	
+	if (!site.session.starred) {
+		return;
+	}
+	
+	for (var i=0; i<site.session.starred.length; i++) {
+		if (site.session.starred[i].station_id==station_id) {
+			continue; // dont add
+		} else {
+			newlist.push(site.session.starred[i]);
+		}
+	}
+	
+	site.session.starred = newlist;
+	
+}
+
+// Get favourites
+// - Retrieves a list of stations[] that are favourited
+
+site.chlist.getStarred = function() {
+	
+	// Empty?
+	if (!site.session.starred) { return []; }
+	
+	// New list
+	var newlist = [];
+	
+	// Walk
+	for (var i=0; i<site.session.starred.length; i++) {
+		
+		var starred = site.session.starred[i];
+		
+		for (var j=0; j<site.data.stations.length; j++) {
+			
+			var station = site.data.stations[j];
+			
+			if (starred.station_id==station.station_id) {
+				newlist.push(station);
+			}
+			
+		}
+		
+	}
+	
+	// Return
+	return newlist;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
