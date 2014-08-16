@@ -1,0 +1,15 @@
+
+v0.010
+- Added 'Add/Edit Stations' section (doesn't actually work yet..)
+- Loading overlay has z-index 90
+- Motorkap: implemented mergeStations, used for (re)install
+
+
+v0.009
+- Lower refresh rate for Now Playing (30s > 1.5m), tap to refresh manually
+- Disabled highlight when tapping items for now (issues..)
+- Version same as site.config.app_version
+
+
+v0.004
+...

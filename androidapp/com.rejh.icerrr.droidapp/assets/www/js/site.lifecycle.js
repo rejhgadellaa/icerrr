@@ -213,6 +213,10 @@ site.lifecycle.onBackButton = function() {
 		case "#channellist":
 			site.home.init();
 			break;
+		
+		case "#editstation":
+			site.chlist.init();
+			break;
 			
 		default:
 			console.log(" > '<' button on unhandled section: "+ currentBackKey);

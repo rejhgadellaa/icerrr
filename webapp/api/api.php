@@ -53,6 +53,7 @@ switch($action) {
 				$json["data"] = json_decode($json["data"],true);
 				if (!$json["data"]) { error("Error decoding json string: ". getJsonError(json_last_error())); }
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
+				$json["info"]["desc"] = $queryobj["get"];
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
 				echo $jsons;
@@ -74,6 +75,7 @@ switch($action) {
 				if (!$json["data"]) { error("Error: file '$filename' not found"); } // TODO: Generate file :D
 				//$json["data"] = json_decode($json["data"],true);
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
+				$json["info"]["desc"] = $queryobj["get"];
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
 				echo $jsons;
@@ -87,6 +89,7 @@ switch($action) {
 				if (!$json["data"]) { error("Error: file '$filename' not found"); } // TODO: Generate file :D
 				//$json["data"] = json_decode($json["data"],true);
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
+				$json["info"]["desc"] = $queryobj["get"];
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
 				echo $jsons;
@@ -100,6 +103,7 @@ switch($action) {
 				$filemtime_ms = @filemtime("../json/".$queryobj["lookup"].".json")*1000;
 				if ($queryobj["last_update_time_ms"] < filemtime_ms) { $json["data"] = 1; } // yes you need to update
 				else { $json["data"] = 0; }
+				$json["info"]["desc"] = $queryobj["get"];
 				$jsons = json_encode($json);
 				echo $json;
 				break;
