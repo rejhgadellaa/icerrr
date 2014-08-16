@@ -317,6 +317,16 @@ site.helpers.capitalize = function(str) {
 	return str;
 }
 
+// ---> Unique ID 
+
+site.helpers.getUniqueID = function(prefix,suffix) {
+	var res = device.uuid;
+	res += "_"+ (new Date().getTime()).toString(16);
+	res += "_"+ Math.round((Math.random()*1024*1024)).toString(16);
+	console.log("site.helpers.getUniqueID(): "+ res);
+	return res;
+}
+
 // ---> Debugging
 
 site.helpers.arrToString = function(arr,depth,newline) {
