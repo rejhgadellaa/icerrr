@@ -146,7 +146,7 @@
         	<div class="action activatablel">
 				<img src="img/icons-48/ic_action_core_overflow.png" />
 			</div>
-            <div class="action activatablel" onclick="site.chedit.init();">
+            <div class="action activatablel" onClick="site.chedit.init();">
 				<img src="img/icons-48/ic_add_green.png" />
 			</div>
         </div>
@@ -197,13 +197,15 @@
 				<input class="round2" type="text" name="station_url" placeholder="http://www.host.com/path-to-stream" />
 			</p>
 			
-			<p><label>Station icon: <a href="javascript:void;" onclick="site.ui.showtoast('Not available');">Google it</a></label>
-				<input class="round2" type="text" name="station_url" placeholder="http://www.host.com/path-to-icon.png" />
+			<p><label>Station icon: <a href="javascript:void;" onClick="site.ui.showtoast('Not available');">Google it</a></label>
+				<input class="round2" type="text" name="station_icon" placeholder="http://www.host.com/path-to-icon.png" />
 			</p>
 			
-			<p><label>Station image: <a href="javascript:void;" onclick="site.ui.showtoast('Not available');">Google it</a></label>
-				<input class="round2" type="text" name="station_url" placeholder="http://www.host.com/path-to-256x256px-image.png" />
+			<p><label>Station image: <a href="javascript:void;" onClick="site.ui.showtoast('Not available');">Google it</a></label>
+				<input class="round2" type="text" name="station_image" placeholder="http://www.host.com/path-to-256x256px-image.png" />
 			</p>
+			
+			<p><a href="javascript:void;" onclick="site.chedit.check();">Check</a></p>
 			
 		</div>
 		
