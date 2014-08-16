@@ -5,6 +5,7 @@
 
 	ICERRR - default css
 	This css is targeted at phones (~320 x ~480), tablets will be targeted with media queries and additional css files
+	Also: landscape...
 	
 	Notes:
 	* Palettes
@@ -477,11 +478,15 @@ section {
 
 /* Activatable */
 
+/* TODO: FIXME: having issues with :active when elem is hidden while :active
+http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when-elem-is-hidden-while-it-is-active
+*/
+
 .activatablel:active {
-	background-color:rgba(208,209,2,0.25);
+	xbackground-color:rgba(208,209,2,0.25);
 }
 .activatabled:active {
-	background-color:rgba(50,116,44,0.25);
+	xbackground-color:rgba(50,116,44,0.25);
 }
 
 /* Hoverable */

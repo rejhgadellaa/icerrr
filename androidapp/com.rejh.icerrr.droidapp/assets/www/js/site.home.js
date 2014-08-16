@@ -67,9 +67,9 @@ site.home.init = function() {
 	$("#home .main .station_nowplaying").html("Now playing: ...");
 	
 	// extra events
-	$("#home .main .station_nowplaying").on("click",function(ev) {
+	$("#home .main .station_nowplaying")[0].onclick = function(ev) {
 		site.home.run_station_updates();
-	});
+	}
 	
 	
 	// hacks..
