@@ -54,11 +54,6 @@ site.installer.cfg.createfolders_folders = [
 ];
 site.installer.cfg.downloadjson_files = [
 	{"dest_path":"Icerrr/json","dest_name":"stations.json","query":"{\"get\":\"stations\"}"},
-	{"dest_path":"Icerrr/json","dest_name":"data.strings.json","query":"{\"get\":\"stations\"}"},
-	{"dest_path":"Icerrr/json","dest_name":"stations.json","query":"{\"get\":\"stations\"}"},
-	{"dest_path":"Icerrr/json","dest_name":"data.strings.json","query":"{\"get\":\"stations\"}"},
-	{"dest_path":"Icerrr/json","dest_name":"stations.json","query":"{\"get\":\"stations\"}"},
-	{"dest_path":"Icerrr/json","dest_name":"data.strings.json","query":"{\"get\":\"stations\"}"},
 	{}
 ];
 
@@ -183,7 +178,7 @@ site.installer.downloadjson_cb = function(res) {
 	console.log("site.installer.downloadjson_cb(): "+ site.helpers.countObj(res["data"]));
 	site.installer.logger(" OK",{use_br:false});
 	site.datatemp = res; // TODO: look at this variable.. it's just sad
-	site.installer.downloadjson_write();
+	site.installer.downloadjson_read();
 }
 
 site.installer.downloadjson_errcb = function(error) {
@@ -191,6 +186,92 @@ site.installer.downloadjson_errcb = function(error) {
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+error["message"]+"",{is_e:true});
 	// TODO: YES.. What now..
+}
+
+// downloadjson_read
+
+site.installer.downloadjson_read = function() {
+	
+	console.log("site.installer.downloadjson_read()");
+	
+	// Check jsonNum
+	if (!site.installer.vars.jsonNum && site.installer.vars.jsonNum!==0) { 
+		// TODO: Error...
+	}
+	
+	// Get current job
+	currentjob = site.installer.cfg.downloadjson_files[site.installer.vars.jsonNum];
+	console.log(" > currentjob: "+ currentjob.query);
+	
+	// Stuff
+	var path = currentjob.dest_path;
+	var filename = currentjob.dest_name;
+	
+	console.log(" > Path: "+ path);
+	console.log(" > Filename: "+ filename);
+	
+	// Check dirtyfiles
+	// TODO: this doesnt work because we haven't restored site.session yet..
+	/*
+	if (!site.session.dirtyfiles) {
+		console.log(" > !site.session.dirtyfiles");
+		site.installer.downloadjson_write();
+		return; // <- I keep forgetting this
+	} else {
+		if (site.session.dirtyfiles.indexOf(path+"/"+filename)<0) {
+			console.log(" > Not dirty...");
+			site.installer.downloadjson_write();
+			return; // <- I keep forgetting this
+		}
+	}
+	/**/
+	
+	// Some output..
+	site.installer.logger("&nbsp;&gt;&gt; Read: "+ path +"/"+ filename);
+	
+	site.storage.readfile(path,filename,
+		function(datalocalstr) {
+			
+			console.log(" > Read OK: ~"+ site.helpers.calcStringToKbytes(datalocalstr) +" kb");
+			
+			if (!datalocalstr) { 
+				console.log(" >> No datalocalstr, just write the file");
+				site.installer.downloadjson_write();
+				return;
+			}
+			
+			var datalocal = JSON.parse(datalocalstr);
+			var dataremote = site.datatemp["data"];
+			
+			// Merge, others?
+			//try {
+			switch(site.datatemp["info"]["desc"]) {
+				
+				case "stations":
+					site.datatemp["data"] = site.helpers.mergeStations(datalocal,dataremote);
+					break;
+				
+				default:
+					break;
+					
+			}
+			// } catch(e) { console.warn(" > Switch switch(site.datatemp['info']['desc']) failed"); console.warn(e); }
+			
+			// Write
+			site.installer.downloadjson_write();
+			
+		},
+		function(error) {
+			console.log("site.installer.downloadjson_read().Error");
+			site.installer.logger(" ERR",{use_br:false,is_e:true});
+			site.installer.logger("&nbsp;&gt; "+JSON.stringify(error)+"",{is_e:true});
+		},
+		{ //opts
+			file:{create:true},
+			end:true
+		}
+	);
+	
 }
 
 // Downloadjson_write

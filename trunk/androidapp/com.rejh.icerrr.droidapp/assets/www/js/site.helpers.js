@@ -16,6 +16,76 @@ if (!site) { var site = {}; }
 
 site.helpers = {};
 
+// ---> Stations
+
+// Merge Stations
+// - Stations1: local copy, station2: remote copy (new)
+// - Adds results of stations2 to stations1 without overwriting stations1
+
+site.helpers.mergeStations = function(stations1,stations2) {
+	
+	console.log("site.helpers.mergeStations()");
+	
+	if (!stations1 && !stations2) { return []; }
+	else if (!stations1) { return stations2; }
+	else if (!stations2) { return stations1; }
+	
+	// Walk station2
+	for (var i=0; i<stations2.length; i++) {
+		
+		var station1 = null; // will look up later..
+		var station2 = stations2[i];
+		
+		// Find in stations2
+		var station1index = site.helpers.session.getStationIndexById(station2.station_id,stations1);
+		if (station1index<0 || !station1index) {
+			// doesn't exist, just insert
+			console.log(" > New: "+ station2.station_id);
+			stations1.push(station2);
+			continue; // <- important
+		}
+		
+		station1 = stations1[station1index];
+		
+		// Compare values..
+		console.log(" > Upd: "+ station2.station_id);
+		for (var key in station2) {
+			
+			// Doesn't exist
+			if (!station1[key]) {
+				console.log(" >> New key: "+ station2.station_id +": "+ key);
+				console.log(" >>> Value: "+ station2[key]);
+				station1[key] = station2[key];
+			}
+			// Keep local data when conflicted
+			else if (station1[key]!=station2[key]) {
+				console.log(" >> Conflict: "+ station2.station_id +": "+ key +", keep local");
+				console.log(" >>> Value1: "+ station1[key]);
+				console.log(" >>> Value2: "+ station2[key]);
+				continue;
+			}
+			// Same values..
+			else {
+				/* TODO: Cleanup
+				console.log(" >> Else: "+ station2.station_id +": "+ key +", overwrite");
+				console.log(" >>> Value1: "+ station1[key]);
+				console.log(" >>> Value2: "+ station2[key]);
+				station1[key] = station2[key];
+				/**/
+			}
+			
+			
+		}
+		
+		// Store
+		stations1[station1index] = station1;
+		
+	}
+	
+	return stations1;
+	
+}
+
 // ---> Images
 
 // Store image
@@ -99,6 +169,7 @@ site.helpers.calcStringToKbytes = function(str) {
 }
 
 site.helpers.calcStringToBytes = function(str) {
+	if(!str) { str = ""; }
 	var bytes = str.length*8;
 	return bytes;
 }
@@ -181,10 +252,11 @@ site.helpers.session.putRecursive = function(sessionelem,data) {
 
 // Get station index by id
 
-site.helpers.session.getStationIndexById = function(station_id) {
-	if (!site.data.stations) { console.log("site.helpers.getStationIndexById().Error: !site.data.stations"); return -1; }
-	for (var index in site.data.stations) {
-		if (site.data.stations[index].station_id == station_id) { return index; }
+site.helpers.session.getStationIndexById = function(station_id, stations) {
+	if (!site.data.stations && !stations) { console.log("site.helpers.getStationIndexById().Error: !site.data.stations"); return -1; }
+	if (!stations) { stations = site.data.stations; }
+	for (var index in stations) {
+		if (stations[index].station_id == station_id) { return index; }
 	}
 	return -1;
 }
@@ -194,6 +266,7 @@ site.helpers.session.getStationIndexById = function(station_id) {
 // Flag dirty
 
 site.helpers.flagdirtyfile = function(filepathandname) {
+	filepathandname = filepathandname.replace("//","/");
 	var dirtyfiles = site.session.dirtyfiles;
 	if (typeof(dirtyfiles)=="object" && site.helpers.countObj(dirtyfiles)>0) { // TODO: dirtyfiles is not an object.. is it?
 		console.log(" > site.helpers.flagdirtyfile.Huh? 'dirtyfiles'==object?");

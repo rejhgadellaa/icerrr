@@ -57,7 +57,15 @@ h1 {
 }
 	
 label {
-	padding:10px;
+	margin:8px;
+}
+
+input {
+	width:98%;
+	margin:-1px;
+	padding:1%;
+	font-size:16pt;
+	border:1px solid rgba(0,0,0,0.5);
 }
 
 select {
@@ -163,15 +171,16 @@ section {
 		xheight:*; /* TODO: smart way to set height dynamically so it uses all available space? */
 		border:-1px solid #f00;
 	}
-	
-		.main .header {
-			position:absolute;
-			top:0; left:0; right:0;
-			height:16px;
-			padding:16px;
-			border-bottom:1px solid #ccc;
-			text-transform:uppercase;
+		
+		.main .block {
+			
 		}
+
+			.main .block.header {
+				font-size:18pt;
+				font-weight:300;
+				padding-left:8px;
+			}
 	
 	.footer {
 		z-index:2;
@@ -295,6 +304,16 @@ section {
 	}
 	
 	/* TODO: Fow now let's keep this universal? */
+	
+	.resultheader {
+		position:absolute;
+		top:0; left:0; right:0;
+		height:16px;
+		padding:16px;
+		border-bottom:1px solid #ccc;
+		text-transform:uppercase;
+	}
+	
 	.resultitem {
 		position:relative;
 		width:100%;
@@ -327,12 +346,25 @@ section {
 	.resultitem .resultstarred {
 		
 	}
+	
+#editstation {
+	
+}
+
+	#editstation .block {
+		padding:16px 16px 0 16px;
+	}
+	
+	#editstation .block label a {
+		float:right;
+	}
 
 /* -- OVERLAYS */
 
 /* Common */
 
 .overlay_wrap {
+	z-index:90; /* high zindex */
 	display:none;
 	position:absolute;
 	top:0; left:0; right:0; bottom:0;
