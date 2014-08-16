@@ -37,14 +37,17 @@ $querys = urldecode($_GET["q"]);
 $queryj = json_decode($querys,true);
 
 	// -> Checks and such
-	if (!$queryj["station_id"]) { $queryj["station_id"] = "unknown"; }
-	if (!$queryj["host"]) { $queryj["host"] = "icecast.omroep.nl"; }
+	// if (!$queryj["station_id"]) { $queryj["station_id"] = "unknown"; }
+	if (!$queryj["host"]) { $queryj["host"] = "null"; }
 	if (!$queryj["port"]) { $queryj["port"] = 80; }
-	if (!$queryj["path"]) { $queryj["path"] = "/3fm-sb-mp3"; }
+	// if (!$queryj["path"]) { $queryj["path"] = "/3fm-sb-mp3"; }
 
 // Open a socket
 $fsock = @fsockopen($queryj["host"],$queryj["port"]);
-if (!fsock) { error("Could not open socket: '".$queryj["host"]."', '".$queryj["port"]); }
+if (!$fsock) { 
+	error("Could not open socket: '".$queryj["host"]."', '".$queryj["port"]); 
+	die();
+}
 
 // Create http_request
 $request = "GET ".$queryj["path"]." HTTP/1.0\r\nIcy-MetaData:1\r\n\r\n";
