@@ -112,7 +112,7 @@ $array["queryj"] = $queryj;
 // Write file
 $filename = $queryj["station_id"].".json";
 $jsons = json_encode($array);
-fw($filename,$jsons);
+// fw($filename,$jsons); // TODO: Cleanup 
 
 $filename2 = "../../json/station_info.". $queryj["station_id"].".json";
 fw($filename2,$jsons);
