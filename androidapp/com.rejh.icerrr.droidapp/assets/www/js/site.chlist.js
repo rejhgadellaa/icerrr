@@ -18,7 +18,7 @@ site.chlist = {};
 
 // ---> Init
 
-site.chlist.init = function() {
+site.chlist.init = function(forceRedraw) {
 	
 	console.log("site.chlist.init()");
 	
@@ -39,11 +39,34 @@ site.chlist.init = function() {
 	if (!site.chlist.currenttab) { site.chlist.currenttab = "stations"; }
 	
 	// Draw results
-	site.chlist.drawResults();
+	site.chlist.drawResults(forceRedraw);
 	
 	// hacks..
 	site.ui.hackActiveCssRule();
 	
+	// Restore scroll
+	if (site.chlist.main_scrollTop) {
+		$("#channellist .main").scrollTop(site.chlist.main_scrollTop);
+	}
+	
+	// Scroll listener
+	$("#channellist .main").off( 'scroll');
+	$("#channellist .main").on( 'scroll', function(evt) {
+		site.chlist.main_scrollTop = $("#channellist .main").scrollTop();
+	});
+	
+}
+
+// PAUSE RESUME
+// - Important stuff: this is function that will be called whenever site.ui.gotosection is called
+
+site.chlist.onpause = function() {
+	console.log("site.chedit.onpause()");
+}
+
+site.chlist.onresume = function() {
+	console.log("site.chedit.site.home.()");
+	// not needed now
 }
 
 // ---> Tabs
@@ -78,11 +101,22 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	console.log("site.chlist.drawResults()");
 	
 	// Check if needs to run..
-	if (!forcerun) {
+	if (!forcerun && !site.chedit.changesHaveBeenMade) {
 		if (site.session.chlist_pagenum || $("#channellist .main div").length > 0) {
 			site.ui.hackActiveCssRule();
 			return;
 		}
+	}
+	
+	if (site.chedit.changesHaveBeenMade) {
+		site.chedit.changesHaveBeenMade = false;
+	}
+	
+	if (site.chedit.changesHaveBeenMadeButResetScroll) {
+		site.chedit.changesHaveBeenMadeButResetScroll = false;
+		pagenum = 0;
+		site.chlist.ontabclick($(".tab .activatablel .starred")[0]);
+		return;
 	}
 	
 	// Determine sorting..
@@ -192,6 +226,11 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resultitem.onclick = function(){
 			site.chlist.selectstation(this); // well, here's one..
 		};
+		$(resultitem).longClick(function(obj){
+			if (!obj.station_id) { obj = obj.parentNode; }
+			navigator.notification.vibrate(100);
+			site.chedit.init(obj.station_id);
+		},250);
 		
 		// add elements..
 		resultitem.appendChild(resulticon);
@@ -243,88 +282,72 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 		+ station_data.station_name +" "
 		+ station_data.station_host +" "
 		+ "logo icon";
-		
-	console.log(" > Search: "+searchstring);
 	
-	// New imagesearch
-	if (!site.chlist.thesearch) { site.chlist.thesearch = {}; }
-	site.chlist.thesearch[station_data.station_id] = new google.search.ImageSearch();
+	var opts = {
+		restrictions:[
+			[google.search.ImageSearch.RESTRICT_FILETYPE, google.search.ImageSearch.FILETYPE_PNG]
+		]
+	}
 	
-	// Set some properties
-	// -> Restrictions
-	site.chlist.thesearch[station_data.station_id].setRestriction(
-		google.search.ImageSearch.RESTRICT_FILETYPE,
-		google.search.ImageSearch.FILETYPE_PNG
-	);
-	
-	// Callback
-	site.chlist.thesearch[station_data.station_id].setSearchCompleteCallback(this, 
-		function() {
-			// TODO: have placeholder ready, if no results then set that and write to disk..
-			// TODO: Use colorthief to check if the image is not too light/bright?..
+	site.helpers.googleImageSearch(searchstring,
+		function(results) {
 			
-			// Results?
-			if (site.chlist.thesearch[station_data.station_id].results && site.chlist.thesearch[station_data.station_id].results.length > 0) {
-				
-				console.log(" > "+ site.chlist.thesearch[station_data.station_id].results.length +" result(s)");
-				
-				// TODO: let user pick image? Nah, we're going with the first one for now
-				// --> Find square image(s)
-				var theresult = false;
-				for (var i=0; i<site.chlist.thesearch[station_data.station_id].results.length; i++) {
-					var result = site.chlist.thesearch[station_data.station_id].results[i];
-					var aspect = site.helpers.calcImageAspect(result["width"],result["height"]);
-					if (aspect<1.1) { 
-						console.log(" > Found square(ish) result: "+ aspect);
-						theresult = result; break; 
-					}
-					
+			console.log(" > "+ results.length +" result(s)");
+			
+			// TODO: let user pick image? Nah, we're going with the first one for now
+			// --> Find square image(s)
+			var theresult = false;
+			for (var i=0; i<results.length; i++) {
+				var result = results[i];
+				var aspect = site.helpers.calcImageAspect(result["width"],result["height"]);
+				if (aspect<1.1) { 
+					console.log(" > Found square(ish) result: "+ aspect);
+					theresult = result; break; 
 				}
-				// Okat just use some image if we can't find a suitable one.. || TODO: fix this
-				if (!theresult) { theresult = site.chlist.thesearch[station_data.station_id].results[0]; }
-				
-				console.log(" > Result info:");
-				console.log(" >> tbw/tbh: "+ result.tbWidth +" x "+ result.tbHeight);
-				console.log(" >> w/h: "+ result.width +" x "+ result.height);
-				
-				// Set src
-				console.log(" > Pick: "+theresult.url);
-				$("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src",theresult.url);
-				
-				// And save to stations stuff
-				station_data.station_icon = theresult.tbUrl;
-				if (!station_data.station_image) { station_data.station_image = theresult.url; } // also finds image.. should do this for all?
-				var station_index = site.helpers.session.getStationIndexById(station_data.station_id);
-				site.data.stations[station_index] = jQuery.extend(true, {}, station_data);
-				
-				// Write file
-				// TODO: problem with site.storage.isBusy: what do we do when it's busy? retry?
-				site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
-					function(evt) { 
-						site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
-					},
-					function(e){ 
-						alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
-						console.log(site.storage.getErrorType(e)); 
-					}
-				);
-				/**/
-				
-			} 
-			// Nope
-			else {
-				
-				console.log(" > No image found...");
-				console.log(" > remove: "+ "#chlist_resultitem_"+ station_data.station_id);
-				$("#chlist_resultitem_"+ station_data.station_id).remove(".resulticon");
 				
 			}
+			// Okat just use some image if we can't find a suitable one.. || TODO: fix this
+			if (!theresult) { theresult = results[0]; }
+			
+			console.log(" > Result info:");
+			console.log(" >> tbw/tbh: "+ result.tbWidth +" x "+ result.tbHeight);
+			console.log(" >> w/h: "+ result.width +" x "+ result.height);
+			
+			// Set src
+			console.log(" > Pick: "+theresult.url);
+			$("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src",theresult.url);
+			
+			// And save to stations stuff
+			station_data.station_icon = theresult.tbUrl;
+			if (!station_data.station_image) { station_data.station_image = theresult.url; } // also finds image.. should do this for all?
+			var station_index = site.helpers.session.getStationIndexById(station_data.station_id);
+			site.data.stations[station_index] = jQuery.extend(true, {}, station_data);
+			
+			// Write file
+			// TODO: problem with site.storage.isBusy: what do we do when it's busy? retry?
+			site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+				function(evt) { 
+					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
+				},
+				function(e){ 
+					alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
+					console.log(site.storage.getErrorType(e)); 
+				}
+			);
+			
 		},
-		null
+		function() {
+			
+			// err
+			console.log(" > No image found...");
+			console.log(" > remove: "+ "#chlist_resultitem_"+ station_data.station_id);
+			$("#chlist_resultitem_"+ station_data.station_id).remove(".resulticon");
+			
+		},
+		opts
 	);
 	
-	// Execute
-	site.chlist.thesearch[station_data.station_id].execute(searchstring);
+	return;
 	
 }
 
@@ -376,6 +399,7 @@ site.chlist.readstations_cb = function(resultstr) {
 site.chlist.readstations_errcb = function(error) {
 	console.log("site.chlist.loadstations_errcb()");
 	alert("site.chlist.readstations_errcb().Error: "+site.storage.getErrorType(error));
+	site.installer.init();
 	// TODO: YES.. What now..
 }
 

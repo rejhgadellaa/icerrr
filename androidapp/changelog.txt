@@ -1,4 +1,10 @@
 
+v0.011
+- 'Add/Edit Stations' now works, probably with bugs here and there
+- Moved googleImageSearch function to site.helpers
+- Partial fix for css ':active' issue
+- Bumped version: 0.011
+
 v0.010
 - Added 'Add/Edit Stations' section (doesn't actually work yet..)
 - Loading overlay has z-index 90

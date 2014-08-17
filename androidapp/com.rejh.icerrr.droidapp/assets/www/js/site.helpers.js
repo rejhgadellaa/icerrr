@@ -327,6 +327,78 @@ site.helpers.getUniqueID = function(prefix,suffix) {
 	return res;
 }
 
+// ---> Google Image Search
+
+site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
+	
+	console.log("site.helpers.googleImageSearch()");
+	console.log(" > "+searchstring);
+	
+	// HELP: https://developers.google.com/image-search/v1/devguide
+	
+	// New imagesearch, get unique id
+	var searchid = site.helpers.getUniqueID();
+	if (!site.chlist.thesearch) { site.chlist.thesearch = {}; }
+	if (!site.chlist.thesearchbusy) { site.chlist.thesearchbusy = {}; }
+	site.chlist.thesearch[searchid] = new google.search.ImageSearch();
+	site.chlist.thesearchbusy[searchid] = true;
+	
+	// Set some properties
+	// -> Restrictions
+	if (opts.restrictions) {
+		for (var i=0; i<opts.restrictions.length; i++) {
+			if (!opts.restrictions[i][0] || !opts.restrictions[i][1]) { continue; }
+			site.chlist.thesearch[searchid].setRestriction(
+				opts.restrictions[i][0],
+				opts.restrictions[i][1]
+			);
+		}
+	}
+	
+	// Callback
+	site.chlist.thesearch[searchid].setSearchCompleteCallback(this, 
+		function() {
+			// Results? || TODO: check if we can extend (deep copy) the results because we want to clean them up..
+			if (site.chlist.thesearch[searchid].results && site.chlist.thesearch[searchid].results.length > 0) {
+				var results = site.chlist.thesearch[searchid].results;
+				console.log(" > "+ results.length +" result(s)");
+				cb(results);
+				site.chlist.thesearchbusy[searchid] = false;
+				site.helpers.googleImageSearchCleanup();
+			} 
+			// Nope
+			else {
+				console.log(" > Search failed, no results");
+				errcb();
+				site.chlist.thesearchbusy[searchid] = false;
+				site.helpers.googleImageSearchCleanup();
+			}
+		},
+		null
+	);
+	
+	// Execute
+	site.chlist.thesearch[searchid].execute(searchstring);
+	
+}
+
+site.helpers.googleImageSearchCleanup = function() {
+	
+	// Check if searches are busy..
+	var anybusy = false;
+	for (var searchid in site.chlist.thesearchbusy) {
+		if (site.chlist.thesearchbusy[searchid]) { anybusy = true; break; }
+	}
+	
+	// All done? destroy thesearch[]
+	if (!anybusy) {
+		console.log("site.helpers.googleImageSearchCleanup(): Cleanup...");
+		site.chlist.thesearch = {};
+		site.chlist.thesearchbusy = {};
+	}
+	
+}
+
 // ---> Debugging
 
 site.helpers.arrToString = function(arr,depth,newline) {

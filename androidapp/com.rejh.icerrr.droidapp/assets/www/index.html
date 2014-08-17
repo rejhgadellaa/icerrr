@@ -30,6 +30,7 @@
 	
 	<!-- Javascript: jQuery -->
     <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" language="javascript" src="js/jquery/jquery.longclick-simple.js"></script>
 	
 	<!-- Javascript: Other -->
     <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
@@ -146,7 +147,7 @@
         	<div class="action activatablel">
 				<img src="img/icons-48/ic_action_core_overflow.png" />
 			</div>
-            <div class="action activatablel" onClick="site.chedit.init();">
+            <div class="action activatablel" onClick="site.chedit.init(false);">
 				<img src="img/icons-48/ic_add_green.png" />
 			</div>
         </div>
@@ -179,6 +180,12 @@
         	<div class="action activatablel">
 				<img src="img/icons-48/ic_action_core_overflow.png" />
 			</div>
+			<div class="action activatablel" onclick="site.chedit.check();">
+				<img src="img/icons-48/ic_save_green.png" />
+			</div>
+            <div class="action activatablel" onClick="if(confirm('Are you sure you want to remove this station?\n\nChanges cannot be easily undone.')){site.ui.showtoast('Sorry, not working yet..');}">
+				<img src="img/icons-48/ic_trash_green.png" />
+			</div>
         </div>
     </div>
     
@@ -188,24 +195,20 @@
 			Add/Edit station		</div>
 		
 		<div class="block data1">
+		
+			<input type="hidden" name="station_id" value="" />
 			
-			<p><label>Station name:</label>
-				<input class="round2" type="text" name="station_name" placeholder="My Radio Station" />
+			<p><label>Station url: <span style="color:#f00;">*</span></label>
+				<input class="round2" type="text" name="station_url" placeholder="http://www.host.com/path-to-stream" />
 			</p>
 			
-			<p><label>Station url:</label>
-				<input class="round2" type="text" name="station_url" placeholder="http://www.host.com/path-to-stream" />
+			<p><label>Station name: <span style="color:#f00;">*</span></label>
+				<input class="round2" type="text" name="station_name" placeholder="My Radio Station" />
 			</p>
 			
 			<p><label>Station icon: <a href="javascript:void;" onClick="site.ui.showtoast('Not available');">Google it</a></label>
 				<input class="round2" type="text" name="station_icon" placeholder="http://www.host.com/path-to-icon.png" />
 			</p>
-			
-			<p><label>Station image: <a href="javascript:void;" onClick="site.ui.showtoast('Not available');">Google it</a></label>
-				<input class="round2" type="text" name="station_image" placeholder="http://www.host.com/path-to-256x256px-image.png" />
-			</p>
-			
-			<p><a href="javascript:void;" onclick="site.chedit.check();">Check</a></p>
 			
 		</div>
 		

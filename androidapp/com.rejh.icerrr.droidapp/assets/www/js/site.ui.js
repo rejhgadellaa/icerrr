@@ -30,6 +30,14 @@ site.ui.init = function() {
 		site.lifecycle.onBackButton
 	});
 	
+	/*
+	$("#canvas_doodle").on("touchstart", function(e){ doo.touchBegin(e); });
+	$("#canvas_doodle").on("touchmove",  function(e){ doo.touchMove(e); });
+	$("#canvas_doodle").on("touchend",  function(e){ doo.touchEnd(e); });
+	*/
+	
+	site.ui.hackActiveCssRule();
+	
 }
 
 // ---> Sections
@@ -49,11 +57,16 @@ site.ui.gotosection = function(selector) {
 	}
 	
 	// TODO: nice animations?
-	$("section").css("display","none"); 
-	$(selector).css("display","block");
-	console.log(" > "+ selector +" display: "+$(selector).css("display"));
-	
-	setTimeout(site.lifecycle.onResize,10);
+	// TODO: Settimeout is a workaround so that :active elements lose their active state..
+	if (site.timeouts.gotosection) { clearTimeout(site.timeouts.gotosection); }
+	//site.timeouts.gotosection = setTimeout(function(){
+		$(".activatablel_active").removeClass("activatablel_active");
+		$(".activatabled_active").removeClass("activatabled_active");
+		$("section").css("display","none"); 
+		$(selector).css("display","block");
+		console.log(" > "+ selector +" display: "+$(selector).css("display"));
+		setTimeout(site.lifecycle.onResize,10);
+	//},100);
 	
 }
 
@@ -105,41 +118,91 @@ site.ui.createtoast = function() {
 
 site.ui.hackActiveCssRule = function() {
 	
-	/*
-	setTimeout(function(){
-		site.listOfActivatableItems = [];
-		var itms = jQuery.extend(true, {}, $(".activatablel,.activatabled"));
-		console.log(itms.length);
-		for (var i=0; i<itms.length; i++) {
-			var itm = itms[i];
-			// tmp store..
-			var index = site.listOfActivatableItems.push(itm)-1;
-			var classname = "";
-			if (itm.className.indexOf("activatablel")>=0) { classname = "activatablel"; }
-			if (itm.className.indexOf("activatabled")>=0) { classname = "activatabled"; }
-			$(itm).removeClass(classname);
-			console.log(" > "+site.listOfActivatableItems[index] +", "+ index +", "+ classname);
-			var execstr = '$(site.listOfActivatableItems['+ index +']).addClass("'+classname+'");';
-			console.log(execstr);
-			setTimeout(execstr,10);
-		}
-	},10);
+	// TODO: let's hope 'elem' variable is not cleaned up?
 	
-	/**/
+	var elems = [];
 	
-	// Doesn't work.. DA FAK
-	/*
-	$("body")
-		.bind("touchend", function() {
-			console.log("touchend! <-------------------")
-			$("*").blur();
+	elems = $(".activatablel");
+	
+	for (var i in elems) {
+		var elem = elems[i];
+		elem.ontouchstart = function(evt) {
+			// Now we have to find the ACTUAL element that bound this event 
+			// because somebody decided it's useful to not do this &$*((@^#))_
+			var foundTheActualTarget = false;
+			var thetarget = evt.target;
+			var whilenum = 0;
+			while (!foundTheActualTarget) {
+				if (thetarget.className) {
+					if (thetarget.className.indexOf("activatablel")>=0) {
+						foundTheActualTarget = true;
+						break;
+					}
+				}
+				thetarget = thetarget.parentNode;
+				whilenum++;
+				if (whilenum>256) { break; } // TODO: unless we intend to do this job in Reno, we're in Barney
+			}
+			if ($(thetarget).hasClass("activatablel_active")) { return; }
+			$(thetarget).addClass("activatablel_active");
 		}
-	);
+		elem.ontouchend = function(evt) {
+			$("*").removeClass("activatablel_active");
+		}
+		elem.ontouchcancel = elem.ontouchend;
+	}
+	
+	elems = $(".activatabled");
+	
+	for (var i in elems) {
+		var elem = elems[i];
+		elem.ontouchstart = function(evt) {
+			// Now we have to find the ACTUAL element that bound this event 
+			// because somebody decided it's useful to not do this &$*((@^#))_
+			var foundTheActualTarget = false;
+			var thetarget = evt.target;
+			var whilenum = 0;
+			while (!foundTheActualTarget) {
+				if (thetarget.className) {
+					if (thetarget.className.indexOf("activatabled")>=0) {
+						foundTheActualTarget = true;
+						break;
+					}
+				}
+				thetarget = thetarget.parentNode;
+				whilenum++;
+				if (whilenum>256) { break; } // TODO: unless we intend to do this job in Reno, we're in Barney
+			}
+			if ($(thetarget).hasClass("activatabled_active")) { return; }
+			$(thetarget).addClass("activatabled_active");
+		}
+		elem.ontouchend = function(evt) {
+			$("*").removeClass("activatabled_active");
+		}
+		elem.ontouchcancel = elem.ontouchend;
+	}
+	
+	/*
+	// activatablel
+	$(".activatablel").off("touchstart").off("touchend");
+	$(".activatablel").on("touchstart",function(evt) {
+		if ($(evt.originalEvent.target).hasClass("activatablel_active")) { return; }
+		$(evt.originalEvent.target).addClass("activatablel_active");
+	}).on("touchend",function(evt) {
+		$(evt.originalEvent.target).removeClass("activatablel_active");
+	});
+	
+	// activatabled
+	$(".activatabled").off("touchstart").off("touchend");
+	$(".activatabled").on("touchstart",function(evt) {
+		if ($(evt.originalEvent.target).hasClass("activatabled_active")) { return; }
+		$(evt.originalEvent.target).addClass("activatabled_active");
+	}).on("touchend",function(evt) {
+		$(evt.originalEvent.target).removeClass("activatabled_active");
+	});
 	/**/
 	
 }
-
-
 
 
 
