@@ -70,6 +70,8 @@ site.lifecycle.onResize = function() {
 		$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height() + $(site.vars.currentSection+" .footer").height())
 	);
 	
+	site.ui.hackActiveCssRule()
+	
 }
 
 // Device Ready

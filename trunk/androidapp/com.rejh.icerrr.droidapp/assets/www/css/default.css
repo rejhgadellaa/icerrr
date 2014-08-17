@@ -315,6 +315,7 @@ section {
 	}
 	
 	.resultitem {
+		float:left;
 		position:relative;
 		width:100%;
 		height:72px;
@@ -514,11 +515,11 @@ section {
 http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when-elem-is-hidden-while-it-is-active
 */
 
-.activatablel:active {
-	xbackground-color:rgba(208,209,2,0.25);
+.activatablel_active {
+	background-color:rgba(208,209,2,0.25);
 }
-.activatabled:active {
-	xbackground-color:rgba(50,116,44,0.25);
+.activatabled_active {
+	background-color:rgba(50,116,44,0.25);
 }
 
 /* Hoverable */
