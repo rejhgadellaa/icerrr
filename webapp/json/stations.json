@@ -1,6 +1,7 @@
 [
   {
     "station_id": "radio1",
+    "station_edited":{},
     "station_name": "Radio 1",
     "station_url": "http://icecast.omroep.nl/radio1-bb-mp3",
     "station_icon": "http://www.radio1.nl/radio1/images/radio1-logo.pngg",
@@ -14,6 +15,7 @@
   },
   {
     "station_id": "radio2",
+    "station_edited":{},
     "station_name": "Radio 2",
     "station_url": "http://icecast.omroep.nl/radio2-bb-mp3",
     "station_icon": "http://www.radio2.nl/radio2-2/images/r2-logo.png",
@@ -27,6 +29,7 @@
   },
   {
     "station_id": "radio3fm",
+    "station_edited":{},
     "station_name": "Radio 3fm",
     "station_url": "http://icecast.omroep.nl/3fm-bb-mp3",
     "station_image": 0,
@@ -40,6 +43,7 @@
   },
   {
     "station_id": "radio4",
+    "station_edited":{},
     "station_name": "Radio 4",
     "station_url": "http://icecast.omroep.nl/radio4-bb-mp3",
     "station_icon": "http://www.radio4.nl/assets/images/logo-radio4.png",
@@ -53,6 +57,7 @@
   },
   {
     "station_id": "radio5",
+    "station_edited":{},
     "station_name": "Radio 5",
     "station_url": "http://icecast.omroep.nl/radio5-bb-mp3",
     "station_icon": "http://1.bp.blogspot.com/-2sbAoBs58N8/T_AvoO3qi8I/AAAAAAAAH2c/5U-WBNlrDX8/s1600/Radio+5+Nederland+logo+2011.png",
@@ -66,6 +71,7 @@
   },
   {
     "station_id": "radio6",
+    "station_edited":{},
     "station_name": "Radio 6",
     "station_url": "http://icecast.omroep.nl/radio6-bb-mp3",
     "station_icon": "http://www.radio6.nl/static/img/nowplaying_dummy.png",
@@ -78,12 +84,13 @@
     "rating_average": -1
   },
   {
-    "station_id": "arrowclassicrock",
-    "station_name": "Arrow Classic Rock",
-    "station_url": "http://81.173.3.132:8082",
-    "station_icon": "http_full_url_to_icon",
+    "station_id": "arrowclassicjazz",
+    "station_edited":{},
+    "station_name": "Sublime FM",
+    "station_url": "http://81.173.3.133:8082",
+    "station_icon": "http://www.ground3d.nl/wp-content/uploads/2014/04/20130224172826sublime_fm.jpeg",
     "station_image": 0,
-    "station_host": "81.173.3.132",
+    "station_host": "81.173.3.133",
     "station_port": 8082,
     "station_path": "",
     "rating_custom": -1,
@@ -92,13 +99,14 @@
   },
   {
     "station_id": "arrowclassicjazz",
-    "station_name": "Sublime FM",
-    "station_url": "http://81.173.3.133:8082",
+    "station_edited":{},
+    "station_name": "Sublime FM2",
+    "station_url": "http://82.201.47.68/SublimeFM2.m3u",
     "station_icon": "http://www.ground3d.nl/wp-content/uploads/2014/04/20130224172826sublime_fm.jpeg",
     "station_image": 0,
-    "station_host": "81.173.3.133",
-    "station_port": 8082,
-    "station_path": "",
+    "station_host": "82.201.47.68",
+    "station_port": "",
+    "station_path": "/SublimeFM2.m3u",
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1

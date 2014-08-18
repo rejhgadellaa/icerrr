@@ -20,7 +20,7 @@ site.helpers = {};
 
 // Merge Stations
 // - Stations1: local copy, station2: remote copy (new)
-// - Adds results of stations2 to stations1 without overwriting stations1
+// - Adds results of stations2 to stations1 without overwriting stations1 || UPDATE: respects 'station_edited' flag
 
 site.helpers.mergeStations = function(stations1,stations2) {
 	
@@ -51,15 +51,18 @@ site.helpers.mergeStations = function(stations1,stations2) {
 		console.log(" > Upd: "+ station2.station_id);
 		for (var key in station2) {
 			
+			if (!station1.station_edited) { station1.station_edited = {}; continue; }
+			if (!station2.station_edited) { station2.station_edited = {}; continue; }
+			
 			// Doesn't exist
-			if (!station1[key]) {
-				console.log(" >> New key: "+ station2.station_id +": "+ key);
+			if (!station1[key] || !station1.station_edited[key]) {
+				console.log(" >> New key: "+ station2.station_id +": "+ key +", "+ station1[key] +", "+ station1.station_edited[key]);
 				console.log(" >>> Value: "+ station2[key]);
 				station1[key] = station2[key];
 			}
 			// Keep local data when conflicted
 			else if (station1[key]!=station2[key]) {
-				console.log(" >> Conflict: "+ station2.station_id +": "+ key +", keep local");
+				console.log(" >> Conflict: "+ station2.station_id +": "+ key +", keep value1");
 				console.log(" >>> Value1: "+ station1[key]);
 				console.log(" >>> Value2: "+ station2[key]);
 				continue;
@@ -191,6 +194,7 @@ site.sorts.station_by_id = function(stations) {
 	var station_ids = [];
 	var station_sort_indexes = {};
 	for (var i=0; i<stations.length; i++) {
+		if (!stations[i]) { continue; }
 		station_ids.push(stations[i].station_id);
 		station_sort_indexes[stations[i].station_id] = i;
 	}
@@ -205,10 +209,12 @@ site.sorts.station_by_id = function(stations) {
 
 // Name
 site.sorts.station_by_name = function(stations) {
+	if (!stations) { console.error("site.sorts.station_by_name().Error: stations='"+station+"'"); }
 	var newlist = [];
 	var station_ids = [];
 	var station_sort_indexes = {};
 	for (var i=0; i<stations.length; i++) {
+		if (!stations[i]) { continue; }
 		station_ids.push(stations[i].station_name);
 		station_sort_indexes[stations[i].station_name] = i;
 	}
@@ -256,6 +262,7 @@ site.helpers.session.getStationIndexById = function(station_id, stations) {
 	if (!site.data.stations && !stations) { console.log("site.helpers.getStationIndexById().Error: !site.data.stations"); return -1; }
 	if (!stations) { stations = site.data.stations; }
 	for (var index in stations) {
+		if (!stations[index]) { continue; }
 		if (stations[index].station_id == station_id) { return index; }
 	}
 	return -1;

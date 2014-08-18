@@ -1,4 +1,12 @@
 
+v0.012
+- Added 'remove' functionality in 'Add/Edit Stations' section
+- Implemented 'station_edited' boolean for better merging data
+- Further improved :active workaround
+- Back icon (top left) now activates on touch (yay)
+- Known bug: removing/editing stations causes 'undefined' errors in site.data.stations
+- Bumped version: 0.012
+
 v0.011
 - 'Add/Edit Stations' now works, probably with bugs here and there
 - Moved googleImageSearch function to site.helpers
@@ -10,12 +18,10 @@ v0.010
 - Loading overlay has z-index 90
 - Motorkap: implemented mergeStations, used for (re)install
 
-
 v0.009
 - Lower refresh rate for Now Playing (30s > 1.5m), tap to refresh manually
 - Disabled highlight when tapping items for now (issues..)
 - Version same as site.config.app_version
-
 
 v0.004
 ...

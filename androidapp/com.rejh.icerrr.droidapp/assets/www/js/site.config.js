@@ -19,7 +19,7 @@ site.cfg = {};
 // ---> Important stuff
 
 // App
-site.cfg.app_version = 0.011; // TODO: Note: app bump causes install to run at launch
+site.cfg.app_version = 0.012; // TODO: Note: app bump causes install to run at launch
 
 // Urls
 // Note: url paths should end with / if folder || TODO: check this..
@@ -58,3 +58,6 @@ site.cfg.chlist.maxItemsPerBatch = 16;
 site.cfg.googleapis = {};
 site.cfg.googleapis.searchapi = {};
 site.cfg.googleapis.searchapi.clientid = "178363199832-dfee06qa7o58vjontdeb0ku89qhm3c0f.apps.googleusercontent.com";
+
+// More
+site.cfg.illegalchars = new Array("!","@","#","$","%","^","&","*","+","=","[","]","{","}","'",'"',"<",">",",","?","|"); // for files, at least
