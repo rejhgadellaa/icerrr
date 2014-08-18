@@ -141,7 +141,7 @@ site.home.run_ui_updates = function() {
 	}
 	
 	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
-	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},1000);
+	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},2000);
 	
 }
 

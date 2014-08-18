@@ -129,10 +129,12 @@ site.ui.hackActiveCssRule = function() {
 		elem.ontouchstart = function(evt) {
 			// Now we have to find the ACTUAL element that bound this event 
 			// because somebody decided it's useful to not do this &$*((@^#))_
+			if (!evt.target) { return; }
 			var foundTheActualTarget = false;
 			var thetarget = evt.target;
 			var whilenum = 0;
 			while (!foundTheActualTarget) {
+				if (!thetarget) { break; }
 				if (thetarget.className) {
 					if (thetarget.className.indexOf("activatablel")>=0) {
 						foundTheActualTarget = true;
@@ -143,12 +145,25 @@ site.ui.hackActiveCssRule = function() {
 				whilenum++;
 				if (whilenum>256) { break; } // TODO: unless we intend to do this job in Reno, we're in Barney
 			}
-			if ($(thetarget).hasClass("activatablel_active")) { return; }
-			$(thetarget).addClass("activatablel_active");
-		}
+			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
+			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
+			site.timeouts.activatablel_ontouchstart = setTimeout(function(){
+				if ($(thetarget).hasClass("activatablel_active")) { return; }
+				$(thetarget).addClass("activatablel_active");
+				setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
+			},50);
+		};
 		elem.ontouchend = function(evt) {
-			$("*").removeClass("activatablel_active");
-		}
+			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
+			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
+			if (site.timeouts.activatablel_ontouchend) { clearTimeout(site.timeouts.activatablel_ontouchend); }
+			site.timeouts.activatablel_ontouchend = setTimeout(function() { 
+				$("*").removeClass("activatablel_active");
+				$("*").removeClass("activatabled_active");
+				$(".activatablel,activatabled").css("transition","background-color 500ms");
+			},250);
+				
+		};
 		elem.ontouchcancel = elem.ontouchend;
 	}
 	
@@ -159,10 +174,12 @@ site.ui.hackActiveCssRule = function() {
 		elem.ontouchstart = function(evt) {
 			// Now we have to find the ACTUAL element that bound this event 
 			// because somebody decided it's useful to not do this &$*((@^#))_
+			if (!evt.target) { return; }
 			var foundTheActualTarget = false;
 			var thetarget = evt.target;
 			var whilenum = 0;
 			while (!foundTheActualTarget) {
+				if (!thetarget) { break; }
 				if (thetarget.className) {
 					if (thetarget.className.indexOf("activatabled")>=0) {
 						foundTheActualTarget = true;
@@ -173,12 +190,24 @@ site.ui.hackActiveCssRule = function() {
 				whilenum++;
 				if (whilenum>256) { break; } // TODO: unless we intend to do this job in Reno, we're in Barney
 			}
-			if ($(thetarget).hasClass("activatabled_active")) { return; }
-			$(thetarget).addClass("activatabled_active");
-		}
+			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
+			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
+			site.timeouts.activatabled_ontouchstart = setTimeout(function(){
+				if ($(thetarget).hasClass("activatabled_active")) { return; }
+				$(thetarget).addClass("activatabled_active");
+				setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
+			},50);
+		};
 		elem.ontouchend = function(evt) {
-			$("*").removeClass("activatabled_active");
-		}
+			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
+			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
+			if (site.timeouts.activatabled_ontouchend) { clearTimeout(site.timeouts.activatabled_ontouchend); }
+			site.timeouts.activatabled_ontouchend = setTimeout(function() { 
+				$("*").removeClass("activatablel_active");
+				$("*").removeClass("activatabled_active");
+				$(".activatablel,activatabled").css("transition","background-color 500ms");
+			},250);
+		};
 		elem.ontouchcancel = elem.ontouchend;
 	}
 	

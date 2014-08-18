@@ -65,7 +65,7 @@ switch($action) {
 				$filename = "../json/station_info.".$queryobj["station_id"].".json";
 				if (@filemtime($filename)<time()-60) { // refresh file every xx secs
 					$id3_reader_url = "http://". $_SERVER['HTTP_HOST'] ."/icerrr/php/tests/test-readid3.php?q=";
-					$id3_reader_q = '{"station_id":"'. $queryobj["station_id"] .'","host":"'. $queryobj["station_host"] .'","port":'. $queryobj["station_port"] .',"path":"'. $queryobj["station_path"] .'"}';
+					$id3_reader_q = urlencode('{"station_id":"'. $queryobj["station_id"] .'","host":"'. $queryobj["station_host"] .'","port":'. $queryobj["station_port"] .',"path":"'. $queryobj["station_path"] .'"}');
 					$fg = fg($id3_reader_url.$id3_reader_q);
 					if (!$fg) { error("Error talking to id3 reader: '".$id3_reader_url.$id3_reader_q."', '$fg', ". json_encode(error_get_last())); }
 					$fw = fw($filename,$fg);

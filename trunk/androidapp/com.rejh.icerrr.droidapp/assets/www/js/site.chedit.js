@@ -31,6 +31,7 @@ site.chedit.init = function(station_id_to_edit) {
 	// Magic || TODO: move to function
 	$("#editstation input[name='station_url']")[0].onchange = function(evt) {
 		if (!$("#editstation input[name='station_name']")[0].value) {
+			site.ui.showtoast("Checking stream...");
 			site.chedit.check(true,true);
 		}
 	}
@@ -38,16 +39,30 @@ site.chedit.init = function(station_id_to_edit) {
 	// Set station_id hidden field
 	if (station_id_to_edit) {
 		var station_info = site.data.stations[site.helpers.session.getStationIndexById(station_id_to_edit)]; // station_id_to_edit
+		$("#editstation .action.trash").css("display","block");
 		$("#editstation input[name='station_id']")[0].value = station_id_to_edit;
 		$("#editstation input[name='station_name']")[0].value = station_info.station_name
 		$("#editstation input[name='station_url']")[0].value = station_info.station_url
 		$("#editstation input[name='station_icon']")[0].value = station_info.station_icon
+		site.chedit.newentry = {
+			station_id: station_id_to_edit,
+			station_name: station_info.station_name,
+			station_url: station_info.station_url,
+			station_icon: station_info.station_icon,
+			station_image: station_info.station_icon,
+			station_host: station_info.station_host,
+			station_port: station_info.station_port,
+			station_path: station_info.station_path,
+			station_edited: station_info.station_edited
+		}
 	} else if (station_id_to_edit===false) { // clean
+		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
 		$("#editstation input[name='station_name']")[0].value = ""
 		$("#editstation input[name='station_url']")[0].value = ""
 		$("#editstation input[name='station_icon']")[0].value = ""
-	} else { // continue
+	} else { // continue but make sure the station_id is cleared
+		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
 	}
 	
@@ -78,15 +93,41 @@ site.chedit.save = function() {
 	// Overwrite data.stations :| || TODO: is this safe?
 	if ($("#editstation input[name='station_id']")[0].value) {
 		site.chedit.newentry.station_id = $("#editstation input[name='station_id']")[0].value.trim();
-		site.chedit.changesHaveBeenMadeButResetScroll = true;
 	}
-	
 	// New station: auto star it
 	else {
 		site.chlist.setStarred(site.chedit.newentry.station_id);
+		site.chedit.changesHaveBeenMadeGotoStarred = true;
 	}
 	
-	console.log(site.helpers.arrToString(site.chedit.newentry,0,"\n"));
+	// console.log(site.helpers.arrToString(site.chedit.newentry,0,"\n")); || TODO: cleanup
+	
+	// Remove tmp data
+	site.chedit.newentry.tmp = 0;
+	
+	// print
+	//console.log(site.helpers.arrToString(site.chedit.newentry,1,"\n"));
+	
+	// Safety
+	if (!site.chedit.newentry.station_edited) {
+		console.log(" > site.chedit.newentry.station_edited = {};");
+		site.chedit.newentry.station_edited = {};
+	}
+	
+	// Find changes
+	var originalStationIfAny = site.data.stations[site.helpers.session.getStationIndexById(site.chedit.newentry.station_id)];
+	if (originalStationIfAny) {
+		for (var key in site.chedit.newentry) {
+			if (site.chedit.newentry[key] != originalStationIfAny[key]) {
+				site.chedit.newentry.station_edited[key] = true;
+			}
+		}
+	} else {
+		console.warn(" > !originalStationIfAny, are we sure?");
+	}
+	
+	console.log(" > Changes:");
+	console.log(site.helpers.arrToString(site.chedit.newentry.station_edited,1,"\n"));
 	
 	// Use MergeStations :D || but in reverse :D
 	var addstations = [site.chedit.newentry];
@@ -99,6 +140,10 @@ site.chedit.save = function() {
 			site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
 			site.chedit.changesHaveBeenMade = true;
 			site.ui.showtoast("Saved!");
+			if (!$("#editstation input[name='station_id']")[0].value.trim()) {
+				// Goto list on first save (long story.. but there is a difference how this script handles new and existing entries
+				site.chlist.init(true);
+			}
 		},
 		function(e){ 
 			alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
@@ -108,12 +153,85 @@ site.chedit.save = function() {
 	
 }
 
+// ---> Remove
+
+site.chedit.remove = function() {
+	
+	console.log("site.chedit.remove()");
+	
+	if (!confirm("Are you sure you want to remove this station?\n\nThis can't be undone easily.")) { return; }
+	
+	// Gather data..
+	var station_id = $("#editstation input[name='station_id']")[0].value.trim();
+	
+	// Clear currentstation if needed
+	if (site.session.currentstation_id == station_id) {
+		site.session.currentstation_id = null;
+		site.session.currentstation = null;
+	}
+	
+	// Find station in data
+	var stationIndex = site.helpers.session.getStationIndexById(station_id);
+	if (stationIndex<0) { site.ui.showtoast("Huh? Could not find station..?"); return; }
+	
+	// Check if starred (and unstar if so)
+	if (site.chlist.isStarred(station_id)) {
+		site.chlist.unsetStarred(station_id);
+	}
+	
+	// Build newstations
+	console.log(" > Build new stations list...");
+	var newstations = [];
+	for (var i in site.data.stations) {
+		if (!site.data.stations[i]) { continue; } // TODO: This shouldn't be neccasary..?
+		if (!site.data.stations[i].station_name) { continue; } // TODO: This shouldn't be neccasary..?
+		if (site.data.stations[i].station_id != station_id) {
+			newstations.push(site.data.stations[i]);
+		}
+	}
+	
+	// Store!
+	site.data.stations = newstations;
+	site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+		function(evt) { 
+			site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
+			site.chedit.changesHaveBeenMade = true;
+			site.ui.showtoast("Removed!");
+			site.chedit.changesHaveBeenMade = true;
+			site.chlist.init(true);
+			
+			/*
+			site.chlist.init(true);
+			
+			// TMP Testcode
+			site.storage.readfile(site.cfg.paths.json,"stations.json",
+				function(res) {
+					var json = JSON.parse(res);
+					console.log("\n"+ site.helpers.arrToString(json,0,"\n") +"\n");
+				},
+				function(error) {
+					// TODO: unless we intend to do this job in Reno, we're in Barney
+					// ...
+				}
+			);
+			/**/
+			
+		},
+		function(e){ 
+			alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
+			console.log(site.storage.getErrorType(e)); 
+		}
+	);
+	
+	
+}
+
 // ---> Check
 
 // Check
 // - Checks fields
 
-site.chedit.check = function(findStationName) {
+site.chedit.check = function(findStationName,silent) {
 
 	console.log("site.chedit.check()");
 	
@@ -148,7 +266,9 @@ site.chedit.check = function(findStationName) {
 			}
 		}
 	} else {
-		console.warn(" > Huh? !site.data.stations...?");
+		//console.warn(" > Huh? !site.data.stations...?"); // TODO: CLEANNUP
+		//console.log(" >> "+ station_id);
+		//console.log(" >> "+ site.data.stations);
 	}
 	
 	// Check if exsits: url
@@ -161,19 +281,18 @@ site.chedit.check = function(findStationName) {
 			}
 		}
 	} else {
-		console.warn(" > Huh? !site.data.stations...?");
+		// console.warn(" > Huh? !site.data.stations...?"); // TODO: CLEANNUP
 	}
 	
 	// Create new entry
-	site.chedit.newentry = {
-		station_id: "CUSTOM."+station_name.replace(" ","_"),
-		station_name: station_name,
-		station_icon: station_icon,
-		station_image: station_icon
-	}
+	if (!site.chedit.newentry) { site.chedit.newentry = {}; }
+	site.chedit.newentry.station_id = "CUSTOM."+site.genUniqueStationId(station_name).replace(" ","_");
+	site.chedit.newentry.station_name = station_name;
+	site.chedit.newentry.station_icon = station_icon;
+	site.chedit.newentry.station_image = station_icon;
 	
 	// Start checking the actual urls..
-	site.chedit.check_station_url(station_name, station_url, false);
+	site.chedit.check_station_url(station_name, station_url, silent);
 	
 }
 
@@ -194,12 +313,12 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 	} else if (station_host.indexOf("https://")>=0) {
 		station_host = station_host.substr("https://".length);
 	}
-	if (station_host.indexOf("/")>0) { 
+	if (station_host.indexOf("/")>0 && station_host.indexOf(":")) { 
 		station_port_end = station_host.indexOf("/")-station_host.indexOf(":")-1; 
 		station_path = station_host.substr(station_host.indexOf("/"));
 	}
 	else { 
-		station_port_end = null; 
+		station_port_end = station_host.length-station_host.indexOf(":")-1; 
 	}
 	if (station_host.indexOf(":")>=0) {
 		station_port = station_host.substr(station_host.indexOf(":")+1,station_port_end);
@@ -215,7 +334,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 	// Do api call
 	var apiqueryobj = {
 		"get":"station_info",
-		"station_id":"TMP."+station_name.replace(" ","_"),
+		"station_id":"TMP."+site.genUniqueStationId(station_name).replace(" ","_"),
 		"station_host":station_host,
 		"station_port":station_port,
 		"station_path":station_path
@@ -249,17 +368,19 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 				
 				// Apply station_name from results?
 				if (data["data"]["icy-name"]) {
-					if (confirm("We found the following Station name: '"+ site.helpers.capitalize(data["data"]["icy-name"]) +"'.\n\nWould you like to apply it?")) {
-						site.chedit.newentry.station_name = site.helpers.capitalize(data["data"]["icy-name"]);
-						$("#editstation input[name='station_name']")[0].value = site.helpers.capitalize(data["data"]["icy-name"]);
+					if (site.helpers.capitalize(data["data"]["icy-name"])!=site.chedit.newentry.station_name) {
+						if (confirm("We found the following Station name: '"+ site.helpers.capitalize(data["data"]["icy-name"]) +"'.\n\nWould you like to apply it?")) {
+							site.chedit.newentry.station_name = site.helpers.capitalize(data["data"]["icy-name"]);
+							$("#editstation input[name='station_name']")[0].value = site.helpers.capitalize(data["data"]["icy-name"]);
+						}
 					}
 				}
 				
 				// Save host, port, path (i knew this data was going to be useful :D
 				site.chedit.newentry.station_url = $("#editstation input[name='station_url']")[0].value.trim();
-				site.chedit.newentry.station_host = data["data"]["queryj"]["station_host"];
-				site.chedit.newentry.station_port = data["data"]["queryj"]["station_port"];
-				site.chedit.newentry.station_path = data["data"]["queryj"]["station_path"];
+				site.chedit.newentry.station_host = data["data"]["queryj"]["host"];
+				site.chedit.newentry.station_port = data["data"]["queryj"]["port"];
+				site.chedit.newentry.station_path = data["data"]["queryj"]["path"];
 				
 				// TODO: Fixme: remove this data before saving it, it's useless because outdated..
 				site.chedit.newentry.tmp = {};
@@ -323,18 +444,21 @@ site.chedit.searchicon = function() {
 	
 	if (!site.chedit.newentry) {
 		site.ui.showtoast("Cannot search without info");
-	}
+		return;
+	}/*
 	if (!site.chedit.newentry.station_name) {
 		site.ui.showtoast("Cannot search without station name");
-	}
+		return;
+	}*/
 	if (!site.chedit.newentry.station_url) {
 		site.ui.showtoast("Cannot search without station url");
+		return;
 	}
 	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
-		+ site.chedit.newentry.station_name +" "
-		+ site.chedit.newentry.station_url +" "
+		+ '"'+ $("#editstation input[name='station_name']")[0].value.trim() +'"' +" "
+	//	+ site.chedit.newentry.station_url +" "
 		+ "logo icon";
 	
 	var opts = {
@@ -378,6 +502,7 @@ site.chedit.searchicon = function() {
 		},
 		function() {
 			console.log(" > No image found...");
+			site.ui.showtoast("Could not find an icon on Google...");
 		},
 		opts
 	);
@@ -385,7 +510,13 @@ site.chedit.searchicon = function() {
 }
 
 
-
+site.genUniqueStationId = function(station_name) {
+	for (var i in site.cfg.illegalchars) {
+		var illchar = site.cfg.illegalchars[i];
+		station_name = station_name.replace(illchar,"");
+	}
+	return station_name;
+}
 
 
 

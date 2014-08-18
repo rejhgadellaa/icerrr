@@ -37,9 +37,20 @@ site.chlist.init = function(forceRedraw) {
 	// Prep some stuff
 	site.chlist.currenttab = site.session.chlist_currenttab;
 	if (!site.chlist.currenttab) { site.chlist.currenttab = "stations"; }
+	site.chlist.main_scrollTop = site.session.chlist_main_scrollTop;
+	if (!site.chlist.main_scrollTop) { site.chlist.main_scrollTop = 0; }
+	
+	// Tabs activator
+	if (site.chlist.currenttab=="stations") {
+		$("#channellist .tabbar .tab").removeClass("active");
+		$("#channellist .tabbar .tab.stations").addClass("active");
+	} else {
+		$("#channellist .tabbar .tab").removeClass("active");
+		$("#channellist .tabbar .tab.starred").addClass("active");
+	}
 	
 	// Draw results
-	site.chlist.drawResults(forceRedraw);
+	site.chlist.drawResults(site.session.chlist_pagenum,forceRedraw);
 	
 	// hacks..
 	site.ui.hackActiveCssRule();
@@ -55,6 +66,13 @@ site.chlist.init = function(forceRedraw) {
 		site.chlist.main_scrollTop = $("#channellist .main").scrollTop();
 	});
 	
+	// Resume + Pause callback for #home
+	// Best for last :)
+	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
+	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
+	site.session.ui_pause_callbacks.push(site.chlist.onpause);
+	site.session.ui_resume_callbacks.push(site.chlist.onresume);
+	
 }
 
 // PAUSE RESUME
@@ -62,11 +80,13 @@ site.chlist.init = function(forceRedraw) {
 
 site.chlist.onpause = function() {
 	console.log("site.chedit.onpause()");
+	site.session.chlist_currenttab = site.chlist.currenttab;
+	site.session.chlist_main_scrollTop = site.chlist.main_scrollTop;
 }
 
 site.chlist.onresume = function() {
 	console.log("site.chedit.site.home.()");
-	// not needed now
+	console.log(" > Nothing..");
 }
 
 // ---> Tabs
@@ -88,7 +108,8 @@ site.chlist.ontabclick = function(tabObj) {
 	$(tabObj).addClass("active");
 	
 	site.chlist.currenttab = tab;
-	site.chlist.drawResults(0,true);
+	site.session.chlist_currenttab = tab;
+	site.chlist.drawResults(null,true);
 	
 	site.lifecycle.onResize();
 	
@@ -108,19 +129,19 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		}
 	}
 	
-	if (site.chedit.changesHaveBeenMade) {
-		site.chedit.changesHaveBeenMade = false;
-	}
-	
-	if (site.chedit.changesHaveBeenMadeButResetScroll) {
-		site.chedit.changesHaveBeenMadeButResetScroll = false;
+	// TODO: Check if this code is needed..
+	if (site.chedit.changesHaveBeenMadeGotoStarred) {
+		site.chedit.changesHaveBeenMadeGotoStarred = false; // need to do this here because we return..
 		pagenum = 0;
-		site.chlist.ontabclick($(".tab .activatablel .starred")[0]);
+		site.chlist.ontabclick($(".tab.activatablel.starred")[0]);
 		return;
 	}
+	/**/
+	
+	site.chedit.changesHaveBeenMade = false;
 	
 	// Determine sorting..
-	var sorter = function(stations) { return stations; };
+	var sorter = site.sorts.station_by_none; //function(stations) { return stations; };
 	if (site.session.sorting=="id") {
 		sorter = site.sorts.station_by_id;
 	}
@@ -179,6 +200,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		
 		// station..
 		var station = stations[i];
+		if (!station) { continue; }
 		
 		// begin creating elements
 		var resultitem = document.createElement("div");
@@ -263,7 +285,6 @@ site.chlist.selectstation = function(resultitem) {
 	
 	site.session.currentstation_id = resultitem.station_id;
 	site.session.currentstation = site.data.stations[site.helpers.session.getStationIndexById(resultitem.station_id)];
-	console.log(" > "+ JSON.stringify(site.session.currentstation));
 	site.mp.destroy(); // should be destroyed whenever currentstation changes!
 	site.home.init();
 	
@@ -275,12 +296,18 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 	
 	console.log("site.chlist.imagesearch()");
 	
+	if (!station_data.station_name) { 
+		console.log(" > !station_data.station_data:");
+		console.log(" > "+ JSON.stringify(station_data));
+		return;
+		}
+	
 	// HELP: https://developers.google.com/image-search/v1/devguide
 	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
 		+ station_data.station_name +" "
-		+ station_data.station_host +" "
+		+ station_data.station_url +" "
 		+ "logo icon";
 	
 	var opts = {
@@ -389,9 +416,9 @@ site.chlist.readstations = function(customCB) {
 
 site.chlist.readstations_cb = function(resultstr) {
 	console.log("site.chlist.loadstations_cb()");
+	console.log(" > "+resultstr.substr(0,64)+"...");
 	resultjson = JSON.parse(resultstr);
 	if (!resultjson) { alert("site.chlist.readstations_cb().Error: !resultjson"); }
-	// console.log(site.helpers.arrToString(resultjson,0,"\n"));
 	site.data.stations = resultjson;
 	site.chlist.init();
 }
@@ -409,9 +436,7 @@ site.chlist.readstations_errcb = function(error) {
 
 site.chlist.isStarred = function(station_id) {
 	
-	console.log("site.chlist.getStarred(): "+station_id);
-	
-	console.log(" > "+ JSON.stringify(site.session.starred));
+	console.log("site.chlist.isStarred(): "+station_id);
 	
 	if (!site.session.starred) { return false; }
 	
@@ -489,8 +514,13 @@ site.chlist.unsetStarred = function(station_id) {
 
 site.chlist.getStarred = function() {
 	
+	console.log("site.chlist.getStarred()");
+	
 	// Empty?
-	if (!site.session.starred) { return []; }
+	if (!site.session.starred) { 
+		console.log(" > Nothing starred, return");
+		return []; 
+		}
 	
 	// New list
 	var newlist = [];
@@ -513,6 +543,7 @@ site.chlist.getStarred = function() {
 	}
 	
 	// Return
+	console.log(" > Results: "+ newlist.length);
 	return newlist;
 	
 }

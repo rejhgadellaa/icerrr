@@ -109,7 +109,19 @@ site.lifecycle.onDeviceReady = function() {
 	site.ui.init
 	
 	// Home
-	setTimeout(function() { site.home.init(); },1000);
+	var onstart_gotosection = site.cookies.get("onstart_gotosection");
+	site.cookies.put("onstart_gotosection",0)
+	switch(onstart_gotosection) {
+		
+		case "#channellist":
+			site.chlist.init();
+			break;
+		
+		default: 
+			setTimeout(function() { site.home.init(); },1000);
+			break;
+			
+	}
 		
 	
 	
