@@ -35,6 +35,11 @@ site.chedit.init = function(station_id_to_edit) {
 			site.chedit.check(true,true);
 		}
 	}
+	$("#editstation img.station_icon")[0].onchange = function(evt) {
+		if (!$("#editstation input[name='station_icon']")[0].value) {
+			$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
+		}
+	}
 	
 	// Set station_id hidden field
 	if (station_id_to_edit) {
@@ -55,15 +60,18 @@ site.chedit.init = function(station_id_to_edit) {
 			station_path: station_info.station_path,
 			station_edited: station_info.station_edited
 		}
+		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
 	} else if (station_id_to_edit===false) { // clean
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
 		$("#editstation input[name='station_name']")[0].value = ""
 		$("#editstation input[name='station_url']")[0].value = ""
 		$("#editstation input[name='station_icon']")[0].value = ""
+		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
 	} else { // continue but make sure the station_id is cleared
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
+		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
 	}
 	
 	site.chedit.changesHaveBeenMade = false;
@@ -302,6 +310,8 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 	
 	console.log("site.chedit.check_station_url()");
 	
+	site.ui.showloading("Wait");
+	
 	// --> Auto-gen host, port and other stuff
 	
 	// Host || TODO: this should be doable in a nicer, cleaner way?
@@ -345,6 +355,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 	
 	site.webapi.exec(apiaction,apiquerystr,
 		function(data,silent) {
+			site.ui.hideloading();
 			console.log(JSON.stringify(data["data"]));
 			if (!data["data"]["content-type"]) { 
 				// Not good!
@@ -391,6 +402,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 			}
 		},
 		function(error) {
+			site.ui.hideloading();
 			if (error.message) { site.ui.showtoast(error.message); console.log(error.message); }
 			else { console.log(error); }
 		}
@@ -416,6 +428,7 @@ site.chedit.check_station_icon = function(silent) {
 	img.onload = function() {
 		// All good :D
 		// TODO: Works
+		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
 		console.log(" > All good :D");
 		if (confirm("Everything seems to check out! Save now?")) {
 			site.chedit.save();
@@ -424,6 +437,7 @@ site.chedit.check_station_icon = function(silent) {
 	img.onerror = function(evt) {
 		// Search the google :D
 		// TODO: Work
+		console.warn(evt);
 		console.log(" > Search the google :D");
 		if (confirm("Station icon could not be loaded. Search Google for an icon?")) {
 			site.chedit.searchicon();
@@ -431,7 +445,7 @@ site.chedit.check_station_icon = function(silent) {
 			// nothin
 		}
 	}
-	img.src = station_icon;
+	img.src = site.helpers.urlAddCachebust(station_icon)
 	
 	
 }

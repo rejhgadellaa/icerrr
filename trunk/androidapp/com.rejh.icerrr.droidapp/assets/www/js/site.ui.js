@@ -118,7 +118,11 @@ site.ui.createtoast = function() {
 
 site.ui.hackActiveCssRule = function() {
 	
-	// TODO: let's hope 'elem' variable is not cleaned up?
+	// Reset transitions
+	
+	$(".activatablel,activatabled").css("transition","none");
+	
+	// Work..
 	
 	var elems = [];
 	
@@ -150,8 +154,8 @@ site.ui.hackActiveCssRule = function() {
 			site.timeouts.activatablel_ontouchstart = setTimeout(function(){
 				if ($(thetarget).hasClass("activatablel_active")) { return; }
 				$(thetarget).addClass("activatablel_active");
-				setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
-			},50);
+				//setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
+			},75);
 		};
 		elem.ontouchend = function(evt) {
 			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
@@ -160,7 +164,7 @@ site.ui.hackActiveCssRule = function() {
 			site.timeouts.activatablel_ontouchend = setTimeout(function() { 
 				$("*").removeClass("activatablel_active");
 				$("*").removeClass("activatabled_active");
-				$(".activatablel,activatabled").css("transition","background-color 500ms");
+				//$(".activatablel,activatabled").css("transition","background-color 500ms");
 			},250);
 				
 		};
@@ -195,8 +199,8 @@ site.ui.hackActiveCssRule = function() {
 			site.timeouts.activatabled_ontouchstart = setTimeout(function(){
 				if ($(thetarget).hasClass("activatabled_active")) { return; }
 				$(thetarget).addClass("activatabled_active");
-				setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
-			},50);
+				//setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
+			},75);
 		};
 		elem.ontouchend = function(evt) {
 			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
@@ -205,31 +209,11 @@ site.ui.hackActiveCssRule = function() {
 			site.timeouts.activatabled_ontouchend = setTimeout(function() { 
 				$("*").removeClass("activatablel_active");
 				$("*").removeClass("activatabled_active");
-				$(".activatablel,activatabled").css("transition","background-color 500ms");
+				//$(".activatablel,activatabled").css("transition","background-color 500ms");
 			},250);
 		};
 		elem.ontouchcancel = elem.ontouchend;
 	}
-	
-	/*
-	// activatablel
-	$(".activatablel").off("touchstart").off("touchend");
-	$(".activatablel").on("touchstart",function(evt) {
-		if ($(evt.originalEvent.target).hasClass("activatablel_active")) { return; }
-		$(evt.originalEvent.target).addClass("activatablel_active");
-	}).on("touchend",function(evt) {
-		$(evt.originalEvent.target).removeClass("activatablel_active");
-	});
-	
-	// activatabled
-	$(".activatabled").off("touchstart").off("touchend");
-	$(".activatabled").on("touchstart",function(evt) {
-		if ($(evt.originalEvent.target).hasClass("activatabled_active")) { return; }
-		$(evt.originalEvent.target).addClass("activatabled_active");
-	}).on("touchend",function(evt) {
-		$(evt.originalEvent.target).removeClass("activatabled_active");
-	});
-	/**/
 	
 }
 

@@ -406,6 +406,15 @@ site.helpers.googleImageSearchCleanup = function() {
 	
 }
 
+// ---> Stuff
+
+site.helpers.urlAddCachebust = function(url) {
+	if (url.indexOf("?")>=0) { url += "&c="; }
+	else { url += "?c="; }
+	url += (new Date().getTime());
+	return url;
+}
+
 // ---> Debugging
 
 site.helpers.arrToString = function(arr,depth,newline) {
