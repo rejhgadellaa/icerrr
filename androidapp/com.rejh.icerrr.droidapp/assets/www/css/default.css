@@ -359,6 +359,10 @@ section {
 	#editstation .block label a {
 		float:right;
 	}
+	
+	#editstation img.station_icon {
+		width:48px; height:48px;
+	}
 
 /* -- OVERLAYS */
 

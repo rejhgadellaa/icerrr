@@ -141,7 +141,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	site.chedit.changesHaveBeenMade = false;
 	
 	// Determine sorting..
-	var sorter = site.sorts.station_by_none; //function(stations) { return stations; };
+	var sorter = site.sorts.station_by_name; //function(stations) { return stations; };
 	if (site.session.sorting=="id") {
 		sorter = site.sorts.station_by_id;
 	}
@@ -252,7 +252,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 			if (!obj.station_id) { obj = obj.parentNode; }
 			navigator.notification.vibrate(100);
 			site.chedit.init(obj.station_id);
-		},250);
+		},200);
 		
 		// add elements..
 		resultitem.appendChild(resulticon);
