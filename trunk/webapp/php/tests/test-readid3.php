@@ -60,7 +60,7 @@ fwrite($fsock,$request);
 $whilenum = 0;
 while (!feof($fsock)) {
 	$whilenum++;
-	if ($whilenum>1024) { error("Whilenum exceeded at 'while (!feof($fsock))'"); }
+	if ($whilenum>4096) { error("Whilenum exceeded at 'while (!feof($fsock))'"); }
 	$line = fgets($fsock);
 	$res .= $line;
 	fw("outp.txt",$res);
@@ -119,7 +119,7 @@ fw($filename2,$jsons);
 
 // Output
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
+// header("Access-Control-Allow-Origin: *"); // TODO: enable this? Not needed because api.php is on same server (and ignores it anyway)
 echo $jsons;
 
 

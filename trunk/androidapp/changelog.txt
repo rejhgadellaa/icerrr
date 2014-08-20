@@ -2,6 +2,7 @@
 v0.014
 - Added 'Search station' section (with option to add manually)
 - Implemented custom logger, can save and upload logs
+- Install overwrites any locally created stations! (that's what you get with a beta)
 - Fix: Typo: site.session.ui_resume_callbacks
 
 v0.013
