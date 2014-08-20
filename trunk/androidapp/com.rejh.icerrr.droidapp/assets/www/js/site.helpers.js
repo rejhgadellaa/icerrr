@@ -24,7 +24,7 @@ site.helpers = {};
 
 site.helpers.mergeStations = function(stations1,stations2) {
 	
-	console.log("site.helpers.mergeStations()");
+	loggr.log("site.helpers.mergeStations()");
 	
 	if (!stations1 && !stations2) { return []; }
 	else if (!stations1) { return stations2; }
@@ -40,7 +40,7 @@ site.helpers.mergeStations = function(stations1,stations2) {
 		var station1index = site.helpers.session.getStationIndexById(station2.station_id,stations1);
 		if (station1index<0 || !station1index) {
 			// doesn't exist, just insert
-			console.log(" > New: "+ station2.station_id);
+			loggr.log(" > New: "+ station2.station_id);
 			stations1.push(station2);
 			continue; // <- important
 		}
@@ -48,31 +48,45 @@ site.helpers.mergeStations = function(stations1,stations2) {
 		station1 = stations1[station1index];
 		
 		// Compare values..
-		console.log(" > Upd: "+ station2.station_id);
+		loggr.log(" > Upd: "+ station2.station_id);
 		for (var key in station2) {
 			
-			if (!station1.station_edited) { station1.station_edited = {}; continue; }
-			if (!station2.station_edited) { station2.station_edited = {}; continue; }
+			if (!station1.station_edited) { station1.station_edited = {}; }
+			if (!station2.station_edited) { station2.station_edited = {}; }
+			
+			var edit1 = station1.station_edited[key]
+			var edit2 = station2.station_edited[key]
+			
+			if (!edit1) { edit1 = 0; }
+			if (!edit2) { edit2 = 1; }
 			
 			// Doesn't exist
-			if (!station1[key] || !station1.station_edited[key]) {
-				console.log(" >> New key: "+ station2.station_id +": "+ key +", "+ station1[key] +", "+ station1.station_edited[key]);
-				console.log(" >>> Value: "+ station2[key]);
+			if (!station1[key] || !edit1) {
+				loggr.log(" >> New key: "+ station2.station_id +": "+ key +", "+ station1[key] +", "+ edit1);
+				loggr.log(" >>> Value: "+ station2[key]);
 				station1[key] = station2[key];
 			}
 			// Keep local data when conflicted
-			else if (station1[key]!=station2[key]) {
-				console.log(" >> Conflict: "+ station2.station_id +": "+ key +", keep value1");
-				console.log(" >>> Value1: "+ station1[key]);
-				console.log(" >>> Value2: "+ station2[key]);
+			else if (station1[key]!=station2[key] && edit1>edit2) {
+				loggr.log(" >> Conflict: "+ station2.station_id +": "+ key +", keep value1");
+				loggr.log(" >>> Value1: "+ station1[key]);
+				loggr.log(" >>> Value2: "+ station2[key]);
+				continue;
+			}
+			// Overwrite if edit2 is newer
+			else if (station1[key]!=station2[key] && edit1<edit2) {
+				loggr.log(" >> Conflict: "+ station2.station_id +": "+ key +", overwrite value1");
+				loggr.log(" >>> Value1: "+ station1[key]);
+				loggr.log(" >>> Value2: "+ station2[key]);
+				station1[key] = station2[key];
 				continue;
 			}
 			// Same values..
 			else {
 				/* TODO: Cleanup
-				console.log(" >> Else: "+ station2.station_id +": "+ key +", overwrite");
-				console.log(" >>> Value1: "+ station1[key]);
-				console.log(" >>> Value2: "+ station2[key]);
+				loggr.log(" >> Else: "+ station2.station_id +": "+ key +", overwrite");
+				loggr.log(" >>> Value1: "+ station1[key]);
+				loggr.log(" >>> Value2: "+ station2[key]);
 				station1[key] = station2[key];
 				/**/
 			}
@@ -124,15 +138,15 @@ site.helpers.imageToBase64 = function(imgobj,cb,opts) {
 	var base64 = canvas.toDataURL("image/png");
 	
 	if (base64.indexOf("image/png") == -1) {
-		console.log("site.helpers.imageToBase64.Error: Unexpected base64 string for "+imgobj.src);
-		console.log(base64);
+		loggr.log("site.helpers.imageToBase64.Error: Unexpected base64 string for "+imgobj.src);
+		loggr.log(base64);
 		try {
 			var imgData = ctx.getImageData(0,0,canvas.width,canvas.height)
 			pngFile = generatePng(canvas.width, canvas.height, imgData.data);
 			base64 = 'data:image/png;base64,' + btoa(pngFile);
 		} catch(e) { 
 			// I've really tried everyting, didn't I?
-			console.log(e);
+			loggr.log(e);
 			base64 = false;
 		}
 		
@@ -209,7 +223,7 @@ site.sorts.station_by_id = function(stations) {
 
 // Name
 site.sorts.station_by_name = function(stations) {
-	if (!stations) { console.error("site.sorts.station_by_name().Error: stations='"+station+"'"); }
+	if (!stations) { loggr.error("site.sorts.station_by_name().Error: stations='"+station+"'"); }
 	var newlist = [];
 	var station_ids = [];
 	var station_sort_indexes = {};
@@ -259,7 +273,7 @@ site.helpers.session.putRecursive = function(sessionelem,data) {
 // Get station index by id
 
 site.helpers.session.getStationIndexById = function(station_id, stations) {
-	if (!site.data.stations && !stations) { console.log("site.helpers.getStationIndexById().Error: !site.data.stations"); return -1; }
+	if (!site.data.stations && !stations) { loggr.log("site.helpers.getStationIndexById().Error: !site.data.stations"); return -1; }
 	if (!stations) { stations = site.data.stations; }
 	for (var index in stations) {
 		if (!stations[index]) { continue; }
@@ -276,16 +290,16 @@ site.helpers.flagdirtyfile = function(filepathandname) {
 	filepathandname = filepathandname.replace("//","/");
 	var dirtyfiles = site.session.dirtyfiles;
 	if (typeof(dirtyfiles)=="object" && site.helpers.countObj(dirtyfiles)>0) { // TODO: dirtyfiles is not an object.. is it?
-		console.log(" > site.helpers.flagdirtyfile.Huh? 'dirtyfiles'==object?");
+		loggr.log(" > site.helpers.flagdirtyfile.Huh? 'dirtyfiles'==object?");
 		if (site.helpers.countObj(dirtyfiles)>0) {
 			var newdirtyfiles = [];
 			for (var intstr in dirtyfiles) {
 				newdirtyfiles.push(dirtyfiles[i]);
 			}
 			dirtyfiles = newdirtyfiles;
-			console.log(" >> Solved it: "+ dirtyfiles.length +" result(s) in 'dirtyfiles'");
+			loggr.log(" >> Solved it: "+ dirtyfiles.length +" result(s) in 'dirtyfiles'");
 		} else {
-			console.log(" >> Just create a new list");
+			loggr.log(" >> Just create a new list");
 			dirtyfiles = false;
 		}
 	}
@@ -317,10 +331,19 @@ site.helpers.getRandomListEntry = function(list) {
 
 site.helpers.capitalize = function(str) {
 	if(!str) { 
-		console.error("site.helpers.capitalize().err: !str");
+		loggr.error("site.helpers.capitalize().err: !str");
 		return "<span style='color:#f00;'>Null</span>"; 
 	}
 	str = str.substr(0,1).toUpperCase() + str.substr(1);
+	return str;
+}
+
+// Short
+
+site.helpers.short = function(str, len) {
+	if (!len) { len = 64; }
+	if (!str) { str = ""; }
+	if (str.length>len) { str = str.substr(0,len)+"..."; }
 	return str;
 }
 
@@ -330,16 +353,24 @@ site.helpers.getUniqueID = function(prefix,suffix) {
 	var res = device.uuid;
 	res += "_"+ (new Date().getTime()).toString(16);
 	res += "_"+ Math.round((Math.random()*1024*1024)).toString(16);
-	console.log("site.helpers.getUniqueID(): "+ res);
+	loggr.log("site.helpers.getUniqueID(): "+ res);
 	return res;
+}
+
+site.helpers.genUniqueStationId = function(station_name) {
+	for (var i in site.cfg.illegalchars) {
+		var illchar = site.cfg.illegalchars[i];
+		station_name = station_name.replace(illchar,"");
+	}
+	return station_name;
 }
 
 // ---> Google Image Search
 
 site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 	
-	console.log("site.helpers.googleImageSearch()");
-	console.log(" > "+searchstring);
+	loggr.log("site.helpers.googleImageSearch()");
+	loggr.log(" > "+searchstring);
 	
 	// HELP: https://developers.google.com/image-search/v1/devguide
 	
@@ -368,14 +399,14 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 			// Results? || TODO: check if we can extend (deep copy) the results because we want to clean them up..
 			if (site.chlist.thesearch[searchid].results && site.chlist.thesearch[searchid].results.length > 0) {
 				var results = site.chlist.thesearch[searchid].results;
-				console.log(" > "+ results.length +" result(s)");
+				loggr.log(" > "+ results.length +" result(s)");
 				cb(results);
 				site.chlist.thesearchbusy[searchid] = false;
 				site.helpers.googleImageSearchCleanup();
 			} 
 			// Nope
 			else {
-				console.log(" > Search failed, no results");
+				loggr.log(" > Search failed, no results");
 				errcb();
 				site.chlist.thesearchbusy[searchid] = false;
 				site.helpers.googleImageSearchCleanup();
@@ -399,11 +430,33 @@ site.helpers.googleImageSearchCleanup = function() {
 	
 	// All done? destroy thesearch[]
 	if (!anybusy) {
-		console.log("site.helpers.googleImageSearchCleanup(): Cleanup...");
+		loggr.log("site.helpers.googleImageSearchCleanup(): Cleanup...");
 		site.chlist.thesearch = {};
 		site.chlist.thesearchbusy = {};
 	}
 	
+}
+
+// ---> Masonry
+
+site.helpers.masonryinit = function(selector,opts) {
+	loggr.log("site.helpers.masonryinit()");
+	if (!opts) { 
+		opts = {
+			itemSelector : '.resultitem',
+			columnWidth : 1,
+			isAnimated : true,
+			isResizable : true
+		};
+	}
+	$(function(){
+	  $(selector).masonry();
+	});
+}
+
+site.helpers.masonryupdate = function(selector) {
+	loggr.log("site.helpers.masonryupdate()");
+	$(selector).masonry();
 }
 
 // ---> Stuff

@@ -20,7 +20,7 @@ site.chlist = {};
 
 site.chlist.init = function(forceRedraw) {
 	
-	console.log("site.chlist.init()");
+	loggr.log("site.chlist.init()");
 	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#channellist");
@@ -79,21 +79,21 @@ site.chlist.init = function(forceRedraw) {
 // - Important stuff: this is function that will be called whenever site.ui.gotosection is called
 
 site.chlist.onpause = function() {
-	console.log("site.chedit.onpause()");
+	loggr.log("site.chedit.onpause()");
 	site.session.chlist_currenttab = site.chlist.currenttab;
 	site.session.chlist_main_scrollTop = site.chlist.main_scrollTop;
 }
 
 site.chlist.onresume = function() {
-	console.log("site.chedit.site.home.()");
-	console.log(" > Nothing..");
+	loggr.log("site.chedit.site.home.()");
+	loggr.log(" > Nothing..");
 }
 
 // ---> Tabs
 
 site.chlist.ontabclick = function(tabObj) {
 	
-	console.log("site.chlist.ontabclick(): "+ tabObj.className);
+	loggr.log("site.chlist.ontabclick(): "+ tabObj.className);
 	
 	// Detect
 	var tab = "stations";
@@ -119,7 +119,7 @@ site.chlist.ontabclick = function(tabObj) {
 
 site.chlist.drawResults = function(pagenum,forcerun) {
 	
-	console.log("site.chlist.drawResults()");
+	loggr.log("site.chlist.drawResults()");
 	
 	// Check if needs to run..
 	if (!forcerun && !site.chedit.changesHaveBeenMade) {
@@ -150,16 +150,16 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	}
 	
 	// Results: stations (all) or starred?
-	var stations = {};
+	var stations = [];
 	if (site.chlist.currenttab=="stations") {
-		console.log(" > Draw stations");
+		loggr.log(" > Draw stations");
 		stations = sorter(site.data.stations);
 	}
 	if (site.chlist.currenttab=="starred") {
-		console.log(" > Draw starred");
+		loggr.log(" > Draw starred");
 		stations = sorter(site.chlist.getStarred());
 		if (!stations.length) { 
-			console.log(" > Nothin' starred..");
+			loggr.log(" > Nothin' starred..");
 			$("#channellist .main").html('<div class="center_table"><div class="center_td">NOTHING HERE</div></div>');
 			return;
 		}
@@ -182,8 +182,8 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	var imax = (pagenum+1)*site.cfg.chlist.maxItemsPerBatch;
 	
 	// Init masonry || TODO: handle opts for other formfactors
-	site.chlist.masonryinit("#channellist .main");
-	site.chlist.masonryupdate();
+	site.helpers.masonryinit("#channellist .main");
+	site.helpers.masonryupdate();
 	
 	// Fragment
 	var fragment = document.createDocumentFragment();
@@ -194,7 +194,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		
 		// check if i>stations.length
 		if (i>=stations.length) {
-			console.log(" > End of list");
+			loggr.log(" > End of list");
 			break;
 		}
 		
@@ -212,7 +212,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resulticon.className = "resulticon";
 		resulticon.addEventListener("load",function(ev){ /*...*/ });
 		resulticon.addEventListener("error",function(ev){ 
-			console.log(" > Could not load "+ ev.target.src);
+			loggr.log(" > Could not load "+ ev.target.src);
 			var station_data = stations[site.helpers.session.getStationIndexById(ev.target.parentNode.station_id)];
 			site.chlist.imagesearch(station_data);
 			ev.target.removeEventListener("error");
@@ -279,9 +279,9 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 
 site.chlist.selectstation = function(resultitem) {
 	
-	console.log("site.chlist.selectstation()");
+	loggr.log("site.chlist.selectstation()");
 	
-	console.log(" > "+ resultitem.station_id);
+	loggr.log(" > "+ resultitem.station_id);
 	
 	site.session.currentstation_id = resultitem.station_id;
 	site.session.currentstation = site.data.stations[site.helpers.session.getStationIndexById(resultitem.station_id)];
@@ -294,11 +294,11 @@ site.chlist.selectstation = function(resultitem) {
 
 site.chlist.imagesearch = function(station_data,fullSizeImage) {
 	
-	console.log("site.chlist.imagesearch()");
+	loggr.log("site.chlist.imagesearch()");
 	
 	if (!station_data.station_name) { 
-		console.log(" > !station_data.station_data:");
-		console.log(" > "+ JSON.stringify(station_data));
+		loggr.log(" > !station_data.station_data:");
+		loggr.log(" > "+ JSON.stringify(station_data));
 		return;
 		}
 	
@@ -307,7 +307,7 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
 		+ station_data.station_name +" "
-		+ station_data.station_url +" "
+		+ station_data.station_country +" "
 		+ "logo icon";
 	
 	var opts = {
@@ -319,7 +319,7 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 	site.helpers.googleImageSearch(searchstring,
 		function(results) {
 			
-			console.log(" > "+ results.length +" result(s)");
+			loggr.log(" > "+ results.length +" result(s)");
 			
 			// TODO: let user pick image? Nah, we're going with the first one for now
 			// --> Find square image(s)
@@ -328,7 +328,7 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 				var result = results[i];
 				var aspect = site.helpers.calcImageAspect(result["width"],result["height"]);
 				if (aspect<1.1) { 
-					console.log(" > Found square(ish) result: "+ aspect);
+					loggr.log(" > Found square(ish) result: "+ aspect);
 					theresult = result; break; 
 				}
 				
@@ -336,12 +336,12 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 			// Okat just use some image if we can't find a suitable one.. || TODO: fix this
 			if (!theresult) { theresult = results[0]; }
 			
-			console.log(" > Result info:");
-			console.log(" >> tbw/tbh: "+ result.tbWidth +" x "+ result.tbHeight);
-			console.log(" >> w/h: "+ result.width +" x "+ result.height);
+			loggr.log(" > Result info:");
+			loggr.log(" >> tbw/tbh: "+ result.tbWidth +" x "+ result.tbHeight);
+			loggr.log(" >> w/h: "+ result.width +" x "+ result.height);
 			
 			// Set src
-			console.log(" > Pick: "+theresult.url);
+			loggr.log(" > Pick: "+theresult.url);
 			$("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src",theresult.url);
 			
 			// And save to stations stuff
@@ -358,7 +358,7 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 				},
 				function(e){ 
 					alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
-					console.log(site.storage.getErrorType(e)); 
+					loggr.log(site.storage.getErrorType(e)); 
 				}
 			);
 			
@@ -366,8 +366,8 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 		function() {
 			
 			// err
-			console.log(" > No image found...");
-			console.log(" > remove: "+ "#chlist_resultitem_"+ station_data.station_id);
+			loggr.log(" > No image found...");
+			loggr.log(" > remove: "+ "#chlist_resultitem_"+ station_data.station_id);
 			$("#chlist_resultitem_"+ station_data.station_id).remove(".resulticon");
 			
 		},
@@ -384,39 +384,17 @@ site.chlist.imagesearch_cb = function() {
 	
 }
 
-// ---> Masonry
-
-site.chlist.masonryinit = function(selector,opts) {
-	console.log("site.chlist.masonryinit()");
-	if (!opts) { 
-		opts = {
-			itemSelector : '.resultitem',
-			columnWidth : 1,
-			isAnimated : true,
-			isResizable : true
-		};
-	}
-	$(function(){
-	  $(selector).masonry();
-	});
-}
-
-site.chlist.masonryupdate = function(selector) {
-	console.log("site.chlist.masonryupdate()");
-	$(selector).masonry();
-}
-
 // ---> Load data
 
 site.chlist.readstations = function(customCB) {
-	console.log("site.chlist.readstations()");
+	loggr.log("site.chlist.readstations()");
 	if (!customCB) { customCB = site.chlist.readstations_cb; }
 	site.storage.readfile(site.cfg.paths.json,"stations.json",customCB,site.chlist.readstations_errcb)
 }
 
 site.chlist.readstations_cb = function(resultstr) {
-	console.log("site.chlist.loadstations_cb()");
-	console.log(" > "+resultstr.substr(0,64)+"...");
+	loggr.log("site.chlist.loadstations_cb()");
+	loggr.log(" > "+resultstr.substr(0,64)+"...");
 	resultjson = JSON.parse(resultstr);
 	if (!resultjson) { alert("site.chlist.readstations_cb().Error: !resultjson"); }
 	site.data.stations = resultjson;
@@ -424,7 +402,7 @@ site.chlist.readstations_cb = function(resultstr) {
 }
 
 site.chlist.readstations_errcb = function(error) {
-	console.log("site.chlist.loadstations_errcb()");
+	loggr.log("site.chlist.loadstations_errcb()");
 	alert("site.chlist.readstations_errcb().Error: "+site.storage.getErrorType(error));
 	site.installer.init();
 	// TODO: YES.. What now..
@@ -436,7 +414,7 @@ site.chlist.readstations_errcb = function(error) {
 
 site.chlist.isStarred = function(station_id) {
 	
-	console.log("site.chlist.isStarred(): "+station_id);
+	loggr.log("site.chlist.isStarred(): "+station_id);
 	
 	if (!site.session.starred) { return false; }
 	
@@ -456,7 +434,7 @@ site.chlist.isStarred = function(station_id) {
 
 site.chlist.toggleStarred = function(station_id) {
 	
-	console.log("site.chlist.toggleStarred(): "+station_id);
+	loggr.log("site.chlist.toggleStarred(): "+station_id);
 	
 	if (site.chlist.isStarred(station_id)) {
 		site.chlist.unsetStarred(station_id);
@@ -472,7 +450,7 @@ site.chlist.toggleStarred = function(station_id) {
 
 site.chlist.setStarred = function(station_id) {
 	
-	console.log("site.chlist.setStarred(): "+station_id);
+	loggr.log("site.chlist.setStarred(): "+station_id);
 	
 	// Create list if it doesn't exist
 	if (!site.session.starred) { site.session.starred = []; }
@@ -489,7 +467,7 @@ site.chlist.setStarred = function(station_id) {
 
 site.chlist.unsetStarred = function(station_id) {
 	
-	console.log("site.chlist.unsetStarred(): "+station_id);
+	loggr.log("site.chlist.unsetStarred(): "+station_id);
 	
 	var newlist = [];
 	
@@ -514,11 +492,11 @@ site.chlist.unsetStarred = function(station_id) {
 
 site.chlist.getStarred = function() {
 	
-	console.log("site.chlist.getStarred()");
+	loggr.log("site.chlist.getStarred()");
 	
 	// Empty?
 	if (!site.session.starred) { 
-		console.log(" > Nothing starred, return");
+		loggr.log(" > Nothing starred, return");
 		return []; 
 		}
 	
@@ -543,7 +521,7 @@ site.chlist.getStarred = function() {
 	}
 	
 	// Return
-	console.log(" > Results: "+ newlist.length);
+	loggr.log(" > Results: "+ newlist.length);
 	return newlist;
 	
 }

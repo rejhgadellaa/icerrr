@@ -268,7 +268,7 @@ var cordova = {
         try {
             cordova.callbackFromNative(callbackId, true, args.status, [args.message], args.keepCallback);
         } catch (e) {
-            console.log("Error in error callback: " + callbackId + " = "+e);
+            loggr.log("Error in error callback: " + callbackId + " = "+e);
         }
     },
 
@@ -281,7 +281,7 @@ var cordova = {
         try {
             cordova.callbackFromNative(callbackId, false, args.status, [args.message], args.keepCallback);
         } catch (e) {
-            console.log("Error in error callback: " + callbackId + " = "+e);
+            loggr.log("Error in error callback: " + callbackId + " = "+e);
         }
     },
 
@@ -308,7 +308,7 @@ var cordova = {
             try {
                 func();
             } catch(e) {
-                console.log("Failed to run constructor: " + e);
+                loggr.log("Failed to run constructor: " + e);
             }
         });
     }
@@ -372,7 +372,7 @@ function checkArgs(spec, functionName, args, opt_callee) {
         errMsg = 'Wrong type for parameter "' + extractParamName(opt_callee || args.callee, i) + '" of ' + functionName + ': ' + errMsg;
         // Don't log when running jake test.
         if (typeof jasmine == 'undefined') {
-            console.error(errMsg);
+            loggr.error(errMsg);
         }
         throw TypeError(errMsg);
     }
@@ -416,7 +416,7 @@ function clobber(obj, key, value) {
 function assignOrWrapInDeprecateGetter(obj, key, value, message) {
     if (message) {
         utils.defineGetter(obj, key, function() {
-            console.log(message);
+            loggr.log(message);
             delete obj[key];
             clobber(obj, key, value);
             return value;
@@ -763,7 +763,7 @@ module.exports = {
 
     // example: cordova.commandProxy.add("Accelerometer",{getCurrentAcceleration: function(successCallback, errorCallback, options) {...},...);
     add:function(id,proxyObj) {
-        console.log("adding proxy for " + id);
+        loggr.log("adding proxy for " + id);
         CommandProxyMap[id] = proxyObj;
         return proxyObj;
     },
@@ -903,7 +903,7 @@ androidExec.nativeToJsModes = nativeToJsModes;
 
 androidExec.setJsToNativeBridgeMode = function(mode) {
     if (mode == jsToNativeModes.JS_OBJECT && !window._cordovaNative) {
-        console.log('Falling back on PROMPT mode since _cordovaNative is missing. Expected for Android 3.2 and lower only.');
+        loggr.log('Falling back on PROMPT mode since _cordovaNative is missing. Expected for Android 3.2 and lower only.');
         mode = jsToNativeModes.PROMPT;
     }
     nativeApiProvider.setPreferPrompt(mode == jsToNativeModes.PROMPT);
@@ -968,12 +968,12 @@ function processMessage(message) {
             }
             cordova.callbackFromNative(callbackId, success, status, [payload], keepCallback);
         } else {
-            console.log("processMessage failed: invalid message:" + message);
+            loggr.log("processMessage failed: invalid message:" + message);
         }
     } catch (e) {
-        console.log("processMessage failed: Message: " + message);
-        console.log("processMessage failed: Error: " + e);
-        console.log("processMessage failed: Stack: " + e.stack);
+        loggr.log("processMessage failed: Message: " + message);
+        loggr.log("processMessage failed: Error: " + e);
+        loggr.log("processMessage failed: Stack: " + e.stack);
     }
 }
 
@@ -1273,7 +1273,7 @@ var exec = require('cordova/exec');
  */
 var CameraPopoverHandle = function() {
     this.setPosition = function(popoverOptions) {
-        console.log('CameraPopoverHandle.setPosition is only supported on iOS.');
+        loggr.log('CameraPopoverHandle.setPosition is only supported on iOS.');
     };
 };
 
@@ -1473,7 +1473,7 @@ function convertIn(contact) {
     try {
       contact.birthday = new Date(parseFloat(value));
     } catch (exception){
-      console.log("Cordova Contact convertIn error: exception creating date.");
+      loggr.log("Cordova Contact convertIn error: exception creating date.");
     }
     return contact;
 }
@@ -2126,7 +2126,7 @@ Entry.prototype.toURL = function() {
  * @return uri
  */
 Entry.prototype.toURI = function(mimeType) {
-    console.log("DEPRECATED: Update your code to use 'toURL'");
+    loggr.log("DEPRECATED: Update your code to use 'toURL'");
     // fullPath attribute contains the full URI
     return this.toURL();
 };
@@ -2398,7 +2398,7 @@ function initRead(reader, file) {
 
     if (typeof file == 'string') {
         // Deprecated in Cordova 2.4.
-        console.warn('Using a string argument with FileReader.readAs functions is deprecated.');
+        loggr.warn('Using a string argument with FileReader.readAs functions is deprecated.');
         reader._fileName = file;
     } else if (typeof file.fullPath == 'string') {
         reader._fileName = file.fullPath;
@@ -3553,12 +3553,12 @@ Media.onStatus = function(id, msgType, value) {
                 media._position = Number(value);
                 break;
             default :
-                console.error && console.error("Unhandled Media.onStatus :: " + msgType);
+                console.error && loggr.error("Unhandled Media.onStatus :: " + msgType);
                 break;
         }
     }
     else {
-         console.error && console.error("Received Media.onStatus callback for unknown media :: " + id);
+         console.error && loggr.error("Received Media.onStatus callback for unknown media :: " + id);
     }
 
 };
@@ -4039,7 +4039,7 @@ module.exports = {
      * You must explicitly override the back button.
      */
     overrideBackButton:function() {
-        console.log("Device.overrideBackButton() is deprecated.  Use App.overrideBackbutton(true).");
+        loggr.log("Device.overrideBackButton() is deprecated.  Use App.overrideBackbutton(true).");
         app.overrideBackbutton(true);
     },
 
@@ -4050,7 +4050,7 @@ module.exports = {
      * This resets the back button to the default behavior
      */
     resetBackButton:function() {
-        console.log("Device.resetBackButton() is deprecated.  Use App.overrideBackbutton(false).");
+        loggr.log("Device.resetBackButton() is deprecated.  Use App.overrideBackbutton(false).");
         app.overrideBackbutton(false);
     },
 
@@ -4061,7 +4061,7 @@ module.exports = {
      * This terminates the activity!
      */
     exitApp:function() {
-        console.log("Device.exitApp() is deprecated.  Use App.exitApp().");
+        loggr.log("Device.exitApp() is deprecated.  Use App.exitApp().");
         app.exitApp();
     }
 };
@@ -4230,13 +4230,13 @@ function completeQuery(id, data) {
                         query.successCallback(query.tx, r);
                     }
                 } catch (ex) {
-                    console.log("executeSql error calling user success callback: "+ex);
+                    loggr.log("executeSql error calling user success callback: "+ex);
                 }
 
                 tx.queryComplete(id);
             }
         } catch (e) {
-            console.log("executeSql error: "+e);
+            loggr.log("executeSql error: "+e);
         }
     }
 }
@@ -4268,14 +4268,14 @@ function failQuery(reason, id) {
                         query.errorCallback(query.tx, reason);
                     }
                 } catch (ex) {
-                    console.log("executeSql error calling user error callback: "+ex);
+                    loggr.log("executeSql error calling user error callback: "+ex);
                 }
 
                 tx.queryFailed(id, reason);
             }
 
         } catch (e) {
-            console.log("executeSql error: "+e);
+            loggr.log("executeSql error: "+e);
         }
     }
 }
@@ -4350,7 +4350,7 @@ DroidDB_Tx.prototype.queryComplete = function(id) {
             try {
                 this.successCallback();
             } catch(e) {
-                console.log("Transaction error calling user success callback: " + e);
+                loggr.log("Transaction error calling user success callback: " + e);
             }
         }
     }
@@ -4374,7 +4374,7 @@ DroidDB_Tx.prototype.queryFailed = function(id, reason) {
         try {
             this.errorCallback(reason);
         } catch(e) {
-            console.log("Transaction error calling user error callback: " + e);
+            loggr.log("Transaction error calling user error callback: " + e);
         }
     }
 };
@@ -4424,12 +4424,12 @@ DatabaseShell.prototype.transaction = function(process, errorCallback, successCa
     try {
         process(tx);
     } catch (e) {
-        console.log("Transaction error: "+e);
+        loggr.log("Transaction error: "+e);
         if (tx.errorCallback) {
             try {
                 tx.errorCallback(e);
             } catch (ex) {
-                console.log("Transaction error calling user error callback: "+e);
+                loggr.log("Transaction error calling user error callback: "+e);
             }
         }
     }
@@ -4578,7 +4578,7 @@ Battery.prototype._status = function(info) {
  * Error callback for battery start
  */
 Battery.prototype._error = function(e) {
-    console.log("Error initializing Battery: " + e);
+    loggr.log("Error initializing Battery: " + e);
 };
 
 var battery = new Battery();
@@ -4885,7 +4885,7 @@ console.assert = function(expression) {
     if (expression) return;
 
     var message = logger.format.apply(logger.format, [].slice.call(arguments, 1));
-    console.log("ASSERT: " + message);
+    loggr.log("ASSERT: " + message);
 };
 
 //------------------------------------------------------------------------------
@@ -4893,12 +4893,12 @@ console.clear = function() {};
 
 //------------------------------------------------------------------------------
 console.dir = function(object) {
-    console.log("%o", object);
+    loggr.log("%o", object);
 };
 
 //------------------------------------------------------------------------------
 console.dirxml = function(node) {
-    console.log(node.innerHTML);
+    loggr.log(node.innerHTML);
 };
 
 //------------------------------------------------------------------------------
@@ -4922,12 +4922,12 @@ console.time = function(name) {
 console.timeEnd = function(name) {
     var timeStart = Timers[name];
     if (!timeStart) {
-        console.warn("unknown timer: " + name);
+        loggr.warn("unknown timer: " + name);
         return;
     }
 
     var timeElapsed = new Date().valueOf() - timeStart;
-    console.log(name + ": " + timeElapsed + "ms");
+    loggr.log(name + ": " + timeElapsed + "ms");
 };
 
 //------------------------------------------------------------------------------
@@ -4947,7 +4947,7 @@ console.exception = console.log;
 
 //------------------------------------------------------------------------------
 console.table = function(data, columns) {
-    console.log("%o", data);
+    loggr.log("%o", data);
 };
 
 //------------------------------------------------------------------------------
@@ -5142,12 +5142,12 @@ module.exports = function(successCallback, errorCallback, message, forceAsync) {
 
     if (utils.typeName(message) == 'ArrayBuffer') {
         if (forceAsync) {
-            console.warn('Cannot echo ArrayBuffer with forced async, falling back to sync.');
+            loggr.warn('Cannot echo ArrayBuffer with forced async, falling back to sync.');
         }
         action += 'ArrayBuffer';
     } else if (messageIsMultipart) {
         if (forceAsync) {
-            console.warn('Cannot echo MultiPart Array with forced async, falling back to sync.');
+            loggr.warn('Cannot echo MultiPart Array with forced async, falling back to sync.');
         }
         action += 'MultiPart';
     } else if (forceAsync) {
@@ -6014,17 +6014,17 @@ logger.logLevel = function(level /* , ... */) {
 
     // log to the console
     switch (level) {
-        case logger.LOG:   console.log(message); break;
-        case logger.ERROR: console.log("ERROR: " + message); break;
-        case logger.WARN:  console.log("WARN: "  + message); break;
-        case logger.INFO:  console.log("INFO: "  + message); break;
-        case logger.DEBUG: console.log("DEBUG: " + message); break;
+        case logger.LOG:   loggr.log(message); break;
+        case logger.ERROR: loggr.log("ERROR: " + message); break;
+        case logger.WARN:  loggr.log("WARN: "  + message); break;
+        case logger.INFO:  loggr.log("INFO: "  + message); break;
+        case logger.DEBUG: loggr.log("DEBUG: " + message); break;
     }
 };
 
 
 /**
- * Formats a string and arguments following it ala console.log()
+ * Formats a string and arguments following it ala loggr.log()
  *
  * Any remaining arguments will be appended to the formatted string.
  *
@@ -6212,7 +6212,7 @@ channel.onCordovaReady.subscribe(function() {
         if (channel.onCordovaConnectionReady.state !== 2) {
             channel.onCordovaConnectionReady.fire();
         }
-        console.log("Error initializing Network Connection: " + e);
+        loggr.log("Error initializing Network Connection: " + e);
     });
 });
 
@@ -6273,7 +6273,7 @@ module.exports = {
 
         // Strings are deprecated!
         if (typeof _buttonLabels === 'string') {
-            console.log("Notification.confirm(string, function, string, string) is deprecated.  Use Notification.confirm(string, function, string, array).");
+            loggr.log("Notification.confirm(string, function, string, string) is deprecated.  Use Notification.confirm(string, function, string, array).");
         }
 
         // Some platforms take an array of button label names.
@@ -6629,7 +6629,7 @@ utils.alert = function(msg) {
     if (window.alert) {
         window.alert(msg);
     } else if (console && console.log) {
-        console.log(msg);
+        loggr.log(msg);
     }
 };
 
@@ -6662,14 +6662,14 @@ window.cordova = require('cordova');
     function logUnfiredChannels(arr) {
         for (var i = 0; i < arr.length; ++i) {
             if (arr[i].state != 2) {
-                console.log('Channel not fired: ' + arr[i].type);
+                loggr.log('Channel not fired: ' + arr[i].type);
             }
         }
     }
 
     window.setTimeout(function() {
         if (channel.onDeviceReady.state != 2) {
-            console.log('deviceready has not fired after 5 seconds.');
+            loggr.log('deviceready has not fired after 5 seconds.');
             logUnfiredChannels(platformInitChannelsArray);
             logUnfiredChannels(channel.deviceReadyChannelsArray);
         }

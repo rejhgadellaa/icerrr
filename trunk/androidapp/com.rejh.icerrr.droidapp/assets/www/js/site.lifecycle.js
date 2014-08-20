@@ -23,8 +23,8 @@ site.session.lifecycle.section_history = [];
 
 site.lifecycle.init = function() {
 	
-	console.log("\n==================================================================================\n\n");
-	console.log("site.lifecycle.init()");
+	loggr.log("\n==================================================================================\n\n");
+	loggr.log("site.lifecycle.init()");
 	
 	// Detect android/ios
 	if( /Android/i.test(navigator.userAgent) ) {
@@ -38,8 +38,8 @@ site.lifecycle.init = function() {
 	}
 	
 	// Debug
-	console.log(" > Device: "+ site.vars.deviceDesc);
-	console.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
+	loggr.log(" > Device: "+ site.vars.deviceDesc);
+	loggr.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
 	
 	// Defaults..
 	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
@@ -51,7 +51,7 @@ site.lifecycle.init = function() {
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
 	
 	// Google Loader
-	google.load("search", "1", {"callback" : function(){console.log(" > Loaded: google.load(search,1)");} });
+	google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
 	
 	// Hacks..
 	site.ui.hackActiveCssRule();
@@ -62,7 +62,7 @@ site.lifecycle.init = function() {
 
 site.lifecycle.onResize = function() {
 	
-	console.log("site.lifecycle.onResize()");
+	loggr.log("site.lifecycle.onResize()");
 	
 	// TODO: figure out if orientation change..
 	
@@ -78,7 +78,7 @@ site.lifecycle.onResize = function() {
 
 site.lifecycle.onDeviceReady = function() {
 	
-	console.log("site.lifecycle.onDeviceReady()");
+	loggr.log("site.lifecycle.onDeviceReady()");
 	
 	// Attach more event listeners (cordova)
 	document.addEventListener('resume', site.lifecycle.onResume, false);
@@ -96,12 +96,12 @@ site.lifecycle.onDeviceReady = function() {
 	// Restore user preferences
 	site.data.userprefs = JSON.parse(site.cookies.get("userprefs"));
 	if (!site.data.userprefs) {
-		console.log(" > No userprefs found, copying defaults...");
+		loggr.log(" > No userprefs found, copying defaults...");
 		site.data.userprefs = jQuery.extend(true, {}, site.cfg.defaults.userprefs);
 	}
 	
 	// Restore user session
-	console.log(" > Restore site.session: "+ site.cookies.get("site.session"));
+	loggr.log(" > Restore site.session: "+ site.cookies.get("site.session"));
 	site.session = JSON.parse(site.cookies.get("site.session"));
 	if (!site.session) { site.session = {}; }
 	
@@ -131,7 +131,7 @@ site.lifecycle.onDeviceReady = function() {
 
 site.lifecycle.onResume = function() {
 	
-	console.log("site.lifecycle.onResume()");
+	loggr.log("site.lifecycle.onResume()");
 	
 	// set timeout now so we have little delay for async shit to rain down upon us
 	if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
@@ -141,10 +141,10 @@ site.lifecycle.onResume = function() {
 	
 	// Re-init ui updates.. || TODO: we really need a better way to do this..	
 	// Call UI close function
-	if (!site.session.ui_init_callbacks) { site.session.ui_init_callbacks = []; }
-	while (site.session.ui_init_callbacks.length>0) {
-		var func = site.session.ui_init_callbacks.shift(); // same order as incoming..
-		func();
+	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
+	while (site.session.ui_resume_callbacks.length>0) {
+		var func = site.session.ui_resume_callbacks.shift(); // same order as incoming..
+		try { func(); } catch(e) { }
 	}
 	
 }
@@ -153,18 +153,18 @@ site.lifecycle.onResume = function() {
 
 site.lifecycle.onPause = function() {
 	
-	console.log("site.lifecycle.onPause()");
+	loggr.log("site.lifecycle.onPause()");
 	
 	// Store some stuff
 	site.cookies.put("site.session",JSON.stringify(site.session));
 	
-	// Write some stuff
+	// Write sessions
 	site.storage.writefile(site.cfg.paths.json,"local.site_session.json",site.cookies.get("site.session"),
 		function() {
-			console.log("site.lifecycle.onPause > write local site.session OK");
+			loggr.log("site.lifecycle.onPause > write local site.session OK");
 		},
 		function(err) {
-			console.log("site.lifecycle.onPause > write local site.session Error");
+			loggr.log("site.lifecycle.onPause > write local site.session Error");
 		}
 	);
 	
@@ -176,7 +176,7 @@ site.lifecycle.onPause = function() {
 	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
 	while (site.session.ui_pause_callbacks.length>0) {
 		var func = site.session.ui_pause_callbacks.shift(); // same order as incoming..
-		func();
+		try { func(); } catch(e) { }
 	}
 	
 }
@@ -186,7 +186,7 @@ site.lifecycle.onPause = function() {
 
 site.lifecycle.onDestroy = function() {
 	
-	console.log("site.lifecycle.onDestroy()");
+	loggr.log("site.lifecycle.onDestroy()");
 	
 	// Call pause..
 	site.lifecycle.onPause();
@@ -200,7 +200,7 @@ site.lifecycle.onDestroy = function() {
 
 site.lifecycle.onBackButton = function() {
 	
-	console.log("site.lifecycle.onBackButton()");
+	loggr.log("site.lifecycle.onBackButton()");
 	
 	// List of selectors that when display==block, then ignore back!
 	var thedonts = {
@@ -209,11 +209,11 @@ site.lifecycle.onBackButton = function() {
 	}
 	
 	// TODO: needs some building in so we don't hit back in the middle of an operation..
-	if (thedonts[site.vars.currentSection]) { console.log(" > Ignore '<' button, we're working here..."); return; }
-	if (site.vars.isloading) { console.log(" > Ignore '<' button, we're working here..."); return; }
+	if (thedonts[site.vars.currentSection]) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
+	if (site.vars.isloading) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
 	
 	var currentBackKey = site.lifecycle.get_section_history_item();
-	console.log(currentBackKey);
+	loggr.log(currentBackKey);
 	
 	// Okay, that out of the way...
 	switch(currentBackKey) {
@@ -228,12 +228,20 @@ site.lifecycle.onBackButton = function() {
 			site.home.init();
 			break;
 		
+		case "#searchstation":
+			site.chlist.init();
+			break;
+		
+		case "#searchstation_results":
+			site.chsearch.init();
+			break;
+		
 		case "#editstation":
 			site.chlist.init();
 			break;
 			
 		default:
-			console.log(" > '<' button on unhandled section: "+ currentBackKey);
+			loggr.log(" > '<' button on unhandled section: "+ currentBackKey);
 			break;
 		
 	}
@@ -245,7 +253,7 @@ site.lifecycle.onBackButton = function() {
 // Exit, ..
 
 site.lifecycle.exit = function() {
-	console.log("site.lifecycle.exit()");
+	loggr.log("site.lifecycle.exit()");
 	site.lifecycle.onDestroy();
 	navigator.app.exitApp();
 }
@@ -253,26 +261,35 @@ site.lifecycle.exit = function() {
 // Section history
 
 site.lifecycle.add_section_history = function(selector) {
-	console.log("site.lifecycle.add_section_history()");
+	loggr.log("site.lifecycle.add_section_history()");
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { site.session.lifecycle.section_history = []; }
 	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] == selector) { return; }
 	site.session.lifecycle.section_history.push(selector);
-	console.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
+	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 }
 
 site.lifecycle.clear_section_history = function() {
-	console.log("site.lifecycle.clear_section_history()");
+	loggr.log("site.lifecycle.clear_section_history()");
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	site.session.lifecycle.section_history = [];
 }
 
+site.lifecycle.remove_section_history_item = function(selector) {
+	loggr.log("site.lifecycle.remove_last_section_history_item()");
+	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
+	if (!site.session.lifecycle.section_history) { site.session.lifecycle.section_history = []; }
+	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] == selector) { 
+		return site.session.lifecycle.section_history.pop();
+	}
+}
+
 site.lifecycle.get_section_history_item = function() {
-	console.log("site.lifecycle.get_section_history_item()");
-	console.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
+	loggr.log("site.lifecycle.get_section_history_item()");
+	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { return false; }
-	console.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
+	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 	return site.session.lifecycle.section_history.pop();
 }
 

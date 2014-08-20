@@ -25,7 +25,12 @@ site.webapi = {};
 
 site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 	
-	console.log("site.webapi.exec()");
+	loggr.log("site.webapi.exec()");
+	
+	if (apiaction=="post") {
+		site.webapi.post(apiaction,apiquerystr,cb,errcb);
+		return;
+	}
 	
 	// Parse apiquerystr || TODO: Important: how to handle urlencoding.. doing it here.. now..
 	if (!apiquerystr) { apiquerystr = "{}"; }
@@ -33,8 +38,8 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 	var apiquery = encodeURIComponent(JSON.stringify(apiqueryobj));
 	
 	var apiurl = site.cfg.urls.api +"a="+ apiaction +"&q="+ apiquery +"&cache="+(new Date().getTime());
-	console.log(" > "+apiurl);
-	console.log(" > "+apiquerystr);
+	loggr.log(" > "+apiurl);
+	loggr.log(" > "+apiquerystr);
 	
 	$.getJSON(apiurl, function(results) {
 		// ok
@@ -43,27 +48,68 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 			return;
 		} else {
 			results.info.size_kb = Math.ceil((JSON.stringify(results).length*8)/1024/10);
-			console.log(" > site.webapi.exec().results: ~"+ results.info.size_kb +" kb");
+			loggr.log(" > site.webapi.exec().results: ~"+ results.info.size_kb +" kb");
 			cb(results);
 			return;
 		}
 	})
 	.error(function(jqXHR, textStatus, errorThrown) { 
 		// error
-		console.error(" > site.webapi.exec().Error: "+ textStatus +", "+ errorThrown);
+		loggr.error(" > site.webapi.exec().Error: "+ textStatus +", "+ errorThrown);
 		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
 	});
 	
 }
 
-// Load stations
+// Post
 
-site.webapi.loadStations = function() {
+site.webapi.post = function(apiaction,apiquerystr,data,cb,errcb) {
 	
-	console.log("site.webapi.loadStations()");
+	loggr.log("site.webapi.post()");
 	
-	var apiquery = JSON.stringify({
-		
+	// Parse apiquerystr || TODO: Important: how to handle urlencoding.. doing it here.. now..
+	if (!apiquerystr) { apiquerystr = "{}"; }
+	var apikey = "REJH_ICERRR_APIKEY-"+ site.helpers.getUniqueID();
+	var apiqueryobj = JSON.parse(apiquerystr);
+	var apiquery = encodeURIComponent(JSON.stringify(apiqueryobj));
+	
+	var apiurl = site.cfg.urls.api +"a="+ apiaction +"&q="+ apiquery +"&apikey="+ apikey +"&cache="+(new Date().getTime());
+	loggr.log(" > "+apiurl);
+	loggr.log(" > "+apiquerystr);
+	
+	$.post(apiurl, data, function(results) {
+			// ok
+			if (results["error"]) {
+				errcb({code:-1,message:results["errormsg"]});
+				return;
+			} else {
+				results.info.size_kb = Math.ceil((JSON.stringify(results).length*8)/1024/10);
+				loggr.log(" > site.webapi.post().results: ~"+ results.info.size_kb +" kb");
+				cb(results);
+				return;
+			} 
+		}
+	).error(function(jqXHR, textStatus, errorThrown) { 
+		// error
+		loggr.error(" > site.webapi.post().Error: "+ textStatus +", "+ errorThrown);
+		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
 	});
 	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

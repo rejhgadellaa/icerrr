@@ -20,7 +20,7 @@ site.ui = {};
 
 site.ui.init = function() {
 	
-	console.log("site.ui.init()");
+	loggr.log("site.ui.init()");
 	
 	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
 	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
@@ -44,7 +44,7 @@ site.ui.init = function() {
 
 site.ui.gotosection = function(selector) {
 	
-	console.log("site.ui.showsection(): "+ selector);
+	loggr.log("site.ui.showsection(): "+ selector);
 	
 	site.vars.currentSection = selector;
 	site.lifecycle.add_section_history(selector);
@@ -64,7 +64,7 @@ site.ui.gotosection = function(selector) {
 		$(".activatabled_active").removeClass("activatabled_active");
 		$("section").css("display","none"); 
 		$(selector).css("display","block");
-		console.log(" > "+ selector +" display: "+$(selector).css("display"));
+		loggr.log(" > "+ selector +" display: "+$(selector).css("display"));
 		setTimeout(site.lifecycle.onResize,10);
 	//},100);
 	
@@ -73,7 +73,7 @@ site.ui.gotosection = function(selector) {
 // ---> Loading
 
 site.ui.showloading = function(message) {
-	console.log("site.ui.showloading()");
+	loggr.log("site.ui.showloading()");
 	if (!message) { message = site.helpers.getRandomListEntry(site.data.strings.loading); }
 	site.vars.isLoading = true;
 	$("#loading.overlay_wrap .message").html(message);
@@ -83,7 +83,7 @@ site.ui.showloading = function(message) {
 
 
 site.ui.hideloading = function() {
-	console.log("site.ui.showloading()");
+	loggr.log("site.ui.showloading()");
 	site.vars.isLoading = false;
 	$("#loading.overlay_wrap .message").html("");
 	$("#loading.overlay_wrap").fadeOut(500); // TODO: animation gpu powered..
@@ -92,7 +92,7 @@ site.ui.hideloading = function() {
 // ---> Hoverbox (toasts!)
 
 site.ui.showtoast = function(msg, timeInSec) {
-	console.log("site.ui.showtoast()");
+	loggr.log("site.ui.showtoast()");
 	if (site.timeouts.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
 	if (!timeInSec) { timeInSec = 2.5; }
 	var timeInMsec = timeInSec * 1000;
@@ -101,12 +101,12 @@ site.ui.showtoast = function(msg, timeInSec) {
 }
 
 site.ui.hidetoast = function() {
-	console.log("site.ui.hidetoast()");
+	loggr.log("site.ui.hidetoast()");
 	$("#overlay_toast").fadeOut(500);
 }
 
 site.ui.createtoast = function() {
-	console.log("site.ui.createtoast()");
+	loggr.log("site.ui.createtoast()");
 	var snip = document.createElement("div");
 	snip.id = "overlay_toast";
 	$("body").append(snip);
