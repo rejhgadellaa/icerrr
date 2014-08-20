@@ -21,6 +21,7 @@ include("s.functions.php");
 
 $action = $_GET["a"];
 $query = urldecode($_GET["q"]);
+$apikey = urldecode($_GET["apikey"]);
 
 // Checkin'
 if (!$action) { error("GET['action'] is not defined"); }
@@ -112,6 +113,23 @@ switch($action) {
 			case "strings":
 				error("Not implemented yet"); // TODO: todo
 				break;
+				
+			// -- EXTERNAL: Dirble api
+			
+			// search
+			case "search_dirble":
+				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
+				$dirble_url = "http://api.dirble.com/v1/search/apikey/{$cfg['dirble_apikey']}/search/";
+				$dirble_query = rawurlencode("{$queryobj['search']}");
+				$fg = fg($dirble_url.$dirble_query);
+				if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
+				$json["data"] = json_decode($fg,true);
+				$json["info"] = array();
+				// TODO: catch errors
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
 			
 			// default	
 			default:
@@ -123,6 +141,44 @@ switch($action) {
 		break; // <-- Important stuff
 		
 	// POST ...
+	case "post":
+		
+		logg("POST > $query");
+	
+		if (!$query) { error("GET['query'] is not defined for action '$action'"); }
+		if (!$apikey) { error("API key is not provided"); }
+		if (strpos($apikey,"REJH_ICERRR_APIKEY-")===FALSE) { error("API key is invalid"); } // TODO: Haha lol I call this a api key? XD
+		
+		// Query
+		$queryobj = json_decode($query,true);
+		switch($queryobj["post"]) {
+			
+			// answers
+			case "log":
+				$id = $_POST["log_id"];
+				$html = $_POST["log_html"];
+				$text = $_POST["log_text"];
+				if (!$id) { error("Error: !post[log_id]"); }
+				if (!$html) { error("Error: !post[log_html]"); }
+				$filename = "logs_users/{$id}.html";
+				$html = "<html><style>body{font-family:sans-serif;font-size:10pt;}</style><body>{$html}</body></html>";
+				$fw = fw($filename,$html);
+				$fw = fw($filename.".txt",$text);
+				if (!$fw) { error("Error: Could not write '$filename'"); }
+				$json["data"] = json_decode('{"post":"ok"}',true);
+				$json["info"] = array();
+				$jsons = json_encode($json);
+				logg($jsons);
+				echo $jsons;
+				break;
+			
+			// default
+			default:
+				error("Error in query: '$query', {$queryobj['post']}, {$queryobj}");
+				die();
+		
+		}
+		break;
 	
 	// Default
 	default:
