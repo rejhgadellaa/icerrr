@@ -57,6 +57,8 @@ site.installer.cfg.downloadjson_files = [
 	{}
 ];
 
+site.installer.cfg.overwrite_versions = [0.014];
+
 // ---> Init
 
 site.installer.init = function() {
@@ -248,10 +250,15 @@ site.installer.downloadjson_read = function() {
 			switch(site.datatemp["info"]["desc"]) {
 				
 				case "stations":
-					site.datatemp["data"] = site.helpers.mergeStations(datalocal,dataremote);
+					if (site.installer.cfg.overwrite_versions.indexOf(site.cfg.app_version)<0) { 
+						site.datatemp["data"] = site.helpers.mergeStations(datalocal,dataremote);  // merge
+					} else {
+						site.datatemp["data"] = dataremote; // overwrite
+					}
 					break;
 				
 				default:
+					site.datatemp["data"] = dataremote // TODO: Default always overwrite?!
 					break;
 					
 			}
@@ -328,10 +335,13 @@ site.installer.finishup = function() {
 	
 	loggr.log("site.installer.finishup()");
 	
-	// TODO: set the damn cookie so install doesnt get re-fired :)
-	
 	site.installer.logger("Finish up...");
-	site.installer.logger("&nbsp;&gt; Giving your device a short break...");
+	
+	// Clear cookies..
+	if (site.installer.cfg.overwrite_versions.indexOf(site.cfg.app_version)<0) {
+		site.installer.logger("&nbsp;&gt; Clear localstorage...");
+		site.cookies.clear();
+	}
 	
 	setTimeout(function(){
 		site.installer.logger("&nbsp;&gt; Ok let's do some hard work!..");
@@ -348,7 +358,7 @@ site.installer.finishup = function() {
 			},2500);
 			//site.ui.gotosection("#home"); // TODO: no not go here, goto #firstlaunch
 		},1000);
-	},500);
+	},2500);
 		
 	
 }

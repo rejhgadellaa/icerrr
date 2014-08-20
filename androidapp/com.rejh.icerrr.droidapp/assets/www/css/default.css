@@ -280,6 +280,12 @@ section {
 		width:256px;
 	}
 	
+	#home .main .station_image_wrap {
+		xmargin:-8px 0 0 -8px;
+		xpadding:8px;
+		xbackground-color:#fff;
+	}
+	
 	#home .main .station_name {
 		width:300px;
 		margin:32px auto 0 auto;

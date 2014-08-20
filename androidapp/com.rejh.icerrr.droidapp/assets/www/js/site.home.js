@@ -51,18 +51,21 @@ site.home.init = function() {
 	
 	// bla
 	$("#home .main .station_image img").on("load",
-		function(evt) {
-			$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+		function(evt) { // TODO: detect transparent images..
+			var colorThief = new ColorThief();
+			var img = $("#home .main .station_image img")[0];
+			var color = colorThief.getColor(img);
+			//$("#home .main .station_image_wrap").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+",1)");
 		}
 	);
 	$("#home .main .station_image img").on("error",
 		function(evt) {
-			$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+			$("#home .main .station_image img").attr("src","img/web_hi_res_512_001.png?c="+(new Date().getTime()));
 		}
 	);
 	
 	// extra ui
-	$("#home .main .station_image img").attr("src","img/web_hi_res_512_001.png?c="+(new Date().getTime()));
+	$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
 	$("#home .main .station_name").html(site.session.currentstation.station_name);
 	$("#home .main .station_nowplaying").html("Now playing: ...");
 	

@@ -488,3 +488,9 @@ site.cookies.get = function(name) {
 	return res;
 }
 
+// Clear
+
+site.cookies.clear = function() {
+	window.localStorage.clear();
+}
+
