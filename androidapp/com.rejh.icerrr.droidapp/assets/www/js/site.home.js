@@ -20,11 +20,11 @@ site.home = {};
 
 site.home.init = function() {
 	
-	console.log("site.home.init();");
+	loggr.log("site.home.init();");
 	
 	// Check if station has been selected
 	if (!site.session.currentstation_id) {
-		console.log(site.session.currentstation_id);
+		loggr.log(site.session.currentstation_id);
 		site.ui.showtoast("Please choose a station");
 		site.chlist.init();
 		return; // <- important
@@ -88,12 +88,12 @@ site.home.init = function() {
 // - Important stuff: this is function that will be called whenever site.ui.gotosection is called
 
 site.home.onpause = function() {
-	console.log("site.home.onpause()");
+	loggr.log("site.home.onpause()");
 	site.home.stop_ui_updates();
 }
 
 site.home.onresume = function() {
-	console.log("site.home.site.home.()");
+	loggr.log("site.home.site.home.()");
 	site.home.init_ui_updates();
 }
 
@@ -103,7 +103,7 @@ site.home.onresume = function() {
 
 site.home.init_ui_updates = function() {
 	
-	console.log("site.home.init_ui_updates()");
+	loggr.log("site.home.init_ui_updates()");
 	
 	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
 	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},1000);
@@ -115,7 +115,7 @@ site.home.init_ui_updates = function() {
 
 site.home.stop_ui_updates = function() {
 	
-	console.log("site.home.stop_ui_updates()");
+	loggr.log("site.home.stop_ui_updates()");
 	
 	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
 	if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
@@ -124,18 +124,18 @@ site.home.stop_ui_updates = function() {
 
 site.home.run_ui_updates = function() {
 	
-	console.log("site.home.run_ui_updates()");
+	loggr.log("site.home.run_ui_updates()");
 	
 	// Home >> Footer >> Play button
 	if (site.mp.mpstatus==Media.MEDIA_RUNNING && !$(".button.center").hasClass("active")) {
-		console.log(" > .button.center addclass active");
+		loggr.log(" > .button.center addclass active");
 		$(".button.center").removeClass("busy"); 
 		$(".button.center").addClass("active"); 
 	} else if (site.mp.mpstatus==Media.MEDIA_STARTING && !$(".button.center").hasClass("busy")) {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").addClass("busy"); 
 	} else if (site.mp.mpstatus!=Media.MEDIA_RUNNING && $(".button.center").hasClass("active")) {
-		console.log(" > .button.center removeclass active");
+		loggr.log(" > .button.center removeclass active");
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy"); 
 	}
@@ -147,7 +147,7 @@ site.home.run_ui_updates = function() {
 
 site.home.run_station_updates = function() {
 	
-	console.log("site.home.run_station_updates()");
+	loggr.log("site.home.run_station_updates()");
 	var apiqueryobj = {
 		"get":"station_info",
 		"station_id":site.session.currentstation.station_id,
@@ -173,8 +173,8 @@ site.home.run_station_updates = function() {
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
 		},
 		function(error) {
-			if (error.message) { site.ui.showtoast(error.message); console.log(error.message); }
-			else { console.log(error); }
+			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
+			else { loggr.log(error); }
 		}
 	);
 	

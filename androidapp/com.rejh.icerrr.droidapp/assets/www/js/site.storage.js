@@ -32,8 +32,8 @@ site.session.storage.queue = [];
 
 site.storage.enqueue = function(action,args) {
 	
-	console.log("site.storage.enqueue(): "+action);
-	console.log(" > "+ JSON.stringify(args));
+	loggr.log("site.storage.enqueue(): "+action);
+	loggr.log(" > "+ JSON.stringify(args));
 	
 	if (!site.session.storage) { site.session.storage = {}; }
 	
@@ -41,7 +41,7 @@ site.storage.enqueue = function(action,args) {
 	for (var i=0; i<site.session.storage.queue.length; i++) {
 		var queue_item = site.session.storage.queue[i];
 		if (queue_item.action==action && JSON.stringify(queue_item.args)==JSON.stringify(args)) {
-			console.log(" > Duplicate exists.. what now? we dont want UNLIMITED LOOPS!");
+			loggr.log(" > Duplicate exists.. what now? we dont want UNLIMITED LOOPS!");
 		}
 	}
 	
@@ -59,13 +59,13 @@ site.storage.enqueue = function(action,args) {
 
 site.storage.runqueue = function() {
 	
-	console.log("site.storage.runqueue(): "+action);
+	loggr.log("site.storage.runqueue(): "+action);
 	
 	if (!site.session.storage) { return; }
 	
 	// Stop when we can
 	if (site.session.storage.queue.length<1) {
-		console.log(" > Queue empty, stop...");
+		loggr.log(" > Queue empty, stop...");
 		if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
 		return;
 	}
@@ -108,8 +108,8 @@ site.storage.runqueue = function() {
 			
 			default:
 				alert("site.storage.runqueue().Error: invalid value for 'action': "+ action);
-				console.log("site.storage.runqueue().Error: invalid value for 'action': "+ action);
-				console.log(action+", "+JSON.stringify(args));
+				loggr.log("site.storage.runqueue().Error: invalid value for 'action': "+ action);
+				loggr.log(action+", "+JSON.stringify(args));
 				break;
 			
 		}
@@ -132,7 +132,7 @@ site.storage.runqueue_cb = function() {
 
 site.storage.createfolder = function(path,cb,errcb) {
 	
-	console.log("site.storage.createfolder(): "+path);
+	loggr.log("site.storage.createfolder(): "+path);
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -169,7 +169,7 @@ site.storage.createfolder = function(path,cb,errcb) {
 
 site.storage.readfolder = function(path,cb,errcb,opts) {
 	
-	console.log("site.storage.readfolder(): "+path);
+	loggr.log("site.storage.readfolder(): "+path);
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -231,7 +231,7 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 
 site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	
-	console.log("site.storage.writefile(): "+path+", "+filename+", ~"+site.helpers.calcStringToKbytes(data)+" kb");
+	loggr.log("site.storage.writefile(): "+path+", "+filename+", ~"+site.helpers.calcStringToKbytes(data)+" kb");
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -292,7 +292,7 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 
 site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	
-	console.log("site.storage.readfile(): "+path+", "+filename);
+	loggr.log("site.storage.readfile(): "+path+", "+filename);
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -358,7 +358,7 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 
 site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
 	
-	console.log("site.storage.getmetadata(): "+path+", "+fileOrFolder);
+	loggr.log("site.storage.getmetadata(): "+path+", "+fileOrFolder);
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -475,7 +475,7 @@ site.cookies = {};
 
 site.cookies.put = function(name,value) {
 	try { window.localStorage.setItem(name, value); }
-	catch(e) { console.warn(" > site.cookies.put failed: "+name+", "+value); return false; }
+	catch(e) { loggr.warn(" > site.cookies.put failed: "+name+", "+value); return false; }
 	return true;
 }
 

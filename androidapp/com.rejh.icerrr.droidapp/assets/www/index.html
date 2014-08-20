@@ -36,6 +36,7 @@
     <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
     <script language="javascript" type="text/javascript" src="js/plugs/masonry.pkgd.min.js"></script>
     <script type="text/javascript" language="javascript" src="js/plugs/todataurl.js"></script>
+    <script type="text/javascript" language="javascript" src="js/plugs/dateformat.js"></script>
     
     <!-- Javascript: Externals || TODO: would rather not rely on online files... -->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -44,11 +45,13 @@
     <script language="javascript" type="text/javascript" src="js/site.base.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.chedit.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.chlist.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.chsearch.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.config.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.helpers.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.home.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.install.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.lifecycle.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.logger.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.mediaplayer.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.storage.js"></script>
 	<script language="javascript" type="text/javascript" src="js/site.ui.js"></script>
@@ -119,8 +122,8 @@
 	</div>
     
     <div class="footer shadow_z1u">
-    	<div class="button left">
-			<!-- ... -->
+    	<div class="button left activatablel" onclick="site.ui.showtoast('Uploading log...');loggr.upload();">
+			
 		</div>
     	<div class="button center activatablel" id="home_play" onClick="site.mp.playToggle();$(this).toggleClass('busy');">
 			<div class="button_inner">
@@ -144,7 +147,7 @@
         <div class="title">ICERRR</div>
         
 		<div class="actions">
-            <div class="action activatablel" onClick="site.chedit.init(false);">
+            <div class="action activatablel" onClick="site.chsearch.init();">
 				<img src="img/icons-48/ic_add_green.png" />
 			</div>
         </div>
@@ -186,9 +189,12 @@
     <div class="main">
 	
 		<div class="block header">
-			Add/Edit station		</div>
+			Add/Edit station
+        </div>
 		
 		<div class="block data1">
+		
+			<form onSubmit="site.chedit.check(); return false;">
 		
 			<input type="hidden" name="station_id" value="" />
 			
@@ -205,6 +211,8 @@
 			</p>
 			
 			<p><img class="station_icon" src="img/icons-48/ic_launcher.png" /></p>
+		
+			</form>
 			
 		</div>
 		
@@ -214,6 +222,72 @@
 		
     </div>
 	
+</section>
+
+<!-- Section -->
+<section id="searchstation">
+	
+    <div class="actionbar shadow_z1">
+    	
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+			<div class="action save activatablel" onClick="site.chsearch.searchstation();">
+				<img src="img/icons-48/ic_search_green.png" />
+			</div>
+        </div>
+    </div>
+    
+    <div class="main">
+	
+		<div class="block header">
+			Search station
+        </div>
+		
+		<div class="block data1">
+		
+			<form onSubmit="site.chsearch.searchstation(); return false;">
+			
+			<p><label>Station name: <span style="color:#f00;">*</span><span style='font-size:10pt;'><a href='http://dirble.com/' target='_blank'>Powered by Dirble</a></span></label>
+				<input class="round2" type="text" name="station_search" placeholder="Ex: BBC Radio 1" />
+			</p>
+            
+            <p>&nbsp;</p>
+            
+            <p>Or add a station <a href="javascript:void;" onClick="loggr.log(site.lifecycle.remove_section_history_item('#searchstation'));site.chedit.init();">manually</a></p>
+			
+			</form>
+			
+		</div>
+		
+		<div class="block data2">
+		
+		</div>
+	
+    </div>
+
+</section>
+
+<!-- Section -->
+<section id="searchstation_results">
+	
+    <div class="actionbar shadow_z1">
+    	
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+			<div class="action save activatablel" onClick="site.chsearch.init();">
+				<img src="img/icons-48/ic_search_green.png" />
+			</div>
+        </div>
+    </div>
+    
+    <div class="main">
+	
+    </div>
+
 </section>
 
 <!-- Section -->

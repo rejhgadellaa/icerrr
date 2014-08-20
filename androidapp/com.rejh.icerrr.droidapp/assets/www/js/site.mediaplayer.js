@@ -20,31 +20,31 @@ site.mp = {};
 
 site.mp.init = function() {
 	
-	console.log("site.mp.init();");
+	loggr.log("site.mp.init();");
 	
 	if (!site.session.currentstation){
-		console.log("ERROR: cannot init mediaplayer when !site.session.currentstation");
+		loggr.log("ERROR: cannot init mediaplayer when !site.session.currentstation");
 		return;
 	}
 	
-	console.log(" > "+site.session.currentstation.station_url);
+	loggr.log(" > "+site.session.currentstation.station_url);
 	
 	// Destroy mp if exists
 	site.mp.destroy();
 	
 	// Create mediaplayer..
-	console.log(" > Create new mediaplayer..");
+	loggr.log(" > Create new mediaplayer..");
 	site.mp.mp = new Media(
 		site.session.currentstation.station_url,
 		function() {
-			console.log(" > MediaPlayer ready: "+ site.session.currentstation.station_url);
+			loggr.log(" > MediaPlayer ready: "+ site.session.currentstation.station_url);
 		}, 
 		function(error) {
-			console.log(" > Mediaplayer error: "+site.mp.getErrorByCode(error));
+			loggr.log(" > Mediaplayer error: "+site.mp.getErrorByCode(error));
 			site.ui.showtoast("MP: "+site.mp.getErrorByCode(error));
 		},
 		function(statuscode) {
-			console.log(" > MediaPlayer status: "+ site.mp.getStatusByCode(statuscode));
+			loggr.log(" > MediaPlayer status: "+ site.mp.getStatusByCode(statuscode));
 			site.mp.mpstatus = statuscode;
 			site.ui.showtoast("MP: "+site.mp.getStatusByCode(statuscode));
 		}
@@ -61,7 +61,7 @@ site.mp.destroy = function() {
 
 site.mp.play = function() {
 	
-	console.log("site.mp.play()");
+	loggr.log("site.mp.play()");
 	
 	site.mp.init();
 	site.mp.mp.play();
@@ -71,7 +71,7 @@ site.mp.play = function() {
 
 site.mp.stop = function() {
 	
-	console.log("site.mp.stop()");
+	loggr.log("site.mp.stop()");
 	
 	if (site.mp.mp) {
 		site.mp.mp.stop();
@@ -82,7 +82,7 @@ site.mp.stop = function() {
 
 site.mp.playToggle = function() {
 	
-	console.log("site.mp.playToggle()");
+	loggr.log("site.mp.playToggle()");
 	
 	if (site.mp.isPlaying) {
 		site.mp.stop();

@@ -332,7 +332,7 @@ section {
 	
 	.resultitem .resultname {
 		position:absolute;
-		top:20px; left:88px;
+		bottom:22px; left:88px;
 		font-size:16pt;
 	}
 	
@@ -348,20 +348,40 @@ section {
 		
 	}
 	
-#editstation {
+#editstation, #searchstation, #searchstation_results {
 	
 }
 
-	#editstation .block {
+	#editstation .block, #searchstation .block {
 		padding:16px 16px 0 16px;
 	}
 	
-	#editstation .block label a {
+	#editstation .block label a, #searchstation .block label a {
 		float:right;
 	}
 	
-	#editstation img.station_icon {
+	#editstation img.station_icon, #searchstation img.station_icon {
 		width:48px; height:48px;
+	}
+	
+	#editstation .block .button, #searchstation .block .button {
+		
+	}
+	
+#searchstation_results {
+
+}
+	
+	#searchstation_results .resultitem .resultname {
+		position:absolute;
+		top:16px; left:88px;
+		font-size:12pt;
+	}
+	
+	#searchstation_results .resultitem .resultsub {
+		position:absolute;
+		bottom:16px; left:88px;
+		font-size:10pt;
 	}
 
 /* -- OVERLAYS */

@@ -61,7 +61,7 @@ site.installer.cfg.downloadjson_files = [
 
 site.installer.init = function() {
 	
-	console.log("site.installer.init()");
+	loggr.log("site.installer.init()");
 	
 	// Well let's start by showing some loading ui
 	site.ui.gotosection("#install");
@@ -83,7 +83,7 @@ site.installer.createfolders_init = function() {
 
 site.installer.createfolders_next = function() {
 	
-	console.log("site.installer.createfolders_next()");
+	loggr.log("site.installer.createfolders_next()");
 	
 	// Check pathsNum
 	if (!site.installer.vars.pathNum && site.installer.vars.pathNum!==0) { site.installer.vars.pathNum = -1;	}
@@ -91,7 +91,7 @@ site.installer.createfolders_next = function() {
 	
 	// Get current path
 	currentpath = site.installer.cfg.createfolders_folders[site.installer.vars.pathNum];
-	console.log(" > currentpath: "+ currentpath);
+	loggr.log(" > currentpath: "+ currentpath);
 	
 	// Createfolders finished?
 	if (!currentpath) { 
@@ -110,13 +110,13 @@ site.installer.createfolders_next = function() {
 }
 
 site.installer.createfolders_cb = function(directoryEntry) {
-	console.log("site.installer.createfolders_cb()");
+	loggr.log("site.installer.createfolders_cb()");
 	site.installer.logger(" OK",{use_br:false});
 	site.installer.createfolders_next();
 }
 
 site.installer.createfolders_errcb = function(error) {
-	console.log("site.installer.createfolders_errcb()");
+	loggr.log("site.installer.createfolders_errcb()");
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+site.storage.getErrorType(error)+"",{is_e:true});
 	// TODO: YES.. What now..
@@ -133,7 +133,7 @@ site.installer.downloadjson_init = function() {
 
 site.installer.downloadjson_next = function() {
 	
-	console.log("site.installer.downloadjson_next()");
+	loggr.log("site.installer.downloadjson_next()");
 	
 	// Check jsonNum
 	if (!site.installer.vars.jsonNum && site.installer.vars.jsonNum!==0) { site.installer.vars.jsonNum = -1;	}
@@ -141,7 +141,7 @@ site.installer.downloadjson_next = function() {
 	
 	// Get current job
 	currentjob = site.installer.cfg.downloadjson_files[site.installer.vars.jsonNum];
-	console.log(" > currentjob: "+ currentjob.query);
+	loggr.log(" > currentjob: "+ currentjob.query);
 	
 	// downloadjson finished?
 	if (!currentjob.query) { 
@@ -175,14 +175,14 @@ site.installer.downloadjson_next = function() {
 }
 
 site.installer.downloadjson_cb = function(res) {
-	console.log("site.installer.downloadjson_cb(): "+ site.helpers.countObj(res["data"]));
+	loggr.log("site.installer.downloadjson_cb(): "+ site.helpers.countObj(res["data"]));
 	site.installer.logger(" OK",{use_br:false});
 	site.datatemp = res; // TODO: look at this variable.. it's just sad
 	site.installer.downloadjson_read();
 }
 
 site.installer.downloadjson_errcb = function(error) {
-	console.log("site.installer.downloadjson_errcb()");
+	loggr.log("site.installer.downloadjson_errcb()");
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+error["message"]+"",{is_e:true});
 	// TODO: YES.. What now..
@@ -192,7 +192,7 @@ site.installer.downloadjson_errcb = function(error) {
 
 site.installer.downloadjson_read = function() {
 	
-	console.log("site.installer.downloadjson_read()");
+	loggr.log("site.installer.downloadjson_read()");
 	
 	// Check jsonNum
 	if (!site.installer.vars.jsonNum && site.installer.vars.jsonNum!==0) { 
@@ -201,25 +201,25 @@ site.installer.downloadjson_read = function() {
 	
 	// Get current job
 	currentjob = site.installer.cfg.downloadjson_files[site.installer.vars.jsonNum];
-	console.log(" > currentjob: "+ currentjob.query);
+	loggr.log(" > currentjob: "+ currentjob.query);
 	
 	// Stuff
 	var path = currentjob.dest_path;
 	var filename = currentjob.dest_name;
 	
-	console.log(" > Path: "+ path);
-	console.log(" > Filename: "+ filename);
+	loggr.log(" > Path: "+ path);
+	loggr.log(" > Filename: "+ filename);
 	
 	// Check dirtyfiles
 	// TODO: this doesnt work because we haven't restored site.session yet..
 	/*
 	if (!site.session.dirtyfiles) {
-		console.log(" > !site.session.dirtyfiles");
+		loggr.log(" > !site.session.dirtyfiles");
 		site.installer.downloadjson_write();
 		return; // <- I keep forgetting this
 	} else {
 		if (site.session.dirtyfiles.indexOf(path+"/"+filename)<0) {
-			console.log(" > Not dirty...");
+			loggr.log(" > Not dirty...");
 			site.installer.downloadjson_write();
 			return; // <- I keep forgetting this
 		}
@@ -232,10 +232,10 @@ site.installer.downloadjson_read = function() {
 	site.storage.readfile(path,filename,
 		function(datalocalstr) {
 			
-			console.log(" > Read OK: ~"+ site.helpers.calcStringToKbytes(datalocalstr) +" kb");
+			loggr.log(" > Read OK: ~"+ site.helpers.calcStringToKbytes(datalocalstr) +" kb");
 			
 			if (!datalocalstr) { 
-				console.log(" >> No datalocalstr, just write the file");
+				loggr.log(" >> No datalocalstr, just write the file");
 				site.installer.downloadjson_write();
 				return;
 			}
@@ -255,14 +255,14 @@ site.installer.downloadjson_read = function() {
 					break;
 					
 			}
-			// } catch(e) { console.warn(" > Switch switch(site.datatemp['info']['desc']) failed"); console.warn(e); }
+			// } catch(e) { loggr.warn(" > Switch switch(site.datatemp['info']['desc']) failed"); loggr.warn(e); }
 			
 			// Write
 			site.installer.downloadjson_write();
 			
 		},
 		function(error) {
-			console.log("site.installer.downloadjson_read().Error");
+			loggr.log("site.installer.downloadjson_read().Error");
 			site.installer.logger(" ERR",{use_br:false,is_e:true});
 			site.installer.logger("&nbsp;&gt; "+JSON.stringify(error)+"",{is_e:true});
 		},
@@ -278,7 +278,7 @@ site.installer.downloadjson_read = function() {
 
 site.installer.downloadjson_write = function() {
 	
-	console.log("site.installer.downloadjson_write()");
+	loggr.log("site.installer.downloadjson_write()");
 	
 	// Check jsonNum
 	if (!site.installer.vars.jsonNum && site.installer.vars.jsonNum!==0) { 
@@ -287,16 +287,16 @@ site.installer.downloadjson_write = function() {
 	
 	// Get current job
 	currentjob = site.installer.cfg.downloadjson_files[site.installer.vars.jsonNum];
-	console.log(" > currentjob: "+ currentjob.query);
+	loggr.log(" > currentjob: "+ currentjob.query);
 	
 	// Stuff
 	var path = currentjob.dest_path;
 	var filename = currentjob.dest_name;
 	var data = JSON.stringify(site.datatemp["data"]);
 	
-	console.log(" > Path: "+ path);
-	console.log(" > Filename: "+ filename);
-	console.log(" > Data: "+ data);
+	loggr.log(" > Path: "+ path);
+	loggr.log(" > Filename: "+ filename);
+	loggr.log(" > Data: "+ data);
 	
 	// Some output..
 	site.installer.logger("&nbsp;&gt;&gt; Write: "+ path +"/"+ filename);
@@ -307,14 +307,14 @@ site.installer.downloadjson_write = function() {
 }
 
 site.installer.downloadjson_write_cb = function(evt) {
-	console.log("site.installer.downloadjson_write_cb()");
+	loggr.log("site.installer.downloadjson_write_cb()");
 	site.installer.logger(" OK",{use_br:false});
-	//console.log(" > target: \n > "+site.helpers.arrToString(evt.target,0,"\n"));
+	//loggr.log(" > target: \n > "+site.helpers.arrToString(evt.target,0,"\n"));
 	site.installer.downloadjson_next();
 }
 
 site.installer.downloadjson_write_errcb = function(error) {
-	console.log("site.installer.downloadjson_write_errcb()");
+	loggr.log("site.installer.downloadjson_write_errcb()");
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+site.storage.getErrorType(error)+"",{is_e:true});
 	// TODO: YES.. What now..
@@ -326,7 +326,7 @@ site.installer.downloadjson_write_errcb = function(error) {
 
 site.installer.finishup = function() {
 	
-	console.log("site.installer.finishup()");
+	loggr.log("site.installer.finishup()");
 	
 	// TODO: set the damn cookie so install doesnt get re-fired :)
 	

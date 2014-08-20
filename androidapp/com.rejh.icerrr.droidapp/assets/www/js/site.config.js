@@ -53,7 +53,7 @@ site.cfg.defaults.userprefs = {}
 // ---> Other stuff
 
 site.cfg.chlist = {};
-site.cfg.chlist.maxItemsPerBatch = 16;
+site.cfg.chlist.maxItemsPerBatch = 32;
 
 site.cfg.googleapis = {};
 site.cfg.googleapis.searchapi = {};

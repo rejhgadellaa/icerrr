@@ -20,7 +20,7 @@ site.chedit = {};
 
 site.chedit.init = function(station_id_to_edit) {
 	
-	console.log("site.chedit.init()");
+	loggr.log("site.chedit.init()");
 	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#editstation");
@@ -51,6 +51,7 @@ site.chedit.init = function(station_id_to_edit) {
 		$("#editstation input[name='station_icon']")[0].value = station_info.station_icon
 		site.chedit.newentry = {
 			station_id: station_id_to_edit,
+			station_edited: station_info.station_edited,
 			station_name: station_info.station_name,
 			station_url: station_info.station_url,
 			station_icon: station_info.station_icon,
@@ -58,7 +59,8 @@ site.chedit.init = function(station_id_to_edit) {
 			station_host: station_info.station_host,
 			station_port: station_info.station_port,
 			station_path: station_info.station_path,
-			station_edited: station_info.station_edited
+			station_country: station_info.station_country,
+			station_bitrate: station_info.station_bitrate
 		}
 		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
 	} else if (station_id_to_edit===false) { // clean
@@ -83,12 +85,12 @@ site.chedit.init = function(station_id_to_edit) {
 // - Important stuff: this is function that will be called whenever site.ui.gotosection is called
 
 site.chedit.onpause = function() {
-	console.log("site.chedit.onpause()");
+	loggr.log("site.chedit.onpause()");
 	// not needed now
 }
 
 site.chedit.onresume = function() {
-	console.log("site.chedit.site.home.()");
+	loggr.log("site.chedit.site.home.()");
 	// not needed now
 }
 
@@ -96,7 +98,7 @@ site.chedit.onresume = function() {
 
 site.chedit.save = function() {
 	
-	console.log("site.chedit.save()");
+	loggr.log("site.chedit.save()");
 	
 	// Overwrite data.stations :| || TODO: is this safe?
 	if ($("#editstation input[name='station_id']")[0].value) {
@@ -108,17 +110,19 @@ site.chedit.save = function() {
 		site.chedit.changesHaveBeenMadeGotoStarred = true;
 	}
 	
-	// console.log(site.helpers.arrToString(site.chedit.newentry,0,"\n")); || TODO: cleanup
+	// loggr.log(site.helpers.arrToString(site.chedit.newentry,0,"\n")); || TODO: cleanup
 	
 	// Remove tmp data
 	site.chedit.newentry.tmp = 0;
 	
 	// print
-	//console.log(site.helpers.arrToString(site.chedit.newentry,1,"\n"));
+	//loggr.log(site.helpers.arrToString(site.chedit.newentry,1,"\n"));
+	
+	// TODO: we need a helper for 'edited' stations
 	
 	// Safety
 	if (!site.chedit.newentry.station_edited) {
-		console.log(" > site.chedit.newentry.station_edited = {};");
+		loggr.log(" > site.chedit.newentry.station_edited = {};");
 		site.chedit.newentry.station_edited = {};
 	}
 	
@@ -127,15 +131,15 @@ site.chedit.save = function() {
 	if (originalStationIfAny) {
 		for (var key in site.chedit.newentry) {
 			if (site.chedit.newentry[key] != originalStationIfAny[key]) {
-				site.chedit.newentry.station_edited[key] = true;
+				site.chedit.newentry.station_edited[key] = new Date().getTime();
 			}
 		}
 	} else {
-		console.warn(" > !originalStationIfAny, are we sure?");
+		loggr.warn(" > !originalStationIfAny, are we sure?");
 	}
 	
-	console.log(" > Changes:");
-	console.log(site.helpers.arrToString(site.chedit.newentry.station_edited,1,"\n"));
+	loggr.log(" > Changes:");
+	loggr.log(site.helpers.arrToString(site.chedit.newentry.station_edited,1,"\n"));
 	
 	// Use MergeStations :D || but in reverse :D
 	var addstations = [site.chedit.newentry];
@@ -155,7 +159,7 @@ site.chedit.save = function() {
 		},
 		function(e){ 
 			alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
-			console.log(site.storage.getErrorType(e)); 
+			loggr.log(site.storage.getErrorType(e)); 
 		}
 	);
 	
@@ -165,7 +169,7 @@ site.chedit.save = function() {
 
 site.chedit.remove = function() {
 	
-	console.log("site.chedit.remove()");
+	loggr.log("site.chedit.remove()");
 	
 	if (!confirm("Are you sure you want to remove this station?\n\nThis can't be undone easily.")) { return; }
 	
@@ -188,7 +192,7 @@ site.chedit.remove = function() {
 	}
 	
 	// Build newstations
-	console.log(" > Build new stations list...");
+	loggr.log(" > Build new stations list...");
 	var newstations = [];
 	for (var i in site.data.stations) {
 		if (!site.data.stations[i]) { continue; } // TODO: This shouldn't be neccasary..?
@@ -215,7 +219,7 @@ site.chedit.remove = function() {
 			site.storage.readfile(site.cfg.paths.json,"stations.json",
 				function(res) {
 					var json = JSON.parse(res);
-					console.log("\n"+ site.helpers.arrToString(json,0,"\n") +"\n");
+					loggr.log("\n"+ site.helpers.arrToString(json,0,"\n") +"\n");
 				},
 				function(error) {
 					// TODO: unless we intend to do this job in Reno, we're in Barney
@@ -227,7 +231,7 @@ site.chedit.remove = function() {
 		},
 		function(e){ 
 			alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
-			console.log(site.storage.getErrorType(e)); 
+			loggr.log(site.storage.getErrorType(e)); 
 		}
 	);
 	
@@ -241,7 +245,7 @@ site.chedit.remove = function() {
 
 site.chedit.check = function(findStationName,silent) {
 
-	console.log("site.chedit.check()");
+	loggr.log("site.chedit.check()");
 	
 	// Start getting values
 	var station_id = $("#editstation input[name='station_id']")[0].value.trim();
@@ -274,9 +278,9 @@ site.chedit.check = function(findStationName,silent) {
 			}
 		}
 	} else {
-		//console.warn(" > Huh? !site.data.stations...?"); // TODO: CLEANNUP
-		//console.log(" >> "+ station_id);
-		//console.log(" >> "+ site.data.stations);
+		//loggr.warn(" > Huh? !site.data.stations...?"); // TODO: CLEANNUP
+		//loggr.log(" >> "+ station_id);
+		//loggr.log(" >> "+ site.data.stations);
 	}
 	
 	// Check if exsits: url
@@ -289,15 +293,17 @@ site.chedit.check = function(findStationName,silent) {
 			}
 		}
 	} else {
-		// console.warn(" > Huh? !site.data.stations...?"); // TODO: CLEANNUP
+		// loggr.warn(" > Huh? !site.data.stations...?"); // TODO: CLEANNUP
 	}
 	
 	// Create new entry
 	if (!site.chedit.newentry) { site.chedit.newentry = {}; }
-	site.chedit.newentry.station_id = "CUSTOM."+site.genUniqueStationId(station_name).replace(" ","_");
+	site.chedit.newentry.station_id = "CUSTOM."+site.helpers.genUniqueStationId(station_name).replace(" ","_");
 	site.chedit.newentry.station_name = station_name;
 	site.chedit.newentry.station_icon = station_icon;
 	site.chedit.newentry.station_image = station_icon;
+	site.chedit.newentry.station_country = ""
+	site.chedit.newentry.station_bitrate = "-1 kbps"
 	
 	// Start checking the actual urls..
 	site.chedit.check_station_url(station_name, station_url, silent);
@@ -308,7 +314,7 @@ site.chedit.check = function(findStationName,silent) {
 
 site.chedit.check_station_url = function(station_name, station_url, silent) {
 	
-	console.log("site.chedit.check_station_url()");
+	loggr.log("site.chedit.check_station_url()");
 	
 	site.ui.showloading("Wait");
 	
@@ -337,14 +343,14 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 		station_path = station_host.substr(station_host.indexOf("/"));
 		station_host = station_host.substr(0,station_host.indexOf("/"));
 	}
-	console.log(" > Host: "+ station_host);
-	console.log(" > Port: "+ station_port);
-	console.log(" > Path: "+ station_path);
+	loggr.log(" > Host: "+ station_host);
+	loggr.log(" > Port: "+ station_port);
+	loggr.log(" > Path: "+ station_path);
 	
 	// Do api call
 	var apiqueryobj = {
 		"get":"station_info",
-		"station_id":"TMP."+site.genUniqueStationId(station_name).replace(" ","_"),
+		"station_id":"TMP."+site.helpers.genUniqueStationId(station_name).replace(" ","_"),
 		"station_host":station_host,
 		"station_port":station_port,
 		"station_path":station_path
@@ -356,7 +362,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 	site.webapi.exec(apiaction,apiquerystr,
 		function(data,silent) {
 			site.ui.hideloading();
-			console.log(JSON.stringify(data["data"]));
+			loggr.log(JSON.stringify(data["data"]));
 			if (!data["data"]["content-type"]) { 
 				// Not good!
 				if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url"); }
@@ -403,8 +409,8 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 		},
 		function(error) {
 			site.ui.hideloading();
-			if (error.message) { site.ui.showtoast(error.message); console.log(error.message); }
-			else { console.log(error); }
+			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
+			else { loggr.log(error); }
 		}
 	);
 	
@@ -414,7 +420,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 
 site.chedit.check_station_icon = function(silent) {
 	
-	console.log("site.chedit.check_station_icon()");
+	loggr.log("site.chedit.check_station_icon()");
 	
 	var newentry = site.chedit.newentry;
 	// site.chedit.newentry.tmp.station_info
@@ -429,7 +435,7 @@ site.chedit.check_station_icon = function(silent) {
 		// All good :D
 		// TODO: Works
 		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
-		console.log(" > All good :D");
+		loggr.log(" > All good :D");
 		if (confirm("Everything seems to check out! Save now?")) {
 			site.chedit.save();
 		}
@@ -437,8 +443,8 @@ site.chedit.check_station_icon = function(silent) {
 	img.onerror = function(evt) {
 		// Search the google :D
 		// TODO: Work
-		console.warn(evt);
-		console.log(" > Search the google :D");
+		loggr.warn(evt);
+		loggr.log(" > Search the google :D");
 		if (confirm("Station icon could not be loaded. Search Google for an icon?")) {
 			site.chedit.searchicon();
 		} else {
@@ -454,7 +460,7 @@ site.chedit.check_station_icon = function(silent) {
 
 site.chedit.searchicon = function() {
 	
-	console.log("site.chedit.searchicon()");
+	loggr.log("site.chedit.searchicon()");
 	
 	if (!site.chedit.newentry) {
 		site.ui.showtoast("Cannot search without info");
@@ -472,6 +478,7 @@ site.chedit.searchicon = function() {
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
 		+ '"'+ $("#editstation input[name='station_name']")[0].value.trim() +'"' +" "
+		+ site.chedit.newentry.station_country +" "
 	//	+ site.chedit.newentry.station_url +" "
 		+ "logo icon";
 	
@@ -485,7 +492,7 @@ site.chedit.searchicon = function() {
 	site.helpers.googleImageSearch(searchstring,
 		function(results) {
 			
-			console.log(" > "+ results.length +" result(s)");
+			loggr.log(" > "+ results.length +" result(s)");
 			
 			// TODO: let user pick image? Nah, we're going with the first one for now
 			// --> Find square image(s)
@@ -494,7 +501,7 @@ site.chedit.searchicon = function() {
 				var result = results[i];
 				var aspect = site.helpers.calcImageAspect(result["width"],result["height"]);
 				if (aspect<1.1) { 
-					console.log(" > Found square(ish) result: "+ aspect);
+					loggr.log(" > Found square(ish) result: "+ aspect);
 					theresult = result; break; 
 				}
 				
@@ -502,12 +509,12 @@ site.chedit.searchicon = function() {
 			// Okat just use some image if we can't find a suitable one.. || TODO: fix this
 			if (!theresult) { theresult = results[0]; }
 			
-			console.log(" > Result info:");
-			console.log(" >> tbw/tbh: "+ result.tbWidth +" x "+ result.tbHeight);
-			console.log(" >> w/h: "+ result.width +" x "+ result.height);
+			loggr.log(" > Result info:");
+			loggr.log(" >> tbw/tbh: "+ result.tbWidth +" x "+ result.tbHeight);
+			loggr.log(" >> w/h: "+ result.width +" x "+ result.height);
 			
 			// Set src
-			console.log(" > Pick: "+theresult.url);
+			loggr.log(" > Pick: "+theresult.url);
 			$("#editstation input[name='station_icon']")[0].value = theresult.url;
 			
 			// Auto check..
@@ -515,21 +522,12 @@ site.chedit.searchicon = function() {
 			
 		},
 		function() {
-			console.log(" > No image found...");
+			loggr.log(" > No image found...");
 			site.ui.showtoast("Could not find an icon on Google...");
 		},
 		opts
 	);
 	
-}
-
-
-site.genUniqueStationId = function(station_name) {
-	for (var i in site.cfg.illegalchars) {
-		var illchar = site.cfg.illegalchars[i];
-		station_name = station_name.replace(illchar,"");
-	}
-	return station_name;
 }
 
 
