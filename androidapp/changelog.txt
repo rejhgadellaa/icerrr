@@ -1,4 +1,9 @@
 
+v0.014
+- Added 'Search station' section (with option to add manually)
+- Implemented custom logger, can save and upload logs
+- Fix: Typo: site.session.ui_resume_callbacks
+
 v0.013
 - UI/UX tweaks to 'Add/Edit Stations' section
 - Fix: removing/editing stations causes 'undefined' errors in stations data
