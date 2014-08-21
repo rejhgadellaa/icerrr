@@ -105,6 +105,46 @@ site.helpers.mergeStations = function(stations1,stations2) {
 
 // ---> Images
 
+// Calc average color from image
+
+site.helpers.getImgAvgColor = function(image,x1,y1,x2,y2) {
+
+	// Draw img on canvas..
+	var canvas = document.createElement("canvas");
+	canvas.width = image.width;
+	canvas.height = image.height;
+	var ctx = canvas.getContext("2d");
+	ctx.drawImage(image, 0, 0);
+	
+	// Get upper pixel data
+	var pixelDataUpper = ctx.getImageData(x1, y1, x2, y2).data;
+	var pixelDataUpperAveraged = site.helpers.calcAverageColor(pixelDataUpper);
+	
+	return pixelDataUpperAveraged;
+		
+}
+
+// Calc Average Color from array
+
+site.helpers.calcAverageColor = function(pixelArray) {
+	var r,g,b,a;
+	var rt = gt = bt = 0; at=0;
+	for (var i=0; i<pixelArray.length; i+=4) {
+		rt += pixelArray[i];
+		gt += pixelArray[i+1];
+		bt += pixelArray[i+2];
+		at += pixelArray[i+3];
+	}
+	var len = pixelArray.length/4;
+	r = parseInt(rt/len)
+	b = parseInt(bt/len);
+	g = parseInt(gt/len);
+	a = at/len;
+	var ret = new Array(r,g,b,a);
+	return ret;
+	
+}
+
 // Store image
 // - create canvas, draw image on canvas, get base64, write to disk
 

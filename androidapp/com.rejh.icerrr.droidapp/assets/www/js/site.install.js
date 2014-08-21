@@ -61,9 +61,15 @@ site.installer.cfg.overwrite_versions = [0.014];
 
 // ---> Init
 
-site.installer.init = function() {
+site.installer.init = function(isUpdate) {
 	
 	loggr.log("site.installer.init()");
+	
+	// Update?
+	if (isUpdate) {
+		site.installer.isUpdate = true;
+		$("#install .log").html("<strong>Updating...</strong>");
+	}
 	
 	// Well let's start by showing some loading ui
 	site.ui.gotosection("#install");
@@ -212,22 +218,6 @@ site.installer.downloadjson_read = function() {
 	loggr.log(" > Path: "+ path);
 	loggr.log(" > Filename: "+ filename);
 	
-	// Check dirtyfiles
-	// TODO: this doesnt work because we haven't restored site.session yet..
-	/*
-	if (!site.session.dirtyfiles) {
-		loggr.log(" > !site.session.dirtyfiles");
-		site.installer.downloadjson_write();
-		return; // <- I keep forgetting this
-	} else {
-		if (site.session.dirtyfiles.indexOf(path+"/"+filename)<0) {
-			loggr.log(" > Not dirty...");
-			site.installer.downloadjson_write();
-			return; // <- I keep forgetting this
-		}
-	}
-	/**/
-	
 	// Some output..
 	site.installer.logger("&nbsp;&gt;&gt; Read: "+ path +"/"+ filename);
 	
@@ -250,7 +240,7 @@ site.installer.downloadjson_read = function() {
 			switch(site.datatemp["info"]["desc"]) {
 				
 				case "stations":
-					if (site.installer.cfg.overwrite_versions.indexOf(site.cfg.app_version)<0) { 
+					if (site.installer.cfg.overwrite_versions.indexOf(site.cfg.app_version)<0 || site.cookies.get("app_version")==site.cfg.app_version) { 
 						site.datatemp["data"] = site.helpers.mergeStations(datalocal,dataremote);  // merge
 					} else {
 						site.datatemp["data"] = dataremote; // overwrite
@@ -338,27 +328,30 @@ site.installer.finishup = function() {
 	site.installer.logger("Finish up...");
 	
 	// Clear cookies..
-	if (site.installer.cfg.overwrite_versions.indexOf(site.cfg.app_version)<0) {
+	if (site.installer.cfg.overwrite_versions.indexOf(site.cfg.app_version)>=0 && site.cookies.get("app_version")!=site.cfg.app_version) {
 		site.installer.logger("&nbsp;&gt; Clear localstorage...");
 		site.cookies.clear();
 	}
 	
+	// Set time for update
+	var now = new Date().getTime();
+	var then = now + (1000*60*60*24); // 1000*60*60*24 == 1 day
+	
+	site.cookies.put("app_update_time",then);
+	
+	// Wait a sec...
 	setTimeout(function(){
-		site.installer.logger("&nbsp;&gt; Ok let's do some hard work!..");
-		setTimeout(function(){
-			site.installer.logger(" OK",{use_br:false});
-			site.installer.logger("&nbsp;&gt; Done");
-			site.ui.showloading("Restarting...");
-			setTimeout(function() {
-				
-				site.cookies.put("app_version",site.cfg.app_version);
-				site.cookies.put("app_is_installed",1);
-				window.location.reload(); // TODO: replace all 'window.location.reload();' with window.location.href=[current_host]/[path-to-file]
-				
-			},2500);
-			//site.ui.gotosection("#home"); // TODO: no not go here, goto #firstlaunch
-		},1000);
-	},2500);
+		site.installer.logger("&nbsp;&gt; Done");
+		site.ui.showloading("Restarting...");
+		setTimeout(function() {
+			
+			site.cookies.put("app_version",site.cfg.app_version);
+			site.cookies.put("app_is_installed",1);
+			window.location.reload(); // TODO: replace all 'window.location.reload();' with window.location.href=[current_host]/[path-to-file]
+			
+		},2500);
+		//site.ui.gotosection("#home"); // TODO: no not go here, goto #firstlaunch
+	},1000);
 		
 	
 }

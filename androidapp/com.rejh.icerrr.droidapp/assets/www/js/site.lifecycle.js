@@ -93,6 +93,11 @@ site.lifecycle.onDeviceReady = function() {
 		}
 	}
 	
+	// Update...
+	if (site.cookies.get("app_update_time") < new Date().getTime()) {
+		site.installer.init(true);
+	}
+	
 	// Restore user preferences
 	site.data.userprefs = JSON.parse(site.cookies.get("userprefs"));
 	if (!site.data.userprefs) {
@@ -142,8 +147,8 @@ site.lifecycle.onResume = function() {
 	// Re-init ui updates.. || TODO: we really need a better way to do this..	
 	// Call UI close function
 	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
-	while (site.session.ui_resume_callbacks.length>0) {
-		var func = site.session.ui_resume_callbacks.shift(); // same order as incoming..
+	for (var i=0; i<site.session.ui_resume_callbacks.length; i++) {
+		var func = site.session.ui_resume_callbacks[i]; // same order as incoming..
 		try { func(); } catch(e) { }
 	}
 	
@@ -174,8 +179,8 @@ site.lifecycle.onPause = function() {
 	
 	// Call UI close function
 	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
-	while (site.session.ui_pause_callbacks.length>0) {
-		var func = site.session.ui_pause_callbacks.shift(); // same order as incoming..
+	for (var i=0; i<site.session.ui_pause_callbacks.length; i++) {
+		var func = site.session.ui_pause_callbacks[i]; // same order as incoming..
 		try { func(); } catch(e) { }
 	}
 	

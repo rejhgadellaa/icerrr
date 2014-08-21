@@ -1,3 +1,10 @@
+2014-08-21 07:10:40    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:10:40    Cleanup json
+2014-08-21 07:10:15    Error: Error: file '../json/station_info.radio5.json' not found? {"{\"station_id\"":"\"radio5\",\"host\":\"icecast.omroep.nl\",\"port\":80,\"path\":\"\/radio5-bb-mp3\"}\n\nhttp\/1.0 200 ok","content-type":"audio\/mpeg","icy-br":"192","ice-audio-info":"bitrate=192","icy-genre":"mixed","icy-name":"radio 5","icy-url":"http:\/\/www.radio5.nl","server":"ics2ess.omroep.nl","cache-control":"no-cache","icy-metaint":"16000","nowplaying":"Jackie Trent - Where are you now (my love)","station_id":"radio5","time_ms":1408605014000,"querys":"{\"station_id\":\"radio5\",\"host\":\"icecast.omroep.nl\",\"port\":80,\"path\":\"\/radio5-bb-mp3\"}","queryj":{"station_id":"radio5","host":"icecast.omroep.nl","port":80,"path":"\/r
+2014-08-21 07:10:13    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:10:13    Cleanup json
+2014-08-21 07:09:27    GET > {"get":"station_info","station_id":"radio6","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio6-bb-mp3"}
+2014-08-21 07:09:27    Cleanup json
 2014-08-21 07:07:57    GET > {"get":"station_info","station_id":"radio6","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio6-bb-mp3"}
 2014-08-21 07:07:57    Cleanup json
 2014-08-21 07:07:52    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}

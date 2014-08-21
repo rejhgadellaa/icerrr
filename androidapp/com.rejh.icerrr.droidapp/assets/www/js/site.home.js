@@ -52,10 +52,15 @@ site.home.init = function() {
 	// bla
 	$("#home .main .station_image img").on("load",
 		function(evt) { // TODO: detect transparent images..
-			var colorThief = new ColorThief();
 			var img = $("#home .main .station_image img")[0];
-			var color = colorThief.getColor(img);
-			//$("#home .main .station_image_wrap").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+",1)");
+			var color = site.helpers.getImgAvgColor(img,2,2,4,4);
+			if (color[3]<1.0) {
+				color = [255,255,255];
+			} else {
+				//var colorThief = new ColorThief();
+				//var color = colorThief.getColor(img);
+			}
+			$("#home .main .station_image_wrap").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+",1)");
 		}
 	);
 	$("#home .main .station_image img").on("error",
@@ -169,7 +174,7 @@ site.home.run_station_updates = function() {
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
 			
 			} else {
-				site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]);
+				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
 				site.session.currentstation.station_nowplaying = data["data"]["nowplaying"];
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
