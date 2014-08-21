@@ -367,8 +367,7 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 			
 			// err
 			loggr.log(" > No image found...");
-			loggr.log(" > remove: "+ "#chlist_resultitem_"+ station_data.station_id);
-			$("#chlist_resultitem_"+ station_data.station_id).remove(".resulticon");
+			$("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src","img/icons-48/ic_launcher.png");
 			
 		},
 		opts

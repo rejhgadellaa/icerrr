@@ -1,4 +1,11 @@
 
+v0.015
+- Check for (stations) updates every ~24hrs
+- Removed search icon on results screen
+- Fix: onresume and onpause functions were cleared sometimes
+- Fix: Station name stated 'Null' on #home for Veronica
+- Tweaks for UX
+
 v0.014
 - Added 'Search station' section (with option to add manually)
 - Implemented custom logger, can save and upload logs

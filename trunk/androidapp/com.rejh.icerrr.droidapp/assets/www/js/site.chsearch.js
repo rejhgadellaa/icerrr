@@ -55,6 +55,8 @@ site.chsearch.searchstation = function() {
 	// Check
 	if (!name) { site.ui.showtoast("Station name is mandatory"); return; }
 	
+	site.chsearch.searchstr = name;
+	
 	site.ui.showloading();
 	
 	// Webapi time!
@@ -141,6 +143,8 @@ site.chsearch.resultsToStationData = function(results) {
 site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 	loggr.log("site.chsearch.drawResults()");
+	
+	$("#searchstation_results .title").html("Icerrr: \""+site.helpers.short(site.chsearch.searchstr,24)+"\"");
 	
 	// TODO: This function is a bit different from site.chlist.js, mainly because
 	//  (cont) it uses its own section

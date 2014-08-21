@@ -56,6 +56,11 @@ site.ui.gotosection = function(selector) {
 		try { func(); } catch(e) { }
 	}
 	
+	// Clean up ui_resume_callbacks
+	while (site.session.ui_resume_callbacks.length>0) {
+		site.session.ui_resume_callbacks.shift(); // same order as incoming..
+	}
+	
 	// TODO: nice animations?
 	// TODO: Settimeout is a workaround so that :active elements lose their active state..
 	if (site.timeouts.gotosection) { clearTimeout(site.timeouts.gotosection); }
