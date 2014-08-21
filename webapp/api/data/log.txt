@@ -1,3 +1,27 @@
+2014-08-21 07:23:11    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:23:11    Cleanup json
+2014-08-21 07:23:05    GET > {"get":"stations"}
+2014-08-21 07:23:05    Cleanup json
+2014-08-21 07:19:36    {"data":{"post":"ok"},"info":[]}
+2014-08-21 07:19:36    POST > {"post":"log"}
+2014-08-21 07:19:36    Cleanup json
+2014-08-21 07:18:52    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2014-08-21 07:18:52    Cleanup json
+2014-08-21 07:18:36    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:18:36    Cleanup json
+2014-08-21 07:18:28    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:18:28    Cleanup json
+2014-08-21 07:18:22    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:18:22    Cleanup json
+2014-08-21 07:18:17    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:18:17    Cleanup json
+2014-08-21 07:18:11    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:18:11    Cleanup json
+2014-08-21 07:17:52    Error: Error: file '../json/station_info.radio5.json' not found?
+2014-08-21 07:17:51    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:17:51    Cleanup json
+2014-08-21 07:17:14    GET > {"get":"stations"}
+2014-08-21 07:17:14    Cleanup json
 2014-08-21 07:10:40    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
 2014-08-21 07:10:40    Cleanup json
 2014-08-21 07:10:15    Error: Error: file '../json/station_info.radio5.json' not found? {"{\"station_id\"":"\"radio5\",\"host\":\"icecast.omroep.nl\",\"port\":80,\"path\":\"\/radio5-bb-mp3\"}\n\nhttp\/1.0 200 ok","content-type":"audio\/mpeg","icy-br":"192","ice-audio-info":"bitrate=192","icy-genre":"mixed","icy-name":"radio 5","icy-url":"http:\/\/www.radio5.nl","server":"ics2ess.omroep.nl","cache-control":"no-cache","icy-metaint":"16000","nowplaying":"Jackie Trent - Where are you now (my love)","station_id":"radio5","time_ms":1408605014000,"querys":"{\"station_id\":\"radio5\",\"host\":\"icecast.omroep.nl\",\"port\":80,\"path\":\"\/radio5-bb-mp3\"}","queryj":{"station_id":"radio5","host":"icecast.omroep.nl","port":80,"path":"\/r
@@ -1570,5 +1594,4 @@
 2014-08-16 18:36:46    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/radio1-bb-mp3"}
 2014-08-16 18:35:59    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/radio1-bb-mp3"}
 2014-08-16 18:35:50    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 18:35:27    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 18:34:46    GET > {"get":"
+2014-08-16 18:35:27    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-b
