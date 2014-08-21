@@ -57,6 +57,7 @@ site.ui.gotosection = function(selector) {
 	}
 	
 	// Clean up ui_resume_callbacks
+	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
 	while (site.session.ui_resume_callbacks.length>0) {
 		site.session.ui_resume_callbacks.shift(); // same order as incoming..
 	}
