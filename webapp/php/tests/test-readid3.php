@@ -41,6 +41,8 @@ $queryj = json_decode($querys,true);
 	if (!$queryj["host"]) { $queryj["host"] = "null"; }
 	if (!$queryj["port"]) { $queryj["port"] = 80; }
 	// if (!$queryj["path"]) { $queryj["path"] = "/3fm-sb-mp3"; }
+	
+$timebgn = time();
 
 // Open a socket
 $fsock = @fsockopen($queryj["host"],$queryj["port"]);
@@ -53,32 +55,40 @@ if (!$fsock) {
 $request = "GET ".$queryj["path"]." HTTP/1.0\r\nIcy-MetaData:1\r\n\r\n";
 
 // Request a-go-go
-$res = "";
+$res = $querys."\n\n";
 $headerFound = false;
 $metaFound = false;
 fwrite($fsock,$request);
 $whilenum = 0;
 while (!feof($fsock)) {
+	
 	$whilenum++;
-	if ($whilenum>4096) { error("Whilenum exceeded at 'while (!feof($fsock))'"); }
+	if ($whilenum>2048) { fclose($fsock); error("Whilenum exceeded at 'while (!feof($fsock))'"); }
+	
+	$timerunning = time() - $timebgn;
+	if ($timerunning>24) { fclose($fsock); error("Exceeded 24 seconds of running time.."); }
+	
 	$line = fgets($fsock);
 	$res .= $line;
 	fw("outp.txt",$res);
+	
 	if (strpos($res,"\r\n\r\n") && !$headerFound) {
 		// got the header
 		$headerFound = true;
 		$header = $res;
 		fw("outp.header.txt",$res);
 	}
+	
 	if (strpos($res,"StreamTitle") && $headerFound) {
 		// got meta?
 		$bgn = strpos($line,"StreamTitle='")+strlen("StreamTitle='");
-		$end = strpos($line,"'",$bgn);
+		$end = strpos($line,";",$bgn)-1;
 		$len = $end - $bgn;
 		$title = substr($line,$bgn,$len);
 		fw("outp.meta.txt",$title);
 		break;
 	}
+	
 }
 fclose($fsock);
 
