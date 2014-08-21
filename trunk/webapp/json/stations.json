@@ -142,5 +142,21 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
+  },
+  {
+    "station_id": "veronicahitradio",
+    "station_edited":{},
+    "station_name": "Veronica",
+    "station_url": "http://8563.live.streamtheworld.com:80/VERONICA_SC?.wma",
+    "station_icon": "http://static.rad.io/images/broadcasts/b8/b2/9676/w175.png",
+    "station_image": 0,
+    "station_host": "8563.live.streamtheworld.com",
+    "station_port": 80,
+    "station_path": "/VERONICA_SC?.wma",
+    "station_country":"NL",
+    "station_bitrate":"-1 kbps",
+    "rating_custom": -1,
+    "rating_soundcloud": -1,
+    "rating_average": -1
   }
 ]

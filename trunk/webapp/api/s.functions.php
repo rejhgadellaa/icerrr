@@ -45,6 +45,22 @@ function getJsonError($code) {
 	
 }
 
+// ---> Cleanup json
+
+function cleanupjson() {
+	logg("Cleanup json");
+	$dir = "../json/";
+	$files = rd($dir);
+	foreach($files as $fnum => $fname) {
+		$fpath = "{$dir}{$fname}";
+		if (is_dir($fpath)) { continue; }
+		if (strpos($fpath,"station_info.TMP.")!==FALSE) {
+			logg(" - {$fpath}");
+			unlink($fpath);
+		}
+	}
+}
+
 // ---> File i/o
 
 function readJsonsFile($file) {

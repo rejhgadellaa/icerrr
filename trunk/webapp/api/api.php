@@ -19,6 +19,8 @@
 include("s.config.php");
 include("s.functions.php");
 
+cleanupjson();
+
 $action = $_GET["a"];
 $query = urldecode($_GET["q"]);
 $apikey = urldecode($_GET["apikey"]);
@@ -72,8 +74,9 @@ switch($action) {
 					$fw = fw($filename,$fg);
 					if (!$fw) { error("Could not write $filename"); }
 				}
+				sleep(1);
 				$json["data"] = json_decode(fr($filename),true);
-				if (!$json["data"]) { error("Error: file '$filename' not found"); } // TODO: Generate file :D
+				if (!$json["data"]) { error("Error: file '$filename' not found? ".fr($filename)); } // TODO: Generate file :D
 				//$json["data"] = json_decode($json["data"],true);
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
 				$json["info"]["desc"] = $queryobj["get"];
