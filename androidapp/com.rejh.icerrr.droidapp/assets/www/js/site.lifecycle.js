@@ -99,6 +99,7 @@ site.lifecycle.onDeviceReady = function() {
 	// Update...
 	if (site.cookies.get("app_update_time") < new Date().getTime()) {
 		site.installer.init(true);
+		return; // <- important. forgot it yet again.
 	}
 	
 	// Restore user preferences

@@ -1,3 +1,5 @@
+v0.018
+- Bug fix
 
 v0.017
 - Uses dirble for now playing info when available
