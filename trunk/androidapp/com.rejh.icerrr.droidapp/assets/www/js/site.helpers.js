@@ -369,13 +369,26 @@ site.helpers.getRandomListEntry = function(list) {
 
 // Capitalize
 
-site.helpers.capitalize = function(str) {
+site.helpers.capitalize = function(str,everyword) {
 	if(!str) { 
 		loggr.error("site.helpers.capitalize().err: !str");
 		return "<span style='color:#f00;'>Null</span>"; 
 	}
+	if (everyword) { 
+		return site.helpers.capAll(str);
+	}
 	str = str.substr(0,1).toUpperCase() + str.substr(1);
 	return str;
+}
+
+site.helpers.capAll = function(str) {
+	var strs = str.split(" ");
+	for (var i in strs) {
+		if (strs[i].length<2 && strs[i].toLowerCase()!="i") { continue; }
+		if (typeof strs[i] != "string") { continue; }
+		strs[i] = site.helpers.capitalize(strs[i]);
+	}
+	return strs.join(" ");
 }
 
 // Short

@@ -73,6 +73,7 @@ site.home.init = function() {
 	$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
 	$("#home .main .station_name").html(site.session.currentstation.station_name);
 	$("#home .main .station_nowplaying").html("Now playing: ...");
+	$("#home .main").css("background","rgba(0,0,0,0)");
 	
 	// extra events
 	$("#home .main .station_nowplaying")[0].onclick = function(ev) {
@@ -156,6 +157,12 @@ site.home.run_ui_updates = function() {
 site.home.run_station_updates = function() {
 	
 	loggr.log("site.home.run_station_updates()");
+	
+	if (site.session.currentstation.dirble_id) {
+		site.home.useDirbleNowPlaying();
+		return;
+	}
+	
 	var apiqueryobj = {
 		"get":"station_info",
 		"station_id":site.session.currentstation.station_id,
@@ -186,8 +193,53 @@ site.home.run_station_updates = function() {
 		}
 	);
 	
-	if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
-	site.timeouts.home_station_timeout = setTimeout(function(){site.home.run_station_updates()},1.5*60*1000); // every ~minute
+	if (!site.session.isPaused) {
+		if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
+		site.timeouts.home_station_timeout = setTimeout(function(){site.home.run_station_updates()},1.5*60*1000); // every ~minute
+	}
+	
+}
+
+// ---> Dirble nowplaying
+
+site.home.useDirbleNowPlaying = function() {
+	
+	loggr.log("site.home.useDirbleNowPlaying()");
+	
+	var apiqueryobj = {
+		"get":"nowplaying_dirble",
+		"dirble_id":site.session.currentstation.dirble_id,
+	}
+	
+	var apiaction = "get";
+	var apiquerystr = JSON.stringify(apiqueryobj);
+	
+	site.webapi.exec(apiaction,apiquerystr,
+		function(data) {
+			if (!data["data"]["songhistory"]) { 
+				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
+				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
+			
+			} else {
+				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
+				site.session.currentstation.station_nowplaying = site.helpers.capitalize(data["data"]["songhistory"][0].info.name,1) +" - "+ site.helpers.capitalize(data["data"]["songhistory"][0].info.title,1);
+			}
+			$("#home .main .station_name").html(site.session.currentstation.station_name);
+			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
+			if (data["data"]["songhistory"][0].info.image) {
+				// $("#home .main").css("background","url("+data["data"]["songhistory"][0].info.image+")");
+			}
+		},
+		function(error) {
+			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
+			else { loggr.log(error); }
+		}
+	);
+	
+	if (!site.session.isPaused) {
+		if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
+		site.timeouts.home_station_timeout = setTimeout(function(){site.home.run_station_updates()},1.5*60*1000); // every ~minute
+	}
 	
 }
 

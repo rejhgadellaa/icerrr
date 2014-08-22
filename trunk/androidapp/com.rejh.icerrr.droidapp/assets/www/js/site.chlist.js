@@ -213,7 +213,8 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resulticon.addEventListener("load",function(ev){ /*...*/ });
 		resulticon.addEventListener("error",function(ev){ 
 			loggr.log(" > Could not load "+ ev.target.src);
-			var station_data = stations[site.helpers.session.getStationIndexById(ev.target.parentNode.station_id)];
+			loggr.log(" > "+ ev.target.parentNode.station_id);
+			var station_data = stations[site.helpers.session.getStationIndexById(ev.target.parentNode.station_id,stations)];
 			site.chlist.imagesearch(station_data);
 			ev.target.removeEventListener("error");
 			ev.target.addEventListener("error",function(ev){ 
