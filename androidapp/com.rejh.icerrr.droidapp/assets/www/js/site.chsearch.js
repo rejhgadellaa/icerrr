@@ -118,6 +118,7 @@ site.chsearch.resultsToStationData = function(results) {
 		
 		var station = {
 			station_id:site.helpers.genUniqueStationId(result.name).replace(" ","_"),
+			dirble_id:result.id,
 			station_edited:{},
 			station_name:result.name,
 			station_url:result.streamurl,

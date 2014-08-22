@@ -1,3 +1,1568 @@
+2014-08-22 07:11:55    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:11:55    Cleanup json
+2014-08-22 07:10:51    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:10:51    Cleanup json
+2014-08-22 07:10:19    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:10:19    Cleanup json
+2014-08-22 07:10:08    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:10:08    Cleanup json
+2014-08-22 07:09:37    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:09:37    Cleanup json
+2014-08-22 07:09:20    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:09:20    Cleanup json
+2014-08-22 07:08:34    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:08:34    Cleanup json
+2014-08-22 07:07:34    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:07:34    Cleanup json
+2014-08-22 07:06:04    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:06:04    Cleanup json
+2014-08-22 07:05:16    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:05:16    Cleanup json
+2014-08-22 07:04:43    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:04:43    Cleanup json
+2014-08-22 07:04:15    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:04:15    Cleanup json
+2014-08-22 07:03:36    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:03:36    Cleanup json
+2014-08-22 07:02:46    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:02:46    Cleanup json
+2014-08-22 07:01:31    {"data":{"post":"ok"},"info":[]}
+2014-08-22 07:01:31    POST > {"post":"log"}
+2014-08-22 07:01:31    Cleanup json
+2014-08-22 07:01:31    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:01:31    Cleanup json
+2014-08-22 07:00:51    {"data":{"post":"ok"},"info":[]}
+2014-08-22 07:00:51    POST > {"post":"log"}
+2014-08-22 07:00:51    Cleanup json
+2014-08-22 07:00:50    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 07:00:50    Cleanup json
+2014-08-22 06:59:28    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:59:28    POST > {"post":"log"}
+2014-08-22 06:59:28    Cleanup json
+2014-08-22 06:59:28    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:59:28    Cleanup json
+2014-08-22 06:58:57    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:58:57    POST > {"post":"log"}
+2014-08-22 06:58:57    Cleanup json
+2014-08-22 06:58:57    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:58:57    Cleanup json
+2014-08-22 06:58:33    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:58:33    POST > {"post":"log"}
+2014-08-22 06:58:33    Cleanup json
+2014-08-22 06:58:33    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:58:33    Cleanup json
+2014-08-22 06:57:03    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:57:03    POST > {"post":"log"}
+2014-08-22 06:57:03    Cleanup json
+2014-08-22 06:57:03    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:57:03    Cleanup json
+2014-08-22 06:55:28    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:55:28    POST > {"post":"log"}
+2014-08-22 06:55:28    Cleanup json
+2014-08-22 06:55:28    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:55:28    Cleanup json
+2014-08-22 06:55:22    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:55:22    Cleanup json
+2014-08-22 06:54:31    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:54:31    POST > {"post":"log"}
+2014-08-22 06:54:31    Cleanup json
+2014-08-22 06:54:30    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:54:30    Cleanup json
+2014-08-22 06:54:17    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:54:17    Cleanup json
+2014-08-22 06:54:03    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:54:03    POST > {"post":"log"}
+2014-08-22 06:54:03    Cleanup json
+2014-08-22 06:54:02    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:54:02    Cleanup json
+2014-08-22 06:52:33    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:52:33    POST > {"post":"log"}
+2014-08-22 06:52:33    Cleanup json
+2014-08-22 06:52:32    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:52:32    Cleanup json
+2014-08-22 06:51:43    {"data":{"post":"ok"},"info":[]}
+2014-08-22 06:51:43    POST > {"post":"log"}
+2014-08-22 06:51:43    Cleanup json
+2014-08-22 06:51:43    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:51:43    Cleanup json
+2014-08-22 06:49:23    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:49:23    Cleanup json
+2014-08-22 06:48:33    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:48:33    Cleanup json
+2014-08-22 06:47:53    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:47:53    Cleanup json
+2014-08-22 06:45:20    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:45:20    Cleanup json
+2014-08-22 06:43:29    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:43:29    Cleanup json
+2014-08-22 06:43:24    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:43:24    Cleanup json
+2014-08-22 06:40:39    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:40:38    Cleanup json
+2014-08-22 06:39:26    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:39:26    Cleanup json
+2014-08-22 06:38:01    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:38:01    Cleanup json
+2014-08-22 06:37:51    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:37:51    Cleanup json
+2014-08-22 06:37:26    Error: Error running query on Dirble: 'http://api.dirble.com/v1/search/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/11284'
+2014-08-22 06:37:26    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:37:26    Cleanup json
+2014-08-22 06:36:31    Error: Error running query on Dirble: 'http://api.dirble.com/v1/search/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/11284'
+2014-08-22 06:36:31    GET > {"get":"nowplaying_dirble","dirble_id":11284}
+2014-08-22 06:36:31    Cleanup json
+2014-08-22 06:36:26    GET > {"get":"search_dirble","search":"veronica/count/32"}
+2014-08-22 06:36:26    Cleanup json
+2014-08-22 06:36:18    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-22 06:36:18    Cleanup json
+2014-08-22 06:36:05    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-22 06:36:05    Cleanup json
+2014-08-22 06:36:02    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-22 06:36:01    Cleanup json
+2014-08-22 06:34:33    Error: Error running query on Dirble: 'http://api.dirble.com/v1/search/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/7'
+2014-08-22 06:34:33    GET > {"get":"nowplaying_dirble","dirble_id":7}
+2014-08-22 06:34:33    Cleanup json
+2014-08-22 06:30:05    Error: Error running query on Dirble: 'http://api.dirble.com/v1/search/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/7'
+2014-08-22 06:30:04    GET > {"get":"nowplaying_dirble","dirble_id":7}
+2014-08-22 06:30:04    Cleanup json
+2014-08-22 06:29:56    Error: Error: 'dirble_id' not defined for get:nowplaying_dirble
+2014-08-22 06:29:56    GET > {"get":"nowplaying_dirble"}
+2014-08-22 06:29:56    Cleanup json
+2014-08-22 06:29:43    GET > {"get":"stations"}
+2014-08-22 06:29:43    Cleanup json
+2014-08-22 06:20:29    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 06:20:29    Cleanup json
+2014-08-22 06:18:59    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 06:18:59    Cleanup json
+2014-08-22 06:17:29    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 06:17:29    Cleanup json
+2014-08-22 06:15:59    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 06:15:59    Cleanup json
+2014-08-22 06:15:34    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 06:15:34    Cleanup json
+2014-08-22 05:57:43    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 05:57:43    Cleanup json
+2014-08-22 05:56:13    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 05:56:13    Cleanup json
+2014-08-22 05:54:43    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 05:54:43    Cleanup json
+2014-08-22 05:53:13    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 05:53:13    Cleanup json
+2014-08-22 05:51:43    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 05:51:43    Cleanup json
+2014-08-22 05:40:57    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 05:40:57    Cleanup json
+2014-08-22 05:39:27    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 05:39:27    Cleanup json
+2014-08-22 04:41:08    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 04:41:08    Cleanup json
+2014-08-22 04:39:38    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 04:39:38    Cleanup json
+2014-08-22 04:38:08    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 04:38:08    Cleanup json
+2014-08-22 04:36:38    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-22 04:36:38    Cleanup json
+2014-08-22 04:36:34    Error: Error: file '../json/station_info.veronicahitradio.json' not found?
+2014-08-22 04:36:33    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-22 04:36:33    Cleanup json
+2014-08-22 04:36:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-22 04:36:27    Cleanup json
+2014-08-22 04:36:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-22 04:36:06    Cleanup json
+2014-08-22 04:34:41    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-22 04:34:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-22 04:34:36    Cleanup json
+2014-08-21 21:59:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:59:30    Cleanup json
+2014-08-21 21:59:03    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-21 21:59:03    Cleanup json
+2014-08-21 21:58:24    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 21:58:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:58:23    Cleanup json
+2014-08-21 21:57:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:57:25    Cleanup json
+2014-08-21 21:56:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:56:28    Cleanup json
+2014-08-21 21:54:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:54:47    Cleanup json
+2014-08-21 21:54:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:54:00    Cleanup json
+2014-08-21 21:52:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:52:30    Cleanup json
+2014-08-21 21:51:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:51:00    Cleanup json
+2014-08-21 21:49:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:49:30    Cleanup json
+2014-08-21 21:48:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:48:00    Cleanup json
+2014-08-21 21:46:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:46:29    Cleanup json
+2014-08-21 21:44:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:44:59    Cleanup json
+2014-08-21 21:43:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:43:29    Cleanup json
+2014-08-21 21:41:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:41:59    Cleanup json
+2014-08-21 21:40:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:40:29    Cleanup json
+2014-08-21 21:38:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:38:59    Cleanup json
+2014-08-21 21:37:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:37:29    Cleanup json
+2014-08-21 21:35:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:35:59    Cleanup json
+2014-08-21 21:34:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:34:29    Cleanup json
+2014-08-21 21:33:00    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 21:32:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:32:59    Cleanup json
+2014-08-21 21:31:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:31:29    Cleanup json
+2014-08-21 21:29:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:29:59    Cleanup json
+2014-08-21 21:28:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:28:29    Cleanup json
+2014-08-21 21:27:00    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 21:26:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:26:59    Cleanup json
+2014-08-21 21:25:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:25:29    Cleanup json
+2014-08-21 21:23:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:23:59    Cleanup json
+2014-08-21 21:22:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:22:29    Cleanup json
+2014-08-21 21:20:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:20:59    Cleanup json
+2014-08-21 21:19:29    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:19:29    Cleanup json
+2014-08-21 21:17:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:17:58    Cleanup json
+2014-08-21 21:16:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:16:28    Cleanup json
+2014-08-21 21:15:00    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 21:14:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:14:58    Cleanup json
+2014-08-21 21:13:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:13:28    Cleanup json
+2014-08-21 21:11:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:11:58    Cleanup json
+2014-08-21 21:10:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:10:28    Cleanup json
+2014-08-21 21:08:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:08:58    Cleanup json
+2014-08-21 21:07:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:07:28    Cleanup json
+2014-08-21 21:05:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:05:58    Cleanup json
+2014-08-21 21:04:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:04:28    Cleanup json
+2014-08-21 21:02:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:02:58    Cleanup json
+2014-08-21 21:01:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 21:01:28    Cleanup json
+2014-08-21 20:59:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:59:58    Cleanup json
+2014-08-21 20:58:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:58:28    Cleanup json
+2014-08-21 20:56:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:56:58    Cleanup json
+2014-08-21 20:55:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:55:28    Cleanup json
+2014-08-21 20:53:59    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 20:53:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:53:58    Cleanup json
+2014-08-21 20:52:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:52:27    Cleanup json
+2014-08-21 20:50:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:50:57    Cleanup json
+2014-08-21 20:49:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:49:27    Cleanup json
+2014-08-21 20:47:59    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 20:47:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:47:57    Cleanup json
+2014-08-21 20:46:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:46:27    Cleanup json
+2014-08-21 20:44:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:44:57    Cleanup json
+2014-08-21 20:43:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:43:27    Cleanup json
+2014-08-21 20:41:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:41:57    Cleanup json
+2014-08-21 20:40:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:40:27    Cleanup json
+2014-08-21 20:38:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:38:57    Cleanup json
+2014-08-21 20:37:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:37:27    Cleanup json
+2014-08-21 20:35:59    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 20:35:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:35:57    Cleanup json
+2014-08-21 20:34:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:34:27    Cleanup json
+2014-08-21 20:32:58    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 20:32:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:32:57    Cleanup json
+2014-08-21 20:31:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:31:27    Cleanup json
+2014-08-21 20:29:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:29:57    Cleanup json
+2014-08-21 20:28:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:28:27    Cleanup json
+2014-08-21 20:26:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:26:57    Cleanup json
+2014-08-21 20:25:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:25:27    Cleanup json
+2014-08-21 20:23:58    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 20:23:57    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:23:57    Cleanup json
+2014-08-21 20:22:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:22:26    Cleanup json
+2014-08-21 20:20:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:20:56    Cleanup json
+2014-08-21 20:19:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:19:26    Cleanup json
+2014-08-21 20:17:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:17:56    Cleanup json
+2014-08-21 20:16:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:16:26    Cleanup json
+2014-08-21 20:14:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:14:56    Cleanup json
+2014-08-21 20:13:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:13:26    Cleanup json
+2014-08-21 20:11:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:11:56    Cleanup json
+2014-08-21 20:10:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:10:26    Cleanup json
+2014-08-21 20:08:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:08:56    Cleanup json
+2014-08-21 20:07:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:07:26    Cleanup json
+2014-08-21 20:05:57    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 20:05:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:05:56    Cleanup json
+2014-08-21 20:04:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:04:26    Cleanup json
+2014-08-21 20:02:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:02:56    Cleanup json
+2014-08-21 20:01:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 20:01:26    Cleanup json
+2014-08-21 19:59:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:59:56    Cleanup json
+2014-08-21 19:58:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:58:26    Cleanup json
+2014-08-21 19:56:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:56:56    Cleanup json
+2014-08-21 19:55:26    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:55:26    Cleanup json
+2014-08-21 19:53:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:53:55    Cleanup json
+2014-08-21 19:52:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:52:25    Cleanup json
+2014-08-21 19:50:57    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 19:50:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:50:55    Cleanup json
+2014-08-21 19:49:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:49:25    Cleanup json
+2014-08-21 19:47:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:47:55    Cleanup json
+2014-08-21 19:46:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:46:25    Cleanup json
+2014-08-21 19:44:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:44:55    Cleanup json
+2014-08-21 19:43:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:43:25    Cleanup json
+2014-08-21 19:41:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:41:55    Cleanup json
+2014-08-21 19:40:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:40:25    Cleanup json
+2014-08-21 19:38:56    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 19:38:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:38:55    Cleanup json
+2014-08-21 19:37:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:37:25    Cleanup json
+2014-08-21 19:35:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:35:55    Cleanup json
+2014-08-21 19:34:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:34:25    Cleanup json
+2014-08-21 19:32:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:32:55    Cleanup json
+2014-08-21 19:31:25    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:31:25    Cleanup json
+2014-08-21 19:29:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:29:55    Cleanup json
+2014-08-21 19:28:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:28:24    Cleanup json
+2014-08-21 19:26:56    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 19:26:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:26:54    Cleanup json
+2014-08-21 19:25:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:25:24    Cleanup json
+2014-08-21 19:23:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:23:54    Cleanup json
+2014-08-21 19:22:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:22:24    Cleanup json
+2014-08-21 19:20:56    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 19:20:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:20:54    Cleanup json
+2014-08-21 19:19:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:19:24    Cleanup json
+2014-08-21 19:17:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:17:54    Cleanup json
+2014-08-21 19:16:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:16:24    Cleanup json
+2014-08-21 19:14:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:14:54    Cleanup json
+2014-08-21 19:13:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:13:24    Cleanup json
+2014-08-21 19:11:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:11:54    Cleanup json
+2014-08-21 19:10:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:10:24    Cleanup json
+2014-08-21 19:08:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:08:54    Cleanup json
+2014-08-21 19:07:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:07:24    Cleanup json
+2014-08-21 19:05:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:05:54    Cleanup json
+2014-08-21 19:04:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:04:24    Cleanup json
+2014-08-21 19:02:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:02:54    Cleanup json
+2014-08-21 19:01:24    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 19:01:24    Cleanup json
+2014-08-21 18:59:54    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:59:53    Cleanup json
+2014-08-21 18:58:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:58:23    Cleanup json
+2014-08-21 18:56:55    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 18:56:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:56:53    Cleanup json
+2014-08-21 18:55:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:55:23    Cleanup json
+2014-08-21 18:53:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:53:53    Cleanup json
+2014-08-21 18:52:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:52:23    Cleanup json
+2014-08-21 18:50:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:50:53    Cleanup json
+2014-08-21 18:49:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:49:23    Cleanup json
+2014-08-21 18:47:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:47:53    Cleanup json
+2014-08-21 18:46:25    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 18:46:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:46:23    Cleanup json
+2014-08-21 18:44:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:44:53    Cleanup json
+2014-08-21 18:43:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:43:23    Cleanup json
+2014-08-21 18:41:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:41:53    Cleanup json
+2014-08-21 18:40:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:40:23    Cleanup json
+2014-08-21 18:38:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:38:53    Cleanup json
+2014-08-21 18:37:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:37:23    Cleanup json
+2014-08-21 18:35:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:35:53    Cleanup json
+2014-08-21 18:34:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:34:23    Cleanup json
+2014-08-21 18:32:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:32:53    Cleanup json
+2014-08-21 18:31:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:31:23    Cleanup json
+2014-08-21 18:29:54    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 18:29:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:29:52    Cleanup json
+2014-08-21 18:28:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:28:22    Cleanup json
+2014-08-21 18:26:52    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:26:52    Cleanup json
+2014-08-21 18:25:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:25:22    Cleanup json
+2014-08-21 18:23:52    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:23:52    Cleanup json
+2014-08-21 18:22:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:22:22    Cleanup json
+2014-08-21 18:20:52    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:20:52    Cleanup json
+2014-08-21 18:19:24    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 18:19:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:19:22    Cleanup json
+2014-08-21 18:17:52    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:17:52    Cleanup json
+2014-08-21 18:17:27    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-21 18:17:27    Cleanup json
+2014-08-21 18:16:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:16:22    Cleanup json
+2014-08-21 18:14:53    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 18:14:52    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:14:52    Cleanup json
+2014-08-21 18:13:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:13:22    Cleanup json
+2014-08-21 18:11:52    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:11:52    Cleanup json
+2014-08-21 18:10:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:10:22    Cleanup json
+2014-08-21 18:08:52    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:08:52    Cleanup json
+2014-08-21 18:07:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:07:22    Cleanup json
+2014-08-21 18:05:52    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:05:52    Cleanup json
+2014-08-21 18:04:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:04:21    Cleanup json
+2014-08-21 18:02:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:02:51    Cleanup json
+2014-08-21 18:01:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 18:01:21    Cleanup json
+2014-08-21 17:59:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:59:51    Cleanup json
+2014-08-21 17:58:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:58:21    Cleanup json
+2014-08-21 17:56:53    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 17:56:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:56:51    Cleanup json
+2014-08-21 17:55:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:55:21    Cleanup json
+2014-08-21 17:53:53    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 17:53:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:53:51    Cleanup json
+2014-08-21 17:52:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:52:21    Cleanup json
+2014-08-21 17:50:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:50:51    Cleanup json
+2014-08-21 17:49:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:49:21    Cleanup json
+2014-08-21 17:47:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:47:51    Cleanup json
+2014-08-21 17:46:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:46:21    Cleanup json
+2014-08-21 17:44:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:44:51    Cleanup json
+2014-08-21 17:43:22    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 17:43:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:43:21    Cleanup json
+2014-08-21 17:41:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:41:51    Cleanup json
+2014-08-21 17:40:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:40:21    Cleanup json
+2014-08-21 17:38:52    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 17:38:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:38:51    Cleanup json
+2014-08-21 17:37:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:37:21    Cleanup json
+2014-08-21 17:35:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:35:51    Cleanup json
+2014-08-21 17:34:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:34:20    Cleanup json
+2014-08-21 17:32:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:32:50    Cleanup json
+2014-08-21 17:31:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:31:20    Cleanup json
+2014-08-21 17:29:52    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 17:29:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:29:50    Cleanup json
+2014-08-21 17:28:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:28:20    Cleanup json
+2014-08-21 17:26:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:26:50    Cleanup json
+2014-08-21 17:25:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:25:20    Cleanup json
+2014-08-21 17:23:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:23:50    Cleanup json
+2014-08-21 17:22:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:22:20    Cleanup json
+2014-08-21 17:20:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:20:50    Cleanup json
+2014-08-21 17:19:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:19:20    Cleanup json
+2014-08-21 17:17:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:17:50    Cleanup json
+2014-08-21 17:16:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:16:20    Cleanup json
+2014-08-21 17:14:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:14:50    Cleanup json
+2014-08-21 17:13:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:13:20    Cleanup json
+2014-08-21 17:11:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:11:50    Cleanup json
+2014-08-21 17:10:21    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 17:10:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:10:20    Cleanup json
+2014-08-21 17:08:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:08:50    Cleanup json
+2014-08-21 17:07:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:07:20    Cleanup json
+2014-08-21 17:05:50    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:05:50    Cleanup json
+2014-08-21 17:04:20    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:04:20    Cleanup json
+2014-08-21 17:02:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:02:49    Cleanup json
+2014-08-21 17:01:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 17:01:19    Cleanup json
+2014-08-21 16:59:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:59:49    Cleanup json
+2014-08-21 16:58:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:58:19    Cleanup json
+2014-08-21 16:56:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:56:49    Cleanup json
+2014-08-21 16:55:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:55:19    Cleanup json
+2014-08-21 16:53:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:53:49    Cleanup json
+2014-08-21 16:52:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:52:19    Cleanup json
+2014-08-21 16:50:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:50:49    Cleanup json
+2014-08-21 16:49:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:49:19    Cleanup json
+2014-08-21 16:47:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:47:49    Cleanup json
+2014-08-21 16:46:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:46:19    Cleanup json
+2014-08-21 16:44:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:44:49    Cleanup json
+2014-08-21 16:43:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:43:19    Cleanup json
+2014-08-21 16:41:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:41:49    Cleanup json
+2014-08-21 16:40:20    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 16:40:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:40:19    Cleanup json
+2014-08-21 16:38:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:38:49    Cleanup json
+2014-08-21 16:37:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:37:19    Cleanup json
+2014-08-21 16:35:49    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:35:49    Cleanup json
+2014-08-21 16:34:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:34:19    Cleanup json
+2014-08-21 16:32:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:32:48    Cleanup json
+2014-08-21 16:31:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:31:18    Cleanup json
+2014-08-21 16:29:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:29:48    Cleanup json
+2014-08-21 16:28:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:28:18    Cleanup json
+2014-08-21 16:26:50    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 16:26:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:26:48    Cleanup json
+2014-08-21 16:25:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:25:18    Cleanup json
+2014-08-21 16:23:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:23:48    Cleanup json
+2014-08-21 16:22:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:22:18    Cleanup json
+2014-08-21 16:20:50    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 16:20:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:20:48    Cleanup json
+2014-08-21 16:19:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:19:18    Cleanup json
+2014-08-21 16:17:50    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 16:17:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:17:48    Cleanup json
+2014-08-21 16:16:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:16:18    Cleanup json
+2014-08-21 16:14:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:14:48    Cleanup json
+2014-08-21 16:13:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:13:18    Cleanup json
+2014-08-21 16:11:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:11:48    Cleanup json
+2014-08-21 16:10:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:10:18    Cleanup json
+2014-08-21 16:08:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:08:48    Cleanup json
+2014-08-21 16:07:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:07:18    Cleanup json
+2014-08-21 16:05:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:05:48    Cleanup json
+2014-08-21 16:04:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:04:17    Cleanup json
+2014-08-21 16:02:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:02:47    Cleanup json
+2014-08-21 16:01:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 16:01:17    Cleanup json
+2014-08-21 15:59:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:59:47    Cleanup json
+2014-08-21 15:58:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:58:17    Cleanup json
+2014-08-21 15:56:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:56:47    Cleanup json
+2014-08-21 15:55:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:55:17    Cleanup json
+2014-08-21 15:53:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:53:47    Cleanup json
+2014-08-21 15:52:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:52:17    Cleanup json
+2014-08-21 15:50:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:50:47    Cleanup json
+2014-08-21 15:50:46    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:50:46    Cleanup json
+2014-08-21 15:50:38    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:50:38    Cleanup json
+2014-08-21 15:49:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:49:17    Cleanup json
+2014-08-21 15:47:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:47:47    Cleanup json
+2014-08-21 15:46:18    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 15:46:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:46:17    Cleanup json
+2014-08-21 15:44:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:44:47    Cleanup json
+2014-08-21 15:43:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:43:17    Cleanup json
+2014-08-21 15:41:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:41:47    Cleanup json
+2014-08-21 15:40:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:40:17    Cleanup json
+2014-08-21 15:38:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:38:47    Cleanup json
+2014-08-21 15:37:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:37:17    Cleanup json
+2014-08-21 15:35:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:35:46    Cleanup json
+2014-08-21 15:34:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:34:16    Cleanup json
+2014-08-21 15:32:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:32:46    Cleanup json
+2014-08-21 15:31:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:31:16    Cleanup json
+2014-08-21 15:29:48    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 15:29:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:29:46    Cleanup json
+2014-08-21 15:28:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:28:16    Cleanup json
+2014-08-21 15:26:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:26:46    Cleanup json
+2014-08-21 15:25:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:25:16    Cleanup json
+2014-08-21 15:23:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:23:46    Cleanup json
+2014-08-21 15:22:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:22:16    Cleanup json
+2014-08-21 15:20:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:20:46    Cleanup json
+2014-08-21 15:19:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:19:16    Cleanup json
+2014-08-21 15:17:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:17:46    Cleanup json
+2014-08-21 15:16:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:16:16    Cleanup json
+2014-08-21 15:14:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:14:46    Cleanup json
+2014-08-21 15:13:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:13:16    Cleanup json
+2014-08-21 15:11:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:11:46    Cleanup json
+2014-08-21 15:10:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:10:16    Cleanup json
+2014-08-21 15:08:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:08:46    Cleanup json
+2014-08-21 15:08:04    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:08:04    Cleanup json
+2014-08-21 15:07:53    GET > {"get":"station_info","station_id":"arrowclassicjazz2","station_host":"82.201.47.68","station_port":"","station_path":"/SublimeFM2.m3u"}
+2014-08-21 15:07:53    Cleanup json
+2014-08-21 15:07:35    GET > {"get":"station_info","station_id":"arrowclassicjazz2","station_host":"82.201.47.68","station_port":"","station_path":"/SublimeFM2.m3u"}
+2014-08-21 15:07:35    Cleanup json
+2014-08-21 15:07:22    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-21 15:07:22    Cleanup json
+2014-08-21 15:07:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:07:15     - ../json/station_info.TMP.Veronica_Hit Radio.json
+2014-08-21 15:07:15    Cleanup json
+2014-08-21 15:07:03    GET > {"get":"station_info","station_id":"TMP.Veronica_Hit Radio","station_host":"8563.live.streamtheworld.com","station_port":"80","station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:07:03    Cleanup json
+2014-08-21 15:07:00    Error: Error: file '../json/station_info.TMP.Veronica_Hit Radio.json' not found?
+2014-08-21 15:07:00     - ../json/station_info.TMP.Veronica_Hit Radio.json
+2014-08-21 15:07:00    Cleanup json
+2014-08-21 15:06:58    GET > {"get":"station_info","station_id":"TMP.Veronica_Hit Radio","station_host":"8563.live.streamtheworld.com","station_port":"80","station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:06:58    Cleanup json
+2014-08-21 15:06:55    Error: Error: file '../json/station_info.TMP.Veronica_Hit Radio.json' not found?
+2014-08-21 15:06:54    {"data":{"post":"ok"},"info":[]}
+2014-08-21 15:06:54    POST > {"post":"log"}
+2014-08-21 15:06:54     - ../json/station_info.TMP.Veronica_Hit Radio.json
+2014-08-21 15:06:54    Cleanup json
+2014-08-21 15:06:53    GET > {"get":"station_info","station_id":"TMP.Veronica_Hit Radio","station_host":"8563.live.streamtheworld.com","station_port":"80","station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:06:53     - ../json/station_info.TMP.Veronica_Hit Radio.json
+2014-08-21 15:06:53    Cleanup json
+2014-08-21 15:06:38    {"data":{"post":"ok"},"info":[]}
+2014-08-21 15:06:38    POST > {"post":"log"}
+2014-08-21 15:06:38    Cleanup json
+2014-08-21 15:06:38    GET > {"get":"station_info","station_id":"TMP.Veronica_Hit Radio","station_host":"8563.live.streamtheworld.com","station_port":"80","station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:06:38    Cleanup json
+2014-08-21 15:06:25    GET > {"get":"search_dirble","search":"veronica hit radio/count/32"}
+2014-08-21 15:06:25    Cleanup json
+2014-08-21 15:06:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:06:00    Cleanup json
+2014-08-21 15:05:49    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:05:49    Cleanup json
+2014-08-21 15:05:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:05:45    Cleanup json
+2014-08-21 15:05:34    Error: Error: file '../json/station_info.veronicahitradio.json' not found?
+2014-08-21 15:05:32    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-21 15:05:32    Cleanup json
+2014-08-21 15:05:28    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2014-08-21 15:05:28    Cleanup json
+2014-08-21 15:04:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:04:15    Cleanup json
+2014-08-21 15:02:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:02:45    Cleanup json
+2014-08-21 15:01:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 15:01:15    Cleanup json
+2014-08-21 14:59:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:59:45    Cleanup json
+2014-08-21 14:58:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:58:15    Cleanup json
+2014-08-21 14:56:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:56:45    Cleanup json
+2014-08-21 14:55:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:55:15    Cleanup json
+2014-08-21 14:53:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:53:45    Cleanup json
+2014-08-21 14:52:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:52:15    Cleanup json
+2014-08-21 14:50:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:50:45    Cleanup json
+2014-08-21 14:49:16    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 14:49:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:49:15    Cleanup json
+2014-08-21 14:47:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:47:45    Cleanup json
+2014-08-21 14:46:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:46:15    Cleanup json
+2014-08-21 14:44:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:44:45    Cleanup json
+2014-08-21 14:43:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:43:15    Cleanup json
+2014-08-21 14:41:46    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 14:41:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:41:45    Cleanup json
+2014-08-21 14:40:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:40:15    Cleanup json
+2014-08-21 14:38:45    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:38:44    Cleanup json
+2014-08-21 14:37:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:37:14    Cleanup json
+2014-08-21 14:35:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:35:44    Cleanup json
+2014-08-21 14:34:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:34:14    Cleanup json
+2014-08-21 14:32:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:32:44    Cleanup json
+2014-08-21 14:31:16    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 14:31:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:31:14    Cleanup json
+2014-08-21 14:29:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:29:44    Cleanup json
+2014-08-21 14:28:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:28:14    Cleanup json
+2014-08-21 14:26:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:26:44    Cleanup json
+2014-08-21 14:25:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:25:14    Cleanup json
+2014-08-21 14:23:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:23:44    Cleanup json
+2014-08-21 14:22:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:22:14    Cleanup json
+2014-08-21 14:20:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:20:44    Cleanup json
+2014-08-21 14:19:15    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 14:19:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:19:14    Cleanup json
+2014-08-21 14:17:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:17:44    Cleanup json
+2014-08-21 14:16:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:16:14    Cleanup json
+2014-08-21 14:14:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:14:44    Cleanup json
+2014-08-21 14:13:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:13:14    Cleanup json
+2014-08-21 14:11:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:11:43    Cleanup json
+2014-08-21 14:10:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:10:13    Cleanup json
+2014-08-21 14:08:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:08:43    Cleanup json
+2014-08-21 14:07:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:07:13    Cleanup json
+2014-08-21 14:05:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:05:43    Cleanup json
+2014-08-21 14:04:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:04:13    Cleanup json
+2014-08-21 14:02:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:02:43    Cleanup json
+2014-08-21 14:01:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 14:01:13    Cleanup json
+2014-08-21 13:59:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:59:43    Cleanup json
+2014-08-21 13:58:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:58:13    Cleanup json
+2014-08-21 13:56:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:56:43    Cleanup json
+2014-08-21 13:55:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:55:13    Cleanup json
+2014-08-21 13:53:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:53:43    Cleanup json
+2014-08-21 13:52:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:52:13    Cleanup json
+2014-08-21 13:50:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:50:43    Cleanup json
+2014-08-21 13:49:14    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 13:49:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:49:13    Cleanup json
+2014-08-21 13:47:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:47:43    Cleanup json
+2014-08-21 13:46:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:46:13    Cleanup json
+2014-08-21 13:44:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:44:43    Cleanup json
+2014-08-21 13:43:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:43:12    Cleanup json
+2014-08-21 13:41:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:41:42    Cleanup json
+2014-08-21 13:40:12    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:40:12    Cleanup json
+2014-08-21 13:38:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:38:42    Cleanup json
+2014-08-21 13:37:12    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:37:12    Cleanup json
+2014-08-21 13:35:44    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 13:35:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:35:42    Cleanup json
+2014-08-21 13:34:12    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:34:12    Cleanup json
+2014-08-21 13:32:44    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 13:32:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:32:42    Cleanup json
+2014-08-21 13:31:12    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:31:12    Cleanup json
+2014-08-21 13:29:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:29:42    Cleanup json
+2014-08-21 13:28:12    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:28:12    Cleanup json
+2014-08-21 13:26:43    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 13:26:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:26:42    Cleanup json
+2014-08-21 13:25:12    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:25:12    Cleanup json
+2014-08-21 13:23:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:23:42    Cleanup json
+2014-08-21 13:22:12    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:22:12    Cleanup json
+2014-08-21 13:20:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:20:42    Cleanup json
+2014-08-21 13:19:12    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:19:11    Cleanup json
+2014-08-21 13:17:43    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 13:17:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:17:41    Cleanup json
+2014-08-21 13:16:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:16:11    Cleanup json
+2014-08-21 13:14:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:14:41    Cleanup json
+2014-08-21 13:13:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:13:11    Cleanup json
+2014-08-21 13:11:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:11:41    Cleanup json
+2014-08-21 13:10:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:10:11    Cleanup json
+2014-08-21 13:08:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:08:41    Cleanup json
+2014-08-21 13:07:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:07:11    Cleanup json
+2014-08-21 13:05:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:05:41    Cleanup json
+2014-08-21 13:04:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:04:11    Cleanup json
+2014-08-21 13:02:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:02:41    Cleanup json
+2014-08-21 13:01:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 13:01:11    Cleanup json
+2014-08-21 12:59:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:59:41    Cleanup json
+2014-08-21 12:58:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:58:11    Cleanup json
+2014-08-21 12:56:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:56:41    Cleanup json
+2014-08-21 12:55:12    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 12:55:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:55:11    Cleanup json
+2014-08-21 12:53:41    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:53:40    Cleanup json
+2014-08-21 12:52:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:52:10    Cleanup json
+2014-08-21 12:50:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:50:40    Cleanup json
+2014-08-21 12:49:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:49:10    Cleanup json
+2014-08-21 12:47:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:47:40    Cleanup json
+2014-08-21 12:46:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:46:10    Cleanup json
+2014-08-21 12:44:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:44:40    Cleanup json
+2014-08-21 12:43:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:43:10    Cleanup json
+2014-08-21 12:41:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:41:40    Cleanup json
+2014-08-21 12:40:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:40:10    Cleanup json
+2014-08-21 12:38:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:38:40    Cleanup json
+2014-08-21 12:38:34    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-21 12:38:34    Cleanup json
+2014-08-21 12:37:51    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2014-08-21 12:37:51    Cleanup json
+2014-08-21 12:37:11    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 12:37:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:37:10    Cleanup json
+2014-08-21 12:35:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:35:40    Cleanup json
+2014-08-21 12:34:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:34:10    Cleanup json
+2014-08-21 12:32:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:32:40    Cleanup json
+2014-08-21 12:31:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:31:10    Cleanup json
+2014-08-21 12:29:41    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 12:29:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:29:40    Cleanup json
+2014-08-21 12:28:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:28:10    Cleanup json
+2014-08-21 12:26:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:26:40    Cleanup json
+2014-08-21 12:25:11    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 12:25:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:25:10    Cleanup json
+2014-08-21 12:23:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:23:39    Cleanup json
+2014-08-21 12:22:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:22:09    Cleanup json
+2014-08-21 12:20:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:20:39    Cleanup json
+2014-08-21 12:19:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:19:09    Cleanup json
+2014-08-21 12:17:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:17:39    Cleanup json
+2014-08-21 12:16:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:16:09    Cleanup json
+2014-08-21 12:14:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:14:39    Cleanup json
+2014-08-21 12:13:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:13:09    Cleanup json
+2014-08-21 12:11:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:11:39    Cleanup json
+2014-08-21 12:10:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:10:09    Cleanup json
+2014-08-21 12:08:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:08:39    Cleanup json
+2014-08-21 12:07:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:07:09    Cleanup json
+2014-08-21 12:05:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:05:39    Cleanup json
+2014-08-21 12:04:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:04:09    Cleanup json
+2014-08-21 12:02:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:02:39    Cleanup json
+2014-08-21 12:01:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 12:01:09    Cleanup json
+2014-08-21 11:59:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:59:39    Cleanup json
+2014-08-21 11:58:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:58:09    Cleanup json
+2014-08-21 11:56:39    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:56:39    Cleanup json
+2014-08-21 11:55:09    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:55:09    Cleanup json
+2014-08-21 11:53:40    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 11:53:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:53:38    Cleanup json
+2014-08-21 11:52:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:52:08    Cleanup json
+2014-08-21 11:50:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:50:38    Cleanup json
+2014-08-21 11:49:10    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 11:49:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:49:08    Cleanup json
+2014-08-21 11:47:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:47:38    Cleanup json
+2014-08-21 11:46:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:46:08    Cleanup json
+2014-08-21 11:44:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:44:38    Cleanup json
+2014-08-21 11:43:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:43:08    Cleanup json
+2014-08-21 11:41:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:41:38    Cleanup json
+2014-08-21 11:40:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:40:08    Cleanup json
+2014-08-21 11:38:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:38:38    Cleanup json
+2014-08-21 11:37:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:37:08    Cleanup json
+2014-08-21 11:35:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:35:38    Cleanup json
+2014-08-21 11:34:09    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 11:34:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:34:08    Cleanup json
+2014-08-21 11:32:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:32:38    Cleanup json
+2014-08-21 11:31:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:31:08    Cleanup json
+2014-08-21 11:29:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:29:38    Cleanup json
+2014-08-21 11:28:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:28:08    Cleanup json
+2014-08-21 11:26:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:26:38    Cleanup json
+2014-08-21 11:25:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:25:08    Cleanup json
+2014-08-21 11:23:38    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:23:38    Cleanup json
+2014-08-21 11:22:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:22:07    Cleanup json
+2014-08-21 11:20:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:20:37    Cleanup json
+2014-08-21 11:19:57    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2014-08-21 11:19:57    Cleanup json
+2014-08-21 11:19:54    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2014-08-21 11:19:54    Cleanup json
+2014-08-21 11:19:48    Error: Error: file '../json/station_info.radio2.json' not found?
+2014-08-21 11:19:47    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2014-08-21 11:19:47    Cleanup json
+2014-08-21 11:19:17    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:19:17    Cleanup json
+2014-08-21 11:19:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:19:07     - ../json/station_info.TMP.NPO_Radio 3fm.json
+2014-08-21 11:19:07    Cleanup json
+2014-08-21 11:19:05    {"data":{"post":"ok"},"info":[]}
+2014-08-21 11:19:05    POST > {"post":"log"}
+2014-08-21 11:19:05    Cleanup json
+2014-08-21 11:19:05    GET > {"get":"station_info","station_id":"TMP.NPO_Radio 3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:19:05    Cleanup json
+2014-08-21 11:19:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:19:02    Cleanup json
+2014-08-21 11:18:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:18:43    Cleanup json
+2014-08-21 11:17:39    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 11:17:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:17:37    Cleanup json
+2014-08-21 11:17:25    GET > {"get":"station_info","station_id":"veronicahitradio","station_host":"8563.live.streamtheworld.com","station_port":80,"station_path":"/VERONICA_SC?.wma"}
+2014-08-21 11:17:25    Cleanup json
+2014-08-21 11:16:56    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:16:56    Cleanup json
+2014-08-21 11:16:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:16:07    Cleanup json
+2014-08-21 11:14:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:14:37    Cleanup json
+2014-08-21 11:13:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:13:07    Cleanup json
+2014-08-21 11:11:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:11:37    Cleanup json
+2014-08-21 11:10:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:10:07    Cleanup json
+2014-08-21 11:08:38    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 11:08:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:08:37    Cleanup json
+2014-08-21 11:07:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:07:07    Cleanup json
+2014-08-21 11:05:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:05:37    Cleanup json
+2014-08-21 11:04:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:04:07    Cleanup json
+2014-08-21 11:02:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:02:37    Cleanup json
+2014-08-21 11:01:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 11:01:07    Cleanup json
+2014-08-21 10:59:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:59:37    Cleanup json
+2014-08-21 10:58:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:58:07    Cleanup json
+2014-08-21 10:56:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:56:37    Cleanup json
+2014-08-21 10:55:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:55:06    Cleanup json
+2014-08-21 10:53:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:53:36    Cleanup json
+2014-08-21 10:52:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:52:06    Cleanup json
+2014-08-21 10:50:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:50:36    Cleanup json
+2014-08-21 10:49:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:49:06    Cleanup json
+2014-08-21 10:47:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:47:36    Cleanup json
+2014-08-21 10:46:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:46:06    Cleanup json
+2014-08-21 10:44:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:44:36    Cleanup json
+2014-08-21 10:43:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:43:06    Cleanup json
+2014-08-21 10:41:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:41:36    Cleanup json
+2014-08-21 10:40:07    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 10:40:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:40:06    Cleanup json
+2014-08-21 10:38:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:38:36    Cleanup json
+2014-08-21 10:37:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:37:06    Cleanup json
+2014-08-21 10:35:37    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 10:35:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:35:36    Cleanup json
+2014-08-21 10:34:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:34:06    Cleanup json
+2014-08-21 10:32:37    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 10:32:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:32:36    Cleanup json
+2014-08-21 10:31:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:31:06    Cleanup json
+2014-08-21 10:29:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:29:36    Cleanup json
+2014-08-21 10:28:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:28:06    Cleanup json
+2014-08-21 10:26:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:26:36    Cleanup json
+2014-08-21 10:25:06    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:25:06    Cleanup json
+2014-08-21 10:23:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:23:35    Cleanup json
+2014-08-21 10:22:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:22:05    Cleanup json
+2014-08-21 10:20:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:20:35    Cleanup json
+2014-08-21 10:20:26    {"data":{"post":"ok"},"info":[]}
+2014-08-21 10:20:26    POST > {"post":"log"}
+2014-08-21 10:20:26    Cleanup json
+2014-08-21 10:19:57    GET > {"get":"search_dirble","search":"Heartland radio/count/32"}
+2014-08-21 10:19:57    Cleanup json
+2014-08-21 10:19:21    GET > {"get":"search_dirble","search":"Radio Heartland/count/32"}
+2014-08-21 10:19:21    Cleanup json
+2014-08-21 10:19:07    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 10:19:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:19:05    Cleanup json
+2014-08-21 10:18:12    GET > {"get":"station_info","station_id":"Folk_Alley  All Folk All The Time","station_host":"66.225.205.8","station_port":"8000","station_path":""}
+2014-08-21 10:18:12    Cleanup json
+2014-08-21 10:17:58    GET > {"get":"search_dirble","search":"Folk Alley/count/32"}
+2014-08-21 10:17:58    Cleanup json
+2014-08-21 10:17:38    GET > {"get":"station_info","station_id":"Boot_Liquor Americana Roots Music For Cowhands Cowpokes And Cowtippers Somafm","station_host":"173.239.76.147","station_port":"9004","station_path":""}
+2014-08-21 10:17:38    Cleanup json
+2014-08-21 10:17:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:17:35    Cleanup json
+2014-08-21 10:16:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:16:05    Cleanup json
+2014-08-21 10:14:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:14:35    Cleanup json
+2014-08-21 10:13:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:13:05    Cleanup json
+2014-08-21 10:11:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:11:35    Cleanup json
+2014-08-21 10:10:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:10:05    Cleanup json
+2014-08-21 10:08:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:08:35    Cleanup json
+2014-08-21 10:07:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:07:05    Cleanup json
+2014-08-21 10:05:36    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 10:05:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:05:35    Cleanup json
+2014-08-21 10:04:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:04:05    Cleanup json
+2014-08-21 10:02:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:02:35    Cleanup json
+2014-08-21 10:01:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 10:01:05    Cleanup json
+2014-08-21 09:59:43    GET > {"get":"station_info","station_id":"Boot_Liquor Americana Roots Music For Cowhands Cowpokes And Cowtippers Somafm","station_host":"173.239.76.147","station_port":"9004","station_path":""}
+2014-08-21 09:59:43    Cleanup json
+2014-08-21 09:59:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:59:35    Cleanup json
+2014-08-21 09:59:15    GET > {"get":"station_info","station_id":"Boot_Liquor Americana Roots Music For Cowhands Cowpokes And Cowtippers Somafm","station_host":"173.239.76.147","station_port":"9004","station_path":""}
+2014-08-21 09:59:15    Cleanup json
+2014-08-21 09:58:47    GET > {"get":"station_info","station_id":"Nashville_Fm","station_host":"server-14.stream-server.nl","station_port":"8300","station_path":"/listen.pls"}
+2014-08-21 09:58:47    Cleanup json
+2014-08-21 09:58:18    GET > {"get":"station_info","station_id":"Boot_Liquor Americana Roots Music For Cowhands Cowpokes And Cowtippers Somafm","station_host":"173.239.76.147","station_port":"9004","station_path":""}
+2014-08-21 09:58:18    Cleanup json
+2014-08-21 09:58:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:58:05    Cleanup json
+2014-08-21 09:57:51    GET > {"get":"search_dirble","search":"Americana/count/32"}
+2014-08-21 09:57:51    Cleanup json
+2014-08-21 09:57:23    GET > {"get":"search_dirble","search":"Heartland/count/32"}
+2014-08-21 09:57:23    Cleanup json
+2014-08-21 09:56:45    GET > {"get":"search_dirble","search":"Radio Heartland/count/32"}
+2014-08-21 09:56:45    Cleanup json
+2014-08-21 09:56:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:56:35    Cleanup json
+2014-08-21 09:56:16    GET > {"get":"station_info","station_id":"Nashville_Fm","station_host":"server-14.stream-server.nl","station_port":"8300","station_path":"/listen.pls"}
+2014-08-21 09:56:16    Cleanup json
+2014-08-21 09:55:56    GET > {"get":"station_info","station_id":"Nashville_Fm","station_host":"server-14.stream-server.nl","station_port":"8300","station_path":"/listen.pls"}
+2014-08-21 09:55:56    Cleanup json
+2014-08-21 09:55:37    GET > {"get":"search_dirble","search":"Nashville FM/count/32"}
+2014-08-21 09:55:37    Cleanup json
+2014-08-21 09:55:10    GET > {"get":"search_dirble","search":"Radio 50 /count/32"}
+2014-08-21 09:55:10    Cleanup json
+2014-08-21 09:55:05    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:55:05    Cleanup json
+2014-08-21 09:54:33    GET > {"get":"search_dirble","search":"Radio 50/count/32"}
+2014-08-21 09:54:33    Cleanup json
+2014-08-21 09:54:03    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 09:54:03    Cleanup json
+2014-08-21 09:54:03    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 09:54:03    Cleanup json
+2014-08-21 09:54:02    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 09:54:02    Cleanup json
+2014-08-21 09:53:55    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 09:53:55    Cleanup json
+2014-08-21 09:53:49    GET > {"get":"stations"}
+2014-08-21 09:53:49    Cleanup json
+2014-08-21 09:53:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:53:34    Cleanup json
+2014-08-21 09:52:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:52:04    Cleanup json
+2014-08-21 09:50:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:50:34    Cleanup json
+2014-08-21 09:49:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:49:04    Cleanup json
+2014-08-21 09:47:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:47:34    Cleanup json
+2014-08-21 09:46:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:46:04    Cleanup json
+2014-08-21 09:44:36    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 09:44:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:44:34    Cleanup json
+2014-08-21 09:43:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:43:04    Cleanup json
+2014-08-21 09:41:35    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 09:41:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:41:34    Cleanup json
+2014-08-21 09:40:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:40:04    Cleanup json
+2014-08-21 09:39:59    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:39:59     - ../json/station_info.TMP.Veronica_Hit Radio.json
+2014-08-21 09:39:59    Cleanup json
+2014-08-21 09:39:38    GET > {"get":"station_info","station_id":"TMP.Veronica_Hit Radio","station_host":"8563.live.streamtheworld.com","station_port":"80","station_path":"/VERONICA_SC?.wma"}
+2014-08-21 09:39:38     - ../json/station_info.TMP.Veronica_Hit Radio.json
+2014-08-21 09:39:38    Cleanup json
+2014-08-21 09:39:30    {"data":{"post":"ok"},"info":[]}
+2014-08-21 09:39:30    POST > {"post":"log"}
+2014-08-21 09:39:30    Cleanup json
+2014-08-21 09:39:30    GET > {"get":"station_info","station_id":"TMP.Veronica_Hit Radio","station_host":"8563.live.streamtheworld.com","station_port":"80","station_path":"/VERONICA_SC?.wma"}
+2014-08-21 09:39:30    Cleanup json
+2014-08-21 09:39:09    GET > {"get":"search_dirble","search":"veronica hit radio/count/32"}
+2014-08-21 09:39:09    Cleanup json
+2014-08-21 09:38:46    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:38:46    Cleanup json
+2014-08-21 09:38:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:38:34    Cleanup json
+2014-08-21 09:37:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:37:04    Cleanup json
+2014-08-21 09:35:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:35:34    Cleanup json
+2014-08-21 09:34:05    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 09:34:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:34:04    Cleanup json
+2014-08-21 09:32:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:32:34    Cleanup json
+2014-08-21 09:31:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:31:04    Cleanup json
+2014-08-21 09:29:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:29:34    Cleanup json
+2014-08-21 09:28:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:28:04    Cleanup json
+2014-08-21 09:26:34    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:26:34    Cleanup json
+2014-08-21 09:25:03    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:25:03    Cleanup json
+2014-08-21 09:23:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:23:33    Cleanup json
+2014-08-21 09:22:03    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:22:03    Cleanup json
+2014-08-21 09:20:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:20:33    Cleanup json
+2014-08-21 09:19:03    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:19:03    Cleanup json
+2014-08-21 09:17:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:17:33    Cleanup json
+2014-08-21 09:16:04    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 09:16:03    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:16:03    Cleanup json
+2014-08-21 09:14:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:14:33    Cleanup json
+2014-08-21 09:13:03    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:13:03    Cleanup json
+2014-08-21 09:11:34    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 09:11:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:11:33    Cleanup json
+2014-08-21 09:10:03    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:10:03    Cleanup json
+2014-08-21 09:08:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:08:33    Cleanup json
+2014-08-21 09:07:03    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:07:03    Cleanup json
+2014-08-21 09:05:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:05:33    Cleanup json
+2014-08-21 09:04:03    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:04:03    Cleanup json
+2014-08-21 09:02:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:02:33    Cleanup json
+2014-08-21 09:01:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 09:01:02    Cleanup json
+2014-08-21 08:59:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:59:32    Cleanup json
+2014-08-21 08:58:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:58:02    Cleanup json
+2014-08-21 08:56:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:56:32    Cleanup json
+2014-08-21 08:55:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:55:02    Cleanup json
+2014-08-21 08:53:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:53:32    Cleanup json
+2014-08-21 08:52:04    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 08:52:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:52:02    Cleanup json
+2014-08-21 08:50:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:50:32    Cleanup json
+2014-08-21 08:49:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:49:02    Cleanup json
+2014-08-21 08:47:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:47:32    Cleanup json
+2014-08-21 08:46:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:46:02    Cleanup json
+2014-08-21 08:44:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:44:32    Cleanup json
+2014-08-21 08:43:03    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 08:43:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:43:02    Cleanup json
+2014-08-21 08:41:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:41:32    Cleanup json
+2014-08-21 08:40:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:40:02    Cleanup json
+2014-08-21 08:38:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:38:32    Cleanup json
+2014-08-21 08:37:03    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 08:37:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:37:02    Cleanup json
+2014-08-21 08:35:32    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:35:32    Cleanup json
+2014-08-21 08:34:02    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:34:02    Cleanup json
+2014-08-21 08:32:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:32:31    Cleanup json
+2014-08-21 08:31:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:31:01    Cleanup json
+2014-08-21 08:29:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:29:31    Cleanup json
+2014-08-21 08:28:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:28:01    Cleanup json
+2014-08-21 08:26:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:26:31    Cleanup json
+2014-08-21 08:25:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:25:01    Cleanup json
+2014-08-21 08:23:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:23:31    Cleanup json
+2014-08-21 08:22:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:22:01    Cleanup json
+2014-08-21 08:20:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:20:31    Cleanup json
+2014-08-21 08:19:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:19:01    Cleanup json
+2014-08-21 08:17:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:17:31    Cleanup json
+2014-08-21 08:16:02    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 08:16:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:16:01    Cleanup json
+2014-08-21 08:14:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:14:31    Cleanup json
+2014-08-21 08:13:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:13:01    Cleanup json
+2014-08-21 08:11:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:11:31    Cleanup json
+2014-08-21 08:10:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:10:01    Cleanup json
+2014-08-21 08:09:40    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:09:40    Cleanup json
+2014-08-21 08:09:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:09:35    Cleanup json
+2014-08-21 08:08:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:08:31    Cleanup json
+2014-08-21 08:07:02    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 08:07:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:07:01    Cleanup json
+2014-08-21 08:05:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:05:31    Cleanup json
+2014-08-21 08:04:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:04:00    Cleanup json
+2014-08-21 08:02:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:02:30    Cleanup json
+2014-08-21 08:01:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 08:01:00    Cleanup json
+2014-08-21 07:59:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:59:30    Cleanup json
+2014-08-21 07:58:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:58:00    Cleanup json
+2014-08-21 07:57:01    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:57:01    Cleanup json
+2014-08-21 07:56:59    Error: Error: file '../json/station_info.radio5.json' not found?
+2014-08-21 07:56:58    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:56:58    Cleanup json
+2014-08-21 07:56:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:56:30    Cleanup json
+2014-08-21 07:55:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:55:00    Cleanup json
+2014-08-21 07:53:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:53:30    Cleanup json
+2014-08-21 07:52:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:52:00    Cleanup json
+2014-08-21 07:50:30    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:50:30    Cleanup json
+2014-08-21 07:49:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:49:00    Cleanup json
+2014-08-21 07:48:55    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 07:48:53    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:48:53    Cleanup json
+2014-08-21 07:40:45    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-21 07:40:43    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:40:43    Cleanup json
+2014-08-21 07:39:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:39:13    Cleanup json
+2014-08-21 07:38:52    GET > {"get":"stations"}
+2014-08-21 07:38:52    Cleanup json
+2014-08-21 07:38:25    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:38:25    Cleanup json
+2014-08-21 07:38:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-21 07:38:11    Cleanup json
+2014-08-21 07:38:01    Error: Error: file '../json/station_info.radio1.json' not found?
+2014-08-21 07:37:59    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
+2014-08-21 07:37:59    Cleanup json
+2014-08-21 07:37:47    GET > {"get":"station_info","station_id":"arrowclassicjazz2","station_host":"82.201.47.68","station_port":"","station_path":"/SublimeFM2.m3u"}
+2014-08-21 07:37:47    Cleanup json
+2014-08-21 07:37:34    GET > {"get":"station_info","station_id":"qmusic","station_host":"vip2.str.reasonnet.com","station_port":"","station_path":"/qmusic.mp3.96"}
+2014-08-21 07:37:34    Cleanup json
+2014-08-21 07:37:22    {"data":{"post":"ok"},"info":[]}
+2014-08-21 07:37:22    POST > {"post":"log"}
+2014-08-21 07:37:22    Cleanup json
+2014-08-21 07:37:12    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-21 07:37:12    Cleanup json
+2014-08-21 07:37:07    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:37:07    Cleanup json
+2014-08-21 07:37:00    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:37:00    Cleanup json
+2014-08-21 07:27:38    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-21 07:27:38    Cleanup json
+2014-08-21 07:25:40    Error: Error: file '../json/station_info.radio5.json' not found?
+2014-08-21 07:25:38    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:25:38    Cleanup json
+2014-08-21 07:25:32    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:25:32    Cleanup json
+2014-08-21 07:25:25    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:25:25    Cleanup json
+2014-08-21 07:25:23    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:25:23    Cleanup json
+2014-08-21 07:24:36    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
+2014-08-21 07:24:36    Cleanup json
 2014-08-21 07:23:11    GET > {"get":"station_info","station_id":"radio5","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio5-bb-mp3"}
 2014-08-21 07:23:11    Cleanup json
 2014-08-21 07:23:05    GET > {"get":"stations"}
@@ -1503,95 +3068,4 @@
 2014-08-17 07:04:31    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
 2014-08-17 07:03:07    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
 2014-08-17 07:03:05    GET > {"get":"station_info","station_id":"TMP.5ee97196827f67c8_147e2c6d3da_d4a74","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":80,"station_path":"/RADIO538_MP3.m3u"}
-2014-08-17 07:02:33    GET > {"get":"station_info","station_id":"TMP.5ee97196827f67c8_147e2c6538f_313a5","station_host":"82.201.100.9","station_port":"8000","station_path":"/radio538"}
-2014-08-17 07:01:37    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 07:00:53    GET > {"get":"station_info","station_id":"arrowclassicjazz","station_host":"81.173.3.133","station_port":8082,"station_path":""}
-2014-08-17 07:00:46    GET > {"get":"stations"}
-2014-08-17 07:00:07    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:59:32    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:57:37    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2c1d0fc_cb85","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:57:31    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:57:22    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2c195c4_7ddd0","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:55:59    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:54:29    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:52:43    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:52:07    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:46:34    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:43:59    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:42:29    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:40:59    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:40:01    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:38:31    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:37:01    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:35:31    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:34:02    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:32:31    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:31:01    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:29:31    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:28:01    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:26:31    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:25:00    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:23:30    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:22:00    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:11:26    GET > {"get":"station_info","station_id":"TMP.Radio_1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:11:14    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2975a27_b31e7","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:10:42    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:10:04    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2964772_71488","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:09:52    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:08:10    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2948a9a_dc142","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:08:04    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:07:52    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2944353_17359","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:07:28    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:04:45    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2916a9b_b2cea","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:04:38    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2914e08_22b61","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp"}
-2014-08-17 06:04:06    Error: Could not write ../json/station_info.TMP.http://icecast.omroep.nl/radio1-bb-mp3.json
-2014-08-17 06:04:05    GET > {"get":"station_info","station_id":"TMP.http://icecast.omroep.nl/radio1-bb-mp3","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:03:52    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:02:09    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e28f07e3_39330","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:02:02    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:00:49    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e28dcee9_3939a","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 06:00:05    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:59:05    GET > {"get":"station_info","station_id":"TMP.Radio_1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:58:56    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e28c1620_99fff","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:58:51    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:57:42    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e28af4df_b239e","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:57:16    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:56:18    GET > {"get":"station_info","station_id":"TMP.Radio_1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:55:37    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2890b87_97c78","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:54:44    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:53:02    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e286ad2e_a2c0a","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:52:45    Error: Error: file '../json/station_info.radio1.json' not found
-2014-08-17 05:52:44    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-17 05:01:28    Error: Error: file '../json/station_info.radio1.json' not found
-2014-08-17 05:01:08    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 21:25:58    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 21:25:35    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e0b6435f_aa6d9","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 21:25:26    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 19:26:35    Error: Error: file '../json/station_info.radio1.json' not found
-2014-08-16 19:26:35    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 19:26:13    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 19:25:33    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e0485e4b_b3b22","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 19:22:59    Error: Error: file '../json/station_info.radio3fm.json' not found
-2014-08-16 19:22:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 19:14:14    GET > {"get":"station_info","station_id":"TMP.Radio_1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 19:14:09    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e03dee12_e075c","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 19:14:00    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 19:11:46    GET > {"get":"station_info","station_id":"TEMP_f58a47008f65009f_147e03bc220_ce28d","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 19:11:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 19:10:01    GET > {"get":"station_info","station_id":"TEMP_radio_1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 19:09:42    GET > {"get":"station_info","station_id":"TEMP_f58a47008f65009f_147e039db15_703","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 19:09:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 19:08:20    Error: Error: file '../json/station_info.radio3fm.json' not found
-2014-08-16 19:08:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 18:58:45    GET > {"get":"station_info","station_id":"TEMP_f58a47008f65009f_NaN_5e1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 18:58:35    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 18:57:47    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 18:56:51    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 18:55:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 18:54:33    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 18:50:16    Error: Error: file '../json/station_info.radio3fm.json' not found
-2014-08-16 18:50:15    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-16 18:36:46    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/radio1-bb-mp3"}
-2014-08-16 18:35:59    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/radio1-bb-mp3"}
-2014-08-16 18:35:50    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
-2014-08-16 18:35:27    GET > {"get":"station_info","station_id":"TEMP_x","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-b
+2014-08-17 07:02:33    GET > {"get":"station_info","station_id":"TMP.5ee97196827f67c8_147e2c6

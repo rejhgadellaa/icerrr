@@ -267,7 +267,9 @@ section {
 }
 
 	#home .main {
-	
+		background-position:center;
+		background-size:cover;
+		background-repeat:no-repeat;
 	}
 	
 	#home .main .station_image {

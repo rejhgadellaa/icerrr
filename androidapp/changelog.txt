@@ -1,4 +1,12 @@
 
+v0.017
+- Uses dirble for now playing info when available
+- Shows album art as background when available
+- Bugfix: Auto Google Image Search on #channellist confused stations
+
+v0.016
+- Hotfix
+
 v0.015
 - Check for (stations) updates every ~24hrs
 - Removed search icon on results screen

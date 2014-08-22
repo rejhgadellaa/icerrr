@@ -84,6 +84,9 @@ site.lifecycle.onDeviceReady = function() {
 	document.addEventListener('resume', site.lifecycle.onResume, false);
 	document.addEventListener('pause', site.lifecycle.onPause, false);
 	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
+		
+	// some stuff
+	site.session.isPaused = false;
 	
 	// Firstlaunch...
 	if (!site.cookies.get("app_is_installed") || site.cookies.get("app_version")<site.cfg.app_version) {
@@ -127,8 +130,6 @@ site.lifecycle.onDeviceReady = function() {
 			break;
 			
 	}
-		
-	
 	
 }
 
@@ -137,6 +138,9 @@ site.lifecycle.onDeviceReady = function() {
 site.lifecycle.onResume = function() {
 	
 	loggr.log("site.lifecycle.onResume()");
+		
+	// some stuff
+	site.session.isPaused = false;
 	
 	// set timeout now so we have little delay for async shit to rain down upon us
 	if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
@@ -183,6 +187,9 @@ site.lifecycle.onPause = function() {
 		var func = site.session.ui_pause_callbacks[i]; // same order as incoming..
 		try { func(); } catch(e) { }
 	}
+		
+	// some stuff
+	site.session.isPaused = true;
 	
 }
 
