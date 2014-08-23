@@ -366,7 +366,7 @@ site.helpers.getRandomListEntry = function(list) {
 
 site.helpers.capitalize = function(str,everyword) {
 	if(!str) { 
-		loggr.error("site.helpers.capitalize().err: !str");
+		loggr.warn("site.helpers.capitalize().err: !str");
 		return "<span style='color:#f00;'>Null</span>"; 
 	}
 	if (everyword) { 
