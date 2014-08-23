@@ -457,6 +457,10 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 		}
 	}
 	
+	// more opts
+	if (!opts) { opts = {}; }
+	if (!opts.maxresults) { opts.maxresults = 64; }
+	
 	// Callback
 	site.chlist.thesearch[searchid].setSearchCompleteCallback(this, 
 		function() {
@@ -479,7 +483,7 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 				var currPage = cursor.currentPageIndex;
 				var pages = cursor.pages;
 				loggr.log(" > "+ currPage +", out of "+ pages.length);
-				if (currPage < pages.length-1) {
+				if (currPage < pages.length-1 || site.chlist.thesearchresults[searchid].length < opts.maxresults) {
 					// get more...
 					loggr.log(" > Getting more results...");
 					thesearch.gotoPage(currPage+1);

@@ -60,10 +60,10 @@ function cache_load($srcpath, $thumbw, $thumbh) {
 	cache_clear();
 	
 	// Setup
-	$srctime = @filemtime($srcpath);
+	if ($imgIsRemote) { $srctime = time(); }
+	else { $srctime = @filemtime($srcpath); }
 	if (!$srctime) { 
-		if ($imgIsRemote) { $srctime = time(); }
-		else { return false; }
+		return false;
 		}
 	
 	// Get data

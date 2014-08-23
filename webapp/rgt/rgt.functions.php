@@ -77,6 +77,10 @@ function chkBusy() {
 // ==============================================================
 
 function error($msg) { 
+
+	// TMP: return HTTP 500
+	http_response_code(500);
+	die();
 	
 	global $imgSrc, $imgThumb, $imgFile, $thWidth, $thHeight;
 	

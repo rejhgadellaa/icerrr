@@ -365,7 +365,6 @@ section {
 		position:fixed;
 		right:0; left:0; bottom:0;
 		padding:16px;
-		pointer-events:none;
 		background:#eee;
 		text-align:center;
 		font-size:10pt;
@@ -395,6 +394,10 @@ section {
 
 }
 	
+	#searchstation_results .main {
+		padding-bottom:48px;
+	}
+	
 	#searchstation_results .resultitem .resultname {
 		position:absolute;
 		top:16px; left:72px;
@@ -412,7 +415,7 @@ section {
 }
 
 	#searchicon .main {
-	
+		padding-bottom:48px;
 	}
 	
 		.resultwrap_chicon {
@@ -438,7 +441,6 @@ section {
 		position:fixed;
 		right:0; left:0; bottom:0;
 		padding:16px;
-		pointer-events:none;
 		background:#eee;
 		text-align:center;
 		font-size:10pt;

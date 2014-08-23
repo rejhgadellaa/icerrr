@@ -52,7 +52,8 @@ site.chicon.init = function(station_id) {
 		restrictions:[
 			[google.search.ImageSearch.RESTRICT_FILETYPE, google.search.ImageSearch.FILETYPE_PNG],
 			[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
-		]
+		],
+		maxresults:32
 	}
 	
 	site.ui.showloading();
@@ -72,10 +73,13 @@ site.chicon.init = function(station_id) {
 				
 				var result = results[i];
 				
+				// How can result.url be undefined? Is google trolling me?
+				if (!result.url) { continue; }
+				
 				var resultitem = document.createElement("div");
-				resultitem.className = "resultitem_chicon shadow_z1";
+				resultitem.className = "resultitem_chicon shadow_z1 activatablel";
 				resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
-					+ '<img class="resulticon_chicon" src="'+result.url+'" '
+					+ '<img class="resulticon_chicon" src="'+ site.cfg.urls.webapp +"rgt/rgt.php?w=160&h=160&src="+ result.url +'" '
 						+'onerror="$(this.parentNode.parentNode.parentNode).remove();"'
 						+'/>'
 					+ '</div></div>'
@@ -89,7 +93,7 @@ site.chicon.init = function(station_id) {
 			
 			// Default icon..				
 			var resultitem = document.createElement("div");
-			resultitem.className = "resultitem_chicon shadow_z1 activatabled";
+			resultitem.className = "resultitem_chicon shadow_z1 activatablel";
 			resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
 				+ '<img class="resulticon_chicon" src="img/icons-48/ic_launcher.png" />'
 				+ '</div></div>'
@@ -124,6 +128,7 @@ site.chicon.init = function(station_id) {
 			
 			// err
 			loggr.log(" > No image found...");
+			site.ui.hideloading();
 			site.chlist.init();
 			
 		},
