@@ -1,6 +1,7 @@
 [
   {
     "station_id": "radio1",
+    "dirble_id":9950,
     "station_edited":{},
     "station_name": "NPO Radio 1",
     "station_url": "http://icecast.omroep.nl/radio1-bb-mp3",
@@ -17,6 +18,7 @@
   },
   {
     "station_id": "radio2",
+    "dirble_id":9952,
     "station_edited":{},
     "station_name": "NPO Radio 2",
     "station_url": "http://icecast.omroep.nl/radio2-bb-mp3",
@@ -33,6 +35,7 @@
   },
   {
     "station_id": "radio3fm",
+    "dirble_id":9954,
     "station_edited":{},
     "station_name": "NPO Radio 3fm",
     "station_url": "http://icecast.omroep.nl/3fm-bb-mp3",
