@@ -1,6 +1,9 @@
 v0.019
 - Implemented '#searchicon' when adding station
+- 'Add/Edit Station': Tap station_icon to search icon (only works when editing!)
 - When update (#install) fails just finish up
+- Fix: dirtyfiles data wasn't protected against duplicate entries
+- Update clears app data (all local content is deleted)
 
 v0.018
 - Bug fix

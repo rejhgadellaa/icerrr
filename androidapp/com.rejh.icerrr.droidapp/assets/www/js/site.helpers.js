@@ -283,23 +283,27 @@ site.helpers.session = {};
 
 // TODO: I want this function for other places too, not just session data
 
-site.helpers.session.put = function(key,data) {
+site.helpers.session.put = function(key,data,isarray) {
 	sessionelem = site.session[key];
-	var newsessionelem = site.helpers.session.putRecursive(sessionelem,data);
+	var newsessionelem = site.helpers.session.putRecursive(sessionelem,data,isarray);
 	site.session[key] = newsessionelem;
 	site.cookies.put("site.session",JSON.stringify(site.session)); // TODO: restore at startup..
 }
 
-site.helpers.session.putRecursive = function(sessionelem,data) {
+site.helpers.session.putRecursive = function(sessionelem,data,isarray) {
 	var newsessionelem = jQuery.extend(true, {}, sessionelem);
-	if (!newsessionelem) { newsessionelem = {}; }
+	if (!newsessionelem && !isarray) { newsessionelem = {}; }
+	else if (!newsessionelem) { newsessionelem = []; }
 	// Walk..
 	for (var elemkey in data) {
 		// build newsessionelem
-		if (typeof(data[elemkey])=="object" || typeof(data[elemkey])=="array") {
+		if (typeof data[elemkey] == "array") { 
+			newsessionelem[elemkey] = site.helpers.session.putRecursive(sessionelem[elemkey],data[elemkey],true);
+		} else if (typeof data[elemkey] == "object") {
 			newsessionelem[elemkey] = site.helpers.session.putRecursive(sessionelem[elemkey],data[elemkey]); // recursive magic
 		} else {
-			newsessionelem[elemkey] = data[elemkey];
+			if (typeof newsessionelem == "array") { newsessionelem.push(data[elemkey]); } // array, push
+			else { newsessionelem[elemkey] = data[elemkey]; } // obj mode
 		}
 	}
 	return newsessionelem;
@@ -324,12 +328,14 @@ site.helpers.session.getStationIndexById = function(station_id, stations) {
 site.helpers.flagdirtyfile = function(filepathandname) {
 	filepathandname = filepathandname.replace("//","/");
 	var dirtyfiles = site.session.dirtyfiles;
-	if (typeof(dirtyfiles)=="object" && site.helpers.countObj(dirtyfiles)>0) { // TODO: dirtyfiles is not an object.. is it?
+	if (typeof dirtyfiles == "object" && site.helpers.countObj(dirtyfiles)>0) { // TODO: dirtyfiles is not an object.. is it?
 		loggr.log(" > site.helpers.flagdirtyfile.Huh? 'dirtyfiles'==object?");
 		if (site.helpers.countObj(dirtyfiles)>0) {
 			var newdirtyfiles = [];
 			for (var intstr in dirtyfiles) {
-				newdirtyfiles.push(dirtyfiles[i]);
+				if (newdirtyfiles.indexOf(dirtyfiles[intstr])<0) {
+					newdirtyfiles.push(dirtyfiles[intstr]);
+				}
 			}
 			dirtyfiles = newdirtyfiles;
 			loggr.log(" >> Solved it: "+ dirtyfiles.length +" result(s) in 'dirtyfiles'");
@@ -339,8 +345,10 @@ site.helpers.flagdirtyfile = function(filepathandname) {
 		}
 	}
 	if (!dirtyfiles) { dirtyfiles = []; }
-	dirtyfiles.push(filepathandname);
-	site.helpers.session.put("dirtyfiles",dirtyfiles);
+	if (dirtyfiles.indexOf(filepathandname)<0) { 
+		dirtyfiles.push(filepathandname);
+	}
+	site.helpers.session.put("dirtyfiles",dirtyfiles,true);
 }
 
 // Count stuff
@@ -475,16 +483,19 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 					// get more...
 					loggr.log(" > Getting more results...");
 					thesearch.gotoPage(currPage+1);
+					return;
 				} else {
 					// return results..
+					loggr.log(" > Results: "+ site.chlist.thesearchresults[searchid].length);
 					cb(site.chlist.thesearchresults[searchid]);
 					site.chlist.thesearchbusy[searchid] = false;
 					site.helpers.googleImageSearchCleanup();
+					return;
 				}
-				
 			}
 			
 			// Errcb
+			if (!site.chlist.thesearchresults[searchid]) { site.chlist.thesearchresults[searchid] = []; }
 			if (site.chlist.thesearchresults[searchid].length<1) {
 				loggr.log(" > Search failed, no results");
 				errcb();

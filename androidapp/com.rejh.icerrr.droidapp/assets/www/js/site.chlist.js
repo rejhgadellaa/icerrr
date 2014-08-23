@@ -133,6 +133,8 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	}
 	/**/
 	
+	forceRedraw = site.chedit.changesHaveBeenMade || site.chedit.changesHaveBeenMadeGotoStarred
+	
 	site.chedit.changesHaveBeenMade = false;
 	
 	// Determine sorting..
