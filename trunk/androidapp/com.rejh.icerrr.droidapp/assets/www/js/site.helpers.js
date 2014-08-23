@@ -430,9 +430,12 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 	// New imagesearch, get unique id
 	var searchid = site.helpers.getUniqueID();
 	if (!site.chlist.thesearch) { site.chlist.thesearch = {}; }
+	if (!site.chlist.thesearchresults) { site.chlist.thesearchresults = []; }
 	if (!site.chlist.thesearchbusy) { site.chlist.thesearchbusy = {}; }
 	site.chlist.thesearch[searchid] = new google.search.ImageSearch();
+	site.chlist.thesearchresults[searchid] = [];
 	site.chlist.thesearchbusy[searchid] = true;
+	
 	
 	// Set some properties
 	// -> Restrictions
@@ -449,21 +452,46 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 	// Callback
 	site.chlist.thesearch[searchid].setSearchCompleteCallback(this, 
 		function() {
-			// Results? || TODO: check if we can extend (deep copy) the results because we want to clean them up..
+			
+			var thesearch = site.chlist.thesearch[searchid];
+			var cursor = {};
+			var results = []
+			
+			// Store results (if any)
 			if (site.chlist.thesearch[searchid].results && site.chlist.thesearch[searchid].results.length > 0) {
-				var results = site.chlist.thesearch[searchid].results;
-				loggr.log(" > "+ results.length +" result(s)");
-				cb(results);
-				site.chlist.thesearchbusy[searchid] = false;
-				site.helpers.googleImageSearchCleanup();
-			} 
-			// Nope
-			else {
+				results = site.chlist.thesearch[searchid].results;
+				for (var i in results) {
+					site.chlist.thesearchresults[searchid].push(results[i]);
+				}
+			}
+			
+			// Check for more results :D
+			if (thesearch.cursor) {
+				cursor = thesearch.cursor;
+				var currPage = cursor.currentPageIndex;
+				var pages = cursor.pages;
+				loggr.log(" > "+ currPage +", out of "+ pages.length);
+				if (currPage < pages.length-1) {
+					// get more...
+					loggr.log(" > Getting more results...");
+					thesearch.gotoPage(currPage+1);
+				} else {
+					// return results..
+					cb(site.chlist.thesearchresults[searchid]);
+					site.chlist.thesearchbusy[searchid] = false;
+					site.helpers.googleImageSearchCleanup();
+				}
+				
+			}
+			
+			// Errcb
+			if (site.chlist.thesearchresults[searchid].length<1) {
 				loggr.log(" > Search failed, no results");
 				errcb();
 				site.chlist.thesearchbusy[searchid] = false;
 				site.helpers.googleImageSearchCleanup();
 			}
+			
 		},
 		null
 	);
@@ -485,6 +513,7 @@ site.helpers.googleImageSearchCleanup = function() {
 	if (!anybusy) {
 		loggr.log("site.helpers.googleImageSearchCleanup(): Cleanup...");
 		site.chlist.thesearch = {};
+		site.chlist.thesearchresults = [];
 		site.chlist.thesearchbusy = {};
 	}
 	
