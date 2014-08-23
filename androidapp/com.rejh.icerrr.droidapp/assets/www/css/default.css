@@ -423,12 +423,11 @@ section {
 			}
 			
 	#searchicon .main .gsc-branding {
-		position:absolute;
-		bottom:8px; 
-		left:50%;
-		width:300px;
-		margin-left:-150px;
+		position:fixed;
+		right:0; left:0; bottom:0;
+		padding:8px;
 		pointer-events:none;
+		background:#eee;
 		text-align:center;
 		font-size:10pt;
 	}

@@ -88,7 +88,7 @@ site.chicon.init = function(station_id) {
 			
 			// Default icon..				
 			var resultitem = document.createElement("div");
-			resultitem.className = "resultitem_chicon shadow_z2";
+			resultitem.className = "resultitem_chicon shadow_z1 activatabled";
 			resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
 				+ '<img class="resulticon_chicon" src="img/icons-48/ic_launcher.png" />'
 				+ '</div></div>'
@@ -105,7 +105,7 @@ site.chicon.init = function(station_id) {
 			// Append branding..
 			// results.getBranding(opt_element?, opt_orientation?)
 			var snip = site.helpers.getGoogleImageSearchBranding();
-			snip = "<div class='gsc-branding'>Powered by <b>Google Image Search</b></div>";
+			snip = "<div class='gsc-branding shadow_z1u'>Powered by <b>Google Image Search</b></div>";
 			$("#searchicon .main").append(snip);
 			
 			// Onclick
