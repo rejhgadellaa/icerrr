@@ -52,7 +52,7 @@ site.installer.cfg.downloadjson_files = [
 	{}
 ];
 
-site.installer.cfg.overwrite_versions = [0.014];
+site.installer.cfg.overwrite_versions = [0.014,0.019];
 
 // ---> Init
 

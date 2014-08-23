@@ -305,6 +305,12 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 	// masonry!
 	$("#searchstation_results .main").masonry( 'appended', elems )
+			
+	// Append branding..
+	// results.getBranding(opt_element?, opt_orientation?)
+	var snip = site.helpers.getGoogleImageSearchBranding();
+	snip = '<div class="resultfooter shadow_z1u"><a href="javascript:void" onclick="window.open(\'http://dirble.com/\',\'_system\');">Powered by Dirble</a>'
+	$("#searchicon .main").append(snip);
 	
 	// TODO: how to load more pages...?
 	

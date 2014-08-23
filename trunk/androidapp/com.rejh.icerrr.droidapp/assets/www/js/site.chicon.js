@@ -24,7 +24,8 @@ site.chicon.init = function(station_id) {
 	site.ui.gotosection("#searchicon");
 			
 	// Clear
-	$("#searchicon .main").html("");
+	$("#searchicon .main").empty();
+	loggr.log(" > "+ $("#searchicon .main").length);
 	
 	// Get data
 	var stationIndex = site.helpers.session.getStationIndexById(station_id);
@@ -72,7 +73,7 @@ site.chicon.init = function(station_id) {
 				var result = results[i];
 				
 				var resultitem = document.createElement("div");
-				resultitem.className = "resultitem_chicon shadow_z2";
+				resultitem.className = "resultitem_chicon shadow_z1";
 				resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
 					+ '<img class="resulticon_chicon" src="'+result.url+'" '
 						+'onerror="$(this.parentNode.parentNode.parentNode).remove();"'
@@ -94,13 +95,18 @@ site.chicon.init = function(station_id) {
 				+ '</div></div>'
 				;
 			
-			
 			// Append
 			wrap.appendChild(resultitem);
 			
 			// Append
-			$("#searchicon .main").append("<div class='resultheader'>Choose an icon for '"+ site.chicon.station.station_name +"'</div>");
+			$("#searchicon .main").html("<div class='resultheader'>Choose an icon for '"+ site.chicon.station.station_name +"'</div>");
 			$("#searchicon .main").append(wrap);
+			
+			// Onclick
+			$("#searchicon .resulticon_chicon").on("click",function(evt) {
+				var target = evt.originalEvent.target;
+				site.chicon.save(target);
+			});
 			
 			// Append branding..
 			// results.getBranding(opt_element?, opt_orientation?)
@@ -108,11 +114,10 @@ site.chicon.init = function(station_id) {
 			snip = "<div class='gsc-branding shadow_z1u'>Powered by <b>Google Image Search</b></div>";
 			$("#searchicon .main").append(snip);
 			
-			// Onclick
-			$("#searchicon .resulticon_chicon").on("click",function(evt) {
-				var target = evt.originalEvent.target;
-				site.chicon.save(target);
-			});
+			// Center
+			var wid = $("#searchicon .resultwrap_chicon").width();
+			var space = wid%100;
+			$("#searchicon .resultwrap_chicon").css("margin-left",Math.round(space/2));
 			
 		},
 		function() {
@@ -158,14 +163,26 @@ site.chicon.save = function(target) {
 	var station_index = site.helpers.session.getStationIndexById(station_data.station_id);
 	site.data.stations[station_index] = jQuery.extend(true, {}, station_data);
 	
+	// Update currentstation if needed
+	if (site.session.currentstation_id == station_data.station_id) {
+		site.session.currentstation = station_data;
+	}
+	
 	// Write file
 	// TODO: problem with site.storage.isBusy: what do we do when it's busy? retry?
 	site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
 		function(evt) { 
 			site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
+			// Goto ...
+			site.lifecycle.get_section_history_item(); // remove self from list
+			var lastsection = site.lifecycle.get_section_history_item();
 			site.chedit.changesHaveBeenMadeGotoStarred = true;
 			site.chedit.changesHaveBeenMade = true;
-			site.chlist.init();
+			if (lastsection=="#editstation") {
+				site.chedit.init(site.chicon.station.station_id);
+			} else {
+				site.chlist.init(); // pretty much every other scenario..
+			}
 		},
 		function(e){ 
 			alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 

@@ -360,6 +360,17 @@ section {
 		
 	}
 	
+	.resultfooter {
+		/* for credits, powered by ... */
+		position:fixed;
+		right:0; left:0; bottom:0;
+		padding:16px;
+		pointer-events:none;
+		background:#eee;
+		text-align:center;
+		font-size:10pt;
+	}
+	
 #editstation, #searchstation, #searchstation_results {
 	
 }
@@ -405,6 +416,7 @@ section {
 	}
 	
 		.resultwrap_chicon {
+			margin:auto;
 			padding:10px;
 		}
 	
@@ -425,7 +437,7 @@ section {
 	#searchicon .main .gsc-branding {
 		position:fixed;
 		right:0; left:0; bottom:0;
-		padding:8px;
+		padding:16px;
 		pointer-events:none;
 		background:#eee;
 		text-align:center;

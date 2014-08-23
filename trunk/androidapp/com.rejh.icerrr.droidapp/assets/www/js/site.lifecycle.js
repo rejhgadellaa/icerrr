@@ -245,7 +245,12 @@ site.lifecycle.onBackButton = function() {
 			break;
 			
 		case "#searchicon": // TODO: Check this
-			site.ui.showtoast("Please choose an icon");
+			var lastsection = site.lifecycle.get_section_history_item(true);
+			if (lastsection=="#editstation") {
+				site.chedit.init(site.chicon.station.station_id);
+			} else {
+				site.ui.showtoast("Please choose an icon");
+			}
 			break;
 		
 		case "#editstation":

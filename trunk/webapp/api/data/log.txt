@@ -1,3 +1,149 @@
+2014-08-23 10:09:14    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-23 10:09:14    Cleanup json
+2014-08-23 10:08:48    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:08:48    Cleanup json
+2014-08-23 10:07:46    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-08-23 10:07:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-08-23 10:07:44    Cleanup json
+2014-08-23 10:07:18    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:07:18     - ../json/station_info.TMP.NPO_Radio 1.json
+2014-08-23 10:07:18    Cleanup json
+2014-08-23 10:07:08    GET > {"get":"station_info","station_id":"TMP.NPO_Radio 1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
+2014-08-23 10:07:08    Cleanup json
+2014-08-23 10:07:05    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:07:05    Cleanup json
+2014-08-23 10:06:29    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:06:29     - ../json/station_info.TMP.NPO_Radio 1.json
+2014-08-23 10:06:29    Cleanup json
+2014-08-23 10:06:18    GET > {"get":"station_info","station_id":"TMP.NPO_Radio 1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
+2014-08-23 10:06:18    Cleanup json
+2014-08-23 10:06:06    GET > {"get":"stations"}
+2014-08-23 10:06:06    Cleanup json
+2014-08-23 10:05:22    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:05:22    Cleanup json
+2014-08-23 10:03:52    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:03:52    Cleanup json
+2014-08-23 10:02:22    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:02:22     - ../json/station_info.TMP.NPO_Radio 1.json
+2014-08-23 10:02:22    Cleanup json
+2014-08-23 10:02:13    GET > {"get":"station_info","station_id":"TMP.NPO_Radio 1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
+2014-08-23 10:02:13    Cleanup json
+2014-08-23 10:01:42    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:01:42     - ../json/station_info.TMP.NPO_Radio 1.json
+2014-08-23 10:01:42    Cleanup json
+2014-08-23 10:01:27    GET > {"get":"station_info","station_id":"TMP.NPO_Radio 1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
+2014-08-23 10:01:27    Cleanup json
+2014-08-23 10:01:22    GET > {"get":"nowplaying_dirble","dirble_id":9950}
+2014-08-23 10:01:22    Cleanup json
+2014-08-23 10:01:07    GET > {"get":"stations"}
+2014-08-23 10:01:07    Cleanup json
+2014-08-23 10:00:34    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 10:00:34    Cleanup json
+2014-08-23 09:53:03    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:53:03    Cleanup json
+2014-08-23 09:51:33    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:51:33    Cleanup json
+2014-08-23 09:50:03    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:50:03    Cleanup json
+2014-08-23 09:48:33    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:48:33    Cleanup json
+2014-08-23 09:47:09    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:47:09    Cleanup json
+2014-08-23 09:46:54    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:46:54    Cleanup json
+2014-08-23 09:46:09    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:46:09    Cleanup json
+2014-08-23 09:45:37    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:45:37    Cleanup json
+2014-08-23 09:45:24    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:45:24    Cleanup json
+2014-08-23 09:44:56    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:44:56    Cleanup json
+2014-08-23 09:43:21    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:43:21    Cleanup json
+2014-08-23 09:38:42    GET > {"get":"nowplaying_dirble","dirble_id":218}
+2014-08-23 09:38:42     - ../json/station_info.TMP.Bbc_6 music.json
+2014-08-23 09:38:42    Cleanup json
+2014-08-23 09:38:34    GET > {"get":"station_info","station_id":"TMP.Bbc_6 music","station_host":"www.bbc.co.uk","station_port":80,"station_path":"/radio/listen/live/r6_aaclca.pls"}
+2014-08-23 09:38:34     - ../json/station_info.TMP.Bbc_6 music.json
+2014-08-23 09:38:34    Cleanup json
+2014-08-23 09:38:14    GET > {"get":"station_info","station_id":"TMP.Bbc_6 music","station_host":"www.bbc.co.uk","station_port":80,"station_path":"/radio/listen/live/r6_aaclca.pls"}
+2014-08-23 09:38:14    Cleanup json
+2014-08-23 09:38:01    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:38:01    Cleanup json
+2014-08-23 09:35:51    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:35:51    Cleanup json
+2014-08-23 09:32:35    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:32:35    Cleanup json
+2014-08-23 09:31:10    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:31:10    Cleanup json
+2014-08-23 09:28:24    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:28:24    Cleanup json
+2014-08-23 09:23:59    GET > {"get":"nowplaying_dirble","dirble_id":724}
+2014-08-23 09:23:59    Cleanup json
+2014-08-23 09:23:13    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 09:23:13    Cleanup json
+2014-08-23 09:22:12    Error: Error running query on Dirble: 'http://api.dirble.com/v1/station/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/62'
+2014-08-23 09:22:12    GET > {"get":"nowplaying_dirble","dirble_id":62}
+2014-08-23 09:22:12    Cleanup json
+2014-08-23 09:21:23    Error: Error running query on Dirble: 'http://api.dirble.com/v1/station/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/62'
+2014-08-23 09:21:23    GET > {"get":"nowplaying_dirble","dirble_id":62}
+2014-08-23 09:21:23    Cleanup json
+2014-08-23 09:20:56    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 09:20:56    Cleanup json
+2014-08-23 09:20:45    GET > {"get":"nowplaying_dirble","dirble_id":726}
+2014-08-23 09:20:45    Cleanup json
+2014-08-23 09:20:38    GET > {"get":"stations"}
+2014-08-23 09:20:38    Cleanup json
+2014-08-23 09:19:57    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 09:19:57    Cleanup json
+2014-08-23 09:19:48    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 09:19:48    Cleanup json
+2014-08-23 09:19:44    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:19:44    Cleanup json
+2014-08-23 09:19:22    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:19:22    Cleanup json
+2014-08-23 09:17:25    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:17:25    Cleanup json
+2014-08-23 09:15:30    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:15:29    Cleanup json
+2014-08-23 09:14:04    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:14:04    Cleanup json
+2014-08-23 09:12:45    GET > {"get":"nowplaying_dirble","dirble_id":9954}
+2014-08-23 09:12:44    Cleanup json
+2014-08-23 09:01:07    GET > {"get":"stations"}
+2014-08-23 09:01:07     - ../json/station_info.TMP.Bbc_World Service.json
+2014-08-23 09:01:07    Cleanup json
+2014-08-23 08:53:57    GET > {"get":"station_info","station_id":"TMP.Bbc_World Service","station_host":"vprbbc.streamguys.net","station_port":"8000","station_path":"/vprbbc24.mp3"}
+2014-08-23 08:53:57    Cleanup json
+2014-08-23 08:53:28    GET > {"get":"nowplaying_dirble","dirble_id":399}
+2014-08-23 08:53:28    Cleanup json
+2014-08-23 08:53:11    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 08:53:11    Cleanup json
+2014-08-23 08:51:29    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-23 08:51:29    Cleanup json
+2014-08-23 08:50:23    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 08:50:23    Cleanup json
+2014-08-23 08:49:30    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 08:49:29    Cleanup json
+2014-08-23 08:47:41    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 08:47:41    Cleanup json
+2014-08-23 08:47:19    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-23 08:47:19    Cleanup json
+2014-08-23 08:46:26    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 08:46:26    Cleanup json
+2014-08-23 08:46:21    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-23 08:46:21    Cleanup json
+2014-08-23 08:46:19    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-23 08:46:19    Cleanup json
+2014-08-23 08:38:51    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 08:38:51    Cleanup json
+2014-08-23 08:38:44    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-23 08:38:44    Cleanup json
+2014-08-23 08:38:12    GET > {"get":"search_dirble","search":"bbc/count/32"}
+2014-08-23 08:38:12    Cleanup json
+2014-08-23 08:37:50    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
+2014-08-23 08:37:50    Cleanup json
 2014-08-23 08:28:40    GET > {"get":"station_info","station_id":"radio538","station_host":"82.201.100.9","station_port":8000,"station_path":"/radio538"}
 2014-08-23 08:28:40    Cleanup json
 2014-08-23 08:28:35    GET > {"get":"nowplaying_dirble","dirble_id":726}
@@ -3399,5 +3545,4 @@
 2014-08-17 07:18:39    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2d50fe3_f0e48","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":80,"station_path":"/RADIO538_MP3.m3u"}
 2014-08-17 07:18:27    GET > {"get":"station_info","station_id":"radio1","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio1-bb-mp3"}
 2014-08-17 07:12:36    GET > {"get":"station_info","station_id":"TMP.f58a47008f65009f_147e2cf85d6_1a990","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":80,"station_path":"/RADIO538_MP3.m3u"}
-2014-08-17 07:09:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-08-17 07:05:08    GET > {"get":"station_info","station_id":"radio3fm","stat
+2014-08-17 07:09:11    GET > {"get":"station_info","station_id":"radio3fm","station_host":"ice

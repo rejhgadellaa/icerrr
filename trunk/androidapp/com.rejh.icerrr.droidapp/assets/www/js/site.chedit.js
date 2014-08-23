@@ -58,6 +58,10 @@ site.chedit.init = function(station_id_to_edit) {
 			station_bitrate: station_info.station_bitrate
 		}
 		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
+		$("#editstation img.station_icon").on("click", function(evt) {
+			site.chicon.init($("#editstation input[name='station_id']")[0].value.trim());
+		});
+		
 	} else if (station_id_to_edit===false) { // clean
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
@@ -71,8 +75,9 @@ site.chedit.init = function(station_id_to_edit) {
 		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
 	}
 	
-	site.chedit.changesHaveBeenMade = false;
-	site.chedit.changesHaveBeenMadeButResetScroll = false;
+	// TODO: check if this is not required
+	//site.chedit.changesHaveBeenMade = false;
+	//site.chedit.changesHaveBeenMadeButResetScroll = false;
 	
 }
 
