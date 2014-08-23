@@ -142,12 +142,15 @@ function fr($file) {
 }
 
 function fg($f) {
+	/*
 	$fo = @fopen($f, "r");
 	if (!$fo) { @fclose($fo); return false; }
 	while($fg = @fgets($fo)) { $buffer .= $fg; }
 	if ($buffer) { @fclose($fo); return $buffer; }
 	@fclose($fo);
 	return false;
+	/**/
+	return @file_get_contents($f);
 }
 
 // ---> Other helpers
