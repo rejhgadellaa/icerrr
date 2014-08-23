@@ -2,21 +2,12 @@
 // ---------------------------------------------
 // BZZ
 
-// ---> Compat
-
-if (!console) { var console = {}; }
-if (!console.log) { console.log = function(str) { }; }
-
-window.onerror = function(message, url, lineNumber) {
-    loggr.error(message+"\n > "+url+" at line "+lineNumber);
-}
-
-// ---> Site
-
-// ---------------------------------------------
-// CHANNEL LIST
+// ---> Loggr
 
 loggr = {};
+
+// ---------------------------------------------
+// LOGGER
 
 // ---> Config
 
@@ -62,20 +53,6 @@ loggr.log = function(str,opts) {
 		default:
 			console.log(str);
 			break;
-	}
-	
-	/*
-	
-	// > loglines
-	var strlines = [];
-	try {
-		str = str.replace("\r\n","\n");
-		strlines = str.split("\n");
-	} catch(e) {}
-	
-	str = "";
-	for (var i in strlines) { // TODO: handle multiple lines . and do it well.
-		str += new Date().format("Y:m:d H:i:s") +"  "+ strlines[i];
 	}
 	
 	/**/
@@ -174,7 +151,7 @@ loggr.upload = function() {
 	var html = loggr.gethtml(512); // last 512 lines
 	var text = loggr.gettext
 	
-	console.log(" >> "+ html.length)
+	loggr.log(" >> "+ html.length)
 	
 	// Webapi time!
 	var apiqueryobj = {
@@ -207,6 +184,37 @@ loggr.upload = function() {
 	
 	/**/
 	
+}
+
+// ---------------------------------------------
+// LOGGER : MORE
+
+// ---> Override console.log, warn, error
+
+/*
+if (console) {
+	
+	// Let's assume that if console exists, we have .log also
+	
+	// Copy original objs
+	loggr.console = jQuery.extend(true, {}, console);
+	
+	// Override
+	console.log = loggr.log
+	console.warn = loggr.warn;
+	console.error = loggr.error;
+	
+}
+/**/
+
+if (!console) { var console = {}; }
+if (!console.log) { console.log = function(str) { }; }
+
+window.onerror = function(message, file, line, column, errorObj) {
+    loggr.error(message+"\n > "+url+" at line "+lineNumber);
+	if (errorObj) {
+		loggr.error(errorObj.stack);
+	}
 }
 
 

@@ -2,11 +2,6 @@
 // ---------------------------------------------
 // BZZ
 
-// ---> Compat
-
-if (!console) { var console = {}; }
-if (!console.log) { console.log = function(str) { }; }
-
 // ---> Site
 
 if (!site) { var site = {}; }
@@ -419,6 +414,11 @@ site.helpers.genUniqueStationId = function(station_name) {
 }
 
 // ---> Google Image Search
+
+site.helpers.getGoogleImageSearchBranding = function() {
+	loggr.log("site.helpers.getGoogleImageSearchBranding()");
+	return google.search.Search.getBranding();
+}
 
 site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 	

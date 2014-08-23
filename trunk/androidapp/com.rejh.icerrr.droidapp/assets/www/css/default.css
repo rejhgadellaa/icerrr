@@ -318,7 +318,7 @@ section {
 	/* TODO: Fow now let's keep this universal? */
 	
 	.resultheader {
-		position:absolute;
+		position:relative;
 		top:0; left:0; right:0;
 		height:16px;
 		padding:16px;
@@ -393,6 +393,43 @@ section {
 	#searchstation_results .resultitem .resultsub {
 		position:absolute;
 		bottom:16px; left:72px;
+		font-size:10pt;
+	}
+	
+#searchicon {
+
+}
+
+	#searchicon .main {
+	
+	}
+	
+		.resultwrap_chicon {
+			padding:10px;
+		}
+	
+		.resultitem_chicon {
+			float:left;
+			width:80px;
+			height:80px;
+			margin:5px;
+			padding:5px;
+			background:#fff;
+			overflow:hidden;
+		}
+	
+			.resulticon_chicon {
+				width:100%;
+			}
+			
+	#searchicon .main .gsc-branding {
+		position:absolute;
+		bottom:8px; 
+		left:50%;
+		width:300px;
+		margin-left:-150px;
+		pointer-events:none;
+		text-align:center;
 		font-size:10pt;
 	}
 	

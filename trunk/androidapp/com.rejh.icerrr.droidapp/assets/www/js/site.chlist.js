@@ -2,11 +2,6 @@
 // ---------------------------------------------
 // BZZ
 
-// ---> Compat
-
-if (!console) { var console = {}; }
-if (!console.log) { console.log = function(str) { }; }
-
 // ---> Site
 
 if (!site) { var site = {}; }
@@ -344,11 +339,13 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 			// Set src
 			loggr.log(" > Pick: "+theresult.url);
 			$("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src",theresult.url);
+			loggr.log(" >> "+ $("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src"));
 			
 			// And save to stations stuff
 			station_data.station_icon = theresult.tbUrl;
 			if (!station_data.station_image) { station_data.station_image = theresult.url; } // also finds image.. should do this for all?
 			var station_index = site.helpers.session.getStationIndexById(station_data.station_id);
+			if (station_index<0) { loggr.warn(" > !station_index"); }
 			site.data.stations[station_index] = jQuery.extend(true, {}, station_data);
 			
 			// Write file
