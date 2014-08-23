@@ -1,3 +1,7 @@
+v0.019
+- Implemented '#searchicon' when adding station
+- When update (#install) fails just finish up
+
 v0.018
 - Bug fix
 

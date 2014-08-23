@@ -2,11 +2,6 @@
 // ---------------------------------------------
 // BZZ
 
-// ---> Compat
-
-if (!console) { var console = {}; }
-if (!console.log) { console.log = function(str) { }; }
-
 // ---> Site
 
 if (!site) { var site = {}; }
@@ -27,6 +22,9 @@ site.chsearch.init = function() {
 	
 	// Show UI
 	site.ui.gotosection("#searchstation");
+	
+	// Focus
+	$("#searchstation .main input")[0].select();
 	
 }
 
@@ -74,7 +72,7 @@ site.chsearch.searchstation = function() {
 			if (data["error"]) {
 				site.ui.showtoast(data["errormsg"]);
 			} else {
-				console.log(data["data"]);
+				loggr.log(data["data"]);
 				site.ui.showtoast("Success! Found "+ data["data"].length +" result(s)");
 				site.chsearch.results = data["data"];
 				site.chsearch.resultsToStationData();
@@ -110,7 +108,7 @@ site.chsearch.resultsToStationData = function(results) {
 		
 		//result = JSON.parse(result);
 		
-		console.log(result.streamurl);
+		loggr.log(result.streamurl);
 		
 		if (result.status!=1) { continue; } // TODO: The status can not be 100% sure yet. Its mainly just working for shoutcast and some Icecast
 		
@@ -235,13 +233,29 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 			loggr.log("site.chsearch.HACK.save()");
 			
+			// -> Get station
+			
 			var station_id = this.station_id;
 			loggr.log(" > "+station_id)
+			
+			site.chsearch.station_id = station_id;
 			
 			var stationIndex = site.helpers.session.getStationIndexById(station_id,site.chsearch.stations);
 			var station = site.chsearch.stations[stationIndex];
 			
 			if (!station) { loggr.error(" > !station"); }
+			
+			// -> Check if station exists
+			
+			for (var i in site.data.stations) {
+				if (!site.data.stations[i].station_url) { continue; }
+				if (station.station_url.toLowerCase()==site.data.stations[i].station_url.toLowerCase()) {
+					alert("A station with this url already exists: '"+site.data.stations[i].station_name+"'");
+					return;
+				}
+			}
+			
+			// -> Gogo
 			
 			if (!confirm("Add '"+ station.station_name +"'?")) { return; }
 			
@@ -251,7 +265,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 			// TODO: we need a helper for 'edited' stations
 			
-			console.log(JSON.stringify(station));
+			loggr.log(JSON.stringify(station));
 			
 			// Use MergeStations :D || but in reverse :D
 			var addstations = [station];
@@ -264,17 +278,14 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
 					site.chedit.changesHaveBeenMade = true;
 					site.ui.showtoast("Saved!");
-					site.chlist.init(true);
+					// site.chlist.init(true);
+					site.chicon.init(site.chsearch.station_id); // TODO: Finish this
 				},
 				function(e){ 
 					alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
 					loggr.log(site.storage.getErrorType(e)); 
 				}
 			);
-			
-			
-			
-			
 			
 		};
 		

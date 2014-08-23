@@ -2,11 +2,6 @@
 // ---------------------------------------------
 // BZZ
 
-// ---> Compat
-
-if (!console) { var console = {}; }
-if (!console.log) { console.log = function(str) { }; }
-
 // ---> Site
 
 if (!site) { var site = {}; }
@@ -66,6 +61,7 @@ site.installer.init = function(isUpdate) {
 	loggr.log("site.installer.init()");
 	
 	// Update?
+	// - This mainly means that when the install fails we'll just finish up
 	if (isUpdate) {
 		site.installer.isUpdate = true;
 		$("#install .log").html("<strong>Updating...</strong>");
@@ -193,6 +189,9 @@ site.installer.downloadjson_errcb = function(error) {
 	loggr.log("site.installer.downloadjson_errcb()");
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+error["message"]+"",{is_e:true});
+	if (site.installer.isUpdate) { 
+		site.installer.finishup();
+	}
 	// TODO: YES.. What now..
 }
 

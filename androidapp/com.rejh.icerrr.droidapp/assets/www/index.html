@@ -45,6 +45,7 @@
 	<!-- Javascript: icerrr -->
     <script language="javascript" type="text/javascript" src="js/site.base.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.chedit.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.chicon.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.chlist.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.chsearch.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.config.js"></script>
@@ -251,13 +252,13 @@
 		
 			<form onSubmit="site.chsearch.searchstation(); return false;">
 			
-			<p><label>Station name: <span style="color:#f00;">*</span><span style='font-size:10pt;'><a href='http://dirble.com/' target='_blank'>Powered by Dirble</a></span></label>
+			<p><label>Station name: <span style="color:#f00;">*</span><span style='font-size:10pt;'><a href='javascript:void' onclick="window.open('http://dirble.com/','_system');">Powered by Dirble</a></span></label>
 				<input class="round2" type="text" name="station_search" placeholder="Ex: BBC Radio 1" />
 			</p>
             
             <p>&nbsp;</p>
 			
-			<p>Can't find your station but you know how to get hold of the stream url? Consider <a href='http://dirble.com/' target='_blank'>signing up for a Dirble account</a> and add it to the database!</p>
+			<p>Can't find your station but you know how to get hold of the stream url? Consider <a href='javascript:void' onclick="window.open('http://dirble.com/','_system');">signing up for a Dirble account</a> and add it to the database!</p>
             
             <p>Or add a station <a href="javascript:void;" onClick="loggr.log(site.lifecycle.remove_section_history_item('#searchstation'));site.chedit.init();">manually</a></p>
 			
@@ -279,6 +280,25 @@
     <div class="actionbar shadow_z1">
     	
         <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+			
+        </div>
+    </div>
+    
+    <div class="main">
+	
+    </div>
+
+</section>
+
+<!-- Section -->
+<section id="searchicon">
+	
+    <div class="actionbar shadow_z1">
+    	
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_launcher.png" onClick="site.lifecycle.onBackButton();" /></div>
         <div class="title">ICERRR</div>
         
 		<div class="actions">

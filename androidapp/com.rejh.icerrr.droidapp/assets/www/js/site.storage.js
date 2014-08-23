@@ -2,11 +2,6 @@
 // ---------------------------------------------
 // BZZ
 
-// ---> Compat
-
-if (!console) { var console = {}; }
-if (!console.log) { console.log = function(str) { }; }
-
 // ---> Site
 
 if (!site) { var site = {}; }
@@ -59,7 +54,7 @@ site.storage.enqueue = function(action,args) {
 
 site.storage.runqueue = function() {
 	
-	loggr.log("site.storage.runqueue(): "+action);
+	loggr.log("site.storage.runqueue()");
 	
 	if (!site.session.storage) { return; }
 	

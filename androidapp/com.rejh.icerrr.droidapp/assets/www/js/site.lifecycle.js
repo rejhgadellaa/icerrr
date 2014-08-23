@@ -2,11 +2,6 @@
 // ---------------------------------------------
 // BZZ
 
-// ---> Compat
-
-if (!console) { var console = {}; }
-if (!console.log) { console.log = function(str) { }; }
-
 // ---> Site
 
 if (!site) { var site = {}; }
@@ -248,6 +243,10 @@ site.lifecycle.onBackButton = function() {
 		case "#searchstation_results":
 			site.chsearch.init();
 			break;
+			
+		case "#searchicon": // TODO: Check this
+			site.ui.showtoast("Please choose an icon");
+			break;
 		
 		case "#editstation":
 			site.chlist.init();
@@ -297,12 +296,13 @@ site.lifecycle.remove_section_history_item = function(selector) {
 	}
 }
 
-site.lifecycle.get_section_history_item = function() {
+site.lifecycle.get_section_history_item = function(dontPop) {
 	loggr.log("site.lifecycle.get_section_history_item()");
 	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { return false; }
 	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
+	if (dontPop) { return site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1]; }
 	return site.session.lifecycle.section_history.pop();
 }
 

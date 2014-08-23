@@ -2,11 +2,6 @@
 // ---------------------------------------------
 // BZZ
 
-// ---> Compat
-
-if (!console) { var console = {}; }
-if (!console.log) { console.log = function(str) { }; }
-
 // ---> Site
 
 if (!site) { var site = {}; }
@@ -221,8 +216,10 @@ site.home.useDirbleNowPlaying = function() {
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
 			
 			} else {
+				try {
 				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
 				site.session.currentstation.station_nowplaying = site.helpers.capitalize(data["data"]["songhistory"][0].info.name,1) +" - "+ site.helpers.capitalize(data["data"]["songhistory"][0].info.title,1);
+				} catch(e) { site.session.currentstation.station_nowplaying = "Now playing: Unknown"; }
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
