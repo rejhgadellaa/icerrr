@@ -1,3 +1,7 @@
+v0.021
+- Fix: loading UI was *still* not dismissed when icon search failed..
+- Added device info to log output
+
 v0.020
 - Tweak: using server side thumbnailer for icon results
 - Fix: loading UI was not dismissed when icon search failed

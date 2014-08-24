@@ -124,10 +124,9 @@
 	</div>
     
     <div class="footer shadow_z1u">
-		<!--
     	<div class="button left activatablel" onClick="site.ui.showtoast('Uploading log...');loggr.upload();">
+			<!-- ... -->
 		</div>
-		-->
     	<div class="button center activatablel" id="home_play" onClick="site.mp.playToggle();$(this).toggleClass('busy');">
 			<div class="button_inner">
 				<div class="center_table"><div class="center_td"><img src="img/icons-96/ic_play_w.png" /></div></div>
@@ -258,7 +257,7 @@
             
             <p>&nbsp;</p>
 			
-			<p>Can't find your station but you know how to get hold of the stream url? Consider <a href='javascript:void' onclick="window.open('http://dirble.com/','_system');">signing up for a Dirble account</a> and add it to the database!</p>
+			<p>Can't find your station but you know how to get hold of the stream url? Consider <a href='javascript:void' onClick="window.open('http://dirble.com/','_system');">signing up for a Dirble account</a> and add it to the database!</p>
             
             <p>Or add a station <a href="javascript:void;" onClick="loggr.log(site.lifecycle.remove_section_history_item('#searchstation'));site.chedit.init();">manually</a></p>
 			
@@ -267,7 +266,7 @@
 		</div>
 		
 		<div class="resultfooter shadow_z1u">
-			<a href='javascript:void' onclick="window.open('http://dirble.com/','_system');">Powered by Dirble</a>
+			<a href='javascript:void' onClick="window.open('http://dirble.com/','_system');">Powered by Dirble</a>
 		</div>
 	
     </div>

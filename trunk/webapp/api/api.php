@@ -177,10 +177,11 @@ switch($action) {
 				$text = $_POST["log_text"];
 				if (!$id) { error("Error: !post[log_id]"); }
 				if (!$html) { error("Error: !post[log_html]"); }
-				$filename = "logs_users/{$id}.html";
+				$filenamehtml = "logs_users/html/{$id}.html";
+				$filenametext = "logs_users/text/{$id}.txt";
 				$html = "<html><style>body{font-family:sans-serif;font-size:10pt;}</style><body>{$html}</body></html>";
-				$fw = fw($filename,$html);
-				$fw = fw($filename.".txt",$text);
+				$fw = fw($filenamehtml,$html);
+				$fw = fw($filenametext,$text);
 				if (!$fw) { error("Error: Could not write '$filename'"); }
 				$json["data"] = json_decode('{"post":"ok"}',true);
 				$json["info"] = array();

@@ -17,6 +17,8 @@ site.chlist.init = function(forceRedraw) {
 	
 	loggr.log("site.chlist.init()");
 	
+	site.ui.hideloading();
+	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#channellist");
 	
@@ -211,12 +213,15 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resulticon.addEventListener("error",function(ev){ 
 			loggr.log(" > Could not load "+ ev.target.src);
 			loggr.log(" > "+ ev.target.parentNode.station_id);
+			$(ev.target).attr("src","img/icons-48/ic_launcher.png?c="+(new Date().getTime()));
+			/*
 			var station_data = stations[site.helpers.session.getStationIndexById(ev.target.parentNode.station_id,stations)];
 			site.chlist.imagesearch(station_data);
 			ev.target.removeEventListener("error");
 			ev.target.addEventListener("error",function(ev){ 
 				$(ev.target).attr("src","img/icons-48/ic_launcher.png?c="+(new Date().getTime()));
 			});
+			/**/
 		});
 		resulticon.src = station.station_icon;
 		

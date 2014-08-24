@@ -17,6 +17,8 @@ site.chedit.init = function(station_id_to_edit) {
 	
 	loggr.log("site.chedit.init()");
 	
+	site.ui.hideloading();
+	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#editstation");
 	

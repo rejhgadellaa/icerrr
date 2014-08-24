@@ -99,8 +99,16 @@ site.chicon.init = function(station_id) {
 				+ '</div></div>'
 				;
 			
+			// Spacer icon..				
+			var resultspace = document.createElement("div");
+			resultspace.style.position = "relative";
+			resultspace.style.clear = "both";
+			resultspace.style.width = "48px";
+			resultspace.style.height = "48px";
+			
 			// Append
 			wrap.appendChild(resultitem);
+			wrap.appendChild(resultspace);
 			
 			// Append
 			$("#searchicon .main").html("<div class='resultheader'>Choose an icon for '"+ site.chicon.station.station_name +"'</div>");
