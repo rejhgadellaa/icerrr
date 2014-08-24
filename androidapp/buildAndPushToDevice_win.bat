@@ -42,7 +42,8 @@ if not errorlevel 0 goto error
 echo.
 echo Building project
 echo.
-call ant clean debug
+call ant -S debug
+if not errorlevel 0 goto error
 if not errorlevel 0 goto error
 
 REM pause

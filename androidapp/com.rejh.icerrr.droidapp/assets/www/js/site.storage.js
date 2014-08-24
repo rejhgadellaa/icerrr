@@ -31,6 +31,7 @@ site.storage.enqueue = function(action,args) {
 	loggr.log(" > "+ JSON.stringify(args));
 	
 	if (!site.session.storage) { site.session.storage = {}; }
+	if (!site.session.storage.queue) { site.session.storage.queue = []; }
 	
 	// Check for duplicates
 	for (var i=0; i<site.session.storage.queue.length; i++) {
@@ -139,8 +140,8 @@ site.storage.createfolder = function(path,cb,errcb) {
 	if (site.storage.isBusy) { 
 		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
 		var args = {path:path,cb:cb,errcb:errcb};
-		site.storage.enqueue("createfolder",args);
-		return; 
+		//site.storage.enqueue("createfolder",args);
+		//return; 
 	}
 	site.storage.isBusy = true;
 	
@@ -176,8 +177,8 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 	if (site.storage.isBusy) { 
 		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
 		var args = {path:path,cb:cb,errcb:errcb,opts:opts};
-		site.storage.enqueue("readfolder",args);
-		return; 
+		//site.storage.enqueue("readfolder",args);
+		//return; 
 	}
 	site.storage.isBusy = true;
 	
@@ -238,8 +239,8 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	if (site.storage.isBusy) { 
 		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
 		var args = {path:path,filename:filename,data:data,cb:cb,errcb:errcb,opts:opts};
-		site.storage.enqueue("writefile",args);
-		return; 
+		//site.storage.enqueue("writefile",args);
+		//return; 
 	}
 	site.storage.isBusy = true;
 	
@@ -299,8 +300,8 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	if (site.storage.isBusy) { 
 		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
 		var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
-		site.storage.enqueue("readfile",args);
-		return; 
+		//site.storage.enqueue("readfile",args);
+		//return; 
 	}
 	site.storage.isBusy = true;
 	
@@ -365,8 +366,8 @@ site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
 	if (site.storage.isBusy) { 
 		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
 		var args = {path:path,fileOrFolder:fileOrFolder,cb:cb,errcb:errcb,opts:opts};
-		site.storage.enqueue("getmetadata",args);
-		return; 
+		//site.storage.enqueue("getmetadata",args);
+		//return; 
 	}
 	site.storage.isBusy = true;
 	
