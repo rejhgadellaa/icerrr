@@ -21,7 +21,7 @@ site.cast.cfg.apiCfg = {}
 
 site.cast.setup = function() {
 	
-	console.log("site.cast.setup()");
+	console.info("site.cast.setup()");
 	
 	execute('setup', function(err) {
 		if (!err) {
@@ -39,7 +39,8 @@ site.cast.setup = function() {
 site.cast.onerror = function(errorCode, errorDescription, errorData) {
 	
 	loggr.warn("CHROMECAST: Error: "+ errorCode +", "+ errorDescription);
-	loggr.warn(" > "+ errorData);
+	loggr.warn(errorCode);
+	loggr.warn(errorData);
 	
 }
 
@@ -47,7 +48,7 @@ site.cast.onerror = function(errorCode, errorDescription, errorData) {
 
 site.cast.init = function() {
 	
-	console.log("site.cast.init()");
+	console.info("site.cast.init()");
 	
 	site.cast.cfg.apiCfg = {
 		sessionRequest:{
@@ -55,8 +56,8 @@ site.cast.init = function() {
 			capabilities:[chrome.cast.Capability.AUDIO_OUT],
 			dialRequest:null
 		},
-		sessionListener:function(){ loggr.log("CHROMECAST: sessionListener()") },
-		receiverListener:function(){ loggr.log("CHROMECAST: receiverListener()") },
+		sessionListener:site.cast.sessionListener,
+		receiverListener:site.cast.receiverListener,
 		autoJoinPolicy: chrome.cast.AutoJoinPolicy.TAB_AND_ORIGIN_SCOPED,
 		defaultActionPolicy: chrome.cast.DefaultActionPolicy.CREATE_SESSION
 	};
@@ -76,17 +77,18 @@ site.cast.sessionListener = function(args) {
 	
 }
 
-// ---> sessionListener
+// ---> receiverListener
 
 site.cast.receiverListener = function(arg) {
 	
-	loggr.log("site.cast.sessionListener()");
+	loggr.info("site.cast.receiverListener()");
 	
 	switch(arg) {
 		
 		case chrome.cast.ReceiverAvailability.AVAILABLE:
 			loggr.log(" > Available!");
-			
+			// TMP || TODO: tmp code
+			setTimeout(function() { site.cast.requestSession(); },500);
 			break;
 		
 		case chrome.cast.ReceiverAvailability.UNAVAILABLE:
@@ -100,6 +102,33 @@ site.cast.receiverListener = function(arg) {
 	}
 	
 		
+	
+}
+
+// ---> Stuff
+
+site.cast.requestSession = function() {
+	
+	console.log("site.cast.requestSession()");
+	
+	chrome.cast.requestSession(
+		function(session) {
+			loggr.log(" > Session ok!");
+			loggr.log(" >> "+ session.displayName);
+			site.cast.session = session;
+		},
+		site.cast.onerror
+	);
+	
+	
+	
+}
+
+// ---> Stuff
+
+site.cast.stuff = function() {
+	
+	console.log("site.cast.stuff()");
 	
 }
 

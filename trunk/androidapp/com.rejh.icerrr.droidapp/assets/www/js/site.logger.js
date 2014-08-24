@@ -67,10 +67,10 @@ loggr.log = function(str,opts) {
 			console.warn(str);
 			break;
 		case "debug":
-			console.warn(str);
+			console.debug(str);
 			break;
 		case "info":
-			console.warn(str);
+			console.info(str);
 			break;
 		default:
 			console.log(str);
