@@ -79,6 +79,14 @@ site.lifecycle.onDeviceReady = function() {
 	document.addEventListener('resume', site.lifecycle.onResume, false);
 	document.addEventListener('pause', site.lifecycle.onPause, false);
 	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
+	
+	// Device info
+	loggr.log(" > Device Info: "
+		+"model: "+ device.model
+		+", platform: "+ device.platform
+		+" "+ device.version
+		+", cordova: "+ device.cordova
+	);
 		
 	// some stuff
 	site.session.isPaused = false;
