@@ -1,3 +1,7 @@
+v0.022
+- Started implementing chromecast support (VERY experimental)
+- Fix: window.onerror typo
+
 v0.021
 - Fix: loading UI was *still* not dismissed when icon search failed..
 - Added device info to log output
