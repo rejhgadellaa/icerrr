@@ -36,6 +36,22 @@ loggr.warn = function(str,opts) {
 	loggr.save();
 }
 
+loggr.debug = function(str,opts) {
+	if (!opts) { opts = {}; }
+	opts.type = "debug";
+	loggr.log(str,opts);
+	loggr.save();
+}
+
+loggr.info = function(str,opts) {
+	if (!opts) { opts = {}; }
+	opts.type = "info";
+	loggr.log(str,opts);
+	loggr.save();
+}
+
+
+
 loggr.log = function(str,opts) {
 	
 	if (!str) { str = ""; }
@@ -48,6 +64,12 @@ loggr.log = function(str,opts) {
 			console.error(str);
 			break;
 		case "warn":
+			console.warn(str);
+			break;
+		case "debug":
+			console.warn(str);
+			break;
+		case "info":
 			console.warn(str);
 			break;
 		default:
@@ -107,8 +129,12 @@ loggr.gethtml = function(maxlines) {
 				break;
 			case "warn":
 				html+= "<span style='color:#c60'>"+ logline +"</span><br>\n";
+			case "debug":
+				html+= "<span style='color:#333'>"+ logline +"</span><br>\n";
+			case "info":
+				html+= "<span style='color:#666'>"+ logline +"</span><br>\n";
 			default:
-				html+= logline +"<br>\n";	
+				html+= "<span style='color:#999'>"+ logline +"</span><br>\n";
 		}
 	}
 	
