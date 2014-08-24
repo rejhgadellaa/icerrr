@@ -211,7 +211,7 @@ if (!console) { var console = {}; }
 if (!console.log) { console.log = function(str) { }; }
 
 window.onerror = function(message, file, line, column, errorObj) {
-    loggr.error(message+"\n > "+url+" at line "+lineNumber);
+    loggr.error(message+"\n > "+file+" at line "+line);
 	if (errorObj) {
 		loggr.error(errorObj.stack);
 	}

@@ -86,6 +86,9 @@ site.home.init = function() {
 	site.session.ui_pause_callbacks.push(site.home.onpause);
 	site.session.ui_resume_callbacks.push(site.home.onresume);
 	
+	// Test: chromecast
+	site.cast.setup();
+	
 }
 
 // PAUSE RESUME

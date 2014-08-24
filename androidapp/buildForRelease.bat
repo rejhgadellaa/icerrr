@@ -5,6 +5,7 @@ set path_prj=com.rejh.icerrr.droidapp
 set name_prj=Icerrr
 set name_key=icerrr
 set name_jarsigner_thingie=icerrr
+set android_sdk_extras=\Android-sdk-extras\
 
 :findandroidbat
 if exist C:\android\android-sdk\tools\android.bat set androidsdk=C:\android\android-sdk\
@@ -12,11 +13,24 @@ if exist C:\android\sdk\tools\android.bat set androidsdk=C:\android\sdk\
 REM --> Add more paths here :)
 
 :checkandroidbat
-if exist %androidsdk% goto sdkfound
+if exist %androidsdk% goto clean_stuff
 echo.
 echo Error: could not locate android.bat
 echo Please edit this batch file and under 'findandroidbat' add the path to your copy of [android-sdk]/tools/android.bat
 goto error
+
+:clean_stuff
+set projcd=%cd%
+echo.
+echo Updating libraries...
+echo.
+cd %android_sdk_extras%google\google_play_services\libproject\google-play-services_lib
+call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
+cd %android_sdk_extras%android\support\v7\appcompat
+call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
+cd %android_sdk_extras%android\support\v7\mediarouter
+call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
+cd %projcd%
 
 :sdkfound
 :checklist
