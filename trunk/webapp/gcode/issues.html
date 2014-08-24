@@ -1,0 +1,154 @@
+
+<!--
+
+	ICERRR
+	
+	REJH Gadellaa 2014
+
+--> 
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	
+    <!-- Title + Info -->
+    <title>ICERRR</title>
+    
+    <meta name="title" content="ICERRR" />
+    <meta name="description" content="The html5(ish) icecast streaming app">
+	<meta name="author" content="REJH Gadellaa">
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta content="True" name="HandheldFriendly" />
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+	
+	<!-- Javascript: jQuery -->
+    <script language="javascript" type="text/javascript" src="../js/jquery/jquery-1.9.1.min.js"></script>
+	
+	<!-- Javascript: Other -->
+    <script language="javascript" type="text/javascript" src="../js/plugs/json2.js"></script>
+    
+    <!-- Javascript -->
+    <script>
+	
+	show_fields = ["type","status","priority","summary"]
+	skip_indexes = [];
+	
+	site = {};
+	site.init = function() {
+		
+		console.log("site.init()");
+		console.log(" > Loading csv..");
+		$.getJSON('../api/?a=get&q={"get":"gcode_issues"}',
+			function(data) {
+				if (data["error"]) { alert(data["errormsg"]); }
+				else {
+					site.buildtable(data["data"])
+				}
+			}
+		);
+	
+	}
+	
+	site.buildtable = function(data) {
+		
+		console.log("site.buildtable()");
+		
+		data = data.split("\r").join("");
+		var lines = data.split("\n");
+		
+		console.log(lines.length);
+		
+		var html = "<table border='0' cellspacing='0' cellpadding='0'>";
+		
+		// Get first line
+		html += "<tr>";
+		var headers = JSON.parse("["+lines.shift()+"]");
+		for (var i in headers) {
+			var header = headers[i];
+			if (show_fields.indexOf(header.toLowerCase())>=0) {
+				if (i==6) { html += "<th width='*'>"+ header +", ("+i+")</th>"; }
+				else { html += "<th width='100'>"+ header +", ("+i+")</th>"; }
+			} else {
+				skip_indexes.push(i);
+			}
+		}
+		html += "</tr>";
+		
+		// The rest is data..
+		for (var i in lines) {
+			
+			var linestr = lines[i];
+			try {
+				var values = JSON.parse("["+linestr+"]");
+			} catch(e) { continue; }
+			
+			html += "<tr>";
+			for (var j in values) {
+				if (skip_indexes.indexOf(j)<0) { 
+					html += "<td>"+ values[j] +"</td>";
+				}
+			}
+			html += "</tr>";
+			
+		}
+		
+		html += "</table>";
+		
+		$("body").html(html);
+		
+	}
+	
+	</script>
+    
+    <!-- Style -->
+    <style>
+		
+		/* -- FONTS */
+		body, table, input, select {
+			font-family: 'Roboto', sans-serif;
+			font-size:10pt;
+			color:rgba(0,0,0,0.87);
+		}
+		
+		body { margin:0; }
+		
+		table { width:100%; }
+		
+		tr:hover {
+			background-color:#fc0;
+		}
+		
+		th {
+			text-align:left;
+			background-color:#ccc;
+		}
+		
+		td, th {
+		}
+		
+	</style>
+    
+    <!-- Webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
+    
+    <!--[if lt IE 9]>
+    	<script src="js/plugs/html5shiv.js"></script>
+    <![endif]-->
+	
+</head>
+
+<body onLoad="site.init();">
+
+<!-- Section -->
+<section id="home">
+	
+</section>
+
+
+</body>
+
+</html>

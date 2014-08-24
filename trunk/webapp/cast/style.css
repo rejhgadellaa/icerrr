@@ -1,0 +1,21 @@
+.background {
+  background: #eee;
+}
+
+.logo {
+  background-image:url(http://94.208.216.239/icerrr/img/web_hi_res_512_001.png);
+}
+
+.progressBar {
+  background-color: rgb(238, 255, 65);
+}
+
+.splash {
+  background-image:url(http://94.208.216.239/icerrr/img/promo1024500.jpg);
+  background-size:cover;
+}
+
+.watermark {
+  background-image:url(http://94.208.216.239/icerrr/img/icons-48/ic_launcher.png);
+  background-size: 56px 56px;
+}
