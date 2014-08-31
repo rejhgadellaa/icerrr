@@ -131,7 +131,7 @@ site.home.stop_ui_updates = function() {
 
 site.home.run_ui_updates = function() {
 	
-	loggr.log("site.home.run_ui_updates()");
+	//loggr.log("site.home.run_ui_updates()");
 	
 	// Home >> Footer >> Play button
 	if (site.mp.mpstatus==Media.MEDIA_RUNNING && !$(".button.center").hasClass("active")) {
@@ -154,7 +154,7 @@ site.home.run_ui_updates = function() {
 
 site.home.run_station_updates = function() {
 	
-	loggr.log("site.home.run_station_updates()");
+	//loggr.log("site.home.run_station_updates()");
 	
 	if (site.session.currentstation.dirble_id) {
 		site.home.useDirbleNowPlaying();

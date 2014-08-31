@@ -32,22 +32,41 @@ cd %projcd%
 
 :sdkfound
 cd %path_prj%
-
 echo.
 echo Updating project
 echo.
 call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
 if not errorlevel 0 goto error
 
+:askifcleanbuild
 echo.
-echo Building project
+echo Run a clean build (this will take longer)?
+choice /C YN /N /T 3 /D N /M "(Y/N)"
+if errorlevel 2 goto buildincr
+if errorlevel 1 goto buildclean
+goto error
+
+:buildincr
+echo.
+echo Building project (INCR)
 echo.
 call ant -S debug
+REM ant -S debug
 if not errorlevel 0 goto error
+goto installapp
+
+:buildclean
+echo.
+echo Building project (CLEAN)
+echo.
+call ant -S clean debug
+REM ant -S debug
 if not errorlevel 0 goto error
+goto installapp
 
 REM pause
 
+:installapp
 echo.
 echo Installing app...
 echo.
