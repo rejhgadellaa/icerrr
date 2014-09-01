@@ -71,9 +71,26 @@ site.cast.init = function() {
 
 // ---> sessionListener
 
-site.cast.sessionListener = function(args) {
+site.cast.sessionListener = function(session) {
 	
-	loggr.log("site.cast.sessionListener()");
+	loggr.info("site.cast.sessionListener()");
+	
+	loggr.log(" > Session_id: "+ session.sessionId);
+	
+	// Check
+	if (site.cast.session) { 
+		if (site.cast.session.sessionId != session.sessionId) {
+			// stop session?
+			site.cast.session.stop();
+			site.cast.session = null;
+		}
+	}
+	
+	if (session.media.length != 0) {
+			loggr.log('Found ' + session.media.length + ' sessions.');
+	}
+	
+	site.cast.session = session;
 	
 }
 
@@ -124,6 +141,7 @@ site.cast.requestSession = function() {
 		loggr.log(" > Session already running, stopping...");
 		site.ui.showtoast("Stopping Chromecast session...");
 		site.cast.session.stop();
+		site.cast.session = null;
 		site.cast.updateicon(1);
 		return; // <- important :)
 	}
@@ -133,7 +151,9 @@ site.cast.requestSession = function() {
 			loggr.log(" > Session ok!");
 			loggr.log(" >> "+ session.displayName);
 			site.cast.session = session;
-			site.cast.loadMedia();
+			setTimeout(function() { 
+				site.cast.loadMedia();
+			},500);
 		},
 		site.cast.onerror
 	);
@@ -152,15 +172,23 @@ site.cast.loadMedia = function() {
 	var station = site.session.currentstation;
 	if (!station) { loggr.error(" > !site.session.currentstation"); }
 	
-	var mediaInfo = new chrome.cast.media.MediaInfo(station.station_id, "audio/mpeg");
-	// var mediaInfo = new chrome.cast.media.MediaInfo(station.station_url);
+	// https 'hack'
+	var station_url_https = station.station_url // "https://dabble.me/cast/?video_link="+ encodeURIComponent(station.station_url);
+	
+	loggr.log(" > "+ station_url_https);
+	
+	// var mediaInfo = new chrome.cast.media.MediaInfo(station.station_id, "audio/mpeg");
+	var mediaInfo = new chrome.cast.media.MediaInfo(station_url_https);
+		mediaInfo.contentType = "audio/mpeg";
 	var request = new chrome.cast.media.LoadRequest(mediaInfo);
+		request.autoplay = true;
 	
 	site.cast.mediaInfo = mediaInfo;
 	
 	site.cast.session.loadMedia(request,
 		function(media) {
 			site.cast.media = media;
+			site.cast.updateicon(2);
 			site.cast.play();
 		},
 		site.cast.onerror

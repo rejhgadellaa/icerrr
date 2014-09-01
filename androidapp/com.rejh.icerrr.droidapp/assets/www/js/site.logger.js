@@ -40,14 +40,12 @@ loggr.debug = function(str,opts) {
 	if (!opts) { opts = {}; }
 	opts.type = "debug";
 	loggr.log(str,opts);
-	loggr.save();
 }
 
 loggr.info = function(str,opts) {
 	if (!opts) { opts = {}; }
 	opts.type = "info";
 	loggr.log(str,opts);
-	loggr.save();
 }
 
 
