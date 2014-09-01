@@ -527,6 +527,7 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 			var receiver = new chrome.cast.Receiver(obj.receiver.label, obj.receiver.friendlyName, obj.receiver.capabilities || [], obj.volume || null);
 
 			var session = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
+			console.log(session);
 			successCallback(session);
 			_sessionListener(session);
 		} else {
@@ -694,6 +695,7 @@ chrome.cast.Session.prototype.loadMedia = function (loadRequest, successCallback
 
 		} else {
 			handleError(err, errorCallback);
+			console.warn(err);
 		}
 	});
 };
@@ -1083,6 +1085,9 @@ chrome.cast._ = {
 		}
 	},
 	mediaLoaded: function(media) {
+		console.log(_sessions);
+		console.log(media);
+		console.log(_sessions[media.sessionId]);
 		if (_sessions[media.sessionId]) {
 			console.log('mediaLoaded');
 			_currentMedia = new chrome.cast.media.Media(media.sessionId, media.mediaSessionId);
@@ -1090,7 +1095,7 @@ chrome.cast._ = {
 
 			_sessions[media.sessionId].emit('_mediaListener', _currentMedia);
 		} else {
-			console.log('mediaLoaded --- but there is no session tied to it', media);
+			console.warn('mediaLoaded --- but there is no session tied to it', media);
 		}
 	},
 	sessionJoined: function(obj) {
