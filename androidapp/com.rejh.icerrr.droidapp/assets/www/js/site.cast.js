@@ -81,8 +81,7 @@ site.cast.sessionListener = function(session) {
 	if (site.cast.session) { 
 		if (site.cast.session.sessionId != session.sessionId) {
 			// stop session?
-			site.cast.session.stop();
-			site.cast.session = null;
+			site.cast.destroy();
 		}
 	}
 	
@@ -124,9 +123,7 @@ site.cast.receiverListener = function(arg) {
 			site.cast.updateicon(0);
 			break;
 	
-	}
-	
-		
+	}	
 	
 }
 
@@ -140,8 +137,7 @@ site.cast.requestSession = function() {
 	if (site.cast.session) {
 		loggr.log(" > Session already running, stopping...");
 		site.ui.showtoast("Stopping Chromecast session...");
-		site.cast.session.stop();
-		site.cast.session = null;
+		site.cast.destroy();
 		site.cast.updateicon(1);
 		return; // <- important :)
 	}
@@ -172,6 +168,12 @@ site.cast.loadMedia = function() {
 	var station = site.session.currentstation;
 	if (!station) { loggr.error(" > !site.session.currentstation"); }
 	
+	// Check session
+	if (!site.cast.session) {
+		site.cast.requestSession();
+		return;
+	}
+	
 	// https 'hack'
 	var station_url_https = station.station_url // "https://dabble.me/cast/?video_link="+ encodeURIComponent(station.station_url);
 	
@@ -180,6 +182,17 @@ site.cast.loadMedia = function() {
 	// var mediaInfo = new chrome.cast.media.MediaInfo(station.station_id, "audio/mpeg");
 	var mediaInfo = new chrome.cast.media.MediaInfo(station_url_https);
 		mediaInfo.contentType = "audio/mpeg";
+		mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
+		mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.GENERIC;
+		mediaInfo.metadata.title = station.station_name;
+		mediaInfo.metadata.images = [
+			{"url":station.station_icon}, 
+			{"url":site.cfg.urls.webapp+"/img/web_hi_res_512_001.png"}
+		];
+		// mediaInfo.customData = null;
+		// mediaInfo.streamType = chrome.cast.media.StreamType.BUFFERED;
+		// mediaInfo.textTrackStyle = new chrome.cast.media.TextTrackStyle();
+		mediaInfo.duration = null
 	var request = new chrome.cast.media.LoadRequest(mediaInfo);
 		request.autoplay = true;
 	
@@ -188,11 +201,31 @@ site.cast.loadMedia = function() {
 	site.cast.session.loadMedia(request,
 		function(media) {
 			site.cast.media = media;
+			site.cast.media.addUpdateListener(function(status) {
+				loggr.log("site.cast.media.addUpdateListener()");
+				console.log(" > ",site.cast.media);
+			});
 			site.cast.updateicon(2);
 			site.cast.play();
 		},
 		site.cast.onerror
 	);
+	
+}
+
+// ---> Media metadata
+
+site.cast.updateMetadata = function() {
+	
+	loggr.info("site.cast.updateMetadata()");
+	
+	/*
+	mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
+	mediaInfo.customData = null;
+	mediaInfo.streamType = chrome.cast.media.StreamType.BUFFERED;
+	mediaInfo.textTrackStyle = new chrome.cast.media.TextTrackStyle();
+	mediaInfo.duration = null
+	/**/
 	
 }
 
@@ -203,6 +236,11 @@ site.cast.loadMedia = function() {
 site.cast.play = function() {
 	
 	loggr.info("site.cast.play()");
+	
+	// Stop mediaplayers
+	if (site.mp.mp) {
+		site.mp.destroy();
+	}
 	
 	site.cast.media.play();
 	
@@ -243,6 +281,24 @@ site.cast.updateicon = function(mode) {
 	
 	loggr.log(" > "+ $(".cast_icon").attr("class"));
 	
+	
+}
+
+// ---> Destroy
+
+site.cast.destroy = function() {
+	
+	console.log("site.cast.destroy()");
+	
+	if (site.cast.media) {
+		site.cast.media.stop();
+		site.cast.media = null;
+	}
+	
+	if (site.cast.session) { 
+		site.cast.session.stop();
+		site.cast.session = null;
+	}
 	
 }
 
