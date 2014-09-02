@@ -289,6 +289,9 @@ site.chlist.selectstation = function(resultitem) {
 	site.session.currentstation_id = resultitem.station_id;
 	site.session.currentstation = site.data.stations[site.helpers.session.getStationIndexById(resultitem.station_id)];
 	site.mp.destroy(); // should be destroyed whenever currentstation changes!
+	if (site.cast.session) {
+		site.cast.loadMedia();
+	}
 	site.home.init();
 	
 }
