@@ -36,11 +36,14 @@ site.mp.init = function() {
 		}, 
 		function(error) {
 			loggr.log(" > Mediaplayer error: "+site.mp.getErrorByCode(error));
+			site.mp.mperror = error;
+			site.mp.mperrstrr = site.mp.getErrorByCode(error);
 			site.ui.showtoast("MP: "+site.mp.getErrorByCode(error));
 		},
 		function(statuscode) {
 			loggr.log(" > MediaPlayer status: "+ site.mp.getStatusByCode(statuscode));
 			site.mp.mpstatus = statuscode;
+			site.mp.mpstatstr = site.mp.getStatusByCode(statuscode);
 			site.ui.showtoast("MP: "+site.mp.getStatusByCode(statuscode));
 		}
 	);
@@ -52,6 +55,7 @@ site.mp.destroy = function() {
 	if (site.mp.mp) { 
 		site.mp.mp.release(); 
 	}
+	site.mp.mpstatus = 0;
 }
 
 site.mp.play = function() {
@@ -72,6 +76,7 @@ site.mp.stop = function() {
 		site.mp.mp.stop();
 	}
 	site.mp.isPlaying = false
+	site.mp.mpstatus = 4;
 	
 }
 
@@ -96,6 +101,8 @@ site.mp.getErrorByCode = function(error) {
 		case MediaError.MEDIA_ERR_NONE_SUPPORTED: return "MediaError.MEDIA_ERR_NONE_SUPPORTED, "+error.message;
 		default: return "UNKNOWN, "+error.message;
 	}
+	
+	site.mp.destroy();
 	
 }
 

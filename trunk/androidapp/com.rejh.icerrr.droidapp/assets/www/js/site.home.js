@@ -104,6 +104,46 @@ site.home.onresume = function() {
 	site.home.init_ui_updates();
 }
 
+// ---> Media: play, stop
+
+site.home.mpPlayToggle = function() {
+	
+	loggr.info("site.home.mpPlay()");
+	
+	// MP or cast?
+	if (site.cast.session) {
+		loggr.log(" > Chromecast session found...");
+		// check mp
+		if (site.mp.mp) { site.mp.destroy(); }
+		// check media...
+		if (site.cast.media) {
+			loggr.log(" > Chromecast media found...");
+			// TODO: site.cast.media.getStatusRequest
+			switch (site.cast.media.playerState) {
+				
+				case chrome.cast.media.PlayerState.PLAYING:
+				case chrome.cast.media.PlayerState.BUFFERING:
+					loggr.log(" >> stop");
+					site.cast.media.stop();
+					break;
+					
+				default:
+					loggr.log(" >> play");
+					site.cast.media.play();
+					break;		
+					
+			}
+		} else {
+			loggr.log(" > No media, loadMedia()");
+			site.cast.loadMedia();
+		}
+	} else {
+		loggr.log(" > Toggle mediaplayer");
+		site.mp.playToggle();
+	}
+	
+}
+
 // ---> UI stuff
 
 // Ui updater
