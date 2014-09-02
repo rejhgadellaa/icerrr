@@ -174,6 +174,11 @@ site.cast.loadMedia = function() {
 		return;
 	}
 	
+	// Check media
+	if (site.cast.media) {
+		site.cast.media.removeUpdateListener(site.cast.mediaUpdateListener);
+	}
+	
 	// https 'hack'
 	var station_url_https = station.station_url // "https://dabble.me/cast/?video_link="+ encodeURIComponent(station.station_url);
 	
@@ -201,16 +206,19 @@ site.cast.loadMedia = function() {
 	site.cast.session.loadMedia(request,
 		function(media) {
 			site.cast.media = media;
-			site.cast.media.addUpdateListener(function(status) {
-				loggr.log("site.cast.media.addUpdateListener()");
-				console.log(" > ",site.cast.media);
-			});
+			site.cast.media.addUpdateListener(site.cast.mediaUpdateListener);
 			site.cast.updateicon(2);
 			site.cast.play();
 		},
 		site.cast.onerror
 	);
 	
+}
+
+// ---> Media Update Listener
+
+site.cast.mediaUpdateListener = function() {
+	loggr.info("site.cast.mediaUpdateListener()");
 }
 
 // ---> Media metadata
@@ -288,7 +296,7 @@ site.cast.updateicon = function(mode) {
 
 site.cast.destroy = function() {
 	
-	console.log("site.cast.destroy()");
+	loggr.log("site.cast.destroy()");
 	
 	if (site.cast.media) {
 		site.cast.media.stop();
@@ -306,7 +314,7 @@ site.cast.destroy = function() {
 
 site.cast.stuff = function() {
 	
-	console.log("site.cast.stuff()");
+	loggr.log("site.cast.stuff()");
 	
 }
 
