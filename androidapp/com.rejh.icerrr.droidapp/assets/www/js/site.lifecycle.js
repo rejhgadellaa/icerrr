@@ -181,6 +181,16 @@ site.lifecycle.onPause = function() {
 		}
 	);
 	
+	// Write stations
+	site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+		function() {
+			loggr.log("site.lifecycle.onPause > write local site.data.stations OK");
+		},
+		function(err) {
+			loggr.log("site.lifecycle.onPause > write local site.data.stations Error");
+		}
+	);
+	
 	// Cancel timeouts
 	for (var i in site.timeouts) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
 	for (var i in site.loops) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }

@@ -15,7 +15,7 @@ site.chlist = {};
 
 site.chlist.init = function(forceRedraw) {
 	
-	loggr.log("site.chlist.init()");
+	loggr.info("site.chlist.init()");
 	
 	site.ui.hideloading();
 	
@@ -76,7 +76,7 @@ site.chlist.init = function(forceRedraw) {
 // - Important stuff: this is function that will be called whenever site.ui.gotosection is called
 
 site.chlist.onpause = function() {
-	loggr.log("site.chedit.onpause()");
+	loggr.info("site.chedit.onpause()");
 	site.session.chlist_currenttab = site.chlist.currenttab;
 	site.session.chlist_main_scrollTop = site.chlist.main_scrollTop;
 }
@@ -90,7 +90,7 @@ site.chlist.onresume = function() {
 
 site.chlist.ontabclick = function(tabObj) {
 	
-	loggr.log("site.chlist.ontabclick(): "+ tabObj.className);
+	loggr.info("site.chlist.ontabclick(): "+ tabObj.className);
 	
 	// Detect
 	var tab = "stations";
@@ -116,7 +116,7 @@ site.chlist.ontabclick = function(tabObj) {
 
 site.chlist.drawResults = function(pagenum,forcerun) {
 	
-	loggr.log("site.chlist.drawResults()");
+	loggr.info("site.chlist.drawResults()");
 	
 	// Check if needs to run..
 	if (!forcerun && !site.chedit.changesHaveBeenMade) {
@@ -209,19 +209,29 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
-		resulticon.addEventListener("load",function(ev){ /*...*/ });
+		resulticon.addEventListener("load",function(ev){ 
+			var stationIndex = site.helpers.session.getStationIndexById(ev.target.parentNode.station_id);
+			if (stationIndex<0) { return; }
+			if (site.data.stations[stationIndex].station_icon_local) { return; }
+			var filename = site.helpers.imageUrlToFilename(ev.target.src,"station_icon_"+site.data.stations[stationIndex].station_name.split(" ").join("-").toLowerCase(),true);
+			site.helpers.storeImageLocally(ev.target,filename,
+				function(evt) {
+					// evt.target.fileName
+					var stationIndex = site.helpers.session.getStationIndexById(ev.target.parentNode.station_id);
+					if (stationIndex>=0) { 
+						site.data.stations[stationIndex].station_icon = evt.target.fileName;
+						site.data.stations[stationIndex].station_icon_local = true;
+						site.data.stations[stationIndex].station_edited["station_icon"] = new Date().getTime();
+						site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
+						site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
+					}
+				}
+			);
+		});
 		resulticon.addEventListener("error",function(ev){ 
 			loggr.log(" > Could not load "+ ev.target.src);
 			loggr.log(" > "+ ev.target.parentNode.station_id);
 			$(ev.target).attr("src","img/icons-48/ic_launcher.png?c="+(new Date().getTime()));
-			/*
-			var station_data = stations[site.helpers.session.getStationIndexById(ev.target.parentNode.station_id,stations)];
-			site.chlist.imagesearch(station_data);
-			ev.target.removeEventListener("error");
-			ev.target.addEventListener("error",function(ev){ 
-				$(ev.target).attr("src","img/icons-48/ic_launcher.png?c="+(new Date().getTime()));
-			});
-			/**/
 		});
 		resulticon.src = station.station_icon;
 		
@@ -285,7 +295,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 
 site.chlist.selectstation = function(resultitem) {
 	
-	loggr.log("site.chlist.selectstation()");
+	loggr.info("site.chlist.selectstation()");
 	
 	loggr.log(" > "+ resultitem.station_id);
 	
@@ -303,7 +313,7 @@ site.chlist.selectstation = function(resultitem) {
 
 site.chlist.imagesearch = function(station_data,fullSizeImage) {
 	
-	loggr.log("site.chlist.imagesearch()");
+	loggr.info("site.chlist.imagesearch()");
 	
 	if (!station_data.station_name) { 
 		loggr.log(" > !station_data.station_data:");
@@ -397,13 +407,13 @@ site.chlist.imagesearch_cb = function() {
 // ---> Load data
 
 site.chlist.readstations = function(customCB) {
-	loggr.log("site.chlist.readstations()");
+	loggr.info("site.chlist.readstations()");
 	if (!customCB) { customCB = site.chlist.readstations_cb; }
 	site.storage.readfile(site.cfg.paths.json,"stations.json",customCB,site.chlist.readstations_errcb)
 }
 
 site.chlist.readstations_cb = function(resultstr) {
-	loggr.log("site.chlist.loadstations_cb()");
+	loggr.info("site.chlist.loadstations_cb()");
 	loggr.log(" > "+resultstr.substr(0,64)+"...");
 	resultjson = JSON.parse(resultstr);
 	if (!resultjson) { alert("site.chlist.readstations_cb().Error: !resultjson"); }
@@ -412,7 +422,7 @@ site.chlist.readstations_cb = function(resultstr) {
 }
 
 site.chlist.readstations_errcb = function(error) {
-	loggr.log("site.chlist.loadstations_errcb()");
+	loggr.info("site.chlist.loadstations_errcb()");
 	alert("site.chlist.readstations_errcb().Error: "+site.storage.getErrorType(error));
 	site.installer.init();
 	// TODO: YES.. What now..
@@ -424,7 +434,7 @@ site.chlist.readstations_errcb = function(error) {
 
 site.chlist.isStarred = function(station_id) {
 	
-	loggr.log("site.chlist.isStarred(): "+station_id);
+	loggr.info("site.chlist.isStarred(): "+station_id);
 	
 	if (!site.session.starred) { return false; }
 	
@@ -444,7 +454,7 @@ site.chlist.isStarred = function(station_id) {
 
 site.chlist.toggleStarred = function(station_id) {
 	
-	loggr.log("site.chlist.toggleStarred(): "+station_id);
+	loggr.info("site.chlist.toggleStarred(): "+station_id);
 	
 	if (site.chlist.isStarred(station_id)) {
 		site.chlist.unsetStarred(station_id);
@@ -460,7 +470,7 @@ site.chlist.toggleStarred = function(station_id) {
 
 site.chlist.setStarred = function(station_id) {
 	
-	loggr.log("site.chlist.setStarred(): "+station_id);
+	loggr.info("site.chlist.setStarred(): "+station_id);
 	
 	// Create list if it doesn't exist
 	if (!site.session.starred) { site.session.starred = []; }
@@ -477,7 +487,7 @@ site.chlist.setStarred = function(station_id) {
 
 site.chlist.unsetStarred = function(station_id) {
 	
-	loggr.log("site.chlist.unsetStarred(): "+station_id);
+	loggr.info("site.chlist.unsetStarred(): "+station_id);
 	
 	var newlist = [];
 	
@@ -502,7 +512,7 @@ site.chlist.unsetStarred = function(station_id) {
 
 site.chlist.getStarred = function() {
 	
-	loggr.log("site.chlist.getStarred()");
+	loggr.info("site.chlist.getStarred()");
 	
 	// Empty?
 	if (!site.session.starred) { 

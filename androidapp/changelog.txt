@@ -1,6 +1,11 @@
+v0.023
+- Station icons are now cached locally
+- Temp: disabled dirble.com now playing info, server was having issues(?)
+- site.helpers.genUniqueStationId now actual unique(ish) id
+
 v0.022
 - Started implementing chromecast support (VERY experimental)
-- Fix: window.onerror typo
+- Fixes, tweaks
 
 v0.021
 - Fix: loading UI was *still* not dismissed when icon search failed..
