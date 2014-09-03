@@ -276,6 +276,9 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	
 	// TODO: how to load more pages...?
 	
+	// update window
+	site.lifecycle.onResize();
+	
 }
 
 // ---> Select station

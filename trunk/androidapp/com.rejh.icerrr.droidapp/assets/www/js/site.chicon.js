@@ -130,6 +130,9 @@ site.chicon.init = function(station_id) {
 			var wid = $("#searchicon .resultwrap_chicon").width();
 			var space = wid%100;
 			$("#searchicon .resultwrap_chicon").css("margin-left",Math.round(space/2));
+	
+			// update window
+			site.lifecycle.onResize();
 			
 		},
 		function() {
@@ -144,8 +147,6 @@ site.chicon.init = function(station_id) {
 	);
 	
 	return;
-	
-	
 	
 }
 
