@@ -224,6 +224,12 @@ site.home.run_station_updates = function() {
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
+			
+			// Cast
+			if (site.cast.session && site.cast.media) {
+				// urn:x-cast:com.google.cast.media.
+				// site.cast.session.sendMessage("","urn:x-cast:com.google.cast.media.Image
+			}
 		},
 		function(error) {
 			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }

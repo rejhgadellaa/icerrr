@@ -103,8 +103,6 @@ site.cast.receiverListener = function(arg) {
 		
 		case chrome.cast.ReceiverAvailability.AVAILABLE:
 			loggr.log(" > Available!");
-			// TMP || TODO: tmp code
-			// setTimeout(function() { site.cast.requestSession(); },500);
 			if (site.cast.session) {
 				loggr.log(" > Session already running");
 				site.cast.updateicon(2);
@@ -183,16 +181,16 @@ site.cast.loadMedia = function() {
 	var station_url_https = station.station_url // "https://dabble.me/cast/?video_link="+ encodeURIComponent(station.station_url);
 	
 	loggr.log(" > "+ station_url_https);
+	loggr.log(" > "+ station.station_icon);
 	
 	// var mediaInfo = new chrome.cast.media.MediaInfo(station.station_id, "audio/mpeg");
 	var mediaInfo = new chrome.cast.media.MediaInfo(station_url_https);
 		mediaInfo.contentType = "audio/mpeg";
-		mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
-		mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.GENERIC;
+		mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata();
 		mediaInfo.metadata.title = station.station_name;
 		mediaInfo.metadata.images = [
-			{"url":station.station_icon}, 
-			{"url":site.cfg.urls.webapp+"/img/web_hi_res_512_001.png"}
+			chrome.cast.Image(station.station_icon), 
+			chrome.cast.Image("img/web_hi_res_512_001.png")
 		];
 		// mediaInfo.customData = null;
 		// mediaInfo.streamType = chrome.cast.media.StreamType.BUFFERED;

@@ -1,5 +1,5 @@
 .background {
-  background: #eee;
+  background: #333;
 }
 
 .logo {
@@ -7,12 +7,12 @@
 }
 
 .progressBar {
-  background-color: rgb(238, 255, 65);
+  background-color: #D0D102;
 }
 
 .splash {
-  background-image:url(http://94.208.216.239/icerrr/img/promo1024500.jpg);
-  background-size:cover;
+  background-image:url(http://94.208.216.239/icerrr/img/web_hi_res_512_001.png);
+  /* background-size:cover; */
 }
 
 .watermark {

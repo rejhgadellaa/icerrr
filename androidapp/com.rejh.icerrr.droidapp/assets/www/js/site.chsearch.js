@@ -314,7 +314,8 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 	// TODO: how to load more pages...?
 	
-	
+	// update window
+	site.lifecycle.onResize();
 	
 }
 
