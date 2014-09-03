@@ -19,7 +19,7 @@ site.helpers = {};
 
 site.helpers.mergeStations = function(stations1,stations2) {
 	
-	loggr.log("site.helpers.mergeStations()");
+	loggr.info("site.helpers.mergeStations()");
 	
 	if (!stations1 && !stations2) { return []; }
 	else if (!stations1) { return stations2; }
@@ -140,11 +140,61 @@ site.helpers.calcAverageColor = function(pixelArray) {
 	
 }
 
+// Image convert url to filename
+
+site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
+	
+	loggr.info("site.helpers.imageUrlToFilename()");
+	loggr.log(" > "+url);
+	
+	var filename = "__noname__"+ new Date().getTime();
+	
+	if (url.indexOf("/")>=0) {
+		filename = url.substr(url.lastIndexOf("/")+1);
+	} else {
+		filename = url;
+	}
+	
+	if (filename.indexOf("?")>=0) {
+		filename = filename.substr(0,url.lastIndexOf("?"));
+	}
+	
+	if (isBase64) {
+		filename += ".base64";
+	}
+	
+	filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
+	
+	return filename;
+	
+}
+
 // Store image
 // - create canvas, draw image on canvas, get base64, write to disk
 
-site.helpers.storeImageLocally = function(imgobj,path,name,opts) {
-	// TODO: Do we need this?
+site.helpers.storeImageLocally = function(imgobj,filename,cb,opts) {
+	
+	loggr.info("site.helpers.storeImageLocally()");
+	
+	// Get base64
+	loggr.log(" > Encode base64...");
+	var timebgn = new Date().getTime();
+	var base64 = site.helpers.imageToBase64(imgobj);
+	var time_encoded = new Date().getTime() - timebgn;
+	
+	loggr.log(" >> "+ time_encoded +" ms");
+	
+	// Write
+	loggr.log(" > Write: "+filename);
+	site.storage.writefile(site.cfg.paths.images,filename,base64,
+		function(evt) { cb(evt); },
+		function(err) {
+			loggr.warn(" > Error writing file "+ filename);
+		}
+	);
+	//
+	
+	
 }
 
 // imageToBase64
@@ -188,7 +238,8 @@ site.helpers.imageToBase64 = function(imgobj,cb,opts) {
 	}
 	
 	// Callback!
-	cb(base64);
+	if (cb) { cb(base64); }
+	else { return base64; }
 	
 }
 
@@ -418,19 +469,20 @@ site.helpers.genUniqueStationId = function(station_name) {
 		var illchar = site.cfg.illegalchars[i];
 		station_name = station_name.replace(illchar,"");
 	}
+	station_name += "_"+ site.helpers.getUniqueID();
 	return station_name;
 }
 
 // ---> Google Image Search
 
 site.helpers.getGoogleImageSearchBranding = function() {
-	loggr.log("site.helpers.getGoogleImageSearchBranding()");
+	loggr.info("site.helpers.getGoogleImageSearchBranding()");
 	return google.search.Search.getBranding();
 }
 
 site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 	
-	loggr.log("site.helpers.googleImageSearch()");
+	loggr.info("site.helpers.googleImageSearch()");
 	loggr.log(" > "+searchstring);
 	
 	// HELP: https://developers.google.com/image-search/v1/devguide
@@ -537,7 +589,7 @@ site.helpers.googleImageSearchCleanup = function() {
 // ---> Masonry
 
 site.helpers.masonryinit = function(selector,opts) {
-	loggr.log("site.helpers.masonryinit()");
+	loggr.info("site.helpers.masonryinit()");
 	if (!opts) { 
 		opts = {
 			itemSelector : '.resultitem',
@@ -552,7 +604,7 @@ site.helpers.masonryinit = function(selector,opts) {
 }
 
 site.helpers.masonryupdate = function(selector) {
-	loggr.log("site.helpers.masonryupdate()");
+	loggr.info("site.helpers.masonryupdate()");
 	$(selector).masonry();
 }
 

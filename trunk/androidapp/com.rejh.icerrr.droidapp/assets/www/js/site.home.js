@@ -15,7 +15,7 @@ site.home = {};
 
 site.home.init = function() {
 	
-	loggr.log("site.home.init();");
+	loggr.info("site.home.init();");
 	
 	// Check if station has been selected
 	if (!site.session.currentstation_id) {
@@ -48,14 +48,14 @@ site.home.init = function() {
 	$("#home .main .station_image img").on("load",
 		function(evt) { // TODO: detect transparent images..
 			var img = $("#home .main .station_image img")[0];
-			var color = site.helpers.getImgAvgColor(img,2,2,4,4);
+			var color = site.helpers.getImgAvgColor(img,0,0,2,2);
 			if (color[3]<1.0) {
-				color = [255,255,255];
+				color = [255,255,255,1.0];
 			} else {
 				//var colorThief = new ColorThief();
 				//var color = colorThief.getColor(img);
 			}
-			$("#home .main .station_image_wrap").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+",1)");
+			$("#home .main .station_image_wrap").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
 		}
 	);
 	$("#home .main .station_image img").on("error",
@@ -69,6 +69,10 @@ site.home.init = function() {
 	$("#home .main .station_name").html(site.session.currentstation.station_name);
 	$("#home .main .station_nowplaying").html("Now playing: ...");
 	$("#home .main").css("background","rgba(0,0,0,0)");
+	
+	$("#home .main .station_image img").on("error",function(evt) {
+		loggr.warn(" > !onload: "+ evt.originalEvent.target.src);
+	});
 	
 	// extra events
 	$("#home .main .station_nowplaying")[0].onclick = function(ev) {
@@ -95,12 +99,12 @@ site.home.init = function() {
 // - Important stuff: this is function that will be called whenever site.ui.gotosection is called
 
 site.home.onpause = function() {
-	loggr.log("site.home.onpause()");
+	loggr.info("site.home.onpause()");
 	site.home.stop_ui_updates();
 }
 
 site.home.onresume = function() {
-	loggr.log("site.home.site.home.()");
+	loggr.info("site.home.site.home.()");
 	site.home.init_ui_updates();
 }
 
@@ -150,7 +154,7 @@ site.home.mpPlayToggle = function() {
 
 site.home.init_ui_updates = function() {
 	
-	loggr.log("site.home.init_ui_updates()");
+	loggr.info("site.home.init_ui_updates()");
 	
 	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
 	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},1000);
@@ -162,7 +166,7 @@ site.home.init_ui_updates = function() {
 
 site.home.stop_ui_updates = function() {
 	
-	loggr.log("site.home.stop_ui_updates()");
+	loggr.info("site.home.stop_ui_updates()");
 	
 	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
 	if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
@@ -197,8 +201,8 @@ site.home.run_station_updates = function() {
 	//loggr.log("site.home.run_station_updates()");
 	
 	if (site.session.currentstation.dirble_id) {
-		site.home.useDirbleNowPlaying();
-		return;
+		//site.home.useDirbleNowPlaying();
+		//return;
 	}
 	
 	var apiqueryobj = {
@@ -214,6 +218,10 @@ site.home.run_station_updates = function() {
 	
 	site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
+			if (data["error"]) {
+				loggr.warn(" > "+data["errormsg"]);
+				return;
+			}
 			if (!data["data"]["nowplaying"]) { 
 				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
@@ -232,7 +240,7 @@ site.home.run_station_updates = function() {
 			}
 		},
 		function(error) {
-			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
+			if (error.message) { site.ui.showtoast(error.message); loggr.warn(error.message); }
 			else { loggr.log(error); }
 		}
 	);
@@ -248,7 +256,7 @@ site.home.run_station_updates = function() {
 
 site.home.useDirbleNowPlaying = function() {
 	
-	loggr.log("site.home.useDirbleNowPlaying()");
+	loggr.info("site.home.useDirbleNowPlaying()");
 	
 	var apiqueryobj = {
 		"get":"nowplaying_dirble",
