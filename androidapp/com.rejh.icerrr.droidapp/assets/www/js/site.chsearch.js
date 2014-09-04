@@ -26,6 +26,10 @@ site.chsearch.init = function() {
 	// Focus
 	$("#searchstation .main input")[0].select();
 	
+	// Reset results
+	site.chsearch.results = [];
+	site.chsearch.searchpage = 0;
+	
 }
 
 // PAUSE RESUME
@@ -43,9 +47,13 @@ site.chsearch.onresume = function() {
 
 // ---> Search
 
-site.chsearch.searchstation = function() {
+site.chsearch.searchstation = function(nextpage) {
 	
 	loggr.log("site.chsearch.searchstation()");
+	
+	if (!site.chsearch.searchpage) {
+		site.chsearch.searchpage = 0;
+	}
 	
 	// Get value
 	var name = $("#searchstation input[name='station_search']")[0].value.trim();
@@ -60,9 +68,10 @@ site.chsearch.searchstation = function() {
 	// Webapi time!
 	var apiqueryobj = {
 		"get":"search_dirble",
-		"search":name +"/count/"+ site.cfg.chlist.maxItemsPerBatch
+		"search":name +"/count/"+ 10 +"/from/"+ site.chsearch.searchpage // site.cfg.chlist.maxItemsPerBatch
 	}
 	
+	// > Go
 	var apiaction = "get";
 	var apiquerystr = JSON.stringify(apiqueryobj);
 	
@@ -72,10 +81,16 @@ site.chsearch.searchstation = function() {
 			if (data["error"]) {
 				site.ui.showtoast(data["errormsg"]);
 			} else {
-				loggr.log(data["data"]);
-				site.ui.showtoast("Success! Found "+ data["data"].length +" result(s)");
-				site.chsearch.results = data["data"];
-				site.chsearch.resultsToStationData();
+				if (data["data"].length>0) {
+					loggr.log(data["data"]);
+					site.ui.showtoast("Success! Found "+ data["data"].length +" result(s)");
+					for (var i in data["data"]) {
+						site.chsearch.results.push(data["data"][i]);
+					}
+					site.chsearch.searchstation(true);
+				} else {
+					site.chsearch.resultsToStationData();
+				}
 			}
 		},
 		function(error) {
@@ -84,6 +99,14 @@ site.chsearch.searchstation = function() {
 			site.ui.hideloading();
 		}
 	);
+	
+	
+	
+}
+
+// ---> Find more
+
+site.chsearch.searchstation_more = function() {
 	
 	
 	

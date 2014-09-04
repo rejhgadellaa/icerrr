@@ -1,78 +1,88 @@
+#Not updated with every update, but it does contain all of it :)
+
+= Changelog =
+
+v0.024
+  * Bugfix: App sometimes wrote empty stations file
+
 v0.023
-- Station icons are now cached locally
-- Temp: disabled dirble.com now playing info, server was having issues(?)
-- site.helpers.genUniqueStationId now actual unique(ish) id
+  * Station icons are now cached locally
+  * Temp: disabled dirble.com now playing info, server was having issues(?)
+  * site.helpers.genUniqueStationId now actual unique(ish) id
 
 v0.022
-- Started implementing chromecast support (VERY experimental)
-- Fixes, tweaks
+  * Started implementing chromecast support (VERY experimental)
+  * Fixes, tweaks
 
 v0.021
-- Fix: loading UI was *still* not dismissed when icon search failed..
-- Added device info to log output
-
+  * Fix: loading UI was *still* not dismissed when icon search failed..
+  * Added device info to log output
 v0.020
-- Tweak: using server side thumbnailer for icon results
-- Fix: loading UI was not dismissed when icon search failed
+  * Tweak: using server side thumbnailer for icon results
+  * Fix: loading UI was not dismissed when icon search failed
 
 v0.019
-- Implemented '#searchicon' when adding station
-- 'Add/Edit Station': Tap station_icon to search icon (only works when editing!)
-- When update (#install) fails just finish up
-- Fix: dirtyfiles data wasn't protected against duplicate entries
-- Update clears app data (all local content is deleted)
+  * Implemented '#searchicon' when adding station
+  * 'Add/Edit Station': Tap station_icon to search icon (only works when editing!)
+  * When update (#install) fails just finish up
+  * Fix: dirtyfiles data wasn't protected against duplicate entries
+  * Update clears app data (all local content is deleted)
 
 v0.018
-- Bug fix
+  * Bug fix
 
 v0.017
-- Uses dirble for now playing info when available
-- Shows album art as background when available
-- Bugfix: Auto Google Image Search on #channellist confused stations
+  * Uses dirble for now playing info when available
+  * Shows album art as background when available
+  * Bugfix: Auto Google Image Search on #channellist confused stations
 
 v0.016
-- Hotfix
+  * Hotfix
 
 v0.015
-- Check for (stations) updates every ~24hrs
-- Removed search icon on results screen
-- Fix: onresume and onpause functions were cleared sometimes
-- Fix: Station name stated 'Null' on #home for Veronica
-- Tweaks for UX
+  * Check for (stations) updates every ~24hrs
+  * Removed search icon on results screen
+  * Fix: onresume and onpause functions were cleared sometimes
+  * Fix: Station name stated 'Null' on #home for Veronica
+  * Tweaks for UX
 
 v0.014
-- Added 'Search station' section (with option to add manually)
-- Implemented custom logger, can save and upload logs
-- Install overwrites any locally created stations! (that's what you get with a beta)
-- Fix: Typo: site.session.ui_resume_callbacks
+  * Added 'Search station' section (with option to add manually)
+  * Implemented custom logger, can save and upload logs
+  * Install overwrites any locally created stations! (that's what you get with a beta)
+  * Fix: Typo: site.session.ui_resume_callbacks
 
 v0.013
-- UI/UX tweaks to 'Add/Edit Stations' section
-- Fix: removing/editing stations causes 'undefined' errors in stations data
-- Tweaked :active behaviour
+  * UI/UX tweaks to 'Add/Edit Stations' section
+  * Fix: removing/editing stations causes 'undefined' errors in stations data
+  * Tweaked :active behaviour
 
 v0.012
-- Added 'remove' functionality in 'Add/Edit Stations' section
-- Implemented 'station_edited' boolean for better merging data
-- Further improved :active workaround
-- Back icon (top left) now activates on touch (yay)
-- Bumped version: 0.012
+  * Added 'remove' functionality in 'Add/Edit Stations' section
+  * Implemented 'station_edited' boolean for better merging data
+  * Further improved :active workaround
+  * Back icon (top left) now activates on touch (yay)
+  * Bumped version: 0.012
 
 v0.011
-- 'Add/Edit Stations' now works, probably with bugs here and there
-- Moved googleImageSearch function to site.helpers
-- Partial fix for css ':active' issue
-- Bumped version: 0.011
+
+  * 'Add/Edit Stations' now works, probably with bugs here and there
+  * Moved googleImageSearch function to site.helpers
+  * Partial fix for css ':active' issue
+  * Bumped version: 0.011
 
 v0.010
-- Added 'Add/Edit Stations' section (doesn't actually work yet..)
-- Loading overlay has z-index 90
-- Motorkap: implemented mergeStations, used for (re)install
+
+  * Added 'Add/Edit Stations' section (doesn't actually work yet..)
+  * Loading overlay has z-index 90
+  * Motorkap: implemented mergeStations, used for (re)install
 
 v0.009
-- Lower refresh rate for Now Playing (30s > 1.5m), tap to refresh manually
-- Disabled highlight when tapping items for now (issues..)
-- Version same as site.config.app_version
+
+  * Lower refresh rate for Now Playing (30s > 1.5m), tap to refresh manually
+  * Disabled highlight when tapping items for now (issues..)
+  * Version same as site.config.app_version
 
 v0.004
+
 ...
