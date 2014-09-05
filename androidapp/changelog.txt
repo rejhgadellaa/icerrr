@@ -2,6 +2,10 @@
 
 = Changelog =
 
+v0.026
+  * Bugfix: Search ended up looping endlessly
+  * Minor fix(es)
+
 v0.024
   * Bugfix: App sometimes wrote empty stations file
 
