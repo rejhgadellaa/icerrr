@@ -55,6 +55,10 @@ site.chsearch.searchstation = function(nextpage) {
 		site.chsearch.searchpage = 0;
 	}
 	
+	if (nextpage) {
+		site.chsearch.searchpage++;
+	}
+	
 	// Get value
 	var name = $("#searchstation input[name='station_search']")[0].value.trim();
 	
@@ -77,19 +81,23 @@ site.chsearch.searchstation = function(nextpage) {
 	
 	site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
-			site.ui.hideloading();
 			if (data["error"]) {
 				site.ui.showtoast(data["errormsg"]);
+				site.ui.hideloading();
 			} else {
 				if (data["data"].length>0) {
 					loggr.log(data["data"]);
-					site.ui.showtoast("Success! Found "+ data["data"].length +" result(s)");
 					for (var i in data["data"]) {
 						site.chsearch.results.push(data["data"][i]);
 					}
-					site.chsearch.searchstation(true);
-				} else {
+					//site.chsearch.searchstation(true);
+					site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
 					site.chsearch.resultsToStationData();
+					site.ui.hideloading();
+				} else {
+					site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
+					site.chsearch.resultsToStationData();
+					site.ui.hideloading();
 				}
 			}
 		},
@@ -328,12 +336,6 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 	// masonry!
 	$("#searchstation_results .main").masonry( 'appended', elems )
-			
-	// Append branding..
-	// results.getBranding(opt_element?, opt_orientation?)
-	var snip = site.helpers.getGoogleImageSearchBranding();
-	snip = '<div class="resultfooter shadow_z1u"><a href="javascript:void" onclick="window.open(\'http://dirble.com/\',\'_system\');">Powered by Dirble</a>'
-	$("#searchicon .main").append(snip);
 	
 	// TODO: how to load more pages...?
 	

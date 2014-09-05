@@ -61,9 +61,12 @@ site.lifecycle.onResize = function() {
 	
 	// TODO: figure out if orientation change..
 	
-	$(".main").css("height",
-		$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height() + $(site.vars.currentSection+" .footer").height())
-	);
+	setTimeout(function(){
+		$(".main").css("height",
+			$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height() + $(site.vars.currentSection+" .footer").height())
+		);
+		loggr.log(" > "+ $(site.vars.currentSection+" .main").css("height"));
+	},10);
 	
 	site.ui.hackActiveCssRule()
 	
