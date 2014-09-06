@@ -29,6 +29,7 @@ site.mp.init = function() {
 	
 	// Create mediaplayer..
 	loggr.log(" > Create new mediaplayer..");
+	/*
 	site.mp.mp = new Media(
 		site.session.currentstation.station_url,
 		function() {
@@ -47,6 +48,20 @@ site.mp.init = function() {
 			site.ui.showtoast("MP: "+site.mp.getStatusByCode(statuscode));
 		}
 	);
+	/**/
+	
+	// Start MediaStreamer
+	window.mediaStreamer.play(site.session.currentstation.station_url,
+		function(msg) {
+			loggr.log(" > "+ msg);
+			site.mp.serviceRunning = true;
+		},
+		function(errmsg) {
+			loggr.error(errmsg);
+			site.ui.showtoast("Error: "+errmsg);
+			site.mp.serviceRunning = false;
+		}
+	);
 	
 }
 
@@ -63,7 +78,7 @@ site.mp.play = function() {
 	loggr.log("site.mp.play()");
 	
 	site.mp.init();
-	site.mp.mp.play();
+	//site.mp.mp.play();
 	site.mp.isPlaying = true;
 	
 }
@@ -71,6 +86,15 @@ site.mp.play = function() {
 site.mp.stop = function() {
 	
 	loggr.log("site.mp.stop()");
+	
+	window.mediaStreamer.stop(
+		function(msg) {
+			loggr.log(msg);
+		},
+		function(errmsg) {
+			loggr.error(msg);
+		}
+	);
 	
 	if (site.mp.mp) {
 		site.mp.mp.stop();

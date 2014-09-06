@@ -56,6 +56,7 @@
     <plugin name="Globalization" value="org.apache.cordova.Globalization"/>
     <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
     <plugin name="Chromecast" value="acidhax.cordova.chromecast.Chromecast"/>
+    <plugin name="MediaStreamer" value="com.rejh.cordova.mediastreamer.MediaStreamer"/>
 </plugins>
 </cordova>
 
