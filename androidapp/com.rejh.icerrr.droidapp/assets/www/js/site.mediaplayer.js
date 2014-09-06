@@ -11,6 +11,8 @@ if (!site) { var site = {}; }
 
 site.mp = {};
 
+site.mp.lastmpstatus = -1;
+
 // ---> Init
 
 site.mp.init = function() {
@@ -142,9 +144,11 @@ site.mp.getStatus = function(cb,cancel) {
 }
 
 site.mp.handleStatus = function(statusCode) {
-	loggr.log(" > MediaStreamer.getStatus: "+ site.mp.getStatusByCode(statusCode))
-	site.mp.mpstatus = statusCode;
-	
+	if (statusCode != site.mp.lastmpstatus) {
+		loggr.log(" > MediaStreamer.getStatus: "+ site.mp.getStatusByCode(statusCode));
+		site.mp.mpstatus = statusCode;
+		site.mp.lastmpstatus = statusCode;
+	}
 }
 
 site.mp.playToggle = function() {
