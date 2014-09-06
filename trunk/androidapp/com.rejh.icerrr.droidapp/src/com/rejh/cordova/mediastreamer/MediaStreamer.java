@@ -69,8 +69,15 @@ public class MediaStreamer extends CordovaPlugin {
         		// Stop
         		this.stop(callbackContext);
         	} else if (action.equals("getStatus")) {
-        		// Stop
+        		// getStatus
         		this.getStatus(callbackContext);
+        	} else if (action.equals("isServiceRunning")) {
+        		// isServiceRunning
+        		if (sett.getBoolean("mediastreamer_serviceRunning", false)) {
+        			callbackContext.success(1);
+        		} else {
+        			callbackContext.success(0);
+        		}
         	} else {
         		// Nothin?
         		callbackContext.error("Action contains invalid value: "+ action);

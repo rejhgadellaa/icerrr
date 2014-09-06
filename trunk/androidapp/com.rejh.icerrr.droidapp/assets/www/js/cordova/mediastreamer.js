@@ -35,11 +35,20 @@
     };
 
     /**
-    * Stop player
+    * GetStatus
+	loggr.log(Media.MEDIA_NONE); // ?
+	loggr.log(Media.MEDIA_STARTING); // 1
+	loggr.log(Media.MEDIA_RUNNING); // 2
+	loggr.log(Media.MEDIA_PAUSED); // 3
+	loggr.log(Media.MEDIA_STOPPED); // 4
     */
     MediaStreamer.prototype.getStatus = function(win, fail) {
-		console.log("MediaStreamer.prototype.getStatus()");
+		// console.log("MediaStreamer.prototype.getStatus()");
         cordova.exec(win, fail, "MediaStreamer", "getStatus", []);
+    };
+    MediaStreamer.prototype.isServiceRunning = function(win, fail) {
+		// console.log("MediaStreamer.prototype.getStatus()");
+        cordova.exec(win, fail, "MediaStreamer", "isServiceRunning", []);
     };
 	
 	/**
