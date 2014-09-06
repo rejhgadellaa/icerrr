@@ -26,31 +26,22 @@ site.mp.init = function() {
 	
 	loggr.log(" > "+site.session.currentstation.station_url);
 	
-	// Destroy mp if exists
-	site.mp.destroy();
-	
-	// Create mediaplayer..
-	loggr.log(" > Create new mediaplayer..");
-	/*
-	site.mp.mp = new Media(
-		site.session.currentstation.station_url,
-		function() {
-			loggr.log(" > MediaPlayer ready: "+ site.session.currentstation.station_url);
-		}, 
-		function(error) {
-			loggr.log(" > Mediaplayer error: "+site.mp.getErrorByCode(error));
-			site.mp.mperror = error;
-			site.mp.mperrstrr = site.mp.getErrorByCode(error);
-			site.ui.showtoast("MP: "+site.mp.getErrorByCode(error));
+	// Check service
+	window.mediaStreamer.isServiceRunning(
+		function(resInt) {
+			if (resInt==1) {
+				loggr.log(" > Service is running, resume..");
+				site.mp.play();
+			} else {
+				loggr.log(" > Service not running, destroy..");
+				site.mp.destroy();
+			}
 		},
-		function(statuscode) {
-			loggr.log(" > MediaPlayer status: "+ site.mp.getStatusByCode(statuscode));
-			site.mp.mpstatus = statuscode;
-			site.mp.mpstatstr = site.mp.getStatusByCode(statuscode);
-			site.ui.showtoast("MP: "+site.mp.getStatusByCode(statuscode));
+		function(errmsg) {
+			loggr.error("window.mediaStreamer.isServiceRunning()");
+			loggr.error(errmsg);
 		}
 	);
-	/**/
 	
 }
 
@@ -74,9 +65,11 @@ site.mp.play = function() {
 			loggr.log(" > mediaStreamer.play()."+msg);
 			site.mp.serviceRunning = true;
 			site.mp.isPlaying = true;
+			site.session.mpIsPlaying = true;
 			site.mp.getStatus(site.mp.handleStatus);
 		},
 		function(errmsg) {
+			loggr.error("window.mediaStreamer.play()");
 			loggr.error(errmsg);
 			site.ui.showtoast("Error: "+errmsg);
 			site.mp.serviceRunning = false;
@@ -95,9 +88,11 @@ site.mp.stop = function() {
 			loggr.log(" > mediaStreamer.stop()."+msg);
 			site.mp.serviceRunning = false;
 			site.mp.isPlaying = false;
+			site.session.mpIsPlaying = false;
 			site.mp.getStatus(site.mp.handleStatus,true);
 		},
 		function(errmsg) {
+			loggr.error("window.mediaStreamer.stop()");
 			loggr.error(errmsg);
 		}
 	);
@@ -136,6 +131,7 @@ site.mp.getStatus = function(cb,cancel) {
 				site.mp.getStatus(site.mp.getStatusCb);
 			},
 			function(errmsg) {
+			loggr.error("window.mediaStreamer.getStatus()");
 				loggr.error(errmsg);
 			}
 		);
