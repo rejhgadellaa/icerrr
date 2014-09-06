@@ -223,7 +223,7 @@ site.lifecycle.onDestroy = function() {
 	site.lifecycle.onPause();
 	
 	// Release some stuff
-	site.mp.destroy();
+	// site.mp.destroy();
 	
 }
 

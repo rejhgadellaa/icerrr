@@ -214,6 +214,8 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 			if (stationIndex<0) { return; }
 			if (site.data.stations[stationIndex].station_icon_local && site.data.stations[stationIndex].station_icon.indexOf("http")!==0) { return; }
 			var filename = site.helpers.imageUrlToFilename(ev.target.src,"station_icon_"+site.data.stations[stationIndex].station_name.split(" ").join("-").toLowerCase(),true);
+			/*
+			// TODO: Fix this..?
 			site.helpers.storeImageLocally(ev.target,filename,
 				function(evt) {
 					// evt.target.fileName
@@ -227,6 +229,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 					}
 				}
 			);
+			/**/
 		});
 		resulticon.addEventListener("error",function(ev){ 
 			loggr.log(" > Could not load "+ ev.target.src);
