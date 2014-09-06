@@ -29,9 +29,17 @@
     /**
     * Stop player
     */
-    MediaStreamer.prototype.stop = function(image_uri, win, fail) {
+    MediaStreamer.prototype.stop = function(win, fail) {
 		console.log("MediaStreamer.prototype.stop()");
         cordova.exec(win, fail, "MediaStreamer", "stop", []);
+    };
+
+    /**
+    * Stop player
+    */
+    MediaStreamer.prototype.getStatus = function(win, fail) {
+		console.log("MediaStreamer.prototype.getStatus()");
+        cordova.exec(win, fail, "MediaStreamer", "getStatus", []);
     };
 	
 	/**

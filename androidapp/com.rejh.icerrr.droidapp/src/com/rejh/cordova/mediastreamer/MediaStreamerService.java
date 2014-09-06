@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -30,8 +31,12 @@ public class MediaStreamerService extends Service {
 	private WifiManager wifiMgr;
 	private WifiManager.WifiLock wifiLock;
 	
+	private ConnectivityManager connMgr;
+	
 	private PowerManager powerMgr;
 	private PowerManager.WakeLock wakelock;
+	
+	private ObjMediaPlayerMgr mpMgr;
 	
 	// --------------------------------------------------
 	// Lifecycle
@@ -53,6 +58,8 @@ public class MediaStreamerService extends Service {
         settEditor = sett.edit();
 		
         // Others
+		wifiMgr = (WifiManager) context.getSystemService(WIFI_SERVICE);
+        connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		
 		// Make sticky
@@ -98,9 +105,14 @@ public class MediaStreamerService extends Service {
 		wakelock.acquire();
 		
 		// WifiLock
-		wifiMgr = (WifiManager) context.getSystemService(WIFI_SERVICE);
 		wifiLock = wifiMgr.createWifiLock(WifiManager.WIFI_MODE_FULL,"Lock");
+		if (wifiLock.isHeld()) { wifiLock.release(); }
 		wifiLock.acquire();
+		
+		// MediaPlayer
+		if (mpMgr!=null) { mpMgr.destroy(); }
+		mpMgr = new ObjMediaPlayerMgr(context, connMgr);
+		mpMgr.init(sett.getString("mediastreamer_streamUrl",null));
 		
 	}
 	
@@ -113,6 +125,12 @@ public class MediaStreamerService extends Service {
         
         // WakeLock OFF
         if (wakelock.isHeld()) { wakelock.release(); }
+        
+        // MediaPlayer
+        if (mpMgr!=null) { 
+			mpMgr.destroy(); 
+			mpMgr = null;
+        }
         
 	}
 	

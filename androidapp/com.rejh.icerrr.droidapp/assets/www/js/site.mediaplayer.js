@@ -50,19 +50,6 @@ site.mp.init = function() {
 	);
 	/**/
 	
-	// Start MediaStreamer
-	window.mediaStreamer.play(site.session.currentstation.station_url,
-		function(msg) {
-			loggr.log(" > "+ msg);
-			site.mp.serviceRunning = true;
-		},
-		function(errmsg) {
-			loggr.error(errmsg);
-			site.ui.showtoast("Error: "+errmsg);
-			site.mp.serviceRunning = false;
-		}
-	);
-	
 }
 
 site.mp.destroy = function() {
@@ -78,8 +65,22 @@ site.mp.play = function() {
 	loggr.log("site.mp.play()");
 	
 	site.mp.init();
-	//site.mp.mp.play();
-	site.mp.isPlaying = true;
+	
+	// Start MediaStreamer
+	window.mediaStreamer.play(site.session.currentstation.station_url,
+		function(msg) {
+			loggr.log(" > mediaStreamer.play()."+msg);
+			site.mp.serviceRunning = true;
+			site.mp.isPlaying = true;
+			site.mp.getStatus(site.mp.handleStatus);
+		},
+		function(errmsg) {
+			loggr.error(errmsg);
+			site.ui.showtoast("Error: "+errmsg);
+			site.mp.serviceRunning = false;
+			site.mp.isPlaying = false;
+		}
+	);
 	
 }
 
@@ -89,18 +90,60 @@ site.mp.stop = function() {
 	
 	window.mediaStreamer.stop(
 		function(msg) {
-			loggr.log(msg);
+			loggr.log(" > mediaStreamer.stop()."+msg);
+			site.mp.serviceRunning = false;
+			site.mp.isPlaying = false;
+			site.mp.getStatus(site.mp.handleStatus,true);
 		},
 		function(errmsg) {
-			loggr.error(msg);
+			loggr.error(errmsg);
 		}
 	);
 	
+	/*
 	if (site.mp.mp) {
 		site.mp.mp.stop();
 	}
 	site.mp.isPlaying = false
+	/**/
+	
 	site.mp.mpstatus = 4;
+	
+}
+
+site.mp.getStatus = function(cb,cancel) {
+	
+	/*
+	loggr.log(Media.MEDIA_NONE); // ?
+	loggr.log(Media.MEDIA_STARTING); // 1
+	loggr.log(Media.MEDIA_RUNNING); // 2
+	loggr.log(Media.MEDIA_PAUSED); // 3
+	loggr.log(Media.MEDIA_STOPPED); // 4
+	/**/
+	
+	if (cb) { site.mp.getStatusCb = cb; }
+	else { site.mp.getStatusCb = null; }
+	
+	if (site.timeouts.mpGetStatus) { clearTimeout(site.timeouts.mpGetStatus); }
+	if (cancel) { return; }
+	site.timeouts.mpGetStatus = setTimeout(function(){
+		window.mediaStreamer.getStatus(
+			function(msg) {
+				var msgInt = parseInt(msg);
+				if (site.mp.getStatusCb) { site.mp.getStatusCb(msgInt); }
+				site.mp.getStatus(site.mp.getStatusCb);
+			},
+			function(errmsg) {
+				loggr.error(errmsg);
+			}
+		);
+	},1000);
+	
+}
+
+site.mp.handleStatus = function(statusCode) {
+	loggr.log(" > MediaStreamer.getStatus: "+ site.mp.getStatusByCode(statusCode))
+	site.mp.mpstatus = statusCode;
 	
 }
 
