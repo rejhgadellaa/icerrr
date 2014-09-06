@@ -68,6 +68,10 @@ public class MediaStreamer extends CordovaPlugin {
         	} else if (action.equals("stop")) {
         		// Stop
         		this.stop(callbackContext);
+        	} else if (action.equals("setVolume")) {
+        		// setVolume
+        		// this.setVolume(args,callbackContext);
+        		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
         	} else if (action.equals("getStatus")) {
         		// getStatus
         		this.getStatus(callbackContext);
@@ -155,6 +159,8 @@ public class MediaStreamer extends CordovaPlugin {
     	callbackContext.success(state); // TODO: todos
     	
     }
+    
+    /*
 	
 	// --- Methods
     
@@ -171,6 +177,8 @@ public class MediaStreamer extends CordovaPlugin {
     	callbackContext.success("OK");
     	
     }
+    
+    /**/
 
 }
 

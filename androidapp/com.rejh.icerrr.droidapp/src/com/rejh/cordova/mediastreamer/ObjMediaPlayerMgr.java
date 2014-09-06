@@ -7,7 +7,6 @@ import java.util.TimerTask;
 import org.npr.android.news.StreamProxy;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -76,7 +75,7 @@ public class ObjMediaPlayerMgr {
 		
         // Get SDK Version (determines use of StreamProxy for 2.1 en lower)
         sdkVersion = 0;
-        try { sdkVersion = Integer.parseInt(Build.VERSION.SDK); } 
+        try { sdkVersion = Build.VERSION.SDK_INT; } 
 		catch (NumberFormatException e) {}
         
         nrOfErrors = 0;
@@ -241,12 +240,14 @@ public class ObjMediaPlayerMgr {
 	public void pause() {
 		stopConnTypeChecker();
 		if (mp==null) { return; }
+		settEditor.putInt("mediastreamer_state",MEDIA_STOPPED);
 		mp.stop();
 		}
 	
 	// RESUME
 	public void resume() {
 		if (mp==null) { return; }
+		settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 		mp.prepareAsync();
 		}
 	
@@ -302,7 +303,6 @@ public class ObjMediaPlayerMgr {
 				nrOfErrors++;
 				Log.w(LOGTAG,"  -> Restarting stream...");
 				init(streamedUrl);
-				
 				}
 			}
 		

@@ -43,6 +43,11 @@ site.mp.init = function() {
 		}
 	);
 	
+	// Init + Close callback for #home
+	// Best for last :)
+	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
+	site.session.ui_resume_callbacks.push(site.mp.init);
+	
 }
 
 site.mp.destroy = function() {
@@ -56,8 +61,6 @@ site.mp.destroy = function() {
 site.mp.play = function() {
 	
 	loggr.log("site.mp.play()");
-	
-	site.mp.init();
 	
 	// Start MediaStreamer
 	window.mediaStreamer.play(site.session.currentstation.station_url,

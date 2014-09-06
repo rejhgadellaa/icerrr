@@ -2,6 +2,12 @@
 
 = Changelog =
 
+v0.027
+  * Implemented MediaStreamer plugin/service, ensures playback when activity is killed
+  * Temp: disabled storing images locally, having some issues
+  * Update will clear app data!
+  * Added required permissions for MediaStreamer
+
 v0.026
   * Bugfix: Search ended up looping endlessly
   * Minor fix(es)

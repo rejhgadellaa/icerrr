@@ -33,6 +33,15 @@
 		console.log("MediaStreamer.prototype.stop()");
         cordova.exec(win, fail, "MediaStreamer", "stop", []);
     };
+	
+    /**
+    * Set Volume
+	* Args: level (int) between 0 and 10
+    */
+    MediaStreamer.prototype.setVolume = function(level, win, fail) {
+		console.log("MediaStreamer.prototype.setVolume(): "+level);
+        cordova.exec(win, fail, "MediaStreamer", "setVolume", [level]);
+    };
 
     /**
     * GetStatus
@@ -46,8 +55,12 @@
 		// console.log("MediaStreamer.prototype.getStatus()");
         cordova.exec(win, fail, "MediaStreamer", "getStatus", []);
     };
+	
+    /**
+    * Is Service Running
+    */
     MediaStreamer.prototype.isServiceRunning = function(win, fail) {
-		// console.log("MediaStreamer.prototype.getStatus()");
+		console.log("MediaStreamer.prototype.isServiceRunning()");
         cordova.exec(win, fail, "MediaStreamer", "isServiceRunning", []);
     };
 	

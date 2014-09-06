@@ -52,7 +52,7 @@ site.installer.cfg.downloadjson_files = [
 	{}
 ];
 
-site.installer.cfg.overwrite_versions = [0.014,0.019];
+site.installer.cfg.overwrite_versions = [0.014,0.019,0.027];
 
 // ---> Init
 
@@ -72,6 +72,9 @@ site.installer.init = function(isUpdate) {
 	
 	// Clear (and prep) any vars
 	site.installer.vars = {};
+	
+	// Bla
+	site.installer.cfg.overwrite_version = site.installer.cfg.overwrite_versions.pop()
 	
 	// Initiate first step: create folders
 	setTimeout(function(){site.installer.createfolders_init();},1000);
@@ -239,7 +242,7 @@ site.installer.downloadjson_read = function() {
 			switch(site.datatemp["info"]["desc"]) {
 				
 				case "stations":
-					if (site.installer.cfg.overwrite_versions.indexOf(site.cfg.app_version)<0 || site.cookies.get("app_version")==site.cfg.app_version) { 
+					if (site.installer.cfg.overwrite_version <= site.cookies.get("app_version") || site.cookies.get("app_version")==site.cfg.app_version) { 
 						site.datatemp["data"] = site.helpers.mergeStations(datalocal,dataremote);  // merge
 					} else {
 						site.datatemp["data"] = dataremote; // overwrite
@@ -327,7 +330,7 @@ site.installer.finishup = function() {
 	site.installer.logger("Finish up...");
 	
 	// Clear cookies..
-	if (site.installer.cfg.overwrite_versions.indexOf(site.cfg.app_version)>=0 && site.cookies.get("app_version")!=site.cfg.app_version) {
+	if (site.installer.cfg.overwrite_version >= site.cfg.app_version && site.cookies.get("app_version")!=site.cfg.app_version) {
 		site.installer.logger("&nbsp;&gt; Clear localstorage...");
 		site.cookies.clear();
 	}

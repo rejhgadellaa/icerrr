@@ -165,6 +165,8 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
 	
 	filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
 	
+	loggr.log(" > "+ filename);
+	
 	return filename;
 	
 }
