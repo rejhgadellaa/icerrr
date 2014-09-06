@@ -68,6 +68,9 @@ public class MediaStreamer extends CordovaPlugin {
         	} else if (action.equals("stop")) {
         		// Stop
         		this.stop(callbackContext);
+        	} else if (action.equals("getStatus")) {
+        		// Stop
+        		this.getStatus(callbackContext);
         	} else {
         		// Nothin?
         		callbackContext.error("Action contains invalid value: "+ action);
@@ -136,11 +139,13 @@ public class MediaStreamer extends CordovaPlugin {
     // --- GetState
     // Returns state of Service.MediaPlayer
     
-    private void getState(CallbackContext callbackContext) {
+    private void getStatus(CallbackContext callbackContext) {
     	
-    	Log.d(APPTAG, APPTAG+" > getState");
+    	Log.d(APPTAG, APPTAG+" > getStatus");
     	
-    	callbackContext.success("OK"); // TODO: todos
+    	String state = ""+ sett.getInt("mediastreamer_state", 0);
+    	
+    	callbackContext.success(state); // TODO: todos
     	
     }
 	
