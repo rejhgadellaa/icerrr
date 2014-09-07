@@ -156,7 +156,7 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
 	}
 	
 	if (filename.indexOf("?")>=0) {
-		filename = filename.substr(0,url.lastIndexOf("?"));
+		filename = filename.substr(0,filename.lastIndexOf("?"));
 	}
 	
 	if (isBase64) {
@@ -537,7 +537,7 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 				var currPage = cursor.currentPageIndex;
 				var pages = cursor.pages;
 				loggr.log(" > "+ currPage +", out of "+ pages.length);
-				if (currPage < pages.length-1 || site.chlist.thesearchresults[searchid].length < opts.maxresults) {
+				if (currPage < pages.length-1 && site.chlist.thesearchresults[searchid].length < opts.maxresults) {
 					// get more...
 					loggr.log(" > Getting more results...");
 					thesearch.gotoPage(currPage+1);

@@ -59,7 +59,7 @@ goto installapp
 echo.
 echo Building project (CLEAN)
 echo.
-call ant -S clean debug
+call ant clean debug
 REM ant -S debug
 if not errorlevel 0 goto error
 goto installapp

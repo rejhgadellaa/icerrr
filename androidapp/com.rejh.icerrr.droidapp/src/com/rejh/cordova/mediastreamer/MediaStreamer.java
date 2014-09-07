@@ -16,6 +16,7 @@ import org.json.JSONException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.util.Log;
 
 public class MediaStreamer extends CordovaPlugin {
@@ -70,7 +71,7 @@ public class MediaStreamer extends CordovaPlugin {
         		this.stop(callbackContext);
         	} else if (action.equals("setVolume")) {
         		// setVolume
-        		// this.setVolume(args,callbackContext);
+        		this.setVolume(args,callbackContext);
         		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
         	} else if (action.equals("getStatus")) {
         		// getStatus
@@ -159,6 +160,39 @@ public class MediaStreamer extends CordovaPlugin {
     	callbackContext.success(state); // TODO: todos
     	
     }
+    
+    // --- SetVolume
+	private void setVolume(JSONArray args, CallbackContext callbackContext) throws JSONException {
+		
+		// SCALE :: 0 - 10
+		
+		boolean allowdown = true;
+        
+        // Check arguments
+        
+        int setvol = args.getInt(0);
+		
+		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+		
+		float maxvol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		float curvol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		float targvol = setvol*(maxvol/10);
+		int difvol = Math.round(targvol-curvol);
+		
+		if (allowdown) {
+			if (curvol>targvol) { Log.d(APPTAG,"ChangedVolume: --"); for (int ivol=0; ivol>difvol; ivol--) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1); } }
+			if (curvol<targvol) { Log.d(APPTAG,"ChangedVolume: ++"); for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1); } }
+			}
+		else {
+			Log.d(APPTAG,"ChangedVolume: ++ (upOnly)");
+			for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1); }
+			}
+		
+		Log.d(APPTAG,"ChangedVolume: set:"+setvol+" --> max:"+maxvol+", cur:"+curvol+", dif:"+difvol);
+		
+		callbackContext.success("OK");
+		
+	}
     
     /*
 	
