@@ -342,6 +342,11 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	// update window
 	site.lifecycle.onResize();
 	
+	loggr.log(" > Required height: "+ (elems.length*72));
+	setTimeout(function(){
+		loggr.log(" > "+ $(site.vars.currentSection+" .main")[0].scrollHeight);
+	},250);
+	
 }
 
 // ---> Helper: get host, port and path from url

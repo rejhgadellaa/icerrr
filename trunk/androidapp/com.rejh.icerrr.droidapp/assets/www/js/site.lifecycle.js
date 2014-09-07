@@ -36,6 +36,16 @@ site.lifecycle.init = function() {
 	loggr.log(" > Device: "+ site.vars.deviceDesc);
 	loggr.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
 	
+	// Check internet connection
+	switch (navigator.connection.type) {
+		
+		case Connection.UNKNOWN:
+		case Connection.NONE:
+			//loggr.warn(" > No internet connection!");
+			break;
+		
+	}
+	
 	// Defaults..
 	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
 	
@@ -160,7 +170,7 @@ site.lifecycle.onResume = function() {
 	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
 	for (var i=0; i<site.session.ui_resume_callbacks.length; i++) {
 		var func = site.session.ui_resume_callbacks[i]; // same order as incoming..
-		try { func(); } catch(e) { }
+		try { func(); } catch(e) { loggr.warn(" > Error on ui_resume_callbacks"); loggr.log(e); }
 	}
 	
 }

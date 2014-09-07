@@ -2,6 +2,12 @@
 
 = Changelog =
 
+v0.028
+  * MediaStreamer pauses/resumes music when calls are incoming
+  * New permission: Read_phone_state, required for detecting calls
+  * Tweaks to polling MediaStreamer status
+  * Added automatic album art. Mileage may vary.
+
 v0.027
   * Implemented MediaStreamer plugin/service, ensures playback when activity is killed
   * Temp: disabled storing images locally, having some issues

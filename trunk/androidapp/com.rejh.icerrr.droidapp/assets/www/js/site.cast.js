@@ -162,6 +162,8 @@ site.cast.loadMedia = function() {
 	
 	loggr.info("site.cast.loadMedia()");
 	
+	site.ui.showtoast("Cast: Loading media...");
+	
 	// Get currentstation
 	var station = site.session.currentstation;
 	if (!station) { loggr.error(" > !site.session.currentstation"); }
@@ -244,7 +246,7 @@ site.cast.play = function() {
 	loggr.info("site.cast.play()");
 	
 	// Stop mediaplayers
-	if (site.mp.mp) {
+	if (site.mp.isPlaying) {
 		site.mp.destroy();
 	}
 	

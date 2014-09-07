@@ -10,6 +10,8 @@ import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class MediaStreamerService extends Service {
@@ -36,6 +38,9 @@ public class MediaStreamerService extends Service {
 	private PowerManager powerMgr;
 	private PowerManager.WakeLock wakelock;
 	
+	private TelephonyManager telephonyMgr;
+	private PhoneStateListener phoneListener;
+	
 	private ObjMediaPlayerMgr mpMgr;
 	
 	// --------------------------------------------------
@@ -61,6 +66,7 @@ public class MediaStreamerService extends Service {
 		wifiMgr = (WifiManager) context.getSystemService(WIFI_SERVICE);
         connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 		
 		// Make sticky
 		try {
@@ -108,6 +114,10 @@ public class MediaStreamerService extends Service {
 		wifiLock = wifiMgr.createWifiLock(WifiManager.WIFI_MODE_FULL,"Lock");
 		if (wifiLock.isHeld()) { wifiLock.release(); }
 		wifiLock.acquire();
+        
+        // Listener: Telephony
+		phoneListener = new RecvEventPhonecalls();  
+	    telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 		
 		// MediaPlayer
 		if (mpMgr!=null) { mpMgr.destroy(); }
@@ -132,6 +142,37 @@ public class MediaStreamerService extends Service {
 			mpMgr = null;
         }
         
+	}
+	
+	// --------------------------------------------------
+	// Listeners
+	
+	// SetPhoneListener
+	private class RecvEventPhonecalls extends PhoneStateListener {
+		@Override
+	    public void onCallStateChanged(int state, String incomingNumber) {
+			
+			// Hoi
+			Log.i(APPTAG,"RecvEventPhonecalls (@MainService)");
+			
+			// Switch!
+		    switch (state) {
+			    case TelephonyManager.CALL_STATE_OFFHOOK:
+			    case TelephonyManager.CALL_STATE_RINGING:
+				    // Phone going offhook or ringing
+			    	settEditor.putBoolean("wasPlayingWhenCalled",true);
+			    	settEditor.commit();
+			    	shutdown();
+				    break;
+			    case TelephonyManager.CALL_STATE_IDLE:
+				    // Phone idle
+			    	if (!sett.getBoolean("wasPlayingWhenCalled",false)) { return; }
+			    	settEditor.putBoolean("wasPlayingWhenCalled",false);
+			    	settEditor.commit();
+			    	setup();
+				    break;
+		    }
+		}
 	}
 	
 	

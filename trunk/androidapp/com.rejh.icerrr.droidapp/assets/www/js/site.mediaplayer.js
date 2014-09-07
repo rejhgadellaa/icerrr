@@ -45,8 +45,16 @@ site.mp.init = function() {
 	
 	// Init + Close callback for #home
 	// Best for last :)
+	if (!site.session.ui_pause_callbacks) { site.session.ui_resume_callbacks = []; }
 	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
-	site.session.ui_resume_callbacks.push(site.mp.init);
+	if (site.session.ui_pause_callbacks.indexOf(site.mp.initStatusPoll)<0) {
+		site.session.ui_pause_callbacks.push(site.mp.stopStatusPoll); 
+	}
+	if (site.session.ui_resume_callbacks.indexOf(site.mp.initStatusPoll)<0) { 
+		site.session.ui_resume_callbacks.push(site.mp.initStatusPoll); 
+	}
+	
+	site.mp.initStatusPoll();
 	
 }
 
@@ -69,7 +77,7 @@ site.mp.play = function() {
 			site.mp.serviceRunning = true;
 			site.mp.isPlaying = true;
 			site.session.mpIsPlaying = true;
-			site.mp.getStatus(site.mp.handleStatus);
+			site.mp.initStatusPoll();
 		},
 		function(errmsg) {
 			loggr.error("window.mediaStreamer.play()");
@@ -77,6 +85,7 @@ site.mp.play = function() {
 			site.ui.showtoast("Error: "+errmsg);
 			site.mp.serviceRunning = false;
 			site.mp.isPlaying = false;
+			site.mp.stopStatusPoll();
 		}
 	);
 	
@@ -92,11 +101,12 @@ site.mp.stop = function() {
 			site.mp.serviceRunning = false;
 			site.mp.isPlaying = false;
 			site.session.mpIsPlaying = false;
-			site.mp.getStatus(site.mp.handleStatus,true);
+			site.mp.getStatus(site.mp.handleStatus); // just once..
 		},
 		function(errmsg) {
 			loggr.error("window.mediaStreamer.stop()");
 			loggr.error(errmsg);
+			site.mp.stopStatusPoll();
 		}
 	);
 	
@@ -111,7 +121,20 @@ site.mp.stop = function() {
 	
 }
 
-site.mp.getStatus = function(cb,cancel) {
+site.mp.initStatusPoll = function() {
+	loggr.info("site.mp.initStatusPoll()");
+	site.mp.stopStatusPoll();
+	site.timeouts.mpGetStatus = setInterval(function(){
+		site.mp.getStatus(site.mp.handleStatus);
+	},1000);
+}
+
+site.mp.stopStatusPoll = function() {
+	loggr.info("site.mp.stopStatusPoll()");
+	if (site.timeouts.mpGetStatus) { clearTimeout(site.timeouts.mpGetStatus); }
+}
+ 
+site.mp.getStatus = function(cb) {
 	
 	/*
 	loggr.log(Media.MEDIA_NONE); // ?
@@ -124,21 +147,16 @@ site.mp.getStatus = function(cb,cancel) {
 	if (cb) { site.mp.getStatusCb = cb; }
 	else { site.mp.getStatusCb = null; }
 	
-	if (site.timeouts.mpGetStatus) { clearTimeout(site.timeouts.mpGetStatus); }
-	if (cancel) { return; }
-	site.timeouts.mpGetStatus = setTimeout(function(){
-		window.mediaStreamer.getStatus(
-			function(msg) {
-				var msgInt = parseInt(msg);
-				if (site.mp.getStatusCb) { site.mp.getStatusCb(msgInt); }
-				site.mp.getStatus(site.mp.getStatusCb);
-			},
-			function(errmsg) {
-			loggr.error("window.mediaStreamer.getStatus()");
-				loggr.error(errmsg);
-			}
-		);
-	},1000);
+	window.mediaStreamer.getStatus(
+		function(msg) {
+			var msgInt = parseInt(msg);
+			if (site.mp.getStatusCb) { site.mp.getStatusCb(msgInt); }
+		},
+		function(errmsg) {
+		loggr.error("window.mediaStreamer.getStatus()");
+			loggr.error(errmsg);
+		}
+	);
 	
 }
 
@@ -148,6 +166,7 @@ site.mp.handleStatus = function(statusCode) {
 		site.mp.mpstatus = statusCode;
 		site.mp.lastmpstatus = statusCode;
 	}
+	if (statusCode==Media.MEDIA_NONE || statusCode==Media.MEDIA_STOPPED) { site.mp.stopStatusPoll(); }
 }
 
 site.mp.playToggle = function() {

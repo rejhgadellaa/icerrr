@@ -32,14 +32,12 @@ site.home.init = function() {
 	site.lifecycle.clear_section_history();
 	
 	// --> Do something...
-
-	// player
-	if (!site.mp.mp) {
-		site.mp.init();
-	}
 	
 	// goto section
 	site.ui.gotosection("#home");
+
+	// player
+	site.mp.init();
 	
 	// ui updates
 	site.home.init_ui_updates();
@@ -104,7 +102,7 @@ site.home.onpause = function() {
 }
 
 site.home.onresume = function() {
-	loggr.info("site.home.site.home.()");
+	loggr.info("site.home.onresume()");
 	site.home.init_ui_updates();
 }
 
@@ -229,6 +227,7 @@ site.home.run_station_updates = function() {
 			} else {
 				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
 				site.session.currentstation.station_nowplaying = data["data"]["nowplaying"];
+				site.home.getAlbumArt();
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
@@ -297,7 +296,38 @@ site.home.useDirbleNowPlaying = function() {
 	
 }
 
+site.home.getAlbumArt = function() {
 	
+	loggr.info("site.home.getAlbumArt()");
+	
+	// Get station
+	var station = site.session.currentstation;
+	
+	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
+	var searchstring = ""
+		+ "\""+ station.station_nowplaying +"\" "
+		+ "album art";
+	
+	var opts = {
+		restrictions:[
+			[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
+		],
+		maxresults:4
+	}
+	
+	site.helpers.googleImageSearch(searchstring,
+		function(results) {
+			// pick an image
+			var result = results[0];
+			$("#home .main .station_image img").attr("src",result.url);
+		},
+		function() {
+			$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+		},
+		opts
+	);
+	
+}
 	
 
 
