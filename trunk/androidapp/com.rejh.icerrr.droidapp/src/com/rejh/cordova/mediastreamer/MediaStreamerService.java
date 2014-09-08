@@ -42,6 +42,8 @@ public class MediaStreamerService extends Service {
 	private PhoneStateListener phoneListener;
 	
 	private ObjMediaPlayerMgr mpMgr;
+    
+    private String stream_url_active = null;
 	
 	// --------------------------------------------------
 	// Lifecycle
@@ -104,6 +106,8 @@ public class MediaStreamerService extends Service {
 	// Setup
 	
 	private void setup() {
+        
+        Log.d(APPTAG," > setup()");
 		
 		// Wakelock
 		wakelock = powerMgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, APPTAG);
@@ -118,23 +122,44 @@ public class MediaStreamerService extends Service {
         // Listener: Telephony
 		phoneListener = new RecvEventPhonecalls();  
 	    telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+        
+        // Stream url
+        String stream_url = sett.getString("mediastreamer_streamUrl",null);
+        
+        // Check
+        if (stream_url==null) { shutdown(); }
+        if (stream_url==stream_url_active) { 
+            Log.d(APPTAG," -> stream already running: "+ stream_url_active);
+            return; 
+        }
 		
 		// MediaPlayer
 		if (mpMgr!=null) { mpMgr.destroy(); }
 		mpMgr = new ObjMediaPlayerMgr(context, connMgr);
-		mpMgr.init(sett.getString("mediastreamer_streamUrl",null));
+		mpMgr.init(stream_url);
+        
+        stream_url_active = stream_url;
 		
 	}
 	
 	// Shutdown
 	
 	private void shutdown() {
+        
+        Log.d(APPTAG," > shutdown()");
 
 		// WifiLock OFF
 		if (wifiLock!=null) { wifiLock.release(); }
         
         // WakeLock OFF
         if (wakelock.isHeld()) { wakelock.release(); }
+		
+		// Listeners
+		try {
+			Log.d(APPTAG,"  -> Stop listeners (telephony...)");
+			telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
+			} 
+		catch (Exception e) { Log.w(APPTAG," -> NULLPOINTER EXCEPTION"); }
         
         // MediaPlayer
         if (mpMgr!=null) { 

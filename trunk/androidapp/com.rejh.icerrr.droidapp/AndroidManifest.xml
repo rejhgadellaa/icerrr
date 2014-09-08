@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-      package="com.rejh.icerrr.droidapp" android:versionName="0.028" android:versionCode="28" android:hardwareAccelerated="true">
+      package="com.rejh.icerrr.droidapp" android:versionName="0.030" android:versionCode="30" android:hardwareAccelerated="true">
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
