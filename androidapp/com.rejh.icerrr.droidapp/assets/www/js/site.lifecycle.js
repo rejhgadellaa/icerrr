@@ -36,16 +36,6 @@ site.lifecycle.init = function() {
 	loggr.log(" > Device: "+ site.vars.deviceDesc);
 	loggr.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
 	
-	// Check internet connection
-	switch (navigator.connection.type) {
-		
-		case Connection.UNKNOWN:
-		case Connection.NONE:
-			//loggr.warn(" > No internet connection!");
-			break;
-		
-	}
-	
 	// Defaults..
 	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
 	
@@ -100,6 +90,18 @@ site.lifecycle.onDeviceReady = function() {
 		+" "+ device.version
 		+", cordova: "+ device.cordova
 	);
+	
+	// Check internet connection
+	/*
+	switch (navigator.connection.type) {
+		
+		case Connection.UNKNOWN:
+		case Connection.NONE:
+			//loggr.warn(" > No internet connection!");
+			break;
+		
+	}
+	/**/
 		
 	// some stuff
 	site.session.isPaused = false;

@@ -2,6 +2,15 @@
 
 = Changelog =
 
+v0.031
+  * MediaStreamer: restarting same stream should no longer interrupt playback
+
+v0.030
+  * Fix: remove telephony listener when MediaStreamerService is killed
+
+v0.029
+  * Fix: connection.type in onDeviceReady, not init.
+
 v0.028
   * MediaStreamer pauses/resumes music when calls are incoming
   * New permission: Read_phone_state, required for detecting calls
