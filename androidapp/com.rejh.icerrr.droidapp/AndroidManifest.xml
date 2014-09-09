@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-      package="com.rejh.icerrr.droidapp" android:versionName="0.030" android:versionCode="30" android:hardwareAccelerated="true">
+      package="com.rejh.icerrr.droidapp" android:versionName="0.031" android:versionCode="30" android:hardwareAccelerated="true">
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -61,6 +61,8 @@
         </activity>
         
         <service android:name="com.rejh.cordova.mediastreamer.MediaStreamerService" android:launchMode="singleTask" />
+        
+        <receiver android:name="com.rejh.cordova.mediastreamer.MediaStreamerReceiver" />
         
     </application>
 

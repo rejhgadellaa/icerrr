@@ -159,8 +159,6 @@ public class NotifMgr extends CordovaPlugin {
         		callbackContext.error("Missing arg: intent{}");
         		return;
         	}
-    		String intentPackage = intentopts.getString("package");
-    		String intentClassName = intentopts.getString("classname");
     		JSONArray intentExtras = intentopts.has("extras") ? intentopts.getJSONArray("extras") : null;
         	
         	// Actions
@@ -189,7 +187,7 @@ public class NotifMgr extends CordovaPlugin {
 	        if (smallicon!=null) { builder.setSmallIcon(getSmallIcon(smallicon)); }
 	        
 	        // Intent // TODO: a lot.
-	        PendingIntent notifPendingIntent = createPendingIntent(intentPackage, intentClassName, intentExtras);
+	        PendingIntent notifPendingIntent = createPendingIntent(intentopts, intentExtras);
 	        builder.setContentIntent(notifPendingIntent);
 	        
 	        // > Optionals
@@ -216,10 +214,8 @@ public class NotifMgr extends CordovaPlugin {
 	        		int actionIcon = getSmallIcon(action.getString("icon"));
 	        		CharSequence actionTitle = (CharSequence) action.getString("title");
 	        		JSONObject actionIntent = action.getJSONObject("intent");
-	        		String actionIntentPackage = actionIntent.getString("package");
-	        		String actionIntentClassName = actionIntent.getString("classname");
 	        		JSONArray actionIntentExtras = actionIntent.has("extras") ? actionIntent.getJSONArray("extras") : null;
-	        		PendingIntent actionPendingIntent = createPendingIntent(actionIntentPackage,actionIntentClassName,actionIntentExtras);
+	        		PendingIntent actionPendingIntent = createPendingIntent(actionIntent,actionIntentExtras);
 	        		// Build..
 	        		NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder(actionIcon, actionTitle, actionPendingIntent);
 	        		NotificationCompat.Action builtAction = actionBuilder.build();
@@ -271,10 +267,33 @@ public class NotifMgr extends CordovaPlugin {
     // > Intents
     
     // Create Pending Intent (with extras!)
-    private PendingIntent createPendingIntent(String intentPackage, String intentClassName, JSONArray intentExtras) throws JSONException {
+    private PendingIntent createPendingIntent(JSONObject intentCfg, JSONArray intentExtras) throws JSONException {
 
+    	// New intent
 	    Intent notifIntent = new Intent();
-	    notifIntent.setClassName(intentPackage, intentClassName);
+	    
+	    // > Figure what type of intent
+	    
+	    // By classname
+	    if (intentCfg.has("package") && intentCfg.has("classname")) {
+	    	String intentPackage = intentCfg.getString("package");
+	    	String intentClassName = intentCfg.getString("classname");
+	    	Log.d(APPTAG," -> Intent by classname: "+intentClassName);
+	    	notifIntent.setClassName(intentPackage, intentClassName);
+	    }
+	    
+	    // By action
+	    if (intentCfg.has("package") && intentCfg.has("action")) {
+	    	String intentPackage = intentCfg.getString("package");
+	    	String action = intentCfg.getString("action");
+	    	Log.d(APPTAG," -> Intent by action: "+action);
+	    	notifIntent.setPackage(intentPackage);
+	    	notifIntent.setAction(action);
+	    	Log.d(APPTAG," ---> "+notifIntent.getAction());
+	    }
+	    
+	    
+	    // Extras
 	    if (intentExtras!=null) {
 			for (int i=0; i<intentExtras.length(); i++) {
 				JSONObject intentExtra = intentExtras.getJSONObject(i);
@@ -291,7 +310,16 @@ public class NotifMgr extends CordovaPlugin {
 				}
 			}
 		}
-	    PendingIntent notifPendingIntent = PendingIntent.getActivity(context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
+	    
+	    // Figure type
+	    String intentType = intentCfg.has("type") ? intentCfg.getString("type") : "activity";
+	    
+	    PendingIntent notifPendingIntent = null;
+	    if (intentType.equals("activity")) {
+	    	notifPendingIntent = PendingIntent.getActivity(context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
+	    } else if (intentType.equals("receiver")) {
+	    	notifPendingIntent = PendingIntent.getBroadcast(context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
+	    }
 	    
 	    return notifPendingIntent;
 	    		

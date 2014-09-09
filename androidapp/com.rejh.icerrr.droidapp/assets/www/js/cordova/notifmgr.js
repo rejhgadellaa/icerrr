@@ -14,9 +14,12 @@
 	opts.smallicon = STRING // (file:///storage/etc) // TODO: wildcard for cordova assets/www/ prefix
 	
 	// REQUIRED: INTENT
+	// 
 	opts.intent = {
-		package: "STRING", // ex 'com.rejh.icerrr.droidapps'
-		classname: "STRING", // ex 'com.rejh.icerrr.droidapps.MainActivity'
+		type: "STRING" // 'activity', 'receiver', 'service'
+		package: "STRING", // ex 'com.rejh.icerrr.droidapp'
+		classname: "STRING", // ex 'com.rejh.icerrr.droidapp.MainActivity'
+		action: "STRING", // ex: com.rejh.icerrr.droidapp.actions.SERVICE
 		intentExtras: [ // optional
 			{type:"string", name:"string", value:"string"},
 			{type:"int", name:"string", value:0},
