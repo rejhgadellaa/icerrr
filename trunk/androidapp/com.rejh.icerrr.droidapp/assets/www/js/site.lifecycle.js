@@ -210,7 +210,7 @@ site.lifecycle.onPause = function() {
 	
 	// Cancel timeouts
 	for (var i in site.timeouts) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
-	for (var i in site.loops) { if (site.loops[i]) { clearTimeout(site.loops[i]); } }
+	for (var i in site.loops) { if (site.loops[i]) { clearInterval(site.loops[i]); } }
 	
 	// Call UI close function
 	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }

@@ -57,6 +57,7 @@
     <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
     <plugin name="Chromecast" value="acidhax.cordova.chromecast.Chromecast"/>
     <plugin name="MediaStreamer" value="com.rejh.cordova.mediastreamer.MediaStreamer"/>
+    <plugin name="NotifMgr" value="com.rejh.cordova.notifmgr.NotifMgr"/>
 </plugins>
 </cordova>
 

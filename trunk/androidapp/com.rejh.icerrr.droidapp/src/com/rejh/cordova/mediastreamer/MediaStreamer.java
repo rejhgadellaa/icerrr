@@ -85,7 +85,7 @@ public class MediaStreamer extends CordovaPlugin {
         		}
         	} else {
         		// Nothin?
-        		callbackContext.error("Action contains invalid value: "+ action);
+        		callbackContext.error("MediaStreamer: Action contains invalid value: "+ action);
                 return false;
         	}
         	

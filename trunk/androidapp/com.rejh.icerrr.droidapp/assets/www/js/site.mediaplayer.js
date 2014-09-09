@@ -78,6 +78,7 @@ site.mp.play = function() {
 			site.mp.isPlaying = true;
 			site.session.mpIsPlaying = true;
 			site.mp.initStatusPoll();
+			site.mp.notif();
 		},
 		function(errmsg) {
 			loggr.error("window.mediaStreamer.play()");
@@ -86,6 +87,7 @@ site.mp.play = function() {
 			site.mp.serviceRunning = false;
 			site.mp.isPlaying = false;
 			site.mp.stopStatusPoll();
+			site.mp.notifCancel(-1);
 		}
 	);
 	
@@ -102,11 +104,13 @@ site.mp.stop = function() {
 			site.mp.isPlaying = false;
 			site.session.mpIsPlaying = false;
 			site.mp.getStatus(site.mp.handleStatus); // just once..
+			site.mp.notifCancel(-1);
 		},
 		function(errmsg) {
 			loggr.error("window.mediaStreamer.stop()");
 			loggr.error(errmsg);
 			site.mp.stopStatusPoll();
+			site.mp.notifCancel(-1);
 		}
 	);
 	
@@ -124,14 +128,15 @@ site.mp.stop = function() {
 site.mp.initStatusPoll = function() {
 	loggr.info("site.mp.initStatusPoll()");
 	site.mp.stopStatusPoll();
-	site.timeouts.mpGetStatus = setInterval(function(){
+	site.loops.mpGetStatus = setInterval(function(){
 		site.mp.getStatus(site.mp.handleStatus);
-	},1000);
+	},2500);
+	loggr.log(" > inited status poll");
 }
 
 site.mp.stopStatusPoll = function() {
 	loggr.info("site.mp.stopStatusPoll()");
-	if (site.timeouts.mpGetStatus) { clearTimeout(site.timeouts.mpGetStatus); }
+	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
 }
  
 site.mp.getStatus = function(cb) {
@@ -177,6 +182,73 @@ site.mp.playToggle = function() {
 		site.mp.stop();
 	} else {
 		site.mp.play();
+	}
+	
+}
+
+site.mp.notif = function() {
+	
+	loggr.info("site.mp.notif()");
+	
+	var opts = {};
+	
+	// Required
+	opts.id = 1;
+	opts.title = "Icerrr: "+ site.session.currentstation.station_name;
+	opts.message = (!site.session.currentstation.station_nowplaying) ? "Now playing: Unknown" : site.session.currentstation.station_nowplaying;
+	opts.smallicon = "ic_media_play";
+	opts.intent = {
+		package: "com.rejh.icerrr.droidapps",
+		classname: "com.rejh.icerrr.droidapps.Icerrr"
+	}
+	
+	// Optional
+	// opts.largeicon = "ic_media_play";
+	opts.priority = "HIGH";
+	opts.ongoing = true;
+	opts.alertOnce = true;
+	
+	// Actions
+	opts.actions = [
+		{
+			icon: "",
+			title: "Stop",
+			intent: {
+				package: "com.rejh.cordova.mediastreamer",
+				classname: "com.rejh.cordova.mediastreamer.MediaStreamerService",
+				extras:[
+					{type:"string", name:"cmd", value:"destroy"}
+				]
+			}
+		}
+	];
+	
+	window.notifMgr.make(
+		function(res) {
+			loggr.log(" > Notification: "+ res);
+		},
+		function(errmsg) {
+			loggr.log(" > Error creating notification: "+errmsg);
+		},
+		opts
+	);
+	
+	
+}
+
+site.mp.notifCancel = function(id) {
+	
+	loggr.info("site.mp.notif(): "+id);
+	
+	if (!id || id<0) { 
+		window.notifMgr.cancelAll(function(res){},function(errmsg) {
+			loggr.warn(" > Could not cancel notification: "+ errmsg);
+		});
+	} else {
+		var opts = {id:id};
+		window.notifMgr.cancel(function(res){},function(errmsg) {
+			loggr.warn(" > Could not cancel notification: "+ errmsg);
+		},opts);
 	}
 	
 }
