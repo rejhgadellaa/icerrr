@@ -2,7 +2,7 @@
 
 	Manual:
 	
-	* Prepare your notification
+	** MAKE **
 	
 	<pre>
 	var opts = {};
@@ -28,7 +28,8 @@
 	// OPTIONAL
 	opts.largeicon = STRING // (file:///storage/etc)
 	opts.ticker = STRING // default opts.title
-	opts.autoCancel = BOOLEAN // default true
+	opts.priority = STRING // default: 'DEFAULT', values MAX, HIGH, DEFAULT, LOW, MIN
+	opts.autoCancel = BOOLEAN // default false
 	opts.ongoing = BOOLEAN // default false
 	opts.alertOnce = BOOLEAN // default false
 	
@@ -43,8 +44,74 @@
 	]
 	
 	// And run it
-	window.notifMgr.make(cb,cberr,[opts]);
+	window.notifMgr.make(cb,cberr,opts);
 	</pre>
-		
+	
+	** CANCEL **
+	
+	<pre>
+	var opts = {};
+	opts.id = INT
+	window.notifMgr.cancel(cb,cberr,opts);
+	</pre>
+	
+	** CANCEL ALL **
+	
+	<pre>
+	window.notifMgr.cancelAll(cb,cberr);
+	</pre>
 
 */
+
+/*
+* 
+* by REJH Gadellaa
+*  MIT license
+*
+*/
+
+(function() {
+		  
+	console.log("Load plugin: NotifMgr");
+		  
+    /* This increases plugin compatibility */
+    // var cordovaRef = window.PhoneGap || window.Cordova || window.cordova; // old to new fallbacks
+	cordovaRef = window.cordova;
+
+    /**
+    * The Java to JavaScript Gateway 'magic' class 
+    */
+    function NotifMgr() { }
+
+    /**
+    * Make
+    */
+    NotifMgr.prototype.make = function(win, fail, opts) {
+		console.log("NotifMgr.prototype.make()");
+        cordova.exec(win, fail, "NotifMgr", "make", [opts]);
+    };
+
+    /**
+    * Cancel
+    */
+    NotifMgr.prototype.cancel = function(win, fail, opts) {
+		console.log("NotifMgr.prototype.cancel()");
+        cordova.exec(win, fail, "NotifMgr", "cancel", [opts]);
+    };
+
+    /**
+    * Cancel All
+    */
+    NotifMgr.prototype.cancelAll = function(win, fail) {
+		console.log("NotifMgr.prototype.cancelAll()");
+        cordova.exec(win, fail, "NotifMgr", "cancelAll", []);
+    };
+	
+	/**
+	* Register the plugin
+	*/
+	try {
+		window.notifMgr = new NotifMgr();
+	} catch(e) { console.error("NotifMgr could not be loaded"); console.error(e); }
+
+})(); 

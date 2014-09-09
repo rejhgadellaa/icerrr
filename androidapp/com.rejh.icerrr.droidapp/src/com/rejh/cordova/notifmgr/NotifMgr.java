@@ -8,6 +8,11 @@ package com.rejh.cordova.notifmgr;
 * 
 */
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
@@ -20,6 +25,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.StrictMode;
+import android.os.StrictMode.ThreadPolicy;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -33,6 +44,8 @@ public class NotifMgr extends CordovaPlugin {
 	
 	private SharedPreferences sett;
 	private SharedPreferences.Editor settEditor;
+	
+	private String packageName;
 	
 	// --- Execute
 	
@@ -49,6 +62,9 @@ public class NotifMgr extends CordovaPlugin {
         // Preferences
         sett = context.getSharedPreferences(APPTAG,2);
         settEditor = sett.edit();
+        
+        // PackageName
+        packageName = context.getPackageName();
 
         // > Check action
         
@@ -56,6 +72,8 @@ public class NotifMgr extends CordovaPlugin {
         	callbackContext.error("Action is null");
             return false;
         }
+        
+        Log.d(APPTAG," -> "+ action);
         
         // > A GOGO
         
@@ -78,7 +96,7 @@ public class NotifMgr extends CordovaPlugin {
             
             // Whut??
             else {
-                callbackContext.error("Action contains invalid value: "+ action);
+                callbackContext.error("NotifMgr: Action contains invalid value: "+ action);
                 return false;
             }
             
@@ -129,7 +147,8 @@ public class NotifMgr extends CordovaPlugin {
         	// Optional
         	String largeicon = obj.has("largeicon") ? obj.getString("largeicon") : null;
         	String ticker = obj.has("ticker") ? obj.getString("ticker") : title;
-        	boolean autoCancel = obj.has("autoCancel") ? obj.getBoolean("autoCancel") : true;
+        	int priority = obj.has("priority") ? getPriority(obj.getString("priority")) : NotificationCompat.PRIORITY_DEFAULT;
+        	boolean autoCancel = obj.has("autoCancel") ? obj.getBoolean("autoCancel") : false;
         	boolean ongoing = obj.has("ongoing") ? obj.getBoolean("ongoing") : false;
         	boolean alertOnce = obj.has("alertOnce") ? obj.getBoolean("alertOnce") : false;
         	
@@ -151,11 +170,13 @@ public class NotifMgr extends CordovaPlugin {
         	}
         	
 	        // Check required args
-	        if (id==-1 || message==null || title==null || smallicon==null && largeicon==null) {
+	        if (id==-1 || message==null || title==null || smallicon==null) {
 	        	Log.e(APPTAG," -> Missing argsobj param: id, msg, title?");
 	        	callbackContext.error("Missing argsobj param: id, msg, title?");
 	        	return;
 	        }
+	        
+	        // > Required
         
 	        // Start building...
 	        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -164,18 +185,23 @@ public class NotifMgr extends CordovaPlugin {
 	        builder.setContentTitle(title);
 	        builder.setContentText(message);
 	        
+	        // Icon // TODO: parse string to resInt
+	        if (smallicon!=null) { builder.setSmallIcon(getSmallIcon(smallicon)); }
+	        
 	        // Intent // TODO: a lot.
 	        PendingIntent notifPendingIntent = createPendingIntent(intentPackage, intentClassName, intentExtras);
 	        builder.setContentIntent(notifPendingIntent);
 	        
-	        // Ticker
-	        if (ticker!=null) {
-	        	builder.setTicker(ticker);
-	        }
+	        // > Optionals
 	        
-	        // Icon // TODO: parse string to resInt
-	        if (smallicon!=null) { builder.setSmallIcon(R.drawable.ic_media_play); }
-	        // if (largeicon!=null) { builder.setLargeIcon(R.drawable.ic_media_play); } // TODO: create bitmap
+	        // Large icon
+	        if (largeicon!=null) { builder.setLargeIcon(getIcon(largeicon)); } // TODO: create bitmap
+	        
+	        // Ticker
+	        builder.setTicker(ticker);
+	        
+	        // Prio
+	        builder.setPriority(priority);
 	        
 	        // Autocancel, ongoing, alertOnce
 	        builder.setAutoCancel(autoCancel);
@@ -187,11 +213,12 @@ public class NotifMgr extends CordovaPlugin {
 	        	for (int i=0; i<actions.length(); i++) {
 	        		// Prep
 	        		JSONObject action = actions.getJSONObject(i);
-	        		int actionIcon = R.drawable.ic_media_play; // TODO: icon! action.getString("icon");
+	        		int actionIcon = getSmallIcon(action.getString("icon"));
 	        		CharSequence actionTitle = (CharSequence) action.getString("title");
-	        		String actionIntentPackage = action.getString("package");
-	        		String actionIntentClassName = action.getString("classname");
-	        		JSONArray actionIntentExtras = action.has("extras") ? action.getJSONArray("extras") : null;
+	        		JSONObject actionIntent = action.getJSONObject("intent");
+	        		String actionIntentPackage = actionIntent.getString("package");
+	        		String actionIntentClassName = actionIntent.getString("classname");
+	        		JSONArray actionIntentExtras = actionIntent.has("extras") ? actionIntent.getJSONArray("extras") : null;
 	        		PendingIntent actionPendingIntent = createPendingIntent(actionIntentPackage,actionIntentClassName,actionIntentExtras);
 	        		// Build..
 	        		NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder(actionIcon, actionTitle, actionPendingIntent);
@@ -204,9 +231,13 @@ public class NotifMgr extends CordovaPlugin {
 	        // Kablooie
 	        NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 	        notifMgr.notify(id, builder.build());
+	        
+	        callbackContext.success("OK");
 		
 		} catch (Exception e) {
 		Log.e(APPTAG," -> Error parsing argsobj");
+		Log.e(APPTAG,e.toString());
+		e.printStackTrace();
 		callbackContext.error("Error parsing argsobj");
 		return;
 		}
@@ -225,11 +256,19 @@ public class NotifMgr extends CordovaPlugin {
         
         Log.d(APPTAG," > CancelAll");
         
+        NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notifMgr.cancelAll();
+        
+        callbackContext.success("OK");
+        
     }
     
     // ...
     
-    // --- PRIVATE METHODS
+    // --------------------------------------------------
+    // --- PRIVATE METHODS, HELPERS
+    
+    // > Intents
     
     // Create Pending Intent (with extras!)
     private PendingIntent createPendingIntent(String intentPackage, String intentClassName, JSONArray intentExtras) throws JSONException {
@@ -241,13 +280,13 @@ public class NotifMgr extends CordovaPlugin {
 				JSONObject intentExtra = intentExtras.getJSONObject(i);
 				String type = intentExtra.getString("type").toLowerCase();
 				String name = intentExtra.getString("name");
-				if (type=="string") {
+				if (type.equals("string")) {
 					notifIntent.putExtra(name, intentExtra.getString("value"));
-				} else if (type=="int") {
+				} else if (type.equals("int")) {
 					notifIntent.putExtra(name, intentExtra.getInt("value"));
-				} else if (type=="float" || type=="double") {
+				} else if (type.equals("float") || type.equals("double")) {
 					notifIntent.putExtra(name, intentExtra.getDouble("value"));
-				} else if (type=="boolean" || type=="bool") {
+				} else if (type.equals("boolean") || type.equals("bool")) {
 					notifIntent.putExtra(name, intentExtra.getBoolean("value"));
 				}
 			}
@@ -256,6 +295,138 @@ public class NotifMgr extends CordovaPlugin {
 	    
 	    return notifPendingIntent;
 	    		
+    }
+    
+    // > Priority
+    
+    private int getPriority(String priority) {
+    	
+    	int res = NotificationCompat.PRIORITY_DEFAULT; // DEFAULT
+    	
+    	if (priority.equals("MAX")) {
+    		res = NotificationCompat.PRIORITY_MAX;
+    	} else if (priority.equals("HIGH")) {
+    		res = NotificationCompat.PRIORITY_HIGH;
+    	} else if (priority.equals("DEFAULT")) {
+    		res = NotificationCompat.PRIORITY_DEFAULT;
+    	} else if (priority.equals("LOW")) {
+    		res = NotificationCompat.PRIORITY_LOW;
+    	} else if (priority.equals("MIN")) {
+    		res = NotificationCompat.PRIORITY_MIN;
+    	}
+    	
+    	return res;
+    	
+    }
+    
+    // > Icons
+    // Ripped from LocalNotification plugin: https://github.com/katzer/cordova-plugin-local-notifications/blob/master/src/android/Options.java
+    
+    private Bitmap getIcon (String icon) {
+        Bitmap bmp = null;
+
+        if (icon.startsWith("http")) {
+            bmp = getIconFromURL(icon);
+        } else if (icon.startsWith("file://")) {
+            bmp = getIconFromURI(icon);
+        }
+
+        if (bmp == null) {
+            bmp = getIconFromRes(icon);
+        }
+
+        return bmp;
+    }
+    
+    private int getSmallIcon (String iconName) {
+        int resId       = 0;
+
+        resId = getIconValue(packageName, iconName);
+
+        if (resId == 0) {
+            resId = getIconValue("android", iconName);
+        }
+
+        if (resId == 0) {
+            resId = getIconValue(packageName, "icon");
+        }
+
+        return resId;
+    }
+    
+    private int getIconValue (String className, String iconName) {
+        int icon = 0;
+
+        try {
+            Class<?> klass  = Class.forName(className + ".R$drawable");
+
+            icon = (Integer) klass.getDeclaredField(iconName).get(Integer.class);
+        } catch (Exception e) {}
+
+        return icon;
+    }
+    
+    private Bitmap getIconFromURL (String src) {
+        Bitmap bmp = null;
+        ThreadPolicy origMode = StrictMode.getThreadPolicy();
+
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            StrictMode.ThreadPolicy policy =
+                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+
+            connection.setDoInput(true);
+            connection.connect();
+
+            InputStream input = connection.getInputStream();
+
+            bmp = BitmapFactory.decodeStream(input);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        StrictMode.setThreadPolicy(origMode);
+
+        return bmp;
+    }
+    
+    private Bitmap getIconFromRes (String icon) {
+        Resources res = context.getResources();
+        int iconId = 0;
+
+        iconId = getIconValue(packageName, icon);
+
+        if (iconId == 0) {
+            iconId = getIconValue("android", icon);
+        }
+
+        if (iconId == 0) {
+            iconId = android.R.drawable.ic_menu_info_details;
+        }
+
+        Bitmap bmp = BitmapFactory.decodeResource(res, iconId);
+
+        return bmp;
+    }
+    
+    private Bitmap getIconFromURI (String src) {
+        AssetManager assets = context.getAssets();
+        Bitmap bmp = null;
+
+        try {
+            String path = src.replace("file:/", "www");
+            InputStream input = assets.open(path);
+
+            bmp = BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bmp;
     }
     
     
