@@ -3,9 +3,8 @@
 = Changelog =
 
 v0.031
-  * Built and implemented notification plugin 
-  * NOT YET: MediaStreamer: restarting same stream should no longer interrupt playback
-  * Fix: site.mp.getStatus was not handled correctly
+  * Built and implemented notification plugin (first try, may be buggy :))
+  * Fix: site.mp.getStatus was not handled correctly (too much activity)
 
 v0.030
   * Fix: remove telephony listener when MediaStreamerService is killed

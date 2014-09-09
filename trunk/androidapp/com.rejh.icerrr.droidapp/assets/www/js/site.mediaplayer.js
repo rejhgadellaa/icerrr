@@ -171,7 +171,11 @@ site.mp.handleStatus = function(statusCode) {
 		site.mp.mpstatus = statusCode;
 		site.mp.lastmpstatus = statusCode;
 	}
-	if (statusCode==Media.MEDIA_NONE || statusCode==Media.MEDIA_STOPPED) { site.mp.stopStatusPoll(); }
+	if (statusCode==Media.MEDIA_NONE || statusCode==Media.MEDIA_STOPPED) { 
+		site.mp.isPlaying = false;
+		site.mp.notifCancel(-1);
+		site.mp.stopStatusPoll(); 
+	}
 }
 
 site.mp.playToggle = function() {
@@ -198,8 +202,9 @@ site.mp.notif = function() {
 	opts.message = (!site.session.currentstation.station_nowplaying) ? "Now playing: Unknown" : site.session.currentstation.station_nowplaying;
 	opts.smallicon = "ic_media_play";
 	opts.intent = {
-		package: "com.rejh.icerrr.droidapps",
-		classname: "com.rejh.icerrr.droidapps.Icerrr"
+		type: "activity",
+		package: "com.rejh.icerrr.droidapp",
+		classname: "com.rejh.icerrr.droidapp.Icerrr"
 	}
 	
 	// Optional
@@ -211,17 +216,21 @@ site.mp.notif = function() {
 	// Actions
 	opts.actions = [
 		{
-			icon: "",
-			title: "Stop",
+			icon: "ic_media_pause",
+			title: "Pause - doesn't work...",
 			intent: {
-				package: "com.rejh.cordova.mediastreamer",
-				classname: "com.rejh.cordova.mediastreamer.MediaStreamerService",
+				type: "receiver",
+				package: "com.rejh.icerrr.droidapp",
+				classname: "com.rejh.cordova.mediastreamer.MediaStreamerReceiver",
 				extras:[
 					{type:"string", name:"cmd", value:"destroy"}
 				]
 			}
 		}
 	];
+	/**/
+	
+	
 	
 	window.notifMgr.make(
 		function(res) {

@@ -231,6 +231,7 @@ site.home.run_station_updates = function() {
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
+			try { if (site.mp.isPlaying) site.mp.notif(); } catch(e) {}
 			
 			// Cast
 			if (site.cast.session && site.cast.media) {
