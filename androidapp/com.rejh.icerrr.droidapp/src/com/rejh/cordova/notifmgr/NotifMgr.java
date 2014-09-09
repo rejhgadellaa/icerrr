@@ -123,13 +123,26 @@ public class NotifMgr extends CordovaPlugin {
         	String title = obj.has("title") ? obj.getString("title") : null;
         	String message = obj.has("message") ? obj.getString("message") : null;
         	String smallicon = obj.has("smallicon") ? obj.getString("smallicon") : null;
-        	String largeicon = obj.has("largeicon") ? obj.getString("largeicon") : null;
-        	String intentClassName = obj.has("intentClassName") ? obj.getString("intentClassName") : null; // TODO: should be able to use 'com.rejh.icerr.doirdapp.MAIN_ACTIVITY'
+        	
+        	//String intentClassName = obj.has("intentClassName") ? obj.getString("intentClassName") : null; // TODO: should be able to use 'com.rejh.icerr.doirdapp.MAIN_ACTIVITY'
         	
         	// Optional
+        	String largeicon = obj.has("largeicon") ? obj.getString("largeicon") : null;
+        	String ticker = obj.has("ticker") ? obj.getString("ticker") : title;
         	boolean autoCancel = obj.has("autoCancel") ? obj.getBoolean("autoCancel") : true;
         	boolean ongoing = obj.has("ongoing") ? obj.getBoolean("ongoing") : false;
-        	String ticker = obj.has("ticker") ? obj.getString("ticker") : title;
+        	boolean alertOnce = obj.has("alertOnce") ? obj.getBoolean("alertOnce") : false;
+        	
+        	// Intent
+        	JSONObject intentopts = obj.has("intent") ? obj.getJSONObject("intent") : null;
+        	if (intentopts==null) {
+        		// Defaults...?
+        		callbackContext.error("Missing arg: intent{}");
+        		return;
+        	}
+    		String intentPackage = intentopts.getString("package");
+    		String intentClassName = intentopts.getString("classname");
+    		JSONArray intentExtras = intentopts.has("extras") ? intentopts.getJSONArray("extras") : null;
         	
         	// Actions
         	JSONArray actions = obj.has("actions") ? obj.getJSONArray("actions") : null;
@@ -138,7 +151,7 @@ public class NotifMgr extends CordovaPlugin {
         	}
         	
 	        // Check required args
-	        if (id==-1 || message==null || title==null || smallicon==null && largeicon==null || intentClassName==null) {
+	        if (id==-1 || message==null || title==null || smallicon==null && largeicon==null) {
 	        	Log.e(APPTAG," -> Missing argsobj param: id, msg, title?");
 	        	callbackContext.error("Missing argsobj param: id, msg, title?");
 	        	return;
@@ -152,20 +165,45 @@ public class NotifMgr extends CordovaPlugin {
 	        builder.setContentText(message);
 	        
 	        // Intent // TODO: a lot.
-	        Intent notifIntent = new Intent();
-	        notifIntent.setClassName(context, intentClassName);
-	        PendingIntent notifPendingIntent = PendingIntent.getActivity(context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
+	        PendingIntent notifPendingIntent = createPendingIntent(intentPackage, intentClassName, intentExtras);
 	        builder.setContentIntent(notifPendingIntent);
+	        
+	        // Ticker
+	        if (ticker!=null) {
+	        	builder.setTicker(ticker);
+	        }
 	        
 	        // Icon // TODO: parse string to resInt
 	        if (smallicon!=null) { builder.setSmallIcon(R.drawable.ic_media_play); }
 	        // if (largeicon!=null) { builder.setLargeIcon(R.drawable.ic_media_play); } // TODO: create bitmap
 	        
+	        // Autocancel, ongoing, alertOnce
+	        builder.setAutoCancel(autoCancel);
+	        builder.setOngoing(ongoing);
+	        builder.setOnlyAlertOnce(alertOnce);
+	        
+	        // Actions
+	        if (actions!=null) {
+	        	for (int i=0; i<actions.length(); i++) {
+	        		// Prep
+	        		JSONObject action = actions.getJSONObject(i);
+	        		int actionIcon = R.drawable.ic_media_play; // TODO: icon! action.getString("icon");
+	        		CharSequence actionTitle = (CharSequence) action.getString("title");
+	        		String actionIntentPackage = action.getString("package");
+	        		String actionIntentClassName = action.getString("classname");
+	        		JSONArray actionIntentExtras = action.has("extras") ? action.getJSONArray("extras") : null;
+	        		PendingIntent actionPendingIntent = createPendingIntent(actionIntentPackage,actionIntentClassName,actionIntentExtras);
+	        		// Build..
+	        		NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder(actionIcon, actionTitle, actionPendingIntent);
+	        		NotificationCompat.Action builtAction = actionBuilder.build();
+	        		// Add
+	        		builder.addAction(builtAction);
+	        	}
+	        }
+	        
 	        // Kablooie
 	        NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 	        notifMgr.notify(id, builder.build());
-	        
-	        
 		
 		} catch (Exception e) {
 		Log.e(APPTAG," -> Error parsing argsobj");
@@ -190,6 +228,35 @@ public class NotifMgr extends CordovaPlugin {
     }
     
     // ...
+    
+    // --- PRIVATE METHODS
+    
+    // Create Pending Intent (with extras!)
+    private PendingIntent createPendingIntent(String intentPackage, String intentClassName, JSONArray intentExtras) throws JSONException {
+
+	    Intent notifIntent = new Intent();
+	    notifIntent.setClassName(intentPackage, intentClassName);
+	    if (intentExtras!=null) {
+			for (int i=0; i<intentExtras.length(); i++) {
+				JSONObject intentExtra = intentExtras.getJSONObject(i);
+				String type = intentExtra.getString("type").toLowerCase();
+				String name = intentExtra.getString("name");
+				if (type=="string") {
+					notifIntent.putExtra(name, intentExtra.getString("value"));
+				} else if (type=="int") {
+					notifIntent.putExtra(name, intentExtra.getInt("value"));
+				} else if (type=="float" || type=="double") {
+					notifIntent.putExtra(name, intentExtra.getDouble("value"));
+				} else if (type=="boolean" || type=="bool") {
+					notifIntent.putExtra(name, intentExtra.getBoolean("value"));
+				}
+			}
+		}
+	    PendingIntent notifPendingIntent = PendingIntent.getActivity(context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
+	    
+	    return notifPendingIntent;
+	    		
+    }
     
     
     
