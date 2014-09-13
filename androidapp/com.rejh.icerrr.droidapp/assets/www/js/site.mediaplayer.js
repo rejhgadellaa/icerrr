@@ -200,7 +200,7 @@ site.mp.notif = function() {
 	opts.id = 1;
 	opts.title = "Icerrr: "+ site.session.currentstation.station_name;
 	opts.message = (!site.session.currentstation.station_nowplaying) ? "Now playing: Unknown" : site.session.currentstation.station_nowplaying;
-	opts.smallicon = "ic_media_play";
+	opts.smallicon = "ic_stat_hardware_headphones";
 	opts.intent = {
 		type: "activity",
 		package: "com.rejh.icerrr.droidapp",
@@ -216,8 +216,8 @@ site.mp.notif = function() {
 	// Actions
 	opts.actions = [
 		{
-			icon: "ic_media_pause",
-			title: "Pause - doesn't work...",
+			icon: "ic_stat_av_stop",
+			title: "Stop playback",
 			intent: {
 				type: "receiver",
 				package: "com.rejh.icerrr.droidapp",

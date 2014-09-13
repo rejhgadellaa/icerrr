@@ -275,8 +275,9 @@ site.helpers.calcStringToKbytes = function(str) {
 
 site.helpers.calcStringToBytes = function(str) {
 	if(!str) { str = ""; }
-	var bytes = str.length*8;
-	return bytes;
+	// Matches only the 10.. bytes that are non-initial characters in a multi-byte sequence.
+	var m = encodeURIComponent(str).match(/%[89ABab]/g);
+	return str.length + (m ? m.length : 0);
 }
 
 // ---> Sort stuff

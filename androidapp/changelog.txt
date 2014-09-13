@@ -2,6 +2,10 @@
 
 = Changelog =
 
+v0.032
+  * New icons and tweaks for notifications
+  * Fix: notification wasn't dismissed in some cases
+
 v0.031
   * Built and implemented notification plugin (first try, may be buggy :))
   * Fix: site.mp.getStatus was not handled correctly (too much activity)

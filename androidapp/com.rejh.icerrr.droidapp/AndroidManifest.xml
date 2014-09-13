@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-      package="com.rejh.icerrr.droidapp" android:versionName="0.031" android:versionCode="30" android:hardwareAccelerated="true">
+      package="com.rejh.icerrr.droidapp" android:versionName="0.032" android:versionCode="32" android:hardwareAccelerated="true">
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -27,6 +27,8 @@
         android:resizeable="true"
         android:anyDensity="true"
         />
+
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="20"/>
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -64,7 +66,11 @@
         
         <receiver android:name="com.rejh.cordova.mediastreamer.MediaStreamerReceiver" />
         
+        <receiver android:name="com.rejh.cordova.notifmgr.NotifMgrReceiver">
+            <intent-filter>
+                <action android:name="com.rejh.cordova.notifmgr.actions.RECEIVER" />
+            </intent-filter>
+        </receiver>
+        
     </application>
-
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="20"/>
 </manifest> 

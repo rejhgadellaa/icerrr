@@ -41,6 +41,8 @@ site.ui.gotosection = function(selector) {
 	
 	loggr.log("site.ui.showsection(): "+ selector);
 	
+	site.vars.previousSection = site.vars.currentSection;
+	
 	site.vars.currentSection = selector;
 	site.lifecycle.add_section_history(selector);
 	
@@ -61,12 +63,26 @@ site.ui.gotosection = function(selector) {
 	// TODO: Settimeout is a workaround so that :active elements lose their active state..
 	if (site.timeouts.gotosection) { clearTimeout(site.timeouts.gotosection); }
 	//site.timeouts.gotosection = setTimeout(function(){
+		
 		$(".activatablel_active").removeClass("activatablel_active");
 		$(".activatabled_active").removeClass("activatabled_active");
+		
 		$("section").css("display","none"); 
 		$(selector).css("display","block");
+		
+		/* animation! *//*
+		$(site.vars.previousSection).css("z-index",1); // TODO: determine zindex
+		$(site.vars.currentSection).css("z-index",2);
+		$(site.vars.currentSection).css("top",$(window).height());
+		$(site.vars.currentSection).css("display","block");
+		$(site.vars.currentSection).animate({top:0},500,null,function(){
+			$(site.vars.previousSection).css("display","none");
+		});
+		/**/
+		
 		loggr.log(" > "+ selector +" display: "+$(selector).css("display"));
 		setTimeout(site.lifecycle.onResize,10);
+		
 	//},100);
 	
 }

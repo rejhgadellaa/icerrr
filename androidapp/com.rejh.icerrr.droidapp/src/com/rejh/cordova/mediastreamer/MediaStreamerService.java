@@ -94,6 +94,15 @@ public class MediaStreamerService extends Service {
 		super.onDestroy();
 		Log.i(APPTAG,"MediaStreamerService.OnDestroy");
 		
+		// Cancel notifmgr notif if available
+		Intent notifIntent = new Intent();
+		notifIntent.setPackage(context.getPackageName());
+		notifIntent.setAction("com.rejh.cordova.notifmgr.actions.RECEIVER");
+		notifIntent.putExtra("cmd", "cancel");
+		notifIntent.putExtra("notif_id",1); // TODO: what ID should we use?
+		context.sendBroadcast(notifIntent);
+		
+		// Store some values
 		settEditor.putBoolean("mediastreamer_serviceRunning", false);
 		settEditor.commit();
 		

@@ -191,8 +191,8 @@ site.cast.loadMedia = function() {
 		mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata();
 		mediaInfo.metadata.title = station.station_name;
 		mediaInfo.metadata.images = [
-			chrome.cast.Image(station.station_icon), 
-			chrome.cast.Image("img/web_hi_res_512_001.png")
+			new chrome.cast.Image(station.station_icon), 
+			new chrome.cast.Image("img/web_hi_res_512_001.png")
 		];
 		// mediaInfo.customData = null;
 		// mediaInfo.streamType = chrome.cast.media.StreamType.BUFFERED;
