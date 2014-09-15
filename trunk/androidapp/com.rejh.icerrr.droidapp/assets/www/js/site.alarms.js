@@ -264,7 +264,7 @@ site.alarms.setAlarms = function() {
 		// Check if tomorrow..
 		var nowdate = new Date();
 		loggr.log(" > Set: "+ alarm.hour+":"+ alarm.minute +", now: "+ nowdate.getHours() +":"+ nowdate.getMinutes());
-		if (alarm.hour < nowdate.getHours() || alarm.hour <= nowdate.getHours() && alarm.minute <= nowdate.getMinutes()) {
+		if (parseInt(alarm.hour) < nowdate.getHours() || parseInt(alarm.hour) <= nowdate.getHours() && parseInt(alarm.minute) <= nowdate.getMinutes()) {
 			loggr.log(" > Set for tomorrow");
 			date.setDate(date.getDate()+1);
 		}
@@ -308,15 +308,7 @@ site.alarms.setAlarms = function() {
 
 site.alarms.writesession = function() {
 	loggr.info("site.alarms.writesession()");
-	site.cookies.put("site.session",JSON.stringify(site.session));
-	site.storage.writefile(site.cfg.paths.json,"local.site_session.json",site.cookies.get("site.session"),
-		function() {
-			loggr.log("site.alarms.writesession > write local site.session OK");
-		},
-		function(err) {
-			loggr.log("site.alarms.writesession > write local site.session Error");
-		}
-	);
+	site.helpers.storeSession();
 }
 
 // ---> Fill

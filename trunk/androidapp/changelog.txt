@@ -2,6 +2,17 @@
 
 = Changelog =
 
+v0.035
+  * Update clears all settings, alarms, etc!
+  * Fix: app still sometimes(?) froze on splash screen
+  * Fix: mediaplayer status detection should be improved
+  * A lot of fixes for alarms..
+
+v0.034
+  * Fix: app sometimes(?) froze on splash screen
+  * Fix: site.session sometimes stored before restored (causing wipe)
+  * Fix: alarms are now always set in the future (long story, you'll love it)
+
 v0.033
   * Alarms! Will be rough around edges!
 

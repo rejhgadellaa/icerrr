@@ -335,6 +335,49 @@ site.sorts.station_by_name = function(stations) {
 
 site.helpers.session = {};
 
+site.helpers.storeSession = function() {
+	loggr.info("site.helpers.storeSession()");
+	if (!site.session_ready) { // get session before writing
+		site.helpers.readSession();
+	}
+	if (site.session_ready) {
+		site.cookies.put("site.session",JSON.stringify(site.session)); // set cookie
+		site.storage.writefile(site.cfg.paths.json,"local.site_session.json",site.cookies.get("site.session"), // write
+			function() {
+				loggr.log("site.helpers.storeSession > write local site.session OK");
+			},
+			function(err) {
+				loggr.log("site.helpers.storeSession > write local site.session Error");
+			}
+		);
+	}
+}
+
+site.helpers.readSession = function() {
+	loggr.info("site.helpers.readSession()");
+	loggr.log(" > Restore site.session: "+ site.cookies.get("site.session"));
+	site.session = JSON.parse(site.cookies.get("site.session"));
+	if (!site.session) { 
+		loggr.warn(" > Error getting session from cookie, trying storage...");
+		site.session = {}; // just a placeholder so the app can continue working.. // TODO: dangerous, user might do stuff that is not remembered..
+		site.storage.readfile(site.cfg.paths.json,"local.site_session.json",
+			function(data) {
+				loggr.log(" > Session read from storage, also writing now");
+				site.session = JSON.parse(data);
+				if (!site.session) { site.session = {}; }
+				site.session_ready = true;
+				site.helpers.storeSession();
+			},
+			function(err) {
+				loggr.error(" > Could not read session from storage: "+err);
+				site.session = {}; 
+			}
+		);
+	} else {
+		site.session_ready = true;
+	}
+}
+
 // TODO: I want this function for other places too, not just session data
 
 site.helpers.session.put = function(key,data,isarray) {
