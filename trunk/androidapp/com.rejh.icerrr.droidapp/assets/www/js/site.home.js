@@ -155,7 +155,7 @@ site.home.init_ui_updates = function() {
 	loggr.info("site.home.init_ui_updates()");
 	
 	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
-	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},1000);
+	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},1);
 	
 	if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
 	site.timeouts.home_station_timeout = setTimeout(function(){site.home.run_station_updates()},1000);
@@ -173,6 +173,8 @@ site.home.stop_ui_updates = function() {
 
 site.home.run_ui_updates = function() {
 	
+	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
+	
 	//loggr.log("site.home.run_ui_updates()");
 	
 	// Home >> Footer >> Play button
@@ -188,8 +190,6 @@ site.home.run_ui_updates = function() {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy"); 
 	}
-	
-	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
 	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},2000);
 	
 }

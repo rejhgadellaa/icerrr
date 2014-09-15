@@ -93,7 +93,7 @@ site.alarms.drawResults = function() {
 		var resultsub = document.createElement("div");
 		resultsub.className = "resultsub";
 		resultsub.innerHTML = ""
-			+ site.alarms.genRepeatString(alarm.repeatCfg);// TODO: events.. anyone?
+			+ site.alarms.genRepeatString(alarm.repeat,alarm.repeatCfg);// TODO: events.. anyone?
 			
 		// Events
 		resultitem.onclick = function(){
@@ -443,14 +443,14 @@ site.alarms.getUniqueAlarmID = function() {
 	return id;
 }
 
-site.alarms.genRepeatString = function(repeatCfg) {
+site.alarms.genRepeatString = function(repeat,repeatCfg) {
 	
 	var list = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 	var days = [];
 	for (var i in repeatCfg) {
 		if (repeatCfg[i]>0) { days.push(list[i]); }
 	}
-	if (days.length<1) { return "Repeat off"; }
+	if (days.length<1 || repeat=="off" || !repeat) { return "Repeat off"; }
 	return "Repeat: "+ days.join(", ");
 	
 }

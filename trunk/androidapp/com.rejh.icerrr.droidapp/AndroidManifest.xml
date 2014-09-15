@@ -19,8 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
       package="com.rejh.icerrr.droidapp" 
-      android:versionName="0.035" 
-      android:versionCode="35" 
+      android:versionName="0.037" 
+      android:versionCode="37" 
       android:hardwareAccelerated="true"
       >
     <supports-screens
@@ -86,6 +86,9 @@
 			</intent-filter>
 			<intent-filter>
 	            <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+	        </intent-filter>
+			<intent-filter>
+	            <action android:name="android.intent.action.PACKAGE_REPLACED" />
 	        </intent-filter>
 		</receiver>
         

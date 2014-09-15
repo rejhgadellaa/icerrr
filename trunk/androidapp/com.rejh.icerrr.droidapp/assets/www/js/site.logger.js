@@ -157,7 +157,7 @@ loggr.save = function() {
 			loggr.log("loggr.save > OK");
 		},
 		function(err) {
-			loggr.warn("loggr.save > FAILED");
+			loggr.log("loggr.save > FAILED");
 		}
 	);
 
@@ -170,7 +170,7 @@ loggr.upload = function() {
 	// TODO: Not ready for primetime
 	
 	if (loggr.uploading) {
-		console.warn("loggr.uploading==true");
+		console.log("loggr.uploading==true");
 		return;
 	}
 	loggr.uploading = true;
@@ -198,8 +198,8 @@ loggr.upload = function() {
 	site.webapi.post(apiaction,apiquerystr,data,
 		function(data) {
 			if (data["error"]) {
-				loggr.warn("loggr.upload().OK");
-				loggr.warn(data["error"]);
+				loggr.log("loggr.upload().OK");
+				loggr.log(data["error"]);
 			} else {
 				loggr.log("loggr.upload().OK");
 				loggr.uploading = false;

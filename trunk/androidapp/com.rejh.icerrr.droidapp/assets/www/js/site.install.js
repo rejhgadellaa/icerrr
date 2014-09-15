@@ -47,12 +47,16 @@ site.installer.cfg.createfolders_folders = [
 	site.cfg.paths.logs,
 	site.cfg.paths.other,
 ];
+site.installer.cfg.delete_files = [
+	{"file_path":site.cfg.paths.json,"file_name":"local.site_session.json","put":"{}"},
+	{}
+];
 site.installer.cfg.downloadjson_files = [
-	{"dest_path":"Icerrr/json","dest_name":"stations.json","query":"{\"get\":\"stations\"}"},
+	{"dest_path":site.cfg.paths.json,"dest_name":"stations.json","query":"{\"get\":\"stations\"}"},
 	{}
 ];
 
-site.installer.cfg.overwrite_versions = [0.014,0.019,0.027,0.35];
+site.installer.cfg.overwrite_versions = [0.014,0.019,0.027,0.035,0.036,0.037];
 
 // ---> Init
 
@@ -103,7 +107,7 @@ site.installer.createfolders_next = function() {
 	// Createfolders finished?
 	if (!currentpath) { 
 		site.installer.logger("&nbsp;&gt; Done");
-		site.installer.downloadjson_init();
+		site.installer.deletefiles_init();
 		return; // <- important stuff happening here.
 	}
 	
@@ -127,6 +131,69 @@ site.installer.createfolders_errcb = function(error) {
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+site.storage.getErrorType(error)+"",{is_e:true});
 	// TODO: YES.. What now..
+}
+
+// ---> Step 2 : delete files
+
+// site.installer.cfg.delete_files
+site.installer.deletefiles_init = function() {
+	
+	site.installer.logger("Delete files...");
+	
+	if (site.installer.cfg.overwrite_version >= site.cfg.app_version && site.cookies.get("app_version")!=site.cfg.app_version) {
+		// only do on 'clear data installs'
+		site.installer.deletefiles_next();
+	} else {
+		// skip deletefiles
+		site.installer.downloadjson_init();
+	}
+	
+}
+
+site.installer.deletefiles_next = function() {
+	
+	loggr.info("site.installer.deletefiles_next()");
+	
+	// Check jsonNum
+	if (!site.installer.vars.delNum && site.installer.vars.delNum!==0) { site.installer.vars.delNum = -1;	}
+	site.installer.vars.delNum++;
+	
+	// Get current job
+	currentjob = site.installer.cfg.delete_files[site.installer.vars.delNum];
+	loggr.log(" > currentjob: "+ currentjob.file_name);
+	
+	// downloadjson finished?
+	if (!currentjob.put) { 
+		site.installer.logger("&nbsp;&gt; Done");
+		site.installer.downloadjson_init();
+		return; // <- important stuff happening here.
+	}
+	
+	// Stuff
+	var path = currentjob.file_path;
+	var filename = currentjob.file_name;
+	var data = currentjob.put;
+	
+	loggr.log(" > Path: "+ path);
+	loggr.log(" > Filename: "+ filename);
+	loggr.log(" > Data: "+ data);
+	
+	// Some output..
+	site.installer.logger("&nbsp;&gt;&gt; Write: "+ path +"/"+ filename);
+	
+	// Do it
+	site.storage.writefile(path,filename,data,
+		function(res) {
+			site.installer.deletefiles_next();
+		},
+		function(err) {
+			loggr.error(" > Could not write/delete");
+			console.error(err);
+		}
+	);
+	
+	
+	
 }
 
 // ---> Step 2 : download json
@@ -372,6 +439,8 @@ site.installer.logger = function(msg,opts) {
 	if (!opts) { opts = {}; }
 	if (opts.use_br!==false) { opts.use_br = true; }
 	if (opts.is_e!==true) { opts.is_e = false; }
+	
+	loggr.log(" (i) "+msg);
 	
 	if (opts.is_e) { msg = "<span class='e'>"+msg+"</span>"; }
 	if (opts.use_br) { msg = "<br>"+msg; }
