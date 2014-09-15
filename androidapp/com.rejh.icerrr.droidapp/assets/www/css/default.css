@@ -60,19 +60,27 @@ label {
 	margin-left:8px;
 }
 
-input {
+input,select {
 	width:98%;
 	margin:-1px;
 	padding:1%;
 	font-size:16pt;
+	background:#fff;
 	border:1px solid rgba(0,0,0,0.5);
 }
 
+input[type="checkbox"] {
+	width:16px;
+	height:16px;
+}
+
+/*
 select {
 	margin:0; 
 	padding:5px;
 	background:#fff;
 }
+/**/
 
 /* -- SECTIONS */
 
@@ -374,11 +382,11 @@ section {
 	
 }
 
-	#editstation .block, #searchstation .block {
+	#editstation .block, #searchstation .block, #alarms_add .block {
 		padding:16px 16px 0 16px;
 	}
 	
-	#editstation .block label a, #searchstation .block label a {
+	#editstation .block label a, #searchstation .block label a, #alarms_add .block label a {
 		float:right;
 	}
 	
@@ -394,17 +402,13 @@ section {
 
 }
 	
-	#searchstation_results .main {
-		padding-bottom:48px;
-	}
-	
-	#searchstation_results .resultitem .resultname {
+	#searchstation_results, #alarms .resultitem .resultname {
 		position:absolute;
 		top:16px; left:72px;
 		font-size:12pt;
 	}
 	
-	#searchstation_results .resultitem .resultsub {
+	#searchstation_results, #alarms .resultitem .resultsub {
 		position:absolute;
 		bottom:16px; left:72px;
 		font-size:10pt;
@@ -445,6 +449,12 @@ section {
 		text-align:center;
 		font-size:10pt;
 	}
+
+/* Alarms */
+	
+#alarms {
+
+}
 	
 /* -- OVERFLOW_MENU */
 

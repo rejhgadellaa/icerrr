@@ -1,0 +1,486 @@
+
+// ---------------------------------------------
+// BZZ
+
+// ---> Site
+
+if (!site) { var site = {}; }
+
+// ---------------------------------------------
+// CHANNEL LIST
+
+site.alarms = {};
+
+// ---> Init
+
+site.alarms.init = function() {
+	
+	loggr.info("site.alarms.init()");
+	
+	// Check stations
+	if (!site.data.stations) {
+		site.alarms.readstations();
+		return;
+	}
+	
+	// Add lifecycle history
+	site.lifecycle.add_section_history("#channellist");
+	
+	// Show UI
+	site.ui.gotosection("#alarms");
+	
+	// Get alarm data..
+	if (!site.session.alarms) { site.session.alarms = []; }
+	
+	// Draw
+	site.alarms.drawResults();
+	
+}
+
+// ---> Draw
+
+site.alarms.drawResults = function() {
+	
+	loggr.info("site.alarms.drawResults()");
+	
+	var alarms = site.session.alarms;
+	
+	// TMP, test alarm
+	/*
+	site.session.alarms = alarms = [{
+		id:"tralala",
+		alarm_id:0,
+		hour: 10,
+		minute: 5,
+		repeat: true,
+		repeatCfg: [0,1,1,1,1,1,1],
+		station: site.session.currentstation
+	}]
+	/**/
+	
+	if (alarms.length<1) {
+		loggr.log(" > No alarms set..");
+		$("#alarms .main").html('<div class="center_table"><div class="center_td">NOTHING HERE</div></div>');
+		return;
+	}
+	
+	$("#alarms .main").html("");
+	
+	// Foreach
+	for (var i=0; i<alarms.length; i++) {
+		
+		var alarm = alarms[i];
+		if (!alarm) { continue; } // TODO: Huh?
+		
+		// Build item
+		var resultitem = document.createElement("div");
+		resultitem.className = "resultitem activatabled";
+		resultitem.id = "alarm_resultitem_"+ alarm.station.station_id;
+		resultitem.edit_id = alarm.id;
+		resultitem.alarm_id = alarm.alarm_id;
+		resultitem.station_id = alarm.station.station_id;
+		
+		var resulticon = document.createElement("img");
+		resulticon.className = "resulticon";
+		resulticon.src = alarm.station.station_icon;
+		
+		var resultname = document.createElement("div");
+		resultname.className = "resultname";
+		resultname.innerHTML = ""
+			+ site.helpers.formatNum(alarm.hour) +":"+ site.helpers.formatNum(alarm.minute) +", "
+			+ alarm.station.station_name;
+		
+		var resultsub = document.createElement("div");
+		resultsub.className = "resultsub";
+		resultsub.innerHTML = ""
+			+ site.alarms.genRepeatString(alarm.repeatCfg);// TODO: events.. anyone?
+			
+		// Events
+		resultitem.onclick = function(){
+			site.alarms.edit(this); // well, here's one..
+		};
+		
+		// Append
+		resultitem.appendChild(resulticon);
+		resultitem.appendChild(resultname);
+		resultitem.appendChild(resultsub);
+		
+		$("#alarms .main").append(resultitem);
+		
+	}
+	
+}
+
+// ---> Add
+
+site.alarms.add = function() {
+	
+	loggr.info("site.alarms.add()");
+	
+	site.lifecycle.add_section_history("#alarms_add");
+	site.ui.gotosection("#alarms_add");
+	
+	// Update form
+	site.alarms.updateForm();
+	
+}
+
+// ---> Edit
+
+site.alarms.edit = function(obj) {
+	
+	loggr.info("site.alarms.add()");
+	
+	var id = obj.edit_id;
+	var alarm_id = obj.alarm_id;
+	
+	site.lifecycle.add_section_history("#alarms_add");
+	site.ui.gotosection("#alarms_add");
+	
+	// Find alarm
+	var alarmCfg = null;
+	for (var i in site.session.alarms) {
+		if (site.session.alarms[i]["id"]==id) {
+			alarmCfg = site.session.alarms[i];
+			break;
+		}
+	}
+	
+	// Update form
+	site.alarms.updateForm(alarmCfg);
+	
+}
+
+// ---> Save
+
+site.alarms.save = function() {
+	
+	loggr.info("site.alarms.save()");
+	
+	var alarmCfg = site.alarms.newAlarmCfg;
+	
+	loggr.log(" > "+JSON.stringify(alarmCfg));
+	
+	// Check if new or overwrite
+	var alarmIndex = -1;
+	for (var i in site.session.alarms) {
+		var analarm = site.session.alarms[i];
+		if (!analarm) { continue; }
+		if (analarm.id == alarmCfg.id) {
+			alarmIndex = i;
+			break;
+		}
+	}
+	
+	// Store
+	if (alarmIndex>=0) {
+		loggr.log(" > Overwrite: "+ alarmIndex);
+		site.session.alarms[alarmIndex] = alarmCfg;
+	} else {
+		loggr.log(" > New");
+		site.session.alarms.push(alarmCfg);
+	}
+	
+	// Set alarm...
+	site.alarms.setAlarms();
+	
+	// Toast!
+	site.ui.showtoast("Alarm saved");
+	
+}
+
+// ---> Remove
+
+site.alarms.remove = function() {
+	
+	loggr.info("site.alarms.remove()");
+	
+	if (!confirm("Are you sure?")) {
+		return;
+	}
+	
+	var alarmCfg = site.alarms.newAlarmCfg;
+	
+	// Check if new or overwrite
+	var alarmIndex = -1;
+	for (var i in site.session.alarms) {
+		var analarm = site.session.alarms[i];
+		if (!analarm) { continue; }
+		if (analarm.id == alarmCfg.id) {
+			alarmIndex = i;
+			break;
+		}
+	}
+	
+	if (alarmIndex<0) {
+		loggr.error(" > Could not find alarm by id: "+ alarmCfg.id);
+		return;
+	}
+	
+	// Build new alarm list
+	newAlarms = [];
+	for (var i=0; i<site.session.alarms.length; i++) {
+		if (i!=alarmIndex) { newAlarms.push(site.session.alarms[i]); }
+	}
+	
+	// Store
+	site.session.alarms = newAlarms;
+	
+	// Cancel alarm
+	window.alarmMgr.cancel(
+		function(msg) {
+			site.ui.showtoast("Alarm removed");
+			site.lifecycle.onBackButton();
+			site.alarms.writesession();
+		},
+		function(err) {
+			loggr.error(err);
+			alert(err);
+		},
+		{id:alarmCfg.alarm_id}
+	);
+	
+}
+
+// ---> Set Alarms
+
+site.alarms.setAlarms = function() {
+	
+	loggr.info("site.alarms.setAlarms()");
+	
+	for (var i in site.session.alarms) {
+		
+		var alarm = site.session.alarms[i];
+		if (!alarm || !alarm.id) { continue; }
+		
+		// Create date
+		var date = new Date();
+		offset = 0; // Math.round(date.getTimezoneOffset()/60);
+		date.setHours(alarm.hour-offset);
+		date.setMinutes(alarm.minute);
+		date.setSeconds(0);
+		date.setMilliseconds(0);
+		
+		// Check if tomorrow..
+		var nowdate = new Date();
+		loggr.log(" > Set: "+ alarm.hour+":"+ alarm.minute +", now: "+ nowdate.getHours() +":"+ nowdate.getMinutes());
+		if (alarm.hour < nowdate.getHours() || alarm.hour <= nowdate.getHours() && alarm.minute <= nowdate.getMinutes()) {
+			loggr.log(" > Set for tomorrow");
+			date.setDate(date.getDate()+1);
+		}
+		
+		loggr.log(" > Repeat: "+ alarm.repeat);
+		
+		var opts = {};
+		opts.id = alarm.alarm_id;
+		opts.timeMillis = date.getTime();
+		opts.repeat = (alarm.repeat) ? 'daily' : 'off';
+		opts.repeatDaily = alarm.repeatCfg;
+		
+		opts.intent = {
+			type: "activity",
+			package: "com.rejh.icerrr.droidapp",
+			classname: "com.rejh.icerrr.droidapp.Icerrr",
+			extras: [
+				{ type:"string", name:"isAlarm", value:"true" },
+				{ type:"string", name:"station_id", value:alarm.station.station_id }
+			]
+		}
+		
+		loggr.log(" > "+ JSON.stringify(opts));
+		
+		window.alarmMgr.set(
+			function(msg) {
+				loggr.log(" > AlarmMgr: OK");
+				site.alarms.writesession();
+			},
+			function(err) {
+				loggr.error(" > AlarmMgr: ERROR!");
+				loggr.error(err);
+				alert(err);
+			},
+			opts
+		);
+		
+	}
+	
+}
+
+site.alarms.writesession = function() {
+	loggr.info("site.alarms.writesession()");
+	site.cookies.put("site.session",JSON.stringify(site.session));
+	site.storage.writefile(site.cfg.paths.json,"local.site_session.json",site.cookies.get("site.session"),
+		function() {
+			loggr.log("site.alarms.writesession > write local site.session OK");
+		},
+		function(err) {
+			loggr.log("site.alarms.writesession > write local site.session Error");
+		}
+	);
+}
+
+// ---> Fill
+
+site.alarms.updateForm = function(alarmCfg) {
+	
+	// Create dummy
+	if (!alarmCfg) {
+		var id = site.helpers.getUniqueID();
+		var alarm_id = site.alarms.getUniqueAlarmID();
+		var hour = new Date().getHours();
+		var minute = new Date().getMinutes();
+		var alarmCfg = {
+			id: id,
+			alarm_id: alarm_id,
+			hour: hour,
+			minute: minute,
+			repeat: true,
+			repeatCfg: [0,1,1,1,1,1,1],
+			station: site.session.currentstation
+		}
+	}
+	
+	site.alarms.newAlarmCfg = alarmCfg;
+	
+	// Build alarm_station_name <select>
+	for (var i in site.data.stations) {
+		
+		var station = site.data.stations[i];
+		if (!station.station_id) { continue; }
+		
+		var option = document.createElement("option");
+		option.innerHTML = station.station_name;
+		option.value = station.station_id;
+		
+		if (station.station_id == alarmCfg.station.station_id) {
+			option.selected = "selected";
+		}
+		
+		$("#alarms_add select[name='alarm_station_name']").append(option);
+		
+	}
+	$("#alarms_add select[name='alarm_station_name']").on("change",function(evt) {
+		var value = evt.originalEvent.target.value;
+		site.alarms.newAlarmCfg.station = site.data.stations[site.helpers.session.getStationIndexById(value)];
+		loggr.log(" > Change: station "+site.alarms.newAlarmCfg.station.station_name);
+		site.alarms.save();
+	});
+	
+	// Alarm time
+	var date = new Date();
+	var offset = Math.round(date.getTimezoneOffset()/60); // TODO || FIXME: this is gonna cause problems. input[type=time] expects GMT when you set it...
+	date.setHours(alarmCfg.hour-offset); // -offset because offset is negative reversed shzzle :(
+	date.setMinutes(alarmCfg.minute);
+	date.setSeconds(0);
+	date.setMilliseconds(0);
+	$("#alarms_add input[name='alarm_time']")[0].valueAsDate = date;
+	$("#alarms_add input[name='alarm_time']").on("change",function(evt) {
+		var values = evt.originalEvent.target.value.split(":");
+		var hour = parseInt(values[0]);
+		var minute = parseInt(values[1]);
+		site.alarms.newAlarmCfg.hour = hour;
+		site.alarms.newAlarmCfg.minute = minute;
+		loggr.log(" > Change: time "+hour+":"+minute);
+		site.alarms.save();
+	});
+	
+	// Repeat
+	if (alarmCfg.repeat) { $("#alarms_add input[name='repeat']").attr("checked","checked"); }
+	else { $("#alarms_add input[name='repeat']").removeAttr("checked"); }
+	$("#alarms_add input[name='repeat']").on("change",function(evt) {
+		var obj = evt.originalEvent.target;
+		var value = obj.checked ? true : false;
+		site.alarms.newAlarmCfg.repeat = value; 
+		loggr.log(" > Change: repeat: "+value);
+		site.alarms.save();
+	});
+	
+	// Repeat days
+	var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	for (var i=0; i<days.length; i++) {
+		var daylc = days[i].toLowerCase();
+		var selector = "#repeat_"+daylc;
+		if (alarmCfg.repeatCfg[i]>0) { 
+			$(selector).attr("checked","checked");
+		} else {
+			$(selector).removeAttr("checked");
+		}
+	}
+	$("#alarms_add input.repeat_day").on("change",function(evt) {
+		var obj = evt.originalEvent.target;
+		var value = obj.checked ? 1 : 0;
+		var num = obj.name.split("_")[1];
+		site.alarms.newAlarmCfg.repeatCfg[num] = value;
+		loggr.log(" > Change: repeat_day "+num+": "+value);
+		site.alarms.save();
+	});
+	
+}
+
+// ---> Get stations
+
+site.alarms.readstations = function(customCB) {
+	loggr.info("site.alarms.readstations()");
+	if (!customCB) { customCB = site.alarms.readstations_cb; }
+	site.storage.readfile(site.cfg.paths.json,"stations.json",customCB,site.alarms.readstations_errcb)
+}
+
+site.alarms.readstations_cb = function(resultstr) {
+	loggr.info("site.alarms.loadstations_cb()");
+	loggr.log(" > "+resultstr.substr(0,64)+"...");
+	resultjson = JSON.parse(resultstr);
+	if (!resultjson) { alert("site.chlist.readstations_cb().Error: !resultjson"); }
+	site.data.stations = resultjson;
+	site.alarms.init();
+}
+
+site.alarms.readstations_errcb = function(error) {
+	loggr.info("site.alarms.loadstations_errcb()");
+	alert("site.alarms.readstations_errcb().Error: "+site.storage.getErrorType(error));
+	site.installer.init();
+	// TODO: YES.. What now..
+}
+
+// ---> Helpers
+
+site.alarms.getUniqueAlarmID = function() {
+	var id = 0;
+	try {
+		id = site.session.alarms[site.session.alarms.length-1]["alarm_id"]+1;
+	} catch(e) { }
+	return id;
+}
+
+site.alarms.genRepeatString = function(repeatCfg) {
+	
+	var list = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	var days = [];
+	for (var i in repeatCfg) {
+		if (repeatCfg[i]>0) { days.push(list[i]); }
+	}
+	if (days.length<1) { return "Repeat off"; }
+	return "Repeat: "+ days.join(", ");
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

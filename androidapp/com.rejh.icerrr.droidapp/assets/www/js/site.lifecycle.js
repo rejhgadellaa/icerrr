@@ -53,27 +53,6 @@ site.lifecycle.init = function() {
 	
 }
 
-// Resize 
-
-site.lifecycle.onResize = function() {
-	
-	loggr.log("site.lifecycle.onResize()");
-	
-	// TODO: figure out if orientation change..
-	
-	setTimeout(function(){
-		$(site.vars.currentSection+" .main").css("height",
-			$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height() + $(site.vars.currentSection+" .footer").height())
-		);
-		loggr.log(" > "+ $(site.vars.currentSection+" .main").css("height"));
-		$(site.vars.currentSection+" .main")[0].style.overflow = "hidden";
-		$(site.vars.currentSection+" .main")[0].style.overflow = "auto";
-	},100);
-	
-	site.ui.hackActiveCssRule();
-	
-}
-
 // Device Ready
 
 site.lifecycle.onDeviceReady = function() {
@@ -104,6 +83,28 @@ site.lifecycle.onDeviceReady = function() {
 		
 	}
 	/**/
+	
+	// Init app
+	site.lifecycle.initApp();
+	
+}
+
+// InitApp
+
+site.lifecycle.initApp = function() {
+	
+	console.info("site.lifecycle.initApp();");
+	
+	// Important things first.. do we have stations?!
+	if (!site.data.stations) {
+		loggr.log(" > Read stations first...");
+		site.chlist.readstations(function(resultstr) {
+			resultjson = JSON.parse(resultstr);
+			site.data.stations = resultjson;
+			site.lifecycle.initApp();
+		});
+		return; // <- important stuff yes
+	}
 		
 	// some stuff
 	site.session.isPaused = false;
@@ -137,7 +138,10 @@ site.lifecycle.onDeviceReady = function() {
 	// UI Init
 	site.ui.init
 	
-	// Home
+	// Resume
+	site.lifecycle.onResume();
+	
+	// Home.. or?
 	var onstart_gotosection = site.cookies.get("onstart_gotosection");
 	site.cookies.put("onstart_gotosection",0)
 	switch(onstart_gotosection) {
@@ -151,6 +155,46 @@ site.lifecycle.onDeviceReady = function() {
 			break;
 			
 	}
+	
+	// Set alarms
+	// TMP || TODO: should be needed every onDeviceready
+	if (site.session.alarms) {
+		window.alarmMgr.setAll(function(msg){ loggr.log(" > All alarms set: "+msg) }, function(err){ loggr.error(" > Error setting alarms: "+err); });
+	}
+	
+}
+
+// New Intent
+
+site.lifecycle.onNewIntent = function(result) {
+	
+	loggr.info("site.lifecycle.onNewIntent()");
+	
+	loggr.log(result);
+	loggr.log(JSON.stringify(result));
+	
+	// Intents(!)
+	// Check for share intent (webintent plugin)
+	window.plugins.webintent.getExtra("isAlarm", 
+		function (isAlarm) {
+			loggr.log(" > Extra: isAlarm: "+isAlarm);
+			if (isAlarm=="true") {
+				window.plugins.webintent.getExtra("station_id",
+					function (station_id) {
+						loggr.log(" > Extra: station_id: "+station_id);
+						site.session.alarmActive = true;
+						var tmpobj = {station_id:station_id};
+						site.chlist.selectstation(tmpobj,true);
+						site.mp.play();
+					}, function(err) {
+						loggr.error(" > isAlarm but !station_id? "+err);
+					}
+				);
+			}
+		}, function(err) {
+			loggr.error(" > !isAlarm: "+err);
+		}
+	);
 	
 }
 
@@ -294,11 +338,44 @@ site.lifecycle.onBackButton = function() {
 			site.chlist.init();
 			break;
 			
+		case "#alarms":
+			site.home.init();
+			break;
+			
+		case "#alarms_add":
+			site.alarms.init();
+			break;
+			
 		default:
 			loggr.log(" > '<' button on unhandled section: "+ currentBackKey);
 			break;
 		
 	}
+	
+}
+
+// ---> Events
+
+// Resize 
+// TODO: this should go in site.ui?
+
+site.lifecycle.onResize = function() {
+	
+	loggr.log("site.lifecycle.onResize()");
+	
+	// TODO: figure out if orientation change..
+	
+	setTimeout(function(){
+		$(site.vars.currentSection+" .main").css("height",
+			$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height() + $(site.vars.currentSection+" .footer").height())
+		);
+		loggr.log("Resized: "+site.vars.currentSection);
+		loggr.log(" > Window height: "+ $(window).height());
+		loggr.log(" > .main height:  "+ $(site.vars.currentSection+" .main").css("height"));
+		loggr.log(" > .main inner:   "+ $(site.vars.currentSection+" .main")[0].scrollHeight);
+	},100);
+	
+	site.ui.hackActiveCssRule();
 	
 }
 

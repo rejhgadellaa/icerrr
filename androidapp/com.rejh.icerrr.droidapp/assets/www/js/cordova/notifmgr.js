@@ -20,7 +20,7 @@
 		package: "STRING", // ex 'com.rejh.icerrr.droidapp'
 		classname: "STRING", // ex 'com.rejh.icerrr.droidapp.MainActivity'
 		action: "STRING", // ex: com.rejh.icerrr.droidapp.actions.SERVICE
-		intentExtras: [ // optional
+		extras: [ // optional
 			{type:"string", name:"string", value:"string"},
 			{type:"int", name:"string", value:0},
 			{type:"float", name:"string", value:0.0},

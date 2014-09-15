@@ -613,6 +613,13 @@ site.helpers.masonryupdate = function(selector) {
 
 // ---> Stuff
 
+site.helpers.formatNum = function(num,len) {
+	if (!len) { len = 2; }
+	num = ""+num;
+	while(num.length<len) { num = "0"+num; }
+	return num;
+}
+
 site.helpers.urlAddCachebust = function(url) {
 	if (url.indexOf("?")>=0) { url += "&c="; }
 	else { url += "?c="; }

@@ -70,6 +70,8 @@ site.chlist.init = function(forceRedraw) {
 	site.session.ui_pause_callbacks.push(site.chlist.onpause);
 	site.session.ui_resume_callbacks.push(site.chlist.onresume);
 	
+	site.ui.hideloading();
+	
 }
 
 // PAUSE RESUME
@@ -296,7 +298,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 
 // ---> Select station
 
-site.chlist.selectstation = function(resultitem) {
+site.chlist.selectstation = function(resultitem,dontgohome) {
 	
 	loggr.info("site.chlist.selectstation()");
 	
@@ -308,7 +310,9 @@ site.chlist.selectstation = function(resultitem) {
 	if (site.cast.session) {
 		site.cast.loadMedia();
 	}
-	site.home.init();
+	if (!dontgohome) {
+		site.home.init();
+	}
 	
 }
 
