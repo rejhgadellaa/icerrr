@@ -94,6 +94,23 @@ site.lifecycle.onDeviceReady = function() {
 site.lifecycle.initApp = function() {
 	
 	console.info("site.lifecycle.initApp();");
+		
+	// some stuff
+	site.session.isPaused = false;
+	
+	// Firstlaunch...
+	if (!site.cookies.get("app_is_installed") || site.cookies.get("app_version")!=site.cfg.app_version) {
+		if (site.vars.currentSection!="#install") { 
+			setTimeout(function() { site.installer.init(); },2500);
+			return; // <- important stuff yes
+		}
+	}
+	
+	// Update...
+	if (site.cookies.get("app_update_time") < new Date().getTime()) {
+		site.installer.init(true);
+		return; // <- important. forgot it yet again.
+	}
 	
 	// Important things first.. do we have stations?!
 	if (!site.data.stations) {
@@ -116,23 +133,6 @@ site.lifecycle.initApp = function() {
 			}
 		},1000);
 		return; // <- important stuff yes
-	}
-		
-	// some stuff
-	site.session.isPaused = false;
-	
-	// Firstlaunch...
-	if (!site.cookies.get("app_is_installed") || site.cookies.get("app_version")<site.cfg.app_version) {
-		if (site.vars.currentSection!="#install") { 
-			setTimeout(function() { site.installer.init(); },2500);
-			return; // <- important stuff yes
-		}
-	}
-	
-	// Update...
-	if (site.cookies.get("app_update_time") < new Date().getTime()) {
-		site.installer.init(true);
-		return; // <- important. forgot it yet again.
 	}
 	
 	// Restore user preferences

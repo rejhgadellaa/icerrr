@@ -33,6 +33,9 @@ import android.webkit.WebView;
 
 public class Icerrr extends DroidGap
 {
+    
+	final static String APPTAG = "Icerrr";
+    
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -58,15 +61,25 @@ public class Icerrr extends DroidGap
     
     @Override
     public void onStart() {
+        Log.d(APPTAG,APPTAG +".onStart()");
     	super.onStart();
-    	Intent incomingIntent = getIntent();
-    	super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "'); },1);");
+    	// Intent incomingIntent = getIntent();
+    }
+    
+    @Override
+    public void onResume() {
+        Log.d(APPTAG,APPTAG +".onResume()");
+        super.onResume();
+        // Intent incomingIntent = getIntent();
+    	// super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "'); },1);");
     }
     
     @Override
     public void onNewIntent(Intent newIntent) {
+        Log.d(APPTAG,APPTAG +".onNewIntent()");
     	super.onNewIntent(newIntent);
     	setIntent(newIntent);
+    	super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + newIntent.getDataString() + "'); },1);");
     }
     
     @Override

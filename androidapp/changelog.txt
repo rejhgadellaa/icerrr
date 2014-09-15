@@ -2,7 +2,11 @@
 
 = Changelog =
 
-v0.035
+v0.037
+  * Fix: New installs would end up in a loop.
+  * Tweaks for play button behaviour (not there yet)
+
+v0.036
   * Update clears all settings, alarms, etc!
   * Fix: app still sometimes(?) froze on splash screen
   * Fix: mediaplayer status detection should be improved

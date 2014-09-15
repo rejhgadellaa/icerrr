@@ -369,8 +369,10 @@ site.helpers.readSession = function() {
 				site.helpers.storeSession();
 			},
 			function(err) {
-				loggr.error(" > Could not read session from storage: "+err);
+				loggr.error(" > Could not read session from storage");
+				loggr.error(err);
 				site.session = {}; 
+				site.session_ready = true;
 			}
 		);
 	} else {
