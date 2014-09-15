@@ -64,14 +64,17 @@
     <!-- Javascript : Cordova -->
     <script language="javascript" type="text/javascript" src="js/cordova/cordova-2.7.0.js"></script>
     <script language="javascript" type="text/javascript" src="js/cordova/chrome.cast.js"></script>
+    <script language="javascript" type="text/javascript" src="js/cordova/webintent.js"></script>
     <script language="javascript" type="text/javascript" src="js/cordova/mediastreamer.js"></script>
     <script language="javascript" type="text/javascript" src="js/cordova/notifmgr.js"></script>
+    <script language="javascript" type="text/javascript" src="js/cordova/alarmmgr.js"></script>
     
     <!-- Javascript: Externals || TODO: would rather not rely on online files... -->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	
 	<!-- Javascript: icerrr -->
     <script language="javascript" type="text/javascript" src="js/site.base.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.alarms.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.chedit.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.chicon.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.chlist.js"></script>
@@ -154,8 +157,10 @@
 	</div>
     
     <div class="footer shadow_z1u">
-    	<div class="button left activatablel" onClick="site.ui.showtoast('Uploading log...');loggr.upload();">
-			<!-- ... -->
+    	<div class="button left activatablel" onClick="site.alarms.init();">
+			<div class="button_inner">
+            	<div class="center_table"><div class="center_td">ALARMS</div></div>
+            </div>
 		</div>
     	<div class="button center activatablel" id="home_play" onClick="site.home.mpPlayToggle();$(this).toggleClass('busy');">
 			<div class="button_inner">
@@ -281,7 +286,7 @@
 		
 			<form onSubmit="site.chsearch.searchstation(); return false;">
 			
-			<p><label>Station name: <span style="color:#f00;">*</label>
+			<p><label>Station name: <span style="color:#f00;">*</span></label>
 				<input class="round2" type="text" name="station_search" placeholder="Ex: BBC Radio 1" />
 			</p>
             
@@ -327,7 +332,7 @@
 	
     <div class="actionbar shadow_z1">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_launcher.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
         <div class="title">ICERRR</div>
         
 		<div class="actions">
@@ -342,7 +347,85 @@
 </section>
 
 <!-- Section -->
-<section id="alarmconfig"></section>
+<section id="alarms">
+
+	<div class="actionbar shadow_z1">
+    	
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+            <div class="action activatablel" onClick="site.alarms.add();">
+				<img src="img/icons-48/ic_add_green.png" />
+			</div>
+        </div>
+    </div>
+    
+    <div class="main">
+	
+    </div>
+    
+</section>
+
+<!-- Section -->
+<section id="alarms_add">
+
+	<div class="actionbar shadow_z1">
+    	
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+			<div class="action save activatablel" onClick="site.alarms.save();">
+				<img src="img/icons-48/ic_save_green.png" />
+			</div>
+            <div class="action trash activatablel" onClick="site.alarms.remove();">
+				<img src="img/icons-48/ic_trash_green.png" />
+			</div>
+        </div>
+    </div>
+    
+    <div class="main">
+		
+        <div class="block header">
+			Set alarm
+        </div>
+		
+		<div class="block data1">
+		
+			<form onSubmit="return false;">
+			
+			<p><label>Station:</label><br>
+				<select name="alarm_station_name"></select>
+			</p>
+            
+            <p><label>Time:</label><br>
+            	<input type="time" name="alarm_time" />
+            </p>
+            
+            <p><label>Repeat:</label><br>
+            	<input type="checkbox" name="repeat" />
+            </p>
+            
+            <p><label>Repeat days:</label><br>
+            	<input type="checkbox" name="repeat_0" id="repeat_sun" class="repeat_day" /> Sunday<br>
+            	<input type="checkbox" name="repeat_1" id="repeat_mon" class="repeat_day" /> Monday<br>
+            	<input type="checkbox" name="repeat_2" id="repeat_tue" class="repeat_day" /> Tuesday<br>
+            	<input type="checkbox" name="repeat_3" id="repeat_wed" class="repeat_day" /> Wednesday<br>
+            	<input type="checkbox" name="repeat_4" id="repeat_thu" class="repeat_day" /> Thurday<br>
+            	<input type="checkbox" name="repeat_5" id="repeat_fri" class="repeat_day" /> Friday<br>
+            	<input type="checkbox" name="repeat_6" id="repeat_sat" class="repeat_day" /> Saturday<br>
+            </p>
+            
+            <p>&nbsp;</p>
+			
+			</form>
+			
+		</div>
+        
+    </div>
+    
+</section>
 
 <!-- Section -->
 <section id="help"></section>

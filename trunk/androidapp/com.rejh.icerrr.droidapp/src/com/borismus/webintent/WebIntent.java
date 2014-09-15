@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
+import org.apache.cordova.api.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,9 +31,11 @@ import android.util.Log;
  */
 public class WebIntent extends CordovaPlugin {
 
-    private String onNewIntentCallback = null;
+    private CallbackContext onNewIntentCallback = null;
     
     private String LOGTAG = "WebIntent";
+    
+    private CallbackContext cbCtx;
 
     /**
      * Executes the request and returns PluginResult.
@@ -49,6 +52,8 @@ public class WebIntent extends CordovaPlugin {
         try {
         	
         	Log.d(LOGTAG,"WebIntent.execute: "+action);
+        	
+        	cbCtx = callbackContext;
         	
             if (action.equals("startActivity")) {
                 if (args.length() != 1) {
@@ -92,7 +97,7 @@ public class WebIntent extends CordovaPlugin {
 
             } else if (action.equals("getExtra")) {
                 if (args.length() != 1) {
-                	Log.w(LOGTAG," > getExtra() args.lengtj != 1");
+                	Log.w(LOGTAG," > getExtra() args.length != 1");
                 	callbackContext.error("Invalid action");
                     return false;
                 }
@@ -111,9 +116,11 @@ public class WebIntent extends CordovaPlugin {
                 	}
                 	return true;
                 } else {
-                	callbackContext.error("Error");
+                	Log.d(LOGTAG," >> !hasExtra "+extraName);
+                	callbackContext.error("Error: !hasExtra "+extraName);
                     return false;
                 }
+                
             } else if (action.equals("getUri")) {
                 if (args.length() != 0) {
                 	callbackContext.error("Invalid action");
@@ -125,21 +132,18 @@ public class WebIntent extends CordovaPlugin {
                 //return new PluginResult(PluginResult.Status.OK, uri);
                 callbackContext.success(uri);
                 return true;
+                
             } else if (action.equals("onNewIntent")) {
                 if (args.length() != 0) {
                 	callbackContext.error("Invalid action");
                     return false;
                 }
-
-                /*
-                this.onNewIntentCallback = ""; // callbackContext;
+                this.onNewIntentCallback = callbackContext;
                 PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
                 result.setKeepCallback(true);
-                callbackContext.success(result);
+                callbackContext.sendPluginResult(result);
+                //callbackContext.success(result);
                 return true;
-                /**/
-                // FIXME: I hope this doesnt break stuff?
-                return false;
             } else if (action.equals("sendBroadcast")) 
             {
                 if (args.length() != 1) {
@@ -180,9 +184,12 @@ public class WebIntent extends CordovaPlugin {
     public void onNewIntent(Intent intent) {
     	Log.w(LOGTAG,"WebIntent.onNewIntent");
         if (this.onNewIntentCallback != null) {
-            //PluginResult result = new PluginResult(PluginResult.Status.OK, intent.getDataString());
-            //result.setKeepCallback(true);
+        	Log.d(LOGTAG," > "+intent.getDataString());
+            PluginResult result = new PluginResult(PluginResult.Status.OK, intent.getDataString());
+            result.setKeepCallback(true);
             //this.success(result, this.onNewIntentCallback);
+            this.onNewIntentCallback.sendPluginResult(result);
+            Log.d(LOGTAG," > Sent...");
         	// FIXME breaks stuff or no?
         }
     }

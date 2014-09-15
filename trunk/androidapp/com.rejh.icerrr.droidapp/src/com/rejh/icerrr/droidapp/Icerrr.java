@@ -19,9 +19,16 @@
 
 package com.rejh.icerrr.droidapp;
 
-import android.os.Bundle;
-import org.apache.cordova.*;
+import org.apache.cordova.Config;
+import org.apache.cordova.DroidGap;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 
 public class Icerrr extends DroidGap
@@ -29,15 +36,54 @@ public class Icerrr extends DroidGap
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+    	
         super.onCreate(savedInstanceState);
+        
         // Clear cache
         super.clearCache();
+        
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
+        
         //super.loadUrl("file:///android_asset/www/index.html")
         if(Build.VERSION.SDK_INT >= 19) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+        
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.rejh.icerrr.droidapp.actions.KILL_APP");
+        registerReceiver(killAppReceiver, filter);
+        
     }
+    
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	Intent incomingIntent = getIntent();
+    	super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "'); },1);");
+    }
+    
+    @Override
+    public void onNewIntent(Intent newIntent) {
+    	super.onNewIntent(newIntent);
+    	setIntent(newIntent);
+    }
+    
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+    	unregisterReceiver(killAppReceiver);
+    }
+    
+    // --------------------------------------
+    // Others
+    
+    BroadcastReceiver killAppReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+    
 }
 

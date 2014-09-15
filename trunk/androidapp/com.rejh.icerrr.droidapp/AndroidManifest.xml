@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-      package="com.rejh.icerrr.droidapp" android:versionName="0.032" android:versionCode="32" android:hardwareAccelerated="true">
+      package="com.rejh.icerrr.droidapp" android:versionName="0.033" android:versionCode="33" android:hardwareAccelerated="true">
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -64,13 +64,26 @@
         
         <service android:name="com.rejh.cordova.mediastreamer.MediaStreamerService" android:launchMode="singleTask" />
         
-        <receiver android:name="com.rejh.cordova.mediastreamer.MediaStreamerReceiver" />
+        <receiver android:name="com.rejh.cordova.mediastreamer.MediaStreamerReceiver">
+        </receiver>
         
         <receiver android:name="com.rejh.cordova.notifmgr.NotifMgrReceiver">
             <intent-filter>
                 <action android:name="com.rejh.cordova.notifmgr.actions.RECEIVER" />
             </intent-filter>
         </receiver>
+        
+        <receiver android:name="com.rejh.cordova.alarmmgr.AlarmMgrReceiver">
+        </receiver>
+        
+        <receiver android:name="com.rejh.cordova.alarmmgr.AlarmMgrOnBoot">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"/>
+			</intent-filter>
+			<intent-filter>
+	            <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+	        </intent-filter>
+		</receiver>
         
     </application>
 </manifest> 

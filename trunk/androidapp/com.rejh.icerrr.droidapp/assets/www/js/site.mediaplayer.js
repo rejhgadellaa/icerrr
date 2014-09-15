@@ -29,7 +29,7 @@ site.mp.init = function() {
 	// Check service
 	window.mediaStreamer.isServiceRunning(
 		function(resInt) {
-			if (resInt==1) {
+			if (resInt==1 || site.session.alarmActive) {
 				loggr.log(" > Service is running, resume..");
 				site.mp.play();
 			} else {
@@ -121,6 +121,7 @@ site.mp.stop = function() {
 	site.mp.isPlaying = false
 	/**/
 	
+	site.session.alarmActive = false;
 	site.mp.mpstatus = 4;
 	
 }

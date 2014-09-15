@@ -57,6 +57,8 @@ loggr.log = function(str,opts) {
 	if (!opts) { opts = {}; }
 	if (!opts.type) { opts.type = "log"; }
 	
+	str = new Date().format("H:i:s") +"    "+ str;
+	
 	switch(opts.type) {
 		case "error":
 			console.error(str);
@@ -79,7 +81,7 @@ loggr.log = function(str,opts) {
 	
 	if (!str) { return; }
 	
-	str = new Date().format("Y:m:d H:i:s") +"    "+ str;
+	str = new Date().format("Y:m:d") +" "+ str;
 	
 	loggr.loglines.push(str);
 	loggr.logtypes.push(opts.type);

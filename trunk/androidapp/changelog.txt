@@ -2,6 +2,9 @@
 
 = Changelog =
 
+v0.033
+  * Alarms! Will be rough around edges!
+
 v0.032
   * New icons and tweaks for notifications
   * Fix: notification wasn't dismissed in some cases
