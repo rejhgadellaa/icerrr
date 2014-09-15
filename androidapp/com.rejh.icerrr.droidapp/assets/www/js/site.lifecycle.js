@@ -98,11 +98,23 @@ site.lifecycle.initApp = function() {
 	// Important things first.. do we have stations?!
 	if (!site.data.stations) {
 		loggr.log(" > Read stations first...");
-		site.chlist.readstations(function(resultstr) {
-			resultjson = JSON.parse(resultstr);
-			site.data.stations = resultjson;
-			site.lifecycle.initApp();
-		});
+		site.storage.readfile(site.cfg.paths.json,"stations.json",
+			function(resultstr) {
+				loggr.log(" > Got stations data, save and re-run initApp()");
+				resultjson = JSON.parse(resultstr);
+				site.data.stations = resultjson;
+				site.lifecycle.initApp();
+			},
+			function(err) {
+				loggr.error(" > Could not read stations.json? "+err);
+			}
+		);
+		setTimeout(function() { // TODO: it's ugly but I need to check if this continues...
+			if (!site.data.stations) {
+				loggr.error("DAFAQUE why doesn't site.lifecycle.initApp > readstations not work?! RETRY BITCH!");
+				site.lifecycle.initApp();
+			}
+		},1000);
 		return; // <- important stuff yes
 	}
 		
@@ -131,15 +143,10 @@ site.lifecycle.initApp = function() {
 	}
 	
 	// Restore user session
-	loggr.log(" > Restore site.session: "+ site.cookies.get("site.session"));
-	site.session = JSON.parse(site.cookies.get("site.session"));
-	if (!site.session) { site.session = {}; }
+	site.helpers.readSession();
 	
 	// UI Init
 	site.ui.init
-	
-	// Resume
-	site.lifecycle.onResume();
 	
 	// Home.. or?
 	var onstart_gotosection = site.cookies.get("onstart_gotosection");
@@ -156,12 +163,6 @@ site.lifecycle.initApp = function() {
 			
 	}
 	
-	// Set alarms
-	// TMP || TODO: should be needed every onDeviceready
-	if (site.session.alarms) {
-		window.alarmMgr.setAll(function(msg){ loggr.log(" > All alarms set: "+msg) }, function(err){ loggr.error(" > Error setting alarms: "+err); });
-	}
-	
 }
 
 // New Intent
@@ -170,8 +171,43 @@ site.lifecycle.onNewIntent = function(result) {
 	
 	loggr.info("site.lifecycle.onNewIntent()");
 	
-	loggr.log(result);
-	loggr.log(JSON.stringify(result));
+	// We need session.alarms..
+	if (!site.session.alarms) {
+		// Retry once...
+		if (result!="retry") {
+			setTimeout(function(){site.lifecycle.onNewIntent("retry");},1000);
+		}
+		return;
+	}
+	
+	// Check if alarm is scheduled that we know of..
+	loggr.log(" > Check if alarm is scheduled...");
+	var alarmOkay = false;
+	var hour = new Date().getHours();
+	var minute = new Date().getMinutes();
+	var alarms = site.session.alarms;
+	for (var i in alarms) {
+		
+		var alarm = alarms[i];
+		if (!alarm || !alarm.hour) { continue; }
+		
+		var alarmHour = parseInt(alarm.hour);
+		var alarmMinute = parseInt(alarm.minute);
+		
+		var minuteDiff = alarmMinute - minute;
+		
+		if (alarmHour == hour && minuteDiff > -1 && minuteDiff < 1) {
+			loggr.log(" > Found alarm: "+ alarmHour +":"+ alarmMinute);
+			alarmOkay = true;
+			break;
+		}
+		
+	}
+	
+	if (!alarmOkay) { 
+		loggr.log(" > Alarm is not scheduled? "+ alarmHour +":"+ alarmMinute);
+		return;
+	}
 	
 	// Intents(!)
 	// Check for share intent (webintent plugin)
@@ -184,15 +220,16 @@ site.lifecycle.onNewIntent = function(result) {
 						loggr.log(" > Extra: station_id: "+station_id);
 						site.session.alarmActive = true;
 						var tmpobj = {station_id:station_id};
-						site.chlist.selectstation(tmpobj,true);
-						site.mp.play();
+						site.chlist.selectstation(tmpobj,true); // select station
+						site.home.init(); // refresh home
+						site.mp.play(); // and play
 					}, function(err) {
 						loggr.error(" > isAlarm but !station_id? "+err);
 					}
 				);
 			}
 		}, function(err) {
-			loggr.error(" > !isAlarm: "+err);
+			loggr.log(" > !isAlarm: "+err);
 		}
 	);
 	
@@ -230,17 +267,7 @@ site.lifecycle.onPause = function() {
 	loggr.log("site.lifecycle.onPause()");
 	
 	// Store some stuff
-	site.cookies.put("site.session",JSON.stringify(site.session));
-	
-	// Write sessions
-	site.storage.writefile(site.cfg.paths.json,"local.site_session.json",site.cookies.get("site.session"),
-		function() {
-			loggr.log("site.lifecycle.onPause > write local site.session OK");
-		},
-		function(err) {
-			loggr.log("site.lifecycle.onPause > write local site.session Error");
-		}
-	);
+	site.helpers.storeSession();
 	
 	// Write stations
 	if (site.data.stations) {

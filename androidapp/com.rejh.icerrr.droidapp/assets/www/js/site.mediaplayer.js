@@ -31,11 +31,23 @@ site.mp.init = function() {
 		function(resInt) {
 			if (resInt==1 || site.session.alarmActive) {
 				loggr.log(" > Service is running, resume..");
-				site.mp.play();
-			} else {
-				loggr.log(" > Service not running, destroy..");
-				site.mp.destroy();
+				//site.mp.play();
+				site.mp.serviceRunning = true;
+				site.mp.isPlaying = true;
+				site.session.mpIsPlaying = true;
+				site.mp.initStatusPoll();
+				site.mp.notif();
 			}
+			/*
+			TODO: Check if I need this..
+			else if (site.session.mpIsPlaying) {
+				loggr.warn(" > Service not running but site.session.mpIsPlaying is true..?");
+				// site.mp.destroy();
+			} else {
+				loggr.log(" > Service not running but I don't think we need to do anything about it");
+				//site.mp.destroy();
+			}
+			/**/
 		},
 		function(errmsg) {
 			loggr.error("window.mediaStreamer.isServiceRunning()");
@@ -47,7 +59,7 @@ site.mp.init = function() {
 	// Best for last :)
 	if (!site.session.ui_pause_callbacks) { site.session.ui_resume_callbacks = []; }
 	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
-	if (site.session.ui_pause_callbacks.indexOf(site.mp.initStatusPoll)<0) {
+	if (site.session.ui_pause_callbacks.indexOf(site.mp.stopStatusPoll)<0) {
 		site.session.ui_pause_callbacks.push(site.mp.stopStatusPoll); 
 	}
 	if (site.session.ui_resume_callbacks.indexOf(site.mp.initStatusPoll)<0) { 
@@ -114,13 +126,6 @@ site.mp.stop = function() {
 		}
 	);
 	
-	/*
-	if (site.mp.mp) {
-		site.mp.mp.stop();
-	}
-	site.mp.isPlaying = false
-	/**/
-	
 	site.session.alarmActive = false;
 	site.mp.mpstatus = 4;
 	
@@ -176,6 +181,8 @@ site.mp.handleStatus = function(statusCode) {
 		site.mp.isPlaying = false;
 		site.mp.notifCancel(-1);
 		site.mp.stopStatusPoll(); 
+	} else {
+		site.mp.isPlaying = true;
 	}
 }
 
@@ -183,11 +190,17 @@ site.mp.playToggle = function() {
 	
 	loggr.log("site.mp.playToggle()");
 	
-	if (site.mp.isPlaying) {
-		site.mp.stop();
-	} else {
-		site.mp.play();
-	}
+	window.mediaStreamer.isServiceRunning(
+		function(resInt) {
+			if (resInt==1) {
+				loggr.log(" > Service running, stop");
+				site.mp.stop();
+			} else {
+				loggr.log(" > Service not running, play");
+				site.mp.play();
+			}
+		}
+	);
 	
 }
 

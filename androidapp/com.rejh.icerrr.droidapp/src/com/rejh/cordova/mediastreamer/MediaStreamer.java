@@ -13,6 +13,8 @@ import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -77,12 +79,7 @@ public class MediaStreamer extends CordovaPlugin {
         		// getStatus
         		this.getStatus(callbackContext);
         	} else if (action.equals("isServiceRunning")) {
-        		// isServiceRunning
-        		if (sett.getBoolean("mediastreamer_serviceRunning", false)) {
-        			callbackContext.success(1);
-        		} else {
-        			callbackContext.success(0);
-        		}
+        		isServiceRunning(callbackContext);
         	} else {
         		// Nothin?
         		callbackContext.error("MediaStreamer: Action contains invalid value: "+ action);
@@ -192,6 +189,18 @@ public class MediaStreamer extends CordovaPlugin {
 		
 		callbackContext.success("OK");
 		
+	}
+	
+	// --- isServiceRunning
+	private void isServiceRunning(CallbackContext callbackContext) {
+		Class<?> serviceClass = MediaStreamerService.class;
+	    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceClass.getName().equals(service.service.getClassName())) {
+	            callbackContext.success(1);
+	        }
+	    }
+	    callbackContext.success(0);
 	}
     
     /*

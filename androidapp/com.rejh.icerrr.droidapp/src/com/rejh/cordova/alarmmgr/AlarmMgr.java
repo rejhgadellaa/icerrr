@@ -154,6 +154,20 @@ public class AlarmMgr extends CordovaPlugin {
 		// Handle date
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(timeMillis);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int min = cal.get(Calendar.MINUTE);
+		
+		// Check if date is in the future
+		Calendar calnow = Calendar.getInstance();
+		calnow.setTimeInMillis(System.currentTimeMillis());
+		int hournow = calnow.get(Calendar.HOUR_OF_DAY);
+		int minnow = calnow.get(Calendar.MINUTE);
+		
+		if (hour < hournow || hour <= hournow && min <= minnow) {
+			Log.d(APPTAG," > Set alarm one day in future");
+			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+1);
+			timeMillis = cal.getTimeInMillis();
+		}
 		
 		Log.d(APPTAG," > "+calToString(cal));
 		
@@ -239,7 +253,7 @@ public class AlarmMgr extends CordovaPlugin {
 	private String calToString (Calendar cal) {
 		
 		Date date = cal.getTime();
-		SimpleDateFormat format = new SimpleDateFormat("mm-dd HH:mm a");
+		SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm a");
 		String dateFormat = format.format(date);
 		
 		return dateFormat;

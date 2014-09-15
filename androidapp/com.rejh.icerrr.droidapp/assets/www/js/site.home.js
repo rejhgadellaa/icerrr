@@ -85,8 +85,8 @@ site.home.init = function() {
 	// Best for last :)
 	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
 	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
-	site.session.ui_pause_callbacks.push(site.home.onpause);
-	site.session.ui_resume_callbacks.push(site.home.onresume);
+	if (site.session.ui_pause_callbacks.indexOf(site.home.onpause)<0) { site.session.ui_pause_callbacks.push(site.home.onpause); }
+	if (site.session.ui_resume_callbacks.indexOf(site.home.onresume)<0) { site.session.ui_resume_callbacks.push(site.home.onresume); }
 	
 	// Test: chromecast
 	site.cast.setup();
