@@ -79,7 +79,7 @@ site.chsearch.searchstation = function(nextpage) {
 	var apiaction = "get";
 	var apiquerystr = JSON.stringify(apiqueryobj);
 	
-	site.webapi.exec(apiaction,apiquerystr,
+	site.chsearch.searchAjaxRequestId = site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
 			if (data["error"]) {
 				site.ui.showtoast(data["errormsg"]);
@@ -335,7 +335,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	$("#searchstation_results .main").append(fragment);
 	
 	// masonry!
-	$("#searchstation_results .main").masonry( 'appended', elems )
+	// $("#searchstation_results .main").masonry( 'appended', elems )
 	
 	// TODO: how to load more pages...?
 	

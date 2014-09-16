@@ -2,6 +2,14 @@
 
 = Changelog =
 
+v0.039
+  * New: you can now use back button while station search is running? (plz test)
+  * Improved play button behaviour
+  * Improved activity 'onresume/onpause' callback flow
+  * Improved AlarmManager efficiency
+  * Re-wrote mediaplayer.js, still not there
+  * Fix: search results stylesheet was messed up
+
 v0.038
   * Clears app app data. Again. 
   * More fixes for alarms

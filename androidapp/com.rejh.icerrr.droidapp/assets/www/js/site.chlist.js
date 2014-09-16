@@ -65,10 +65,8 @@ site.chlist.init = function(forceRedraw) {
 	
 	// Resume + Pause callback for #home
 	// Best for last :)
-	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
-	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
-	if (site.session.ui_pause_callbacks.indexOf(site.chlist.onpause)<0) { site.session.ui_pause_callbacks.push(site.chlist.onpause); }
-	if (site.session.ui_resume_callbacks.indexOf(site.chlist.onresume)<0) { site.session.ui_resume_callbacks.push(site.chlist.onresume); }
+	site.lifecycle.addOnPauseCb(site.chlist.onpause);
+	site.lifecycle.addOnResumeCb(site.chlist.onresume);
 	
 	site.ui.hideloading();
 	
@@ -184,7 +182,6 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	
 	// Init masonry || TODO: handle opts for other formfactors
 	site.helpers.masonryinit("#channellist .main");
-	site.helpers.masonryupdate();
 	
 	// Fragment
 	var fragment = document.createDocumentFragment();
@@ -286,8 +283,8 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	// add list
 	$("#channellist .main").append(fragment);
 	
-	// masonry!
-	$("#channellist .main").masonry( 'appended', elems )
+	// masonry! TODO || TMP: disabled
+	// $("#channellist .main").masonry( 'appended', elems )
 	
 	// TODO: how to load more pages...?
 	

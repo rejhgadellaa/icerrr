@@ -348,7 +348,11 @@ site.lifecycle.onBackButton = function() {
 			break;
 		
 		case "#searchstation":
-			site.chlist.init();
+			if (site.vars.isLoading) { 
+				site.webapi.abort(site.chsearch.searchAjaxRequestId);
+				site.chsearch.init();
+			}
+			else { site.chlist.init(); }
 			break;
 		
 		case "#searchstation_results":
@@ -399,10 +403,11 @@ site.lifecycle.onResize = function() {
 		$(site.vars.currentSection+" .main").css("height",
 			$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height() + $(site.vars.currentSection+" .footer").height())
 		);
+		site.helpers.masonryOnResize();
 		loggr.log("Resized: "+site.vars.currentSection);
 		loggr.log(" > Window height: "+ $(window).height());
 		loggr.log(" > .main height:  "+ $(site.vars.currentSection+" .main").css("height"));
-		loggr.log(" > .main inner:   "+ $(site.vars.currentSection+" .main")[0].scrollHeight);
+		try { loggr.log(" > .main inner:   "+ $(site.vars.currentSection+" .main")[0].scrollHeight); } catch(e) { }
 	},100);
 	
 	site.ui.hackActiveCssRule();
@@ -417,6 +422,24 @@ site.lifecycle.exit = function() {
 	loggr.log("site.lifecycle.exit()");
 	site.lifecycle.onDestroy();
 	navigator.app.exitApp();
+}
+
+// ---> Others
+
+// OnResume / OnPause
+
+site.lifecycle.addOnResumeCb = function(cb) {
+	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
+	if (site.session.ui_resume_callbacks.indexOf(cb)<0) {
+		site.session.ui_resume_callbacks.push(cb);
+	}
+}
+
+site.lifecycle.addOnPauseCb = function(cb) {
+	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
+	if (site.session.ui_pause_callbacks.indexOf(cb)<0) {
+		site.session.ui_pause_callbacks.push(cb);
+	}
 }
 
 // Section history
