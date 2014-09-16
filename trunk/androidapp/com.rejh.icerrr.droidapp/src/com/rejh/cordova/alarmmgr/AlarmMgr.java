@@ -130,6 +130,8 @@ public class AlarmMgr extends CordovaPlugin {
 		// Get args
 		int id = opts.has("id") ? opts.getInt("id") : -1;
 		long timeMillis = opts.has("timeMillis") ? opts.getLong("timeMillis") : -1;
+		int hour = opts.has("hour") ? opts.getInt("hour") : -1;
+		int minute = opts.has("minute") ? opts.getInt("minute") : -1;
 		String repeat = opts.has("repeat") ? opts.getString("repeat") : "no";
 		long repeatMillis = opts.has("repeatMillis") ? opts.getLong("repeatMillis") : -1;
 		JSONArray repeatDaily = opts.has("repeatDaily") ? opts.getJSONArray("repeatDaily") : new JSONArray();
@@ -140,8 +142,8 @@ public class AlarmMgr extends CordovaPlugin {
 			callbackContext.error("Missing opts: id??");
 			return;
 		}
-		if (timeMillis<0) {
-			callbackContext.error("Missing timeMillis: id??");
+		if (hour<0 || minute <0) {
+			Log.e(APPTAG,"Missing opts: hour/minute??");
 			return;
 		}
 		if (intentOpts==null) {
@@ -149,25 +151,28 @@ public class AlarmMgr extends CordovaPlugin {
 			return;
 		}
 		
-		Log.d(APPTAG," > "+id +", "+ timeMillis);
-		
 		// Handle date
 		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(timeMillis);
-		int hour = cal.get(Calendar.HOUR_OF_DAY);
-		int min = cal.get(Calendar.MINUTE);
+		cal.setTimeInMillis(System.currentTimeMillis());
+		//int hour = cal.get(Calendar.HOUR_OF_DAY);
+		//int min = cal.get(Calendar.MINUTE);
+		cal.set(Calendar.HOUR_OF_DAY, hour);
+		cal.set(Calendar.MINUTE, minute);
+		cal.set(Calendar.SECOND, 0);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
 		
 		// Check if date is in the future
 		Calendar calnow = Calendar.getInstance();
 		calnow.setTimeInMillis(System.currentTimeMillis());
+		int daynow = calnow.get(Calendar.DAY_OF_MONTH);
 		int hournow = calnow.get(Calendar.HOUR_OF_DAY);
 		int minnow = calnow.get(Calendar.MINUTE);
 		
-		if (hour < hournow || hour <= hournow && min <= minnow) {
+		if (day == daynow && hour < hournow || day == daynow && hour <= hournow && minute <= minnow) {
 			Log.d(APPTAG," > Set alarm one day in future");
 			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+1);
-			timeMillis = cal.getTimeInMillis();
 		}
+		timeMillis = cal.getTimeInMillis();
 		
 		Log.d(APPTAG," > "+calToString(cal));
 		
@@ -209,7 +214,7 @@ public class AlarmMgr extends CordovaPlugin {
 		}
 		
 		// Default callback
-		callbackContext.success("OK");
+		callbackContext.success("OK "+calToString(cal));
 		return;
 		
 	}

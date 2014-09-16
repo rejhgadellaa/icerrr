@@ -163,6 +163,9 @@ site.lifecycle.initApp = function() {
 			
 	}
 	
+	// Check intents
+	site.lifecycle.onNewIntent();
+	
 }
 
 // New Intent

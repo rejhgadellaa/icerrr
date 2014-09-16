@@ -2,6 +2,10 @@
 
 = Changelog =
 
+v0.038
+  * Clears app app data. Again. 
+  * More fixes for alarms
+
 v0.037
   * Fix: New installs would end up in a loop.
   * Tweaks for play button behaviour (not there yet)

@@ -13,6 +13,8 @@
 	// Required
 	opts.id = int // id, can later be used to modify or cancel an alarm
 	opts.timeMillis = int // when the alarm should fire
+	opts.hour = int // req
+	opts.minute = int // req
 	opts.repeat = STRING // optional; minutely, hourly, daily, [weekly, monthly, yearly,] custom
 	opts.repeatDaily = [] // optional: list of days on which to actually fire the alarm; 0 = sunday, 6 = saturday, example: repeat only mondays: [0,1,0,0,0,0,0]
 	opts.repeatMillis = int // optional, required when repeat is set to 'custom', millis between repeats
