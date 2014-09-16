@@ -637,7 +637,10 @@ site.helpers.googleImageSearchCleanup = function() {
 // ---> Masonry
 
 site.helpers.masonryinit = function(selector,opts) {
-	loggr.info("site.helpers.masonryinit()");
+	/*
+	loggr.info("site.helpers.masonryinit(): "+selector);
+	if (!site.vars.masonries) { site.vars.masonries = []; }
+	if (site.vars.masonries.indexOf(selector)<0 && typeof selector =="string") { site.vars.masonries.push(selector); }
 	if (!opts) { 
 		opts = {
 			itemSelector : '.resultitem',
@@ -649,11 +652,25 @@ site.helpers.masonryinit = function(selector,opts) {
 	$(function(){
 	  $(selector).masonry();
 	});
+	/**/
 }
 
 site.helpers.masonryupdate = function(selector) {
-	loggr.info("site.helpers.masonryupdate()");
-	$(selector).masonry();
+	loggr.info("site.helpers.masonryupdate(): "+selector);
+	//$(selector).masonry('layout');
+}
+
+site.helpers.masonryOnResize = function() {
+	loggr.info("site.vars.masonryOnResize()");
+	if (!site.vars.masonries) { return; }
+	for (var i=0; i<site.vars.masonries.length; i++) {
+		var selector = site.vars.masonries[i];
+		if (!$(selector).is(":visible") || $(selector).length<1) { continue; }
+		try { site.helpers.masonryupdate(selector); } 
+		catch(e) {
+			loggr.warn(" > Error: "+ e);
+		}
+	}
 }
 
 // ---> Stuff

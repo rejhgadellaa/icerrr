@@ -69,9 +69,15 @@ input,select {
 	border:1px solid rgba(0,0,0,0.5);
 }
 
+select {
+	width:100%;
+	margin:0;
+}
+
 input[type="checkbox"] {
-	width:16px;
-	height:16px;
+	width:24px;
+	height:24px;
+	margin-top:8px;
 }
 
 /*
@@ -402,13 +408,15 @@ section {
 
 }
 	
-	#searchstation_results, #alarms .resultitem .resultname {
+	#searchstation_results  .resultitem .resultname, 
+	#alarms .resultitem .resultname {
 		position:absolute;
 		top:16px; left:72px;
 		font-size:12pt;
 	}
 	
-	#searchstation_results, #alarms .resultitem .resultsub {
+	#searchstation_results .resultitem .resultsub, 
+	#alarms .resultitem .resultsub {
 		position:absolute;
 		bottom:16px; left:72px;
 		font-size:10pt;
@@ -455,6 +463,14 @@ section {
 #alarms {
 
 }
+
+#alarms_add {
+
+}
+
+	#alarms_add label {
+		padding-bottom:16px; 
+	}
 	
 /* -- OVERFLOW_MENU */
 

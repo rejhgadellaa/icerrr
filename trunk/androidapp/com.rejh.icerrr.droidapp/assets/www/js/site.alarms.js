@@ -182,7 +182,7 @@ site.alarms.save = function() {
 	}
 	
 	// Set alarm...
-	site.alarms.setAlarms();
+	site.alarms.setAlarm(null,alarmCfg);
 	
 	// Toast!
 	site.ui.showtoast("Alarm saved");
@@ -244,67 +244,93 @@ site.alarms.remove = function() {
 
 // ---> Set Alarms
 
+// An Alarm
+
+site.alarms.setAlarm = function(alarm_id,alarm) {
+	
+	alarm_id = (alarm!=null) ? alarm.alarm_id : alarm_id;
+	
+	loggr.info("site.alarms.setAlarm(): "+alarm_id);
+	
+	if (!alarm_id && !alarm) {
+		loggr.warn(" > !alarm_id && !alarm");
+		return;
+	}
+	
+	// Find alarm
+	if (!alarm) {
+		loggr.log(" > Find alarm for id '"+ alarm_id +"'");
+		for (var i in site.session.alarms) {
+			if (alarm_id==site.sessions.alarms[i].alarm_id) { 
+				alarm = site.sessions.alarms[i];
+				break; 
+			}
+		}
+	}
+	
+	if (!alarm || !alarm.id) { 
+		loggr.warn(" > !alarm || !alarm.id");
+		return;
+	}
+	
+	// Create date
+	var date = new Date();
+	offset = 0; // Math.round(date.getTimezoneOffset()/60);
+	date.setHours(alarm.hour-offset);
+	date.setMinutes(alarm.minute);
+	date.setSeconds(0);
+	date.setMilliseconds(0);
+	
+	loggr.log(" > Repeat: "+ alarm.repeat);
+	
+	var opts = {};
+	opts.id = alarm.alarm_id;
+	opts.timeMillis = date.getTime();
+	opts.hour = date.getHours();
+	opts.minute = date.getMinutes();
+	opts.repeat = (alarm.repeat) ? 'daily' : 'off';
+	opts.repeatDaily = alarm.repeatCfg;
+	
+	opts.intent = {
+		type: "activity",
+		package: "com.rejh.icerrr.droidapp",
+		classname: "com.rejh.icerrr.droidapp.Icerrr",
+		extras: [
+			{ type:"string", name:"isAlarm", value:"true" },
+			{ type:"string", name:"station_id", value:alarm.station.station_id }
+		]
+	}
+	
+	// loggr.log(" > "+ JSON.stringify(opts));
+	
+	window.alarmMgr.set(
+		function(msg) {
+			loggr.log(" > AlarmMgr: OK");
+			site.alarms.writesession();
+		},
+		function(err) {
+			loggr.error(" > AlarmMgr: ERROR!");
+			loggr.error(err);
+			alert(err);
+		},
+		opts
+	);
+	
+	
+	
+	
+	
+}
+
+// All Alarms
+
 site.alarms.setAlarms = function() {
 	
 	loggr.info("site.alarms.setAlarms()");
 	
 	for (var i in site.session.alarms) {
 		
-		var alarm = site.session.alarms[i];
-		if (!alarm || !alarm.id) { continue; }
-		
-		// Create date
-		var date = new Date();
-		offset = 0; // Math.round(date.getTimezoneOffset()/60);
-		date.setHours(alarm.hour-offset);
-		date.setMinutes(alarm.minute);
-		date.setSeconds(0);
-		date.setMilliseconds(0);
-		
-		// Check if tomorrow..
-		/* plugin will do this..
-		var nowdate = new Date();
-		loggr.log(" > Set: "+ alarm.hour+":"+ alarm.minute +", now: "+ nowdate.getHours() +":"+ nowdate.getMinutes());
-		if (parseInt(alarm.hour) < nowdate.getHours() || parseInt(alarm.hour) <= nowdate.getHours() && parseInt(alarm.minute) <= nowdate.getMinutes()) {
-			loggr.log(" > Set for tomorrow");
-			date.setDate(date.getDate()+1);
-		}
-		/**/
-		
-		loggr.log(" > Repeat: "+ alarm.repeat);
-		
-		var opts = {};
-		opts.id = alarm.alarm_id;
-		opts.timeMillis = date.getTime();
-		opts.hour = date.getHours();
-		opts.minute = date.getMinutes();
-		opts.repeat = (alarm.repeat) ? 'daily' : 'off';
-		opts.repeatDaily = alarm.repeatCfg;
-		
-		opts.intent = {
-			type: "activity",
-			package: "com.rejh.icerrr.droidapp",
-			classname: "com.rejh.icerrr.droidapp.Icerrr",
-			extras: [
-				{ type:"string", name:"isAlarm", value:"true" },
-				{ type:"string", name:"station_id", value:alarm.station.station_id }
-			]
-		}
-		
-		loggr.log(" > "+ JSON.stringify(opts));
-		
-		window.alarmMgr.set(
-			function(msg) {
-				loggr.log(" > AlarmMgr: OK");
-				site.alarms.writesession();
-			},
-			function(err) {
-				loggr.error(" > AlarmMgr: ERROR!");
-				loggr.error(err);
-				alert(err);
-			},
-			opts
-		);
+		site.alarms.setAlarm(null,site.session.alarms[i]);
 		
 	}
 	

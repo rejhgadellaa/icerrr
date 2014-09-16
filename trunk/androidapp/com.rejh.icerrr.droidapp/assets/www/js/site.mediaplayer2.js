@@ -7,18 +7,21 @@
 if (!site) { var site = {}; }
 
 // ---------------------------------------------
-// HOME
+// MEDIAPLAYER
 
 site.mp = {};
 
 site.mp.lastmpstatus = -1;
 
-// ---> Init
+// ---> Lifecycle
+
+// Init
 
 site.mp.init = function() {
 	
-	loggr.log("site.mp.init();");
+	loggr.info("site.mp.init()");
 	
+	// Check if a station is selected
 	if (!site.session.currentstation){
 		loggr.log("ERROR: cannot init mediaplayer when !site.session.currentstation");
 		return;
@@ -29,25 +32,14 @@ site.mp.init = function() {
 	// Check service
 	window.mediaStreamer.isServiceRunning(
 		function(resInt) {
-			if (resInt==1 || site.session.alarmActive) {
+			if (resInt==1) {
 				loggr.log(" > Service is running, resume..");
-				//site.mp.play();
 				site.mp.serviceRunning = true;
 				site.mp.isPlaying = true;
 				site.session.mpIsPlaying = true;
 				site.mp.initStatusPoll();
 				site.mp.notif();
 			}
-			/*
-			TODO: Check if I need this..
-			else if (site.session.mpIsPlaying) {
-				loggr.warn(" > Service not running but site.session.mpIsPlaying is true..?");
-				// site.mp.destroy();
-			} else {
-				loggr.log(" > Service not running but I don't think we need to do anything about it");
-				//site.mp.destroy();
-			}
-			/**/
 		},
 		function(errmsg) {
 			loggr.error("window.mediaStreamer.isServiceRunning()");
@@ -60,21 +52,44 @@ site.mp.init = function() {
 	site.lifecycle.addOnPauseCb(site.mp.stopStatusPoll);
 	site.lifecycle.addOnResumeCb(site.mp.initStatusPoll); 
 	
+	// Poll status at least once
 	site.mp.initStatusPoll();
 	
 }
+
+// Destroy
 
 site.mp.destroy = function() {
 	site.mp.stop();
 	if (site.mp.mp) { 
 		site.mp.mp.release(); 
 	}
-	site.mp.mpstatus = 0;
+	site.mp.mpstatus = Media.MEDIA_NONE;
+}
+
+// ---> Play, stop, toggle
+
+site.mp.playToggle = function() {
+	
+	loggr.info("site.mp.playToggle()");
+	
+	window.mediaStreamer.isServiceRunning(
+		function(resInt) {
+			if (resInt==1) {
+				loggr.log(" > Service running, stop");
+				site.mp.stop();
+			} else {
+				loggr.log(" > Service not running, play");
+				site.mp.play();
+			}
+		}
+	);
+	
 }
 
 site.mp.play = function() {
 	
-	loggr.log("site.mp.play()");
+	loggr.info("site.mp.play()");
 	
 	// Start MediaStreamer
 	window.mediaStreamer.play(site.session.currentstation.station_url,
@@ -101,7 +116,7 @@ site.mp.play = function() {
 
 site.mp.stop = function() {
 	
-	loggr.log("site.mp.stop()");
+	loggr.info("site.mp.stop()");
 	
 	window.mediaStreamer.stop(
 		function(msg) {
@@ -121,9 +136,13 @@ site.mp.stop = function() {
 	);
 	
 	site.session.alarmActive = false;
-	site.mp.mpstatus = 4;
+	site.mp.mpstatus = Media.MEDIA_NONE;
 	
 }
+
+// ---> Status Polls
+
+// Init, stop
 
 site.mp.initStatusPoll = function() {
 	loggr.info("site.mp.initStatusPoll()");
@@ -138,19 +157,13 @@ site.mp.stopStatusPoll = function() {
 	loggr.info("site.mp.stopStatusPoll()");
 	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
 }
+
+// Get status
  
 site.mp.getStatus = function(cb) {
 	
-	/*
-	loggr.log(Media.MEDIA_NONE); // ?
-	loggr.log(Media.MEDIA_STARTING); // 1
-	loggr.log(Media.MEDIA_RUNNING); // 2
-	loggr.log(Media.MEDIA_PAUSED); // 3
-	loggr.log(Media.MEDIA_STOPPED); // 4
-	/**/
-	
 	if (cb) { site.mp.getStatusCb = cb; }
-	else { site.mp.getStatusCb = null; }
+	else { site.mp.getStatusCb = site.mp.handleStatus; }
 	
 	window.mediaStreamer.getStatus(
 		function(msg) {
@@ -165,38 +178,33 @@ site.mp.getStatus = function(cb) {
 	
 }
 
+// Handle status
+
 site.mp.handleStatus = function(statusCode) {
 	if (statusCode != site.mp.lastmpstatus) {
 		loggr.log(" > MediaStreamer.getStatus: "+ site.mp.getStatusByCode(statusCode));
 		site.mp.mpstatus = statusCode;
 		site.mp.lastmpstatus = statusCode;
+		site.home.run_ui_updates();
 	}
 	if (statusCode==Media.MEDIA_NONE || statusCode==Media.MEDIA_STOPPED) { 
 		site.mp.isPlaying = false;
 		site.mp.notifCancel(-1);
 		site.mp.stopStatusPoll(); 
+		site.session.mpIsPlaying = false;
+		site.home.run_ui_updates(); // TODO: is dit handig?
+		site.helpers.storeSession();
 	} else {
 		site.mp.isPlaying = true;
+		site.session.mpIsPlaying = true;
+		site.home.run_ui_updates();
+		site.helpers.storeSession();
 	}
 }
 
-site.mp.playToggle = function() {
-	
-	loggr.log("site.mp.playToggle()");
-	
-	window.mediaStreamer.isServiceRunning(
-		function(resInt) {
-			if (resInt==1) {
-				loggr.log(" > Service running, stop");
-				site.mp.stop();
-			} else {
-				loggr.log(" > Service not running, play");
-				site.mp.play();
-			}
-		}
-	);
-	
-}
+// ---> Notifications || Notif
+
+// Notif
 
 site.mp.notif = function() {
 	
@@ -236,10 +244,8 @@ site.mp.notif = function() {
 			}
 		}
 	];
-	/**/
 	
-	
-	
+	// Exec
 	window.notifMgr.make(
 		function(res) {
 			loggr.log(" > Notification: "+ res);
@@ -253,15 +259,19 @@ site.mp.notif = function() {
 	
 }
 
+// Cancel
+
 site.mp.notifCancel = function(id) {
 	
 	loggr.info("site.mp.notif(): "+id);
 	
 	if (!id || id<0) { 
+		loggr.log(" > Cancel all");
 		window.notifMgr.cancelAll(function(res){},function(errmsg) {
 			loggr.warn(" > Could not cancel notification: "+ errmsg);
 		});
 	} else {
+		loggr.log(" > Cancel: "+id);
 		var opts = {id:id};
 		window.notifMgr.cancel(function(res){},function(errmsg) {
 			loggr.warn(" > Could not cancel notification: "+ errmsg);
@@ -269,6 +279,8 @@ site.mp.notifCancel = function(id) {
 	}
 	
 }
+
+// ---> Helpers
 
 site.mp.getErrorByCode = function(error) {
 	
@@ -296,6 +308,15 @@ site.mp.getStatusByCode = function(code) {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
 
 
 

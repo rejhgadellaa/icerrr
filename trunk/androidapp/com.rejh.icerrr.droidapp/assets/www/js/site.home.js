@@ -83,10 +83,8 @@ site.home.init = function() {
 	
 	// Init + Close callback for #home
 	// Best for last :)
-	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
-	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
-	if (site.session.ui_pause_callbacks.indexOf(site.home.onpause)<0) { site.session.ui_pause_callbacks.push(site.home.onpause); }
-	if (site.session.ui_resume_callbacks.indexOf(site.home.onresume)<0) { site.session.ui_resume_callbacks.push(site.home.onresume); }
+	site.lifecycle.addOnPauseCb(site.home.onpause);
+	site.lifecycle.addOnResumeCb(site.home.onresume);
 	
 	// Test: chromecast
 	site.cast.setup();
@@ -154,11 +152,13 @@ site.home.init_ui_updates = function() {
 	
 	loggr.info("site.home.init_ui_updates()");
 	
-	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
-	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},1);
+	if (site.loops.home_ui_timeout) { clearInterval(site.loops.home_ui_timeout); }
+	site.loops.home_ui_timeout = setInterval(function(){site.home.run_ui_updates()},2000);
+	site.home.run_ui_updates(); // run once because interval will only fire after xxx sec
 	
-	if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
-	site.timeouts.home_station_timeout = setTimeout(function(){site.home.run_station_updates()},1000);
+	if (site.loops.home_station_timeout) { clearInterval(site.loops.home_station_timeout); }
+	site.loops.home_station_timeout = setInterval(function(){site.home.run_station_updates()},(60*1000)*1.5); // ~every minute
+	site.home.run_station_updates(); // run once because interval will only fire after xxx sec
 	
 }
 
@@ -166,14 +166,12 @@ site.home.stop_ui_updates = function() {
 	
 	loggr.info("site.home.stop_ui_updates()");
 	
-	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
-	if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
+	if (site.loops.home_ui_timeout) { clearInterval(site.loops.home_ui_timeout); }
+	if (site.loops.home_station_timeout) { clearInterval(site.loops.home_station_timeout); }
 	
 }
 
 site.home.run_ui_updates = function() {
-	
-	if (site.timeouts.home_ui_timeout) { clearTimeout(site.timeouts.home_ui_timeout); }
 	
 	//loggr.log("site.home.run_ui_updates()");
 	
@@ -190,7 +188,11 @@ site.home.run_ui_updates = function() {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy"); 
 	}
-	site.timeouts.home_ui_timeout = setTimeout(function(){site.home.run_ui_updates()},2000);
+	
+	// When paused, stop updates...
+	if (site.session.isPaused) {
+		site.home.stop_ui_updates();
+	}
 	
 }
 
@@ -245,9 +247,9 @@ site.home.run_station_updates = function() {
 		}
 	);
 	
-	if (!site.session.isPaused) {
-		if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
-		site.timeouts.home_station_timeout = setTimeout(function(){site.home.run_station_updates()},1.5*60*1000); // every ~minute
+	// When paused, stop updates...
+	if (site.session.isPaused) {
+		site.home.stop_ui_updates();
 	}
 	
 }
@@ -290,9 +292,8 @@ site.home.useDirbleNowPlaying = function() {
 		}
 	);
 	
-	if (!site.session.isPaused) {
-		if (site.timeouts.home_station_timeout) { clearTimeout(site.timeouts.home_station_timeout); }
-		site.timeouts.home_station_timeout = setTimeout(function(){site.home.run_station_updates()},1.5*60*1000); // every ~minute
+	if (site.session.isPaused) {
+		site.home.stop_ui_updates();
 	}
 	
 }

@@ -11,6 +11,10 @@ if (!site) { var site = {}; }
 
 site.webapi = {};
 
+// ---> Variables
+
+site.webapi.ajaxRequests = {};
+
 // TODO: implement timeout!
 
 // ---> Stuff
@@ -36,15 +40,18 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 	loggr.log(" > "+apiurl);
 	loggr.log(" > "+apiquerystr);
 	
-	$.getJSON(apiurl, function(results) {
+	var ajaxReqIdentifier = site.helpers.getUniqueID();
+	var ajaxReq = $.getJSON(apiurl, function(results) {
 		// ok
 		if (results["error"]) {
 			errcb({code:-1,message:results["errormsg"]});
+			site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 			return;
 		} else {
 			results.info.size_kb = Math.ceil((JSON.stringify(results).length*8)/1024/10);
 			loggr.log(" > site.webapi.exec().results: ~"+ results.info.size_kb +" kb");
 			cb(results);
+			site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 			return;
 		}
 	})
@@ -52,7 +59,12 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 		// error
 		loggr.error(" > site.webapi.exec().Error: "+ textStatus +", "+ errorThrown);
 		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
+		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 	});
+	
+	// Store apireq
+	site.webapi.ajaxRequests[ajaxReqIdentifier] = ajaxReq;
+	return ajaxReqIdentifier;
 	
 }
 
@@ -72,15 +84,18 @@ site.webapi.post = function(apiaction,apiquerystr,data,cb,errcb) {
 	loggr.log(" > "+apiurl);
 	loggr.log(" > "+apiquerystr);
 	
-	$.post(apiurl, data, function(results) {
+	var ajaxReqIdentifier = site.helpers.getUniqueID();
+	var ajaxReq = $.post(apiurl, data, function(results) {
 			// ok
 			if (results["error"]) {
 				errcb({code:-1,message:results["errormsg"]});
+				site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 				return;
 			} else {
 				results.info.size_kb = Math.ceil((JSON.stringify(results).length*8)/1024/10);
 				loggr.log(" > site.webapi.post().results: ~"+ results.info.size_kb +" kb");
 				cb(results);
+				site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 				return;
 			} 
 		}
@@ -88,11 +103,55 @@ site.webapi.post = function(apiaction,apiquerystr,data,cb,errcb) {
 		// error
 		loggr.error(" > site.webapi.post().Error: "+ textStatus +", "+ errorThrown);
 		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
+		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 	});
 	
-	
+	// Store apireq
+	site.webapi.ajaxRequests[ajaxReqIdentifier] = ajaxReq;
+	return ajaxReqIdentifier;
 	
 }
+
+// Cancel
+
+site.webapi.abort = function(ajaxReqIdentifier) {
+	
+	loggr.info("site.webapi.cancel(): "+ajaxReqIdentifier);
+	
+	loggr.log(" > Abort..");
+	var ajaxReq = site.webapi.ajaxRequests[ajaxReqIdentifier];
+	if (!ajaxReq) { loggr.warn(" > Ajax request does not exist (anymore)"); return; }
+	ajaxReq.abort();
+	
+	loggr.log(" > Cleanup..");
+	site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
+	
+}
+
+// Cleanup
+
+site.webapi.cleanupAjaxRequests = function(ajaxReqIdentifier) {
+	
+	loggr.info("site.webapi.cleanupAjaxRequests(): "+ajaxReqIdentifier);
+	
+	var ajaxReq = site.webapi.ajaxRequests[ajaxReqIdentifier];
+	if (!ajaxReq) { loggr.warn(" > Ajax request does not exist (anymore)"); return; }
+	
+	var newAjaxRequests = {};
+	for (var id in site.webapi.ajaxRequests) {
+		if (id==ajaxReqIdentifier) { continue; }
+		if (!site.webapi.ajaxRequests[id]) { continue; }
+		newAjaxRequests[id] = site.webapi.ajaxRequests[id];
+	}
+	
+	loggr.log(" > Before: "+ site.helpers.countObj(site.webapi.ajaxRequests));
+	loggr.log(" > After:  "+ site.helpers.countObj(newAjaxRequests));
+	
+	site.webapi.ajaxRequests = newAjaxRequests;
+	
+}
+
+
 
 
 
