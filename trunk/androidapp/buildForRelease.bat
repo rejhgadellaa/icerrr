@@ -52,6 +52,7 @@ echo.
 echo Building project
 echo.
 call ant clean release
+if errorlevel 1 goto error
 
 echo.
 echo Signing app
