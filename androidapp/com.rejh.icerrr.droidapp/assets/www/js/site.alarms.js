@@ -262,18 +262,22 @@ site.alarms.setAlarms = function() {
 		date.setMilliseconds(0);
 		
 		// Check if tomorrow..
+		/* plugin will do this..
 		var nowdate = new Date();
 		loggr.log(" > Set: "+ alarm.hour+":"+ alarm.minute +", now: "+ nowdate.getHours() +":"+ nowdate.getMinutes());
 		if (parseInt(alarm.hour) < nowdate.getHours() || parseInt(alarm.hour) <= nowdate.getHours() && parseInt(alarm.minute) <= nowdate.getMinutes()) {
 			loggr.log(" > Set for tomorrow");
 			date.setDate(date.getDate()+1);
 		}
+		/**/
 		
 		loggr.log(" > Repeat: "+ alarm.repeat);
 		
 		var opts = {};
 		opts.id = alarm.alarm_id;
 		opts.timeMillis = date.getTime();
+		opts.hour = date.getHours();
+		opts.minute = date.getMinutes();
 		opts.repeat = (alarm.repeat) ? 'daily' : 'off';
 		opts.repeatDaily = alarm.repeatCfg;
 		

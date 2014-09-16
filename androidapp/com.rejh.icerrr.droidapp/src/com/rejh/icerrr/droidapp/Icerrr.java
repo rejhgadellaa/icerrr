@@ -35,6 +35,8 @@ public class Icerrr extends DroidGap
 {
     
 	final static String APPTAG = "Icerrr";
+	
+	private boolean newIntentSent = false;
     
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -70,8 +72,8 @@ public class Icerrr extends DroidGap
     public void onResume() {
         Log.d(APPTAG,APPTAG +".onResume()");
         super.onResume();
-        // Intent incomingIntent = getIntent();
-    	// super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "'); },1);");
+        Intent incomingIntent = getIntent(); 
+    	super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "'); },1);");
     }
     
     @Override
@@ -79,7 +81,8 @@ public class Icerrr extends DroidGap
         Log.d(APPTAG,APPTAG +".onNewIntent()");
     	super.onNewIntent(newIntent);
     	setIntent(newIntent);
-    	super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + newIntent.getDataString() + "'); },1);");
+    	newIntentSent = false;
+    	// super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + newIntent.getDataString() + "'); },1);");
     }
     
     @Override
