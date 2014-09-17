@@ -407,6 +407,9 @@ site.installer.finishup = function() {
 	var then = now + (1000*60*60*24); // 1000*60*60*24 == 1 day
 	
 	site.cookies.put("app_update_time",then);
+						
+	//site.installer.logger("&nbsp;&gt; Set alarms...");
+	//site.alarms.setAlarms();
 	
 	// Wait a sec...
 	setTimeout(function(){
@@ -416,11 +419,12 @@ site.installer.finishup = function() {
 			
 			site.cookies.put("app_version",site.cfg.app_version);
 			site.cookies.put("app_is_installed",1);
+			site.cookies.put("app_has_updated",1);
 			window.location.reload(); // TODO: replace all 'window.location.reload();' with window.location.href=[current_host]/[path-to-file]
 			
 		},2500);
 		//site.ui.gotosection("#home"); // TODO: no not go here, goto #firstlaunch
-	},1000);
+	},2500);
 		
 	
 }

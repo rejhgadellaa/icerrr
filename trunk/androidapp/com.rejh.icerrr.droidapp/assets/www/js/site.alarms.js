@@ -316,10 +316,6 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 		opts
 	);
 	
-	
-	
-	
-	
 }
 
 // All Alarms

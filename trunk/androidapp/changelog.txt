@@ -2,6 +2,10 @@
 
 = Changelog =
 
+v0.040
+  * Alarms were not set on boot (missing permission)
+  * Alarms are re-set after app update
+
 v0.039
   * New: you can now use back button while station search is running? (plz test)
   * Improved play button behaviour
