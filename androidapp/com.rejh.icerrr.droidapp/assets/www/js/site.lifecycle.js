@@ -166,6 +166,13 @@ site.lifecycle.initApp = function() {
 	// Check intents
 	site.lifecycle.onNewIntent();
 	
+	// On update: re-set alarms
+	if (site.cookies.get("app_has_updated")!=0) {
+		loggr.log(" > App_has_updated: "+site.cookies.get("app_has_updated"));
+		site.cookies.put("app_has_updated",0);
+		site.alarms.setAlarms();
+	}
+	
 }
 
 // New Intent

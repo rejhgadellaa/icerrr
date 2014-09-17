@@ -528,7 +528,7 @@ section {
 	z-index:99;
 	display:none;
 	position:absolute;
-	left:32px; right:32px; bottom:32px;
+	left:32px; right:32px; bottom:72px;
 	height:auto;
 	padding:16px;
 	color:rgba(255,255,255,0.87);

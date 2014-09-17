@@ -19,8 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
       package="com.rejh.icerrr.droidapp" 
-      android:versionName="0.039" 
-      android:versionCode="39" 
+      android:versionName="0.040" 
+      android:versionCode="40" 
       android:hardwareAccelerated="true"
       >
     <supports-screens
@@ -44,6 +44,7 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application 
         android:icon="@drawable/ic_launcher"
@@ -87,10 +88,6 @@
 			<intent-filter>
 	            <action android:name="android.intent.action.TIMEZONE_CHANGED" />
 	        </intent-filter>
-			<intent-filter>
-	            <action android:name="android.intent.action.PACKAGE_REPLACED" />
-	        </intent-filter>
 		</receiver>
-        
     </application>
 </manifest> 

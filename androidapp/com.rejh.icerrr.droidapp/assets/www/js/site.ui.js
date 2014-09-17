@@ -111,10 +111,11 @@ site.ui.hideloading = function() {
 site.ui.showtoast = function(msg, timeInSec) {
 	loggr.log("site.ui.showtoast()");
 	if (site.timeouts.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
-	if (!timeInSec) { timeInSec = 2.5; }
+	if (!timeInSec) { timeInSec = 3.0; }
 	var timeInMsec = timeInSec * 1000;
 	$("#overlay_toast").html(msg);
-	$("#overlay_toast").fadeIn(500,function() { site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec); });
+	$("#overlay_toast").fadeIn(500);
+	site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec); 
 }
 
 site.ui.hidetoast = function() {
