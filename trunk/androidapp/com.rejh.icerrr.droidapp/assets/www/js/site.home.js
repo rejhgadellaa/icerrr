@@ -187,6 +187,10 @@ site.home.run_ui_updates = function() {
 		loggr.log(" > .button.center removeclass active");
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy"); 
+		loggr.log(" >> "+ $(".button.center").attr("class"));
+	} else if (site.mp.mpstatus==Media.MEDIA_NONE) {
+		$(".button.center").removeClass("active"); 
+		$(".button.center").removeClass("busy"); 
 	}
 	
 	// When paused, stop updates...

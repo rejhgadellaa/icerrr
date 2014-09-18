@@ -388,6 +388,15 @@ site.installer.downloadjson_write_errcb = function(error) {
 
 
 
+// clearcache_init
+
+site.installer.clearcache_init = function() {
+	loggr.info("site.installer.clearcache_init()");
+	site.installer.logger(" ERR",{use_br:false,is_e:true});
+}
+
+
+
 // ---> Step X : finish up
 
 site.installer.finishup = function() {
@@ -404,7 +413,7 @@ site.installer.finishup = function() {
 	
 	// Set time for update
 	var now = new Date().getTime();
-	var then = now + (1000*60*60*24); // 1000*60*60*24 == 1 day
+	var then = now + (1000*60*60*24*7); // 1000*60*60*24 == 1 day
 	
 	site.cookies.put("app_update_time",then);
 						

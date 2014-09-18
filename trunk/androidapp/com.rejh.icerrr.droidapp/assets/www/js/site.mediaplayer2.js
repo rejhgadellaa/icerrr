@@ -29,6 +29,9 @@ site.mp.init = function() {
 	
 	loggr.log(" > "+site.session.currentstation.station_url);
 	
+	// Media None
+	site.mp.mpstatus = Media.MEDIA_NONE;
+	
 	// Check service
 	window.mediaStreamer.isServiceRunning(
 		function(resInt) {
@@ -124,7 +127,7 @@ site.mp.stop = function() {
 			site.mp.serviceRunning = false;
 			site.mp.isPlaying = false;
 			site.session.mpIsPlaying = false;
-			site.mp.getStatus(site.mp.handleStatus); // just once..
+			site.mp.getStatus(); // just once..
 			site.mp.notifCancel(-1);
 		},
 		function(errmsg) {
@@ -155,6 +158,10 @@ site.mp.initStatusPoll = function() {
 
 site.mp.stopStatusPoll = function() {
 	loggr.info("site.mp.stopStatusPoll()");
+	if (site.mp.mpstatus!=Media.MEDIA_NONE) {
+		loggr.warn(" > site.mp.mpstatus!=Media.MEDIA_NONE, value = "+site.mp.getStatusByCode(site.mp.mpstatus));
+		return;
+	}
 	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
 }
 

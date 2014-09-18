@@ -99,10 +99,6 @@
     
     <!-- Webfonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
-    
-    <!--[if lt IE 9]>
-    	<script src="js/plugs/html5shiv.js"></script>
-    <![endif]-->
 	
 </head>
 
@@ -144,7 +140,7 @@
         <div class="title">ICERRR</div>
         
 		<div class="actions">
-        	<div class="action activatablel" onClick="site.ui.showtoast('It\'s just a placeholder :)')";><img src="img/icons-48/ic_action_core_overflow.png" /></div>
+        	<!-- <div class="action activatablel" onClick="site.ui.showtoast('It\'s just a placeholder :)')";><img src="img/icons-48/ic_action_core_overflow.png" /></div> -->
             <div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" /></div>
         </div>
     </div>
@@ -442,7 +438,9 @@
 </div>
 
 <!-- Overflow_Menu -->
-<div id="overflow_menu" class="overflow_menu shadow_z2"></div>
+<div id="overflow_menu" class="overflow_menu shadow_z2">
+	<div class="menu_item">Settings</div>
+</div>
 
 <!-- Overlay: Dialog -->
 <div id="dialog" class="overlay_wrap"></div>
