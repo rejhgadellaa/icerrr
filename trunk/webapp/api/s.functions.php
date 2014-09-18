@@ -61,6 +61,22 @@ function cleanupjson() {
 	}
 }
 
+// ---> Send email
+
+function sendEmail_log($log_html_url) {
+	$to = "icerrr@rejh.nl";
+	$subject = "Icerrr log";
+	$message = "Hi,\n\nA new log has been uploaded:\n". $log_html_url ."\n\nGreetings,\n\nIcerrr Mailer";
+	$headers = 'From: noreply-icerrr@rejh.nl' . "\r\n" .
+		'Reply-To: noreply-icerrr@rejh.nl' . "\r\n" .
+		'X-Mailer: PHP/' . phpversion();
+	sendEmail($to,$subject,$message,$headers);
+}
+
+function sendEmail($to,$subject,$message,$add_headers,$add_params) {
+	@mail($to,$subject,$message,$add_headers,$add_params);
+}
+
 // ---> File i/o
 
 function readJsonsFile($file) {
