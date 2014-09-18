@@ -128,7 +128,7 @@ loggr.gethtml = function(maxlines) {
 				html += "<span style='color:#c00'>"+ logline +"</span><br>\n";
 				break;
 			case "warn":
-				html+= "<span style='color:#c60'>"+ logline +"</span><br>\n";
+				html+= "<span style='color:#c90'>"+ logline +"</span><br>\n";
 				break;
 			case "debug":
 				html+= "<span style='color:#333'>"+ logline +"</span><br>\n";

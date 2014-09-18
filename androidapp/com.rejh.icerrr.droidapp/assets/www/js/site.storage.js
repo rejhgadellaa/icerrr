@@ -16,6 +16,14 @@ site.storage = {};
 
 // TODO: Check if opts.bla are setting default correctly
 
+// ---> Timeouts
+
+site.storage.timeouts = [];
+
+site.storage.addTimeout = function(id, action) {
+	
+}
+
 // ---> Queue
 
 site.session.storage = {};

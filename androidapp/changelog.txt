@@ -2,6 +2,13 @@
 
 = Changelog =
 
+v0.042
+  * First attempt at fixing FileEntry.read getting stuck..
+
+v0.041
+  * Milestone: app released in Play Store!
+  * Improved play button behaviour
+
 v0.040
   * Alarms were not set on boot (missing permission)
   * Alarms are re-set after app update
