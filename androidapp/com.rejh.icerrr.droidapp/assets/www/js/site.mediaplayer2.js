@@ -156,9 +156,10 @@ site.mp.initStatusPoll = function() {
 	loggr.log(" > inited status poll");
 }
 
-site.mp.stopStatusPoll = function() {
+site.mp.stopStatusPoll = function(force) {
 	loggr.info("site.mp.stopStatusPoll()");
-	if (site.mp.mpstatus!=Media.MEDIA_NONE) {
+	// TODO: we DO want to stop poll when app is being paused...
+	if (site.mp.mpstatus!=Media.MEDIA_NONE && !force) {
 		loggr.warn(" > site.mp.mpstatus!=Media.MEDIA_NONE, value = "+site.mp.getStatusByCode(site.mp.mpstatus));
 		return;
 	}
@@ -206,6 +207,9 @@ site.mp.handleStatus = function(statusCode) {
 		site.session.mpIsPlaying = true;
 		site.home.run_ui_updates();
 		site.helpers.storeSession();
+	}
+	if (site.session.isPaused) {
+		site.mp.stopStatusPoll(true);
 	}
 }
 
