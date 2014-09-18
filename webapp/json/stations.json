@@ -131,22 +131,6 @@
     "rating_average": -1
   },
   {
-    "station_id": "arrowclassicjazz2",
-    "station_edited":{},
-    "station_name": "Sublime FM2",
-    "station_url": "http://82.201.47.68/SublimeFM2.m3u",
-    "station_icon": "http://www.ground3d.nl/wp-content/uploads/2014/04/20130224172826sublime_fm.jpeg",
-    "station_image": 0,
-    "station_host": "82.201.47.68",
-    "station_port": "",
-    "station_path": "/SublimeFM2.m3u",
-    "station_country":"NL",
-    "station_bitrate":"-1 kbps",
-    "rating_custom": -1,
-    "rating_soundcloud": -1,
-    "rating_average": -1
-  },
-  {
     "station_id": "veronicahitradio",
     "dirble_id":11284,
     "station_edited":{},
