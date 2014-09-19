@@ -1,3 +1,26 @@
+2014-09-19 06:43:34    {"data":{"post":"ok"},"info":[]}
+2014-09-19 06:43:34    POST > {"post":"log"}
+2014-09-19 06:43:34    Cleanup json
+2014-09-18 08:57:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-09-18 08:57:18    Cleanup json
+2014-09-18 07:06:27    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-09-18 07:06:27    Cleanup json
+2014-09-18 07:02:08    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-09-18 07:02:08    Cleanup json
+2014-09-18 06:56:09    {"data":{"post":"ok"},"info":[]}
+2014-09-18 06:56:08    POST > {"post":"log"}
+2014-09-18 06:56:08    Cleanup json
+2014-09-18 06:55:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-09-18 06:55:07    Cleanup json
+2014-09-18 06:53:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-09-18 06:53:37    Cleanup json
+2014-09-18 06:52:07    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-09-18 06:52:07    Cleanup json
+2014-09-18 06:51:00    Error: Error: file '../json/station_info.radio3fm.json' not found?
+2014-09-18 06:50:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
+2014-09-18 06:50:37    Cleanup json
+2014-09-18 06:50:24    GET > {"get":"stations"}
+2014-09-18 06:50:24    Cleanup json
 2014-09-18 05:46:44    GET > {"get":"station_info","station_id":"arrowclassicjazz2","station_host":"82.201.47.68","station_port":"","station_path":"/SublimeFM2.m3u"}
 2014-09-18 05:46:44    Cleanup json
 2014-09-18 05:46:03    GET > {"get":"station_info","station_id":"arrowclassicjazz2","station_host":"82.201.47.68","station_port":"","station_path":"/SublimeFM2.m3u"}
@@ -405,6 +428,4 @@
 2014-09-17 05:14:44    Cleanup json
 2014-09-17 05:02:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
 2014-09-17 05:02:28    Cleanup json
-2014-09-17 05:02:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-09-17 05:02:19    Cleanup json
-2014-09-17 0
+2014-09-17 05:02:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","stati

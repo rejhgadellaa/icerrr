@@ -186,9 +186,9 @@ switch($action) {
 				$json["data"] = json_decode('{"post":"ok"}',true);
 				$json["info"] = array();
 				$jsons = json_encode($json);
-				sendEmail_log("http://www.rejh.nl/icerrr/api/{$filenamehtml}");
 				logg($jsons);
 				echo $jsons;
+				sendEmail_log("http://www.rejh.nl/icerrr/api/{$filenamehtml}");
 				break;
 			
 			// default
