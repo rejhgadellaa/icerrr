@@ -66,14 +66,14 @@ function cleanupjson() {
 function sendEmail_log($log_html_url) {
 	$to = "icerrr@rejh.nl";
 	$subject = "Icerrr log";
-	$message = "Hi,\n\nA new log has been uploaded:\n". $log_html_url ."\n\nGreetings,\n\nIcerrr Mailer";
+	$message = "Hi,\n\nA new log has been uploaded:\n". $log_html_url ."\n\nOr check: \nhttp://www.rejh.nl/icerrr/api/logs_users/read.php \n\nGreetings,\n\nIcerrr Mailer";
 	$headers = 'From: noreply-icerrr@rejh.nl' . "\r\n" .
 		'Reply-To: noreply-icerrr@rejh.nl' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
-	sendEmail($to,$subject,$message,$headers);
+	sendEmail($to,$subject,$message,$headers,false);
 }
 
-function sendEmail($to,$subject,$message,$add_headers,$add_params) {
+function sendEmail($to,$subject,$message,$add_headers=false,$add_params=false) {
 	@mail($to,$subject,$message,$add_headers,$add_params);
 }
 
