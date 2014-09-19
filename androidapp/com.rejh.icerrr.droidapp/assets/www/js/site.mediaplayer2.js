@@ -189,11 +189,13 @@ site.mp.getStatus = function(cb) {
 // Handle status
 
 site.mp.handleStatus = function(statusCode) {
+	var doStoreSession = false;
 	if (statusCode != site.mp.lastmpstatus) {
 		loggr.log(" > MediaStreamer.getStatus: "+ site.mp.getStatusByCode(statusCode));
 		site.mp.mpstatus = statusCode;
 		site.mp.lastmpstatus = statusCode;
 		site.home.run_ui_updates();
+		doStoreSession = true;
 	}
 	if (statusCode==Media.MEDIA_NONE || statusCode==Media.MEDIA_STOPPED) { 
 		site.mp.isPlaying = false;
@@ -201,11 +203,12 @@ site.mp.handleStatus = function(statusCode) {
 		site.mp.stopStatusPoll(); 
 		site.session.mpIsPlaying = false;
 		site.home.run_ui_updates(); // TODO: is dit handig?
-		site.helpers.storeSession();
 	} else {
 		site.mp.isPlaying = true;
 		site.session.mpIsPlaying = true;
 		site.home.run_ui_updates();
+	}
+	if (doStoreSession) {
 		site.helpers.storeSession();
 	}
 	if (site.session.isPaused) {

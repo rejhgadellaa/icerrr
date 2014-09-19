@@ -26,7 +26,7 @@ loggr.error = function(str,opts) {
 	if (!opts) { opts = {}; }
 	opts.type = "error";
 	loggr.log(str,opts);
-	loggr.upload();
+	if (!opts.dontupload) { loggr.upload(); }
 }
 
 loggr.warn = function(str,opts) {
