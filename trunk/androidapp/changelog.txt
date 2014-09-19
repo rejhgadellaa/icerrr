@@ -1,11 +1,16 @@
-#Not updated with every update, but it does contain all of it :)
+#summary Not updated with every update, but it does contain all of it :)
 
 = Changelog =
 
-v0.042
-  * First attempt at fixing FileEntry.read getting stuck..
+v0.043 [stable]
+  * Storage.readfile sometimes gets stuck. Should be fixed, needs testing
+  * Tweaks for media player status detection
 
-v0.041
+v0.042 [stable]
+  * Delete button now only shows after saving an alarm
+  * Media status poll was sometimes not stopped
+
+v0.041 [stable]
   * Milestone: app released in Play Store!
   * Improved play button behaviour
 

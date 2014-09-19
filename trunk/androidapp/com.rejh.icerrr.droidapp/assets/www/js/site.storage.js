@@ -17,11 +17,105 @@ site.storage = {};
 // TODO: Check if opts.bla are setting default correctly
 
 // ---> Timeouts
+// It looks like cordova can get stuck on reading files so let's build a timeout that at least detects this behaviour..
 
-site.storage.timeouts = [];
+site.storage.timeouts = {};
 
-site.storage.addTimeout = function(id, action) {
+site.storage.addTimeout = function(action, time, args) {
 	
+	if (!time) { time = 2000; }
+	
+	var timeoutID = site.helpers.getUniqueID(action);
+	
+	loggr.info("site.storage.addTimeout(): "+ action +", "+ timeoutID);
+	
+	site.storage.timeouts[timeoutID] = {};
+	site.storage.timeouts[timeoutID].action = action
+	site.storage.timeouts[timeoutID].args = args;
+	site.storage.timeouts[timeoutID].timeout = setTimeout(function() {
+		
+		loggr.error("site.storage timeout! Action: '"+action+"'",{dontupload:true});
+		loggr.error(JSON.stringify(args));
+		
+		// TODO || TMP: remove this line for prod.
+		// alert("Storage timeout occured!");
+		
+		if (!site.storage.timeouts[timeoutID]) {
+			loggr.warn("site.storage.timeouts["+ timeoutID +"] is null?");
+			return;
+		}
+		
+		// try aborting and retry..
+		if (site.storage.timeouts[timeoutID].canAbort) {
+			
+			loggr.log(" > Can abort, will retry...");
+			site.storage.timeouts[timeoutID].abortObj.abort();
+			
+			switch(action) {
+				
+				case "readfile":
+					loggr.log(" > Retry action: "+ action);
+					site.storage.removeTimeout(timeoutID);
+					site.storage.readfile(args.path,args.filename,args.cb,args.errcb,args.opts);
+					break;
+				
+				default:
+					loggr.error(" > Could not retry action: '"+ action +"'");
+					alert("An error accured. Icerrr will now close.");
+					site.lifecycle.exit();
+					
+			}
+			
+		} else {
+			alert("An error accured. Icerrr will now close.");
+			site.lifecycle.exit();
+		}
+		
+		loggr.log(" > Endof storage.timeout");
+		
+		site.storage.removeTimeout(timeoutID);
+		
+	},time);
+	
+	return timeoutID;
+	
+}
+
+site.storage.removeTimeout = function(timeoutID) {
+	
+	loggr.info("site.storage.removeTimeout(): "+ timeoutID);
+	
+	if (!site.storage.timeouts[timeoutID]) {
+		loggr.warn(" > site.storage.removeTimeout: "+timeoutID +" not found");
+		return;
+	}
+	
+	if (site.storage.timeouts[timeoutID].timeout) {
+		clearTimeout(site.storage.timeouts[timeoutID].timeout);
+	}
+	
+	site.storage.timeouts[timeoutID] = null;
+	
+	var foundActiveTimeout = false;
+	for (var id in site.storage.timeouts) {
+		if (site.storage.timeouts[id]) { foundActiveTimeout = true; break; }
+	}
+	if (!foundActiveTimeout) { site.storage.timeouts = {}; }
+	
+}
+
+// ---> Pre-callback
+
+site.storage.preCb = function(cb,res,timeoutID) {
+	if (timeoutID) { site.storage.removeTimeout(timeoutID); }
+	site.storage.isBusy = false;
+	cb(res);
+}
+
+site.storage.preCbErr = function(cberr,err,timeoutID) {
+	if (timeoutID) { site.storage.removeTimeout(timeoutID); }
+	site.storage.isBusy = false;
+	cberr(err);
 }
 
 // ---> Queue
@@ -323,33 +417,49 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
 	if (opts.file.readAsDataUrl!==true) { opts.file.readAsDataUrl = false; }
 	
+	// Prep timeout
+	var timeoutID = site.storage.addTimeout("readfile",null,{path:path,filename:filename,cb:cb,errcb:errcb,opts:opts});
+	
 	// Run
+	loggr.log(" > Request File System");
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
+			loggr.log(" > Get directory entry: "+path);
             fileSystem.root.getDirectory(path,
                 opts.path,
                 function(directoryEntry) {
+					loggr.log(" > Get file entry: "+filename);
 					directoryEntry.getFile(filename,opts.file,
 						function(fileEntry) {
 							fileEntry.file(
 								function(file) {
+									loggr.log(" > Read file...");
 									var fileReader = new FileReader();
-									fileReader.onload = function(evt) { site.storage.isBusy=false; cb(evt.target.result); }
-									fileReader.onabort = function(error) { site.storage.isBusy=false; errcb(error); }; // TODO: onabort != error..?
-									fileReader.onerror = function(error) { site.storage.isBusy=false; errcb(error); };
+									site.storage.timeouts[timeoutID].canabort = true;
+									site.storage.timeouts[timeoutID].abortObj = fileReader;
+									fileReader.onload = function(evt) { 
+										// check if aborted..
+										if (!site.storage.timeouts[timeoutID]) { 
+											loggr.warn(" > site.storage.readfile(): canceled action suddenly got fired");
+											return; 
+										}
+										site.storage.preCb(cb,evt.target.result,timeoutID); 
+										}
+									// fileReader.onabort = function(error) { site.storage.preCbErr(errcb,error,timeoutID); }; // TODO: onabort != error..?
+									fileReader.onerror = function(error) { site.storage.preCbErr(errcb,error,timeoutID); };
 									if (opts.file.readAsDataUrl) { fileReader.readAsDataURL(file); }
 									else { fileReader.readAsText(file); }
 								},
-								function(error) { site.storage.isBusy=false; errcb(error); }
+								function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
 							);
 						},
-						function(error) { site.storage.isBusy=false; errcb(error); }
+						function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
 					);
 				},
-                function(error) { site.storage.isBusy=false; errcb(error); }
+                function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
             );
         },
-        function(error) { site.storage.isBusy=false; errcb(error); }
+        function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
     );
 	
 }

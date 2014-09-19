@@ -57,7 +57,7 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 	})
 	.error(function(jqXHR, textStatus, errorThrown) { 
 		// error
-		loggr.error(" > site.webapi.exec().Error: "+ textStatus +", "+ errorThrown);
+		loggr.error(" > site.webapi.exec().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown);
 		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
 		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 	});
@@ -101,7 +101,7 @@ site.webapi.post = function(apiaction,apiquerystr,data,cb,errcb) {
 		}
 	).error(function(jqXHR, textStatus, errorThrown) { 
 		// error
-		loggr.error(" > site.webapi.post().Error: "+ textStatus +", "+ errorThrown);
+		loggr.error(" > site.webapi.post().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown,{dontupload:true});
 		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
 		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 	});

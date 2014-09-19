@@ -89,6 +89,12 @@ site.home.init = function() {
 	// Test: chromecast
 	site.cast.setup();
 	
+	// Cleanup other containers || TODO
+	//$("#alarms .main").html("");
+	//$("#channellist .main").html("");
+	//$("#searchstation_results .main").html("");
+	//$("#searchicon .main").html("");
+	
 }
 
 // PAUSE RESUME

@@ -126,12 +126,14 @@ site.lifecycle.initApp = function() {
 				loggr.error(" > Could not read stations.json? "+err);
 			}
 		);
+		/*
 		setTimeout(function() { // TODO: it's ugly but I need to check if this continues...
 			if (!site.data.stations) {
 				loggr.error("DAFAQUE why doesn't site.lifecycle.initApp > readstations not work?! RETRY BITCH!");
 				site.lifecycle.initApp();
 			}
-		},1000);
+		},5000);
+		/**/
 		return; // <- important stuff yes
 	}
 	
