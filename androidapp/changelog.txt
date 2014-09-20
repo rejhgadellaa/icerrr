@@ -2,6 +2,12 @@
 
 = Changelog =
 
+0.045
+  * Added some info when uploading log contents
+
+0.044 [stable]
+  * Fix: Mediaplayer could crash after receiving a phone call
+
 v0.043 [stable]
   * Storage.readfile sometimes gets stuck. Should be fixed, needs testing
   * Tweaks for media player status detection
