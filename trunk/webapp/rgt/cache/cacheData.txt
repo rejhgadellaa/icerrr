@@ -345,4 +345,12 @@ http://www.stack.nl/~dimitri/doxygen/images/doxygen.png##cache/cachedimg.1410954
 http://collectiva.dj/images/collectiva.png##cache/cachedimg.1410954901.w0160h0160.446151.collectiva.png##160##160##1410954901####
 http://www.stack.nl/~dimitri/doxygen/doxygen.png##cache/cachedimg.1410954901.w0160h0160.368231.doxygen.png##160##160##1410954901####
 http://2.bp.blogspot.com/-4BPFW4S2gPo/UzPg2toW9AI/AAAAAAAAA6M/PArO3RNM_k8/s1600/apachelocation.PNG##cache/cachedimg.1410954902.w0160h0160.864648.apachelocation.PNG##160##160##1410954902####
-http://hdradio.com/assets/logos/1/0/10bfa1d079c1a2c97c73bd09d2b9d49d.png##cache/cachedimg.1411033786.w0160h0160.985745.10bfa1d079c1a2c97c73bd09d2b9d49d.png##160##160##1411033786
+http://hdradio.com/assets/logos/1/0/10bfa1d079c1a2c97c73bd09d2b9d49d.png##cache/cachedimg.1411033786.w0160h0160.985745.10bfa1d079c1a2c97c73bd09d2b9d49d.png##160##160##1411033786####
+http://vradio.org/files/vr_icon.png##cache/cachedimg.1411112554.w0160h0160.239526.vr_icon.png##160##160##1411112554####
+http://i.img.co/radio/38/18/21838_145.png##cache/cachedimg.1411112555.w0160h0160.189291.21838_145.png##160##160##1411112555####
+http://xymail.nl/Radio%20NL/thumbs/Studio%20ant.png##cache/cachedimg.1411112555.w0160h0160.777554.Studio%20ant.png##160##160##1411112555####
+http://hdradio.com/assets/logos/1/0/10bfa1d079c1a2c97c73bd09d2b9d49d.png##cache/cachedimg.1411135926.w0160h0160.481445.10bfa1d079c1a2c97c73bd09d2b9d49d.png##160##160##1411135926####
+http://xymail.nl/Radio%20NL/thumbs/Studio%20ant.png##cache/cachedimg.1411206534.w0160h0160.816033.Studio%20ant.png##160##160##1411206534####
+http://vradio.org/files/vr_icon.png##cache/cachedimg.1411206535.w0160h0160.246035.vr_icon.png##160##160##1411206535####
+http://i.img.co/radio/38/18/21838_145.png##cache/cachedimg.1411206535.w0160h0160.471310.21838_145.png##160##160##1411206535####
+http://hdradio.com/assets/logos/1/0/10bfa1d079c1a2c97c73bd09d2b9d49d.png##cache/cachedimg.1411239625.w0160h0160.754757.10bfa1d079c1a2c97c73bd09d2b9d49d.png##160##160##1411239625

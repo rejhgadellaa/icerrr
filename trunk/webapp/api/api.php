@@ -16,6 +16,8 @@
 
 */
 
+error_reporting(1);
+
 include("s.config.php");
 include("s.functions.php");
 
