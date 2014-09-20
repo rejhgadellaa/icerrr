@@ -158,7 +158,11 @@ public class MediaStreamerService extends Service {
         Log.d(APPTAG," > shutdown()");
 
 		// WifiLock OFF
-		if (wifiLock!=null) { wifiLock.release(); }
+		if (wifiLock!=null) { 
+			if (wifiLock.isHeld()) {
+				wifiLock.release();
+			}
+		}
         
         // WakeLock OFF
         if (wakelock.isHeld()) { wakelock.release(); }

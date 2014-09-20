@@ -128,7 +128,7 @@ loggr.gethtml = function(maxlines) {
 				html += "<span style='color:#c00'>"+ logline +"</span><br>\n";
 				break;
 			case "warn":
-				html+= "<span style='color:#c90'>"+ logline +"</span><br>\n";
+				html+= "<span style='color:#f90'>"+ logline +"</span><br>\n";
 				break;
 			case "debug":
 				html+= "<span style='color:#333'>"+ logline +"</span><br>\n";
@@ -174,6 +174,17 @@ loggr.upload = function() {
 		return;
 	}
 	loggr.uploading = true;
+	
+	// Debug --> Add this to log before uploading...
+	loggr.log(" > Device: "+ site.vars.deviceDesc);
+	loggr.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
+	loggr.log(" > Device Info: "
+		+"model: "+ device.model
+		+", platform: "+ device.platform
+		+" "+ device.version
+		+", cordova: "+ device.cordova
+	);
+	loggr.log(" > App version: "+ site.cfg.app_version);
 	
 	loggr.save();
 	
