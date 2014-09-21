@@ -1,4 +1,5 @@
-<h1>Introduction</h1>
+Introduction
+===========
 
 *Fed up with how TuneIn tries to be a social network these days? How it has problems running streams even if other apps do it just fine without setting the buffer to 30 seconds or more (and then still has trouble playing the stream)? Would you like an alarm feature that actually works reliably? Would you like Chromecast [1] support with that?*
 
@@ -23,11 +24,13 @@ Keywords: radio, stream, icecast, shoutcast, chromecast, clock radio, alarm, cor
 More info:
 http://android.rejh.nl/droidapps/?app=Icerrr
 
-<h1>Get it on Google Play</h1>
+Get it on Google Play
+=====================
 
 https://play.google.com/store/apps/details?id=com.rejh.icerrr.droidapp
 
-<h1>Join the beta</h1>
+Join the beta
+-------------
 
 Join here:
 https://plus.google.com/communities/115139919019529491940
@@ -38,9 +41,11 @@ https://play.google.com/apps/testing/com.rejh.icerrr.droidapp
 and then go here:
 https://play.google.com/store/apps/details?id=com.rejh.icerrr.droidapp
 
-<h1>Resources</h1>
+Resources
+=========
 
-<h2>Style + design<h2>
+Style + design
+--------------
 
   * Palettes: 
     * [http://www.colourlovers.com/business/trends/branding/7880/Papeterie_Haute-Ville_Logo Papeterie_Haute-Ville_Logo]
@@ -49,11 +54,13 @@ https://play.google.com/store/apps/details?id=com.rejh.icerrr.droidapp
   * Icon generators:
     * Material: http://shreyasachar.github.io/AndroidAssetStudio/index.html
 
-<2h>Radio Directory<h2>
+Radio Directory
+---------------
 
 * Dirble: http://dirble.com/developer/api
 
-= Contact =
+Contact
+=======
 
 M: icerrr@rejh.nl <br>
 G: https://plus.google.com/+RoderickGadellaa <br>
