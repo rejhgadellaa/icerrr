@@ -81,7 +81,33 @@ site.installer.init = function(isUpdate) {
 	site.installer.cfg.overwrite_version = site.installer.cfg.overwrite_versions.pop()
 	
 	// Initiate first step: create folders
-	setTimeout(function(){site.installer.createfolders_init();},1000);
+	setTimeout(function(){site.installer.deletefolders();},1000);
+	
+}
+
+// ---> Step 0 : delete folders
+
+site.installer.deletefolders = function() {
+	
+	if (!site.cookies.get("app_is_installed") || site.installer.cfg.overwrite_version >= site.cfg.app_version) { 
+		site.installer.logger("Delete folders...");
+		site.installer.logger("&nbsp;&gt; "+site.cfg.paths.root);
+		site.storage.removefolder(site.cfg.paths.root,
+			function(res) {
+				site.installer.logger("&nbsp;&gt; Done");
+				site.installer.createfolders_init();
+			},
+			function(fileError) {
+				loggr.error(" > removefolder.Error: "+ site.storage.getErrorType(fileError),{dontupload:true});
+				loggr.error(" > "+ fileError.message);
+				site.installer.logger("&nbsp;&gt; Failed");
+				site.installer.createfolders_init();
+			},
+			{recursively:true}
+		);
+	} else {
+		site.installer.createfolders_init();
+	}
 	
 }
 
@@ -140,17 +166,14 @@ site.installer.deletefiles_init = function() {
 	
 	site.installer.logger("Delete files...");
 	
-	if (site.installer.cfg.overwrite_version >= site.cfg.app_version && site.cookies.get("app_version")!=site.cfg.app_version || !site.cookies.get("app_is_installed")) {
-		// only do on 'clear data installs'
-		site.installer.deletefiles_next();
-	} else {
-		// skip deletefiles
-		site.installer.downloadjson_init();
-	}
+	// skip deletefiles
+	site.installer.downloadjson_init();
 	
 }
 
 site.installer.deletefiles_next = function() {
+	
+	// TODO: deprecated?!
 	
 	loggr.info("site.installer.deletefiles_next()");
 	

@@ -1,3 +1,7 @@
+0.053 (stable)
+  * Fresh install clears sdcard/Icerrr/ to prevent conflicts
+  * Landscape support for phones (tablets coming soon)
+
 0.052 (beta)
   * Fix: once a station icon was stored locally, it didn't update when edited
 

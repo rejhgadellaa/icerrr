@@ -235,6 +235,12 @@ site.storage.removefolder = function(path,cb,errcb,opts) {
 		return; // <- important...
 	}
 	
+	// Remove last '/'
+	if (path.lastIndexOf("/")==path.length-1) {
+		path = path.substr(0,path.length-1);
+		loggr.log(" > "+ path);
+	}
+	
 	// Opts
 	if (!opts) { opts = {}; }
 	
@@ -243,7 +249,7 @@ site.storage.removefolder = function(path,cb,errcb,opts) {
         function(fileSystem) {
             fileSystem.root.getDirectory(
 				path,
-                { create: false, exclusive: false },
+                { create: false },
                 function(entry) { 
 					if (opts.recursively) { entry.removeRecursively(cb,errcb); }
 					else { entry.remove(cb,errcb); }
@@ -255,7 +261,7 @@ site.storage.removefolder = function(path,cb,errcb,opts) {
 				}
             );
         },
-        function(error) { site.storage.isBusy=false; errcb(error); }
+        function() { site.storage.isBusy=false; errcb(); }
     );
 	
 }
@@ -287,7 +293,7 @@ site.storage.createfolder = function(path,cb,errcb) {
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
             fileSystem.root.getDirectory(path,
-                { create: true, exclusive: false },
+                { create: true },
                 function(entry) { site.storage.isBusy=false; cb(entry); },
                 function(error) { site.storage.isBusy=false; errcb(error); }
             );
