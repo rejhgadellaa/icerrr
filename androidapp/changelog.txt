@@ -1,3 +1,6 @@
+0.054 (...)
+  * Started work on landscape support (#home) for tablets (10" for now)
+
 0.053 (stable)
   * Fresh install clears sdcard/Icerrr/ to prevent conflicts
   * Landscape support for phones (tablets coming soon)
