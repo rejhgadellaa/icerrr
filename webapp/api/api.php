@@ -16,7 +16,7 @@
 
 */
 
-error_reporting(1);
+error_reporting(E_ERROR | E_PARSE);
 
 include("s.config.php");
 include("s.functions.php");
@@ -71,14 +71,25 @@ switch($action) {
 				if (@filemtime($filename)<time()-60) { // refresh file every xx secs
 					$id3_reader_url = "http://". $_SERVER['HTTP_HOST'] ."/icerrr/php/tests/test-readid3.php?q=";
 					$id3_reader_q = urlencode('{"station_id":"'. $queryobj["station_id"] .'","host":"'. $queryobj["station_host"] .'","port":'. $queryobj["station_port"] .',"path":"'. $queryobj["station_path"] .'"}');
-					$fg = file_get_contents($id3_reader_url.$id3_reader_q);
+					// retry this a couple of times..
+					$fgjson = false;
+					$whilenum = 0;
+					while(!$fgjson) {
+						logg(" >> Read file... $whilenum");
+						$whilenum++;
+						if ($whilenum>=4) { break; }
+						$fg = fg($id3_reader_url.$id3_reader_q);
+						$fgjson = @json_decode($fg,true);
+					}
 					if (!$fg) { error("Error talking to id3 reader: '".$id3_reader_url.$id3_reader_q."', '$fg', ". json_encode(error_get_last())); }
 					$fw = fw($filename,$fg);
 					if (!$fw) { error("Could not write $filename"); }
 				}
-				sleep(1);
-				$json["data"] = json_decode(fr($filename),true);
-				if (!$json["data"]) { error("Error: file '$filename' not found?"); } // TODO: Generate file :D
+				// sleep(1);
+				$fr = fr($filename);
+				if (!$fr) { error("Error: could not read file '$filename'"); } // TODO: Generate file :D
+				$json["data"] = json_decode($fr,true);
+				if (!$json["data"]) { logg(" >> ".$fr); error("Error: could not parse json: '$filename'"); }
 				//$json["data"] = json_decode($json["data"],true);
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
 				$json["info"]["desc"] = $queryobj["get"];

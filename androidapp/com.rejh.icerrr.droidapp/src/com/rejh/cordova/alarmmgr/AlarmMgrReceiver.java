@@ -69,9 +69,12 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		// Handle repeat: daily
 			boolean fireToday = true;
     		if (repeat.equals("daily")) {
+    			Log.d(APPTAG," > Daily repeat..");
 				int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
 				if (repeatDaily.length()<dayOfWeek) { fireToday = false; }
 				else if (repeatDaily.getInt(dayOfWeek)>0) { fireToday = true; }
+				else { fireToday = false; }
+				Log.d(APPTAG," > Day: "+ dayOfWeek +", "+ repeatDaily.getInt(dayOfWeek));
     		}
     		if (!fireToday) { 
     			Log.d(APPTAG," > Do not need to fire today");

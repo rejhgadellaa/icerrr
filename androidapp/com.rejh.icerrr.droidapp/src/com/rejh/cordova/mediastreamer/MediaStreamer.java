@@ -60,6 +60,8 @@ public class MediaStreamer extends CordovaPlugin {
             return false;
         }
         
+        Log.d(APPTAG," > "+ action);
+        
         // > A GOGO
         
         try {
@@ -74,6 +76,14 @@ public class MediaStreamer extends CordovaPlugin {
         	} else if (action.equals("setVolume")) {
         		// setVolume
         		this.setVolume(args,callbackContext);
+        		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
+        	} else if (action.equals("incrVolume")) {
+        		// incrVolume
+        		this.incrVolume(callbackContext);
+        		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
+        	} else if (action.equals("decrVolume")) {
+        		// decrVolume
+        		this.decrVolume(callbackContext);
         		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
         	} else if (action.equals("getStatus")) {
         		// getStatus
@@ -151,8 +161,20 @@ public class MediaStreamer extends CordovaPlugin {
     private void getStatus(CallbackContext callbackContext) {
     	
     	Log.d(APPTAG, APPTAG+" > getStatus");
-    	
-    	String state = ""+ sett.getInt("mediastreamer_state", 0);
+        
+        // Check service first
+        boolean serviceRunning = false;
+        Class<?> serviceClass = MediaStreamerService.class;
+	    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceClass.getName().equals(service.service.getClassName())) {
+	            serviceRunning = true;
+	        }
+	    }
+        
+        String state = null;
+        if (!serviceRunning) { state = "0"; }
+    	else { state = ""+ sett.getInt("mediastreamer_state", 0); }
     	
     	callbackContext.success(state); // TODO: todos
     	
@@ -173,7 +195,7 @@ public class MediaStreamer extends CordovaPlugin {
 		
 		float maxvol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		float curvol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-		float targvol = setvol*(maxvol/10);
+		float targvol = Math.round((setvol*maxvol)/10);
 		int difvol = Math.round(targvol-curvol);
 		
 		if (allowdown) {
@@ -186,6 +208,24 @@ public class MediaStreamer extends CordovaPlugin {
 			}
 		
 		Log.d(APPTAG,"ChangedVolume: set:"+setvol+" --> max:"+maxvol+", cur:"+curvol+", dif:"+difvol);
+		
+		callbackContext.success("OK");
+		
+	}
+	
+	private void incrVolume(CallbackContext callbackContext) {
+		
+		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+		audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
+		
+		callbackContext.success("OK");
+		
+	}
+	
+	private void decrVolume(CallbackContext callbackContext) {
+		
+		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+		audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
 		
 		callbackContext.success("OK");
 		

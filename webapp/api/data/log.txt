@@ -1,3 +1,9 @@
+2014-09-21 05:29:47    Error: Error in query: '{"get":"gcode_issues"}', gcode_issues, Array
+2014-09-21 05:29:47    GET > {"get":"gcode_issues"}
+2014-09-21 05:29:47    Cleanup json
+2014-09-21 05:29:21    Error: Error in query: '{"get":"gcode_issues"}', gcode_issues, Array
+2014-09-21 05:29:21    GET > {"get":"gcode_issues"}
+2014-09-21 05:29:21    Cleanup json
 2014-09-19 06:43:34    {"data":{"post":"ok"},"info":[]}
 2014-09-19 06:43:34    POST > {"post":"log"}
 2014-09-19 06:43:34    Cleanup json
@@ -428,4 +434,4 @@
 2014-09-17 05:14:44    Cleanup json
 2014-09-17 05:02:28    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
 2014-09-17 05:02:28    Cleanup json
-2014-09-17 05:02:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","stati
+2014-09-17 0

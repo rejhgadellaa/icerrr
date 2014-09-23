@@ -18,8 +18,8 @@ site.session.lifecycle.section_history = [];
 
 site.lifecycle.init = function() {
 	
-	loggr.log("\n==================================================================================\n\n");
-	loggr.log("site.lifecycle.init()");
+	loggr.info("\n==================================================================================\n\n");
+	loggr.info("site.lifecycle.init()");
 	
 	// Detect android/ios
 	if( /Android/i.test(navigator.userAgent) ) {
@@ -57,12 +57,14 @@ site.lifecycle.init = function() {
 
 site.lifecycle.onDeviceReady = function() {
 	
-	loggr.log("site.lifecycle.onDeviceReady()");
+	loggr.info("site.lifecycle.onDeviceReady()");
 	
 	// Attach more event listeners (cordova)
 	document.addEventListener('resume', site.lifecycle.onResume, false);
 	document.addEventListener('pause', site.lifecycle.onPause, false);
 	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
+	document.addEventListener("volumeupbutton", site.lifecycle.onVolumeUp, true);
+	document.addEventListener("volumedownbutton", site.lifecycle.onVolumeDown, true);
 	
 	// Device info
 	loggr.log(" > Device Info: "
@@ -93,7 +95,7 @@ site.lifecycle.onDeviceReady = function() {
 
 site.lifecycle.initApp = function() {
 	
-	console.info("site.lifecycle.initApp();");
+	loggr.info("site.lifecycle.initApp();");
 		
 	// some stuff
 	site.session.isPaused = false;
@@ -232,6 +234,7 @@ site.lifecycle.onNewIntent = function(result) {
 						loggr.log(" > Extra: station_id: "+station_id);
 						site.session.alarmActive = true;
 						var tmpobj = {station_id:station_id};
+						site.cast.destroy(); // make sure we're not firing an alarm over chromecast api
 						site.chlist.selectstation(tmpobj,true); // select station
 						site.home.init(); // refresh home
 						site.mp.play(); // and play
@@ -251,7 +254,7 @@ site.lifecycle.onNewIntent = function(result) {
 
 site.lifecycle.onResume = function() {
 	
-	loggr.log("site.lifecycle.onResume()");
+	loggr.info("site.lifecycle.onResume()");
 		
 	// some stuff
 	site.session.isPaused = false;
@@ -276,7 +279,7 @@ site.lifecycle.onResume = function() {
 
 site.lifecycle.onPause = function() {
 	
-	loggr.log("site.lifecycle.onPause()");
+	loggr.info("site.lifecycle.onPause()");
 	
 	// Store some stuff
 	site.helpers.storeSession();
@@ -314,7 +317,7 @@ site.lifecycle.onPause = function() {
 
 site.lifecycle.onDestroy = function() {
 	
-	loggr.log("site.lifecycle.onDestroy()");
+	loggr.info("site.lifecycle.onDestroy()");
 	
 	// Call pause..
 	site.lifecycle.onPause();
@@ -328,7 +331,7 @@ site.lifecycle.onDestroy = function() {
 
 site.lifecycle.onBackButton = function() {
 	
-	loggr.log("site.lifecycle.onBackButton()");
+	loggr.info("site.lifecycle.onBackButton()");
 	
 	// List of selectors that when display==block, then ignore back!
 	var thedonts = {
@@ -404,7 +407,7 @@ site.lifecycle.onBackButton = function() {
 
 site.lifecycle.onResize = function() {
 	
-	loggr.log("site.lifecycle.onResize()");
+	loggr.info("site.lifecycle.onResize()");
 	
 	// TODO: figure out if orientation change..
 	
@@ -423,12 +426,28 @@ site.lifecycle.onResize = function() {
 	
 }
 
+site.lifecycle.onVolumeUp = function() {
+	if (site.cast.media && site.cast.session) {
+		site.cast.onVolumeUp();
+	} else {
+		window.mediaStreamer.incrVolume(null,null);
+	}
+}
+
+site.lifecycle.onVolumeDown = function() {
+	if (site.cast.media && site.cast.session) {
+		site.cast.onVolumeDown();
+	} else {
+		window.mediaStreamer.decrVolume(null,null);
+	}
+}
+
 // ---> ACTIONS
 
 // Exit, ..
 
 site.lifecycle.exit = function() {
-	loggr.log("site.lifecycle.exit()");
+	loggr.info("site.lifecycle.exit()");
 	site.lifecycle.onDestroy();
 	navigator.app.exitApp();
 }
@@ -454,7 +473,7 @@ site.lifecycle.addOnPauseCb = function(cb) {
 // Section history
 
 site.lifecycle.add_section_history = function(selector) {
-	loggr.log("site.lifecycle.add_section_history()");
+	loggr.debug("site.lifecycle.add_section_history()");
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { site.session.lifecycle.section_history = []; }
 	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] == selector) { return; }
@@ -463,13 +482,13 @@ site.lifecycle.add_section_history = function(selector) {
 }
 
 site.lifecycle.clear_section_history = function() {
-	loggr.log("site.lifecycle.clear_section_history()");
+	loggr.debug("site.lifecycle.clear_section_history()");
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	site.session.lifecycle.section_history = [];
 }
 
 site.lifecycle.remove_section_history_item = function(selector) {
-	loggr.log("site.lifecycle.remove_last_section_history_item()");
+	loggr.debug("site.lifecycle.remove_last_section_history_item()");
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { site.session.lifecycle.section_history = []; }
 	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] == selector) { 
@@ -478,7 +497,7 @@ site.lifecycle.remove_section_history_item = function(selector) {
 }
 
 site.lifecycle.get_section_history_item = function(dontPop) {
-	loggr.log("site.lifecycle.get_section_history_item()");
+	loggr.debug("site.lifecycle.get_section_history_item()");
 	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { return false; }

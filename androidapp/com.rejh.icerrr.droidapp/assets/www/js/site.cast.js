@@ -188,20 +188,17 @@ site.cast.loadMedia = function() {
 	// var mediaInfo = new chrome.cast.media.MediaInfo(station.station_id, "audio/mpeg");
 	var mediaInfo = new chrome.cast.media.MediaInfo(station_url_https);
 		mediaInfo.contentType = "audio/mpeg";
-		mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata();
+		mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
+		mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.GENERIC;
 		mediaInfo.metadata.title = station.station_name;
-		mediaInfo.metadata.images = [
-			new chrome.cast.Image(station.station_icon), 
-			new chrome.cast.Image("img/web_hi_res_512_001.png")
-		];
-		// mediaInfo.customData = null;
-		// mediaInfo.streamType = chrome.cast.media.StreamType.BUFFERED;
-		// mediaInfo.textTrackStyle = new chrome.cast.media.TextTrackStyle();
-		mediaInfo.duration = null
+		mediaInfo.metadata.subtitle = "Icerrr Chromecast";
+		mediaInfo.metadata.images = [{'url': station.station_icon}];
 	var request = new chrome.cast.media.LoadRequest(mediaInfo);
 		request.autoplay = true;
 	
 	site.cast.mediaInfo = mediaInfo;
+	
+	console.log(" > Metadata Image: "+ mediaInfo.metadata.images[0].url);
 	
 	site.cast.session.loadMedia(request,
 		function(media) {
@@ -217,7 +214,7 @@ site.cast.loadMedia = function() {
 
 // ---> Media Update Listener
 
-site.cast.mediaUpdateListener = function() {
+site.cast.mediaUpdateListener = function(res) {
 	loggr.info("site.cast.mediaUpdateListener()");
 }
 
@@ -226,6 +223,10 @@ site.cast.mediaUpdateListener = function() {
 site.cast.updateMetadata = function() {
 	
 	loggr.info("site.cast.updateMetadata()");
+	
+	if (!site.cast.session) { return; }
+	
+	// site.cast.session.sendMessage("urn:x-cast:com.google.cast.media.Image",site.session.currentstation.station_icon,alert,alert);
 	
 	/*
 	mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
@@ -246,11 +247,13 @@ site.cast.play = function() {
 	loggr.info("site.cast.play()");
 	
 	// Stop mediaplayers
-	if (site.mp.isPlaying) {
-		site.mp.destroy();
+	if (site.mp.serviceRunning) {
+		site.mp.stop();
 	}
 	
-	site.cast.media.play();
+	site.cast.media.play(null,null,alert);
+	
+	site.cast.notif();
 	
 }
 
@@ -261,6 +264,132 @@ site.cast.stop = function() {
 	loggr.info("site.cast.play()");
 	
 	site.cast.media.stop();
+	
+	site.cast.notifCancel();
+	
+}
+
+// ---> Volume up/down
+
+site.cast.onVolumeUp = function() {
+	loggr.debug("site.cast.onVolumeUp()");
+	var level = site.cast.media.volume.level;
+	level = (level+0.1>0.95) ? level = 1 : level+0.1;
+	site.cast.setVolume(level,
+		function() {
+			site.ui.showtoast("Volume: "+ Math.round(level*100) +"%");
+		},
+		function(err) {
+			loggr.log(" > Volume UP FAILED");
+			loggr.error(err);
+		}
+	);
+}
+
+site.cast.onVolumeDown = function() {
+	loggr.debug("site.cast.onVolumeDown()");
+	var level = site.cast.media.volume.level;
+	level = (level-0.1<0.05) ? level = 0 : level-0.1;
+	site.cast.setVolume(level,
+		function() {
+			site.ui.showtoast("Volume: "+ Math.round(level*100) +"%");
+		},
+		function(err) {
+			loggr.log(" > Volume DOWN FAILED");
+			loggr.error(err);
+		}
+	);
+}
+
+site.cast.setVolume = function(level,cb,cberr) {
+	
+	loggr.debug("site.cast.setVolume(): "+level);
+	var volume = new chrome.cast.Volume(level);
+	var volumeRequest = new chrome.cast.media.VolumeRequest(volume);
+	site.cast.media.setVolume(volumeRequest,cb,cberr);
+	
+}
+
+// ---> Destroy
+
+site.cast.destroy = function() {
+	
+	loggr.log("site.cast.destroy()");
+	
+	if (site.cast.media) {
+		site.cast.media.stop();
+		site.cast.media = null;
+	}
+	
+	if (site.cast.session) { 
+		site.ui.showtoast("Chromecast: Session.stop()");
+		site.cast.updateicon(1);
+		site.cast.session.stop();
+		site.cast.session = null;
+	}
+	
+	site.cast.notifCancel();
+	
+}
+
+// ---> Notifications
+
+site.cast.notif = function() {
+	
+	loggr.info("site.cast.notif()");
+	
+	loggr.info("site.mp.notif()");
+	
+	var opts = {};
+	
+	// Required
+	opts.id = 2;
+	opts.title = "Icerrr: "+ site.session.currentstation.station_name;
+	opts.message = "Casting to '"+ site.cast.session.receiver.friendlyName +"'";
+	opts.smallicon = "ic_notification_media_route";
+	opts.intent = {
+		type: "activity",
+		package: "com.rejh.icerrr.droidapp",
+		classname: "com.rejh.icerrr.droidapp.Icerrr"
+	}
+	
+	// Optional
+	// opts.largeicon = "ic_media_play";
+	opts.priority = "HIGH";
+	opts.ongoing = true;
+	opts.alertOnce = true;
+	
+	// Exec
+	window.notifMgr.make(
+		function(res) {
+			loggr.log(" > Notification: "+ res);
+		},
+		function(errmsg) {
+			loggr.log(" > Error creating notification: "+errmsg);
+		},
+		opts
+	);
+	
+}
+
+site.cast.notifCancel = function(id) {
+	
+	loggr.info("site.cast.notifCancel()");
+	
+	if (!id && id!==0) { id = site.cfg.notifs.notifID_cast; }
+	
+	if (id<0) { 
+		loggr.log(" > Cancel all");
+		window.notifMgr.cancelAll(function(res){},function(errmsg) {
+			loggr.error(" > Could not cancel notification: "+ errmsg);
+		});
+	} else {
+		loggr.log(" > Cancel: "+id);
+		var opts = {id:id};
+		window.notifMgr.cancel(function(res){},function(errmsg) {
+			loggr.error(" > Could not cancel notification: "+ errmsg);
+		},opts);
+	}
 	
 }
 
@@ -289,24 +418,6 @@ site.cast.updateicon = function(mode) {
 	
 	loggr.log(" > "+ $(".cast_icon").attr("class"));
 	
-	
-}
-
-// ---> Destroy
-
-site.cast.destroy = function() {
-	
-	loggr.log("site.cast.destroy()");
-	
-	if (site.cast.media) {
-		site.cast.media.stop();
-		site.cast.media = null;
-	}
-	
-	if (site.cast.session) { 
-		site.cast.session.stop();
-		site.cast.session = null;
-	}
 	
 }
 

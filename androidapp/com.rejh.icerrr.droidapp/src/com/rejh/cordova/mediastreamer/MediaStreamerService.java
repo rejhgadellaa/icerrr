@@ -1,11 +1,14 @@
 package com.rejh.cordova.mediastreamer;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
+import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
@@ -13,6 +16,7 @@ import android.os.PowerManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.KeyEvent;
 
 public class MediaStreamerService extends Service {
 
@@ -29,6 +33,10 @@ public class MediaStreamerService extends Service {
 	private SharedPreferences.Editor settEditor;
 	
 	private Intent serviceIntent;
+	
+	private AudioManager audioMgr;
+	private RemoteControlReceiver remoteControlReceiver;
+	private ComponentName remoteControlReceiverComponent;
 	
 	private WifiManager wifiMgr;
 	private WifiManager.WifiLock wifiLock;
@@ -69,6 +77,9 @@ public class MediaStreamerService extends Service {
         connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
         telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        remoteControlReceiver = new RemoteControlReceiver();
+        remoteControlReceiverComponent = new ComponentName(this, remoteControlReceiver.getClass());
 		
 		// Make sticky
 		try {
@@ -81,6 +92,9 @@ public class MediaStreamerService extends Service {
 		// Service running..
 		settEditor.putBoolean("mediastreamer_serviceRunning", true);
 		settEditor.commit();
+	    
+	    // Audio Focus
+	    int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 		
 		// Setup
 		setup();
@@ -105,6 +119,9 @@ public class MediaStreamerService extends Service {
 		// Store some values
 		settEditor.putBoolean("mediastreamer_serviceRunning", false);
 		settEditor.commit();
+        
+        // Audio Focus OFF
+        audioMgr.abandonAudioFocus(afChangeListener);
 		
 		shutdown();
 		
@@ -212,6 +229,101 @@ public class MediaStreamerService extends Service {
 		    }
 		}
 	}
+	
+	// On Audio Focus Change Listener
+	OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
+		
+	    public void onAudioFocusChange(int focusChange) {
+	    	Log.i(APPTAG,"MediaStreamerService.onAudioFocusChange()");
+	        if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+	            // Pause playback
+	        	Log.d(APPTAG," > LOSS_TRANSIENT, Pause playback");
+	        	settEditor.putBoolean("wasPlayingWhenCalled",true);
+		    	settEditor.commit();
+		    	shutdown();
+	        } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+	            // Resume playback 
+	        	Log.d(APPTAG," > AUDIOFOCUS_GAIN, Resume if possible");
+	        	if (!sett.getBoolean("wasPlayingWhenCalled",false)) { return; }
+	        	Log.d(APPTAG," >> Yes, resume");
+		    	settEditor.putBoolean("wasPlayingWhenCalled",false);
+		    	settEditor.commit();
+		    	setup();
+	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+	            audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
+	            audioMgr.abandonAudioFocus(afChangeListener);
+	            // Stop playback
+	            Log.d(APPTAG," > AUDIOFOCUS_LOSS, Stop playback");
+	            settEditor.putBoolean("wasPlayingWhenCalled",false);
+		    	settEditor.commit();
+		    	shutdown();
+	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                // Lower the volume
+	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK");
+	        	setVolumeDucked();	        	
+            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                // Raise it back to normal
+            	Log.d(APPTAG," > AUDIOFOCUS_GAIN");
+            	setVolumeFocusGained();
+            }
+	    }
+	    
+	    private void setVolumeDucked() {
+	    	audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 5);
+	    }
+	    
+	    private void setVolumeFocusGained() {
+	    	audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 5);
+	    }
+	    
+	};
+	
+	// ------------------
+	// INCLUDED BROADCAST RECEIVERS
+	
+	public class RemoteControlReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+        	
+        	Log.d(APPTAG,"RemoteControlReceiver");
+        	
+        	// Stop if needed 
+        	if (intent.getAction()==null) { return; }
+            if (!intent.getAction().equals(Intent.ACTION_MEDIA_BUTTON)) { return; }
+    		
+            // Get key event
+    		KeyEvent event = (KeyEvent)intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
+            
+    		// Event empty > return
+    		if (event == null) {
+    			Log.d(APPTAG,"event==null");
+    		    return;
+    		}
+    		
+    		int action = event.getAction();
+    		if (action == KeyEvent.ACTION_UP) {
+    			
+    		    if (event.getKeyCode()==126 || event.getKeyCode()==127) { // Play/pause
+    		    		
+    		    }
+    		    
+    		    else if (event.getKeyCode()==88) { // Previous 
+    		    		
+    		    }
+    		    
+    		    else if (event.getKeyCode()==87) { // Next 
+    		    		
+    		    }
+    		    
+    		    else {
+    		    	Log.d(APPTAG," > "+ event.getKeyCode());
+    		    }
+    			
+    		}
+            
+            
+        }
+    }
 	
 	
 

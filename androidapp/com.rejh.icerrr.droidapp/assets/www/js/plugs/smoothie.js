@@ -114,7 +114,7 @@ function require(identifier, callback) {
 		if (request.status != 200)
 			throw new SmoothieError('unable to load '+descriptor.id+" ("+request.status+" "+request.statusText+")");
 		if (locks[cacheid]) {
-			console.warn("module locked: "+descriptor.id);
+			loggr.warn("module locked: "+descriptor.id);
 			callback && setTimeout(onLoad, 0);
 			return;
 		}

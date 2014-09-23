@@ -302,6 +302,7 @@ section {
 	
 	#home .main .station_image img {
 		width:256px;
+		max-height:256px;
 		margin:0;
 		padding:0;
 	}

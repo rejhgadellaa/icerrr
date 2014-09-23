@@ -29,6 +29,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.webkit.WebView;
 
 public class Icerrr extends DroidGap
@@ -46,6 +47,7 @@ public class Icerrr extends DroidGap
         
         // Clear cache
         super.clearCache();
+        super.appView.getSettings().setAllowFileAccess(true);
         
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
@@ -90,6 +92,28 @@ public class Icerrr extends DroidGap
     	super.onDestroy();
     	unregisterReceiver(killAppReceiver);
     }
+    
+    // --------------------------------------
+    // Keys
+    
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        //If volume down key
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            super.loadUrl("javascript:cordova.fireDocumentEvent('volumedownbutton');");
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            super.loadUrl("javascript:cordova.fireDocumentEvent('volumeupbutton');");
+            return true;
+        } else {
+            //return super.onKeyDown(keyCode, event); 
+        }
+        //return super.onKeyDown(keyCode, event);
+
+        return true;
+    }
+    /**/
     
     // --------------------------------------
     // Others

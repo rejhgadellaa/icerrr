@@ -15,7 +15,8 @@ site.chicon = {};
 
 site.chicon.init = function(station_id) {
 	
-	loggr.log("site.chicon.init()");
+	loggr.info("------------------------------------");
+	loggr.info("site.chicon.init()");
 	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#searchicon");

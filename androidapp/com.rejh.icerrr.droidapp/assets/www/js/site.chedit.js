@@ -15,7 +15,8 @@ site.chedit = {};
 
 site.chedit.init = function(station_id_to_edit) {
 	
-	loggr.log("site.chedit.init()");
+	loggr.info("------------------------------------");
+	loggr.info("site.chedit.init()");
 	
 	site.ui.hideloading();
 	

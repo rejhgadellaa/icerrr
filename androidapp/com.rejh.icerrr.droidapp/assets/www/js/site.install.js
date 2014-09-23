@@ -188,7 +188,7 @@ site.installer.deletefiles_next = function() {
 		},
 		function(err) {
 			loggr.error(" > Could not write/delete");
-			console.error(err);
+			loggr.error(err);
 		}
 	);
 	
@@ -396,7 +396,6 @@ site.installer.clearcache_init = function() {
 }
 
 
-
 // ---> Step X : finish up
 
 site.installer.finishup = function() {
@@ -416,9 +415,12 @@ site.installer.finishup = function() {
 	var then = now + (1000*60*60*24*7); // 1000*60*60*24 == 1 day
 	
 	site.cookies.put("app_update_time",then);
-						
-	//site.installer.logger("&nbsp;&gt; Set alarms...");
-	//site.alarms.setAlarms();
+	
+	// Clean up directories...
+	site.storage.removefolder(site.cfg.paths.images,null,null,{recursively:true});
+	if (!site.cookies.get("app_is_installed")) { 
+		site.storage.removefolder(site.cfg.paths.json,null,null,{recursively:true});
+	}
 	
 	// Wait a sec...
 	setTimeout(function(){

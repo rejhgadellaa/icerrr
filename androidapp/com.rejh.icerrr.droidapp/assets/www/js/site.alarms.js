@@ -15,6 +15,7 @@ site.alarms = {};
 
 site.alarms.init = function() {
 	
+	loggr.info("------------------------------------");
 	loggr.info("site.alarms.init()");
 	
 	// Check stations
@@ -72,6 +73,8 @@ site.alarms.drawResults = function() {
 		var alarm = alarms[i];
 		if (!alarm) { continue; } // TODO: Huh?
 		
+		loggr.log(" >> "+ alarm.station.station_name);
+		
 		// Build item
 		var resultitem = document.createElement("div");
 		resultitem.className = "resultitem activatabled";
@@ -82,7 +85,8 @@ site.alarms.drawResults = function() {
 		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
-		resulticon.src = alarm.station.station_icon;
+		resulticon.src = (!alarm.station.station_icon_local) ? alarm.station.station_icon : site.helpers.getImageLocally(resulticon, site.cfg.paths.images, alarm.station.station_icon_local, alarm.station.station_icon, null, null); 
+			// alarm.station.station_icon;
 		
 		var resultname = document.createElement("div");
 		resultname.className = "resultname";
@@ -115,6 +119,7 @@ site.alarms.drawResults = function() {
 
 site.alarms.add = function() {
 	
+	loggr.info("------------------------------------");
 	loggr.info("site.alarms.add()");
 	
 	site.lifecycle.add_section_history("#alarms_add");
@@ -131,7 +136,8 @@ site.alarms.add = function() {
 
 site.alarms.edit = function(obj) {
 	
-	loggr.info("site.alarms.add()");
+	loggr.info("------------------------------------");
+	loggr.info("site.alarms.edit()");
 	
 	var id = obj.edit_id;
 	var alarm_id = obj.alarm_id;

@@ -1,26 +1,54 @@
-#summary Not updated with every update, but it does contain all of it :)
+0.052 (??)
+  * Install/update clears locally stored images
+  * Station icons would not update when stored locally
 
-= Changelog =
+0.051 (beta)
+  * Save station icons locally: cleanup log output
+  * Fix: Tapping 'cast' icon sometimes crashed app
 
-0.045
+0.050 (beta)
+  * Save station icons locally (testing)
+  * Some other stuff
+  
+0.049 (stable)
+  * Quickfix: Removed 'you may want to restart' message
+
+0.048 (stable)
+  * Improvements to media state detection
+
+0.047 (stable)
+  * Stop casting when an alarm is fired
+  * More work on respecting 'Audio Focus'
+  * Minor stuff
+  
+0.046 (beta)
+  * Volume levels for chromecast were strangely rounded..
+  * Started work on respecting 'Audio Focus'
+  * Notification when casting to Chromecast
+  * Minor improvements to notification system
+
+0.045 (stable)
+  * New: Volume buttons now control Chromecast when casting
+  * Alarm would sometimes fire on days it shouldn't repeat
   * Added some info when uploading log contents
+  * Tweaks, fixes
 
-0.044 [stable]
+0.044 (stable)
   * Fix: Mediaplayer could crash after receiving a phone call
 
-v0.043 [stable]
+v0.043 (stable)
   * Storage.readfile sometimes gets stuck. Should be fixed, needs testing
   * Tweaks for media player status detection
 
-v0.042 [stable]
+v0.042 (stable)
   * Delete button now only shows after saving an alarm
   * Media status poll was sometimes not stopped
 
-v0.041 [stable]
+v0.041 (stable)
   * Milestone: app released in Play Store!
   * Improved play button behaviour
 
-v0.040
+v0.040 (beta)
   * Alarms were not set on boot (missing permission)
   * Alarms are re-set after app update
 

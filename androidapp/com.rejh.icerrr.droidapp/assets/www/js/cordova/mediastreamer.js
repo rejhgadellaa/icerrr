@@ -42,14 +42,32 @@
 		console.log("MediaStreamer.prototype.setVolume(): "+level);
         cordova.exec(win, fail, "MediaStreamer", "setVolume", [level]);
     };
+	
+    /**
+    * Incr Volume
+	* Increase volume by 1 (from 0 to 10)
+    */
+    MediaStreamer.prototype.incrVolume = function(win, fail) {
+		console.log("MediaStreamer.prototype.incrVolume()");
+        cordova.exec(win, fail, "MediaStreamer", "incrVolume", []);
+    };
+	
+    /**
+    * Decrease Volume
+	* Decrease volume by 1 (from 0 to 10)
+    */
+    MediaStreamer.prototype.decrVolume = function(win, fail) {
+		console.log("MediaStreamer.prototype.decrVolume()");
+        cordova.exec(win, fail, "MediaStreamer", "decrVolume", []);
+    };
 
     /**
     * GetStatus
-	loggr.log(Media.MEDIA_NONE); // ?
-	loggr.log(Media.MEDIA_STARTING); // 1
-	loggr.log(Media.MEDIA_RUNNING); // 2
-	loggr.log(Media.MEDIA_PAUSED); // 3
-	loggr.log(Media.MEDIA_STOPPED); // 4
+	* Media.MEDIA_NONE // 0?
+	* Media.MEDIA_STARTING // 1
+	* Media.MEDIA_RUNNING // 2
+	* Media.MEDIA_PAUSED // 3
+	* Media.MEDIA_STOPPED // 4
     */
     MediaStreamer.prototype.getStatus = function(win, fail) {
 		// console.log("MediaStreamer.prototype.getStatus()");

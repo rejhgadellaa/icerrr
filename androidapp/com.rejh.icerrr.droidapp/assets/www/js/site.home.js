@@ -15,6 +15,7 @@ site.home = {};
 
 site.home.init = function() {
 	
+	loggr.info("------------------------------------");
 	loggr.info("site.home.init();");
 	
 	// Check if station has been selected
@@ -114,7 +115,7 @@ site.home.onresume = function() {
 
 site.home.mpPlayToggle = function() {
 	
-	loggr.info("site.home.mpPlay()");
+	loggr.info("site.home.mpPlayToggle()");
 	
 	// MP or cast?
 	if (site.cast.session) {
@@ -130,7 +131,7 @@ site.home.mpPlayToggle = function() {
 				case chrome.cast.media.PlayerState.PLAYING:
 				case chrome.cast.media.PlayerState.BUFFERING:
 					loggr.log(" >> stop");
-					site.cast.media.stop();
+					site.cast.destroy();
 					break;
 					
 				default:
@@ -243,12 +244,12 @@ site.home.run_station_updates = function() {
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
-			try { if (site.mp.isPlaying) site.mp.notif(); } catch(e) {}
 			
 			// Cast
 			if (site.cast.session && site.cast.media) {
 				// urn:x-cast:com.google.cast.media.
 				// site.cast.session.sendMessage("","urn:x-cast:com.google.cast.media.Image
+				site.cast.updateMetadata();
 			}
 		},
 		function(error) {

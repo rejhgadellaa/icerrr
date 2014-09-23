@@ -15,6 +15,7 @@ site.chlist = {};
 
 site.chlist.init = function(forceRedraw) {
 	
+	loggr.info("------------------------------------");
 	loggr.info("site.chlist.init()");
 	
 	site.ui.hideloading();
@@ -209,20 +210,18 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
 		resulticon.addEventListener("load",function(ev){ 
+			// Store image locally
 			var stationIndex = site.helpers.session.getStationIndexById(ev.target.parentNode.station_id);
 			if (stationIndex<0) { return; }
-			if (site.data.stations[stationIndex].station_icon_local && site.data.stations[stationIndex].station_icon.indexOf("http")!==0) { return; }
+			if (site.data.stations[stationIndex].station_icon_local) { return; }
+			site.data.stations[stationIndex].station_icon_orig = $(ev.target).attr("src"); // store original
 			var filename = site.helpers.imageUrlToFilename(ev.target.src,"station_icon_"+site.data.stations[stationIndex].station_name.split(" ").join("-").toLowerCase(),true);
-			/*
-			// TODO: Fix this..?
 			site.helpers.storeImageLocally(ev.target,filename,
 				function(evt) {
 					// evt.target.fileName
 					var stationIndex = site.helpers.session.getStationIndexById(ev.target.parentNode.station_id);
 					if (stationIndex>=0) { 
-						site.data.stations[stationIndex].station_icon = evt.target.fileName;
-						site.data.stations[stationIndex].station_icon_local = true;
-						site.data.stations[stationIndex].station_edited["station_icon"] = new Date().getTime();
+						site.data.stations[stationIndex].station_icon_local = evt.target.fileName;
 						site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
 						site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
 					}
@@ -230,12 +229,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 			);
 			/**/
 		});
-		resulticon.addEventListener("error",function(ev){ 
-			loggr.log(" > Could not load "+ ev.target.src);
-			loggr.log(" > "+ ev.target.parentNode.station_id);
-			$(ev.target).attr("src","img/icons-48/ic_launcher.png?c="+(new Date().getTime()));
-		});
-		resulticon.src = station.station_icon;
+		resulticon.src = (!station.station_icon_local) ? station.station_icon : site.helpers.getImageLocally(resulticon, site.cfg.paths.images, station.station_icon_local, station.station_icon, null, null); 
 		
 		var resultname = document.createElement("div");
 		resultname.className = "resultname";
@@ -303,7 +297,7 @@ site.chlist.selectstation = function(resultitem,dontgohome) {
 	
 	site.session.currentstation_id = resultitem.station_id;
 	site.session.currentstation = site.data.stations[site.helpers.session.getStationIndexById(resultitem.station_id)];
-	site.mp.destroy(); // should be destroyed whenever currentstation changes!
+	site.mp.stop(); // should be destroyed whenever currentstation changes!
 	if (site.cast.session) {
 		site.cast.loadMedia();
 	}

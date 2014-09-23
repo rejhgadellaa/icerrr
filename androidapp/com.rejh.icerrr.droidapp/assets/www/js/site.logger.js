@@ -130,10 +130,10 @@ loggr.gethtml = function(maxlines) {
 			case "warn":
 				html+= "<span style='color:#f90'>"+ logline +"</span><br>\n";
 				break;
-			case "debug":
+			case "info":
 				html+= "<span style='color:#333'>"+ logline +"</span><br>\n";
 				break;
-			case "info":
+			case "debug":
 				html+= "<span style='color:#666'>"+ logline +"</span><br>\n";
 				break;
 			default:
@@ -186,41 +186,45 @@ loggr.upload = function() {
 	);
 	loggr.log(" > App version: "+ site.cfg.app_version);
 	
-	loggr.save();
+	setTimeout(function(){
 	
-	var html = loggr.gethtml(512); // last 512 lines
-	var text = loggr.gettext
-	
-	loggr.log(" >> "+ html.length)
-	
-	// Webapi time!
-	var apiqueryobj = {
-		"post":"log"
-	}
-	var data = {
-		"log_id":site.helpers.getUniqueID(),
-		"log_html":html,
-		"log_text":text
-	}
-	
-	var apiaction = "post";
-	var apiquerystr = JSON.stringify(apiqueryobj);
-	
-	site.webapi.post(apiaction,apiquerystr,data,
-		function(data) {
-			if (data["error"]) {
-				loggr.log("loggr.upload().OK");
-				loggr.log(data["error"]);
-			} else {
-				loggr.log("loggr.upload().OK");
-				loggr.uploading = false;
-			}
-		},
-		function(error) {
-			if (error.message) { loggr.log(error.message); }
-			else { loggr.log(error); }
+		loggr.save();
+		
+		var html = loggr.gethtml(512); // last 512 lines
+		var text = loggr.gettext
+		
+		loggr.log(" >> "+ html.length)
+		
+		// Webapi time!
+		var apiqueryobj = {
+			"post":"log"
 		}
-	);
+		var data = {
+			"log_id":site.helpers.getUniqueID(),
+			"log_html":html,
+			"log_text":text
+		}
+		
+		var apiaction = "post";
+		var apiquerystr = JSON.stringify(apiqueryobj);
+		
+		site.webapi.post(apiaction,apiquerystr,data,
+			function(data) {
+				if (data["error"]) {
+					loggr.log("loggr.upload().OK");
+					loggr.log(data["error"]);
+				} else {
+					loggr.log("loggr.upload().OK");
+					loggr.uploading = false;
+				}
+			},
+			function(error) {
+				if (error.message) { loggr.log(error.message); }
+				else { loggr.log(error); }
+			}
+		);
+	
+	},500);
 	
 	/**/
 	

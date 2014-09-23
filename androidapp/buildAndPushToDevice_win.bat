@@ -52,8 +52,8 @@ echo Building project (INCR)
 echo.
 call ant -S debug
 REM ant -S debug
-if errorlevel 1 goto error
-if not errorlevel 0 goto error
+if errorlevel 1 goto buildclean
+if not errorlevel 0 goto buildclean
 goto installapp
 
 :buildclean

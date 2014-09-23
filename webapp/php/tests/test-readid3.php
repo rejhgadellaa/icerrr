@@ -5,6 +5,7 @@
 // Example usage:
 // - ?q={"station_id":"3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-sb-mp3"}
 
+error_reporting(E_ERROR | E_PARSE);
 
 // Function: fw
 function fw($path,$content,$append=false) {
@@ -106,7 +107,7 @@ foreach($lines as $line) {
 	if (!$key || !$val) { continue; }
 	
 	// store
-	$array[$key] = $val;
+	$array[urlencode($key)] = urlencode($val);
 	
 }
 
@@ -116,8 +117,9 @@ $array["nowplaying"] = $title;
 // Add station_id, timestamp
 $array["station_id"] = $queryj["station_id"];
 $array["time_ms"] = time()*1000;
-$array["querys"] = $querys;
+// $array["querys"] = $querys;
 $array["queryj"] = $queryj;
+$array["time_read"] = time()-$timebgn;
 
 // Write file
 $filename = $queryj["station_id"].".json";
@@ -125,7 +127,7 @@ $jsons = json_encode($array);
 // fw($filename,$jsons); // TODO: Cleanup 
 
 $filename2 = "../../json/station_info.". $queryj["station_id"].".json";
-fw($filename2,$jsons);
+$fw = fw($filename2,$jsons);
 
 // Output
 header("Content-Type: application/json");

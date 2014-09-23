@@ -19,7 +19,7 @@ site.helpers = {};
 
 site.helpers.mergeStations = function(stations1,stations2) {
 	
-	loggr.info("site.helpers.mergeStations()");
+	loggr.debug("site.helpers.mergeStations()");
 	
 	if (!stations1 && !stations2) { return []; }
 	else if (!stations1) { return stations2; }
@@ -144,8 +144,7 @@ site.helpers.calcAverageColor = function(pixelArray) {
 
 site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
 	
-	loggr.info("site.helpers.imageUrlToFilename()");
-	loggr.log(" > "+url);
+	loggr.debug("site.helpers.imageUrlToFilename()");
 	
 	var filename = "__noname__"+ new Date().getTime();
 	
@@ -165,8 +164,6 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
 	
 	filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
 	
-	loggr.log(" > "+ filename);
-	
 	return filename;
 	
 }
@@ -176,18 +173,19 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
 
 site.helpers.storeImageLocally = function(imgobj,filename,cb,opts) {
 	
-	loggr.info("site.helpers.storeImageLocally()");
+	loggr.debug("site.helpers.storeImageLocally()");
 	
 	// Get base64
-	loggr.log(" > Encode base64...");
+	//loggr.log(" > Encode base64...");
 	var timebgn = new Date().getTime();
 	var base64 = site.helpers.imageToBase64(imgobj);
 	var time_encoded = new Date().getTime() - timebgn;
 	
-	loggr.log(" >> "+ time_encoded +" ms");
+	//loggr.log(" >> Base64: "+ base64);
+	//loggr.log(" >> "+ time_encoded +" ms");
 	
 	// Write
-	loggr.log(" > Write: "+filename);
+	//loggr.log(" > Write: "+filename);
 	site.storage.writefile(site.cfg.paths.images,filename,base64,
 		function(evt) { cb(evt); },
 		function(err) {
@@ -199,6 +197,48 @@ site.helpers.storeImageLocally = function(imgobj,filename,cb,opts) {
 	
 }
 
+// Get image
+
+site.helpers.getImageLocally = function(imgobj,filepath,filename,fallback,cb,cberr) {
+	
+	loggr.debug("site.helpers.getImageLocally()");
+	
+	setTimeout(function() {
+	
+		// Get filename
+		if (filename.indexOf("/")>=0) {
+			filename = filename.substr(filename.lastIndexOf("/")+1);
+		}
+		
+		loggr.log(" > "+ filename);
+		
+		// Read file
+		site.storage.readfile(filepath,filename,
+			function(data) {
+				imgobj.src = data;
+				if (cb) { cb(); }
+			},
+			function(error) {
+				loggr.warn(" > site.helpers.getImageLocally.Error: "+ filename);
+				loggr.warn(error);
+				imgobj.src = fallback;
+				if (cberr) { cberr(); }
+			},
+			null
+		);
+		
+		imgobj.addEventListener("error",
+			function(ev){ 
+				loggr.warn(" > site.helpers.getImageLocally.Error");
+				loggr.warn(" > Could not load "+ ev.target.src);
+				$(ev.target).attr("src",fallback);
+			}
+		);
+		
+	},1);
+	
+}
+
 // imageToBase64
 // - Returns FALSE if something has gone wrong...
 
@@ -206,8 +246,8 @@ site.helpers.imageToBase64 = function(imgobj,cb,opts) {
 	
 	// Handle opts
 	if (!opts) { opts = {}; }
-	if (!opts.maxwidth) { opts.maxwidth = imgobj.width; } // Note: dev is responsible for handling aspect!
-	if (!opts.maxheight) { opts.maxheight = imgobj.height; }
+	if (!opts.maxwidth) { opts.maxwidth = imgobj.naturalWidth; } // Note: dev is responsible for handling aspect!
+	if (!opts.maxheight) { opts.maxheight = imgobj.naturalWidth; }
 	if (!opts.zoomcrop) { opts.zoomcrop = false; } // TODO: implement
 	
 	// Create canvas
@@ -215,11 +255,11 @@ site.helpers.imageToBase64 = function(imgobj,cb,opts) {
 	ctx = canvas.getContext("2d");
 	
 	// Set width/height to match imageObj
-	canvas.width = imgobj.width;
-	canvas.height = imgobj.height;
+	canvas.width = imgobj.naturalWidth;
+	canvas.height = imgobj.naturalWidth;
 	
 	// Draw image
-	ctx.drawImage(imgobj, 0, 0, imgobj.width, imgobj.height, 0, 0, opts.maxwidth, opts.maxheight);
+	ctx.drawImage(imgobj, 0, 0, imgobj.naturalWidth, imgobj.naturalWidth, 0, 0, opts.maxwidth, opts.maxheight);
 	
 	// Now get the base64...
 	var base64 = canvas.toDataURL("image/png");
@@ -336,7 +376,7 @@ site.sorts.station_by_name = function(stations) {
 site.helpers.session = {};
 
 site.helpers.storeSession = function() {
-	loggr.info("site.helpers.storeSession()");
+	loggr.debug("site.helpers.storeSession()");
 	if (!site.session_ready) { // get session before writing
 		site.helpers.readSession();
 	}
@@ -354,7 +394,7 @@ site.helpers.storeSession = function() {
 }
 
 site.helpers.readSession = function() {
-	loggr.info("site.helpers.readSession()");
+	loggr.debug("site.helpers.readSession()");
 	loggr.log(" > Restore site.session: "+ site.cookies.get("site.session"));
 	site.session = JSON.parse(site.cookies.get("site.session"));
 	if (!site.session) { 
@@ -367,6 +407,7 @@ site.helpers.readSession = function() {
 				if (!site.session) { site.session = {}; }
 				site.session_ready = true;
 				site.helpers.storeSession();
+				site.alarms.setAlarms(); // not a nice place but I need it somewhere...
 			},
 			function(err) {
 				loggr.error(" > Could not read session from storage");
@@ -508,7 +549,7 @@ site.helpers.getUniqueID = function(prefix,suffix) {
 	var res = device.uuid;
 	res += "_"+ (new Date().getTime()).toString(16);
 	res += "_"+ Math.round((Math.random()*1024*1024)).toString(16);
-	loggr.log("site.helpers.getUniqueID(): "+ res);
+	loggr.debug("site.helpers.getUniqueID(): "+ res);
 	return res;
 }
 
@@ -524,13 +565,13 @@ site.helpers.genUniqueStationId = function(station_name) {
 // ---> Google Image Search
 
 site.helpers.getGoogleImageSearchBranding = function() {
-	loggr.info("site.helpers.getGoogleImageSearchBranding()");
+	loggr.debug("site.helpers.getGoogleImageSearchBranding()");
 	return google.search.Search.getBranding();
 }
 
 site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 	
-	loggr.info("site.helpers.googleImageSearch()");
+	loggr.debug("site.helpers.googleImageSearch()");
 	loggr.log(" > "+searchstring);
 	
 	// HELP: https://developers.google.com/image-search/v1/devguide
@@ -656,12 +697,12 @@ site.helpers.masonryinit = function(selector,opts) {
 }
 
 site.helpers.masonryupdate = function(selector) {
-	loggr.info("site.helpers.masonryupdate(): "+selector);
+	loggr.debug("site.helpers.masonryupdate(): "+selector);
 	//$(selector).masonry('layout');
 }
 
 site.helpers.masonryOnResize = function() {
-	loggr.info("site.vars.masonryOnResize()");
+	loggr.debug("site.vars.masonryOnResize()");
 	if (!site.vars.masonries) { return; }
 	for (var i=0; i<site.vars.masonries.length; i++) {
 		var selector = site.vars.masonries[i];

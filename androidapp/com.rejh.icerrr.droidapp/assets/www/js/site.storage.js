@@ -27,7 +27,7 @@ site.storage.addTimeout = function(action, time, args) {
 	
 	var timeoutID = site.helpers.getUniqueID(action);
 	
-	loggr.info("site.storage.addTimeout(): "+ action +", "+ timeoutID);
+	loggr.debug("site.storage.addTimeout(): "+ action +", "+ timeoutID);
 	
 	site.storage.timeouts[timeoutID] = {};
 	site.storage.timeouts[timeoutID].action = action
@@ -35,7 +35,7 @@ site.storage.addTimeout = function(action, time, args) {
 	site.storage.timeouts[timeoutID].timeout = setTimeout(function() {
 		
 		loggr.error("site.storage timeout! Action: '"+action+"'",{dontupload:true});
-		loggr.error(JSON.stringify(args));
+		loggr.error(JSON.stringify(args),{dontupload:true});
 		
 		// TODO || TMP: remove this line for prod.
 		// alert("Storage timeout occured!");
@@ -61,14 +61,13 @@ site.storage.addTimeout = function(action, time, args) {
 				
 				default:
 					loggr.error(" > Could not retry action: '"+ action +"'");
-					alert("An error accured. Icerrr will now close.");
-					site.lifecycle.exit();
+					// site.ui.showtoast("An error accured. You may want to restart Icerrr.");
 					
 			}
 			
 		} else {
-			alert("An error accured. Icerrr will now close.");
-			site.lifecycle.exit();
+			loggr.error(" > Cannot abort file operation, ask user to restart app");
+			// site.ui.showtoast("An error accured. You may want to restart Icerrr.");
 		}
 		
 		loggr.log(" > Endof storage.timeout");
@@ -83,7 +82,7 @@ site.storage.addTimeout = function(action, time, args) {
 
 site.storage.removeTimeout = function(timeoutID) {
 	
-	loggr.info("site.storage.removeTimeout(): "+ timeoutID);
+	loggr.debug("site.storage.removeTimeout(): "+ timeoutID);
 	
 	if (!site.storage.timeouts[timeoutID]) {
 		loggr.warn(" > site.storage.removeTimeout: "+timeoutID +" not found");
@@ -129,7 +128,7 @@ site.session.storage.queue = [];
 
 site.storage.enqueue = function(action,args) {
 	
-	loggr.log("site.storage.enqueue(): "+action);
+	loggr.debug("site.storage.enqueue(): "+action);
 	loggr.log(" > "+ JSON.stringify(args));
 	
 	if (!site.session.storage) { site.session.storage = {}; }
@@ -157,7 +156,7 @@ site.storage.enqueue = function(action,args) {
 
 site.storage.runqueue = function() {
 	
-	loggr.log("site.storage.runqueue()");
+	loggr.debug("site.storage.runqueue()");
 	
 	if (!site.session.storage) { return; }
 	
@@ -224,13 +223,50 @@ site.storage.runqueue_cb = function() {
 
 // ---> Folders
 
+// RemoveFolder
+
+site.storage.removefolder = function(path,cb,errcb,opts) {
+	
+	loggr.debug("site.storage.removefolder(): "+path);
+	
+	// Check path, should contain site.cfg.paths.root
+	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
+		errcb({code:-1,message:"site.storage.createfolder().Error: Will not write outside of root directory: '"+path+"'"});
+		return; // <- important...
+	}
+	
+	// Opts
+	if (!opts) { opts = {}; }
+	
+	// Run
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+        function(fileSystem) {
+            fileSystem.root.getDirectory(
+				path,
+                { create: false, exclusive: false },
+                function(entry) { 
+					var func = (opts.recursively) ? entry.removeRecursively : remove;
+					try { if (!func) { func(cb,cberr); } } catch(e) { loggr.error(e); }
+					site.storage.isBusy=false; 
+				},
+                function(error) { 
+					site.storage.isBusy=false; 
+					errcb(error); 
+				}
+            );
+        },
+        function(error) { site.storage.isBusy=false; errcb(error); }
+    );
+	
+}
+
 // Create folder
 // - Use to create a folder INSIDE site.cfg.paths.root
 // - Returns directoryEntry to cb: http://docs.phonegap.com/en/2.7.0/cordova_file_file.md.html#DirectoryEntry
 
 site.storage.createfolder = function(path,cb,errcb) {
 	
-	loggr.log("site.storage.createfolder(): "+path);
+	loggr.debug("site.storage.createfolder(): "+path);
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -267,7 +303,7 @@ site.storage.createfolder = function(path,cb,errcb) {
 
 site.storage.readfolder = function(path,cb,errcb,opts) {
 	
-	loggr.log("site.storage.readfolder(): "+path);
+	loggr.debug("site.storage.readfolder(): "+path);
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -329,7 +365,7 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 
 site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	
-	loggr.log("site.storage.writefile(): "+path+", "+filename+", ~"+site.helpers.calcStringToKbytes(data)+" kb");
+	loggr.debug("site.storage.writefile(): "+path+", "+filename+", ~"+site.helpers.calcStringToKbytes(data)+" kb");
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -390,7 +426,7 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 
 site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	
-	loggr.log("site.storage.readfile(): "+path+", "+filename);
+	loggr.debug("site.storage.readfile(): "+path+", "+filename);
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
@@ -441,7 +477,7 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 										// check if aborted..
 										if (!site.storage.timeouts[timeoutID]) { 
 											loggr.warn(" > site.storage.readfile(): canceled action suddenly got fired");
-											return; 
+											// return; 
 										}
 										site.storage.preCb(cb,evt.target.result,timeoutID); 
 										}
@@ -472,7 +508,7 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 
 site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
 	
-	loggr.log("site.storage.getmetadata(): "+path+", "+fileOrFolder);
+	loggr.debug("site.storage.getmetadata(): "+path+", "+fileOrFolder);
 	
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0

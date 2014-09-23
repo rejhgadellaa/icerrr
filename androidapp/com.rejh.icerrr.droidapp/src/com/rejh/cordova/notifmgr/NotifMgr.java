@@ -163,9 +163,6 @@ public class NotifMgr extends CordovaPlugin {
         	
         	// Actions
         	JSONArray actions = obj.has("actions") ? obj.getJSONArray("actions") : null;
-        	for (int i=0; i<actions.length(); i++) {
-        		// TODO: Handle actions
-        	}
         	
 	        // Check required args
 	        if (id==-1 || message==null || title==null || smallicon==null) {
@@ -230,7 +227,7 @@ public class NotifMgr extends CordovaPlugin {
 	        
 	        callbackContext.success("OK");
 		
-		} catch (Exception e) {
+        } catch (Exception e) {
 		Log.e(APPTAG," -> Error parsing argsobj");
 		Log.e(APPTAG,e.toString());
 		e.printStackTrace();
@@ -244,6 +241,18 @@ public class NotifMgr extends CordovaPlugin {
     public void cancel(JSONArray args, CallbackContext callbackContext) throws JSONException {
         
         Log.d(APPTAG," > Cancel");
+        
+        // Args
+        JSONObject argObj = args.getJSONObject(0);
+        int id = argObj.has("id") ? argObj.getInt("id") : -1;
+        
+        if (id<0) { Log.e(APPTAG," > Cannot cancel notification without an id: "+ id); return; }
+        
+        // Cancel
+        NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notifMgr.cancel(id);
+        
+        callbackContext.success("OK");
         
     }
     
