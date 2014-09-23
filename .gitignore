@@ -1,0 +1,30 @@
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# more android stuff
+.classpath
+.project
+.settings/
+
+# icerrr specific
+_keystore/
+_apks/
+_tmp/
+cache/
+webapp/json/
+!webapp/json/stations.json
+!webapp/json/stations.example.json
+
+# Local configuration file (sdk path, etc)
+local.properties
