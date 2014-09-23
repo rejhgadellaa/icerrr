@@ -17,14 +17,18 @@ gen/
 .project
 .settings/
 
-# icerrr specific
+# Local configuration file (sdk path, etc)
+local.properties
+
+# ---> Icerrr
+
+# Some personal files
 _keystore/
-_apks/
+_apks/*
 _tmp/
 cache/
+
+# webapp jsons
 webapp/json/
 !webapp/json/stations.json
 !webapp/json/stations.example.json
-
-# Local configuration file (sdk path, etc)
-local.properties
