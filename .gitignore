@@ -20,10 +20,10 @@ gen/
 # Local configuration file (sdk path, etc)
 local.properties
 
-# ---> Icerrr
+# --- Icerrr
 
 # Some personal files
-_keystore/*
+/androidapp/_keystore/icerrr.keystore
 _apks/*
 _tmp/
 cache/
