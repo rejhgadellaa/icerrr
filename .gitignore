@@ -23,7 +23,7 @@ local.properties
 # ---> Icerrr
 
 # Some personal files
-_keystore/
+_keystore/*
 _apks/*
 _tmp/
 cache/
