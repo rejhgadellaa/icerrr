@@ -1,6 +1,5 @@
-0.052 (??)
-  * Install/update clears locally stored images
-  * Station icons would not update when stored locally
+0.052 (beta)
+  * Fix: once a station icon was stored locally, it didn't update when edited
 
 0.051 (beta)
   * Save station icons locally: cleanup log output

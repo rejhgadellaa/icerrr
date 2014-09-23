@@ -140,7 +140,7 @@ site.installer.deletefiles_init = function() {
 	
 	site.installer.logger("Delete files...");
 	
-	if (site.installer.cfg.overwrite_version >= site.cfg.app_version && site.cookies.get("app_version")!=site.cfg.app_version) {
+	if (site.installer.cfg.overwrite_version >= site.cfg.app_version && site.cookies.get("app_version")!=site.cfg.app_version || !site.cookies.get("app_is_installed")) {
 		// only do on 'clear data installs'
 		site.installer.deletefiles_next();
 	} else {
@@ -417,10 +417,12 @@ site.installer.finishup = function() {
 	site.cookies.put("app_update_time",then);
 	
 	// Clean up directories...
-	site.storage.removefolder(site.cfg.paths.images,null,null,{recursively:true});
+	/* TODO: NOT HERE, we just created these folders :S
+	site.storage.removefolder(site.cfg.paths.images,null,site.installer.removefolder_cberr,{recursively:true});
 	if (!site.cookies.get("app_is_installed")) { 
-		site.storage.removefolder(site.cfg.paths.json,null,null,{recursively:true});
+		site.storage.removefolder(site.cfg.paths.json,null,site.installer.removefolder_cberr,{recursively:true});
 	}
+	/**/
 	
 	// Wait a sec...
 	setTimeout(function(){
@@ -436,8 +438,19 @@ site.installer.finishup = function() {
 		},2500);
 		//site.ui.gotosection("#home"); // TODO: no not go here, goto #firstlaunch
 	},2500);
-		
 	
+}
+
+// ---------------------------------------------
+// CALLBACKS
+
+site.installer.removefolder_cb = function(res) {
+	
+}
+
+site.installer.removefolder_cberr = function(error) {
+	loggr.warn(" > removefolder.Error: "+ site.storage.getErrorType(error));
+	loggr.warn(" > "+ error.message);
 }
 
 // ---------------------------------------------

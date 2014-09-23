@@ -245,8 +245,8 @@ site.storage.removefolder = function(path,cb,errcb,opts) {
 				path,
                 { create: false, exclusive: false },
                 function(entry) { 
-					var func = (opts.recursively) ? entry.removeRecursively : remove;
-					try { if (!func) { func(cb,cberr); } } catch(e) { loggr.error(e); }
+					if (opts.recursively) { entry.removeRecursively(cb,errcb); }
+					else { entry.remove(cb,errcb); }
 					site.storage.isBusy=false; 
 				},
                 function(error) { 
