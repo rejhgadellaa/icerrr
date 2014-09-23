@@ -100,7 +100,7 @@ site.installer.deletefolders = function() {
 			function(fileError) {
 				loggr.error(" > removefolder.Error: "+ site.storage.getErrorType(fileError),{dontupload:true});
 				loggr.error(" > "+ fileError.message);
-				site.installer.logger("&nbsp;&gt; Failed");
+				site.installer.logger("&nbsp;&gt; Done");
 				site.installer.createfolders_init();
 			},
 			{recursively:true}

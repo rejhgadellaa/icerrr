@@ -114,13 +114,13 @@ site.ui.showtoast = function(msg, timeInSec) {
 	if (!timeInSec) { timeInSec = 3.0; }
 	var timeInMsec = timeInSec * 1000;
 	$("#overlay_toast").html(msg);
-	$("#overlay_toast").fadeIn(500);
+	$("#overlay_toast").fadeIn(250);
 	site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec); 
 }
 
 site.ui.hidetoast = function() {
 	loggr.log("site.ui.hidetoast()");
-	$("#overlay_toast").fadeOut(500);
+	$("#overlay_toast").fadeOut(250);
 }
 
 site.ui.createtoast = function() {
