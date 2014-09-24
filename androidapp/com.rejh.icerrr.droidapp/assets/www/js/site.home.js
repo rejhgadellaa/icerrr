@@ -187,6 +187,7 @@ site.home.run_ui_updates = function() {
 		loggr.log(" > .button.center addclass active");
 		$(".button.center").removeClass("busy"); 
 		$(".button.center").addClass("active"); 
+		$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 	} else if (site.mp.mpstatus==Media.MEDIA_STARTING && !$(".button.center").hasClass("busy")) {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").addClass("busy"); 
@@ -194,10 +195,12 @@ site.home.run_ui_updates = function() {
 		loggr.log(" > .button.center removeclass active");
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy"); 
+		$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
 		loggr.log(" >> "+ $(".button.center").attr("class"));
 	} else if (site.mp.mpstatus==Media.MEDIA_NONE) {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy"); 
+		$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
 	}
 	
 	// When paused, stop updates...

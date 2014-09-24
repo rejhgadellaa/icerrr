@@ -1,3 +1,9 @@
+0.055 (stable)
+  * Tweak: Play button now shows 'stop' icon when streaming
+  * Tweak: MediaStreamer enabled wifi when active (should minimize mobile data usage)
+  * Fix: MediaStreamer caused volume UI to pop up when notifications happened
+  * Fix: Other issues related to audio focus (incoming notifs, calls, etc)
+
 0.054 (stable)
   * Landscape support for 7 and 10" tablets
   * Minor tweaks

@@ -132,6 +132,10 @@ public class MediaStreamerService extends Service {
 	// Setup
 	
 	private void setup() {
+		setup(false);
+	}
+	
+	private void setup(boolean force) {
         
         Log.d(APPTAG," > setup()");
 		
@@ -159,7 +163,7 @@ public class MediaStreamerService extends Service {
         
         // Check
         if (stream_url==null) { shutdown(); }
-        if (stream_url==stream_url_active) { 
+        if (stream_url==stream_url_active && !force) { 
             Log.d(APPTAG," -> stream already running: "+ stream_url_active);
             return; 
         }
@@ -265,7 +269,7 @@ public class MediaStreamerService extends Service {
 	        		Log.d(APPTAG," >> Resume playback");
 	        		settEditor.putBoolean("wasPlayingWhenCalled",false);
 	        		settEditor.commit();
-	        		setup();
+	        		setup(true);
 	        	} else if (sett.getBoolean("volumeHasDucked", false)) {
 	        		Log.d(APPTAG," >> Volume++");
 	        		settEditor.putBoolean("volumeHasDucked",false);

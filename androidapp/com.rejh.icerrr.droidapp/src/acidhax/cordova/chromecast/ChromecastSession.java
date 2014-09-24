@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.cordova.api.CordovaInterface;
+import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,8 +24,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.images.WebImage;
-
-import android.util.Log;
 
 import android.os.Bundle;
 import android.support.v7.media.MediaRouter.RouteInfo;
@@ -194,25 +192,24 @@ public class ChromecastSession
 					@Override
 					public void onResult(MediaChannelResult result) {
 						if (result.getStatus().isSuccess()) {
-							Log.d("IcerrrCast","Media loaded successfully");
+							System.out.println("Media loaded successfully");
 
 							callback.onSuccess(ChromecastSession.this.createMediaObject());
 						
 						} else {
-                            Log.d("IcerrrCast","!result.getStatus().isSuccess()");
 							callback.onError("session_error");
 						}
 				    }
 				});
     	} catch (IllegalStateException e) {
     		e.printStackTrace();
-    		Log.d("IcerrrCast","Problem occurred with media during loading");
+    		System.out.println("Problem occurred with media during loading");
     		callback.onError("session_error");
     		return false;
     	} catch (Exception e) {
     		e.printStackTrace();
     		callback.onError("session_error");
-    		Log.d("IcerrrCast","Problem opening media during loading");
+    		System.out.println("Problem opening media during loading");
     		return false;
     	}
     	return true;
@@ -419,7 +416,7 @@ public class ChromecastSession
 			if (result.getStatus().isSuccess()) {
 				ChromecastSession.this.onMediaUpdatedListener.onMediaLoaded(ChromecastSession.this.createMediaObject());
 			} else {
-				Log.d("IcerrrCast","Failed to request status.");
+				System.out.println("Failed to request status.");
 			}
 		}
 	};

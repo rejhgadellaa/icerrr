@@ -95,13 +95,13 @@ site.installer.deletefolders = function() {
 		site.storage.removefolder(site.cfg.paths.root,
 			function(res) {
 				site.installer.logger("&nbsp;&gt; Done");
-				site.installer.createfolders_init();
+				setTimeout(function(){site.installer.createfolders_init();},500);
 			},
 			function(fileError) {
 				loggr.error(" > removefolder.Error: "+ site.storage.getErrorType(fileError),{dontupload:true});
 				loggr.error(" > "+ fileError.message);
 				site.installer.logger("&nbsp;&gt; Done");
-				site.installer.createfolders_init();
+				setTimeout(function(){site.installer.createfolders_init();},500);
 			},
 			{recursively:true}
 		);
