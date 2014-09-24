@@ -24,7 +24,7 @@ site.chsearch.init = function() {
 	site.ui.gotosection("#searchstation");
 	
 	// Focus
-	$("#searchstation .main input")[0].select();
+	$("#searchstation .main input")[0].focus();
 	
 	// Reset results
 	site.chsearch.results = [];

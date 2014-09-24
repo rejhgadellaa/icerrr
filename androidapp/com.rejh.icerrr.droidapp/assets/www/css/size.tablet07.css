@@ -1,3 +1,50 @@
 @charset "utf-8";
 /* CSS Document */
 
+/* -- SECTIONS */
+
+/* Common */
+
+/* Specific */
+
+#home {}
+
+	/* tbe rule: (image.size + 24) == 50% of content; */
+	
+	#home .main .station_image {
+		position:relative;
+		top:0; left:50%;
+		width:384px; 
+		height:384px;
+		margin:64px auto 0 -192px;
+	}
+	
+	#home .main .station_image_wrap {
+		width:384px; 
+		height:384px;
+	}
+	
+	#home .main .station_image img {
+		width:384px;
+		max-height:384px;
+	}
+	
+	#home .main .station_name {
+		position:relative;
+		top:0; left:auto;
+		width:512px;
+		margin:64px auto 0 auto;
+		text-align:center;
+		font-size:24pt; 
+		font-weight:300;
+		text-transform:capitalize;
+	}
+	
+	#home .main .station_nowplaying {
+		position:relative;
+		top:0; left:auto;
+		width:512px;
+		margin:32px auto 0 auto;
+		text-align:center;
+		font-size:18px;
+	}

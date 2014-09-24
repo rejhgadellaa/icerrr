@@ -308,6 +308,8 @@ section {
 	}
 	
 	#home .main .station_name {
+		position:inherit;
+		top:auto; left:auto;
 		width:300px;
 		margin:32px auto 0 auto;
 		text-align:center;
@@ -317,6 +319,8 @@ section {
 	}
 	
 	#home .main .station_nowplaying {
+		position:inherit;
+		top:auto; left:auto;
 		width:300px;
 		margin:16px auto 0 auto;
 		text-align:center;
