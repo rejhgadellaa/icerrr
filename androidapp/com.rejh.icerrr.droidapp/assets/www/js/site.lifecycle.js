@@ -429,7 +429,7 @@ site.lifecycle.onResize = function() {
 site.lifecycle.onVolumeUp = function() {
 	if (site.cast.media && site.cast.session) {
 		site.cast.onVolumeUp();
-	} else {
+	} else if (site.mp.serviceRunning) {
 		window.mediaStreamer.incrVolume(null,null);
 	}
 }
@@ -437,7 +437,7 @@ site.lifecycle.onVolumeUp = function() {
 site.lifecycle.onVolumeDown = function() {
 	if (site.cast.media && site.cast.session) {
 		site.cast.onVolumeDown();
-	} else {
+	} else if (site.mp.serviceRunning) {
 		window.mediaStreamer.decrVolume(null,null);
 	}
 }
