@@ -144,6 +144,11 @@ public class MediaStreamerService extends Service {
 		wifiLock = wifiMgr.createWifiLock(WifiManager.WIFI_MODE_FULL,"Lock");
 		if (wifiLock.isHeld()) { wifiLock.release(); }
 		wifiLock.acquire();
+		
+		// Turn wifi on..
+		settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
+		settEditor.commit();
+		wifiMgr.setWifiEnabled(true);
         
         // Listener: Telephony
 		phoneListener = new RecvEventPhonecalls();  
@@ -183,6 +188,13 @@ public class MediaStreamerService extends Service {
         
         // WakeLock OFF
         if (wakelock.isHeld()) { wakelock.release(); }
+        
+     // Turn wifi off..
+    	if (!sett.getBoolean("wifiStateOnSetup",false)) {
+    		wifiMgr.setWifiEnabled(false);
+    	}
+    	settEditor.putBoolean("wifiStateOnSetup",false);
+    	settEditor.commit();
 		
 		// Listeners
 		try {
@@ -236,44 +248,65 @@ public class MediaStreamerService extends Service {
 	    public void onAudioFocusChange(int focusChange) {
 	    	Log.i(APPTAG,"MediaStreamerService.onAudioFocusChange()");
 	        if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-	            // Pause playback
-	        	Log.d(APPTAG," > LOSS_TRANSIENT, Pause playback");
+	            
+	        	// Pause playback
+	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS_TRANSIENT()");
+	        	
 	        	settEditor.putBoolean("wasPlayingWhenCalled",true);
 		    	settEditor.commit();
 		    	shutdown();
+		    	
 	        } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+	        	
 	            // Resume playback 
-	        	Log.d(APPTAG," > AUDIOFOCUS_GAIN, Resume if possible");
-	        	if (!sett.getBoolean("wasPlayingWhenCalled",false)) { return; }
-	        	Log.d(APPTAG," >> Yes, resume");
-		    	settEditor.putBoolean("wasPlayingWhenCalled",false);
-		    	settEditor.commit();
-		    	setup();
+	        	Log.d(APPTAG," > AUDIOFOCUS_GAIN()");
+	        	
+	        	if (sett.getBoolean("wasPlayingWhenCalled",false)) {
+	        		Log.d(APPTAG," >> Resume playback");
+	        		settEditor.putBoolean("wasPlayingWhenCalled",false);
+	        		settEditor.commit();
+	        		setup();
+	        	} else if (sett.getBoolean("volumeHasDucked", false)) {
+	        		Log.d(APPTAG," >> Volume++");
+	        		settEditor.putBoolean("volumeHasDucked",false);
+	        		settEditor.commit();
+	        		setVolumeFocusGained();
+	        	}
+	        	
 	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-	            audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
-	            audioMgr.abandonAudioFocus(afChangeListener);
+	            
 	            // Stop playback
-	            Log.d(APPTAG," > AUDIOFOCUS_LOSS, Stop playback");
+	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS()");
+	        	
 	            settEditor.putBoolean("wasPlayingWhenCalled",false);
 		    	settEditor.commit();
 		    	shutdown();
+	        	
+	            audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
+	            audioMgr.abandonAudioFocus(afChangeListener);
+		    	
 	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+	        	
                 // Lower the volume
-	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK");
-	        	setVolumeDucked();	        	
-            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                // Raise it back to normal
-            	Log.d(APPTAG," > AUDIOFOCUS_GAIN");
-            	setVolumeFocusGained();
+	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK()");
+	        	Log.d(APPTAG," >> Volume--");
+	        	settEditor.putBoolean("volumeHasDucked",true);
+        		settEditor.commit();
+	        	setVolumeDucked();
+	        	
             }
 	    }
 	    
 	    private void setVolumeDucked() {
-	    	audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 5);
+	    	for (int i=0; i<5; i++) {
+	    		audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+	    	}
 	    }
 	    
 	    private void setVolumeFocusGained() {
-	    	audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 5);
+	    	for (int i=0; i<5; i++) {
+	    		audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+	    	}
 	    }
 	    
 	};
