@@ -9,6 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Bundle;
+import android.support.v7.media.MediaRouter.RouteInfo;
+import android.util.Log;
+
 import com.google.android.gms.cast.ApplicationMetadata;
 import com.google.android.gms.cast.Cast;
 import com.google.android.gms.cast.Cast.ApplicationConnectionResult;
@@ -24,11 +28,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.images.WebImage;
-
-import android.util.Log;
-
-import android.os.Bundle;
-import android.support.v7.media.MediaRouter.RouteInfo;
 
 /*
  * All of the Chromecast session specific functions should start here. 
@@ -182,12 +181,13 @@ public class ChromecastSession
 	 * @param streamType
 	 * @param autoPlay - Whether or not to start the video playing or not
 	 * @param currentTime - Where in the video to begin playing from
+	 * @param metadata - Metadata object
 	 * @param callback
 	 * @return
 	 */
-	public boolean loadMedia(String contentId, String contentType, long duration, String streamType, boolean autoPlay, double currentTime, final ChromecastSessionCallback callback) {
+	public boolean loadMedia(String contentId, String contentType, long duration, String streamType, boolean autoPlay, double currentTime, JSONObject metadata, final ChromecastSessionCallback callback) {
 		try {
-			MediaInfo mediaInfo = chromecastMediaController.createLoadUrlRequest(contentId, contentType, duration, streamType);
+			MediaInfo mediaInfo = chromecastMediaController.createLoadUrlRequest(contentId, contentType, duration, streamType, metadata);
 			
 			mRemoteMediaPlayer.load(mApiClient, mediaInfo, autoPlay, (long)(currentTime * 1000))
 				.setResultCallback(new ResultCallback<RemoteMediaPlayer.MediaChannelResult>() {

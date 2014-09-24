@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
 import android.support.v7.media.MediaRouter.RouteInfo;
+import android.util.Log;
 
 import com.google.android.gms.cast.CastMediaControlIntent;
 
@@ -108,6 +109,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
         			return true;
         		}
     		} else {
+    			Log.e("CordCast","Could not execute: "+action);
     			return false;
     		}
 		} catch (IllegalAccessException e) {
@@ -438,10 +440,10 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
      * @param  loadReuqest.currentTime Where to begin playing from
      * @param  callbackContext 
      */
-    public boolean loadMedia (String contentId, String contentType, Integer duration, String streamType, Boolean autoPlay, Double currentTime, final CallbackContext callbackContext) {
+    public boolean loadMedia (String contentId, String contentType, Integer duration, String streamType, Boolean autoPlay, Double currentTime, JSONObject metadata, final CallbackContext callbackContext) {
         
     	if (this.currentSession != null) {
-    		return this.currentSession.loadMedia(contentId, contentType, duration, streamType, autoPlay, currentTime, 
+    		return this.currentSession.loadMedia(contentId, contentType, duration, streamType, autoPlay, currentTime, metadata,
     				new ChromecastSessionCallback() {
 
 						@Override
@@ -464,8 +466,8 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
     		return false;
     	}
     }
-    public boolean loadMedia (String contentId, String contentType, Integer duration, String streamType, Boolean autoPlay, Integer currentTime, final CallbackContext callbackContext) {
-    	return this.loadMedia (contentId, contentType, duration, streamType, autoPlay, new Double(currentTime.doubleValue()), callbackContext);
+    public boolean loadMedia (String contentId, String contentType, Integer duration, String streamType, Boolean autoPlay, Integer currentTime, JSONObject metadata, final CallbackContext callbackContext) {
+    	return this.loadMedia (contentId, contentType, duration, streamType, autoPlay, new Double(currentTime.doubleValue()), metadata, callbackContext);
     }
     
     /**
