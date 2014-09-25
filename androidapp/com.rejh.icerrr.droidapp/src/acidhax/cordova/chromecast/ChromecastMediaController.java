@@ -1,6 +1,7 @@
 package acidhax.cordova.chromecast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.net.Uri;
@@ -22,7 +23,7 @@ public class ChromecastMediaController {
 	}
 	
 	public MediaInfo createLoadUrlRequest(String contentId, String contentType, long duration, String streamType, JSONObject metadata) {
-
+	
 		// Try creating a GENERIC MediaMetadata obj
 		MediaMetadata mediaMetadata = new MediaMetadata();
 		try {
@@ -35,25 +36,11 @@ public class ChromecastMediaController {
 			
 			// GENERIC
 			if (metadataType == MediaMetadata.MEDIA_TYPE_GENERIC) {
-				
 				Log.d("CordCast"," >>> GENERIC");
 				mediaMetadata = new MediaMetadata(); // Creates GENERIC MediaMetaData
 				mediaMetadata.putString(MediaMetadata.KEY_TITLE, (metadata.has("title")) ? metadata.getString("title") : "[Title not set]" ); // TODO: What should it default to?
 				mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, (metadata.has("title")) ? metadata.getString("subtitle") : "[Subtitle not set]" ); // TODO: What should it default to?
-				if (metadata.has("images")) {
-					JSONArray imageUrls = metadata.getJSONArray("images");
-					for (int i=0; i<imageUrls.length(); i++) {
-						Log.d("CordCast"," >>> Image: "+ i);
-						JSONObject imageObj = imageUrls.getJSONObject(i); 
-						String imageUrl = imageObj.has("url") ? imageObj.getString("url") : "undefined";
-						if (imageUrl.indexOf("http://")<0) { continue; } // TODO: don't add image?
-						Log.d("CordCast"," >>>>> "+ imageUrl);
-						Uri imageURI = Uri.parse( imageUrl );
-						WebImage webImage = new WebImage(imageURI);
-						mediaMetadata.addImage(webImage);
-					}
-				}
-				// mediaMetadata.addImage( () ? metadata.getJSONArray("images").get(0) : null ); // TODO: What should it default to?
+				mediaMetadata = addImages(metadata, mediaMetadata);
 			}
 			
 		} catch(Exception e) {
@@ -137,4 +124,20 @@ public class ChromecastMediaController {
 		    }
 		};
 	}
+    
+    private MediaMetadata addImages(JSONObject metadata, MediaMetadata mediaMetadata) throws JSONException {
+        if (metadata.has("images")) {
+            JSONArray imageUrls = metadata.getJSONArray("images");
+            for (int i=0; i<imageUrls.length(); i++) {
+                JSONObject imageObj = imageUrls.getJSONObject(i); 
+                String imageUrl = imageObj.has("url") ? imageObj.getString("url") : "undefined";
+                if (imageUrl.indexOf("http://")<0) { continue; } // TODO: don't add image?
+                Uri imageURI = Uri.parse( imageUrl );
+                WebImage webImage = new WebImage(imageURI);
+                mediaMetadata.addImage(webImage);
+            }
+        }
+        return mediaMetadata;
+    }
+    
 }
