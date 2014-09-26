@@ -1,3 +1,6 @@
+0.058 
+  * Storage timeout outputs to 'warn' instead of 'error'
+
 0.057 (stable)
   * Partial fix for chromecast notification not going away when Wifi is turned off
 

@@ -34,8 +34,8 @@ site.storage.addTimeout = function(action, time, args) {
 	site.storage.timeouts[timeoutID].args = args;
 	site.storage.timeouts[timeoutID].timeout = setTimeout(function() {
 		
-		loggr.error("site.storage timeout! Action: '"+action+"'",{dontupload:true});
-		loggr.error(JSON.stringify(args),{dontupload:true});
+		loggr.warn("site.storage timeout! Action: '"+action+"'",{dontupload:true});
+		loggr.warn(JSON.stringify(args),{dontupload:true});
 		
 		// TODO || TMP: remove this line for prod.
 		// alert("Storage timeout occured!");
@@ -66,7 +66,7 @@ site.storage.addTimeout = function(action, time, args) {
 			}
 			
 		} else {
-			loggr.error(" > Cannot abort file operation, ask user to restart app");
+			loggr.warn(" > Cannot abort file operation, ask user to restart app");
 			// site.ui.showtoast("An error accured. You may want to restart Icerrr.");
 		}
 		
