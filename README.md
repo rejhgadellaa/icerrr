@@ -5,7 +5,7 @@ Introduction
 
 Well, I think Icerrr may be just the thing for you!
 
-And it get's better: Icerrr is FREE [2]
+And it gets better: Icerrr is FREE [2]
 
 Icerrr is FMAlarm's successor and currently (heavily) under development. It's built with Cordova/Phonegap and should eventually also support iOS and regular browsers. 
 
