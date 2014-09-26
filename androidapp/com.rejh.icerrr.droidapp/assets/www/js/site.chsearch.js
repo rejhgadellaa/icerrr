@@ -258,7 +258,6 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 		
 		// TODO: events.. anyone?
 		resultitem.onclick = function(){
-			site.ui.showtoast("TODO: Todo.. ");
 			
 			// TODO: quick hack :D
 	
@@ -286,39 +285,81 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 				}
 			}
 			
-			// -> Gogo
+			// -> Check if station actually works...
 			
-			if (!confirm("Add '"+ station.station_name +"'?")) { return; }
+			site.ui.showloading("Testing...<br><span style='font-size:12pt;'>Checking stream validity</span>");
 			
-			// Auto star
-			site.chlist.setStarred(station.station_id);
-			site.chedit.changesHaveBeenMadeGotoStarred = true;
-	
-			// TODO: we need a helper for 'edited' stations
-			
-			loggr.log(JSON.stringify(station));
-			
-			// Use MergeStations :D || but in reverse :D
-			var addstations = [station];
-			var newstations = site.helpers.mergeStations(addstations, site.data.stations);
-			
-			// Store!
-			site.data.stations = newstations;
-			site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
-				function(evt) { 
-					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
-					site.chedit.changesHaveBeenMade = true;
-					site.ui.showtoast("Saved!");
-					// site.chlist.init(true);
-					site.chicon.init(site.chsearch.station_id); // TODO: Finish this
+			var mediaPlayer = new Media(station.station_url,
+				function() {
+					// Do nothing..
 				},
-				function(e){ 
-					alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
-					loggr.log(site.storage.getErrorType(e)); 
+				function(error) {
+					loggr.warn(" > Station is not working");
+					loggr.log(" > Errorcode: "+error);
+					mediaPlayer.stop();
+					mediaPlayer.release();
+					site.ui.hideloading();
+					site.ui.showtoast("Station error, please choose another");
+				},
+				function(status) {
+					loggr.log(" > Status: "+ status);
+					switch (status) {
+						
+						case Media.MEDIA_RUNNING:
+						
+							if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
+						
+							mediaPlayer.stop();
+							mediaPlayer.release();
+			
+							// -> Gogo
+							
+							if (!confirm("Add '"+ station.station_name +"'?")) { return; }
+							
+							// Auto star
+							site.chlist.setStarred(station.station_id);
+							site.chedit.changesHaveBeenMadeGotoStarred = true;
+					
+							// TODO: we need a helper for 'edited' stations
+							
+							loggr.log(JSON.stringify(station));
+							
+							// Use MergeStations :D || but in reverse :D
+							var addstations = [station];
+							var newstations = site.helpers.mergeStations(addstations, site.data.stations);
+							
+							// Store!
+							site.data.stations = newstations;
+							site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+								function(evt) { 
+									site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
+									site.chedit.changesHaveBeenMade = true;
+									site.ui.showtoast("Saved!");
+									// site.chlist.init(true);
+									site.chicon.init(site.chsearch.station_id); // TODO: Finish this
+								},
+								function(e){ 
+									alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
+									loggr.log(site.storage.getErrorType(e)); 
+								}
+							);
+							
+					}
 				}
 			);
 			
-		};
+			mediaPlayer.play();
+
+			site.chsearch.station_test_timeout = setTimeout(function(){
+				loggr.warn(" > Station is not working");
+				loggr.log(" > Timed out");
+				mediaPlayer.stop();
+				mediaPlayer.release();
+				site.ui.hideloading();
+				site.ui.showtoast("Station error, please choose another");
+			},7500);
+			
+		}; // end of onclick
 		
 		// add elements..
 		resultitem.appendChild(resulticon);

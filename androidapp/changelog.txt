@@ -1,4 +1,5 @@
-0.058 
+0.058 (beta)
+  * New: when adding a station, Icerrr checks if it can actually play it
   * Storage timeout outputs to 'warn' instead of 'error'
 
 0.057 (stable)
