@@ -86,7 +86,9 @@ site.cast.sessionListener = function(session) {
 	}
 	
 	if (session.media.length != 0) {
-			loggr.log('Found ' + session.media.length + ' sessions.');
+		loggr.log('Found ' + session.media.length + ' sessions.');
+	} else {
+		site.cast.notifCancel(); // cancel any notifs
 	}
 	
 	site.cast.session = session;
@@ -114,11 +116,13 @@ site.cast.receiverListener = function(arg) {
 		case chrome.cast.ReceiverAvailability.UNAVAILABLE:
 			loggr.log(" > Unavailable!");
 			site.cast.updateicon(0);
+			site.cast.notifCancel(); // cancel any notifs
 			break;
 			
 		default:
 			loggr.warn("Unknown arg: "+arg);
 			site.cast.updateicon(0);
+			site.cast.notifCancel(); // cancel any notifs
 			break;
 	
 	}	
@@ -281,7 +285,7 @@ site.cast.onVolumeUp = function() {
 		},
 		function(err) {
 			loggr.log(" > Volume UP FAILED");
-			loggr.error(err);
+			loggr.warn(err);
 		}
 	);
 }
@@ -296,7 +300,7 @@ site.cast.onVolumeDown = function() {
 		},
 		function(err) {
 			loggr.log(" > Volume DOWN FAILED");
-			loggr.error(err);
+			loggr.warn(err);
 		}
 	);
 }
