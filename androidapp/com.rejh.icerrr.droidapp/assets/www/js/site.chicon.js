@@ -57,7 +57,7 @@ site.chicon.init = function(station_id) {
 		maxresults:32
 	}
 	
-	site.ui.showloading();
+	site.ui.showloading("Hold on...","Searching Google for icons");
 	
 	site.helpers.googleImageSearch(searchstring,
 		function(results) {

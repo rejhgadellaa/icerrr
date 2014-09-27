@@ -287,7 +287,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 			
 			// -> Check if station actually works...
 			
-			site.ui.showloading("Testing...<br><span style='font-size:12pt;'>Checking stream validity</span>");
+			site.ui.showloading("Testing...","Checking station validity");
 			
 			var mediaPlayer = new Media(station.station_url,
 				function() {
@@ -314,7 +314,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 			
 							// -> Gogo
 							
-							if (!confirm("Add '"+ station.station_name +"'?")) { return; }
+							if (!confirm("Add '"+ station.station_name +"'?")) { site.ui.hideloading(); return; }
 							
 							// Auto star
 							site.chlist.setStarred(station.station_id);

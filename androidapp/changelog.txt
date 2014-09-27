@@ -1,3 +1,7 @@
+0.059 (beta)
+  * Fixes for 'check new station before adding'
+  * Fix: When stream fails to play, MediaStreamer would always default to alarm sound
+
 0.058 (beta)
   * New: when adding a station, Icerrr checks if it can actually play it
   * Storage timeout outputs to 'warn' instead of 'error'

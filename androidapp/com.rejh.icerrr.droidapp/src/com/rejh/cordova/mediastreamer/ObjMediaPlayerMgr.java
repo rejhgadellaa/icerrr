@@ -7,6 +7,7 @@ import java.util.TimerTask;
 import org.npr.android.news.StreamProxy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -50,6 +51,8 @@ public class ObjMediaPlayerMgr {
 	private String streamUrl;
 	private String streamedUrl;
 	
+	private boolean isAlarm;
+	
 	private int sdkVersion;
 	
 	private int nrOfErrors;
@@ -90,30 +93,36 @@ public class ObjMediaPlayerMgr {
 	
 	private void initbackup() {
 		Log.w("MediaStreamer"," -> nrOfErrors > 10, using backup-plan!");
-		Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-	     if(alert == null){
-	         // alert is null, using backup
-	         alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-	         if(alert == null){  // I can't see this ever being null (as always have a default notification) but just incase
-	             // alert backup is null, using 2nd backup
-	             alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);               
-	         }
-	     }
-		destroy();
-		try {
-		mp = new MediaPlayer();
-		mp.setDataSource(context, alert);
-		mp.setLooping(true);
-		mp.prepare();
-		mp.start();
-		} catch(Exception e) { Log.e(LOGTAG,e.toString()); }
-		settEditor.putInt("mediaplayerState",MEDIA_RUNNING);
-		settEditor.putInt("mediastreamer_state",MEDIA_RUNNING);
-		settEditor.commit();
+		if (isAlarm) {
+			Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		     if(alert == null){
+		         // alert is null, using backup
+		         alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+		         if(alert == null){  // I can't see this ever being null (as always have a default notification) but just incase
+		             // alert backup is null, using 2nd backup
+		             alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);               
+		         }
+		     }
+			destroy();
+			try {
+			mp = new MediaPlayer();
+			mp.setDataSource(context, alert);
+			mp.setLooping(true);
+			mp.prepare();
+			mp.start();
+			} catch(Exception e) { Log.e(LOGTAG,e.toString()); }
+			settEditor.putInt("mediaplayerState",MEDIA_RUNNING);
+			settEditor.putInt("mediastreamer_state",MEDIA_RUNNING);
+			settEditor.commit();
+		} else {
+			// Kill self...
+			Intent serviceIntent = new Intent(context, MediaStreamerService.class);
+			context.stopService(serviceIntent);
 		}
+	}
 	
 	// INIT
-	public boolean init(String url) {
+	public boolean init(String url, boolean _isAlarm) {
 		
 		if (mp!=null || proxy!=null) { destroy(); SystemClock.sleep(1000);  }
 		
@@ -125,6 +134,8 @@ public class ObjMediaPlayerMgr {
 		if (url==null) { url = streamUrlDefault; }
 		streamUrl = url;
 		streamedUrl = url;
+		
+		isAlarm = _isAlarm;
 		
 		// Prepare Proxy (if needed)
 		// For Android 2.1 en lower (sdk<8)
@@ -302,7 +313,7 @@ public class ObjMediaPlayerMgr {
 				if (nrOfErrors > 8) { initbackup(); return; }
 				nrOfErrors++;
 				Log.w(LOGTAG,"  -> Restarting stream...");
-				init(streamedUrl);
+				init(streamedUrl,isAlarm);
 				}
 			}
 		
@@ -357,7 +368,7 @@ public class ObjMediaPlayerMgr {
 			settEditor.commit();
 			
 			Log.d(LOGTAG," -> Restarting stream...");
-			init(streamedUrl);
+			init(streamedUrl,isAlarm);
 			
 			return false;
 			}
@@ -450,7 +461,7 @@ public class ObjMediaPlayerMgr {
 				
 				Log.d(LOGTAG," -> ConnType CHANGE "+connTypeOld+"="+connType);
 				connTypeOld = connType;
-				init(streamedUrl);
+				init(streamedUrl,isAlarm);
 				
 				}
 			
@@ -459,7 +470,7 @@ public class ObjMediaPlayerMgr {
 				if (connWasLost) {
 					Log.d(LOGTAG," -> Stream resumed");
 					connWasLost=false;
-					init(streamedUrl);
+					init(streamedUrl,isAlarm);
 					}
 				}
 			else {

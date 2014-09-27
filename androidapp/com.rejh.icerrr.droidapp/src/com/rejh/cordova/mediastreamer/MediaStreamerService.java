@@ -33,6 +33,7 @@ public class MediaStreamerService extends Service {
 	private SharedPreferences.Editor settEditor;
 	
 	private Intent serviceIntent;
+	private Intent incomingIntent;
 	
 	private AudioManager audioMgr;
 	private RemoteControlReceiver remoteControlReceiver;
@@ -96,9 +97,13 @@ public class MediaStreamerService extends Service {
 	    // Audio Focus
 	    int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 		
-		// Setup
+	}
+	
+	@Override
+	public int onStartCommand (Intent intent, int flags, int startId) {
+		if(intent!=null) { incomingIntent = intent; }
 		setup();
-		
+		return START_STICKY;
 	}
 	
 	// OnDestroy
@@ -159,7 +164,16 @@ public class MediaStreamerService extends Service {
 	    telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
         
         // Stream url
-        String stream_url = sett.getString("mediastreamer_streamUrl",null);
+	    String stream_url = "null";
+	    boolean isAlarm = false;
+        if (incomingIntent!=null) {
+        	// incomingIntent = this.getIntent(); // sett.getString("mediastreamer_streamUrl",null);
+        	stream_url = incomingIntent.getStringExtra("stream_url");
+        	isAlarm = incomingIntent.getBooleanExtra("isAlarm", false);
+        } else {
+        	sett.getString("mediastreamer_streamUrl",null); // fallback
+        	isAlarm = false;
+        }  
         
         // Check
         if (stream_url==null) { shutdown(); }
@@ -171,7 +185,7 @@ public class MediaStreamerService extends Service {
 		// MediaPlayer
 		if (mpMgr!=null) { mpMgr.destroy(); }
 		mpMgr = new ObjMediaPlayerMgr(context, connMgr);
-		mpMgr.init(stream_url);
+		mpMgr.init(stream_url,isAlarm);
         
         stream_url_active = stream_url;
 		

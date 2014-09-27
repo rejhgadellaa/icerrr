@@ -45,11 +45,11 @@ site.lifecycle.init = function() {
 	// Attach 'onDeviceReady' event listener (cordova)
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
 	
-	// Google Loader
-	google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
-	
 	// Hacks..
 	site.ui.hackActiveCssRule();
+	
+	// Google Loader
+	google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
 	
 }
 

@@ -21,9 +21,9 @@
     /**
     * Start player
     */
-    MediaStreamer.prototype.play = function(stream_url, win, fail) {
+    MediaStreamer.prototype.play = function(stream_url, isAlarm, win, fail) {
 		console.log("MediaStreamer.prototype.play()");
-        cordova.exec(win, fail, "MediaStreamer", "play", [stream_url]);
+        cordova.exec(win, fail, "MediaStreamer", "play", [stream_url,isAlarm]);
     };
 
     /**

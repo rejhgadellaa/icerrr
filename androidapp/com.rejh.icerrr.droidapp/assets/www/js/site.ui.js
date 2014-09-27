@@ -89,9 +89,10 @@ site.ui.gotosection = function(selector) {
 
 // ---> Loading
 
-site.ui.showloading = function(message) {
+site.ui.showloading = function(message,submsg) {
 	loggr.log("site.ui.showloading()");
 	if (!message) { message = site.helpers.getRandomListEntry(site.data.strings.loading); }
+	if (submsg) { message += "<br><span style='font-size:12pt;'>"+submsg+"</span>"; }
 	site.vars.isLoading = true;
 	$("#loading.overlay_wrap .message").html(message);
 	$("#loading.overlay_wrap").fadeIn(500); // TODO: animation gpu powered..
