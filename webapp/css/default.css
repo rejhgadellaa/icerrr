@@ -1,3 +1,207 @@
 @charset "utf-8";
 /* CSS Document */
 
+/*
+
+	ICERRR - default css
+	This css is targeted at phones (~320 x ~480), tablets will be targeted with media queries and additional css files
+	Also: landscape...
+	
+	Notes:
+	* Palettes
+	   * http://www.colourlovers.com/business/trends/branding/7880/Papeterie_Haute-Ville_Logo
+	
+*/
+
+/* -- FONTS */
+
+body, table, input, select {
+	font-family: 'Roboto', sans-serif;
+	font-size:12pt;
+	color:rgba(0,0,0,0.87);
+}
+
+/* -- ELEMENTS */
+
+* {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+html { 
+	overflow:hidden;
+	width:100%; 
+	height:100%; 
+	}
+
+body {
+	overflow:hidden; 
+	width:100%; 
+	height:100%; 
+	margin:0;
+	padding:0;
+	background-color:#eee;
+}
+
+a {
+	color:#2D6073;
+	text-decoration:none;
+}
+
+	a:hover {
+		text-decoration:underline;
+	}
+	
+h1 {
+	font-size:32pt;
+	font-weight:200;
+}
+	
+label {
+	margin-left:8px;
+}
+
+input,select {
+	width:98%;
+	margin:-1px;
+	padding:1%;
+	font-size:16pt;
+	background:#fff;
+	border:1px solid rgba(0,0,0,0.5);
+}
+
+select {
+	width:100%;
+	margin:0;
+}
+
+input[type="checkbox"] {
+	width:24px;
+	height:24px;
+	margin-top:8px;
+}
+
+/* -- SECTIONS */
+
+/* Common */
+
+section {
+	overflow:hidden;
+	display:none;
+	position:absolute;
+	top:0; left:0; right:0; bottom:0;
+	width:100%;
+	height:100%;
+	background:#eee;
+}
+
+/* Specific */
+
+#home {
+	display:block;
+	xbackground-image:url(../img/web_hi_res_512_001.png);
+	xbackground-position:center;
+	xbackground-repeat:no-repeat;
+}
+
+	#home .logo {
+		z-index:0;
+		position:absolute;
+		top:50%; left:50%;
+		width:256px;
+		margin:-128px 0 0 -128px;
+	}
+	
+		#home .logo img {
+			width:100%; height:100%;
+		}
+		
+		#home .logo .title {
+			display:none;
+			text-align:center;
+			font-size:56pt;
+		}
+		
+		#home .logo .subtitle {
+			display:none;
+			text-align:center;
+		}
+		
+	#home .getit {
+		z-index:1;
+		position:absolute;
+		bottom:48px; left:50%;
+		margin:0 0 0 -86px;
+	}
+	
+	#home .credits {
+		z-index:1;
+		position:absolute;
+		bottom:48px; right:48px;
+		margin:0 0 0 0;
+		text-align:right;
+		font-size:9pt;
+		color:rgba(0,0,0,0.56);
+	}
+	
+	#home .social {
+		z-index:1;
+		position:absolute;
+		bottom:48px; left:48px;
+		margin:0 0 0 0;
+	}
+	
+	#home .item_wrap {
+		margin-top:8px;
+	}
+
+/* -- COMMON */
+
+/* Selectable */
+
+* {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor:default;
+}
+
+.selectable, p, input, textarea {
+	-webkit-touch-callout: text;
+	-webkit-user-select: text;
+	-khtml-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+	cursor:text;
+}
+
+a {
+	cursor:pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -32,8 +32,9 @@
     <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
 	
 	<!-- Javascript: icerrr -->
-    <script language="javascript" type="text/javascript" src="js/site.config.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.base.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.config.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.main.js"></script>
     
     <!-- Style / base -->
     <link rel="stylesheet" type="text/css" href="css/default.css" />
@@ -47,13 +48,55 @@
 	
 </head>
 
-<body onLoad="site.init();">
+<body>
 
 <!-- Section -->
 <section id="home">
-	
+
+	<div class="logo">
+    	<img src="img/web_hi_res_512_001.png" />
+        <div class="title">ICERRR</div>
+		<div class="subtitle">The html5(ish) icecast streaming app</div>
+	</div>
+    
+    <div class="getit">
+        <a href="https://play.google.com/store/apps/details?id=com.rejh.icerrr.droidapp" target="_blank">
+            <img alt="Get it on Google Play" src="img/googleplay60.png" />
+        </a>
+	</div>
+    
+    <!-- SocialPlusLike -->
+    <div class="social">
+        <div class="item_wrap"><a href="https://twitter.com/share" class="twitter-share-button" data-via="RGadellaa" data-count="none">Tweet</a></div>
+        <div class="item_wrap"><div class="g-plusone" data-size="medium" data-annotation="inline" data-width="300"></div></div>
+        <div class="item_wrap"><div class="fb-like" data-href="http://www.rejh.nl/icerrr" data-send="false" data-width="300" data-show-faces="true" data-font="segoe ui"></div></div>
+    </div>
+    
+    <div class="credits">
+    	<div class="item_wrap"><a href="http://github.com/rejhgadellaa/icerrr/" target="_blank">Find the project on Github</a></div>
+    	<div class="item_wrap">Copyright (c) 2014 <a href="http://rejh.nl" target="_blank">REJH Gadellaa</a></div>
+    </div>
+
 </section>
 
+<script>
+// Google+
+	(function() {
+		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		po.src = 'https://apis.google.com/js/plusone.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	})();
+	// Fb
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	// Twitter
+	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
 
 </body>
 
