@@ -184,6 +184,8 @@ site.helpers.storeImageLocally = function(imgobj,filename,cb,opts) {
 	//loggr.log(" >> Base64: "+ base64);
 	//loggr.log(" >> "+ time_encoded +" ms");
 	
+	if (!base64) { return false; }
+	
 	// Write
 	//loggr.log(" > Write: "+filename);
 	site.storage.writefile(site.cfg.paths.images,filename,base64,
@@ -257,6 +259,11 @@ site.helpers.imageToBase64 = function(imgobj,cb,opts) {
 	// Set width/height to match imageObj
 	canvas.width = imgobj.naturalWidth;
 	canvas.height = imgobj.naturalWidth;
+	
+	// Check
+	if (!imgobj.naturalWidth || !imgobj.naturalHeight || !opts.maxwidth || !opts.maxheight) {
+		return false;
+	}
 	
 	// Draw image
 	ctx.drawImage(imgobj, 0, 0, imgobj.naturalWidth, imgobj.naturalWidth, 0, 0, opts.maxwidth, opts.maxheight);
