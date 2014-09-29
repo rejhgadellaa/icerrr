@@ -184,7 +184,7 @@ public class MediaStreamerService extends Service {
 		
 		// MediaPlayer
 		if (mpMgr!=null) { mpMgr.destroy(); }
-		mpMgr = new ObjMediaPlayerMgr(context, connMgr);
+		mpMgr = new ObjMediaPlayerMgr(context, connMgr, wifiMgr);
 		mpMgr.init(stream_url,isAlarm);
         
         stream_url_active = stream_url;

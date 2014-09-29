@@ -59,7 +59,12 @@ site.home.init = function() {
 	);
 	$("#home .main .station_image img").on("error",
 		function(evt) {
-			$("#home .main .station_image img").attr("src","img/web_hi_res_512_001.png?c="+(new Date().getTime()));
+			if ($("#home .main .station_image img").attr("src")!=site.session.currentstation.station_icon) {
+				$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+			} else {
+				$("#home .main .station_image img").attr("src","img/web_hi_res_512_001.png?c="+(new Date().getTime()));
+			}
+			
 		}
 	);
 	

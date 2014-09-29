@@ -204,6 +204,9 @@ public class AlarmMgr extends CordovaPlugin {
 		intent.putExtra("alarm_id", id);
 		PendingIntent pintent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
 		
+		// Cancel first
+		alarmMgr.cancel(pintent);
+		
 		// Create alarm...
 		if (doRepeat) {
 			Log.d(APPTAG," > Repeat "+ repeatMillis);

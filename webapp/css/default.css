@@ -178,7 +178,7 @@ section {
 	cursor:text;
 }
 
-a {
+a, a img {
 	cursor:pointer;
 }
 

@@ -1,3 +1,9 @@
+0.061 (stable)
+  * Some fixes for turning off wifi when stream is stopped
+  * Fixes for re-setting alarms when timezone changes
+  * Renamed 'All stations' to 'Stations' in stations list
+  * Added stylesheet for 'smaller' screens (320 x *) in portrait mode
+
 0.060 (stable)
   * Fixes for helpers.storeImageLocally
 

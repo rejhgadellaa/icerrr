@@ -20,6 +20,7 @@ import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
@@ -45,6 +46,8 @@ public class ObjMediaPlayerMgr {
 	
 	private ConnectivityManager connMgr;
 	
+	private WifiManager wifiMgr;
+	
 	// Variables
 	
 	private final String streamUrlDefault = "http://icecast.omroep.nl/3fm-sb-mp3";
@@ -67,7 +70,7 @@ public class ObjMediaPlayerMgr {
 	// --------------------------------------------------
 	// Constructor
 	
-	public ObjMediaPlayerMgr(Context bindToContext, ConnectivityManager bindToConnMgr) {
+	public ObjMediaPlayerMgr(Context bindToContext, ConnectivityManager bindToConnMgr, WifiManager bindToWifiMgr) {
 		
 		Log.i(LOGTAG,"MediaPlayerMgr.Constructor()");
 		
@@ -75,6 +78,7 @@ public class ObjMediaPlayerMgr {
 		sett = context.getSharedPreferences(SETTAG,2);
         settEditor = sett.edit();
         connMgr = bindToConnMgr;
+        wifiMgr = bindToWifiMgr;
 		
         // Get SDK Version (determines use of StreamProxy for 2.1 en lower)
         sdkVersion = 0;
@@ -177,32 +181,19 @@ public class ObjMediaPlayerMgr {
 			settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 			settEditor.commit();
 			
-			// Notify
-			/* TODO: Notification
-			Intent ni = new Intent(context, RecvNotifier.class);
-				ni.putExtra("icon",R.drawable.icon_fmalarm_buff);
-				ni.putExtra("ticker","FMAlarm Active ("+sett.getString("selectedShoutcastName","Radio 3FM")+")");
-				ni.putExtra("title","FMAlarm is active...");
-				ni.putExtra("text","Loading: "+sett.getString("selectedShoutcastName","Radio 3FM"));
-				ni.putExtra("ongoing",true);
-			context.sendBroadcast(ni);
-			/**/
-			
-			// Toast.makeText(context, "FMAlarm Buffering: "+sett.getString("selectedShoutcastName","Radio 3FM"),Toast.LENGTH_LONG).show();
-			
 			}
 		catch (IllegalArgumentException e) { 
-			Toast.makeText(context, "FMAlarm2 MP IllArgumentException:\n"+e,Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "MP IllArgumentException:\n"+e,Toast.LENGTH_LONG).show();
 			Log.w(LOGTAG," -> MP Init IllegalArgumentException!", e);
 			initHasFailed = true;
         	}
 		catch (IllegalStateException e) { 
-			Toast.makeText(context, "FMAlarm2 MP IllStateException:\n"+e,Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "MP IllStateException:\n"+e,Toast.LENGTH_LONG).show();
 			Log.w(LOGTAG," -> MP Init IllegalStateException", e);
 			initHasFailed = true;
 			} 
 		catch (IOException e) { 
-			Toast.makeText(context, "FMAlarm2 MP IOException:\n"+e,Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "MP IOException:\n"+e,Toast.LENGTH_LONG).show();
 			Log.w(LOGTAG," -> MP Init IOException", e);
 			initHasFailed = true;
 			}
@@ -463,7 +454,10 @@ public class ObjMediaPlayerMgr {
 				connTypeOld = connType;
 				init(streamedUrl,isAlarm);
 				
-				}
+				settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
+				settEditor.commit();
+				
+			}
 			
 			// Handle Connection losses
 			if (netwInfo != null && netwInfo.getState() == NetworkInfo.State.CONNECTED) {
