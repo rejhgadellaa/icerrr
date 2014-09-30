@@ -153,11 +153,6 @@ public class MediaStreamerService extends Service {
 		wifiLock = wifiMgr.createWifiLock(WifiManager.WIFI_MODE_FULL,"Lock");
 		if (wifiLock.isHeld()) { wifiLock.release(); }
 		wifiLock.acquire();
-		
-		// Turn wifi on..
-		settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
-		settEditor.commit();
-		wifiMgr.setWifiEnabled(true);
         
         // Listener: Telephony
 		phoneListener = new RecvEventPhonecalls();  
@@ -170,10 +165,20 @@ public class MediaStreamerService extends Service {
         	// incomingIntent = this.getIntent(); // sett.getString("mediastreamer_streamUrl",null);
         	stream_url = incomingIntent.getStringExtra("stream_url");
         	isAlarm = incomingIntent.getBooleanExtra("isAlarm", false);
+        	settEditor.putBoolean("isAlarm", isAlarm);
+        	settEditor.commit();
         } else {
         	sett.getString("mediastreamer_streamUrl",null); // fallback
         	isAlarm = false;
+        	settEditor.putBoolean("isAlarm", isAlarm);
+        	settEditor.commit();
         }  
+        
+        // Wifi
+        Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
+		settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
+		settEditor.commit();
+		wifiMgr.setWifiEnabled(true);
         
         // Check
         if (stream_url==null) { shutdown(); }
@@ -207,12 +212,18 @@ public class MediaStreamerService extends Service {
         // WakeLock OFF
         if (wakelock.isHeld()) { wakelock.release(); }
         
-     // Turn wifi off..
-    	if (!sett.getBoolean("wifiStateOnSetup",false)) {
-    		wifiMgr.setWifiEnabled(false);
-    	}
+	     // Turn wifi off..
+	    	if (!sett.getBoolean("wifiStateOnSetup",false)) {
+	    		wifiMgr.setWifiEnabled(false);
+	    	}
     	settEditor.putBoolean("wifiStateOnSetup",false);
     	settEditor.commit();
+    	
+        // Wifi
+    	Log.d(APPTAG," > WifiState stored: "+ sett.getBoolean("wifiStateOnSetup",false));
+    	if (!sett.getBoolean("wifiStateOnSetup",false)) {
+    		// wifiMgr.setWifiEnabled(false);
+    	}
 		
 		// Listeners
 		try {

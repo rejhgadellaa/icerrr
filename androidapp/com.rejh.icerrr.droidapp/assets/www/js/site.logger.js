@@ -107,7 +107,7 @@ loggr.gettext = function() {
 
 loggr.gethtml = function(maxlines) {
 	
-	if (!maxlines) { maxlines = loggr.loglines.length; }
+	if (!maxlines || maxlines > loggr.loglines.length) { maxlines = loggr.loglines.length; }
 	
 	var html = "";
 	

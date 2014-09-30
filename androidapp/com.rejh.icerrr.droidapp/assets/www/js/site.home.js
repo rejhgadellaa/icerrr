@@ -43,7 +43,7 @@ site.home.init = function() {
 	// ui updates
 	site.home.init_ui_updates();
 	
-	// bla
+	// average color
 	$("#home .main .station_image img").on("load",
 		function(evt) { // TODO: detect transparent images..
 			var img = $("#home .main .station_image img")[0];
@@ -57,12 +57,15 @@ site.home.init = function() {
 			$("#home .main .station_image_wrap").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
 		}
 	);
+	
+	// image
+	var station_image_url = (!station.station_image_local) ? site.cfg.urls.webapp +"rgt/rgt.php?w=512&h=512&src="+ station.station_icon : site.helpers.getImageLocally($("#home .main .station_image img")[0], site.cfg.paths.images, station.station_icon, station.station_icon, null, null); 
 	$("#home .main .station_image img").on("error",
 		function(evt) {
-			if ($("#home .main .station_image img").attr("src")!=site.session.currentstation.station_icon) {
-				$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+			if ($("#home .main .station_image img").attr("src")!=station_image_url) {
+				$("#home .main .station_image img").attr("src",station_image_url);
 			} else {
-				$("#home .main .station_image img").attr("src","img/web_hi_res_512_001.png?c="+(new Date().getTime()));
+				$("#home .main .station_image img").attr("src","img/web_hi_res_512_001.png?");
 			}
 			
 		}
@@ -232,6 +235,13 @@ site.home.run_station_updates = function() {
 		"station_path":site.session.currentstation.station_path
 	}
 	
+	if (google) { if (google.search) {
+		loggr.log(" >> With restrictions!");
+		apiqueryobj.opts = {
+			restrictions : [ [google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM] ]
+		}
+	}}
+	
 	var apiaction = "get";
 	var apiquerystr = JSON.stringify(apiqueryobj);
 	
@@ -349,8 +359,40 @@ site.home.getAlbumArt = function() {
 	);
 	
 }
-	
 
+// ---> Overflow menu
+
+site.home.toggleOverflowMenu = function() {
+	
+	loggr.info("site.home.toggleOverflowMenu()");
+	
+	var visible = site.home.overflowMenuIsVisible;
+	
+	if (!visible) {
+		site.home.overflowMenuIsVisible = true;
+		$(".overflow_menu").fadeIn(125);
+		$(".overflow_menu").addClass("active");
+	} else {
+		site.home.overflowMenuIsVisible = false;
+		$(".overflow_menu").fadeOut(125);
+		$(".overflow_menu").removeClass("active");
+	}
+	
+}
+
+// View log
+	
+site.home.viewlog = function() {
+	
+	loggr.info("site.home.viewLog()");
+	
+	var loghtml = loggr.gethtml(512) +"<p>&nbsp;</p>";
+	
+	$("#viewlog .main .block.content").html(loghtml);
+	
+	site.ui.gotosection("#viewlog");
+	
+}
 
 
 

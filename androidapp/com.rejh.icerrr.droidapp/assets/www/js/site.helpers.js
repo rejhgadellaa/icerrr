@@ -576,12 +576,26 @@ site.helpers.getGoogleImageSearchBranding = function() {
 	return google.search.Search.getBranding();
 }
 
-site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
+site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull) {
 	
 	loggr.debug("site.helpers.googleImageSearch()");
 	loggr.log(" > "+searchstring);
 	
 	// HELP: https://developers.google.com/image-search/v1/devguide
+	
+	// Check if search is loaded...
+	if (googleWasNull) {
+		loggr.error(" > GoogleWasNull == true, google won't load :(");
+		errcb();
+		return;
+	}
+	if (!google) {
+		google.load("search", "1", {"callback" : function(){ site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true); } });
+		return;
+	} else if (!google.search) {
+		google.load("search", "1", {"callback" : function(){ site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true); } });
+		return;
+	}
 	
 	// New imagesearch, get unique id
 	var searchid = site.helpers.getUniqueID();
@@ -595,6 +609,7 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 	
 	// Set some properties
 	// -> Restrictions
+	// ->> opts.restrictions = [ [google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM] ]
 	if (opts.restrictions) {
 		for (var i=0; i<opts.restrictions.length; i++) {
 			if (!opts.restrictions[i][0] || !opts.restrictions[i][1]) { continue; }
@@ -633,7 +648,7 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts) {
 				loggr.log(" > "+ currPage +", out of "+ pages.length);
 				if (currPage < pages.length-1 && site.chlist.thesearchresults[searchid].length < opts.maxresults) {
 					// get more...
-					loggr.log(" > Getting more results...");
+					loggr.log(" > Getting more results... ("+pages.length+" page(s) total)");
 					thesearch.gotoPage(currPage+1);
 					return;
 				} else {

@@ -1,3 +1,13 @@
+0.063
+  * Started implementation of overflow menu; about and view log
+
+0.062 (beta)
+  * Uses Dirble's Get Station request to find audio/mpeg stream for station if possible
+  * Improvements for icons vs logo's (icons are smaller, logo's are larger)
+  * Fixes for when no station icon is found
+  * More fixes for turning wifi off and on again (not there yet)
+  * Fix for 404 on icons via server
+
 0.061 (stable)
   * Some fixes for turning off wifi when stream is stopped
   * Fixes for re-setting alarms when timezone changes

@@ -147,7 +147,7 @@
         <div class="title">ICERRR</div>
         
 		<div class="actions">
-        	<!-- <div class="action activatablel" onClick="site.ui.showtoast('It\'s just a placeholder :)')";><img src="img/icons-48/ic_action_core_overflow.png" /></div> -->
+        	<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_core_overflow.png" /></div>
             <div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" /></div>
         </div>
     </div>
@@ -433,7 +433,82 @@
 <section id="help"></section>
 
 <!-- Section -->
-<section id="about"></section>
+<section id="about">
+
+	<div class="actionbar shadow_z1">
+    	
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+			<!--
+			<div class="action save activatablel" onClick="site.alarms.save();">
+				<img src="img/icons-48/ic_save_green.png" />
+			</div>
+            <div class="action trash activatablel" onClick="site.alarms.remove();">
+				<img src="img/icons-48/ic_trash_green.png" />
+			</div>
+			-->
+        </div>
+    </div>
+    
+    <div class="main">
+		
+        <div class="block header">
+			About
+        </div>
+		
+		<div class="block">
+		
+			<p><b>The html5(ish) streaming app with clock radio functionality. And chromecast.</b></p>
+			
+			<p>An open source project (MIT License) available at http://github.com/rejhgadellaa/icerrr/</p>
+			
+			<p>Copyright (c) 2014 REJH Gadellaa</p>
+			
+			<!--
+			<p>Icerr uses..</p>
+			<ul>
+				<li>Apache Cordova</li>
+				<li>jQuery 1.9.1</li>
+				<li>GetVideostream/cordova-chromecast</li>
+				<li>Dirble Radio Directory</li>
+				<li>Google Image Search</li>
+				<li>And much, much more</li>
+			</ul>
+			-->
+			
+		</div>
+		
+	</div>
+	
+</section>
+
+<!-- Section -->
+<section id="viewlog">
+
+	<div class="actionbar shadow_z1">
+    	
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="title">ICERRR</div>
+        
+		<div class="actions">
+        </div>
+    </div>
+    
+    <div class="main">
+		
+        <div class="block header">
+			Log
+        </div>
+		
+		<div class="block content">
+		<!-- ... -->
+		</div>
+		
+	</div>
+	
+</section>
 
 <!-- Overlay: Loading -->
 <div id="loading" class="overlay_wrap">
@@ -446,7 +521,21 @@
 
 <!-- Overflow_Menu -->
 <div id="overflow_menu" class="overflow_menu shadow_z2">
-	<div class="menu_item">Settings</div>
+
+	<!--
+	<div class="menu_item activatablel" onclick="site.home.toggleOverflowMenu();">
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;Send feedback</div></div>
+	</div>
+	-->
+	
+	<div class="menu_item activatablel" onclick="site.home.viewlog();site.home.toggleOverflowMenu();">
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;View log</div></div>
+	</div>
+	
+	<div class="menu_item activatablel" onclick="site.ui.gotosection('#about');site.home.toggleOverflowMenu();">
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;About</div></div>
+	</div>
+	
 </div>
 
 <!-- Overlay: Dialog -->

@@ -80,7 +80,7 @@ site.chicon.init = function(station_id) {
 				var resultitem = document.createElement("div");
 				resultitem.className = "resultitem_chicon shadow_z1 activatablel";
 				resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
-					+ '<img class="resulticon_chicon" src="'+ site.cfg.urls.webapp +"rgt/rgt.php?w=160&h=160&src="+ result.url +'" '
+					+ '<img class="resulticon_chicon" src="'+ result.url +'" '
 						+'onerror="$(this.parentNode.parentNode.parentNode).remove();"'
 						+'/>'
 					+ '</div></div>'
@@ -139,9 +139,16 @@ site.chicon.init = function(station_id) {
 		function() {
 			
 			// err
-			loggr.log(" > No image found...");
+			loggr.warn(" > No image found...");
+			site.ui.showtoast("No icon(s) found");
 			site.ui.hideloading();
-			site.chlist.init();
+			
+			// dummy obj
+			var targ = new Image();
+			targ.onload = function(evt) {
+				site.chicon.save(this);
+			}
+			targ.src = "http://rejh.nl/icerrr/img/web_hi_res_512_001.png";
 			
 		},
 		opts

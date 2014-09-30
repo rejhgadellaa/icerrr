@@ -229,7 +229,10 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 			);
 			/**/
 		});
-		resulticon.src = (!station.station_icon_local) ? station.station_icon : site.helpers.getImageLocally(resulticon, site.cfg.paths.images, station.station_icon_local, station.station_icon, null, null); 
+		resulticon.addEventListener("error",function(ev){ 
+			ev.target.src = "img/icons-48/ic_launcher.png";
+		});
+		resulticon.src = (!station.station_icon_local) ? site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ station.station_icon : site.helpers.getImageLocally(resulticon, site.cfg.paths.images, station.station_icon_local, station.station_icon, null, null); 
 		
 		var resultname = document.createElement("div");
 		resultname.className = "resultname";

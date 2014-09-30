@@ -392,6 +392,14 @@ site.lifecycle.onBackButton = function() {
 			site.alarms.init();
 			break;
 			
+		case "#about":
+			site.home.init();
+			break;
+			
+		case "#viewlog":
+			site.home.init();
+			break;
+			
 		default:
 			loggr.log(" > '<' button on unhandled section: "+ currentBackKey);
 			break;
