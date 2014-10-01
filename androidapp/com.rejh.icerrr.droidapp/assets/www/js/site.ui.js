@@ -46,6 +46,11 @@ site.ui.gotosection = function(selector) {
 	site.vars.currentSection = selector;
 	site.lifecycle.add_section_history(selector);
 	
+	// When leaving home: dismiss overflow menu
+	if (selector!="#home" && site.home.overflowMenuIsVisible) {
+		site.home.dismissOverflowMenu();
+	}
+	
 	// Call close function
 	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
 	while (site.session.ui_pause_callbacks.length>0) {

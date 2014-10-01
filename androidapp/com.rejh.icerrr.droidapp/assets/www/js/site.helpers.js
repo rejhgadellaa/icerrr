@@ -417,8 +417,7 @@ site.helpers.readSession = function() {
 				site.alarms.setAlarms(); // not a nice place but I need it somewhere...
 			},
 			function(err) {
-				loggr.error(" > Could not read session from storage");
-				loggr.error(err);
+				loggr.warn(" > Could not read session from storage");
 				site.session = {}; 
 				site.session_ready = true;
 			}

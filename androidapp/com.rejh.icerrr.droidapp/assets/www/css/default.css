@@ -363,7 +363,10 @@ section {
 	
 	.resultitem .resultname {
 		position:absolute;
-		bottom:22px; left:72px;
+		bottom:22px; left:72px; right:16px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
 		font-size:16pt;
 	}
 	
@@ -416,14 +419,20 @@ section {
 	#searchstation_results  .resultitem .resultname, 
 	#alarms .resultitem .resultname {
 		position:absolute;
-		top:16px; left:72px;
+		top:16px; left:72px; right:16px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
 		font-size:12pt;
 	}
 	
 	#searchstation_results .resultitem .resultsub, 
 	#alarms .resultitem .resultsub {
 		position:absolute;
-		bottom:16px; left:72px;
+		bottom:16px; left:72px; right:16px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
 		font-size:10pt;
 	}
 	

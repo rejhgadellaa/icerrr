@@ -1,3 +1,8 @@
+0.064 (stable)
+  * Fix for stations with long names (is now shortened to fit in screen)
+  * Overflow menu is now dismissed when leaving 'home' section
+  * Bunch of other small tweaks
+
 0.063 (stable)
   * Started implementation of overflow menu; about and view log
   * Wifi is not turned off anymore (sry about that)

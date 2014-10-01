@@ -362,6 +362,12 @@ site.home.getAlbumArt = function() {
 
 // ---> Overflow menu
 
+site.home.dismissOverflowMenu = function() {
+	site.home.overflowMenuIsVisible = false;
+	$(".overflow_menu").fadeOut(125);
+	$(".overflow_menu").removeClass("active");
+}
+
 site.home.toggleOverflowMenu = function() {
 	
 	loggr.info("site.home.toggleOverflowMenu()");

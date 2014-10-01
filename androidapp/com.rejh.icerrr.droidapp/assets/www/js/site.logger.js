@@ -112,7 +112,7 @@ loggr.gethtml = function(maxlines) {
 	var html = "";
 	
 	for (var i in loggr.loglines) {
-		// if (loggr.loglines.length-i > maxlines) { continue; } // TODO: Implement
+		if (loggr.loglines.length-i > maxlines) { continue; }
 		var logline = loggr.loglines[i];
 		var logtype = loggr.logtypes[i];
 		if (typeof logline !=="string") { continue; }
