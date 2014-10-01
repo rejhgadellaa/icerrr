@@ -454,9 +454,6 @@ public class ObjMediaPlayerMgr {
 				connTypeOld = connType;
 				init(streamedUrl,isAlarm);
 				
-				settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
-				settEditor.commit();
-				
 			}
 			
 			// Handle Connection losses

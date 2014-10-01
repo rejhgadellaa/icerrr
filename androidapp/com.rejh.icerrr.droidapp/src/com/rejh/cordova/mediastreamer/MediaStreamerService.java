@@ -175,10 +175,12 @@ public class MediaStreamerService extends Service {
         }  
         
         // Wifi
-        Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
-		settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
-		settEditor.commit();
-		wifiMgr.setWifiEnabled(true);
+        if (isAlarm) {
+	        Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
+			settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
+			settEditor.commit();
+			wifiMgr.setWifiEnabled(true);
+        }
         
         // Check
         if (stream_url==null) { shutdown(); }
@@ -211,19 +213,9 @@ public class MediaStreamerService extends Service {
         
         // WakeLock OFF
         if (wakelock.isHeld()) { wakelock.release(); }
-        
-	     // Turn wifi off..
-	    	if (!sett.getBoolean("wifiStateOnSetup",false)) {
-	    		wifiMgr.setWifiEnabled(false);
-	    	}
-    	settEditor.putBoolean("wifiStateOnSetup",false);
-    	settEditor.commit();
     	
         // Wifi
     	Log.d(APPTAG," > WifiState stored: "+ sett.getBoolean("wifiStateOnSetup",false));
-    	if (!sett.getBoolean("wifiStateOnSetup",false)) {
-    		// wifiMgr.setWifiEnabled(false);
-    	}
 		
 		// Listeners
 		try {

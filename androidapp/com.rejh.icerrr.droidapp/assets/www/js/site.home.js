@@ -386,11 +386,15 @@ site.home.viewlog = function() {
 	
 	loggr.info("site.home.viewLog()");
 	
-	var loghtml = loggr.gethtml(512) +"<p>&nbsp;</p>";
-	
-	$("#viewlog .main .block.content").html(loghtml);
+	var loghtml = loggr.gethtml(128) +"<p>&nbsp;</p>";
 	
 	site.ui.gotosection("#viewlog");
+	
+	setTimeout(function(){
+	
+		$("#viewlog .main .block.content").html(loghtml);
+		
+	},500);
 	
 }
 

@@ -1,5 +1,6 @@
-0.063
+0.063 (stable)
   * Started implementation of overflow menu; about and view log
+  * Wifi is not turned off anymore (sry about that)
 
 0.062 (beta)
   * Uses Dirble's Get Station request to find audio/mpeg stream for station if possible
