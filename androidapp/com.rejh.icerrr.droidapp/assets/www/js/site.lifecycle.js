@@ -225,26 +225,17 @@ site.lifecycle.onNewIntent = function(result) {
 	
 	// Intents(!)
 	// Check for share intent (webintent plugin)
-	window.plugins.webintent.getExtra("isAlarm", 
-		function (isAlarm) {
-			loggr.log(" > Extra: isAlarm: "+isAlarm);
-			if (isAlarm=="true") {
-				window.plugins.webintent.getExtra("station_id",
-					function (station_id) {
-						loggr.log(" > Extra: station_id: "+station_id);
-						site.session.alarmActive = true;
-						var tmpobj = {station_id:station_id};
-						site.cast.destroy(); // make sure we're not firing an alarm over chromecast api
-						site.chlist.selectstation(tmpobj,true); // select station
-						site.home.init(); // refresh home
-						site.mp.play(); // and play
-					}, function(err) {
-						loggr.error(" > isAlarm but !station_id? "+err);
-					}
-				);
-			}
+	window.plugins.webintent.getExtra("station_id",
+		function (station_id) {
+			loggr.log(" > Extra: station_id: "+station_id);
+			var tmpobj = {station_id:station_id};
+			site.cast.destroy(); // make sure we're not firing an alarm over chromecast api
+			site.chlist.selectstation(tmpobj,true); // select station
+			site.home.init(); // refresh home
+			site.session.alarmActive = true; // set alarm active
+			site.mp.play(); // and play
 		}, function(err) {
-			loggr.log(" > !isAlarm: "+err);
+			loggr.error(" > isAlarm but !station_id? "+err);
 		}
 	);
 	

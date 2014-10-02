@@ -57,6 +57,9 @@ site.chsearch.searchstation = function(nextpage) {
 	
 	if (nextpage) {
 		site.chsearch.searchpage++;
+	} else {
+		site.chsearch.results = [];
+		site.chsearch.searchpage = 0;
 	}
 	
 	// Get value
@@ -67,7 +70,7 @@ site.chsearch.searchstation = function(nextpage) {
 	
 	site.chsearch.searchstr = name;
 	
-	site.ui.showloading();
+	if (!site.vars.isLoading) { site.ui.showloading(); }
 	
 	// Webapi time!
 	var apiqueryobj = {
@@ -85,15 +88,17 @@ site.chsearch.searchstation = function(nextpage) {
 				site.ui.showtoast(data["errormsg"]);
 				site.ui.hideloading();
 			} else {
-				if (data["data"].length>0) {
+				if (data["data"].length>0 && site.chsearch.results.length<20) {
 					loggr.log(data["data"]);
 					for (var i in data["data"]) {
+						if (!data["data"][i]) { continue; }
+						if (!data["data"][i].name) { continue; }
 						site.chsearch.results.push(data["data"][i]);
 					}
-					//site.chsearch.searchstation(true);
-					site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
-					site.chsearch.resultsToStationData();
-					site.ui.hideloading();
+					site.chsearch.searchstation(true);
+					//site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
+					//site.chsearch.resultsToStationData();
+					//site.ui.hideloading();
 				} else {
 					site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
 					site.chsearch.resultsToStationData();
@@ -102,6 +107,16 @@ site.chsearch.searchstation = function(nextpage) {
 			}
 		},
 		function(error) {
+			// this could be just fired because there aro no more results..
+			if (site.chsearch.results) {
+				if (site.chsearch.results.length>0) {
+					site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
+					site.chsearch.resultsToStationData();
+					site.ui.hideloading();
+					return;
+				}
+			}
+			// jep it's an error
 			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
 			else { loggr.log(error); }
 			site.ui.hideloading();
@@ -280,11 +295,6 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 	// update window
 	site.lifecycle.onResize();
-	
-	loggr.log(" > Required height: "+ (elems.length*72));
-	setTimeout(function(){
-		loggr.log(" > "+ $(site.vars.currentSection+" .main")[0].scrollHeight);
-	},250);
 	
 }
 

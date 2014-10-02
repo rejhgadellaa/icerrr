@@ -126,7 +126,9 @@ public class MediaStreamer extends CordovaPlugin {
         boolean isAlarm = false;
         try {
         	isAlarm = args.getBoolean(1);
-        } catch(Exception e) {}
+        } catch(Exception e) {
+        	Log.e(APPTAG," > Exception on args.getBoolean(1) - isAlarm!!");
+        }
         
         if (stream_url==null) { 
         	callbackContext.error("stream_url is null");
@@ -138,6 +140,8 @@ public class MediaStreamer extends CordovaPlugin {
         	Log.d(APPTAG, APPTAG+" > play > mediastreamer_serviceRunning==true, stopService()");
         	context.stopService(serviceIntent);
         }
+        
+        Log.d(APPTAG," > isAlarm: "+ isAlarm);
         
         // Start
         settEditor.putString("mediastreamer_streamUrl", stream_url);

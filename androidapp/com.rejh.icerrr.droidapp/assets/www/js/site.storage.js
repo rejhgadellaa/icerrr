@@ -463,19 +463,19 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	var timeoutID = site.storage.addTimeout("readfile",null,{path:path,filename:filename,cb:cb,errcb:errcb,opts:opts});
 	
 	// Run
-	loggr.log(" > Request File System");
+	//loggr.log(" > Request File System");
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
-			loggr.log(" > Get directory entry: "+path);
+			//loggr.log(" > Get directory entry: "+path);
             fileSystem.root.getDirectory(path,
                 opts.path,
                 function(directoryEntry) {
-					loggr.log(" > Get file entry: "+filename);
+					//loggr.log(" > Get file entry: "+filename);
 					directoryEntry.getFile(filename,opts.file,
 						function(fileEntry) {
 							fileEntry.file(
 								function(file) {
-									loggr.log(" > Read file...");
+									//loggr.log(" > Read file...");
 									var fileReader = new FileReader();
 									site.storage.timeouts[timeoutID].canabort = true;
 									site.storage.timeouts[timeoutID].abortObj = fileReader;

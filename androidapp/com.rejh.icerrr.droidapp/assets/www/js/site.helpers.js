@@ -178,24 +178,77 @@ site.helpers.storeImageLocally = function(imgobj,filename,cb,opts) {
 	// Get base64
 	//loggr.log(" > Encode base64...");
 	var timebgn = new Date().getTime();
-	var base64 = site.helpers.imageToBase64(imgobj);
-	var time_encoded = new Date().getTime() - timebgn;
+	site.helpers.imageToBase64(imgobj,function(base64) {
+		
+		var time_encoded = new Date().getTime() - timebgn;
+		
+		if (!base64) { return false; }
+		
+		loggr.log(base64);
+		
+		// Write
+		//loggr.log(" > Write: "+filename);
+		site.storage.writefile(site.cfg.paths.images,filename,base64,
+			function(evt) { cb(evt); },
+			function(err) {
+				loggr.warn(" > Error writing file "+ filename);
+			}
+		);
+		
+	});
 	
-	//loggr.log(" >> Base64: "+ base64);
-	//loggr.log(" >> "+ time_encoded +" ms");
+}
+
+// imageToBase64
+// - Returns FALSE if something has gone wrong...
+
+site.helpers.imageToBase64 = function(imgobj,cb,opts) {
 	
-	if (!base64) { return false; }
+	// Handle opts
+	if (!opts) { opts = {}; }
+	//if (!opts.maxwidth) { opts.maxwidth = imgobj.naturalWidth; } // Note: dev is responsible for handling aspect!
+	//if (!opts.maxheight) { opts.maxheight = imgobj.naturalWidth; } // TODO: not working atm
+	if (!opts.zoomcrop) { opts.zoomcrop = false; } // TODO: implement
 	
-	// Write
-	//loggr.log(" > Write: "+filename);
-	site.storage.writefile(site.cfg.paths.images,filename,base64,
-		function(evt) { cb(evt); },
-		function(err) {
-			loggr.warn(" > Error writing file "+ filename);
+	// Create new image
+	var tmpImage = new Image();
+	tmpImage.onload = function() {
+	
+		// Create canvas
+		var canvas = document.createElement("canvas");
+		ctx = canvas.getContext("2d");
+	
+		// Set width/height to match imageObj
+		canvas.width = tmpImage.width;
+		canvas.height = tmpImage.height;
+	
+		// Draw image
+		ctx.drawImage(tmpImage, 0, 0, tmpImage.width, tmpImage.height, 0, 0, tmpImage.width, tmpImage.height);
+		
+		// Now get the base64...
+		var base64 = canvas.toDataURL("image/png");
+		
+		if (base64.indexOf("image/png") == -1) {
+			loggr.log("site.helpers.imageToBase64.Error: Unexpected base64 string for "+tmpImage.src);
+			loggr.log(base64);
+			try {
+				var imgData = ctx.getImageData(0,0,canvas.width,canvas.height)
+				pngFile = generatePng(canvas.width, canvas.height, imgData.data);
+				base64 = 'data:image/png;base64,' + btoa(pngFile);
+			} catch(e) { 
+				// I've really tried everyting, didn't I?
+				loggr.log(e);
+				base64 = false;
+			}
+			
 		}
-	);
-	//
-	
+		
+		// Callback!
+		if (cb) { cb(base64); }
+		else { return base64; }
+		
+	}
+	tmpImage.src = imgobj.src;
 	
 }
 
@@ -233,62 +286,12 @@ site.helpers.getImageLocally = function(imgobj,filepath,filename,fallback,cb,cbe
 			function(ev){ 
 				loggr.warn(" > site.helpers.getImageLocally.Error");
 				loggr.warn(" > Could not load "+ ev.target.src);
+				loggr.warn(" > Filename: "+ filename);
 				$(ev.target).attr("src",fallback);
 			}
 		);
 		
 	},1);
-	
-}
-
-// imageToBase64
-// - Returns FALSE if something has gone wrong...
-
-site.helpers.imageToBase64 = function(imgobj,cb,opts) {
-	
-	// Handle opts
-	if (!opts) { opts = {}; }
-	if (!opts.maxwidth) { opts.maxwidth = imgobj.naturalWidth; } // Note: dev is responsible for handling aspect!
-	if (!opts.maxheight) { opts.maxheight = imgobj.naturalWidth; }
-	if (!opts.zoomcrop) { opts.zoomcrop = false; } // TODO: implement
-	
-	// Create canvas
-	var canvas = document.createElement("canvas");
-	ctx = canvas.getContext("2d");
-	
-	// Set width/height to match imageObj
-	canvas.width = imgobj.naturalWidth;
-	canvas.height = imgobj.naturalWidth;
-	
-	// Check
-	if (!imgobj.naturalWidth || !imgobj.naturalHeight || !opts.maxwidth || !opts.maxheight) {
-		return false;
-	}
-	
-	// Draw image
-	ctx.drawImage(imgobj, 0, 0, imgobj.naturalWidth, imgobj.naturalWidth, 0, 0, opts.maxwidth, opts.maxheight);
-	
-	// Now get the base64...
-	var base64 = canvas.toDataURL("image/png");
-	
-	if (base64.indexOf("image/png") == -1) {
-		loggr.log("site.helpers.imageToBase64.Error: Unexpected base64 string for "+imgobj.src);
-		loggr.log(base64);
-		try {
-			var imgData = ctx.getImageData(0,0,canvas.width,canvas.height)
-			pngFile = generatePng(canvas.width, canvas.height, imgData.data);
-			base64 = 'data:image/png;base64,' + btoa(pngFile);
-		} catch(e) { 
-			// I've really tried everyting, didn't I?
-			loggr.log(e);
-			base64 = false;
-		}
-		
-	}
-	
-	// Callback!
-	if (cb) { cb(base64); }
-	else { return base64; }
 	
 }
 

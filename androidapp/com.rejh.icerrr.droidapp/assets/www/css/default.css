@@ -489,8 +489,13 @@ section {
 /* Viewlog */
 
 #viewlog {
-
+	
 }
+
+	#viewlog .main {
+		left:0; right:0;
+		overflow-x:hidden;
+	}
 
 	#viewlog .main .block span {
 		font-size:9pt;

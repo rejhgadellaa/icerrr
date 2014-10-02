@@ -235,13 +235,6 @@ site.home.run_station_updates = function() {
 		"station_path":site.session.currentstation.station_path
 	}
 	
-	if (google) { if (google.search) {
-		loggr.log(" >> With restrictions!");
-		apiqueryobj.opts = {
-			restrictions : [ [google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM] ]
-		}
-	}}
-	
 	var apiaction = "get";
 	var apiquerystr = JSON.stringify(apiqueryobj);
 	

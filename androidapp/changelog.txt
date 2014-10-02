@@ -1,3 +1,13 @@
+0.067 (beta)
+  * Wifi is turned on when alarm is fired (not turned off!)
+
+0.066 (stable)
+  * Should fix INDEX_SIZE_ERR on Android 4.2.2 devices (A500s)
+
+0.065 (beta)
+  * More results when searching for stations (20 for now, working on 'more' functionality)
+  * Cleanup some log output
+
 0.064 (stable)
   * Fix for stations with long names (is now shortened to fit in screen)
   * Overflow menu is now dismissed when leaving 'home' section

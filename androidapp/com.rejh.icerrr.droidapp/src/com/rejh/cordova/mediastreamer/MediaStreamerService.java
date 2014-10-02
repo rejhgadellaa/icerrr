@@ -159,28 +159,24 @@ public class MediaStreamerService extends Service {
 	    telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
         
         // Stream url
-	    String stream_url = "null";
+	    String stream_url = null;
+	    
+	    // Is Alarm
 	    boolean isAlarm = false;
         if (incomingIntent!=null) {
         	// incomingIntent = this.getIntent(); // sett.getString("mediastreamer_streamUrl",null);
         	stream_url = incomingIntent.getStringExtra("stream_url");
-        	isAlarm = incomingIntent.getBooleanExtra("isAlarm", false);
+        	isAlarm = incomingIntent.getBooleanExtra("isAlarm",false);
+        	Log.d(APPTAG," > IsAlarmStr: "+ isAlarm);
         	settEditor.putBoolean("isAlarm", isAlarm);
         	settEditor.commit();
         } else {
+        	Log.d(APPTAG," > !incomingIntent");
         	sett.getString("mediastreamer_streamUrl",null); // fallback
         	isAlarm = false;
         	settEditor.putBoolean("isAlarm", isAlarm);
         	settEditor.commit();
         }  
-        
-        // Wifi
-        if (isAlarm) {
-	        Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
-			settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
-			settEditor.commit();
-			wifiMgr.setWifiEnabled(true);
-        }
         
         // Check
         if (stream_url==null) { shutdown(); }
@@ -188,6 +184,15 @@ public class MediaStreamerService extends Service {
             Log.d(APPTAG," -> stream already running: "+ stream_url_active);
             return; 
         }
+        
+        // Wifi
+        if (isAlarm) {
+			wifiMgr.setWifiEnabled(true);
+        }
+
+        Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
+		settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
+		settEditor.commit();
 		
 		// MediaPlayer
 		if (mpMgr!=null) { mpMgr.destroy(); }

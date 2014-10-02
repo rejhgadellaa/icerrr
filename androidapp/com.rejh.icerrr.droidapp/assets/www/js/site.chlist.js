@@ -219,12 +219,12 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 			site.helpers.storeImageLocally(ev.target,filename,
 				function(evt) {
 					// evt.target.fileName
-					var stationIndex = site.helpers.session.getStationIndexById(ev.target.parentNode.station_id);
-					if (stationIndex>=0) { 
-						site.data.stations[stationIndex].station_icon_local = evt.target.fileName;
-						site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
-						site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
-					}
+					//var stationIndex = site.helpers.session.getStationIndexById(ev.target.parentNode.station_id);
+					//if (stationIndex>=0) { 
+					site.data.stations[stationIndex].station_icon_local = evt.target.fileName;
+					site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
+					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
+					//}
 				}
 			);
 			/**/
