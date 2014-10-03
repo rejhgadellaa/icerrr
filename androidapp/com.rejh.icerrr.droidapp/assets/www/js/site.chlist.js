@@ -203,7 +203,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		
 		// begin creating elements
 		var resultitem = document.createElement("div");
-		resultitem.className = "resultitem activatabled";
+		resultitem.className = "resultitem activatablel";
 		resultitem.id = "chlist_resultitem_"+ station.station_id;
 		resultitem.station_id = station.station_id;
 		
@@ -239,7 +239,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resultname.innerHTML = station.station_name;
 		
 		var resultstar = document.createElement("img");
-		resultstar.className = "resultstar activatabled";
+		resultstar.className = "resultstar activatablel";
 		resultstar.onclick = function(event) {
 			event.preventDefault(); 
 			event.stopPropagation();

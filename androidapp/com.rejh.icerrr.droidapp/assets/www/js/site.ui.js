@@ -179,7 +179,7 @@ site.ui.hackActiveCssRule = function() {
 				if ($(thetarget).hasClass("activatablel_active")) { return; }
 				$(thetarget).addClass("activatablel_active");
 				//setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
-			},75);
+			},25);
 		};
 		elem.ontouchend = function(evt) {
 			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
@@ -224,7 +224,7 @@ site.ui.hackActiveCssRule = function() {
 				if ($(thetarget).hasClass("activatabled_active")) { return; }
 				$(thetarget).addClass("activatabled_active");
 				//setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
-			},75);
+			},25);
 		};
 		elem.ontouchend = function(evt) {
 			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }

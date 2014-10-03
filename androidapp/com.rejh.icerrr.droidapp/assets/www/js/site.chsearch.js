@@ -189,7 +189,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 	loggr.log("site.chsearch.drawResults()");
 	
-	$("#searchstation_results .title").html("Icerrr: \""+site.helpers.short(site.chsearch.searchstr,24)+"\"");
+	$("#searchstation_results .title").html("Icerrr: \""+site.helpers.short(site.chsearch.searchstr,18)+"\"");
 	
 	// TODO: This function is a bit different from site.chlist.js, mainly because
 	//  (cont) it uses its own section
@@ -252,7 +252,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 		
 		// begin creating elements
 		var resultitem = document.createElement("div");
-		resultitem.className = "resultitem activatabled";
+		resultitem.className = "resultitem activatablel";
 		resultitem.id = "chlist_resultitem_"+ station.station_id;
 		resultitem.station_id = station.station_id;
 		

@@ -77,7 +77,7 @@ site.alarms.drawResults = function() {
 		
 		// Build item
 		var resultitem = document.createElement("div");
-		resultitem.className = "resultitem activatabled";
+		resultitem.className = "resultitem activatablel";
 		resultitem.id = "alarm_resultitem_"+ alarm.station.station_id;
 		resultitem.edit_id = alarm.id;
 		resultitem.alarm_id = alarm.alarm_id;
