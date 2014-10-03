@@ -1,3 +1,7 @@
+0.068 (beta)
+  * Wifi is always switched on when stream is started
+  * Wifi is turned off when stream is killed AND it was off to begin with
+
 0.067 (beta)
   * Wifi is turned on when alarm is fired (not turned off!)
 

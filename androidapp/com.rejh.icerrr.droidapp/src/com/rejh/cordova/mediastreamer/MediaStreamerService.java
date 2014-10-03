@@ -186,8 +186,13 @@ public class MediaStreamerService extends Service {
         }
         
         // Wifi
-        if (isAlarm) {
+        if (isAlarm || !isAlarm) {
+        	settEditor.putBoolean("wifiIsToggled", true);
+        	settEditor.commit();
 			wifiMgr.setWifiEnabled(true);
+        } else {
+        	settEditor.putBoolean("wifiIsToggled", false);
+        	settEditor.commit();
         }
 
         Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
@@ -220,7 +225,12 @@ public class MediaStreamerService extends Service {
         if (wakelock.isHeld()) { wakelock.release(); }
     	
         // Wifi
+        Log.d(APPTAG," > WifiIsToggled: "+ sett.getBoolean("wifiIsToggled", false));
     	Log.d(APPTAG," > WifiState stored: "+ sett.getBoolean("wifiStateOnSetup",false));
+    	if (sett.getBoolean("wifiIsToggled", false) && !sett.getBoolean("wifiStateOnSetup",false)) {
+    		Log.w(APPTAG," > Turn wifi off...");
+    		wifiMgr.setWifiEnabled(false);
+    	}
 		
 		// Listeners
 		try {
