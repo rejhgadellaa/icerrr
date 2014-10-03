@@ -183,7 +183,6 @@ section {
 		top:56px; left:0; right:0;
 		width:100%;
 		xheight:*; /* TODO: smart way to set height dynamically so it uses all available space? */
-		border:-1px solid #f00;
 	}
 		
 		.main .block {

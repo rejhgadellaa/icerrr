@@ -1,6 +1,9 @@
 0.068 (beta)
   * Wifi is always switched on when stream is started
-  * Wifi is turned off when stream is killed AND it was off to begin with
+  * Wifi is turned off when stream is killed AND was off to begin with [1]
+  * Removed red border that appeared on some older devices
+  
+  [1] I think I got it right this time. Plz let me know if you're experiencing issues
 
 0.067 (beta)
   * Wifi is turned on when alarm is fired (not turned off!)
