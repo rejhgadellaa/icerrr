@@ -1,3 +1,6 @@
+0.069 (stable)
+  * All the stuff the beta users where already enjoying
+
 0.068 (beta)
   * Wifi is always switched on when stream is started
   * Wifi is turned off when stream is killed AND was off to begin with [1]
