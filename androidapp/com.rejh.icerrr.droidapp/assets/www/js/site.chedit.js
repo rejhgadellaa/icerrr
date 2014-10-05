@@ -373,7 +373,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 				if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
 				else { loggr.log(error); }
 			}
-		});
+		);
 		
 		return;
 		
