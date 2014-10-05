@@ -327,18 +327,23 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 	var station_host = station_url;
 	var station_port = 80; // logic, since it should have http:// in front of it?
 	var station_path = "";
+	
 	if (station_host.indexOf("http://")>=0) {
 		station_host = station_host.substr("http://".length);
 	} else if (station_host.indexOf("https://")>=0) {
 		station_host = station_host.substr("https://".length);
 	}
-	if (station_host.indexOf("/")>0 && station_host.indexOf(":")) { 
+	
+	if (station_host.indexOf("/")>0 && station_host.indexOf(":")>0) { 
 		station_port_end = station_host.indexOf("/")-station_host.indexOf(":")-1; 
 		station_path = station_host.substr(station_host.indexOf("/"));
-	}
-	else { 
+	} else if (station_host.indexOf("/")<0 && station_host.indexOf(":")>0) {
+		station_port_end = station_host.length-station_host.indexOf(":")-1; 
+		station_path = "/";
+ 	} else { 
 		station_port_end = station_host.length-station_host.indexOf(":")-1; 
 	}
+	
 	if (station_host.indexOf(":")>=0) {
 		station_port = station_host.substr(station_host.indexOf(":")+1,station_port_end);
 		station_host = station_host.substr(0,station_host.indexOf(":"));
@@ -346,6 +351,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 		station_path = station_host.substr(station_host.indexOf("/"));
 		station_host = station_host.substr(0,station_host.indexOf("/"));
 	}
+	
 	loggr.log(" > Host: "+ station_host);
 	loggr.log(" > Port: "+ station_port);
 	loggr.log(" > Path: "+ station_path);
