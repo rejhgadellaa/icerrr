@@ -1,6 +1,6 @@
-{"station_id":"test","host":"pr128.pinguinradio.com","port":80,"path":"listen.pls"}
+{"station_id":"test","host":"pr128.pinguinradio.com","port":80,"path":"/listen.pls"}
 
-ICY 404 Resource Not Found
-icy-notice1:<BR>SHOUTcast Distributed Network Audio Server/Linux v1.9.8<BR>
-icy-notice2:The resource requested was not found<BR>
+HTTP/1.0 200 OK
+content-type:audio/x-scpls
+Connection: close
 

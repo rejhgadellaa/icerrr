@@ -392,6 +392,10 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 	// Store
 	station.stream_url = stream_url;
 	
+	// -> Check if station is actually a playlist...
+	
+	// TODO
+	
 	// -> Check if station actually works...
 	
 	site.ui.showloading("Testing...","Checking station validity");
