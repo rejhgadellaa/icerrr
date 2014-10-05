@@ -1,3 +1,86 @@
+2014-10-05 18:52:33    GET > {"get":"parse_playlist","url":"http://pr128.pinguinradio.com/listen.pls"}
+2014-10-05 18:52:33    Cleanup json
+2014-10-05 18:51:58    GET > {"get":"parse_playlist","url":"http://pr128.pinguinradio.com/listen.pls"}
+2014-10-05 18:51:58    Cleanup json
+2014-10-05 18:51:43     >> Read file... 0
+2014-10-05 18:51:43    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:51:43    Cleanup json
+2014-10-05 18:47:25    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:25    Cleanup json
+2014-10-05 18:47:24    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:24    Cleanup json
+2014-10-05 18:47:24    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:24    Cleanup json
+2014-10-05 18:47:24    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:24    Cleanup json
+2014-10-05 18:47:23    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:23    Cleanup json
+2014-10-05 18:47:23    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:23    Cleanup json
+2014-10-05 18:47:23    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:23    Cleanup json
+2014-10-05 18:47:23    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:23    Cleanup json
+2014-10-05 18:47:22    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:22    Cleanup json
+2014-10-05 18:47:22    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:22    Cleanup json
+2014-10-05 18:47:21    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:21    Cleanup json
+2014-10-05 18:47:21    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:21    Cleanup json
+2014-10-05 18:47:14    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:14    Cleanup json
+2014-10-05 18:47:13    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:13    Cleanup json
+2014-10-05 18:47:13    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:13    Cleanup json
+2014-10-05 18:47:12    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:12    Cleanup json
+2014-10-05 18:47:11    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:11    Cleanup json
+2014-10-05 18:47:10    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:10    Cleanup json
+2014-10-05 18:47:10    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:10    Cleanup json
+2014-10-05 18:47:10    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:10    Cleanup json
+2014-10-05 18:47:10    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:10    Cleanup json
+2014-10-05 18:47:10    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:10    Cleanup json
+2014-10-05 18:47:09    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:09    Cleanup json
+2014-10-05 18:47:09    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:09    Cleanup json
+2014-10-05 18:47:09    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:09    Cleanup json
+2014-10-05 18:47:09    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:09    Cleanup json
+2014-10-05 18:47:08    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:08    Cleanup json
+2014-10-05 18:47:07    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:07    Cleanup json
+2014-10-05 18:47:01    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:47:01    Cleanup json
+2014-10-05 18:46:55    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port":80,"station_path":"/listen.pls"}
+2014-10-05 18:46:55    Cleanup json
+2014-10-05 18:46:50    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port":80,"station_path":"/listen.pls"}
+2014-10-05 18:46:50    Cleanup json
+2014-10-05 18:46:23     >> Read file... 0
+2014-10-05 18:46:23    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port":82,"station_path":"/listen.pls"}
+2014-10-05 18:46:23    Cleanup json
+2014-10-05 18:46:13    Error: Error in query: '{"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port",82,"station_path":"/listen.pls"}', , 
+2014-10-05 18:46:13    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port",82,"station_path":"/listen.pls"}
+2014-10-05 18:46:13    Cleanup json
+2014-10-05 18:46:10    Error: Error in query: '{"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port",82"station_path":"/listen.pls"}', , 
+2014-10-05 18:46:10    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port",82"station_path":"/listen.pls"}
+2014-10-05 18:46:10    Cleanup json
+2014-10-05 18:45:36    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_path":"/listen.pls"}
+2014-10-05 18:45:36    Cleanup json
+2014-10-05 18:45:02     >> Read file... 0
+2014-10-05 18:45:02    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port":80,"station_path":"listen.pls"}
+2014-10-05 18:45:02    Cleanup json
 2014-10-05 18:41:41    GET > {"get":"parse_playlist","url":"http://pr128.pinguinradio.com/listen.pls"}
 2014-10-05 18:41:41    Cleanup json
 2014-10-05 18:41:23    GET > {"get":"parse_playlist","url":"http://pr128.pinguinradio.com/listen.pls"}
@@ -439,9 +522,4 @@
 2014-09-17 05:15:57    Error: Error: file '../json/station_info.radio3fm.json' not found?
 2014-09-17 05:15:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
 2014-09-17 05:15:55    Cleanup json
-2014-09-17 05:14:48    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-09-17 05:14:48    Cleanup json
-2014-09-17 05:14:46    Error: Error: file '../json/station_info.radio3fm.json' not found?
-2014-09-17 05:14:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-09-17 05:14:44    Cleanup json
-2014-09-17 05:02:28    GET > {"get":"station_info","statio
+2014-09-17 05:14:48    GET > {"get":"station_info","station_id":"r

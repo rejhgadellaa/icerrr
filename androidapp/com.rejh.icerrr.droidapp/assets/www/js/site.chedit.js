@@ -352,6 +352,32 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 		station_host = station_host.substr(0,station_host.indexOf("/"));
 	}
 	
+	// Catch pls and m3u
+	if (station_path.indexOf(".pls")>=0 || station_path.indexOf(".m3u")>=0) {
+		
+		var apiqueryobj = {
+			"get":"parse_playlist",
+			"url":station_url
+		}
+		
+		var apiaction = "get";
+		var apiquerystr = JSON.stringify(apiqueryobj);
+		
+		site.webapi.exec(apiaction,apiquerystr,
+			function(data) {
+				var url = data["data"];
+				site.chedit.check_station_url(station_name,url,silent);
+			},
+			function(error) {
+				site.ui.hideloading();
+				if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
+				else { loggr.log(error); }
+			}
+		
+		return;
+		
+	}
+	
 	loggr.log(" > Host: "+ station_host);
 	loggr.log(" > Port: "+ station_port);
 	loggr.log(" > Path: "+ station_path);
@@ -369,7 +395,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 	var apiquerystr = JSON.stringify(apiqueryobj);
 	
 	site.webapi.exec(apiaction,apiquerystr,
-		function(data,silent) {
+		function(data) {
 			site.ui.hideloading();
 			loggr.log(JSON.stringify(data["data"]));
 			if (!data["data"]["content-type"]) { 
