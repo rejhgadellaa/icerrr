@@ -498,6 +498,13 @@ section {
 
 	#viewlog .main .block span {
 		font-size:9pt;
+		-webkit-touch-callout: text;
+		-webkit-user-select: text;
+		-khtml-user-select: text;
+		-moz-user-select: text;
+		-ms-user-select: text;
+		user-select: text;
+		cursor:text;
 	}
 	
 /* -- OVERFLOW_MENU */

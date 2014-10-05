@@ -1,6 +1,6 @@
 0.071 (beta)
   * Improvements for manually adding and editing a station url
-  * Log is now selectable (so you can copy/paste it)
+  * Log now selectable, useful for copy/pasting
 
 0.070 (beta)
    * New: set volume for alarms (default: 70%)
