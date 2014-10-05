@@ -1,5 +1,9 @@
 package com.rejh.cordova.mediastreamer;
 
+import org.apache.cordova.api.CallbackContext;
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -161,12 +165,14 @@ public class MediaStreamerService extends Service {
         // Stream url
 	    String stream_url = null;
 	    
-	    // Is Alarm
+	    // Is Alarm, stream_url and volume
 	    boolean isAlarm = false;
+	    int volume = -1;
         if (incomingIntent!=null) {
         	// incomingIntent = this.getIntent(); // sett.getString("mediastreamer_streamUrl",null);
         	stream_url = incomingIntent.getStringExtra("stream_url");
         	isAlarm = incomingIntent.getBooleanExtra("isAlarm",false);
+        	volume = incomingIntent.getIntExtra("volume", -1);
         	Log.d(APPTAG," > IsAlarmStr: "+ isAlarm);
         	settEditor.putBoolean("isAlarm", isAlarm);
         	settEditor.commit();
@@ -176,7 +182,7 @@ public class MediaStreamerService extends Service {
         	isAlarm = false;
         	settEditor.putBoolean("isAlarm", isAlarm);
         	settEditor.commit();
-        }  
+        }
         
         // Check
         if (stream_url==null) { shutdown(); }
@@ -193,6 +199,12 @@ public class MediaStreamerService extends Service {
         } else {
         	settEditor.putBoolean("wifiIsToggled", false);
         	settEditor.commit();
+        }
+        
+        // Volume
+        if (volume>-1) {
+        	Log.d(APPTAG," > Volume: "+volume);
+        	setVolume(volume);
         }
 
         Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
@@ -393,6 +405,40 @@ public class MediaStreamerService extends Service {
             
         }
     }
+	
+	// ------------------
+	// METHODS
+    
+    // --- SetVolume
+	private void setVolume(int volume) {
+		
+		// SCALE :: 0 - 10
+		
+		boolean allowdown = true;
+        
+        // Check arguments
+        
+        int setvol = volume;
+		
+		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+		
+		float maxvol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		float curvol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		float targvol = Math.round((setvol*maxvol)/10);
+		int difvol = Math.round(targvol-curvol);
+		
+		if (allowdown) {
+			if (curvol>targvol) { Log.d(APPTAG,"ChangedVolume: --"); for (int ivol=0; ivol>difvol; ivol--) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1); } }
+			if (curvol<targvol) { Log.d(APPTAG,"ChangedVolume: ++"); for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1); } }
+			}
+		else {
+			Log.d(APPTAG,"ChangedVolume: ++ (upOnly)");
+			for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1); }
+			}
+		
+		Log.d(APPTAG,"ChangedVolume: set:"+setvol+" --> max:"+maxvol+", cur:"+curvol+", dif:"+difvol);
+		
+	}
 	
 	
 

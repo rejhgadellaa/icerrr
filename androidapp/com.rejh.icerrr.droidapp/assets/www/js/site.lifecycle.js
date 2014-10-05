@@ -160,9 +160,9 @@ site.lifecycle.initApp = function() {
 		case "#channellist":
 			site.chlist.init();
 			break;
-		
-		default: 
-			setTimeout(function() { site.home.init(); },1000);
+			
+		default:
+			site.home.init();
 			break;
 			
 	}
@@ -200,6 +200,7 @@ site.lifecycle.onNewIntent = function(result) {
 	var hour = new Date().getHours();
 	var minute = new Date().getMinutes();
 	var alarms = site.session.alarms;
+	var thealarm;
 	for (var i in alarms) {
 		
 		var alarm = alarms[i];
@@ -211,9 +212,22 @@ site.lifecycle.onNewIntent = function(result) {
 		var minuteDiff = alarmMinute - minute;
 		
 		if (alarmHour == hour && minuteDiff > -1 && minuteDiff < 1) {
+			
 			loggr.log(" > Found alarm: "+ alarmHour +":"+ alarmMinute);
+			
+			// Does it need to fire todat?
+			var day = new Date().getDay(); // 0 - 6
+			var repeatCfg = alarm.repeatCfg;
+			loggr.log(" > Day: "+ day +", repeat: "+ repeatCfg[day]);
+			if (repeatCfg[day]!=1 && alarm.repeat) {
+				loggr.log(" >> Don't repeat today..");
+				continue;
+			}
+			
 			alarmOkay = true;
+			thealarm = alarm;
 			break;
+			
 		}
 		
 	}
@@ -233,6 +247,7 @@ site.lifecycle.onNewIntent = function(result) {
 			site.chlist.selectstation(tmpobj,true); // select station
 			site.home.init(); // refresh home
 			site.session.alarmActive = true; // set alarm active
+			site.session.alarmVolume = thealarm.volume;
 			site.mp.play(); // and play
 		}, function(err) {
 			loggr.error(" > isAlarm but !station_id? "+err);

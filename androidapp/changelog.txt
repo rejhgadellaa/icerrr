@@ -1,3 +1,7 @@
+0.070 (beta)
+   * New: set volume for alarms (default: 70%)
+   * Repeat options will hide/show when needed
+
 0.069 (stable)
   * All the stuff the beta users where already enjoying
 

@@ -92,7 +92,7 @@ site.mp.play = function() {
 	loggr.debug("site.mp.play()");
 	
 	// Start MediaStreamer
-	window.mediaStreamer.play(site.session.currentstation.station_url, site.session.alarmActive, 
+	window.mediaStreamer.play(site.session.currentstation.station_url, site.session.alarmActive, site.session.alarmVolume, 
 		function(msg) {
 			loggr.log(" > mediaStreamer.play()."+msg);
 			site.mp.setPlaying();
@@ -124,6 +124,7 @@ site.mp.stop = function() {
 	);
 	
 	site.session.alarmActive = false;
+	site.session.alarmVolume = -1;
 	site.mp.mpstatus = Media.MEDIA_NONE;
 	
 }

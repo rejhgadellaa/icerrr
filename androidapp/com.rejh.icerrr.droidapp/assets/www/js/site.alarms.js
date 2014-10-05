@@ -293,6 +293,9 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 	date.setSeconds(0);
 	date.setMilliseconds(0);
 	
+	// Volume
+	var volume = (alarm.volume) ? alarm.volume : 7;
+	
 	loggr.log(" > Repeat: "+ alarm.repeat);
 	
 	var opts = {};
@@ -309,7 +312,8 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 		classname: "com.rejh.icerrr.droidapp.Icerrr",
 		extras: [
 			{ type:"string", name:"isAlarm", value:"true" },
-			{ type:"string", name:"station_id", value:alarm.station.station_id }
+			{ type:"string", name:"station_id", value:alarm.station.station_id },
+			{ type:"int", name:"volume", value:volume }
 		]
 	}
 	
@@ -364,6 +368,7 @@ site.alarms.updateForm = function(alarmCfg) {
 			alarm_id: alarm_id,
 			hour: hour,
 			minute: minute,
+			volume: 7,
 			repeat: true,
 			repeatCfg: [0,1,1,1,1,1,1],
 			station: site.session.currentstation
@@ -414,14 +419,27 @@ site.alarms.updateForm = function(alarmCfg) {
 		site.alarms.save();
 	});
 	
+	// Volume
+	if (alarmCfg.volume) { $("#alarms_add input[name='alarm_volume']").attr("value",alarmCfg.volume); }
+	else { $("#alarms_add input[name='alarm_volume']").attr("value",7); }
+	$("#alarms_add input[name='alarm_volume']").on("change",function(evt) {
+		var obj = evt.originalEvent.target;
+		var value = obj.value ? obj.value : 7;
+		loggr.log(" > Change: volume: "+value);
+		alarmCfg.volume = value;
+		site.alarms.save();
+	});
+	
 	// Repeat
-	if (alarmCfg.repeat) { $("#alarms_add input[name='repeat']").attr("checked","checked"); }
-	else { $("#alarms_add input[name='repeat']").removeAttr("checked"); }
+	if (alarmCfg.repeat) { $("#alarms_add input[name='repeat']").attr("checked","checked"); $("#alarms_add_repeatCfg").css("display","block"); }
+	else { $("#alarms_add input[name='repeat']").removeAttr("checked"); $("#alarms_add_repeatCfg").css("display","none"); }
 	$("#alarms_add input[name='repeat']").on("change",function(evt) {
 		var obj = evt.originalEvent.target;
 		var value = obj.checked ? true : false;
 		site.alarms.newAlarmCfg.repeat = value; 
 		loggr.log(" > Change: repeat: "+value);
+		if (value) { $("#alarms_add_repeatCfg").css("display","block"); } 
+		else { $("#alarms_add_repeatCfg").css("display","none"); }
 		site.alarms.save();
 	});
 	

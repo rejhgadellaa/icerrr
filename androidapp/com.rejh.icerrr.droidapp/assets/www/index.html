@@ -405,11 +405,15 @@
             	<input type="time" name="alarm_time" />
             </p>
             
+            <p><label>Volume:</label><br>
+            	<input type="range" name="alarm_volume" min="1" max="10" />
+            </p>
+            
             <p><label>Repeat:</label><br>
             	<input type="checkbox" name="repeat" />
             </p>
             
-            <p><label>Repeat days:</label><br>
+            <p id="alarms_add_repeatCfg"><label>Repeat days:</label><br>
             	<input type="checkbox" name="repeat_0" id="repeat_sun" class="repeat_day activatablel" /> <label class='day'>Sunday</label><br>
             	<input type="checkbox" name="repeat_1" id="repeat_mon" class="repeat_day activatablel" /> <label class='day'>Monday</label><br>
             	<input type="checkbox" name="repeat_2" id="repeat_tue" class="repeat_day activatablel" /> <label class='day'>Tuesday</label><br>
