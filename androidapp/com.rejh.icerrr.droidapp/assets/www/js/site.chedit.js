@@ -366,6 +366,8 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 		site.webapi.exec(apiaction,apiquerystr,
 			function(data) {
 				var url = data["data"];
+				site.chedit.newentry.station_url = url;
+				$("#editstation input[name='station_url']")[0].value = url;
 				site.chedit.check_station_url(station_name,url,silent);
 			},
 			function(error) {
@@ -410,6 +412,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 				 && data["data"]["content-type"].indexOf("audio/aacp")<0
 				 && data["data"]["content-type"].indexOf("audio/x-mpegurl")<0
 				 && data["data"]["content-type"].indexOf("audio/")<0 // TODO: To easy on the type?
+				 && data["data"]["content-type"].indexOf("audio%2F")<0 // TODO: To easy on the type?
 				) {
 					if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url"); }
 					return;

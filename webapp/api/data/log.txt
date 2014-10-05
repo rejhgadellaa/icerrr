@@ -1,3 +1,7 @@
+2014-10-05 19:54:03    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port":80,"station_path":"/listen.pls"}
+2014-10-05 19:54:03    Cleanup json
+2014-10-05 19:54:01    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port":80,"station_path":"/listen.pls"}
+2014-10-05 19:54:01    Cleanup json
 2014-10-05 19:53:39     >> Read file... 0
 2014-10-05 19:53:39    GET > {"get":"station_info","station_id":"test","station_host":"pr128.pinguinradio.com","station_port":80,"station_path":"/listen.pls"}
 2014-10-05 19:53:39    Cleanup json

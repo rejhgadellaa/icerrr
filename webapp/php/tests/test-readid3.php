@@ -67,7 +67,7 @@ while (!feof($fsock)) {
 	if ($whilenum>2048) { fclose($fsock); error("Whilenum exceeded at 'while (!feof($fsock))'"); }
 	
 	$timerunning = time() - $timebgn;
-	if ($timerunning>24) { fclose($fsock); error("Exceeded 24 seconds of running time.."); }
+	if ($timerunning>16) { fclose($fsock); error("Exceeded 24 seconds of running time.."); }
 	
 	$line = fgets($fsock);
 	$res .= $line;
@@ -107,7 +107,7 @@ foreach($lines as $line) {
 	if (!$key || !$val) { continue; }
 	
 	// store
-	$array[urlencode($key)] = urlencode($val);
+	$array[$key] = $val;
 	
 }
 
