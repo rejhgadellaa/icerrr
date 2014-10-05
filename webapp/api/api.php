@@ -133,7 +133,7 @@ switch($action) {
 				if (!$fg) { error("Error: Could not load url: '". $queryobj["url"] ."'"); }
 				$bgn = 0; $end = -1; $len = -1;
 				$bgn = strpos($fg,"http");
-				$end = strpos($fg,"\n");
+				$end = strpos($fg,"\n",$bgn);
 				$len = $end - $bgn;
 				if ($bgn===FALSE) { error("Error: could not parse pls/m3u: '". $queryobj["url"] ."'"); }
 				$url = trim( substr($fg,$bgn,$len), " \n\r\t");
