@@ -124,6 +124,9 @@ switch($action) {
 				$jsons = json_encode($json);
 				echo $json;
 				break;
+				
+			// parse_playlist
+			// - get stream(s) from pls and m3u files
 			
 			// strings
 			case "strings":
