@@ -512,9 +512,9 @@ site.lifecycle.remove_section_history_item = function(selector) {
 
 site.lifecycle.get_section_history_item = function(dontPop) {
 	loggr.debug("site.lifecycle.get_section_history_item()");
-	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { return false; }
+	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 	if (dontPop) { return site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1]; }
 	return site.session.lifecycle.section_history.pop();
