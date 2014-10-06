@@ -1,9 +1,12 @@
+0.075 (stable)
+  * Everything beta is now stable
+
 0.074 (beta)
   * Hotfix: alarms not firing after app update
 
 0.073 (beta)
-  * Support for .pls (tested) and .m3u (nope, not tested yet), needs testing
-  * Fix: Add station manually wasn't always an empty form
+  * Support for .pls and .m3u (prototype)
+  * Fix: Add station manually wasn't always showing an empty form
 
 0.072 (stable)
   * All that was once beta is now deemed stable
