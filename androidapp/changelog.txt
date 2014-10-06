@@ -1,4 +1,4 @@
-0.073 (beta, branched)
+0.073 (beta)
   * Support for .pls (tested) and .m3u (nope, not tested yet), needs testing
   * Fix: Add station manually wasn't always an empty form
 
