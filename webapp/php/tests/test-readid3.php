@@ -107,7 +107,7 @@ foreach($lines as $line) {
 	if (!$key || !$val) { continue; }
 	
 	// store
-	$array[$key] = $val;
+	$array[$key] = addslashes($val);
 	
 }
 
