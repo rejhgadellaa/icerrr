@@ -1,5 +1,6 @@
 0.072 (beta, branched)
   * Support for .pls (tested) and .m3u (nope, not tested yet), needs testing
+  * Fix: Add station manually wasn't always an empty form
 
 0.071 (beta)
   * Improvements for manually adding and editing a station url
