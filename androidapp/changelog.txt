@@ -1,3 +1,6 @@
+0.072 (stable)
+  * All that was once beta is now deemed stable
+
 0.071 (beta)
   * Improvements for manually adding and editing a station url
   * Log now selectable, useful for copy/pasting
