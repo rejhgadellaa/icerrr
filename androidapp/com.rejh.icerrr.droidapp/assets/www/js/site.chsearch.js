@@ -392,6 +392,40 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 	// Store
 	station.stream_url = stream_url;
 	
+	// -> Check if station is actually a playlist...
+	
+	/*
+	
+	// Catch pls and m3u
+	if (stream_url.indexOf(".pls")>=0 || stream_url.indexOf(".m3u")>=0) {
+		
+		var apiqueryobj = {
+			"get":"parse_playlist",
+			"url":stream_url
+		}
+		
+		var apiaction = "get";
+		var apiquerystr = JSON.stringify(apiqueryobj);
+		
+		site.webapi.exec(apiaction,apiquerystr,
+			function(data) {
+				var url = data["data"];
+				//site.chedit.newentry.station_url = url;
+				//site.chedit.check_station_url(station_name,url,silent);
+			},
+			function(error) {
+				site.ui.hideloading();
+				if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
+				else { loggr.log(error); }
+			}
+		);
+		
+		return;
+		
+	}
+	
+	/**/
+	
 	// -> Check if station actually works...
 	
 	site.ui.showloading("Testing...","Checking station validity");
@@ -483,18 +517,23 @@ site.chsearch.getHostPortAndPathFromUrl = function(station_url) {
 	var station_host = station_url;
 	var station_port = 80; // logic, since it should have http:// in front of it?
 	var station_path = "";
+	
 	if (station_host.indexOf("http://")>=0) {
 		station_host = station_host.substr("http://".length);
 	} else if (station_host.indexOf("https://")>=0) {
 		station_host = station_host.substr("https://".length);
 	}
-	if (station_host.indexOf("/")>0 && station_host.indexOf(":")) { 
+	
+	if (station_host.indexOf("/")>0 && station_host.indexOf(":")>0) { 
 		station_port_end = station_host.indexOf("/")-station_host.indexOf(":")-1; 
 		station_path = station_host.substr(station_host.indexOf("/"));
-	}
-	else { 
+	} else if (station_host.indexOf("/")<0 && station_host.indexOf(":")>0) {
+		station_port_end = station_host.length-station_host.indexOf(":")-1; 
+		station_path = "/";
+ 	} else { 
 		station_port_end = station_host.length-station_host.indexOf(":")-1; 
 	}
+	
 	if (station_host.indexOf(":")>=0) {
 		station_port = station_host.substr(station_host.indexOf(":")+1,station_port_end);
 		station_host = station_host.substr(0,station_host.indexOf(":"));
@@ -502,6 +541,7 @@ site.chsearch.getHostPortAndPathFromUrl = function(station_url) {
 		station_path = station_host.substr(station_host.indexOf("/"));
 		station_host = station_host.substr(0,station_host.indexOf("/"));
 	}
+	
 	loggr.log(" > Host: "+ station_host);
 	loggr.log(" > Port: "+ station_port);
 	loggr.log(" > Path: "+ station_path);

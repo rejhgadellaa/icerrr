@@ -1,15 +1,6 @@
-{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
+{"station_id":"test","host":"pr128.pinguinradio.com","port":80,"path":"/listen.pls"}
 
 HTTP/1.0 200 OK
-Content-Type: audio/mpeg
-icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Pop
-icy-name:3FM Serious Radio
-icy-pub:0
-icy-url:http://www.3fm.nl
-Server: ics2dss.omroep.nl
-Cache-Control: no-cache
-icy-metaint:16000
+content-type:audio/x-scpls
+Connection: close
 

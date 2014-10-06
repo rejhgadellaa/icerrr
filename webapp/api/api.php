@@ -124,6 +124,25 @@ switch($action) {
 				$jsons = json_encode($json);
 				echo $json;
 				break;
+				
+			// parse_playlist
+			// - get stream(s) from pls and m3u files
+			case "parse_playlist":
+				if (!$queryobj["url"]) { error("Error: 'url' not defined for get:".$queryobj["get"]); }
+				$fg = fg($queryobj["url"]);
+				if (!$fg) { error("Error: Could not load url: '". $queryobj["url"] ."'"); }
+				$bgn = 0; $end = -1; $len = -1;
+				$bgn = strpos($fg,"http");
+				$end = strpos($fg,"\n",$bgn);
+				$len = $end - $bgn;
+				if ($bgn===FALSE) { error("Error: could not parse pls/m3u: '". $queryobj["url"] ."'"); }
+				$url = trim( substr($fg,$bgn,$len), " \n\r\t");
+				$json["data"] = $url;
+				$json["info"] = array();
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
 			
 			// strings
 			case "strings":

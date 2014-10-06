@@ -18,7 +18,7 @@ foreach($rd as $file) {
 $res = "Unique devices: ". count($byDeviceIds);
 foreach($byDeviceIds as $deviceId => $byDeviceId) {
 
-	if ($lastdevice != $deviceId) { $res .= "<tr><td>&nbsp;</td></tr>"; }
+	if ($lastdevice != $deviceId) { $res .= "<tr><td>&nbsp;</td></tr>\n\n"; $newdevice = true; }
 	$lastdevice = $deviceId;
 	
 	// Find device name
@@ -30,15 +30,22 @@ foreach($byDeviceIds as $deviceId => $byDeviceId) {
 		$date = date("Y-m-d H:i:s",$filemtime);
 		$date_short = date("m-d H:i",$filemtime);
 		
-		$fr = fr($path);
-		$lines = explode("\n",$fr);
+		if ($newdevice) {
 		
-		foreach($lines as $line) {
-			if (strpos($line,"Device Info")!==FALSE) {
-				$res .= "<tr><td>{$date_short}&nbsp;&nbsp;&nbsp;</td><td><a title='$date' href='{$path}'>$file</a></td><td>&nbsp;&nbsp;{$line}</td></tr>";
-				break;
+			$fr = fr($path);
+			$lines = explode("\n",$fr);
+			
+			foreach($lines as $line) {
+				if (strpos($line,"Device Info")!==FALSE) {
+					break;
+				}
 			}
+			
 		}
+		
+		$res .= "<tr><td>{$date_short}&nbsp;&nbsp;&nbsp;</td><td><a title='$date' href='{$path}'>$file</a></td><td>&nbsp;&nbsp;{$line}</td></tr>\n";
+		
+		$newdevice = false;
 		
 	}
 	

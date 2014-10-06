@@ -1,3 +1,7 @@
+0.073 (beta, branched)
+  * Support for .pls (tested) and .m3u (nope, not tested yet), needs testing
+  * Fix: Add station manually wasn't always an empty form
+
 0.072 (stable)
   * All that was once beta is now deemed stable
 
@@ -6,8 +10,8 @@
   * Log now selectable, useful for copy/pasting
 
 0.070 (beta)
-   * New: set volume for alarms (default: 70%)
-   * Repeat options will hide/show when needed
+  * New: set volume for alarms (default: 70%)
+  * Repeat options will hide/show when needed
 
 0.069 (stable)
   * All the stuff the beta users where already enjoying
