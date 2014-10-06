@@ -39,6 +39,30 @@ public class AlarmMgrOnBoot extends BroadcastReceiver {
 		
 		Log.i(APPTAG,"AlarmMgrOnBoot.onReceive()");
 		
+		// Check if it's an update message
+		boolean isUpdate = false;
+		boolean isUpdateAndRun = false;
+		try {
+			String dataString = _intent.getDataString();
+			if (dataString!=null) {
+				isUpdate = true;
+				if (dataString.contains("com.rejh.icerrr.droidapp")){
+					isUpdate = true;
+					isUpdateAndRun = true;
+				}
+			}
+		} catch(Exception e) {
+			Log.w(APPTAG," > Exception when trying to check if update");
+			Log.w(APPTAG,e);
+		}
+		
+		if (isUpdate && !isUpdateAndRun) {
+			Log.d(APPTAG," > Update detected but not Icerrr");
+			return;
+		} else {
+			Log.d(APPTAG," > isUpdate: "+ isUpdate);
+		}
+		
 		try {
 		
 			// Context & intent
