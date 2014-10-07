@@ -44,7 +44,7 @@ public class NotifMgrReceiver extends BroadcastReceiver {
         	Log.d(APPTAG," -> Cmd: "+ cmd);
         	
         	// Cancel
-        	if (cmd.equals("cancel") && intent.hasExtra("notif_id")) {
+        	if (cmd.equals("cancel")) {
         		int notif_id = intent.getIntExtra("notif_id", -1);
         		NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notifMgr.cancel(notif_id);
