@@ -1,3 +1,7 @@
+0.077 (stable)
+  * Fixes for the previous fixes for alarms... :(
+  * Adding/editing alarms: Stations are now sorted by name
+
 0.076 (stable)
   * Fixes for alarms not firing sometimes
   * Bugfixes

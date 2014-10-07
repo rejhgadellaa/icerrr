@@ -285,6 +285,13 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 		return;
 	}
 	
+	// Check site.vars.thealarm
+	if (site.vars.thealarm) {
+		if (alarm_id == site.vars.thealarm.alarm_id) {
+			site.vars.thealarm = null;
+		}
+	}
+	
 	// Create date
 	var date = new Date();
 	offset = 0; // Math.round(date.getTimezoneOffset()/60);
@@ -378,9 +385,10 @@ site.alarms.updateForm = function(alarmCfg) {
 	site.alarms.newAlarmCfg = alarmCfg;
 	
 	// Build alarm_station_name <select>
-	for (var i in site.data.stations) {
+	var stations = site.sorts.station_by_name(site.data.stations)
+	for (var i in stations) {
 		
-		var station = site.data.stations[i];
+		var station = stations[i];
 		if (!station.station_id) { continue; }
 		
 		var option = document.createElement("option");

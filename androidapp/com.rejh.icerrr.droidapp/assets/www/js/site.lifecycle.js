@@ -237,12 +237,37 @@ site.lifecycle.onNewIntent = function(result) {
 		return;
 	}
 	
+	
+	// Check if alarm has already fired
+	if (site.vars.thealarm) {
+		
+		loggr.log(" > An alarm has fired before: "+ site.vars.thealarm.alarm_id +", "+ site.vars.thealarm.hour+":"+ site.vars.thealarm.minute);
+		
+		if (site.vars.thealarm.alarm_id == thealarm.alarm_id) {
+			
+			loggr.log(" > Has the same id as the alarm firing right now...");
+			
+			var timenow = new Date().getTime();
+			var thealarmtime = site.vars.thealarm.time;
+			
+			if (timenow-thealarmtime < (1000*60*3)) { // if the same alarm has fired within the last 3 minutes: something is wrong!
+				loggr.warn(" > Alarm has already fired less than 3 minutes ago");
+				return;
+			}
+			
+		}
+		
+	}
+	
+	site.vars.thealarm = thealarm;
+	site.vars.thealarm.time = new Date().getTime();
+	
+	/*
 	if (site.vars.alarmHasFired) {
 		loggr.warn(" > Alarm has already fired?");
 		return;
 	}
-	
-	site.vars.alarmHasFired = true;
+	/**/
 	
 	// Intents(!)
 	// Check for share intent (webintent plugin)
