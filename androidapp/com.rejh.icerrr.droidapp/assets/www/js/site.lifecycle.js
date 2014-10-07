@@ -211,7 +211,7 @@ site.lifecycle.onNewIntent = function(result) {
 		
 		var minuteDiff = alarmMinute - minute;
 		
-		if (alarmHour == hour && minuteDiff >= -1 && minuteDiff <= 1) {
+		if (alarmHour == hour && minuteDiff >= -1 && minuteDiff < 1) {
 			
 			loggr.log(" > Found alarm: "+ alarmHour +":"+ alarmMinute);
 			
@@ -236,6 +236,13 @@ site.lifecycle.onNewIntent = function(result) {
 		loggr.log(" > Alarm is not scheduled? "+ alarmHour +":"+ alarmMinute);
 		return;
 	}
+	
+	if (site.vars.alarmHasFired) {
+		loggr.warn(" > Alarm has already fired?");
+		return;
+	}
+	
+	site.vars.alarmHasFired = true;
 	
 	// Intents(!)
 	// Check for share intent (webintent plugin)
