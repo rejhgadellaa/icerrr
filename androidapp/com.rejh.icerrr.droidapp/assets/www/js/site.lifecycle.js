@@ -211,7 +211,7 @@ site.lifecycle.onNewIntent = function(result) {
 		
 		var minuteDiff = alarmMinute - minute;
 		
-		if (alarmHour == hour && minuteDiff > -1 && minuteDiff < 1) {
+		if (alarmHour == hour && minuteDiff >= -1 && minuteDiff <= 1) {
 			
 			loggr.log(" > Found alarm: "+ alarmHour +":"+ alarmMinute);
 			

@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.PowerManager;
 import android.util.Log;
 
 public class AlarmMgrReceiver extends BroadcastReceiver {
@@ -39,6 +40,11 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
 			// Context & intent
 			context = _context;
 			intent = _intent;
+			
+			Log.d(APPTAG," -> Wakelock 60s");
+			PowerManager powerMgr = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+			PowerManager.WakeLock wakelock = powerMgr.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, APPTAG);
+			wakelock.acquire(60000);
 	        
 	        // Preferences
 	        sett = context.getSharedPreferences(APPTAG,2);
