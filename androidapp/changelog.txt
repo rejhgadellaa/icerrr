@@ -1,5 +1,5 @@
-0.076 (beta)
-  * Fixes for alarms nog firing, had to do with phone not waking up quickly enough
+0.076 (stable)
+  * Fixes for alarms not firing sometimes
   * Bugfixes
 
 0.075 (stable)
