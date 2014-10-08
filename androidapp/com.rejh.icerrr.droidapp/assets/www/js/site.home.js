@@ -333,11 +333,14 @@ site.home.getAlbumArt = function() {
 		+ "album art";
 	
 	var opts = {
-		restrictions:[
-			[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
-		],
 		maxresults:4
 	}
+	
+	if (google) { if (google.search) { if (google.search.ImageSearch) {
+		opts.restrictions = [
+			[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
+		];
+	}}}
 	
 	site.helpers.googleImageSearch(searchstring,
 		function(results) {
