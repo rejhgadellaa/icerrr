@@ -95,7 +95,8 @@ site.chsearch.searchstation = function(nextpage) {
 						if (!data["data"][i].name) { continue; }
 						site.chsearch.results.push(data["data"][i]);
 					}
-					setTimeout(function(){ site.chsearch.searchstation(true); }, 500);
+					if (site.timeouts.dirblesearch) { clearTimeout(site.timeouts.dirblesearch); }
+					site.timeouts.dirblesearch = setTimeout(function(){ site.chsearch.searchstation(true); }, 500);
 					//site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
 					//site.chsearch.resultsToStationData();
 					//site.ui.hideloading();
