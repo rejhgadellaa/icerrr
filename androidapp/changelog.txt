@@ -1,3 +1,6 @@
+0.080 (beta)
+  * Potential fix for dirble search errors (a bit more time between api calls)
+
 0.079 (beta)
   * Device ID's are now always hashed in log
   * Bugfixes
