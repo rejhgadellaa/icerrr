@@ -555,7 +555,7 @@ site.helpers.short = function(str, len) {
 // ---> Unique ID 
 
 site.helpers.getUniqueID = function(prefix,suffix) {
-	var res = device.uuid;
+	var res = site.cookies.put("device_id");
 	res += "_"+ (new Date().getTime()).toString(16);
 	res += "_"+ Math.round((Math.random()*1024*1024)).toString(16);
 	loggr.debug("site.helpers.getUniqueID(): "+ res);

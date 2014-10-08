@@ -1,3 +1,9 @@
+0.079 (beta)
+  * Device ID's are now always hashed whenever used
+
+0.078 (stable)
+  * Bugfixes
+
 0.077 (stable)
   * Fixes for the previous fixes for alarms... :(
   * Adding/editing alarms: Stations are now sorted by name
