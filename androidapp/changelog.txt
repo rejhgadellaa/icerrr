@@ -1,5 +1,6 @@
 0.079 (beta)
-  * Device ID's are now always hashed whenever used
+  * Device ID's are now always hashed in log
+  * Bugfixes
 
 0.078 (stable)
   * Bugfixes
