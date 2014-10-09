@@ -1,6 +1,7 @@
 0.081 (beta?) - TESTING
   * Fix #67: webintent getExtra sometimes failed when it shouldn't
   * Fix #68: blur focus on input when search is activated
+  * Bugfix: getUniqueID returned 'true_timestamp' instead of 'md5(uuid)_timestamp'
 
 0.080 (stable)
   * Should fix: Alarms with repeat disabled would (sometimes) repeat nonetheless (issue #69)

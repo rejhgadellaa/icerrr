@@ -448,7 +448,7 @@ site.installer.finishup = function() {
 	/**/
 	
 	// Create unique device ID
-	if (site.cookies.get("app_is_installed")!=1 || site.cookies.get("app_version")<0.079) {
+	if (site.cookies.get("app_is_installed")!=1 || site.cookies.get("app_version")<0.081) {
 		loggr.log(" > Create unique device ID");
 		site.cookies.put("device_id", CryptoJS.MD5(device.uuid));
 	}
