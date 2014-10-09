@@ -1,3 +1,6 @@
+0.082 (...)
+  * Fix #71: Audio focus doesn't always return volume to correct level
+
 0.081 (stable)
   * Fix #67: webintent getExtra sometimes failed when it shouldn't
   * Fix #68: unfocus input when search is activated

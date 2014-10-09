@@ -57,6 +57,8 @@ public class MediaStreamerService extends Service {
 	private ObjMediaPlayerMgr mpMgr;
     
     private String stream_url_active = null;
+    
+    int volumeBeforeDuck = -1;
 	
 	// --------------------------------------------------
 	// Lifecycle
@@ -346,13 +348,21 @@ public class MediaStreamerService extends Service {
 	    }
 	    
 	    private void setVolumeDucked() {
-	    	for (int i=0; i<5; i++) {
+	    	volumeBeforeDuck = audioMgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+	    	int levelsDown = 5;
+	    	if (volumeBeforeDuck<=5) { levelsDown = volumeBeforeDuck-1; }
+	    	Log.d(APPTAG," > setVolumeDucked, from "+ volumeBeforeDuck +" go to "+ (volumeBeforeDuck-levelsDown));
+	    	for (int i=0; i<levelsDown; i++) {
 	    		audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 	    	}
 	    }
 	    
 	    private void setVolumeFocusGained() {
-	    	for (int i=0; i<5; i++) {
+	    	int levelsUp = 5;
+	    	int volumeNow = audioMgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+	    	if (volumeBeforeDuck<=levelsUp+volumeNow) { levelsUp = (volumeBeforeDuck-volumeNow); }
+	    	Log.d(APPTAG," > setVolumeFocusGained, from "+ volumeNow +" go to "+ (volumeNow+levelsUp));
+	    	for (int i=0; i<levelsUp; i++) {
 	    		audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 	    	}
 	    }
