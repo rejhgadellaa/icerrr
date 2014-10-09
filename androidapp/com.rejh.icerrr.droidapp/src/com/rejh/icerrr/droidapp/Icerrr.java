@@ -61,6 +61,9 @@ public class Icerrr extends DroidGap
         filter.addAction("com.rejh.icerrr.droidapp.actions.KILL_APP");
         registerReceiver(killAppReceiver, filter);
         
+        // Call onNewIntent when app is not started before..
+        onNewIntent(getIntent());
+        
     }
     
     @Override
