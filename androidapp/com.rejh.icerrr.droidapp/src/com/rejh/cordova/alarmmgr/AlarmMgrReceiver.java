@@ -64,7 +64,7 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		
     		// Get args
     		long timeMillis = opts.has("timeMillis") ? opts.getLong("timeMillis") : 0;
-    		String repeat = opts.has("repeat") ? opts.getString("repeat") : "no";
+    		String repeat = opts.has("repeat") ? opts.getString("repeat") : "off";
     		JSONArray repeatDaily = opts.has("repeatDaily") ? opts.getJSONArray("repeatDaily") : new JSONArray();
     		JSONObject intentOpts = opts.has("intent") ? opts.getJSONObject("intent") : null;
     		
@@ -85,6 +85,13 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		if (!fireToday) { 
     			Log.d(APPTAG," > Do not need to fire today");
     			return; // <-- important stuff
+    		}
+    		
+    		// Handle repeat: off
+    		// -> Remove alarm from settings to prevent it from firing again..
+    		if (repeat.equals("off") || !repeat.equals("daily")) {
+	    		settEditor.putString("alarm_"+id, null);
+	    		settEditor.commit();
     		}
     		
     		// Handle intent
