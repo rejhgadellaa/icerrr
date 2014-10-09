@@ -90,6 +90,7 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		// Handle repeat: off
     		// -> Remove alarm from settings to prevent it from firing again..
     		if (repeat.equals("off") || !repeat.equals("daily")) {
+    			Log.d(APPTAG, " > !repeat, fire alarm and forget..");
 	    		settEditor.putString("alarm_"+id, null);
 	    		settEditor.commit();
     		}

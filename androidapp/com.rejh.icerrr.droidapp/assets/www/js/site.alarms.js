@@ -539,10 +539,7 @@ site.alarms.genRepeatString = function(repeat,repeatCfg) {
 	
 }
 
-
-
-
-site.alarms.getAlarmDate = new function(hour,minute) {
+site.alarms.getAlarmDate = function(hour,minute) {
 	
 	loggr.log("site.alarms.getAlarmDate(): "+hour+":"+minute);
 	

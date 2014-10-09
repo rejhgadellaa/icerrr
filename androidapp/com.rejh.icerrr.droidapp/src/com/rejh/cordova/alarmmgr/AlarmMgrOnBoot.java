@@ -57,7 +57,7 @@ public class AlarmMgrOnBoot extends BroadcastReceiver {
 		}
 		
 		if (isUpdate && !isUpdateAndRun) {
-			Log.d(APPTAG," > Update detected but not Icerrr");
+			Log.d(APPTAG," > Update detected but not Icerrr, return");
 			return;
 		} else {
 			Log.d(APPTAG," > isUpdate: "+ isUpdate);
