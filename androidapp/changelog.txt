@@ -1,4 +1,5 @@
-0.080 (beta)
+0.080 (stable)
+  * Should fix: Alarms with repeat disabled would (sometimes) repeat nonetheless (issue #69)
   * Potential fix for dirble search errors (a bit more time between api calls)
 
 0.079 (beta)
