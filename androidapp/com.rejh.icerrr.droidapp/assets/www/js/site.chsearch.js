@@ -65,6 +65,9 @@ site.chsearch.searchstation = function(nextpage) {
 	// Get value
 	var name = $("#searchstation input[name='station_search']")[0].value.trim();
 	
+	// Blur focus
+	$("#searchstation input[name='station_search']")[0].blur();
+	
 	// Check
 	if (!name) { site.ui.showtoast("Station name is mandatory"); return; }
 	

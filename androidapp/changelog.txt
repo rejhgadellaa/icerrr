@@ -1,3 +1,6 @@
+0.081 (beta?)
+  * Fix: blur focus on input when search is activated
+
 0.080 (stable)
   * Should fix: Alarms with repeat disabled would (sometimes) repeat nonetheless (issue #69)
   * Potential fix for dirble search errors (a bit more time between api calls)
