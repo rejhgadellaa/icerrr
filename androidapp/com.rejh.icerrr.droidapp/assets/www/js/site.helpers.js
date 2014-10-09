@@ -597,6 +597,9 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNu
 	} else if (!google.search) {
 		google.load("search", "1", {"callback" : function(){ site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true); } });
 		return;
+	} else if (!google.search.ImageSearch) {
+		google.load("search", "1", {"callback" : function(){ site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true); } });
+		return;
 	}
 	
 	// New imagesearch, get unique id
