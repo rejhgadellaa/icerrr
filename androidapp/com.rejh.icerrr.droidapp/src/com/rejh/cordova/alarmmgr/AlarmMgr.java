@@ -192,6 +192,11 @@ public class AlarmMgr extends CordovaPlugin {
 			// repeatMillis already set...
 		}
 		
+		// Handle no repeat
+		if (!doRepeat) {
+			
+		}
+		
 		// Store some stuff
 		String alarm_key = "alarm_"+ id;
 		String alarm_jsons = opts.toString();

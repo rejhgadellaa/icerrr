@@ -292,6 +292,24 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 		}
 	}
 	
+	// If no repeat: check if timemillis is today
+	if (!alarm.repeat) {
+		
+		var timeMillis = (alarm.timeMillis) ? alarm.timeMillis : -1;
+		var timeMillisNow = new Date().getTime();
+		
+		if (timeMillis < timeMillisNow) {
+			loggr.warn(" > !repeat and timeMillis < timeMillisNow, alarm should not fire anymore");
+			return;
+		}
+		
+		if (timeMillis<0) { 
+			loggr.warn(" > !repeat and timeMillis<0, return");
+			return; 
+		}
+		
+	}
+	
 	// Create date
 	var date = new Date();
 	offset = 0; // Math.round(date.getTimezoneOffset()/60);
@@ -373,6 +391,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		var alarmCfg = {
 			id: id,
 			alarm_id: alarm_id,
+			timeMillis: site.alarms.getAlarmDate(hour,minute).getTime(),
 			hour: hour,
 			minute: minute,
 			volume: 7,
@@ -421,6 +440,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		var values = evt.originalEvent.target.value.split(":");
 		var hour = parseInt(values[0]);
 		var minute = parseInt(values[1]);
+		site.alarms.newAlarmCfg.timeMillis = site.alarms.getAlarmDate(hour,minute).getTime();
 		site.alarms.newAlarmCfg.hour = hour;
 		site.alarms.newAlarmCfg.minute = minute;
 		loggr.log(" > Change: time "+hour+":"+minute);
@@ -522,7 +542,32 @@ site.alarms.genRepeatString = function(repeat,repeatCfg) {
 
 
 
-
+site.alarms.getAlarmDate = new function(hour,minute) {
+	
+	loggr.log("site.alarms.getAlarmDate(): "+hour+":"+minute);
+	
+	var date = new Date();
+	date.setHours(hour); // -offset because offset is negative reversed shzzle :(
+	date.setMinutes(minute);
+	date.setSeconds(0);
+	date.setMilliseconds(0)
+	
+	var day = date.getDate();
+	
+	var tmpdate = new Date();
+	var tmpday = tmpdate.getDate();
+	var tmphour = tmpdate.getHours();
+	var tmpminute = tmpdate.getMinutes();
+	
+	// (day == daynow && hour < hournow || day == daynow && hour <= hournow && minute <= minnow)
+	if (day == tmpday && hour < tmphour || day == tmpday && hour <= tmphour && minute <= tmpminute) {
+		loggr.log(" > One day in the future...");
+		date.setDate(day+1);
+	}
+	
+	return date;
+	
+}
 
 
 
