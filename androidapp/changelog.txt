@@ -1,3 +1,6 @@
+0.084 (beta)
+  * Fix #72 (?): MediaStreamer kills itself when restarted by android system
+
 0.083 (beta)
   * Manually added stations are uploaded periodically for analytics
   * Fix #70: ImageSearch sometimes is a 'nullpointer'

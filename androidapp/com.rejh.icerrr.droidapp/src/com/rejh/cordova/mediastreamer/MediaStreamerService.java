@@ -176,14 +176,13 @@ public class MediaStreamerService extends Service {
         	isAlarm = incomingIntent.getBooleanExtra("isAlarm",false);
         	volume = incomingIntent.getIntExtra("volume", -1);
         	Log.d(APPTAG," > IsAlarmStr: "+ isAlarm);
+        	settEditor.putString("mediastreamer_streamUrl",stream_url);
         	settEditor.putBoolean("isAlarm", isAlarm);
         	settEditor.commit();
         } else {
         	Log.d(APPTAG," > !incomingIntent");
-        	sett.getString("mediastreamer_streamUrl",null); // fallback
-        	isAlarm = false;
-        	settEditor.putBoolean("isAlarm", isAlarm);
-        	settEditor.commit();
+        	stream_url = sett.getString("mediastreamer_streamUrl",null); // fallback
+        	isAlarm = sett.getBoolean("isAlarm", false);
         }
         
         // Check
@@ -258,6 +257,11 @@ public class MediaStreamerService extends Service {
 			mpMgr.destroy(); 
 			mpMgr = null;
         }
+        
+        // Settings
+        settEditor.putString("mediastreamer_streamUrl",null);
+        settEditor.putBoolean("isAlarm", false);
+    	settEditor.commit();
         
 	}
 	
