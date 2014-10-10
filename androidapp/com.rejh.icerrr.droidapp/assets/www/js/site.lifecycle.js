@@ -189,6 +189,7 @@ site.lifecycle.initApp = function(force) {
 		loggr.log(" > App_has_updated: "+site.cookies.get("app_has_updated"));
 		site.cookies.put("app_has_updated",0);
 		site.alarms.setAlarms();
+		site.helpers.uploadStations();
 	}
 	
 	// Hacks..

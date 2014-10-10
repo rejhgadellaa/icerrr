@@ -222,6 +222,34 @@ switch($action) {
 				echo $jsons;
 				sendEmail_log("http://www.rejh.nl/icerrr/api/{$filenamehtml}");
 				break;
+				
+			case "stations":
+				$id = $_POST["id"];
+				$stations = $_POST["stations"];
+				if (!$id || !$stations) { error("Error: !post[id] || !post[stations]"); }
+				$filename = "stations_users/stations_{$id}.json";
+				$fw = fw($filename,$stations);
+				if (!$fw) { error("Error: Could not write '$filename'"); }
+				$json["data"] = json_decode('{"post":"ok"}',true);
+				$json["info"] = array();
+				$jsons = json_encode($json);
+				logg($jsons);
+				echo $jsons;
+				break;
+				
+			case "station":
+				$id = $_POST["id"];
+				$station = $_POST["station"];
+				if (!$id || !$stations) { error("Error: !post[id] || !post[station]"); }
+				$filename = "station_users/station_{$id}.json";
+				$fw = fw($filename,$station);
+				if (!$fw) { error("Error: Could not write '$filename'"); }
+				$json["data"] = json_decode('{"post":"ok"}',true);
+				$json["info"] = array();
+				$jsons = json_encode($json);
+				logg($jsons);
+				echo $jsons;
+				break;
 			
 			// default
 			default:

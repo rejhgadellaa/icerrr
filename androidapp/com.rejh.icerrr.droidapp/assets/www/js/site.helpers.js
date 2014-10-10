@@ -713,7 +713,70 @@ site.helpers.uploadStations = function() {
 	
 	loggr.log("site.helpers.uploadStations()");
 	
+	if (!site.data.stations) {
+		loggr.warn(" > !site.data.stations, return");
+		return;
+	}
 	
+	// Webapi time!
+	var apiqueryobj = {
+		"post":"stations"
+	}
+	var data = {
+		"id": site.cookies.get("device_id") +"_"+ new Date().format("Y-m-d"),
+		"stations":JSON.stringify(site.data.stations)
+	}
+	
+	var apiaction = "post";
+	var apiquerystr = JSON.stringify(apiqueryobj);
+	
+	site.webapi.post(apiaction,apiquerystr,data,
+		function(data) {
+			if (data["error"]) {
+				loggr.log("loggr.upload().OK");
+				loggr.log(data["error"]);
+			} else {
+				loggr.log("loggr.upload().OK");
+			}
+		},
+		function(error) {
+			if (error.message) { loggr.log(error.message); }
+			else { loggr.log(error); }
+		}
+	);
+	
+}
+
+site.helpers.uploadStation = function(station) {
+	
+	loggr.log("site.helpers.uploadStation()");
+	
+	// Webapi time!
+	var apiqueryobj = {
+		"post":"station"
+	}
+	var data = {
+		"id": site.cookies.get("device_id") +"_"+ station.station_id,
+		"station":JSON.stringify(station)
+	}
+	
+	var apiaction = "post";
+	var apiquerystr = JSON.stringify(apiqueryobj);
+	
+	site.webapi.post(apiaction,apiquerystr,data,
+		function(data) {
+			if (data["error"]) {
+				loggr.log("loggr.upload().OK");
+				loggr.log(data["error"]);
+			} else {
+				loggr.log("loggr.upload().OK");
+			}
+		},
+		function(error) {
+			if (error.message) { loggr.log(error.message); }
+			else { loggr.log(error); }
+		}
+	);
 	
 }
 

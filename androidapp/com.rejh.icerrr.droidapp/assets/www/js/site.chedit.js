@@ -159,6 +159,7 @@ site.chedit.save = function() {
 				// Goto list on first save (long story.. but there is a difference how this script handles new and existing entries
 				site.chlist.init(true);
 			}
+			site.helpers.uploadStation(site.chedit.newentry);
 		},
 		function(e){ 
 			alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 

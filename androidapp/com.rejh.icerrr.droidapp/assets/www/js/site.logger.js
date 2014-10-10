@@ -81,7 +81,7 @@ loggr.log = function(str,opts) {
 	
 	if (!str) { return; }
 	
-	str = new Date().format("Y:m:d") +" "+ str;
+	str = new Date().format("Y-m-d") +" "+ str;
 	
 	loggr.loglines.push(str);
 	loggr.logtypes.push(opts.type);

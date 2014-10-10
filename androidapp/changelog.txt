@@ -1,4 +1,5 @@
 0.083 
+  * Manually added stations are uploaded periodically for analytics
   * Fix #70: ImageSearch sometimes is a 'nullpointer'
   * Detect connection status on startup
 
