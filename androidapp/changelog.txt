@@ -1,3 +1,6 @@
+0.085 (stable)
+  * Yes. Stuff is stable
+
 0.084 (beta)
   * Fix #72: MediaStreamer kills itself when restarted by android system
 
