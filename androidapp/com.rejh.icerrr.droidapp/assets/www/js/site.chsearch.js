@@ -504,7 +504,7 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 		mediaPlayer.release();
 		site.ui.hideloading();
 		site.ui.showtoast("Station error, please choose another");
-	},7500);
+	},10000);
 	
 }
 
