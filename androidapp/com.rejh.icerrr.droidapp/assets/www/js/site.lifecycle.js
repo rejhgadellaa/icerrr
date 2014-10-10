@@ -93,23 +93,6 @@ site.lifecycle.onDeviceReady = function() {
 site.lifecycle.initApp = function(force) {
 	
 	loggr.info("site.lifecycle.initApp();");
-	
-	// Internet connection..
-	if (!site.helpers.isConnected() && !force) {
-		navigator.notification.confirm(
-			"Icerrr needs a working internet connection.\n\nYour current connections status is: "+ site.helpers.getConnType() +"\n\nContinue anyway?",
-			function(buttonIndex) {
-				alert(buttonIndex);
-				if (buttonIndex==1) { site.lifecycle.initApp(true); }
-				else {
-					site.lifecycle.exit();
-				}
-			},
-			"Warning",
-			"Continue,Exit"
-		);
-		return;
-	}
 		
 	// some stuff
 	site.session.isPaused = false;
@@ -181,8 +164,25 @@ site.lifecycle.initApp = function(force) {
 			
 	}
 	
-	// Check intents
-	site.lifecycle.onNewIntent();
+	// Check intents, if no alarm check connection
+	if (!site.lifecycle.onNewIntent()) {
+		// Internet connection..
+		if (!site.helpers.isConnected() && !force) {
+			navigator.notification.confirm(
+				"Icerrr needs a working internet connection.\n\nYour current connections status is: "+ site.helpers.getConnType() +"\n\nContinue anyway?",
+				function(buttonIndex) {
+					alert(buttonIndex);
+					if (buttonIndex==1) { site.lifecycle.initApp(true); }
+					else {
+						site.lifecycle.exit();
+					}
+				},
+				"Warning",
+				"Continue,Exit"
+			);
+			return;
+		}
+	}
 	
 	// On update: re-set alarms
 	if (site.cookies.get("app_has_updated")!=0) {
@@ -303,6 +303,9 @@ site.lifecycle.onNewIntent = function(result) {
 			loggr.error(" > isAlarm but !station_id? "+err);
 		}
 	);
+	
+	// An alarm has been scheduled..
+	return true;
 	
 }
 

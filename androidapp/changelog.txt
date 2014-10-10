@@ -1,4 +1,4 @@
-0.083 
+0.083 (beta)
   * Manually added stations are uploaded periodically for analytics
   * Fix #70: ImageSearch sometimes is a 'nullpointer'
   * Detect connection status on startup
