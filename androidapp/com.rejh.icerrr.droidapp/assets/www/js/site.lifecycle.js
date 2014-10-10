@@ -45,11 +45,8 @@ site.lifecycle.init = function() {
 	// Attach 'onDeviceReady' event listener (cordova)
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
 	
-	// Hacks..
-	site.ui.hackActiveCssRule();
-	
 	// Google Loader
-	google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
+	// google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
 	
 }
 
@@ -93,9 +90,26 @@ site.lifecycle.onDeviceReady = function() {
 
 // InitApp
 
-site.lifecycle.initApp = function() {
+site.lifecycle.initApp = function(force) {
 	
 	loggr.info("site.lifecycle.initApp();");
+	
+	// Internet connection..
+	if (!site.helpers.isConnected() && !force) {
+		navigator.notification.confirm(
+			"Icerrr needs a working internet connection.\n\nYour current connections status is: "+ site.helpers.getConnType() +"\n\nContinue anyway?",
+			function(buttonIndex) {
+				alert(buttonIndex);
+				if (buttonIndex==1) { site.lifecycle.initApp(true); }
+				else {
+					site.lifecycle.exit();
+				}
+			},
+			"Warning",
+			"Continue,Exit"
+		);
+		return;
+	}
 		
 	// some stuff
 	site.session.isPaused = false;
@@ -176,6 +190,9 @@ site.lifecycle.initApp = function() {
 		site.cookies.put("app_has_updated",0);
 		site.alarms.setAlarms();
 	}
+	
+	// Hacks..
+	site.ui.hackActiveCssRule();
 	
 }
 

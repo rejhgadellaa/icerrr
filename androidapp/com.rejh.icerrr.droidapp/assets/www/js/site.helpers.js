@@ -587,9 +587,14 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNu
 	
 	// Check if search is loaded...
 	if (googleWasNull) {
-		loggr.error(" > GoogleWasNull == true, google won't load :(");
-		errcb();
-		return;
+		loggr.warn(" > google.search.ImageSearch loaded");
+		try {
+			var atmpsearch = new google.search.ImageSearch();
+		} catch (e) {
+			loggr.error(" > GoogleWasNull == true, google won't load :(");
+			errcb();
+			return;
+		}
 	}
 	if (!google) {
 		google.load("search", "1", {"callback" : function(){ site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true); } });
@@ -698,6 +703,60 @@ site.helpers.googleImageSearchCleanup = function() {
 		site.chlist.thesearch = {};
 		site.chlist.thesearchresults = [];
 		site.chlist.thesearchbusy = {};
+	}
+	
+}
+
+// ---> Upload stations
+
+site.helpers.uploadStations = function() {
+	
+	loggr.log("site.helpers.uploadStations()");
+	
+	
+	
+}
+
+// ---> Connection
+
+site.helpers.getConnType = function() {
+	
+	var type = navigator.connection.type;
+	
+	switch(type) {
+		case Connection.UNKNOWN:
+			return "UNKNOWN";
+		case Connection.ETHERNET:
+			return "ETHERNET";
+		case Connection.WIFI:
+			return "WIFI";
+		case Connection.CELL_2G:
+			return "CELL_2G";
+		case Connection.CELL_3G:
+			return "CELL_3G";
+		case Connection.CELL_4G:
+			return "CELL_4G";
+		case Connection.CELL:
+			return "CELL";
+		case Connection.NONE:
+			return "NONE";
+		default:
+			return "UNKNOWN";
+	}
+	
+}
+
+site.helpers.isConnected = function() {
+	
+	var type = site.helpers.getConnType();
+	
+	switch(type) {
+		case "UNKNOWN":
+		case "NONE":
+			return false;
+		default:
+			return true;
+		
 	}
 	
 }

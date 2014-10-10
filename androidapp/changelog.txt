@@ -1,4 +1,8 @@
-0.082 (...)
+0.083 
+  * Fix #70: ImageSearch sometimes is a 'nullpointer'
+  * Detect connection status on startup
+
+0.082 (stable)
   * Fix #71: Audio focus doesn't always return volume to correct level
 
 0.081 (stable)
