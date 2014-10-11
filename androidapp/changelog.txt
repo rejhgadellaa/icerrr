@@ -1,3 +1,6 @@
+0.086 (stable)
+  * New: Send feedback (see overflow menu)
+
 0.085 (stable)
   * Yes. Stuff is stable
 
