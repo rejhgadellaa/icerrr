@@ -301,6 +301,7 @@ site.lifecycle.onNewIntent = function(result) {
 			site.mp.play(); // and play
 		}, function(err) {
 			loggr.error(" > isAlarm but !station_id? "+err);
+			site.vars.thealarm = null;
 		}
 	);
 	
