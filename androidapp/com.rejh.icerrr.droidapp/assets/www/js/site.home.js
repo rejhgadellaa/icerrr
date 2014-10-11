@@ -382,7 +382,42 @@ site.home.toggleOverflowMenu = function() {
 	
 }
 
-// View log
+// ---> Send feedback
+
+site.home.sendfeedback = function() {
+	
+	loggr.info("site.home.sendfeedback()");
+	
+	// Gather some info
+	var info = ""
+		+ "Device Info:"
+		+"\n\tIdentifier: "+ site.cookies.get("device_id")
+		+"\n\tModel: "+ device.model
+		+"\n\tPlatform: "+ device.platform +", "+ device.version
+		+"\n\tCordova: "+ device.cordova;
+	info += "\nApp version: "+ site.cfg.app_version;
+	
+	// Upload log..
+	loggr.upload();
+	
+	// Send mail intent
+	var extras = {};
+	extras[window.plugins.webintent.EXTRA_EMAIL] = "droidapps@rejh.nl";
+	extras[window.plugins.webintent.EXTRA_SUBJECT] = "Icerrr Feedback";
+	extras[window.plugins.webintent.EXTRA_TEXT] = info +"\n\n-- Please type below this line:\n\n";
+	
+	var params = {
+		action: window.plugins.webintent.ACTION_SEND,
+		type: 'text/plain',
+		extras: extras
+	}
+	
+	window.plugins.webintent.startActivity(params,function(){},function(){ alert("An error occured");});
+	
+	
+}
+
+// ---> View log
 	
 site.home.viewlog = function() {
 	
