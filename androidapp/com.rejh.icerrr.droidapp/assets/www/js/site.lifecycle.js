@@ -46,7 +46,7 @@ site.lifecycle.init = function() {
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
 	
 	// Google Loader
-	// google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
+	google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
 	
 }
 
