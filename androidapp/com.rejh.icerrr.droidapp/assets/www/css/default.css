@@ -708,3 +708,9 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 .hoverabled:hover {
 	background-color:rgba(50,116,44,0.25);
 }
+
+/* HW ACC animations! */
+
+.section_translate_in {
+	transform: translate3d(0,0,0);
+}

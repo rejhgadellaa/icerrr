@@ -75,7 +75,7 @@ site.ui.gotosection = function(selector) {
 		$("section").css("display","none"); 
 		$(selector).css("display","block");
 		
-		/* animation! *//*
+		/* animation! */
 		$(site.vars.previousSection).css("z-index",1); // TODO: determine zindex
 		$(site.vars.currentSection).css("z-index",2);
 		$(site.vars.currentSection).css("top",$(window).height());
