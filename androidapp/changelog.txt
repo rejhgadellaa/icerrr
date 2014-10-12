@@ -1,3 +1,6 @@
+0.088 (stable)
+  * Minor tweaks, nothing you'll notice :)
+
 0.087 (stable)
   * Bugfix
 
