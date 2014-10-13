@@ -171,7 +171,6 @@ site.lifecycle.initApp = function(force) {
 			navigator.notification.confirm(
 				"Icerrr needs a working internet connection.\n\nYour current connections status is: "+ site.helpers.getConnType() +"\n\nContinue anyway?",
 				function(buttonIndex) {
-					alert(buttonIndex);
 					if (buttonIndex==1) { site.lifecycle.initApp(true); }
 					else {
 						site.lifecycle.exit();

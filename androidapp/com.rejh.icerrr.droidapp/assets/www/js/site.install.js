@@ -64,6 +64,22 @@ site.installer.init = function(isUpdate) {
 	
 	loggr.info("site.installer.init()");
 	
+	if (!site.helpers.isConnected()) {
+		navigator.notification.confirm(
+			"Icerrr needs a working internet connection.\n\nYour current connections status is: "+ site.helpers.getConnType() +"\n\nPlease make sure you are connected and try again.",
+			function(buttonIndex) {
+				if (buttonIndex==1) { 
+					site.installer.init(isUpdate)
+				} else {
+					site.lifecycle.exit();
+				}
+			},
+			"Warning",
+			"Continue,Exit"
+		);
+		return;
+	}
+	
 	// Update?
 	// - This mainly means that when the install fails we'll just finish up
 	if (isUpdate) {

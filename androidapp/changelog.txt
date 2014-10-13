@@ -1,3 +1,7 @@
+0.090 (stable)
+  * On install/update: check if internet connection is available
+  * Minor bugfix
+
 0.089 (stable)
   * Fix #73: Cordova: 'the connection to the server was unsuccessful' error
 
