@@ -1,3 +1,6 @@
+0.089 (stable)
+  * Fix #73: Cordova: 'the connection to the server was unsuccessful' error
+
 0.088 (stable)
   * Minor tweaks, nothing you'll notice :)
 
