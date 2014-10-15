@@ -125,6 +125,16 @@ site.home.mpPlayToggle = function() {
 	
 	loggr.info("site.home.mpPlayToggle()");
 	
+	// Limit button presses to 1 per .. second?
+	// If user start bashing let him through..
+	if (site.vars.mpPlayToggleBusy) {
+		site.vars.mpPlayToggleBusy = false;
+		return false;
+	}
+	
+	site.vars.mpPlayToggleBusy = true;
+	setTimeout(function(){ site.vars.mpPlayToggleBusy = false; },1250);
+	
 	// MP or cast?
 	if (site.cast.session) {
 		loggr.log(" > Chromecast session found...");
@@ -156,6 +166,8 @@ site.home.mpPlayToggle = function() {
 		loggr.log(" > Toggle mediaplayer");
 		site.mp.playToggle();
 	}
+	
+	return true;
 	
 }
 

@@ -88,6 +88,8 @@ site.ui.gotosection = function(selector) {
 		loggr.log(" > "+ selector +" display: "+$(selector).css("display"));
 		setTimeout(site.lifecycle.onResize,10);
 		
+		site.ui.setLongclickHelp();
+		
 	//},100);
 	
 }
@@ -134,6 +136,41 @@ site.ui.createtoast = function() {
 	var snip = document.createElement("div");
 	snip.id = "overlay_toast";
 	$("body").append(snip);
+}
+
+// ---> Longclick help
+
+site.ui.setLongclickHelp = function() {
+	
+	loggr.info("site.ui.setLongclickHelp()");
+	
+	// Bind actionbar longpress help stuff
+	
+	var selectors = [
+		".actionbar .actions .action",
+		".footer .button"
+	];
+	
+	for (var i=0; i<selectors.length; i++) {
+		
+		var selector = selectors[i];
+	
+		$(selector).longClick(function(obj){
+			
+			if (!obj) { loggr.warn("Event: '"+ selector +"' taphold error: !ev"); return; }
+			if (!obj.title) { return; }
+			
+			navigator.notification.vibrate(100);
+			
+			try {
+			site.ui.showtoast(obj.title);
+			} catch(e) { loggr.warn(" > Attribute missing: 'title' on "+obj); }
+			
+			
+		},250);
+		
+	}
+	
 }
 
 // ---> Hacks... seufs

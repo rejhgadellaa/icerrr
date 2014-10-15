@@ -153,8 +153,8 @@
         <div class="title">ICERRR</div>
         
 		<div class="actions">
-        	<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_core_overflow.png" /></div>
-            <div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" /></div>
+        	<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_core_overflow.png" title="Tap for more options" /></div>
+            <div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" title="Chromecast" /></div>
         </div>
     </div>
     
@@ -165,19 +165,19 @@
 	</div>
     
     <div class="footer shadow_z1u">
-    	<div class="button left activatablel" onClick="site.alarms.init();">
+    	<div class="button left activatablel" onclick="site.alarms.init();">
 			<div class="button_inner">
-            	<div class="center_table"><div class="center_td">ALARMS</div></div>
+            	<div class="center_table"><div class="center_td"><img title="Go to alarms" src="img/icons-96/ic_alarms.png" style="width:32px;" /></div></div>
             </div>
 		</div>
-    	<div class="button center activatablel" id="home_play" onClick="site.home.mpPlayToggle();$(this).toggleClass('busy');">
+    	<div class="button center activatablel" id="home_play" onclick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
 			<div class="button_inner">
 				<div class="center_table"><div class="center_td"><img src="img/icons-96/ic_play_w.png" /></div></div>
 			</div>
 		</div>
-		<div class="button right activatablel" onClick="site.chlist.init();">
+		<div class="button right activatablel" onclick="site.chlist.init();">
 			<div class="button_inner">
-            	<div class="center_table"><div class="center_td">STATIONS</div></div>
+            	<div class="center_table"><div class="center_td"><img title="Go to stations" src="img/icons-96/ic_list.png" style="width:32px;" /></div></div>
             </div>
 		</div>
     </div>
@@ -193,7 +193,7 @@
         
 		<div class="actions">
             <div class="action activatablel" onClick="site.chsearch.init();">
-				<img src="img/icons-48/ic_add_green.png" />
+				<img src="img/icons-48/ic_add_green.png" title="Add station" />
 			</div>
         </div>
     </div>
@@ -223,10 +223,10 @@
         
 		<div class="actions">
 			<div class="action save activatablel" onClick="site.chedit.check();">
-				<img src="img/icons-48/ic_save_green.png" />
+				<img src="img/icons-48/ic_save_green.png" title="Save station" />
 			</div>
             <div class="action trash activatablel" onClick="site.chedit.remove();">
-				<img src="img/icons-48/ic_trash_green.png" />
+				<img src="img/icons-48/ic_trash_green.png" title="Remove station" />
 			</div>
         </div>
     </div>
@@ -279,7 +279,7 @@
         
 		<div class="actions">
 			<div class="action save activatablel" onClick="site.chsearch.searchstation();">
-				<img src="img/icons-48/ic_search_green.png" />
+				<img src="img/icons-48/ic_search_green.png" title="Search" />
 			</div>
         </div>
     </div>
@@ -364,7 +364,7 @@
         
 		<div class="actions">
             <div class="action activatablel" onClick="site.alarms.add();">
-				<img src="img/icons-48/ic_add_green.png" />
+				<img src="img/icons-48/ic_add_green.png" title="Add alarm" />
 			</div>
         </div>
     </div>
@@ -385,10 +385,10 @@
         
 		<div class="actions">
 			<div class="action save activatablel" onClick="site.alarms.save();">
-				<img src="img/icons-48/ic_save_green.png" />
+				<img src="img/icons-48/ic_save_green.png" title="Save alarm" />
 			</div>
             <div class="action trash activatablel" onClick="site.alarms.remove();">
-				<img src="img/icons-48/ic_trash_green.png" />
+				<img src="img/icons-48/ic_trash_green.png" title="Remove alarm" />
 			</div>
         </div>
     </div>

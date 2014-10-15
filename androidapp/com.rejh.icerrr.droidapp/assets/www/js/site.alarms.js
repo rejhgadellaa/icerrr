@@ -207,7 +207,7 @@ site.alarms.remove = function() {
 	
 	loggr.info("site.alarms.remove()");
 	
-	if (!confirm("Are you sure?")) {
+	if (!confirm("Are you sure you want to remove this alarm?")) {
 		return;
 	}
 	
