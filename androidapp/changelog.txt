@@ -1,5 +1,9 @@
+0.095 (beta)
+  * Notification info was sometimes not updated
+
 0.094 (beta)
   * When now playing is not available, default to station icon
+  * Fix: possible nullpointer when using Dirble now playing
 
 0.093 (beta)
   * Use Dirble's now playing info whenever possible

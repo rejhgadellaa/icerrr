@@ -301,6 +301,10 @@ site.home.run_station_updates = function() {
 		site.home.stop_ui_updates();
 	}
 	
+	if (site.mp.serviceRunning) {
+		site.mp.notif();
+	}
+	
 }
 
 // ---> Dirble nowplaying
@@ -327,13 +331,20 @@ site.home.useDirbleNowPlaying = function() {
 				try {
 				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
 				site.session.currentstation.station_nowplaying = site.helpers.capitalize(data["data"]["songhistory"][0].info.name,1) +" - "+ site.helpers.capitalize(data["data"]["songhistory"][0].info.title,1);
-				} catch(e) { site.session.currentstation.station_nowplaying = "Now playing: Unknown"; }
+				} catch(e) { 
+					site.session.currentstation.station_nowplaying = "Now playing: Unknown"; 
+					$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+				}
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
-			if (data["data"]["songhistory"][0].info.image) {
-				$("#home .main .station_image img").attr("src",data["data"]["songhistory"][0].info.image);
-			} else {
+			try {
+				if (data["data"]["songhistory"][0].info.image) {
+					$("#home .main .station_image img").attr("src",data["data"]["songhistory"][0].info.image);
+				} else {
+					site.home.getAlbumArt();
+				}
+			} catch(e) {
 				site.home.getAlbumArt();
 			}
 		},
@@ -345,6 +356,10 @@ site.home.useDirbleNowPlaying = function() {
 	
 	if (site.session.isPaused) {
 		site.home.stop_ui_updates();
+	}
+	
+	if (site.mp.serviceRunning) {
+		site.mp.notif();
 	}
 	
 }
