@@ -1,5 +1,5 @@
 0.092 (beta)
-  * You may now donate money!
+  * You may now donate (app will prompt for it once)
 
 0.091 (stable)
   * Most icons can now be longclicked for info
