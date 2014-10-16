@@ -165,17 +165,17 @@
 	</div>
     
     <div class="footer shadow_z1u">
-    	<div class="button left activatablel" onclick="site.alarms.init();">
+    	<div class="button left activatablel" onClick="site.alarms.init();">
 			<div class="button_inner">
             	<div class="center_table"><div class="center_td"><img title="Go to alarms" src="img/icons-96/ic_alarms.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
             </div>
 		</div>
-    	<div class="button center activatablel" id="home_play" onclick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
+    	<div class="button center activatablel" id="home_play" onClick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
 			<div class="button_inner">
 				<div class="center_table"><div class="center_td"><img src="img/icons-96/ic_play_w.png" /></div></div>
 			</div>
 		</div>
-		<div class="button right activatablel" onclick="site.chlist.init();">
+		<div class="button right activatablel" onClick="site.chlist.init();">
 			<div class="button_inner">
             	<div class="center_table"><div class="center_td"><img title="Go to stations" src="img/icons-96/ic_list.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
             </div>
@@ -470,11 +470,16 @@
 		
 		<div class="block">
 		
-			<p><b>The html5(ish) streaming app with clock radio functionality. And chromecast.</b></p>
+			<p><b>Icerrr. The html5(ish) streaming app with clock radio functionality and chromecast support.</b></p>
 			
-			<p>An open source project (MIT License) available at http://github.com/rejhgadellaa/icerrr/</p>
+			<p>An open source project (MIT License)<br><a href="javascript:void(0);" onclick="window.open('http://github.com/rejhgadellaa/icerrr/','_system');">http://github.com/rejhgadellaa/icerrr/</a></p>
 			
 			<p>Copyright (c) 2014 REJH Gadellaa</p>
+			
+			<p>&nbsp;</p>
+			<p>
+			<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" onclick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S6BCCM9LESNBU&lc=US&item_name=REJH%20Gadellaa&item_number=icerrr_droidapp&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted','_system');" />
+			</p>
 			
 			<!--
 			<p>Icerr uses..</p>
@@ -547,7 +552,11 @@
 </div>
 
 <!-- Overlay: Dialog -->
-<div id="dialog" class="overlay_wrap"></div>
+<div id="dialog" class="overlay_wrap">
+	<div id="dialog_inner">
+	
+	</div>
+</div>
 
 <!-- Overlay: Toast -->
 <div id="overlay_toast" class="round4">Toast!</body>

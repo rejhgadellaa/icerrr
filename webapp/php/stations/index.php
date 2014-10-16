@@ -6,6 +6,7 @@ $data_stations_urls = array();
 $data_stations_urls_count = array();
 $data_stations = array();
 $data_station = array();
+$device_ids = array();
 
 $path_stations = "../../api/stations_users/";
 $path_station = "../../api/station_users/";
@@ -18,14 +19,21 @@ foreach ($files_stations as $file_stations) {
 	$jsons_stations = fr($path_stations.$file_stations);
 	$json_stations = json_decode($jsons_stations,true);
 	
-	foreach ($json_stations as $station) {
+	$file_nameparts = explode("_",$file_stations);
+	$device_id = $file_nameparts[1];
 	
-		$data_stations_urls_count[$station["station_url"]]++;
+	foreach ($json_stations as $station) {
 		
 		if (!in_array($station["station_url"],$data_stations_urls)) {
 			
+			$data_stations_urls_count[$station["station_url"]]++;
 			$data_stations_urls[] = $station["station_url"];
 			$data_stations[] = $station;
+			$device_ids[] = $device_id;
+			
+		} elseif (!in_array($device_id,$device_ids)) {
+		
+			$data_stations_urls_count[$station["station_url"]]++;
 			
 		}
 		

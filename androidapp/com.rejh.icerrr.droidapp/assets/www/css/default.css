@@ -508,6 +508,15 @@ section {
 		cursor:text;
 	}
 	
+#about {
+	display:none;
+}
+	
+	#about input.paypal {
+		width:147px;
+		cursor:pointer;
+	}
+	
 /* -- OVERFLOW_MENU */
 
 .overflow_menu {
@@ -567,6 +576,15 @@ section {
 	
 }
 
+	#dialog_inner {
+		position:absolute;
+		top:16px; left:16px; right:16px; bottom:16px;
+		padding:16px;
+		background:#fff;
+		font-size:14pt;
+		color:rgba(0,0,0,0.87);
+	}
+
 /* Other */
 
 #overlay_toast {
@@ -575,7 +593,7 @@ section {
 	position:absolute;
 	left:32px; right:32px; bottom:72px;
 	height:auto;
-	padding:16px;
+	padding:16px 24px 16px 24px;
 	color:rgba(255,255,255,0.87);
 	background-color:rgba(0,0,0,0.5);
 	pointer-events:none;
