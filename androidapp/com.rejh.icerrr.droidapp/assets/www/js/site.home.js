@@ -250,8 +250,8 @@ site.home.run_station_updates = function() {
 	//loggr.log("site.home.run_station_updates()");
 	
 	if (site.session.currentstation.dirble_id) {
-		//site.home.useDirbleNowPlaying();
-		//return;
+		site.home.useDirbleNowPlaying();
+		return;
 	}
 	
 	var apiqueryobj = {
@@ -274,7 +274,7 @@ site.home.run_station_updates = function() {
 			if (!data["data"]["nowplaying"]) { 
 				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
-			
+				$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
 			} else {
 				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
 				site.session.currentstation.station_nowplaying = data["data"]["nowplaying"];
@@ -322,7 +322,7 @@ site.home.useDirbleNowPlaying = function() {
 			if (!data["data"]["songhistory"]) { 
 				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
-			
+				$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
 			} else {
 				try {
 				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
@@ -332,12 +332,14 @@ site.home.useDirbleNowPlaying = function() {
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
 			if (data["data"]["songhistory"][0].info.image) {
-				// $("#home .main").css("background","url("+data["data"]["songhistory"][0].info.image+")");
+				$("#home .main .station_image img").attr("src",data["data"]["songhistory"][0].info.image);
+			} else {
+				site.home.getAlbumArt();
 			}
 		},
 		function(error) {
 			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
-			else { loggr.log(error); }
+			else { loggr.warn(error); }
 		}
 	);
 	
