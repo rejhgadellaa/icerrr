@@ -248,5 +248,22 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
+  },
+  {
+    "station_id": "soma_groovesalad",
+    "dirble_id":11540,
+    "station_edited":{},
+    "station_name": "Soma Groove Salad",
+    "station_url": "http://uwstream1.somafm.com:80",
+    "station_icon": "http://somafm.com/img/groovesalad120.png",
+    "station_image": 0,
+    "station_host": "uwstream1.somafm.com",
+    "station_port": 80,
+    "station_path": "/",
+    "station_country":"US",
+    "station_bitrate":"128 kbps",
+    "rating_custom": -1,
+    "rating_soundcloud": -1,
+    "rating_average": -1
   }
 ]

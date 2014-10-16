@@ -1,5 +1,5 @@
 0.095 (beta)
-  * Notification info was sometimes not updated
+  * Notification info was not updated (still has issues, working on it)
   * Fix: album art not always defaulting to station icon
 
 0.094 (beta)
