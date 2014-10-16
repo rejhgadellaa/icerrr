@@ -1,5 +1,6 @@
 0.095 (beta)
   * Notification info was sometimes not updated
+  * Fix: album art not always defaulting to station icon
 
 0.094 (beta)
   * When now playing is not available, default to station icon

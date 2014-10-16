@@ -371,6 +371,12 @@ site.home.getAlbumArt = function() {
 	// Get station
 	var station = site.session.currentstation;
 	
+	// Check now playing
+	if (station.station_nowplaying=="Now playing: Unknown") {
+		$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+		return;
+	}
+	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
 		+ "\""+ station.station_nowplaying +"\" "
