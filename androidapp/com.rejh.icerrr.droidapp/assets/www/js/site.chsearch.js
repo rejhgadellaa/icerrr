@@ -368,25 +368,6 @@ site.chsearch.addThisStation = function(evt) {
 	
 }
 
-site.chsearch.getStreamFromPlaylist = function(station, stationIndex, stationData) {
-	
-	loggr.inf("site.chsearch.getStreamFromPlayList()");
-	
-	var stream_url = station.stream_url;
-	
-	site.webapi.getajax(stream_url,"text",
-		function(data,textStatus,jqXHR) {
-			
-		},
-		function(error) {
-			site.ui.hideloading();
-			site.ui.showtoast("Station error, please choose another");
-			if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
-		}
-	);
-	
-}
-
 site.chsearch.testStation = function(station, stationIndex, stationData) {
 	
 	loggr.info("site.chsearch.testStation()");
@@ -415,40 +396,6 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 	
 	// Store
 	station.stream_url = stream_url;
-	
-	// -> Check if station is actually a playlist...
-	
-	/*
-	
-	// Catch pls and m3u
-	if (stream_url.indexOf(".pls")>=0 || stream_url.indexOf(".m3u")>=0) {
-		
-		var apiqueryobj = {
-			"get":"parse_playlist",
-			"url":stream_url
-		}
-		
-		var apiaction = "get";
-		var apiquerystr = JSON.stringify(apiqueryobj);
-		
-		site.webapi.exec(apiaction,apiquerystr,
-			function(data) {
-				var url = data["data"];
-				//site.chedit.newentry.station_url = url;
-				//site.chedit.check_station_url(station_name,url,silent);
-			},
-			function(error) {
-				site.ui.hideloading();
-				if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
-				else { loggr.log(error); }
-			}
-		);
-		
-		return;
-		
-	}
-	
-	/**/
 	
 	// -> Check if station actually works...
 	

@@ -133,9 +133,10 @@ switch($action) {
 				if (!$fg) { error("Error: Could not load url: '". $queryobj["url"] ."'"); }
 				$bgn = 0; $end = -1; $len = -1;
 				$bgn = strpos($fg,"http");
+				if ($bgn===FALSE) { error("Error: could not parse pls/m3u: '". $queryobj["url"] ."'"); }
 				$end = strpos($fg,"\n",$bgn);
 				$len = $end - $bgn;
-				if ($bgn===FALSE) { error("Error: could not parse pls/m3u: '". $queryobj["url"] ."'"); }
+				if ($end===FALSE) { $len = strlen($fg)-$bgn; }
 				$url = trim( substr($fg,$bgn,$len), " \n\r\t");
 				$json["data"] = $url;
 				$json["info"] = array();

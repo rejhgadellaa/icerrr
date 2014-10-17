@@ -353,37 +353,6 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 		station_host = station_host.substr(0,station_host.indexOf("/"));
 	}
 	
-	// Check pls and m3u and...
-	if (!playlistChecked) {
-		site.webapi.getajax(station_url,"text",
-			function(data,textStatus,jqXHR) {
-				try {
-					if (data.toLowerCase().indexOf("http")>=0 && data.toLowerCase().indexOf("<html>")<0 && data.toLowerCase().indexOf("text/html")<0) {
-						loggr.log(" > Found http in ajax req data");
-						site.chedit.parsePlaylist(station_url, station_name, function(){ site.chedit.check_station_url(station_name,$("#editstation input[name='station_url']")[0].value,silent,true); });
-					} else {
-						site.chedit.check_station_url(station_name,station_url,silent,true);
-					}
-				} catch(e) {
-					site.chedit.check_station_url(station_name,station_url,silent,true);
-				}
-			},
-			function(error) {
-				site.chedit.check_station_url(station_name,station_url,silent,true);
-			}
-		);
-		return;
-	}
-	
-	// Catch pls and m3u
-	if (station_path.indexOf(".pls")>=0 || station_path.indexOf(".m3u")>=0) {
-		if (!playlistChecked) {
-			loggr.log(" > Found pls or m3u in station_path");
-			site.chedit.parsePlaylist(station_url, station_name, function(){ site.chedit.check_station_url(station_name,$("#editstation input[name='station_url']")[0].value,silent,true); });
-			return;
-		}
-	}
-	
 	loggr.log(" > Host: "+ station_host);
 	loggr.log(" > Port: "+ station_port);
 	loggr.log(" > Path: "+ station_path);
@@ -402,13 +371,22 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 	
 	site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
-			site.ui.hideloading();
 			loggr.log(JSON.stringify(data["data"]));
 			if (!data["data"]["content-type"]) { 
 				// Not good!
+				site.ui.hideloading();
 				if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url"); }
 			} else {
 				// Good!
+				
+				// Check content-type for playlist-ish keywords
+				if (data["data"]["content-type"].indexOf("text/html")>=0
+				 || data["data"]["content-type"].indexOf("audio/x-mpegurl")>=0
+				) {
+					loggr.log(" > Playlist detected, parse it...");
+					site.chedit.parsePlaylist(station_url, station_name, function(){ site.chedit.check_station_url(station_name,$("#editstation input[name='station_url']")[0].value,silent,true); });
+					return;
+				}
 				
 				// Check content-type
 				if (data["data"]["content-type"].indexOf("audio/mpeg")<0 
@@ -417,11 +395,13 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 				 && data["data"]["content-type"].indexOf("audio/")<0 // TODO: To easy on the type?
 				 && data["data"]["content-type"].indexOf("audio%2F")<0 // TODO: To easy on the type?
 				) {
-					if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url"); }
+					site.ui.hideloading();
+					if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url");  }
 					return;
 				}
 				
 				if (!silent) {
+					site.ui.hideloading();
 					site.ui.showtoast("Station url verified!");
 				}
 				
@@ -572,7 +552,6 @@ site.chedit.searchicon = function() {
 	);
 	
 }
-
 
 site.chedit.parsePlaylist = function(station_url, station_name, cb, cberr) {
 	
