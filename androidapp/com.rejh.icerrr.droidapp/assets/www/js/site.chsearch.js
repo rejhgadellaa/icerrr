@@ -353,6 +353,7 @@ site.chsearch.addThisStation = function(evt) {
 				site.ui.hideloading();
 			} else {
 				site.chsearch.testStation(station, stationIndex, data["data"]);
+				// site.chsearch.getStreamFromPlaylist(station, stationIndex, data["data"]);
 			}
 		},
 		function(error) {
@@ -364,6 +365,25 @@ site.chsearch.addThisStation = function(evt) {
 	
 	
 	
+	
+}
+
+site.chsearch.getStreamFromPlaylist = function(station, stationIndex, stationData) {
+	
+	loggr.inf("site.chsearch.getStreamFromPlayList()");
+	
+	var stream_url = station.stream_url;
+	
+	site.webapi.getajax(stream_url,"text",
+		function(data,textStatus,jqXHR) {
+			
+		},
+		function(error) {
+			site.ui.hideloading();
+			site.ui.showtoast("Station error, please choose another");
+			if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
+		}
+	);
 	
 }
 

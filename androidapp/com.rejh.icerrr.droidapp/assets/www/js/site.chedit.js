@@ -316,7 +316,7 @@ site.chedit.check = function(findStationName,silent) {
 
 // Check station_url
 
-site.chedit.check_station_url = function(station_name, station_url, silent) {
+site.chedit.check_station_url = function(station_name, station_url, silent, playlistChecked, isPlaylist) {
 	
 	loggr.log("site.chedit.check_station_url()");
 	
@@ -353,33 +353,35 @@ site.chedit.check_station_url = function(station_name, station_url, silent) {
 		station_host = station_host.substr(0,station_host.indexOf("/"));
 	}
 	
-	// Catch pls and m3u
-	if (station_path.indexOf(".pls")>=0 || station_path.indexOf(".m3u")>=0) {
-		
-		var apiqueryobj = {
-			"get":"parse_playlist",
-			"url":station_url
-		}
-		
-		var apiaction = "get";
-		var apiquerystr = JSON.stringify(apiqueryobj);
-		
-		site.webapi.exec(apiaction,apiquerystr,
-			function(data) {
-				var url = data["data"];
-				site.chedit.newentry.station_url = url;
-				$("#editstation input[name='station_url']")[0].value = url;
-				site.chedit.check_station_url(station_name,url,silent);
+	// Check pls and m3u and...
+	if (!playlistChecked) {
+		site.webapi.getajax(station_url,"text",
+			function(data,textStatus,jqXHR) {
+				try {
+					if (data.toLowerCase().indexOf("http")>=0 && data.toLowerCase().indexOf("<html>")<0 && data.toLowerCase().indexOf("text/html")<0) {
+						loggr.log(" > Found http in ajax req data");
+						site.chedit.parsePlaylist(station_url, station_name, function(){ site.chedit.check_station_url(station_name,$("#editstation input[name='station_url']")[0].value,silent,true); });
+					} else {
+						site.chedit.check_station_url(station_name,station_url,silent,true);
+					}
+				} catch(e) {
+					site.chedit.check_station_url(station_name,station_url,silent,true);
+				}
 			},
 			function(error) {
-				site.ui.hideloading();
-				if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
-				else { loggr.log(error); }
+				site.chedit.check_station_url(station_name,station_url,silent,true);
 			}
 		);
-		
 		return;
-		
+	}
+	
+	// Catch pls and m3u
+	if (station_path.indexOf(".pls")>=0 || station_path.indexOf(".m3u")>=0) {
+		if (!playlistChecked) {
+			loggr.log(" > Found pls or m3u in station_path");
+			site.chedit.parsePlaylist(station_url, station_name, function(){ site.chedit.check_station_url(station_name,$("#editstation input[name='station_url']")[0].value,silent,true); });
+			return;
+		}
 	}
 	
 	loggr.log(" > Host: "+ station_host);
@@ -572,7 +574,32 @@ site.chedit.searchicon = function() {
 }
 
 
-
+site.chedit.parsePlaylist = function(station_url, station_name, cb, cberr) {
+	
+	var apiqueryobj = {
+			"get":"parse_playlist",
+			"url":station_url
+		}
+		
+		var apiaction = "get";
+		var apiquerystr = JSON.stringify(apiqueryobj);
+		
+		site.webapi.exec(apiaction,apiquerystr,
+			function(data) {
+				var url = data["data"];
+				site.chedit.newentry.station_url = url;
+				$("#editstation input[name='station_url']")[0].value = url;
+				if (cb) { cb(); }
+			},
+			function(error) {
+				site.ui.hideloading();
+				if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
+				else { loggr.log(error); }
+				if (cberr) { cberr(error); }
+			}
+		);
+	
+}
 
 
 

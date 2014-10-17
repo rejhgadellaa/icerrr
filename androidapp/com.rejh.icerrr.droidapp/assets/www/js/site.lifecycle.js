@@ -401,7 +401,7 @@ site.lifecycle.onBackButton = function() {
 	
 	// TODO: needs some building in so we don't hit back in the middle of an operation..
 	if (thedonts[site.vars.currentSection]) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
-	if (site.vars.isloading) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
+	if (site.vars.isLoading) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
 	
 	var currentBackKey = site.lifecycle.get_section_history_item();
 	loggr.log(currentBackKey);

@@ -1,3 +1,6 @@
+0.096 (beta)
+  * Better handling of playlists (pls, m3u) when adding stations manually
+
 0.095 (beta)
   * Notification info was not updated (still has issues, working on it)
   * Fix: album art not always defaulting to station icon

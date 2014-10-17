@@ -105,6 +105,7 @@ site.home.init = function() {
 	//$("#searchicon .main").html("");
 	
 	// App updated
+	/*
 	if (site.cookies.get("donate_button_shown")!=1 && site.vars.app_has_updated_home) {
 		site.vars.app_has_updated_home = false; // do once
 		site.cookies.put("donate_button_shown",1);
@@ -118,6 +119,7 @@ site.home.init = function() {
 		);
 		setTimeout(function(){ $("#dialog").fadeOut(500); },5500);
 	}
+	/**/
 	
 }
 
