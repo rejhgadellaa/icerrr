@@ -64,7 +64,9 @@ site.chedit.init = function(station_id_to_edit) {
 		$("#editstation img.station_icon").on("click", function(evt) {
 			site.chicon.init($("#editstation input[name='station_id']")[0].value.trim());
 		});
-		
+		$("#editstation .googleit")[0].onclick = function() {
+			site.chicon.init($("#editstation input[name='station_id']")[0].value.trim());
+		}
 	} else if (station_id_to_edit===false) { // clean
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
@@ -72,16 +74,22 @@ site.chedit.init = function(station_id_to_edit) {
 		$("#editstation input[name='station_url']")[0].value = ""
 		$("#editstation input[name='station_icon']")[0].value = ""
 		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
+		$("#editstation img.station_icon").off("click");
+		$("#editstation img.station_icon")[0].onclick = function() {
+			site.ui.showtoast('One moment...');
+			site.chedit.searchicon();
+		}
 		site.chedit.newentry = {};
 	} else { // continue but make sure the station_id is cleared
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
 		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
+		$("#editstation img.station_icon").off("click");
+		$("#editstation img.station_icon")[0].onclick = function() {
+			site.ui.showtoast('One moment...');
+			site.chedit.searchicon();
+		}
 	}
-	
-	// TODO: check if this is not required
-	//site.chedit.changesHaveBeenMade = false;
-	//site.chedit.changesHaveBeenMadeButResetScroll = false;
 	
 }
 
@@ -216,23 +224,6 @@ site.chedit.remove = function() {
 			site.ui.showtoast("Removed!");
 			site.chedit.changesHaveBeenMade = true;
 			site.chlist.init(true);
-			
-			/*
-			site.chlist.init(true);
-			
-			// TMP Testcode
-			site.storage.readfile(site.cfg.paths.json,"stations.json",
-				function(res) {
-					var json = JSON.parse(res);
-					loggr.log("\n"+ site.helpers.arrToString(json,0,"\n") +"\n");
-				},
-				function(error) {
-					// TODO: unless we intend to do this job in Reno, we're in Barney
-					// ...
-				}
-			);
-			/**/
-			
 		},
 		function(e){ 
 			alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
@@ -408,7 +399,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 				// Apply station_name from results?
 				if (data["data"]["icy-name"]) {
 					if (site.helpers.capitalize(data["data"]["icy-name"])!=site.chedit.newentry.station_name) {
-						if (confirm("We found the following Station name: '"+ site.helpers.capitalize(data["data"]["icy-name"]) +"'.\n\nWould you like to apply it?")) {
+						if (confirm("We found the following Station name:\n'"+ site.helpers.capitalize(data["data"]["icy-name"]) +"'.\n\nWould you like to apply it?")) {
 							site.chedit.newentry.station_name = site.helpers.capitalize(data["data"]["icy-name"]);
 							$("#editstation input[name='station_name']")[0].value = site.helpers.capitalize(data["data"]["icy-name"]);
 						}
@@ -471,7 +462,7 @@ site.chedit.check_station_icon = function(silent) {
 		if (confirm("Station icon could not be loaded. Search Google for an icon?")) {
 			site.chedit.searchicon();
 		} else {
-			// nothin
+			site.ui.hideloading();
 		}
 	}
 	img.src = site.helpers.urlAddCachebust(station_icon)
