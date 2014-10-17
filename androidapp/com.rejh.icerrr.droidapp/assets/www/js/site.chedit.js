@@ -567,6 +567,7 @@ site.chedit.parsePlaylist = function(station_url, station_name, cb, cberr) {
 			function(data) {
 				var url = data["data"];
 				if (url.toLowerCase().indexOf("<")>=0 || url.toLowerCase().indexOf(">")>=0) {
+					site.ui.showtoast("Err: Icerrr cannot verify station url");
 					site.ui.hideloading();
 					cberr({error:1,message:"Unknown data"});
 					return;
@@ -576,6 +577,7 @@ site.chedit.parsePlaylist = function(station_url, station_name, cb, cberr) {
 				if (cb) { cb(); }
 			},
 			function(error) {
+				site.ui.showtoast("Err: Icerrr cannot verify station url");
 				site.ui.hideloading();
 				if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
 				else { loggr.log(error); }
