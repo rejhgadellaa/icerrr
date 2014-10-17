@@ -1,3 +1,7 @@
+0.097 (beta)
+  * More improvements for handling playlists when adding stations manually
+  * Fix: app sometimes got confused when adding multiple stations manually
+
 0.096 (beta)
   * Better handling of playlists (pls, m3u) when adding stations manually
 

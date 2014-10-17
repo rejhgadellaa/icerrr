@@ -72,6 +72,7 @@ site.chedit.init = function(station_id_to_edit) {
 		$("#editstation input[name='station_url']")[0].value = ""
 		$("#editstation input[name='station_icon']")[0].value = ""
 		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
+		site.chedit.newentry = {};
 	} else { // continue but make sure the station_id is cleared
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
@@ -238,7 +239,6 @@ site.chedit.remove = function() {
 			loggr.log(site.storage.getErrorType(e)); 
 		}
 	);
-	
 	
 }
 
@@ -566,6 +566,11 @@ site.chedit.parsePlaylist = function(station_url, station_name, cb, cberr) {
 		site.webapi.exec(apiaction,apiquerystr,
 			function(data) {
 				var url = data["data"];
+				if (url.toLowerCase().indexOf("<")>=0 || url.toLowerCase().indexOf(">")>=0) {
+					site.ui.hideloading();
+					cberr({error:1,message:"Unknown data"});
+					return;
+				}
 				site.chedit.newentry.station_url = url;
 				$("#editstation input[name='station_url']")[0].value = url;
 				if (cb) { cb(); }
