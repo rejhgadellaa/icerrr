@@ -1,4 +1,4 @@
-0.098 (...)
+0.098 (stable)
   * Improved startup cycle
   * Bugfixes
 
