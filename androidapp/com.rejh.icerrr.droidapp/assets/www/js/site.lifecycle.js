@@ -14,6 +14,27 @@ site.lifecycle = {};
 site.session.lifecycle = {};
 site.session.lifecycle.section_history = [];
 
+site.lifecycle.loaded = false;
+site.lifecycle.deviceReady = false;
+
+// Onload + device ready
+
+site.lifecycle.onload = function() {
+	loggr.info("site.lifecycle.onload()");
+	site.lifecycle.loaded = true;
+	if (site.lifecycle.loaded && site.lifecycle.deviceReady) {
+		site.lifecycle.init();
+	}
+}
+
+site.lifecycle.onDeviceReady = function() {
+	loggr.info("site.lifecycle.onDeviceReady()");
+	site.lifecycle.deviceReady = true;
+	if (site.lifecycle.loaded && site.lifecycle.deviceReady) {
+		site.lifecycle.init();
+	}
+}
+
 // Init
 
 site.lifecycle.init = function() {
@@ -36,33 +57,6 @@ site.lifecycle.init = function() {
 	loggr.log(" > Device: "+ site.vars.deviceDesc);
 	loggr.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
 	
-	// Defaults..
-	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
-	
-	// Vars..
-	site.lifecycle.add_section_history("#home");
-	
-	// Attach 'onDeviceReady' event listener (cordova)
-	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
-	
-	// Google Loader
-	google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
-	
-}
-
-// Device Ready
-
-site.lifecycle.onDeviceReady = function() {
-	
-	loggr.info("site.lifecycle.onDeviceReady()");
-	
-	// Attach more event listeners (cordova)
-	document.addEventListener('resume', site.lifecycle.onResume, false);
-	document.addEventListener('pause', site.lifecycle.onPause, false);
-	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
-	document.addEventListener("volumeupbutton", site.lifecycle.onVolumeUp, true);
-	document.addEventListener("volumedownbutton", site.lifecycle.onVolumeDown, true);
-	
 	// Device info
 	loggr.log(" > Device Info: "
 		+"model: "+ device.model
@@ -71,17 +65,21 @@ site.lifecycle.onDeviceReady = function() {
 		+", cordova: "+ device.cordova
 	);
 	
-	// Check internet connection
-	/*
-	switch (navigator.connection.type) {
-		
-		case Connection.UNKNOWN:
-		case Connection.NONE:
-			//loggr.warn(" > No internet connection!");
-			break;
-		
-	}
-	/**/
+	// Defaults..
+	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
+	
+	// Vars..
+	site.lifecycle.add_section_history("#home");
+	
+	// Attach more event listeners (cordova)
+	document.addEventListener('resume', site.lifecycle.onResume, false);
+	document.addEventListener('pause', site.lifecycle.onPause, false);
+	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
+	document.addEventListener("volumeupbutton", site.lifecycle.onVolumeUp, true);
+	document.addEventListener("volumedownbutton", site.lifecycle.onVolumeDown, true);
+	
+	/**/// Google Loader
+	google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
 	
 	// Init app
 	site.lifecycle.initApp();

@@ -93,7 +93,7 @@
 
 	<!-- Script: init! -->
 	<script>
-	site.lifecycle.init();
+	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
 	</script>
         
     <!-- Style / base -->
@@ -115,7 +115,7 @@
 	
 </head>
 
-<body onResize="site.lifecycle.onResize();">
+<body onload="site.lifecycle.onload();" onresize="site.lifecycle.onResize();">
 
 <!-- Section -->
 <section id="splash">
@@ -251,7 +251,7 @@
 				<input class="round2" type="text" name="station_name" placeholder="My Radio Station" />
 			</p>
 			
-			<p><label>Station icon: <a class="googleit" href="javascript:void(0);" onclick="site.ui.showtoast('One moment...');site.chedit.searchicon();">Google it</a></label>
+			<p><label>Station icon: <a class="googleit" href="javascript:void(0);" onClick="site.ui.showtoast('One moment...');site.chedit.searchicon();">Google it</a></label>
 				<input class="round2" type="text" name="station_icon" placeholder="http://www.host.com/path-to-icon.png" />
 			</p>
 			

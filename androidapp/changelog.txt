@@ -1,3 +1,7 @@
+0.098 (...)
+  * Improved startup cycle
+  * Bugfixes
+
 0.097 (stable)
   * More improvements for handling playlists when adding stations manually
   * Fix: app sometimes got confused when adding multiple stations manually
