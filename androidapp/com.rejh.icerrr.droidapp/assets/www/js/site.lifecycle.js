@@ -147,7 +147,7 @@ site.lifecycle.initApp = function(force) {
 	site.helpers.readSession();
 	
 	// UI Init
-	site.ui.init
+	site.ui.init();
 	
 	// Home.. or?
 	var onstart_gotosection = site.cookies.get("onstart_gotosection");
