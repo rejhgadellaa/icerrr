@@ -1,3 +1,6 @@
+0.099 (..)
+  * Holo light theme for dialogs
+
 0.098 (stable)
   * Improved startup cycle
   * Bugfixes
