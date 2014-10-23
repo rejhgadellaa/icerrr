@@ -19,8 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
       package="com.rejh.icerrr.droidapp" 
-      android:versionName="0.097" 
-      android:versionCode="97" 
+      android:versionName="0.098" 
+      android:versionCode="98" 
       android:hardwareAccelerated="true"
       >
     <supports-screens
@@ -58,7 +58,7 @@
        android:value="@integer/google_play_services_version" />
         
         <activity android:name="Icerrr" android:label="@string/app_name"
-                android:theme="@android:style/Theme.Black.NoTitleBar"
+                android:theme="@android:style/Theme.Holo.Light.NoActionBar"
                 android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
                 android:launchMode="singleTask">
             <intent-filter>

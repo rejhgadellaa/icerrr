@@ -560,7 +560,7 @@ site.chedit.parsePlaylist = function(station_url, station_name, cb, cberr) {
 				if (url.toLowerCase().indexOf("<")>=0 || url.toLowerCase().indexOf(">")>=0) {
 					site.ui.showtoast("Err: Icerrr cannot verify station url");
 					site.ui.hideloading();
-					cberr({error:1,message:"Unknown data"});
+					if (cberr) { cberr({error:1,message:"Unknown data"}); }
 					return;
 				}
 				site.chedit.newentry.station_url = url;

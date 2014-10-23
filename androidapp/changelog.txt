@@ -1,3 +1,10 @@
+0.099 (..)
+  * Holo light theme for dialogs
+
+0.098 (stable)
+  * Improved startup cycle
+  * Bugfixes
+
 0.097 (stable)
   * More improvements for handling playlists when adding stations manually
   * Fix: app sometimes got confused when adding multiple stations manually
