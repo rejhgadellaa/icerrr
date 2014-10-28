@@ -19,8 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
       package="com.rejh.icerrr.droidapp" 
-      android:versionName="0.099" 
-      android:versionCode="99" 
+      android:versionName="0.100" 
+      android:versionCode="100" 
       android:hardwareAccelerated="true"
       >
     <supports-screens

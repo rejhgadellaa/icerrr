@@ -1,3 +1,8 @@
+0.100 (beta)
+  * 100th update!
+  * New style for app's home screen
+  * Fixes for now playing info
+
 0.099 (stable
   * Holo light theme for dialogs
 

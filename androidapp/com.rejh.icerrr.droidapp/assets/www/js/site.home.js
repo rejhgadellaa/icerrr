@@ -58,21 +58,8 @@ site.home.init = function() {
 		}
 	);
 	
-	// image
-	var station_image_url = (!station.station_image_local) ? site.cfg.urls.webapp +"rgt/rgt.php?w=512&h=512&src="+ station.station_icon : site.helpers.getImageLocally($("#home .main .station_image img")[0], site.cfg.paths.images, station.station_icon, station.station_icon, null, null); 
-	$("#home .main .station_image img").on("error",
-		function(evt) {
-			if ($("#home .main .station_image img").attr("src")!=station_image_url) {
-				$("#home .main .station_image img").attr("src",station_image_url);
-			} else {
-				$("#home .main .station_image img").attr("src","img/web_hi_res_512_001.png?");
-			}
-			
-		}
-	);
-	
 	// extra ui
-	$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+	site.home.handleStationImage(site.session.currentstation.station_icon);
 	$("#home .main .station_name").html(site.session.currentstation.station_name);
 	$("#home .main .station_nowplaying").html("Now playing: ...");
 	$("#home .main").css("background","rgba(0,0,0,0)");
@@ -247,11 +234,11 @@ site.home.run_ui_updates = function() {
 	
 }
 
-site.home.run_station_updates = function() {
+site.home.run_station_updates = function(dontUseDirble) {
 	
 	//loggr.log("site.home.run_station_updates()");
 	
-	if (site.session.currentstation.dirble_id) {
+	if (site.session.currentstation.dirble_id && !dontUseDirble) {
 		site.home.useDirbleNowPlaying();
 		return;
 	}
@@ -276,7 +263,7 @@ site.home.run_station_updates = function() {
 			if (!data["data"]["nowplaying"]) { 
 				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
-				$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+				site.home.handleStationImage(site.session.currentstation.station_icon);
 			} else {
 				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
 				site.session.currentstation.station_nowplaying = data["data"]["nowplaying"];
@@ -326,23 +313,24 @@ site.home.useDirbleNowPlaying = function() {
 	site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
 			if (!data["data"]["songhistory"]) { 
-				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
-				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
-				$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+				site.home.run_station_updates(true);
 			} else {
 				try {
-				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
-				site.session.currentstation.station_nowplaying = site.helpers.capitalize(data["data"]["songhistory"][0].info.name,1) +" - "+ site.helpers.capitalize(data["data"]["songhistory"][0].info.title,1);
+				site.session.currentstation.station_nowplaying = site.helpers.capitalize(data["data"]["songhistory"][0].name,1) +" - "+ site.helpers.capitalize(data["data"]["songhistory"][0].title,1);
+				if ((data["data"]["songhistory"][0].date.sec*1000) < (new Date().getTime()+(1000*60*60))) {
+					site.home.run_station_updates(true);
+					return;
+				}
 				} catch(e) { 
-					site.session.currentstation.station_nowplaying = "Now playing: Unknown"; 
-					$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+					site.home.run_station_updates(true);
+					return;
 				}
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
 			try {
 				if (data["data"]["songhistory"][0].info.image) {
-					$("#home .main .station_image img").attr("src",data["data"]["songhistory"][0].info.image);
+					site.home.handleStationImage(data["data"]["songhistory"][0].info.image);
 				} else {
 					site.home.getAlbumArt();
 				}
@@ -375,7 +363,7 @@ site.home.getAlbumArt = function() {
 	
 	// Check now playing
 	if (station.station_nowplaying=="Now playing: Unknown") {
-		$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+		site.home.handleStationImage(site.session.currentstation.station_icon);
 		return;
 	}
 	
@@ -389,22 +377,60 @@ site.home.getAlbumArt = function() {
 	}
 	
 	if (google) { if (google.search) { if (google.search.ImageSearch) {
-		opts.restrictions = [
-			[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
-		];
+		var conntype = site.helpers.getConnType();
+		if (conntype=="WIFI" || conntype=="ETHERNET") {
+			opts.restrictions = [
+				[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_LARGE]
+			];
+		} else {
+			opts.restrictions = [
+				[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
+			];
+		}
 	}}}
 	
 	site.helpers.googleImageSearch(searchstring,
 		function(results) {
 			// pick an image
 			var result = results[0];
-			$("#home .main .station_image img").attr("src",result.url);
+			site.home.handleStationImage(result.url);
 		},
 		function() {
-			$("#home .main .station_image img").attr("src",site.session.currentstation.station_icon);
+			site.home.handleStationImage(site.session.currentstation.station_icon);
 		},
 		opts
 	);
+
+}
+
+site.home.handleStationImage = function(src) {
+	
+	loggr.log("site.home.handleStationImage()");
+	loggr.log(" > "+ src);
+	
+	if (site.home.stationImagePreloader) {
+		site.home.stationImagePreloader.onload = function() {};
+	}
+	
+	site.home.stationImagePreloader = new Image();
+	site.home.stationImagePreloader.onload = function() {
+		site.helpers.imageToBase64(this,
+			function(base64) {
+				$("#home .main .station_image").css("background-image","url('"+ base64 +"')");
+			},
+			function(error) {
+				$("#home .main .station_image").css("background-image","url('"+ site.session.currentstation.station_icon +"')");
+			}
+		);
+	}
+	
+	if (src.toLowerCase().indexOf("http")>=0) {
+		if (src.indexOf("?")>=0) { src += "&cache="+ new Date().getTime(); }
+		else { src += "?cache="+ new Date().getTime(); }
+	}
+	
+	site.home.stationImagePreloader.src = src;
+	
 	
 }
 
