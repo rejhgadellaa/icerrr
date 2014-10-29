@@ -1,3 +1,6 @@
+0.101 (stable)
+  * Minor design tweaks
+
 0.100 (beta)
   * 100th update!
   * New style for app's home screen

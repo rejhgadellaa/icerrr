@@ -414,6 +414,8 @@ site.home.handleStationImage = function(src) {
 	
 	site.home.stationImagePreloader = new Image();
 	site.home.stationImagePreloader.onload = function() {
+		$("#home .main .station_image").css("background-image","url('"+ this.src +"')");
+		/*
 		site.helpers.imageToBase64(this,
 			function(base64) {
 				$("#home .main .station_image").css("background-image","url('"+ base64 +"')");
@@ -422,6 +424,7 @@ site.home.handleStationImage = function(src) {
 				$("#home .main .station_image").css("background-image","url('"+ site.session.currentstation.station_icon +"')");
 			}
 		);
+		/**/
 	}
 	
 	if (src.toLowerCase().indexOf("http")>=0) {
