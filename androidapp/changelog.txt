@@ -1,3 +1,7 @@
+0.103 (beta)
+  * Design improvements (new/edit alarm section)
+  * More bug fixes (minor stuff)
+
 0.102 (stable)
   * More design tweaks
   * Blended artwork for Android 5.0+

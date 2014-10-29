@@ -421,6 +421,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		$("#alarms_add select[name='alarm_station_name']").append(option);
 		
 	}
+	$("#alarms_add select[name='alarm_station_name']").off("change");
 	$("#alarms_add select[name='alarm_station_name']").on("change",function(evt) {
 		var value = evt.originalEvent.target.value;
 		site.alarms.newAlarmCfg.station = site.data.stations[site.helpers.session.getStationIndexById(value)];
@@ -436,6 +437,7 @@ site.alarms.updateForm = function(alarmCfg) {
 	date.setSeconds(0);
 	date.setMilliseconds(0);
 	$("#alarms_add input[name='alarm_time']")[0].valueAsDate = date;
+	$("#alarms_add input[name='alarm_time']").off("change");
 	$("#alarms_add input[name='alarm_time']").on("change",function(evt) {
 		var values = evt.originalEvent.target.value.split(":");
 		var hour = parseInt(values[0]);
@@ -450,6 +452,7 @@ site.alarms.updateForm = function(alarmCfg) {
 	// Volume
 	if (alarmCfg.volume) { $("#alarms_add input[name='alarm_volume']").attr("value",alarmCfg.volume); }
 	else { $("#alarms_add input[name='alarm_volume']").attr("value",7); }
+	$("#alarms_add input[name='alarm_volume']").off("change");
 	$("#alarms_add input[name='alarm_volume']").on("change",function(evt) {
 		var obj = evt.originalEvent.target;
 		var value = obj.value ? obj.value : 7;
@@ -459,8 +462,10 @@ site.alarms.updateForm = function(alarmCfg) {
 	});
 	
 	// Repeat
+	/*
 	if (alarmCfg.repeat) { $("#alarms_add input[name='repeat']").attr("checked","checked"); $("#alarms_add_repeatCfg").css("display","block"); }
 	else { $("#alarms_add input[name='repeat']").removeAttr("checked"); $("#alarms_add_repeatCfg").css("display","none"); }
+	$("#alarms_add input[name='repeat']").off("change");
 	$("#alarms_add input[name='repeat']").on("change",function(evt) {
 		var obj = evt.originalEvent.target;
 		var value = obj.checked ? true : false;
@@ -470,9 +475,54 @@ site.alarms.updateForm = function(alarmCfg) {
 		else { $("#alarms_add_repeatCfg").css("display","none"); }
 		site.alarms.save();
 	});
+	/**/
 	
 	// Repeat days
 	var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	for (var i=0; i<days.length; i++) {
+		var repeatOn = 0;
+		var daylc = days[i].toLowerCase();
+		var selector = "#alarms_add .weekschedule ."+daylc;
+		if (alarmCfg.repeatCfg[i]>0) {
+			repeatOn = 1;
+			if (!$(selector).hasClass("active")) { $(selector).addClass("active"); }
+		} else {
+			$(selector).removeClass("active");
+		}
+		site.alarms.newAlarmCfg.repeat = repeatOn;
+	}
+	$("#alarms_add .weekschedule .weekboxWrap").off("click");
+	$("#alarms_add .weekschedule .weekboxWrap").on("click",function(evt) {
+		loggr.log("weekboxWrap.on(click)");
+		var targ = evt.currentTarget;
+		// find daynum
+		var daynum = -1;
+		var weekboxes = $("#alarms_add .weekschedule .weekboxWrap");
+		for (var i=0; i<weekboxes.length; i++) {
+			if (weekboxes[i]==targ) { daynum = i; break; }
+		}
+		if (daynum<0) { loggr.error(" > weekboxWrap.on(click) > could not find daynum: "+ daynum); return; }
+		var daylc = days[daynum].toLowerCase();
+		if (!$(targ).hasClass("active")) { 
+			// on
+			$(targ).addClass("active"); 
+			site.alarms.newAlarmCfg.repeatCfg[daynum] = 1;
+			loggr.log(" > "+ JSON.stringify(site.alarms.newAlarmCfg.repeatCfg));
+		} else {
+			// off
+			$(targ).removeClass("active");
+			site.alarms.newAlarmCfg.repeatCfg[daynum] = 0;
+			loggr.log(" > "+ JSON.stringify(site.alarms.newAlarmCfg.repeatCfg));
+			var repeatOn = 0;
+			for (var i=0; i<days.length; i++) {
+				if (alarmCfg.repeatCfg[i]>0) { repeatOn = 1; }
+			}
+		}
+		loggr.log(" > Repeat: "+ repeatOn);
+		site.alarms.newAlarmCfg.repeat = repeatOn;
+		site.alarms.save();
+	});
+	/*
 	for (var i=0; i<days.length; i++) {
 		var daylc = days[i].toLowerCase();
 		var selector = "#repeat_"+daylc;
@@ -490,6 +540,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		loggr.log(" > Change: repeat_day "+num+": "+value);
 		site.alarms.save();
 	});
+	/**/
 	
 }
 

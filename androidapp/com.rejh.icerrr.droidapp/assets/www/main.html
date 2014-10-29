@@ -402,10 +402,10 @@
         <div class="block header">
 			Set alarm
         </div>
+        
+        <form onSubmit="return false;">
 		
 		<div class="block data1">
-		
-			<form onSubmit="return false;">
 			
 			<p><label>Station:</label><br>
 				<select name="alarm_station_name"></select>
@@ -419,11 +419,32 @@
             	<input type="range" name="alarm_volume" min="1" max="10" />
             </p>
             
-            <p><label>Repeat:</label><br>
-            	<input type="checkbox" name="repeat" />
-            </p>
-            
-            <p id="alarms_add_repeatCfg"><label>Repeat days:</label><br>
+            <div id="alarms_add_repeatCfg">
+            <p><label>Repeat days:</label></p>
+            	<div class="item weekschedule">
+					<div class="weekboxWrap activatablel sun">
+						<div class="weekboxIndicator"></div><div class="weekboxText">Sun</div>
+					</div>
+					<div class="weekboxWrap activatablel mon">
+						<div class="weekboxIndicator"></div><div class="weekboxText">Mon</div>
+					</div>
+					<div class="weekboxWrap activatablel tue">
+						<div class="weekboxIndicator"></div><div class="weekboxText">Tue</div>
+					</div>
+					<div class="weekboxWrap activatablel wed">
+						<div class="weekboxIndicator"></div><div class="weekboxText">Wed</div>
+					</div>
+					<div class="weekboxWrap activatablel thu">
+						<div class="weekboxIndicator"></div><div class="weekboxText">Thu</div>
+					</div>
+					<div class="weekboxWrap activatablel fri">
+						<div class="weekboxIndicator"></div><div class="weekboxText">Fri</div>
+					</div>
+					<div class="weekboxWrap activatablel sat">
+						<div class="weekboxIndicator"></div><div class="weekboxText">Sat</div>
+					</div>
+				</div>
+	            <!--
             	<input type="checkbox" name="repeat_0" id="repeat_sun" class="repeat_day activatablel" /> <label class='day'>Sunday</label><br>
             	<input type="checkbox" name="repeat_1" id="repeat_mon" class="repeat_day activatablel" /> <label class='day'>Monday</label><br>
             	<input type="checkbox" name="repeat_2" id="repeat_tue" class="repeat_day activatablel" /> <label class='day'>Tuesday</label><br>
@@ -431,7 +452,10 @@
             	<input type="checkbox" name="repeat_4" id="repeat_thu" class="repeat_day activatablel" /> <label class='day'>Thurday</label><br>
             	<input type="checkbox" name="repeat_5" id="repeat_fri" class="repeat_day activatablel" /> <label class='day'>Friday</label><br>
             	<input type="checkbox" name="repeat_6" id="repeat_sat" class="repeat_day activatablel" /> <label class='day'>Saturday</label><br>
-            </p>
+                -->
+            </div>
+            
+            
             
             <p>&nbsp;</p>
 			
