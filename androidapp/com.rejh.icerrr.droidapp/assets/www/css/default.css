@@ -282,21 +282,33 @@ section {
 }
 
 	#home .main {
-		background-position:center;
-		background-size:cover;
-		background-repeat:no-repeat;
+		overflow:hidden;
 	}
 	
 	#home .main .station_image {
 		position:absolute;
-		top:0; left:0;
-		width:100%;
-		height:100%;
+		top:-5%; left:-5%;
+		width:110%;
+		height:110%;
 		margin:0;
 		background-color:#333;
-		background-position:top center;
+		background-position:center;
 		background-repeat:no-repeat;
 		background-size:cover;
+	}
+	
+	#home .main .station_image_wrap {
+		position:absolute;
+		top:50%; left:50%;
+		width:268px; height:268px;
+		margin:-136px 0 0 -136px;
+	}
+	
+	#home .main .station_image_wrap img {
+		width:256px;
+		height:256px;
+		padding:8px;
+		transition:opacity 500ms;
 	}
 	
 	#home .main .station_image_overlay {
@@ -645,7 +657,7 @@ section {
 }
 
 .shadow_z2 {
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.37);
 }
 
 .shadow_z3 {
@@ -665,7 +677,7 @@ section {
 }
 
 .shadow_z2u {
-	box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.5);
+	box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.37);
 }
 
 .shadow_z3u {

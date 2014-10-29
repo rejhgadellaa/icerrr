@@ -51,7 +51,7 @@ public class NotifMgrReceiver extends BroadcastReceiver {
         	}
         	
         	// CancelAll
-        	if (cmd.equals("cancelAll")) {
+        	else if (cmd.equals("cancelAll")) {
         		NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notifMgr.cancelAll();
         	}

@@ -11,6 +11,16 @@ if (!site) { var site = {}; }
 
 site.helpers = {};
 
+// ---> Cachebust
+
+site.helpers.addCachebust = function(src) {
+	if (src.toLowerCase().indexOf("http")>=0) {
+		if (src.indexOf("?")>=0) { src += "&cache="+ new Date().getTime(); }
+		else { src += "?cache="+ new Date().getTime(); }
+	}
+	return src;
+}
+
 // ---> Stations
 
 // Merge Stations

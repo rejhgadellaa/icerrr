@@ -346,7 +346,7 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 	
 	window.alarmMgr.set(
 		function(msg) {
-			loggr.log(" > AlarmMgr: OK");
+			loggr.log(" > AlarmMgr: "+msg);
 			site.alarms.writesession();
 		},
 		function(err) {

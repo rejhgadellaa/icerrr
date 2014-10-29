@@ -205,7 +205,7 @@ public class AlarmMgr extends CordovaPlugin {
 		settEditor.commit();
 		
 		// Handle intent
-		Intent intent = new Intent(context, AlarmMgrReceiver.class);
+		Intent intent = new Intent(context, com.rejh.cordova.alarmmgr.AlarmMgrReceiver.class);
 		intent.putExtra("alarm_id", id);
 		PendingIntent pintent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
 		

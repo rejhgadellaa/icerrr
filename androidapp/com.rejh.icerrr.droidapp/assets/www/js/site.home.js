@@ -48,13 +48,27 @@ site.home.init = function() {
 		function(evt) { // TODO: detect transparent images..
 			var img = $("#home .main .station_image img")[0];
 			var color = site.helpers.getImgAvgColor(img,0,0,2,2);
-			if (color[3]<1.0) {
-				color = [255,255,255,1.0];
+			var colorIcon;
+			if (color[3]<1.0 || color[0]>=250 && color[1]>=250 && color[2]>=250) {
+				color = [51,51,51,1.0];
+				colorIcon = [255,255,255,1]
 			} else {
 				//var colorThief = new ColorThief();
 				//var color = colorThief.getColor(img);
 			}
-			$("#home .main .station_image_wrap").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
+			$("#home .main .station_image").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
+			$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+			$("#home .main .station_image").css("background-blend-mode","multiply");
+			$("#home .main .station_image").css("-webkit-background-blend-mode","multiply");
+			if (colorIcon) { 
+				if (!$("#home .main .station_image img").hasClass("shadow_z2")) { $("#home .main .station_image img").addClass("shadow_z2"); }
+				$("#home .main .station_image img").css("background-color","rgba("+colorIcon[0]+","+colorIcon[1]+","+colorIcon[2]+","+colorIcon[3]+")");
+			}
+			else { 
+				if ($("#home .main .station_image img").hasClass("shadow_z2")) { $("#home .main .station_image img").removeClass("shadow_z2"); }
+				$("#home .main .station_image img").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
+			}
+			$("#home .main .station_image img").css("opacity",1.0);
 		}
 	);
 	
@@ -408,31 +422,31 @@ site.home.handleStationImage = function(src) {
 	loggr.log("site.home.handleStationImage()");
 	loggr.log(" > "+ src);
 	
+	// Icon or album art..
+	if (src == site.session.currentstation.station_icon) {
+		// icon
+		$("#home .main .station_image img").attr("src",site.helpers.addCachebust(src));
+		return;
+	}
+	
+	// Clear preloader
 	if (site.home.stationImagePreloader) {
 		site.home.stationImagePreloader.onload = function() {};
 	}
 	
 	site.home.stationImagePreloader = new Image();
 	site.home.stationImagePreloader.onload = function() {
+		// $("#home .main .station_image").css("background-color","#333");
 		$("#home .main .station_image").css("background-image","url('"+ this.src +"')");
-		/*
-		site.helpers.imageToBase64(this,
-			function(base64) {
-				$("#home .main .station_image").css("background-image","url('"+ base64 +"')");
-			},
-			function(error) {
-				$("#home .main .station_image").css("background-image","url('"+ site.session.currentstation.station_icon +"')");
-			}
-		);
-		/**/
+		$("#home .main .station_image img").css("opacity",0.0);
+		$("#home .main .station_image").css("background-blend-mode","normal");
+		$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
 	}
 	
-	if (src.toLowerCase().indexOf("http")>=0) {
-		if (src.indexOf("?")>=0) { src += "&cache="+ new Date().getTime(); }
-		else { src += "?cache="+ new Date().getTime(); }
-	}
-	
-	site.home.stationImagePreloader.src = src;
+	if (site.timeouts.handleStationImage) { clearTimeout(site.timeouts.handleStationImage); }
+	site.timeouts.handleStationImage = setTimeout(function(){
+		site.home.stationImagePreloader.src = site.helpers.addCachebust(src);
+	},1000);
 	
 	
 }
