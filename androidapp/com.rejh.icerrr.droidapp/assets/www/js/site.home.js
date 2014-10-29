@@ -355,6 +355,7 @@ site.home.useDirbleNowPlaying = function() {
 		function(error) {
 			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
 			else { loggr.warn(error); }
+			site.home.run_station_updates(true);
 		}
 	);
 	

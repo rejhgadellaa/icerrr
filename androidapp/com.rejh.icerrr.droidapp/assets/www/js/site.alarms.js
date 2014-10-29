@@ -480,11 +480,11 @@ site.alarms.updateForm = function(alarmCfg) {
 	// Repeat days
 	var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 	for (var i=0; i<days.length; i++) {
-		var repeatOn = 0;
+		var repeatOn = false;
 		var daylc = days[i].toLowerCase();
 		var selector = "#alarms_add .weekschedule ."+daylc;
 		if (alarmCfg.repeatCfg[i]>0) {
-			repeatOn = 1;
+			repeatOn = true;
 			if (!$(selector).hasClass("active")) { $(selector).addClass("active"); }
 		} else {
 			$(selector).removeClass("active");
@@ -508,14 +508,15 @@ site.alarms.updateForm = function(alarmCfg) {
 			$(targ).addClass("active"); 
 			site.alarms.newAlarmCfg.repeatCfg[daynum] = 1;
 			loggr.log(" > "+ JSON.stringify(site.alarms.newAlarmCfg.repeatCfg));
+			repeatOn = true;
 		} else {
 			// off
 			$(targ).removeClass("active");
 			site.alarms.newAlarmCfg.repeatCfg[daynum] = 0;
 			loggr.log(" > "+ JSON.stringify(site.alarms.newAlarmCfg.repeatCfg));
-			var repeatOn = 0;
+			var repeatOn = false;
 			for (var i=0; i<days.length; i++) {
-				if (alarmCfg.repeatCfg[i]>0) { repeatOn = 1; }
+				if (alarmCfg.repeatCfg[i]>0) { repeatOn = true; }
 			}
 		}
 		loggr.log(" > Repeat: "+ repeatOn);
