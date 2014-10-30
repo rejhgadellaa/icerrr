@@ -161,30 +161,33 @@
     </div>
     
     <div class="main">
-		<div class="station_image"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div>
-		</div>
+		
+		<div class="station_image"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div></div>
 		<div class="station_image_overlay"></div>
 		<div class="station_name textshadow25">...</div>
         <div class="station_nowplaying textshadow25">...</div>
-	</div>
     
-    <div class="footer shadow_z2u">
-    	<div class="button left activatablel" onClick="site.alarms.init();">
-			<div class="button_inner">
-            	<div class="center_table"><div class="center_td"><img title="Go to alarms" src="img/icons-96/ic_alarms.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
-            </div>
-		</div>
-    	<div class="button center activatablel" id="home_play" onClick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
-			<div class="button_inner">
-				<div class="center_table"><div class="center_td"><img src="img/icons-96/ic_play_w.png" /></div></div>
+		<div class="station_image_overlay_bottom"></div>
+		<div class="footer">
+			<div class="button left activatablel" onClick="site.alarms.init();">
+				<div class="button_inner">
+					<div class="center_table"><div class="center_td"><img title="Go to alarms" src="img/icons-96/ic_alarms.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
+				</div>
+			</div>
+			<div class="button center activatablel" id="home_play" onClick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
+				<div class="button_inner">
+					<div class="center_table"><div class="center_td"><img src="img/icons-96/ic_play_w.png" /></div></div>
+				</div>
+			</div>
+			<div class="button right activatablel" onClick="site.chlist.init();">
+				<div class="button_inner">
+					<div class="center_table"><div class="center_td"><img title="Go to stations" src="img/icons-96/ic_list.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
+				</div>
 			</div>
 		</div>
-		<div class="button right activatablel" onClick="site.chlist.init();">
-			<div class="button_inner">
-            	<div class="center_table"><div class="center_td"><img title="Go to stations" src="img/icons-96/ic_list.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
-            </div>
-		</div>
-    </div>
+		
+	</div>
+	
 </section>
 
 <!-- Section -->
@@ -420,7 +423,7 @@
             </p>
             
             <div id="alarms_add_repeatCfg">
-            <p><label>Repeat days:</label></p>
+            <p><label>Repeat:</label></p>
             	<div class="item weekschedule">
 					<div class="weekboxWrap activatablel sun">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Sun</div>

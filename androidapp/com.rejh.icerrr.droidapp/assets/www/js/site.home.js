@@ -73,7 +73,10 @@ site.home.init = function() {
 	);
 	
 	// extra ui
-	site.home.handleStationImage(site.session.currentstation.station_icon);
+	if (site.home.lastStationId!=site.session.currentstation.station_id) {
+		site.home.handleStationImage(site.session.currentstation.station_icon);
+	}
+	site.home.lastStationId = site.session.currentstation.station_id;
 	$("#home .main .station_name").html(site.session.currentstation.station_name);
 	$("#home .main .station_nowplaying").html("Now playing: ...");
 	$("#home .main").css("background","rgba(0,0,0,0)");

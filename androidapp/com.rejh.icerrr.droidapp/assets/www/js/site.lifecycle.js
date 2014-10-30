@@ -479,7 +479,7 @@ site.lifecycle.onResize = function() {
 	
 	setTimeout(function(){
 		$(site.vars.currentSection+" .main").css("height",
-			$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height() + $(site.vars.currentSection+" .footer").height())
+			$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height()) // $(site.vars.currentSection+" .footer").height()
 		);
 		site.helpers.masonryOnResize();
 		loggr.log("Resized: "+site.vars.currentSection);

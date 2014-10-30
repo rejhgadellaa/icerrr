@@ -1,3 +1,6 @@
+v0.105 (beta)
+  * More design tweaks
+
 0.104 (beta)
   * Bugfix: repeat was not always stored correctly since 0.103
 
