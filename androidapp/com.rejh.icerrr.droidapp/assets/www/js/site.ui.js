@@ -67,28 +67,27 @@ site.ui.gotosection = function(selector) {
 	// TODO: nice animations?
 	// TODO: Settimeout is a workaround so that :active elements lose their active state..
 	if (site.timeouts.gotosection) { clearTimeout(site.timeouts.gotosection); }
-	//site.timeouts.gotosection = setTimeout(function(){
 		
-		$(".activatablel_active").removeClass("activatablel_active");
-		$(".activatabled_active").removeClass("activatabled_active");
+	$(".activatablel_active").removeClass("activatablel_active");
+	$(".activatabled_active").removeClass("activatabled_active");
 		
-		$("section").css("display","none"); 
+	if (site.vars.previousSection=="#splash") {
+		var translate = "translate3d(0px,"+ (-($(window).height()-56)) +"px,0px)";
+		loggr.log(translate);
+		$("#splash").css({"transform":translate,"-webkit-transform":translate});
 		$(selector).css("display","block");
-		
-		/* animation! *//*
-		$(site.vars.previousSection).css("z-index",1); // TODO: determine zindex
-		$(site.vars.currentSection).css("z-index",2);
-		$(site.vars.currentSection).css("top",$(window).height());
-		$(site.vars.currentSection).css("display","block");
-		$(site.vars.currentSection).animate({top:0},500,null,function(){
-			$(site.vars.previousSection).css("display","none");
-		});
-		/**/
-		
-		loggr.log(" > "+ selector +" display: "+$(selector).css("display"));
-		setTimeout(site.lifecycle.onResize,10);
-		
-		site.ui.setLongclickHelp();
+		setTimeout(function(){
+			$("#splash").fadeOut(250);
+		},1000);
+	} else {
+		$("section").css("display","none");
+		$(selector).css("display","block");
+	}
+	
+	loggr.log(" > "+ selector +" display: "+$(selector).css("display"));
+	setTimeout(site.lifecycle.onResize,10);
+	
+	site.ui.setLongclickHelp();
 		
 	//},100);
 	

@@ -1,3 +1,9 @@
+v0.107 (..)
+  * Some optimizations for data usage
+
+v0.106 (stable)
+  * Tweaked startup procedure
+
 v0.105 (beta)
   * More design tweaks
 

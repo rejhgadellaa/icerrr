@@ -6,13 +6,21 @@
 	
     <meta charset="utf-8">
 	
+	<style>
+	html, body { background:#2D6073; }
+	</style>
+	
+	<script>
+	function bodyloaded() {
+		setTimeout(function(){window.location.href='main.html';},100);
+	}
+	</script>
+	
 </head>
 
-<body>
+<body onLoad="bodyloaded();">
 
-<script>
-window.location.href='main.html';
-</script>
+
 
 </body>
 

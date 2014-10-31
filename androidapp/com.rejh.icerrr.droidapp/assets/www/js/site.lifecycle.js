@@ -23,7 +23,7 @@ site.lifecycle.onload = function() {
 	loggr.info("site.lifecycle.onload()");
 	site.lifecycle.loaded = true;
 	if (site.lifecycle.loaded && site.lifecycle.deviceReady) {
-		site.lifecycle.init();
+		setTimeout(function(){site.lifecycle.init();},250);
 	}
 }
 
@@ -31,7 +31,7 @@ site.lifecycle.onDeviceReady = function() {
 	loggr.info("site.lifecycle.onDeviceReady()");
 	site.lifecycle.deviceReady = true;
 	if (site.lifecycle.loaded && site.lifecycle.deviceReady) {
-		site.lifecycle.init();
+		setTimeout(function(){site.lifecycle.init();},250);
 	}
 }
 
@@ -93,6 +93,7 @@ site.lifecycle.initApp = function(force) {
 	loggr.info("site.lifecycle.initApp();");
 		
 	// some stuff
+	site.vars.currentSection = "#splash";
 	site.session.isPaused = false;
 	
 	// Firstlaunch...
@@ -153,11 +154,11 @@ site.lifecycle.initApp = function(force) {
 	switch(onstart_gotosection) {
 		
 		case "#channellist":
-			site.chlist.init();
+			setTimeout(function(){site.chlist.init();},1250);
 			break;
 			
 		default:
-			site.home.init();
+			setTimeout(function(){site.home.init(true);},1250);
 			break;
 			
 	}

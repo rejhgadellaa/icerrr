@@ -433,6 +433,12 @@ site.home.handleStationImage = function(src) {
 		return;
 	}
 	
+	// Check if image already loaded..
+	if ($("#home .main .station_image").css("background-image").indexOf(src)>=0) {
+		loggr.log(" > Image already loaded: "+ src);
+		return;
+	}
+	
 	// Clear preloader
 	if (site.home.stationImagePreloader) {
 		site.home.stationImagePreloader.onload = function() {};

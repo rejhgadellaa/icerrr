@@ -86,9 +86,10 @@ goto end
 :error
 echo.
 echo Error!
+echo.
+pause
 goto end
 
 :end
 cd ..
 echo.
-pause

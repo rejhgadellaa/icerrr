@@ -39,7 +39,7 @@ body {
 	height:100%; 
 	margin:0;
 	padding:0;
-	background-color:#eee;
+	background-color:#2D6073;
 }
 
 a {
@@ -254,8 +254,11 @@ section {
 /* Specific */
 
 #splash {
+	z-index:90;
 	display:block;
 	background:#2D6073;
+	-webkit-transition: -webkit-transform 500ms ease-in-out;
+	transition: transform 500ms ease-in-out;
 }
 
 	#splash img {
@@ -298,6 +301,7 @@ section {
 		background-position:center;
 		background-repeat:no-repeat;
 		background-size:cover;
+		background-image:url(../img/bg_home_default.jpg);
 	}
 	
 	#home .main .station_image_wrap {
