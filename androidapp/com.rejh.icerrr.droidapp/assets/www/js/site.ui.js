@@ -78,7 +78,7 @@ site.ui.gotosection = function(selector) {
 		$(selector).css("display","block");
 		setTimeout(function(){
 			$("#splash").fadeOut(250);
-		},1000);
+		},600);
 	} else {
 		$("section").css("display","none");
 		$(selector).css("display","block");

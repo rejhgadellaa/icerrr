@@ -201,21 +201,21 @@ section {
 		position:absolute;
 		bottom:0; left:0; right:0;
 		width:100%;
-		height:56px;
+		height:64px;
 		xbackground-color:#616161;
 		transition:top 1000ms;
 	}
 	
 		.footer .button {
 			width:33.3%;
-			height:56px;
+			height:64px;
 			color:rgba(255,255,255,0.87);
 		}
 		
 		.footer .button.active {
 			background-color: rgba(0,0,0,0.25);
 			background: -webkit-radial-gradient(ellipse, rgba(208, 209, 2, 1) 5%, rgba(208, 209, 2, 0.0) 75%);
-			background-size:64px 56px;
+			background-size:64px 64px;
 			background-position:center;
 			background-repeat:no-repeat;
 		}
@@ -242,7 +242,7 @@ section {
 		.footer .button_inner {
 			position:absolute;
 			width:100%; height:24px;
-			padding:16px 0 16px 0;
+			padding:20px 0 20px 0;
 		}
 		
 		.footer .button_inner img {
@@ -250,6 +250,12 @@ section {
 			height:40px;
 			margin:-8px 0 0 0;
 		}
+		
+			.footer .button.center .button_inner img {
+				width:48px;
+				height:48px;
+				margin:-12px 0 0 0;
+			}
 
 /* Specific */
 

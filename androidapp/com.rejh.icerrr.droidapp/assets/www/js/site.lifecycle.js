@@ -154,11 +154,11 @@ site.lifecycle.initApp = function(force) {
 	switch(onstart_gotosection) {
 		
 		case "#channellist":
-			setTimeout(function(){site.chlist.init();},1250);
+			setTimeout(function(){site.chlist.init();},500);
 			break;
 			
 		default:
-			setTimeout(function(){site.home.init(true);},1250);
+			setTimeout(function(){site.home.init(true);},500);
 			break;
 			
 	}

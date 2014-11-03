@@ -1,5 +1,7 @@
-v0.107 (..)
-  * Some optimizations for data usage
+v0.107 (stable)
+  * Minor optimizations for data usage
+  * App should launch a bit faster
+  * Some new icons
 
 v0.106 (stable)
   * Tweaked startup procedure
