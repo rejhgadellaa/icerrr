@@ -459,6 +459,10 @@ site.lifecycle.onBackButton = function() {
 			site.home.init();
 			break;
 			
+		case "#settings":
+			site.home.init();
+			break;
+			
 		default:
 			loggr.log(" > '<' button on unhandled section: "+ currentBackKey);
 			break;

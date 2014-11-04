@@ -97,7 +97,25 @@ site.installer.init = function(isUpdate) {
 	site.installer.cfg.overwrite_version = site.installer.cfg.overwrite_versions.pop()
 	
 	// Initiate first step: create folders
-	setTimeout(function(){site.installer.deletefolders();},1000);
+	setTimeout(function(){site.installer.update();},1000);
+	
+}
+
+// ---> Step -1: upgrade
+
+site.installer.update = function() {
+	
+	site.installer.logger("Update...");
+	
+	if (site.cookies.get("app_version")!=site.cfg.app_version) {
+		site.installer.logger("&nbsp;&gt; Settings...");
+		window.mediaStreamer.setting("bool","useWifi",true,function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	}
+	
+	setTimeout(function(){
+		site.installer.logger("&nbsp;&gt; Done");
+		site.installer.deletefolders();
+	},1000);
 	
 }
 

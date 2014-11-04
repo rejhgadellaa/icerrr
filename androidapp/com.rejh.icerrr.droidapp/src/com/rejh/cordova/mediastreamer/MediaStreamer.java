@@ -12,6 +12,7 @@ import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -90,6 +91,10 @@ public class MediaStreamer extends CordovaPlugin {
         		this.getStatus(callbackContext);
         	} else if (action.equals("isServiceRunning")) {
         		isServiceRunning(callbackContext);
+        	} else if (action.equals("setting")) {
+        		setting(args, callbackContext);
+        	} else if (action.equals("getSetting")) {
+        		getSetting(args, callbackContext);
         	} else {
         		// Nothin?
         		callbackContext.error("MediaStreamer: Action contains invalid value: "+ action);
@@ -261,6 +266,98 @@ public class MediaStreamer extends CordovaPlugin {
 	    callbackContext.success(0);
 	}
     
+	private void setting(JSONArray args, CallbackContext callbackContext) throws JSONException {
+		
+		JSONObject argsobj = args.getJSONObject(0);
+		
+		String type = argsobj.getString("type");
+		String key = argsobj.getString("key");
+
+		
+		int swtype = -1;
+		if (type.equals("boolean") || type.equals("bool")) { swtype = 1; }
+		if (type.equals("int")) { swtype = 2; }
+		if (type.equals("float") || type.equals("double")) { swtype = 3; }
+		if (type.equals("string")) { swtype = 4; }
+		
+		switch(swtype) {
+			
+		case 1:
+			boolean valueBool = argsobj.getBoolean("value");
+			settEditor.putBoolean(key,valueBool);
+			Log.d(APPTAG," > "+ key +", "+ valueBool);
+			break;
+			
+		case 2:
+			int valueInt = argsobj.getInt("value");
+			settEditor.putInt(key, valueInt);
+			Log.d(APPTAG," > "+ key +", "+ valueInt);
+			break;
+			
+		case 3:
+			double valueFloat = argsobj.getDouble("value");
+			settEditor.putFloat(key, (float)valueFloat);
+			Log.d(APPTAG," > "+ key +", "+ valueFloat);
+			break;
+			
+		case 4:
+			String valueString = argsobj.getString("value");
+			settEditor.putString(key, valueString);
+			Log.d(APPTAG," > "+ key +", "+ valueString);
+			break;
+			
+		default:
+			Log.w(APPTAG," > Cannot handle type '"+ type +"'");
+			callbackContext.error("Cannot handle type '"+ type +"'");
+			return;
+			
+		}
+	
+	settEditor.commit();
+	callbackContext.success(1);
+		
+	}
+	
+	private void getSetting(JSONArray args, CallbackContext callbackContext) throws JSONException {
+		
+		JSONObject argsobj = args.getJSONObject(0);
+		String type = argsobj.getString("type");
+		String key = argsobj.getString("key");
+		
+		Log.d(APPTAG," > "+ type +", "+ key);
+		
+		int swtype = -1;
+		if (type.equals("boolean") || type.equals("bool")) { swtype = 1; }
+		if (type.equals("int")) { swtype = 2; }
+		if (type.equals("string")) { swtype = 4; }
+		
+		switch(swtype) {
+		
+		case 1:
+			boolean bool = sett.getBoolean(key, false);
+			if (bool) { callbackContext.success(1); }
+			else { callbackContext.success(0); }
+			break;
+			
+		case 2:
+			int integer = sett.getInt(key, -1);
+			callbackContext.success(integer);
+			break;
+			
+		case 4:
+			String str = sett.getString(key, null);
+			callbackContext.success(str);
+			break;
+			
+		default:
+			Log.w(APPTAG," > Cannot handle type '"+ type +"'");
+			callbackContext.error("Cannot handle type '"+ type +"'");
+			return;
+		
+		}
+		
+	}
+	
     /*
 	
 	// --- Methods

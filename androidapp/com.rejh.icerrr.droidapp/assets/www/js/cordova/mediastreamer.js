@@ -83,6 +83,18 @@
     };
 	
 	/**
+	* Setting
+	*/
+	MediaStreamer.prototype.setting = function(type,key,value,win,fail) {
+		console.log("MediaStreamer.prototype.setting()");
+        cordova.exec(win, fail, "MediaStreamer", "setting", [{"type":type,"key":key,"value":value}]);
+	}
+	MediaStreamer.prototype.getSetting = function(type,key,win,fail) {
+		console.log("MediaStreamer.prototype.getSetting()");
+        cordova.exec(win, fail, "MediaStreamer", "getSetting", [{"type":type,"key":key}]);
+	}
+	
+	/**
 	* Register the plugin
 	*/
 	try {

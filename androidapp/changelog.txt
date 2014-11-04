@@ -1,3 +1,11 @@
+v0.109 (stable)
+  * New: Settings (in overflow menu)
+  * Actionbar title reflects current section
+  * Minor tweaks
+
+v0.108 (stable)
+  * A bit more contrast for icons on app home screen
+
 v0.107 (stable)
   * Minor optimizations for data usage
   * App should launch a bit faster

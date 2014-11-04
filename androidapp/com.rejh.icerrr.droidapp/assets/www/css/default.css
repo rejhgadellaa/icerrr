@@ -209,6 +209,7 @@ section {
 		.footer .button {
 			width:33.3%;
 			height:64px;
+			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.25) 5%, rgba(0, 0, 0, 0.0) 75%);
 			color:rgba(255,255,255,0.87);
 		}
 		
@@ -601,6 +602,8 @@ section {
 		cursor:text;
 	}
 	
+/* About */
+	
 #about {
 	display:none;
 }
@@ -609,6 +612,68 @@ section {
 		width:147px;
 		cursor:pointer;
 	}
+	
+/* Settings */
+
+#settings {
+
+}
+	
+	#settings .block {
+		padding:16px 16px 0 16px;
+	}
+
+		#settings .block.header {
+			padding:8px 16px 8px 16px;
+			background:#D0D102;
+			font-size:18pt;
+			font-weight:300;
+		}
+	
+	/* Item defaults */
+	
+	#settings .block .itemWrap {
+		position:relative;
+	}
+	
+	#settings .block .item {
+		
+	}
+	
+	#settings .block .item.spacer {
+		width:100%;
+		height:1px;
+		margin:16px -16px 16px -16px;
+		background:#ddd;
+	}
+	
+	#settings .block .item.endspacer {
+		width:100%;
+		height:16px;
+	}
+	
+	#settings .block .item.title {
+		font-size:16pt;
+		font-weight:normal;
+		position:relative;
+		left:0; right:56px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+	}
+	
+	#settings .block .item.subtitle {
+		position:relative;
+		left:0; right:56px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+	}
+	
+		#settings .checkboxWrap {
+			position:absolute;
+			top:4px; right:0px;
+		}
 	
 /* -- OVERFLOW_MENU */
 

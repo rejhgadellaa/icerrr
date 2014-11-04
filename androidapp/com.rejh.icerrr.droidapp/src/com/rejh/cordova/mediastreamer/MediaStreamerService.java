@@ -193,7 +193,7 @@ public class MediaStreamerService extends Service {
         }
         
         // Wifi
-        if (isAlarm || !isAlarm) {
+        if (isAlarm || sett.getBoolean("useWifi", true)) {
         	settEditor.putBoolean("wifiIsToggled", true);
         	settEditor.commit();
 			wifiMgr.setWifiEnabled(true);
