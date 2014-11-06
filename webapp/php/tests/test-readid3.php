@@ -46,23 +46,46 @@ $queryj = json_decode($querys,true);
 $timebgn = time();
 
 // Open a socket
-$fsock = @fsockopen($queryj["host"],$queryj["port"],$errno,$errstr);
+$fsock = @fsockopen($queryj["host"],$queryj["port"],$errno,$errstr,5);
 if (!$fsock) { 
 
+	$diddnslookup = 0;
 	
-	// Try dns lookup
-	$dns = dns_get_record ($queryj["host"]);
-	if (!$dns) {
-		error("Error getting dns record for host '". $queryj["host"] ."'");
-		die();
+	// IP or nameserver?
+	if (count(explode(".",$queryj["host"]))<4) {
+	
+		$diddnslookup = 1;
+	
+		// Try dns lookup
+		$dns = dns_get_record ($queryj["host"]);
+		if (!$dns) {
+			error("Error getting dns record for host '". $queryj["host"] ."'");
+			die();
+		}
+		
+		$host = 0;
+		for ($i=0; $i<count($dns); $i++) {
+			if ($dns[$i]["ip"]) {
+				$host = $dns[$i]["ip"];
+				break;
+			}
+		}
+		
+		if (!$host) {
+			header("Content-Type: application/json");
+			header("Access-Control-Allow-Origin: *");
+			$jsons = json_encode($dns);
+			echo $jsons;
+			die();
+		}
+		
+		$fsock = fsockopen($host,$queryj["port"],$errno,$errstr,10);
+		/**/
+		
 	}
 	
-	$host = $dns[0]['ip'];
-	$fsock = fsockopen($host,$queryj["port"],$errno,$errstr);
-	/**/
-	
 	if (!$fsock) { 
-		error("Could not open socket: '".$queryj["host"]."' (dns: '{$host}'), '".$queryj["port"] ."', $errno $errstr"); 
+		error("Could not open socket: '".$queryj["host"]."' (dns lookup: '{$diddnslookup}', '{$host}'), '".$queryj["port"] ."', $errno $errstr"); 
 		die();
 	}
 	

@@ -1,10 +1,12 @@
-{"station_id":"test","host":"www.radio10.nl","port":80,"path":"/players/stream/radio10.asx"}
+{"station_id":"tmptest","host":"thuis.nldpa.nl","port":8000,"path":"/mpd.mp3"}
 
-HTTP/1.1 404 Not Found
-Date: Fri, 17 Oct 2014 08:06:50 GMT
-Server: Apache
-Vary: Accept-Encoding
-Content-Length: 224
-Connection: close
-Content-Type: text/html; charset=iso-8859-1
+HTTP/1.0 200 OK
+Content-Type: audio/mpeg
+icy-br:192
+ice-audio-info: channels=2;samplerate=44100;bitrate=192
+icy-name:My Shout Stream
+icy-pub:0
+Server: Icecast 2.3.3
+Cache-Control: no-cache
+icy-metaint:16000
 
