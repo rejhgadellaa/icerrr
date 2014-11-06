@@ -1,3 +1,6 @@
+v0.111 (beta)
+  * Material designed statusbar (and probably some dialogs here and there)
+
 v0.110 (stable)
   * Fix: Shoutcast streams didn't work on Chromecast
   * Fixes for things that could go wrong in 'edit channel' section

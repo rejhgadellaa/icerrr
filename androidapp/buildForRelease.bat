@@ -33,11 +33,11 @@ echo.
 echo Updating libraries...
 echo.
 cd %android_sdk_extras%google\google_play_services\libproject\google-play-services_lib
-call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
+call %androidsdk%tools\android.bat update project -p %cd% -s -t android-21
 cd %android_sdk_extras%android\support\v7\appcompat
-call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
+call %androidsdk%tools\android.bat update project -p %cd% -s -t android-21
 cd %android_sdk_extras%android\support\v7\mediarouter
-call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
+call %androidsdk%tools\android.bat update project -p %cd% -s -t android-21
 cd %projcd%
 
 :sdkfound
@@ -54,7 +54,7 @@ cd %path_prj%
 echo.
 echo Updating project
 echo.
-call %androidsdk%tools\android.bat update project -p %cd% -s -t 1
+call %androidsdk%tools\android.bat update project -p %cd% -s -t android-21
 
 echo.
 echo Building project
