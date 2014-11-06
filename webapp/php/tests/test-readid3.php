@@ -146,7 +146,7 @@ foreach($lines as $line) {
 	if (!$key || !$val) { continue; }
 	
 	// store
-	$array[$key] = addslashes($val);
+	$array[$key] = $val;
 	
 }
 

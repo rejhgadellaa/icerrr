@@ -69,7 +69,8 @@ switch($action) {
 				if (!$queryobj["station_id"]) { error("Error: 'station_id' not defined for get:station_info"); }
 				$filename = "../json/station_info.".$queryobj["station_id"].".json";
 				if (@filemtime($filename)<time()-60) { // refresh file every xx secs
-					$id3_reader_url = "http://". $_SERVER['HTTP_HOST'] ."/icerrr/php/tests/test-readid3.php?q=";
+					// $id3_reader_url = "http://". $_SERVER['HTTP_HOST'] ."/icerrr/php/tests/test-readid3.php?q="; // TODO: rejh.nl only opens fsock on port 80
+					$id3_reader_url = "http://94.208.216.239/icerrr/php/tests/test-readid3.php?q=";
 					$id3_reader_q = urlencode('{"station_id":"'. $queryobj["station_id"] .'","host":"'. $queryobj["station_host"] .'","port":'. $queryobj["station_port"] .',"path":"'. $queryobj["station_path"] .'"}');
 					// retry this a couple of times..
 					$fgjson = false;
@@ -130,7 +131,7 @@ switch($action) {
 			case "parse_playlist":
 				if (!$queryobj["url"]) { error("Error: 'url' not defined for get:".$queryobj["get"]); }
 				$fg = fg($queryobj["url"]);
-				if (!$fg) { error("Error: Could not load url: '". $queryobj["url"] ."'"); }
+				if (!$fg) { error("Error: Could not load url: '". $queryobj["url"] ."', {$php_errormsg}"); }
 				$bgn = 0; $end = -1; $len = -1;
 				$bgn = strpos($fg,"http");
 				if ($bgn===FALSE) { error("Error: could not parse pls/m3u: '". $queryobj["url"] ."'"); }
