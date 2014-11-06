@@ -46,10 +46,26 @@ $queryj = json_decode($querys,true);
 $timebgn = time();
 
 // Open a socket
-$fsock = @fsockopen($queryj["host"],$queryj["port"]);
+$fsock = @fsockopen($queryj["host"],$queryj["port"],$errno,$errstr);
 if (!$fsock) { 
-	error("Could not open socket: '".$queryj["host"]."', '".$queryj["port"]); 
-	die();
+
+	
+	// Try dns lookup
+	$dns = dns_get_record ($queryj["host"]);
+	if (!$dns) {
+		error("Error getting dns record for host '". $queryj["host"] ."'");
+		die();
+	}
+	
+	$host = $dns[0]['ip'];
+	$fsock = fsockopen($host,$queryj["port"],$errno,$errstr);
+	/**/
+	
+	if (!$fsock) { 
+		error("Could not open socket: '".$queryj["host"]."' (dns: '{$host}'), '".$queryj["port"] ."', $errno $errstr"); 
+		die();
+	}
+	
 }
 
 // Create http_request
