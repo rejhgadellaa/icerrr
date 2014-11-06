@@ -13,10 +13,18 @@ if exist C:\android\sdk\tools\android.bat set androidsdk=C:\android\sdk\
 REM --> Add more paths here :)
 
 :checkandroidbat
-if exist %androidsdk% goto clean_stuff
+if exist %androidsdk% goto findzipalign
 echo.
 echo Error: could not locate android.bat
 echo Please edit this batch file and under 'findandroidbat' add the path to your copy of [android-sdk]/tools/android.bat
+goto error
+
+:findzipalign
+if exist %androidsdk%tools\zipalign.exe set zipalign=%androidsdk%tools\zipalign.exe
+if exist %androidsdk%build-tools\20.0.0\zipalign.exe set zipalign=%androidsdk%build-tools\20.0.0\zipalign.exe
+if exist %zipalign% goto clean_stuff
+echo.
+echo Error: could not locate zipalign.exe
 goto error
 
 :clean_stuff
@@ -62,8 +70,9 @@ call %JAVA_HOME%\bin\jarsigner -verbose -sigalg MD5withRSA -digestalg SHA1 -keys
 echo.
 echo Zipaligning apk
 echo.
-call %androidsdk%tools\zipalign -f -v 4 %cd%\bin\%name_prj%-release-unsigned.apk %cd%\..\_apks\%name_prj%.apk
-
+call %zipalign% -f -v 4 %cd%\bin\%name_prj%-release-unsigned.apk %cd%\..\_apks\%name_prj%.apk
+if not errorlevel 0 goto error
+if errorlevel 1 goto error
 
 echo.
 echo You can now upload _apks/ScreenDoodle.apk to the Play Store!
