@@ -242,6 +242,9 @@ site.chedit.check = function(findStationName,silent) {
 
 	loggr.log("site.chedit.check()");
 	
+	// Blur focus
+	$("#editstation input").trigger("blur");
+	
 	// Start getting values
 	var station_id = $("#editstation input[name='station_id']")[0].value.trim();
 	var station_name = $("#editstation input[name='station_name']")[0].value.trim();
@@ -269,6 +272,7 @@ site.chedit.check = function(findStationName,silent) {
 			if (!site.data.stations[i].station_name) { continue; }
 			if (station_name.toLowerCase()==site.data.stations[i].station_name.toLowerCase()) {
 				alert("A station with name '"+ station_name +"' already exists. Please change it.");
+				site.ui.hideloading();
 				return;
 			}
 		}
@@ -284,6 +288,7 @@ site.chedit.check = function(findStationName,silent) {
 			if (!site.data.stations[i].station_url) { continue; }
 			if (station_url.toLowerCase()==site.data.stations[i].station_url.toLowerCase()) {
 				alert("A station with this url already exists: '"+site.data.stations[i].station_name+"'");
+				site.ui.hideloading();
 				return;
 			}
 		}
@@ -388,9 +393,37 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 				) {
 					site.ui.hideloading();
 					if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url");  }
+					site.ui.hideloading();
 					return;
 				}
 				
+				// Check if it's a shoutcast stream (we need to append ';' to the path for chromecast..
+				var isShoutcast = false;
+				if (data["data"]["icy-notice1"]) {
+					if (data["data"]["icy-notice1"].toLowerCase().indexOf("shoutcast")>=0) {
+						isShoutcast = true;
+					}
+				}
+				if (data["data"]["icy-notice2"]) {
+					if (data["data"]["icy-notice2"].toLowerCase().indexOf("shoutcast")>=0) {
+						isShoutcast = true;
+					}
+				}
+				if (isShoutcast) {
+					var url = $("#editstation input[name='station_url']")[0].value.trim();
+					var lastchar = url.substr(-1);
+					if (lastchar!=";") {
+						loggr.log(" > Detected shoutcast, append ';' to url..");
+						if (lastchar=="/") {
+							url += ";";
+						} else {
+							url += "/;";
+						}
+						$("#editstation input[name='station_url']")[0].value = url;
+					}
+				}
+				
+				// Message!
 				if (!silent) {
 					site.ui.hideloading();
 					site.ui.showtoast("Station url verified!");
@@ -478,6 +511,7 @@ site.chedit.searchicon = function() {
 	
 	if (!site.chedit.newentry) {
 		site.ui.showtoast("Cannot search without info");
+		site.ui.hideloading();
 		return;
 	}/*
 	if (!site.chedit.newentry.station_name) {
@@ -486,6 +520,7 @@ site.chedit.searchicon = function() {
 	}*/
 	if (!site.chedit.newentry.station_url) {
 		site.ui.showtoast("Cannot search without station url");
+		site.ui.hideloading();
 		return;
 	}
 	

@@ -1,3 +1,7 @@
+v0.110 (stable)
+  * Fix: Shoutcast streams didn't work on Chromecast
+  * Fixes for things that could go wrong in 'edit channel' section
+
 v0.109 (stable)
   * New: Settings (in overflow menu)
   * Actionbar title reflects current section
