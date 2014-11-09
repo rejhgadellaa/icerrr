@@ -1,3 +1,7 @@
+v0.112
+  * Slightly faster startup time
+  * Slightly better handling of chromecast sessions
+
 v0.111 (beta)
   * Material designed statusbar (and probably some dialogs here and there)
 

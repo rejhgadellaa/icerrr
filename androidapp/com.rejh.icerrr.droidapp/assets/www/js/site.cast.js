@@ -23,6 +23,10 @@ site.cast.setup = function() {
 	
 	loggr.info("site.cast.setup()");
 	
+	// Prep
+	site.cast.routes = [];
+	
+	// Setup
 	execute('setup', function(err) {
 		if (!err) {
 			chrome.cast.isAvailable = true;
@@ -42,6 +46,8 @@ site.cast.onerror = function(errorCode, errorDescription, errorData) {
 	loggr.warn(errorCode);
 	loggr.warn(errorData);
 	
+	console.warn(errorCode, errorDescription, errorData);
+	
 }
 
 // ---> Init
@@ -50,6 +56,12 @@ site.cast.init = function() {
 	
 	loggr.info("site.cast.init()");
 	
+	// Restore session data
+	if (!site.cast.session) {
+		site.cast.session = (site.cookies.get("cast_session")) ? JSON.parse(site.cookies.get("cast_session")) : null;
+	}
+	
+	// Initialize
 	site.cast.cfg.apiCfg = {
 		sessionRequest:{
 			appId:"9B4DB672",
@@ -92,6 +104,7 @@ site.cast.sessionListener = function(session) {
 	}
 	
 	site.cast.session = session;
+	site.cookies.put("cast_session",JSON.stringify(session));
 	
 }
 
@@ -108,6 +121,16 @@ site.cast.receiverListener = function(arg) {
 			if (site.cast.session) {
 				loggr.log(" > Session already running");
 				site.cast.updateicon(2);
+				if (typeof(site.cast.session.stop) != "function") {
+					site.cast.destroy();
+					if (!site.session.alarmActive) {
+						if(confirm("An existing Chromecast session has been found. Would you like to reconnect?")) {
+							setTimeout(function(){ 
+								site.cast.requestSession();
+							},1000);
+						}
+					}
+				}
 			} else {
 				site.cast.updateicon(1);
 			}
@@ -129,7 +152,7 @@ site.cast.receiverListener = function(arg) {
 	
 }
 
-// ---> Stuff
+// ---> Request session
 
 site.cast.requestSession = function() {
 	
@@ -144,6 +167,7 @@ site.cast.requestSession = function() {
 		return; // <- important :)
 	}
 	
+	loggr.log(" > Request session...");
 	chrome.cast.requestSession(
 		function(session) {
 			loggr.log(" > Session ok!");
@@ -155,8 +179,6 @@ site.cast.requestSession = function() {
 		},
 		site.cast.onerror
 	);
-	
-	
 	
 }
 
@@ -320,19 +342,33 @@ site.cast.destroy = function() {
 	
 	loggr.log("site.cast.destroy()");
 	
-	if (site.cast.media) {
-		site.cast.media.stop();
+	try {
+		if (site.cast.media) {
+			site.cast.media.stop();
+			site.cast.media = null;
+		}
+	} catch(e) {
+		loggr.warn(" > Exception stopping site.cast.media");
+		console.warn(e);
 		site.cast.media = null;
 	}
 	
-	if (site.cast.session) { 
-		site.ui.showtoast("Chromecast: Session.stop()");
-		site.cast.updateicon(1);
-		site.cast.session.stop();
+	try {
+		if (site.cast.session) { 
+			site.ui.showtoast("Chromecast: Session.stop()");
+			site.cast.updateicon(1);
+			site.cast.session.stop();
+			site.cast.session = null;
+		}
+	} catch(e) {
+		loggr.warn(" > Exception stopping site.cast.session");
+		console.warn(e);
 		site.cast.session = null;
 	}
 	
 	site.cast.notifCancel();
+	
+	site.cookies.put("cast_session",0);
 	
 }
 

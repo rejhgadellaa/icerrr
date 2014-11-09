@@ -1062,6 +1062,7 @@ chrome.cast._ = {
 	},
 	routeAdded: function(route) {
 		if (!_routeList[route.id]) {
+			try { site.cast.routes.append(route); } catch(e) {}
 			route.el = createRouteElement(route);
 			_routeList[route.id] = route;
 

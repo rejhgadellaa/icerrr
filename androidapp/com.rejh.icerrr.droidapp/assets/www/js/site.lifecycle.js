@@ -158,7 +158,7 @@ site.lifecycle.initApp = function(force) {
 			break;
 			
 		default:
-			setTimeout(function(){site.home.init(true);},500);
+			site.home.init(true);
 			break;
 			
 	}
