@@ -48,6 +48,17 @@ site.cast.onerror = function(errorCode, errorDescription, errorData) {
 	
 	console.warn(errorCode, errorDescription, errorData);
 	
+	var msg;
+	if (errorCode.message) {
+		msg = errorCode.message;
+	} else if (errorDescription) {
+		msg = errorDescription;
+	}
+	
+	site.ui.showtoast("Cast error: "+ msg);
+	
+	site.cast.destroy(true);
+	
 }
 
 // ---> Init
@@ -338,7 +349,7 @@ site.cast.setVolume = function(level,cb,cberr) {
 
 // ---> Destroy
 
-site.cast.destroy = function() {
+site.cast.destroy = function(silent) {
 	
 	loggr.log("site.cast.destroy()");
 	
@@ -355,7 +366,7 @@ site.cast.destroy = function() {
 	
 	try {
 		if (site.cast.session) { 
-			site.ui.showtoast("Chromecast: Session.stop()");
+			if (!silent) { site.ui.showtoast("Cast: Session.stop()"); }
 			site.cast.updateicon(1);
 			site.cast.session.stop();
 			site.cast.session = null;
