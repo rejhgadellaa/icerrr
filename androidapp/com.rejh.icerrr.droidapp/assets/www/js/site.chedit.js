@@ -30,6 +30,7 @@ site.chedit.init = function(station_id_to_edit) {
 	$("#editstation input[name='station_url']")[0].onchange = function(evt) {
 		site.chedit.askedAboutNowplaying = false;
 		site.chedit.checkedPlayability = false;
+		site.chedit.isPlayable = false;
 		if (!$("#editstation input[name='station_name']")[0].value) {
 			site.ui.showtoast("Checking stream...");
 			$("#editstation .action.save").css("display","block");
@@ -104,6 +105,7 @@ site.chedit.init = function(station_id_to_edit) {
 	site.chedit.askedAboutStationName = false;
 	site.chedit.askedAboutNowplaying = false;
 	site.chedit.checkedPlayability = false;
+	site.chedit.isPlayable = false;
 	
 }
 
@@ -368,6 +370,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 				 && data["data"]["content-type"].indexOf("audio/x-mpegurl")<0
 				 && data["data"]["content-type"].indexOf("audio/")<0 // TODO: To easy on the type?
 				 && data["data"]["content-type"].indexOf("audio%2F")<0 // TODO: To easy on the type?
+				 && !site.chedit.isPlayable
 				) {
 					
 					loggr.log(" > Webapi cannot read metadata, test if playable at all...");
@@ -382,6 +385,8 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 					// Station not verified, try if it is playable
 					site.chedit.testStationPlayable(station_url,
 						function() { // playable
+								
+							site.chedit.isPlayable = true;
 							
 							var conf;
 							if (site.chedit.askedAboutNowplaying) { conf = true; }
