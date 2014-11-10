@@ -1,13 +1,15 @@
-{"station_id":"TMP.steiermark_f23a8d548bfcd828146242606cd120fc_149985f0771_af708","host":"livestream.antenne.at","port":80,"path":""}
+{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
 
-HTTP/1.1 200 OK
-Date: Mon, 10 Nov 2014 06:23:26 GMT
-Server: Apache
-Last-Modified: Tue, 05 Jul 2011 10:42:49 GMT
-ETag: "65c160-b1-4a75025213c40"
-Accept-Ranges: bytes
-Content-Length: 177
-Vary: Accept-Encoding
-Connection: close
-Content-Type: text/html
+HTTP/1.0 200 OK
+Content-Type: audio/mpeg
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Pop
+icy-name:3FM Serious Radio
+icy-pub:0
+icy-url:http://www.3fm.nl
+Server: ics2css.omroep.nl
+Cache-Control: no-cache
+icy-metaint:16000
 
