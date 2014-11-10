@@ -142,6 +142,8 @@ foreach($lines as $line) {
 	$key = strtolower(trim($parts[0]));
 	$val = strtolower(trim($parts[1]));
 	
+	if ($key=="location") { $val = trim($parts[1]); }
+	
 	// Skip?
 	if (!$key || !$val) { continue; }
 	

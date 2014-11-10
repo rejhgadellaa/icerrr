@@ -28,8 +28,11 @@ site.chedit.init = function(station_id_to_edit) {
 	
 	// Magic || TODO: move to function
 	$("#editstation input[name='station_url']")[0].onchange = function(evt) {
+		site.chedit.askedAboutNowplaying = false;
+		site.chedit.checkedPlayability = false;
 		if (!$("#editstation input[name='station_name']")[0].value) {
 			site.ui.showtoast("Checking stream...");
+			$("#editstation .action.save").css("display","block");
 			site.chedit.check(true,true);
 		}
 	}
@@ -41,7 +44,9 @@ site.chedit.init = function(station_id_to_edit) {
 	
 	// Set station_id hidden field
 	if (station_id_to_edit) {
+		site.chedit.isNewStation = false;
 		var station_info = site.data.stations[site.helpers.session.getStationIndexById(station_id_to_edit)]; // station_id_to_edit
+		$("#editstation .action.save").css("display","block");
 		$("#editstation .action.trash").css("display","block");
 		$("#editstation input[name='station_id']")[0].value = station_id_to_edit;
 		$("#editstation input[name='station_name']")[0].value = station_info.station_name
@@ -61,13 +66,13 @@ site.chedit.init = function(station_id_to_edit) {
 			station_bitrate: station_info.station_bitrate
 		}
 		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
-		$("#editstation img.station_icon").on("click", function(evt) {
-			site.chicon.init($("#editstation input[name='station_id']")[0].value.trim());
-		});
-		$("#editstation .googleit")[0].onclick = function() {
+		$("#editstation img.station_icon")[0].onclick = function() {
+			loggr.error(" > chicon.init()",{dontupload:true});
 			site.chicon.init($("#editstation input[name='station_id']")[0].value.trim());
 		}
 	} else if (station_id_to_edit===false) { // clean
+		site.chedit.isNewStation = true;
+		$("#editstation .action.save").css("display","none");
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
 		$("#editstation input[name='station_name']")[0].value = ""
@@ -76,20 +81,29 @@ site.chedit.init = function(station_id_to_edit) {
 		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
 		$("#editstation img.station_icon").off("click");
 		$("#editstation img.station_icon")[0].onclick = function() {
+			loggr.error(" > chedit.searchicon() (1)",{dontupload:true});
 			site.ui.showtoast('One moment...');
 			site.chedit.searchicon();
 		}
 		site.chedit.newentry = {};
 	} else { // continue but make sure the station_id is cleared
+		loggr.warn(" > !station_id_to_edit but it's not false?");
+		$("#editstation .action.save").css("display","none");
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
 		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
 		$("#editstation img.station_icon").off("click");
 		$("#editstation img.station_icon")[0].onclick = function() {
+			loggr.error(" > chedit.searchicon() (2)",{dontupload:true});
 			site.ui.showtoast('One moment...');
 			site.chedit.searchicon();
 		}
 	}
+	
+	// Reset some values
+	site.chedit.askedAboutStationName = false;
+	site.chedit.askedAboutNowplaying = false;
+	site.chedit.checkedPlayability = false;
 	
 }
 
@@ -122,15 +136,8 @@ site.chedit.save = function() {
 		site.chedit.changesHaveBeenMadeGotoStarred = true;
 	}
 	
-	// loggr.log(site.helpers.arrToString(site.chedit.newentry,0,"\n")); || TODO: cleanup
-	
 	// Remove tmp data
 	site.chedit.newentry.tmp = 0;
-	
-	// print
-	//loggr.log(site.helpers.arrToString(site.chedit.newentry,1,"\n"));
-	
-	// TODO: we need a helper for 'edited' stations
 	
 	// Safety
 	if (!site.chedit.newentry.station_edited) {
@@ -166,7 +173,7 @@ site.chedit.save = function() {
 			site.ui.showtoast("Saved!");
 			if (!$("#editstation input[name='station_id']")[0].value.trim()) {
 				// Goto list on first save (long story.. but there is a difference how this script handles new and existing entries
-				site.chlist.init(true);
+				site.chedit.init(site.chedit.newentry.station_id);
 			}
 			site.helpers.uploadStation(site.chedit.newentry);
 		},
@@ -239,6 +246,11 @@ site.chedit.remove = function() {
 // - Checks fields
 
 site.chedit.check = function(findStationName,silent) {
+	
+	if (site.chedit.isChecking) { return; }
+	if (site.chedit.timeout_checking) { clearTimeout(site.chedit.timeout_checking); }
+	site.chedit.timeout_checking = setTimeout(function() { site.chedit.isChecking = false; },500);
+	site.chedit.isChecking = true;
 
 	loggr.log("site.chedit.check()");
 	
@@ -259,10 +271,12 @@ site.chedit.check = function(findStationName,silent) {
 	// Check mandatory values
 	if (!station_name) {
 		site.ui.showtoast("Station name is mandatory");
+		site.ui.hideloading();
 		return;
 	}
 	if (!station_url) {
 		site.ui.showtoast("Station url is mandatory");
+		site.ui.hideloading();
 		return;
 	}
 	
@@ -321,37 +335,10 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 	// --> Auto-gen host, port and other stuff
 	
 	// Host || TODO: this should be doable in a nicer, cleaner way?
-	var station_host = station_url;
-	var station_port = 80; // logic, since it should have http:// in front of it?
-	var station_path = "";
-	
-	if (station_host.indexOf("http://")>=0) {
-		station_host = station_host.substr("http://".length);
-	} else if (station_host.indexOf("https://")>=0) {
-		station_host = station_host.substr("https://".length);
-	}
-	
-	if (station_host.indexOf("/")>0 && station_host.indexOf(":")>0) { 
-		station_port_end = station_host.indexOf("/")-station_host.indexOf(":")-1; 
-		station_path = station_host.substr(station_host.indexOf("/"));
-	} else if (station_host.indexOf("/")<0 && station_host.indexOf(":")>0) {
-		station_port_end = station_host.length-station_host.indexOf(":")-1; 
-		station_path = "/";
- 	} else { 
-		station_port_end = station_host.length-station_host.indexOf(":")-1; 
-	}
-	
-	if (station_host.indexOf(":")>=0) {
-		station_port = station_host.substr(station_host.indexOf(":")+1,station_port_end);
-		station_host = station_host.substr(0,station_host.indexOf(":"));
-	} else if (station_host.indexOf("/")>=0) {
-		station_path = station_host.substr(station_host.indexOf("/"));
-		station_host = station_host.substr(0,station_host.indexOf("/"));
-	}
-	
-	loggr.log(" > Host: "+ station_host);
-	loggr.log(" > Port: "+ station_port);
-	loggr.log(" > Path: "+ station_path);
+	var stationHostPortAndPath = site.chedit.getStationHostPortAndPath(station_name, station_url);
+	var station_host = stationHostPortAndPath.host;
+	var station_port = stationHostPortAndPath.port;
+	var station_path = stationHostPortAndPath.path;
 	
 	// Do api call
 	var apiqueryobj = {
@@ -375,15 +362,6 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 			} else {
 				// Good!
 				
-				// Check content-type for playlist-ish keywords
-				if (data["data"]["content-type"].indexOf("text/html")>=0
-				 || data["data"]["content-type"].indexOf("audio/x-mpegurl")>=0
-				) {
-					loggr.log(" > Playlist detected, parse it...");
-					site.chedit.parsePlaylist(station_url, station_name, function(){ site.chedit.check_station_url(station_name,$("#editstation input[name='station_url']")[0].value,silent,true); });
-					return;
-				}
-				
 				// Check content-type
 				if (data["data"]["content-type"].indexOf("audio/mpeg")<0 
 				 && data["data"]["content-type"].indexOf("audio/aacp")<0
@@ -391,9 +369,64 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 				 && data["data"]["content-type"].indexOf("audio/")<0 // TODO: To easy on the type?
 				 && data["data"]["content-type"].indexOf("audio%2F")<0 // TODO: To easy on the type?
 				) {
-					site.ui.hideloading();
-					if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url");  }
-					site.ui.hideloading();
+					
+					loggr.log(" > Webapi cannot read metadata, test if playable at all...");
+					
+					if (site.chedit.checkedPlayability == station_url) {
+						site.ui.showtoast("Sorry, doesn't work");
+						site.ui.hideloading();
+						return;
+					}
+					site.chedit.checkedPlayability = station_url;
+					
+					// Station not verified, try if it is playable
+					site.chedit.testStationPlayable(station_url,
+						function() { // playable
+							
+							var conf;
+							if (site.chedit.askedAboutNowplaying) { conf = true; }
+							else {
+								conf = confirm("Icerrr can not read the station's metadata but it can play the stream. 'Now playing' info will not be available. Continue?");
+								site.chedit.askedAboutNowplaying = true;
+							}
+							
+							if (conf) {
+								
+								// Save host, port, path (i knew this data was going to be useful :D
+								site.chedit.newentry.station_url = $("#editstation input[name='station_url']")[0].value.trim();
+								site.chedit.newentry.station_host = station_host;
+								site.chedit.newentry.station_port = station_port;
+								site.chedit.newentry.station_path = station_path;
+								
+								// TODO: Fixme: remove this data before saving it, it's useless because outdated..
+								site.chedit.newentry.tmp = {};
+								site.chedit.newentry.tmp.station_info = data["data"];
+								
+								site.chedit.check_station_icon(silent);
+								
+							} else {
+								site.ui.hideloading();
+								if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url");  }
+							}
+							
+						},
+						function() { // not playable
+							
+							// Check content-type for playlist-ish keywords
+							if (data["data"]["content-type"].indexOf("text")>=0
+							 || data["data"]["content-type"].indexOf("audio/x-mpegurl")>=0
+							) {
+								loggr.log(" > Playlist detected(?), parse it...");
+								site.chedit.parsePlaylist(station_url, station_name, function(){ site.chedit.check_station_url(station_name,$("#editstation input[name='station_url']")[0].value,silent,true); });
+								return;
+							}
+								
+							// Utterly failed..
+							site.ui.hideloading();
+							if (!silent) { site.ui.showtoast("Err: Icerrr cannot verify station url");  }
+							
+						}
+					);
 					return;
 				}
 				
@@ -430,12 +463,13 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 				}
 				
 				// Apply station_name from results?
-				if (data["data"]["icy-name"]) {
+				if (data["data"]["icy-name"] && !site.chedit.askedAboutStationName) {
 					if (site.helpers.capitalize(data["data"]["icy-name"])!=site.chedit.newentry.station_name) {
 						if (confirm("We found the following Station name:\n'"+ site.helpers.capitalize(data["data"]["icy-name"]) +"'.\n\nWould you like to apply it?")) {
 							site.chedit.newentry.station_name = site.helpers.capitalize(data["data"]["icy-name"]);
 							$("#editstation input[name='station_name']")[0].value = site.helpers.capitalize(data["data"]["icy-name"]);
 						}
+						site.chedit.askedAboutStationName = true;
 					}
 				}
 				
@@ -480,6 +514,7 @@ site.chedit.check_station_icon = function(silent) {
 	img.onload = function() {
 		// All good :D
 		// TODO: Works
+		site.ui.hideloading();
 		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
 		newentry.station_icon_local = false;
 		loggr.log(" > All good :D");
@@ -490,10 +525,13 @@ site.chedit.check_station_icon = function(silent) {
 	img.onerror = function(evt) {
 		// Search the google :D
 		// TODO: Work
-		loggr.warn(evt);
-		loggr.log(" > Search the google :D");
-		if (confirm("Station icon could not be loaded. Search Google for an icon?")) {
-			site.chedit.searchicon();
+		if (station_name) {
+			loggr.log(" > Search the google :D");
+			if (confirm("Station icon could not be loaded. Search Google for an icon?\n\n(Note: You may change the icon later)")) {
+				site.chedit.searchicon();
+			} else {
+				site.ui.hideloading();
+			}
 		} else {
 			site.ui.hideloading();
 		}
@@ -513,11 +551,11 @@ site.chedit.searchicon = function() {
 		site.ui.showtoast("Cannot search without info");
 		site.ui.hideloading();
 		return;
-	}/*
-	if (!site.chedit.newentry.station_name) {
+	}
+	if (!$("#editstation input[name='station_name']")[0].value.trim()) {
 		site.ui.showtoast("Cannot search without station name");
 		return;
-	}*/
+	}
 	if (!site.chedit.newentry.station_url) {
 		site.ui.showtoast("Cannot search without station url");
 		site.ui.hideloading();
@@ -573,11 +611,14 @@ site.chedit.searchicon = function() {
 		function() {
 			loggr.log(" > No image found...");
 			site.ui.showtoast("Could not find an icon on Google...");
+			site.ui.hideloading();
 		},
 		opts
 	);
 	
 }
+
+// ---> Parse playlist
 
 site.chedit.parsePlaylist = function(station_url, station_name, cb, cberr) {
 	
@@ -613,7 +654,117 @@ site.chedit.parsePlaylist = function(station_url, station_name, cb, cberr) {
 	
 }
 
+// ---> Helpers
 
+// Get station host, port and path
+
+site.chedit.getStationHostPortAndPath = function(station_name, station_url) {
+	
+	loggr.log("site.chedit.getStationHostPortAndPath()");
+	
+	// --> Auto-gen host, port and other stuff
+	
+	// Host || TODO: this should be doable in a nicer, cleaner way?
+	var station_host = station_url;
+	var station_port = 80; // logic, since it should have http:// in front of it?
+	var station_path = "";
+	
+	if (station_host.indexOf("http://")>=0) {
+		station_host = station_host.substr("http://".length);
+	} else if (station_host.indexOf("https://")>=0) {
+		station_host = station_host.substr("https://".length);
+	}
+	
+	if (station_host.indexOf("/")>0 && station_host.indexOf(":")>0) { 
+		station_port_end = station_host.indexOf("/")-station_host.indexOf(":")-1; 
+		station_path = station_host.substr(station_host.indexOf("/"));
+	} else if (station_host.indexOf("/")<0 && station_host.indexOf(":")>0) {
+		station_port_end = station_host.length-station_host.indexOf(":")-1; 
+		station_path = "/";
+ 	} else { 
+		station_port_end = station_host.length-station_host.indexOf(":")-1; 
+	}
+	
+	if (station_host.indexOf(":")>=0) {
+		station_port = station_host.substr(station_host.indexOf(":")+1,station_port_end);
+		station_host = station_host.substr(0,station_host.indexOf(":"));
+	} else if (station_host.indexOf("/")>=0) {
+		station_path = station_host.substr(station_host.indexOf("/"));
+		station_host = station_host.substr(0,station_host.indexOf("/"));
+	}
+	
+	loggr.log(" > Host: "+ station_host);
+	loggr.log(" > Port: "+ station_port);
+	loggr.log(" > Path: "+ station_path);
+	
+	return {"host":station_host,"port":station_port,"path":station_path};
+	
+}
+
+// Test station url playable
+
+site.chedit.testStationPlayable = function(station_url,cb,cberr) {
+	
+	loggr.log("site.chedit.testStationPlayable()");
+	
+	if (site.chedit.isTestingPlayable) { return; }
+	site.chedit.isTestingPlayable = true;
+	
+	// -> Check if station actually works...
+	
+	site.ui.showloading();
+	loggr.log(" > "+ station_url);
+	
+	var mediaPlayer = new Media(station_url,
+		function() {
+			// Do nothing..
+		},
+		function(error) {
+			if (!site.chedit.isTestingPlayable) { return; }
+			loggr.warn(" > Station is not working");
+			loggr.log(" > Error: "+ site.mp.getErrorByCode(error.code));
+			site.chedit.isTestingPlayable = false;
+			mediaPlayer.stop();
+			mediaPlayer.release();
+			if (site.chedit.station_test_timeout) { clearTimeout(site.chedit.station_test_timeout); }
+			setTimeout(function() { if (cberr) { cberr(); } },1);
+		},
+		function(status) {
+			loggr.log(" > Status: "+ status);
+			switch (status) {
+				
+				case Media.MEDIA_RUNNING:
+				
+					if (site.chedit.station_test_timeout) { clearTimeout(site.chedit.station_test_timeout); }
+				
+					mediaPlayer.stop();
+					mediaPlayer.release();
+	
+					// -> Gogo
+					
+					site.chedit.changesHaveBeenMade = true;
+					
+					setTimeout(function() { if (cb) { cb(); } },1);
+					
+					site.chedit.isTestingPlayable = false;
+					
+			}
+		}
+	);
+	
+	mediaPlayer.play();
+
+	if (site.chedit.station_test_timeout) { clearTimeout(site.chedit.station_test_timeout); }
+	site.chedit.station_test_timeout = setTimeout(function(){
+		loggr.warn(" > Station is not working");
+		loggr.log(" > Timed out");
+		site.chedit.isTestingPlayable = false;
+		mediaPlayer.stop();
+		mediaPlayer.release();
+		setTimeout(function() { if (cberr) { cberr(); } },1);
+	},10000);
+	
+}
 
 
 

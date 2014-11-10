@@ -464,6 +464,7 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 	
 	mediaPlayer.play();
 
+	if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
 	site.chsearch.station_test_timeout = setTimeout(function(){
 		loggr.warn(" > Station is not working");
 		loggr.log(" > Timed out");

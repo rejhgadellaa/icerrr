@@ -1,4 +1,5 @@
-v0.112
+v0.112 (beta)
+  * Lots of (experimental) improvements for manually adding and editing stations
   * Slightly faster startup time
   * Slightly better handling of chromecast sessions
 

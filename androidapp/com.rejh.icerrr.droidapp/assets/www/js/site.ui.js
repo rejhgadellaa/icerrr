@@ -107,7 +107,7 @@ site.ui.showloading = function(message,submsg) {
 
 
 site.ui.hideloading = function() {
-	loggr.log("site.ui.showloading()");
+	loggr.log("site.ui.hideloading()");
 	site.vars.isLoading = false;
 	$("#loading.overlay_wrap .message").html("");
 	$("#loading.overlay_wrap").fadeOut(500); // TODO: animation gpu powered..

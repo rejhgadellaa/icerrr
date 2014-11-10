@@ -1,10 +1,13 @@
-{"station_id":"radio538","host":"82.201.100.9","port":8000,"path":"/radio538"}
+{"station_id":"TMP.Antenne_Steiermark_61e1d9b71d74585ede1529b09f5fd16f_1499812b14f_def95","host":"livestream.antenne.at","port":80,"path":"/"}
 
-HTTP/1.1 302 Found
-Date: Thu, 06 Nov 2014 14:36:27 GMT
-Server: Apache/2.2.3 (CentOS)
-Location: http://vip-icecast.538.lw.triple-it.nl/RADIO538_MP3
-Content-Length: 309
+HTTP/1.1 200 OK
+Date: Mon, 10 Nov 2014 05:00:12 GMT
+Server: Apache
+Last-Modified: Tue, 05 Jul 2011 10:42:49 GMT
+ETag: "65c160-b1-4a75025213c40"
+Accept-Ranges: bytes
+Content-Length: 177
+Vary: Accept-Encoding
 Connection: close
-Content-Type: text/html; charset=iso-8859-1
+Content-Type: text/html
 
