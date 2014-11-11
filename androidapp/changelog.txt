@@ -1,3 +1,6 @@
+v0.115 (beta)
+  * Fix for detecting phonecalls
+
 v0.114 (beta)
   * Minor improvements for adding/editing stations manually
 

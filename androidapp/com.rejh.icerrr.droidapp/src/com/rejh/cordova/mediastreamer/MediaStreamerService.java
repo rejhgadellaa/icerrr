@@ -102,6 +102,10 @@ public class MediaStreamerService extends Service {
 	    
 	    // Audio Focus
 	    int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        
+        // Listener: Telephony
+		phoneListener = new RecvEventPhonecalls();  
+	    telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 		
 	}
 	
@@ -133,6 +137,17 @@ public class MediaStreamerService extends Service {
         
         // Audio Focus OFF
         audioMgr.abandonAudioFocus(afChangeListener);
+        
+        // Bla
+        settEditor.putBoolean("wasPlayingWhenCalled",false);
+    	settEditor.commit();
+		
+		// Telephone Listener
+		try {
+			Log.d(APPTAG,"  -> Stop listeners (telephony...)");
+			telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
+			} 
+		catch (Exception e) { Log.w(APPTAG," -> NULLPOINTER EXCEPTION"); }
 		
 		shutdown();
 		
@@ -159,10 +174,6 @@ public class MediaStreamerService extends Service {
 		wifiLock = wifiMgr.createWifiLock(WifiManager.WIFI_MODE_FULL,"Lock");
 		if (wifiLock.isHeld()) { wifiLock.release(); }
 		wifiLock.acquire();
-        
-        // Listener: Telephony
-		phoneListener = new RecvEventPhonecalls();  
-	    telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
         
         // Stream url
 	    String stream_url = null;
@@ -244,13 +255,6 @@ public class MediaStreamerService extends Service {
     		Log.w(APPTAG," > Turn wifi off...");
     		wifiMgr.setWifiEnabled(false);
     	}
-		
-		// Listeners
-		try {
-			Log.d(APPTAG,"  -> Stop listeners (telephony...)");
-			telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
-			} 
-		catch (Exception e) { Log.w(APPTAG," -> NULLPOINTER EXCEPTION"); }
         
         // MediaPlayer
         if (mpMgr!=null) { 
