@@ -1,16 +1,17 @@
-{"station_id":"CUSTOM.Bnr_nieuwsradio_ab12f6c3fc41ec1d2e1215eed221ee97_14900f3a7a1_a9ac9","host":"icecast-bnr.cdp.triple-it.nl","port":80,"path":"/bnr_mp3_96_06"}
+{"station_id":"Radio_10_f23a8d548bfcd828146242606cd120fc_1495f3ca5b8_7e224","host":"stream.radio10.nl","port":80,"path":"/radio10?.wma"}
 
 HTTP/1.0 200 OK
+Accept-Ranges: none
 Content-Type: audio/mpeg
-icy-br:96
-ice-audio-info: ice-samplerate=44100;ice-bitrate=96;ice-channels=2
-icy-br:96
-icy-description:BNR Nieuwsradio
-icy-genre:News
-icy-name:BNR Nieuwsradio
+icy-br:128
+ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
+icy-br:128
+icy-description:De Grootste Hits Aller Tijden!
+icy-genre:POP
+icy-name:Radio 10
+icy-private:0
 icy-pub:1
-icy-url:http://www.bnr.nl
-Server: Icecast 2.3.3-kh5
+Server: Icecast 2.3.3-kh10
 Cache-Control: no-cache
 Pragma: no-cache
 Expires: Mon, 26 Jul 1997 05:00:00 GMT

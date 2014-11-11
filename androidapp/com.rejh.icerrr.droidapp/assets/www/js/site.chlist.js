@@ -209,30 +209,31 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
-		resulticon.addEventListener("load",function(ev){ 
-			// Store image locally
-			var stationIndex = site.helpers.session.getStationIndexById(ev.target.parentNode.station_id);
-			if (stationIndex<0) { return; }
-			if (site.data.stations[stationIndex].station_icon_local) { return; }
-			site.data.stations[stationIndex].station_icon_orig = $(ev.target).attr("src"); // store original
-			var filename = site.helpers.imageUrlToFilename(ev.target.src,"station_icon_"+site.data.stations[stationIndex].station_name.split(" ").join("-").toLowerCase(),true);
-			site.helpers.storeImageLocally(ev.target,filename,
-				function(evt) {
-					// evt.target.fileName
-					//var stationIndex = site.helpers.session.getStationIndexById(ev.target.parentNode.station_id);
-					//if (stationIndex>=0) { 
-					site.data.stations[stationIndex].station_icon_local = evt.target.fileName;
-					site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
-					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
-					//}
-				}
-			);
-			/**/
-		});
 		resulticon.addEventListener("error",function(ev){ 
 			ev.target.src = "img/icons-48/ic_launcher.png";
 		});
-		resulticon.src = (!station.station_icon_local) ? site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ station.station_icon : site.helpers.getImageLocally(resulticon, site.cfg.paths.images, station.station_icon_local, station.station_icon, null, null); 
+		if (!station.station_icon_local || station.station_icon_local.indexOf(".base64")>0) {
+			var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
+			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_icon_"+station.station_name.split(" ").join("-").toLowerCase(),false);
+			site.data.stations[stationIndex].station_icon_orig = station.station_icon // store original
+			site.helpers.downloadImage(resulticon, filename, site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ station.station_icon,
+				function(fileEntry,imgobj) {
+					var stationIndex = site.helpers.session.getStationIndexById(imgobj.parentNode.station_id);
+					if (stationIndex<0) { return; }
+					loggr.log(" > DL "+ stationIndex +", "+ fileEntry.fullPath);
+					site.data.stations[stationIndex].station_icon_local = fileEntry.fullPath;
+					site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
+					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
+				},
+				function(error) {
+					loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
+					console.error(error);
+					resulticon.src = "img/icons-48/ic_launcher.png";
+				}
+			);
+		} else {
+			resulticon.src = station.station_icon_local;
+		}
 		
 		var resultname = document.createElement("div");
 		resultname.className = "resultname";

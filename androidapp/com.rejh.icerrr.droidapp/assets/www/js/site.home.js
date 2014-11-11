@@ -429,8 +429,32 @@ site.home.handleStationImage = function(src) {
 	// Icon or album art..
 	if (src == site.session.currentstation.station_icon) {
 		// icon
-		$("#home .main .station_image img").attr("src",site.helpers.addCachebust(src));
+		
+		var station = site.session.currentstation;
+		
+		if (!station.station_image_local || station.station_image_local.indexOf(".base64")>0) {
+			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
+			site.helpers.downloadImage($("#home .main .station_image img")[0], filename, station.station_icon,
+				function(fileEntry,imgobj) {
+					var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
+					loggr.log(" > DL "+ stationIndex +", "+ fileEntry.fullPath);
+					site.data.stations[stationIndex].station_image_local = fileEntry.fullPath;
+					site.data.stations[stationIndex].station_edited["station_image_local"] = new Date().getTime();
+					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
+				},
+				function(error) {
+					loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
+					console.error(error);
+					$("#home .main .station_image img").attr("src","img/icons-48/ic_launcher.png");
+				}
+			);
+		} else {
+			$("#home .main .station_image img").attr("src",station.station_image_local);
+		}
+		
+		// $("#home .main .station_image img").attr("src",site.helpers.addCachebust(src));
 		return;
+		
 	}
 	
 	// Check if image already loaded..

@@ -85,7 +85,7 @@ site.alarms.drawResults = function() {
 		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
-		resulticon.src = (!alarm.station.station_icon_local) ? alarm.station.station_icon : site.helpers.getImageLocally(resulticon, site.cfg.paths.images, alarm.station.station_icon_local, alarm.station.station_icon, null, null); 
+		resulticon.src = (alarm.station.station_icon_local) ? alarm.station.station_icon_local : site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ alarm.station.station_icon;
 			// alarm.station.station_icon;
 		
 		var resultname = document.createElement("div");
@@ -459,6 +459,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		loggr.log(" > Change: volume: "+value);
 		alarmCfg.volume = value;
 		site.alarms.save();
+		$("#alarms_add input[name='alarm_volume']").blur();
 	});
 	
 	// Repeat

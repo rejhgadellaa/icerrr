@@ -17,6 +17,65 @@ site.webapi.ajaxRequests = {};
 
 // TODO: implement timeout!
 
+// ---> Download
+
+site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
+	
+	loggr.log("site.webapi.download()");
+	loggr.log(" > "+ url);
+	
+	if (!site.helpers.isConnected()) {
+		errcb({code:-1,message:"No connection available"});
+	}
+	
+	targetPath = encodeURI(targetPath);
+	targetFile = targetFile;
+	
+	// Get file entry..
+	site.storage.getFolderEntry(targetPath,
+		function(folderEntry) {
+			
+			loggr.log(" > Init download...");
+			
+			var fileTransfer = new FileTransfer();
+			var uri = encodeURI(url);
+			var dest = encodeURI(folderEntry.fullPath +"/"+ targetFile)
+			
+			loggr.log(" >> "+ uri);
+			
+			if (progressCb) {
+				fileTransfer.onprogress = function(progressEvent) {
+					progressCb(progressEvent);
+				}
+			}
+		
+			fileTransfer.download(
+				uri,
+				dest,
+				function(entry) {
+					// console.log("download complete: " + entry.fullPath);
+					cb(entry);
+				},
+				function(error) {
+					loggr.error("download error source " + error.source);
+					loggr.error("download error target " + error.target);
+					loggr.error("download error code " + error.code);
+					loggr.error(" > "+ site.storage.getErrorType(error));
+					if (errcb) { errcb(error); }
+				},
+				true
+			);
+			
+		},
+		function(error) {
+			loggr.error("Error: getFolderEntry?");
+			console.error(error);
+			errcb(error);
+		}
+	);
+	
+}
+
 // ---> Ajax request
 
 site.webapi.getajax = function(url,dataType,cb,errcb) {

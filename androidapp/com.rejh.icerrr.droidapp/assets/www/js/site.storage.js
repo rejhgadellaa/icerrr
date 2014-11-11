@@ -506,6 +506,124 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	
 }
 
+// ---> Entries...
+
+site.storage.getFileEntry = function(path,filename,cb,errcb,opts) {
+	
+	loggr.log("site.storage.getFileEntry(): "+ path +", "+ filename);
+	
+	// Check path, should contain site.cfg.paths.root
+	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
+		errcb({code:-1,message:"site.storage.getFileEntry().Error: Will not read outside of root directory: '"+path+"'"});
+		return; // <- important...
+	}
+	
+	// Check busy
+	if (site.storage.isBusy) { 
+		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+		var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
+		//site.storage.enqueue("readfile",args);
+		//return; 
+	}
+	site.storage.isBusy = true;
+	
+	// Handle opts
+	if (!opts) { opts = {}; }
+	if (!opts.path) { opts.path = {}; }
+	if (opts.path.create!==true) { opts.path.create = false; } // Note: defaults to FALSE - most other storage methods don't!
+	if (opts.path.exclusive) { opts.path.exclusive = false; }
+	if (!opts.file) { opts.file = {}; }
+	if (opts.file.create!==true) { opts.file.create = false; } // Note: defaults to FALSE - most other storage methods don't!
+	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
+	if (opts.file.readAsDataUrl!==true) { opts.file.readAsDataUrl = false; }
+	
+	// Prep timeout
+	var timeoutID = site.storage.addTimeout("getFileEntry",null,{path:path,filename:filename,cb:cb,errcb:errcb,opts:opts});
+	
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+        function(fileSystem) {
+			loggr.log(" > Get directory entry: "+path);
+            fileSystem.root.getDirectory(path,
+                opts.path,
+                function(directoryEntry) {
+					loggr.log(" > Get file entry: "+path +", "+ filename);
+					directoryEntry.getFile(filename,opts.file,
+						function(fileEntry) {
+							loggr.log(" > Got file: "+ fileEntry.fullPath);
+							site.storage.preCb(cb,fileEntry,timeoutID); 
+						},
+						function(error) { loggr.error(" > Err on getFile",{dontupload:true}); site.storage.preCbErr(errcb,error,timeoutID); }
+					);
+				},
+                function(error) { loggr.error(" > Err on getDirectory",{dontupload:true}); site.storage.preCbErr(errcb,error,timeoutID); }
+            );
+        },
+        function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
+    );
+	
+}
+
+site.storage.getFolderEntry = function(path,cb,errcb,opts) {
+	
+	loggr.log("site.storage.getFolderEntry(): "+ path);
+	
+	// Check path, should contain site.cfg.paths.root
+	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
+		errcb({code:-1,message:"site.storage.getFolderEntry().Error: Will not read outside of root directory: '"+path+"'"});
+		return; // <- important...
+	}
+	
+	// Check busy
+	if (site.storage.isBusy) { 
+		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+		// var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
+		//site.storage.enqueue("readfile",args);
+		//return; 
+	}
+	site.storage.isBusy = true;
+	
+	// Handle opts
+	if (!opts) { opts = {}; }
+	if (!opts.path) { opts.path = {}; }
+	if (opts.path.create!==true) { opts.path.create = false; } // Note: defaults to FALSE - most other storage methods don't!
+	if (opts.path.exclusive) { opts.path.exclusive = false; }
+	
+	// Prep timeout
+	var timeoutID = site.storage.addTimeout("getFolderEntry",null,{path:path,cb:cb,errcb:errcb,opts:opts});
+	
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+        function(fileSystem) {
+			//loggr.log(" > Get directory entry: "+path);
+            fileSystem.root.getDirectory(path,
+                opts.path,
+                function(directoryEntry) {
+					site.storage.preCb(cb,directoryEntry,timeoutID); 
+				},
+                function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
+            );
+        },
+        function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
+    );
+	
+	/*
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+        function(fileSystem) {
+			loggr.log(" > Get directory entry: "+path);
+            fileSystem.root.getDirectory(path,
+                opts.path,
+                function(directoryEntry) {
+					loggr.log(" > Got dirEntry: "+ directoryEntry.fullPath);
+					site.storage.preCb(cb,directoryEntry,timeoutID); 
+				},
+                function(error) { loggr.error(" > Err on getDirectory: "+fileSystem.root.fullPath,{dontupload:true}); site.storage.preCbErr(errcb,error,timeoutID); }
+            );
+        },
+        function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
+    );
+	*/
+	
+}
+
 // ---> Others
 
 // Get Meta Data

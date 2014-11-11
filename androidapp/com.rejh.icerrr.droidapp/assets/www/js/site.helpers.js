@@ -178,6 +178,32 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
 	
 }
 
+// Download image
+// - > Whoop!
+
+site.helpers.downloadImage = function(imgobj, filename, url, cb, cberr, cbprogress) {
+	
+	loggr.log("site.helpers.downloadImage(): "+ filename);
+	
+	// Prep
+	// url,targetPath,targetFile,cb,errcb,progressCb
+	
+	site.webapi.download(url, site.cfg.paths.images, filename,
+		function(fileEntry) {
+			imgobj.src = fileEntry.fullPath;
+			cb(fileEntry,imgobj);
+		},
+		function(error) {
+			imgobj.src = url; // fallback || TODO: do this?
+			cberr(error);
+		},
+		function(pEvent) {
+			if (cbprogress) { cbprogress(pEvent); }
+		}
+	);
+	
+}
+
 // Store image
 // - create canvas, draw image on canvas, get base64, write to disk
 

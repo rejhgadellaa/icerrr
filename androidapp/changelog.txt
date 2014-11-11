@@ -1,5 +1,6 @@
 v0.115 (beta)
-  * Fix for detecting phonecalls
+  * Potential fix for streams starting when ending a phonecall
+  * Improvements for how icons are cached on local storage
 
 v0.114 (beta)
   * Minor improvements for adding/editing stations manually
