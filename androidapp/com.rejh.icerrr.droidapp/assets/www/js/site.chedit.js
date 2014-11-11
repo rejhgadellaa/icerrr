@@ -13,7 +13,7 @@ site.chedit = {};
 
 // ---> Init
 
-site.chedit.init = function(station_id_to_edit) {
+site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAboutNowplaying, checkedPlayability, isPlayable) {
 	
 	loggr.info("------------------------------------");
 	loggr.info("site.chedit.init()");
@@ -102,10 +102,10 @@ site.chedit.init = function(station_id_to_edit) {
 	}
 	
 	// Reset some values
-	site.chedit.askedAboutStationName = false;
-	site.chedit.askedAboutNowplaying = false;
-	site.chedit.checkedPlayability = false;
-	site.chedit.isPlayable = false;
+	site.chedit.askedAboutStationName = askedAboutStationName;
+	site.chedit.askedAboutNowplaying = askedAboutNowplaying;
+	site.chedit.checkedPlayability = checkedPlayability;
+	site.chedit.isPlayable = isPlayable;
 	
 }
 
@@ -175,7 +175,7 @@ site.chedit.save = function() {
 			site.ui.showtoast("Saved!");
 			if (!$("#editstation input[name='station_id']")[0].value.trim()) {
 				// Goto list on first save (long story.. but there is a difference how this script handles new and existing entries
-				site.chedit.init(site.chedit.newentry.station_id);
+				site.chedit.init(site.chedit.newentry.station_id, site.chedit.askedAboutStationName, site.chedit.askedAboutNowplaying, site.chedit.checkedPlayability, site.chedit.isPlayable);
 			}
 			site.helpers.uploadStation(site.chedit.newentry);
 		},

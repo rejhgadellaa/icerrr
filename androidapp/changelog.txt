@@ -1,3 +1,6 @@
+v0.114 (beta)
+  * Minor improvements for adding/editing stations manually
+
 v0.113 (beta)
   * Some fixes for adding/editing stations manually
 
