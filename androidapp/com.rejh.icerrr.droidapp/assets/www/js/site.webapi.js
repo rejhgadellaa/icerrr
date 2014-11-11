@@ -57,9 +57,9 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 					cb(entry);
 				},
 				function(error) {
-					loggr.error("download error source " + error.source);
-					loggr.error("download error target " + error.target);
-					loggr.error("download error code " + error.code);
+					loggr.error("download error source " + error.source, {dontupload:true});
+					loggr.error("download error target " + error.target, {dontupload:true});
+					loggr.error("download error code " + error.code, {dontupload:true});
 					loggr.error(" > "+ site.storage.getErrorType(error));
 					if (errcb) { errcb(error); }
 				},
