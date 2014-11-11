@@ -1,9 +1,7 @@
 package com.rejh.cordova.mediastreamer;
 
-import org.apache.cordova.api.CallbackContext;
-import org.json.JSONArray;
-import org.json.JSONException;
-
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -291,9 +289,10 @@ public class MediaStreamerService extends Service {
 				    break;
 			    case TelephonyManager.CALL_STATE_IDLE:
 				    // Phone idle
-			    	if (!sett.getBoolean("wasPlayingWhenCalled",false)) { return; }
 			    	settEditor.putBoolean("wasPlayingWhenCalled",false);
 			    	settEditor.commit();
+			    	if (!isServiceRunning(MediaStreamerService.class)) { return; }
+			    	if (!sett.getBoolean("wasPlayingWhenCalled",false)) { return; }
 			    	setup();
 				    break;
 		    }
@@ -304,7 +303,7 @@ public class MediaStreamerService extends Service {
 	OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
 		
 	    public void onAudioFocusChange(int focusChange) {
-	    	Log.i(APPTAG,"MediaStreamerService.onAudioFocusChange()");
+	    	Log.i(APPTAG,"MediaStreamerService.onAudioFocusChange(): "+ focusChange);
 	        if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
 	            
 	        	// Pause playback
@@ -319,12 +318,12 @@ public class MediaStreamerService extends Service {
 	            // Resume playback 
 	        	Log.d(APPTAG," > AUDIOFOCUS_GAIN()");
 	        	
-	        	if (sett.getBoolean("wasPlayingWhenCalled",false)) {
+	        	if (sett.getBoolean("wasPlayingWhenCalled",false) && isServiceRunning(MediaStreamerService.class)) {
 	        		Log.d(APPTAG," >> Resume playback");
 	        		settEditor.putBoolean("wasPlayingWhenCalled",false);
 	        		settEditor.commit();
 	        		setup(true);
-	        	} else if (sett.getBoolean("volumeHasDucked", false)) {
+	        	} else if (sett.getBoolean("volumeHasDucked", false) && isServiceRunning(MediaStreamerService.class)) {
 	        		Log.d(APPTAG," >> Volume++");
 	        		settEditor.putBoolean("volumeHasDucked",false);
 	        		settEditor.commit();
@@ -456,6 +455,17 @@ public class MediaStreamerService extends Service {
 		
 		Log.d(APPTAG,"ChangedVolume: set:"+setvol+" --> max:"+maxvol+", cur:"+curvol+", dif:"+difvol);
 		
+	}
+	
+	// --- Service running
+	private boolean isServiceRunning(Class<?> serviceClass) {
+	    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceClass.getName().equals(service.service.getClassName())) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 	
 	
