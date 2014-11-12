@@ -1,3 +1,6 @@
+v0.116 (stable)
+  * Some clean up for stable release
+
 v0.115 (beta)
   * Potential fix for streams starting when ending a phonecall
   * Improvements for how icons are cached on local storage
