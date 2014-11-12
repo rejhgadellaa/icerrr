@@ -1,3 +1,6 @@
+v0.117 (stable)
+  * Bugfixes
+
 v0.116 (stable)
   * Some clean up for stable release
 

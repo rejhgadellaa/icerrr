@@ -1,17 +1,15 @@
-{"station_id":"SWR3_01d1bf642076149fd8133db8e6dd0121_149a18809d8_3dc97","host":"swr-mp3-m-swr3.akacast.akamaistream.net","port":80,"path":"/7/720/137136/v1/gnl.akacast.akamaistream.net/swr-mp3-m-swr3"}
+{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
-icy-br:128
-ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
-icy-br:128
-icy-description:Mehr Hits. Mehr Kicks. Einfach SWR3
-icy-genre:SWR
-icy-name:SWR3
-icy-private:1
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Pop
+icy-name:3FM Serious Radio
 icy-pub:0
-icy-url:http://www.swr3.de
-Server: Akacast 1.0
+icy-url:http://www.3fm.nl
+Server: ics2css.omroep.nl
 Cache-Control: no-cache
 icy-metaint:16000
 

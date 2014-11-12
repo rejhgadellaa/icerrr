@@ -227,12 +227,13 @@ site.lifecycle.onNewIntent = function(result) {
 		var alarmMinute = parseInt(alarm.minute);
 		
 		var minuteDiff = alarmMinute - minute;
+		if (minuteDiff>58) { minuteDiff = 1; }
 		
-		if (alarmHour == hour && minuteDiff >= -2 && minuteDiff < 1) {
+		if (alarmHour == hour && minuteDiff >= -2 && minuteDiff < 1 || alarmHour == hour-1 && minuteDiff>58) {
 			
 			loggr.log(" > Found alarm: "+ alarmHour +":"+ alarmMinute);
 			
-			// Does it need to fire todat?
+			// Does it need to fire today?
 			var day = new Date().getDay(); // 0 - 6
 			var repeatCfg = alarm.repeatCfg;
 			loggr.log(" > Day: "+ day +", repeat: "+ repeatCfg[day]);
