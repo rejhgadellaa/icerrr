@@ -605,23 +605,6 @@ site.storage.getFolderEntry = function(path,cb,errcb,opts) {
         function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
     );
 	
-	/*
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-        function(fileSystem) {
-			loggr.log(" > Get directory entry: "+path);
-            fileSystem.root.getDirectory(path,
-                opts.path,
-                function(directoryEntry) {
-					loggr.log(" > Got dirEntry: "+ directoryEntry.fullPath);
-					site.storage.preCb(cb,directoryEntry,timeoutID); 
-				},
-                function(error) { loggr.error(" > Err on getDirectory: "+fileSystem.root.fullPath,{dontupload:true}); site.storage.preCbErr(errcb,error,timeoutID); }
-            );
-        },
-        function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
-    );
-	*/
-	
 }
 
 // ---> Others

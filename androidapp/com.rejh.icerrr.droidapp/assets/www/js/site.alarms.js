@@ -85,8 +85,23 @@ site.alarms.drawResults = function() {
 		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
-		resulticon.src = (alarm.station.station_icon_local) ? alarm.station.station_icon_local : site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ alarm.station.station_icon;
-			// alarm.station.station_icon;
+		if (alarm.station.station_icon_local && alarm.station.station_icon_local.indexOf(".base64")<0) { 
+			resulticon.src = alarm.station.station_icon_local; // : site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ alarm.station.station_icon;
+		} else {
+			// try upgrade image from site.data.stations
+			var stationIndex = site.helpers.session.getStationIndexById(alarm.station.station_id);
+			if (stationIndex<0) { resulticon.src = site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ alarm.station.station_icon; return; }
+			if (site.data.stations[stationIndex].station_icon_local && site.data.stations[stationIndex].station_icon_local.indexOf(".base64")<0) { 
+				alarm.station = site.data.stations[stationIndex];
+				site.session.alarms[i] = alarm;
+				resulticon.src = alarm.station.station_icon_local;
+				site.helpers.storeSession();
+			} else {
+				loggr.warn(" > No local icon for station: "+ alarm.station.station_name +", "+ site.data.stations[stationIndex].station_icon_local);
+				resulticon.src = site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ alarm.station.station_icon;
+			}
+		}
+		
 		
 		var resultname = document.createElement("div");
 		resultname.className = "resultname";

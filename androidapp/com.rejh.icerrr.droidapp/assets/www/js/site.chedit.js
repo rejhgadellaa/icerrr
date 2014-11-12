@@ -522,6 +522,7 @@ site.chedit.check_station_icon = function(silent) {
 		site.ui.hideloading();
 		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
 		newentry.station_icon_local = false;
+		newentry.station_image_local = false;
 		loggr.log(" > All good :D");
 		if (confirm("Everything seems to check out! Save now?")) {
 			site.chedit.save();
