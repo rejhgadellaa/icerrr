@@ -184,7 +184,7 @@ public class NotifMgr extends CordovaPlugin {
 	        if (smallicon!=null) { builder.setSmallIcon(getSmallIcon(smallicon)); }
 	        
 	        // Intent // TODO: a lot.
-	        PendingIntent notifPendingIntent = createPendingIntent(intentopts, intentExtras);
+	        PendingIntent notifPendingIntent = createPendingIntent(intentopts, intentExtras, id);
 	        builder.setContentIntent(notifPendingIntent);
 	        
 	        // > Optionals
@@ -210,9 +210,10 @@ public class NotifMgr extends CordovaPlugin {
 	        		JSONObject action = actions.getJSONObject(i);
 	        		int actionIcon = getSmallIcon(action.getString("icon"));
 	        		CharSequence actionTitle = (CharSequence) action.getString("title");
+	        		Log.d(APPTAG," >> "+ actionTitle);
 	        		JSONObject actionIntent = action.getJSONObject("intent");
 	        		JSONArray actionIntentExtras = actionIntent.has("extras") ? actionIntent.getJSONArray("extras") : null;
-	        		PendingIntent actionPendingIntent = createPendingIntent(actionIntent,actionIntentExtras);
+	        		PendingIntent actionPendingIntent = createPendingIntent(actionIntent,actionIntentExtras,i+1+(100*id));
 	        		// Build..
 	        		NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder(actionIcon, actionTitle, actionPendingIntent);
 	        		NotificationCompat.Action builtAction = actionBuilder.build();
@@ -276,7 +277,7 @@ public class NotifMgr extends CordovaPlugin {
     // > Intents
     
     // Create Pending Intent (with extras!)
-    private PendingIntent createPendingIntent(JSONObject intentCfg, JSONArray intentExtras) throws JSONException {
+    private PendingIntent createPendingIntent(JSONObject intentCfg, JSONArray intentExtras, int requestCode) throws JSONException {
 
     	// New intent
 	    Intent notifIntent = new Intent();
@@ -309,6 +310,7 @@ public class NotifMgr extends CordovaPlugin {
 				String type = intentExtra.getString("type").toLowerCase();
 				String name = intentExtra.getString("name");
 				if (type.equals("string")) {
+					Log.d(APPTAG," >> Extra: "+ type +", "+ name +", "+ intentExtra.getString("value"));
 					notifIntent.putExtra(name, intentExtra.getString("value"));
 				} else if (type.equals("int")) {
 					notifIntent.putExtra(name, intentExtra.getInt("value"));
@@ -325,9 +327,9 @@ public class NotifMgr extends CordovaPlugin {
 	    
 	    PendingIntent notifPendingIntent = null;
 	    if (intentType.equals("activity")) {
-	    	notifPendingIntent = PendingIntent.getActivity(context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
+	    	notifPendingIntent = PendingIntent.getActivity(context, requestCode, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
 	    } else if (intentType.equals("receiver")) {
-	    	notifPendingIntent = PendingIntent.getBroadcast(context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
+	    	notifPendingIntent = PendingIntent.getBroadcast(context, requestCode, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
 	    }
 	    
 	    return notifPendingIntent;

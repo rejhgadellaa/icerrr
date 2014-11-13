@@ -9,7 +9,7 @@ icy-genre:Pop
 icy-name:3FM Serious Radio
 icy-pub:0
 icy-url:http://www.3fm.nl
-Server: ics2css.omroep.nl
+Server: ics2sss.omroep.nl
 Cache-Control: no-cache
 icy-metaint:16000
 

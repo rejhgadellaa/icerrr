@@ -76,8 +76,13 @@ site.mp.playToggle = function() {
 	window.mediaStreamer.isServiceRunning(
 		function(resInt) {
 			if (resInt==1) {
-				loggr.log(" > Service running, stop");
-				site.mp.stop();
+				if (site.mp.mpstatus==Media.MEDIA_PAUSED) {
+					loggr.log(" > Service is paused, play!");
+					site.mp.play();
+				} else {
+					loggr.log(" > Service running, stop");
+					site.mp.stop();
+				}
 			} else {
 				loggr.log(" > Service not running, play");
 				site.mp.play();
@@ -248,6 +253,18 @@ site.mp.notif = function() {
 				classname: "com.rejh.cordova.mediastreamer.MediaStreamerReceiver",
 				extras:[
 					{type:"string", name:"cmd", value:"destroy"}
+				]
+			}
+		},
+		{
+			icon: "ic_stat_av_pause",
+			title: "Pause/Resume",
+			intent: {
+				type: "receiver",
+				package: "com.rejh.icerrr.droidapp",
+				classname: "com.rejh.cordova.mediastreamer.MediaStreamerReceiver",
+				extras:[
+					{type:"string", name:"cmd", value:"pause_resume"}
 				]
 			}
 		}

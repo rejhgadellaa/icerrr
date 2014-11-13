@@ -242,19 +242,22 @@ public class ObjMediaPlayerMgr {
 	public void pause() {
 		stopConnTypeChecker();
 		if (mp==null) { return; }
-		settEditor.putInt("mediastreamer_state",MEDIA_STOPPED);
-		mp.stop();
+		settEditor.putInt("mediastreamer_state",MEDIA_PAUSED);
+		settEditor.commit();
+		if (mp!=null) { mp.release(); mp = null; }
+		if (proxy!=null) { proxy.stop(); proxy = null; }
 		}
 	
 	// RESUME
 	public void resume() {
-		if (mp==null) { return; }
 		settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
-		mp.prepareAsync();
+		settEditor.commit();
+		init(streamUrl,false);
 		}
 	
 	// ISPLAYING
 	public boolean isPlaying() {
+		if (mp==null) { return false; }
 		return mp.isPlaying();
 		}
 	

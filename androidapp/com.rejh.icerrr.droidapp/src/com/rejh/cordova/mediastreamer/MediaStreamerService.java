@@ -96,6 +96,7 @@ public class MediaStreamerService extends Service {
 		
 		// Service running..
 		settEditor.putBoolean("mediastreamer_serviceRunning", true);
+		settEditor.putBoolean("is_paused", false);
 		settEditor.commit();
 	    
 	    // Audio Focus
@@ -109,9 +110,32 @@ public class MediaStreamerService extends Service {
 	
 	@Override
 	public int onStartCommand (Intent intent, int flags, int startId) {
+		
 		if(intent!=null) { incomingIntent = intent; }
-		setup();
+		
+		// Cmds..
+		boolean cmd_pause_resume = false;
+		if(intent!=null) { cmd_pause_resume = intent.getBooleanExtra("pause_resume", false); }
+		if (mpMgr!=null) {
+			if (cmd_pause_resume && !sett.getBoolean("is_paused", false)) { // pause
+				Log.d(APPTAG," > cmd_pause_resume PAUSE!");
+				settEditor.putBoolean("is_paused", true);
+				settEditor.commit();
+				mpMgr.pause();
+			} else if (sett.getBoolean("is_paused", false)) { // resume
+				Log.d(APPTAG," > cmd_pause_resume RESUME!");
+				settEditor.putBoolean("is_paused", false);
+				settEditor.commit();
+				mpMgr.resume();
+			} else {
+				Log.d(APPTAG," > cmd_pause_resume unhandled!");
+			}
+		} else {
+			setup();
+		}
+		
 		return START_STICKY;
+		
 	}
 	
 	// OnDestroy
@@ -218,7 +242,9 @@ public class MediaStreamerService extends Service {
         }
 
         Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
+        
 		settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
+		settEditor.putBoolean("is_paused", false);
 		settEditor.commit();
 		
 		// MediaPlayer
@@ -263,6 +289,7 @@ public class MediaStreamerService extends Service {
         // Settings
         settEditor.putString("mediastreamer_streamUrl",null);
         settEditor.putBoolean("isAlarm", false);
+        settEditor.putBoolean("is_paused", false);
     	settEditor.commit();
         
 	}

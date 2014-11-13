@@ -146,12 +146,6 @@ public class MediaStreamer extends CordovaPlugin {
         	Log.e(APPTAG," > Exception on args.getBoolean(2) - volume!!");
         }
         
-        // Is playing?
-        if (sett.getBoolean("mediastreamer_serviceRunning", false)) {
-        	Log.d(APPTAG, APPTAG+" > play > mediastreamer_serviceRunning==true, stopService()");
-        	context.stopService(serviceIntent);
-        }
-        
         Log.d(APPTAG," > isAlarm: "+ isAlarm);
         
         // Start

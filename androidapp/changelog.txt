@@ -1,4 +1,5 @@
-v0.117 (stable)
+v0.117 (beta)
+  * New: Pause/resume action for notification
   * Bugfixes
 
 v0.116 (stable)
