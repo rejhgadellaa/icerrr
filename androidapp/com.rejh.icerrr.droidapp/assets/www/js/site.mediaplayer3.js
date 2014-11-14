@@ -139,8 +139,8 @@ site.mp.stop = function() {
 site.mp.setPlaying = function() {
 	loggr.debug("site.mp.setPlaying()");
 	site.mp.serviceRunning = true;
-	site.mp.initStatusPoll();
-	site.mp.notif();
+	if (!site.loops.mpGetStatus) { site.mp.initStatusPoll(); }
+	if (!site.mp.notifActive) { site.mp.notif(); }
 }
 
 site.mp.setStopped = function() {
@@ -159,15 +159,19 @@ site.mp.initStatusPoll = function() {
 	loggr.info("site.mp.initStatusPoll()");
 	site.mp.stopStatusPoll();
 	site.mp.getStatus(site.mp.handleStatus);
+	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
 	site.loops.mpGetStatus = setInterval(function(){
 		site.mp.getStatus(site.mp.handleStatus);
-	},2500);
+	},1000);
 	loggr.log(" > inited status poll");
 }
 
 site.mp.stopStatusPoll = function(force) {
-	loggr.info("site.mp.stopStatusPoll()");
+	loggr.info("site.mp.stopStatusPoll()"); 
 	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
+	site.loops.mpGetStatus = setInterval(function(){
+		site.mp.getStatus(site.mp.handleStatus); // actually, don't stop but do it on a much slower cycle!
+	},5000);
 }
 
 // Get status
@@ -207,6 +211,7 @@ site.mp.handleStatus = function(statusCode) {
 	if (statusCode==Media.MEDIA_NONE || statusCode==Media.MEDIA_STOPPED) { 
 		site.mp.setStopped(); 
 	} else {
+		site.mp.setPlaying();
 		site.mp.isPlaying = true;
 	}
 	
@@ -281,6 +286,8 @@ site.mp.notif = function() {
 		opts
 	);
 	
+	site.mp.notifActive = true;
+	
 }
 
 // Cancel
@@ -303,6 +310,8 @@ site.mp.notifCancel = function(id) {
 			loggr.error(" > Could not cancel notification: "+ errmsg);
 		},opts);
 	}
+	
+	site.mp.notifActive = false;
 	
 }
 

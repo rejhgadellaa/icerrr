@@ -452,6 +452,35 @@ site.alarms.updateForm = function(alarmCfg) {
 	date.setSeconds(0);
 	date.setMilliseconds(0);
 	$("#alarms_add input[name='alarm_time']")[0].valueAsDate = date;
+	$("#alarms_add input[name='alarm_time']")[0].onclick = function(){
+		loggr.log(" > Timepicker!");
+		var offset = Math.round(new Date().getTimezoneOffset()/60);
+		var values = this.value.split(":");
+		var hour = parseInt(values[0]);
+		var minute = parseInt(values[1]);
+		var date = new Date();
+		date.setHours(hour);
+		date.setMinutes(minute);
+		date.setSeconds(0);
+		date.setMilliseconds(0);
+		datepicker.show({date:date,mode:'time'},function(date) {
+			// alert(typeof(date));
+			var offset = Math.round(new Date().getTimezoneOffset()/60);
+			var hour = date.getHours();
+			var minute = date.getMinutes();
+			site.alarms.newAlarmCfg.timeMillis = site.alarms.getAlarmDate(hour,minute).getTime();
+			site.alarms.newAlarmCfg.hour = hour;
+			site.alarms.newAlarmCfg.minute = minute;
+			loggr.log(" > Change: time "+hour+":"+minute);
+			date.setHours(date.getHours()-offset); // ugly...
+			date.setSeconds(0);
+			$("#alarms_add input[name='alarm_time']")[0].valueAsDate = date;
+			site.alarms.save();
+		});
+		return false;
+	}
+	
+	/*
 	$("#alarms_add input[name='alarm_time']").off("change");
 	$("#alarms_add input[name='alarm_time']").on("change",function(evt) {
 		var values = evt.originalEvent.target.value.split(":");
@@ -463,6 +492,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		loggr.log(" > Change: time "+hour+":"+minute);
 		site.alarms.save();
 	});
+	/**/
 	
 	// Volume
 	if (alarmCfg.volume) { $("#alarms_add input[name='alarm_volume']").attr("value",alarmCfg.volume); }

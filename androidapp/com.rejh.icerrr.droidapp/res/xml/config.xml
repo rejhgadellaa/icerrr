@@ -61,6 +61,7 @@
     <plugin name="MediaStreamer" value="com.rejh.cordova.mediastreamer.MediaStreamer"/>
     <plugin name="NotifMgr" value="com.rejh.cordova.notifmgr.NotifMgr"/>
     <plugin name="AlarmMgr" value="com.rejh.cordova.alarmmgr.AlarmMgr"/>
+    <plugin name="DatePickerPlugin" value="com.plugin.datepicker.DatePickerPlugin"/>
 </plugins>
 </cordova>
 

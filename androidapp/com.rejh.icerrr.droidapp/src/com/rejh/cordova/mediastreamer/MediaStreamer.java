@@ -40,7 +40,7 @@ public class MediaStreamer extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
-        Log.d(APPTAG, APPTAG+" > execute");
+        Log.d(APPTAG, APPTAG+" > execute: "+action);
         
         // > Setup
         
@@ -60,8 +60,6 @@ public class MediaStreamer extends CordovaPlugin {
         	callbackContext.error("Action is null");
             return false;
         }
-        
-        Log.d(APPTAG," > "+ action);
         
         // > A GOGO
         
@@ -177,7 +175,7 @@ public class MediaStreamer extends CordovaPlugin {
     
     private void getStatus(CallbackContext callbackContext) {
     	
-    	Log.d(APPTAG, APPTAG+" > getStatus");
+    	// Log.d(APPTAG, APPTAG+" > getStatus");
         
         // Check service first
         boolean serviceRunning = false;

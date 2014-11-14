@@ -232,6 +232,7 @@ site.home.run_ui_updates = function() {
 	} else if (site.mp.mpstatus==Media.MEDIA_STARTING && !$(".button.center").hasClass("busy")) {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").addClass("busy"); 
+		$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 	} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").addClass("busy");

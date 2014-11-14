@@ -1,3 +1,7 @@
+v0.118 (stable)
+  * Implemented timepicker plugin for compatibility with Android 5.0
+  * Improvements for media status detection
+
 v0.117 (beta)
   * New: Pause/resume action for notification
   * Bugfixes

@@ -356,16 +356,19 @@ site.lifecycle.onPause = function() {
 		);
 	}
 	
-	// Cancel timeouts
-	for (var i in site.timeouts) { if (site.timeouts[i]) { clearTimeout(site.timeouts[i]); } }
-	for (var i in site.loops) { if (site.loops[i]) { clearInterval(site.loops[i]); } }
-	
 	// Call UI close function
 	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
 	for (var i=0; i<site.session.ui_pause_callbacks.length; i++) {
 		var func = site.session.ui_pause_callbacks[i]; // same order as incoming..
 		try { func(); } catch(e) { }
 	}
+	
+	// Cancel timeouts
+	loggr.log(" > "+ site.helpers.countObj(site.timeouts) +" timeout(s), "+ site.helpers.countObj(site.loops) +" loop(s)");
+	for (var i in site.timeouts) { if (site.timeouts[i]) { loggr.log(" >> Cancel timeout "+ i); clearTimeout(site.timeouts[i]); } }
+	for (var i in site.loops) { if (site.loops[i]) { loggr.log(" >> Cancel loop "+ i); clearInterval(site.loops[i]); } }
+	site.timeouts = [];
+	site.loops = [];
 		
 	// some stuff
 	site.session.isPaused = true;
