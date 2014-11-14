@@ -90,9 +90,6 @@ public class ObjMediaPlayerMgr {
 		}
 	
 	// --------------------------------------------------
-	// Variables Public
-	
-	// --------------------------------------------------
 	// Methods Public
 	
 	private void initbackup() {
@@ -318,7 +315,7 @@ public class ObjMediaPlayerMgr {
 		
 		// @Override
 		public void onBufferingUpdate(MediaPlayer mediaplayer, int progress) {
-			// Log.d(LOGTAG," -> MP.OnBufferUpdate "+progress);
+			Log.d(LOGTAG," -> MP.OnBufferUpdate "+progress);
 			// Unimportant ?
 			}
 		
