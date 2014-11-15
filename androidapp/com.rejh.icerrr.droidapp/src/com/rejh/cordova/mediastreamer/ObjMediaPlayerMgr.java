@@ -75,7 +75,7 @@ public class ObjMediaPlayerMgr {
 		Log.i(LOGTAG,"MediaPlayerMgr.Constructor()");
 		
 		context = bindToContext;
-		sett = context.getSharedPreferences(SETTAG,2);
+		sett = context.getSharedPreferences(SETTAG,Context.MODE_MULTI_PROCESS | 2);
         settEditor = sett.edit();
         connMgr = bindToConnMgr;
         wifiMgr = bindToWifiMgr;
@@ -146,6 +146,7 @@ public class ObjMediaPlayerMgr {
 		if (sdkVersion<8) {
 			if (proxy==null) {
 				try {
+					Log.d(LOGTAG," > Use streamproxy");
 					proxy = new StreamProxy();
 					proxy.init();
 					proxy.start();

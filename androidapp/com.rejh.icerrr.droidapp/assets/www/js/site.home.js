@@ -229,8 +229,9 @@ site.home.run_ui_updates = function() {
 		$(".button.center").removeClass("busy"); 
 		$(".button.center").addClass("active"); 
 		$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
-	} else if (site.mp.mpstatus==Media.MEDIA_STARTING && !$(".button.center").hasClass("busy")) {
+	} else if (site.mp.mpstatus==Media.MEDIA_STARTING) {
 		$(".button.center").removeClass("active"); 
+		$(".button.center").removeClass("busy");
 		$(".button.center").addClass("busy"); 
 		$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 	} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {

@@ -107,7 +107,7 @@ site.installer.update = function() {
 	
 	site.installer.logger("Update...");
 	
-	if (site.cookies.get("app_version")!=site.cfg.app_version) {
+	if (site.cookies.get("app_version")<=site.cfg.app_version) {
 		site.installer.logger("&nbsp;&gt; Settings...");
 		window.mediaStreamer.setting("bool","useWifi",true,function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	}

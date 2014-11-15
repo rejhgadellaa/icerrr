@@ -484,18 +484,37 @@ site.lifecycle.onResize = function() {
 	
 	loggr.info("site.lifecycle.onResize()");
 	
-	// TODO: figure out if orientation change..
+	// Do it now!
 	
-	setTimeout(function(){
+	/*
+	$(".main").css("height",
+		$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height()) // $(site.vars.currentSection+" .footer").height()
+	);
+	loggr.log("Resized: "+site.vars.currentSection);
+	/**/
+	
+	/*
+	loggr.log(" > Window height: "+ $(window).height());
+	loggr.log(" > .main height:  "+ $(site.vars.currentSection+" .main").css("height"));
+	try { loggr.log(" > .main inner:   "+ $(site.vars.currentSection+" .main")[0].scrollHeight); } catch(e) { }
+	site.helpers.masonryOnResize();
+	/**/
+	
+	// Re-do it in a sec...
+	
+	if (site.timeouts.onresize) { clearTimeout(site.timeouts.onresize); }
+	site.timeouts.onresize = setTimeout(function(){
 		$(site.vars.currentSection+" .main").css("height",
 			$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height()) // $(site.vars.currentSection+" .footer").height()
 		);
-		site.helpers.masonryOnResize();
+		/*
 		loggr.log("Resized: "+site.vars.currentSection);
 		loggr.log(" > Window height: "+ $(window).height());
 		loggr.log(" > .main height:  "+ $(site.vars.currentSection+" .main").css("height"));
 		try { loggr.log(" > .main inner:   "+ $(site.vars.currentSection+" .main")[0].scrollHeight); } catch(e) { }
-	},100);
+		site.helpers.masonryOnResize();
+		/**/
+	},50);
 	
 	site.ui.hackActiveCssRule();
 	

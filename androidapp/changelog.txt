@@ -1,3 +1,6 @@
+v0.119 (stable)
+  * Tweaks and bugfixes
+
 v0.118 (stable)
   * Implemented timepicker plugin for compatibility with Android 5.0
   * Improvements for media status detection

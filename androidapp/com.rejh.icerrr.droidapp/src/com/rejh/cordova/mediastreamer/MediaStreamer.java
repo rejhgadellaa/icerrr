@@ -51,7 +51,7 @@ public class MediaStreamer extends CordovaPlugin {
         serviceIntent = new Intent(context, MediaStreamerService.class);
         
         // Preferences
-        sett = context.getSharedPreferences(APPTAG,2);
+        sett = context.getSharedPreferences(APPTAG,Context.MODE_MULTI_PROCESS | 2);
         settEditor = sett.edit();
 
         // > Check action

@@ -76,6 +76,8 @@ echo.
 REM C:\Android\android-sdk\platform-tools\adb -d uninstall org.z25.weckerapp
 REM if not errorlevel 0 goto error
 
+%androidsdk%platform-tools\adb kill-server
+%androidsdk%platform-tools\adb devices
 %androidsdk%platform-tools\adb -d install -r bin\%name_prj%-debug.apk
 if not errorlevel 0 goto error
 
