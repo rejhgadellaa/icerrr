@@ -1,3 +1,6 @@
+v0.121 (stable)
+  * Fix: default (fallback) station icon would not load in channel list
+
 v0.120 (stable)
   * Fixes for duplicate icons being saved on local storage
 

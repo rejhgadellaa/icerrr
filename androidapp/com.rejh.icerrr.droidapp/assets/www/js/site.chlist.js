@@ -212,7 +212,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resulticon.addEventListener("error",function(ev){ 
 			ev.target.src = "img/icons-48/ic_launcher.png";
 		});
-		if (!station.station_icon_local || station.station_icon_local.indexOf(".base64")>0) {
+		if (!station.station_icon_local || station.station_icon_local.indexOf(".base64")>0 && station.station_icon.indexOf("file://")<0) {
 			var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
 			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_icon_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 			site.data.stations[stationIndex].station_icon_orig = station.station_icon // store original
