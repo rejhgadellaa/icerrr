@@ -1,3 +1,6 @@
+v0.120 (stable)
+  * Fixes for duplicate icons being saved on local storage
+
 v0.119 (stable)
   * Tweaks and bugfixes
 

@@ -426,6 +426,51 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	
 }
 
+// Remove file
+// - Returns: boolean or error
+
+site.storage.deletefile = function(path,filename,cb,errcb,opts) {
+	
+	loggr.debug("site.storage.deletefile(): "+path+", "+filename);
+	
+	// Check path, should contain site.cfg.paths.root
+	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
+		errcb({code:-1,message:"site.storage.deletefile().Error: Will not read outside of root directory: '"+path+"'"});
+		return; // <- important...
+	}
+	
+	// Check busy
+	if (site.storage.isBusy) { 
+		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+		// var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
+		//site.storage.enqueue("readfile",args);
+		//return; 
+	}
+	site.storage.isBusy = true;
+	
+	// Handle opts
+	if (!opts) { opts = {}; }
+	if (!opts.path) { opts.path = {}; }
+	if (opts.path.create!==true) { opts.path.create = false; } // Note: defaults to FALSE - most other storage methods don't!
+	if (opts.path.exclusive) { opts.path.exclusive = false; }
+	if (!opts.file) { opts.file = {}; }
+	if (opts.file.create!==true) { opts.file.create = false; } // Note: defaults to FALSE - most other storage methods don't!
+	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
+	if (opts.file.readAsDataUrl!==true) { opts.file.readAsDataUrl = false; }
+	
+	// Go
+	site.storage.getFileEntry(path,filename,
+		function(fileEntry) {
+			fileEntry.remove(cb,errcb);
+		},
+		function(error) {
+			errcb(error);
+		},
+		{path:{create:true},file:{create:true}}
+	);
+	
+}
+
 // Read file (text)
 // - Opts: opts.path are passed to getDirectory function, opts.file are passed to getFile function
 // - Returns: string of file contents
@@ -607,7 +652,49 @@ site.storage.getFolderEntry = function(path,cb,errcb,opts) {
 	
 }
 
+
+
 // ---> Others
+
+// List files
+
+site.storage.listfiles = function(path,cb,errcb,opts) {
+	
+	loggr.debug("site.storage.getFolderSize()");
+	
+	var hasSubFolder = false;
+	var size = 0;
+	var entries = [];
+	
+	// Get folderEntry
+	site.storage.getFolderEntry(path,
+		function(folderEntry) {
+			
+			loggr.log(" > Got folderEntry: "+ folderEntry.fullPath);
+			
+			var reader = folderEntry.createReader();
+			reader.readEntries(
+				function(entries) {
+					
+					cb(entries);
+					return;
+					
+				},
+				function(error) {
+					alert(error);
+					errcb(error);
+				}
+			);
+			
+		},
+		function(error) {
+			alert(error);
+			errcb(error);
+		},
+		{path:{create:true}}
+	);
+	
+}
 
 // Get Meta Data
 // - Opts: opts.path are passed to getDirectory and/or getFile function, opts.type: 0=autodetect, 1=files, 2=folders || TODO: autodetect!

@@ -353,6 +353,23 @@ site.helpers.calcImageAspect = function(imageObjOrWidth,height) {
 
 // ---> Calculators
 
+// Bytes and such
+
+site.helpers.calcAutoByteStr = function(nrOfBytes) {
+	if (nrOfBytes<1024) {
+		return nrOfBytes +" bytes";
+	}
+	nrOfBytes = Math.round(nrOfBytes/1024);
+	if (nrOfBytes<1024) {
+		return nrOfBytes +" kb";
+	}
+	nrOfBytes = Math.round(nrOfBytes/1024);
+	if (nrOfBytes<1024) {
+		return nrOfBytes +" mb";
+	}
+	return "alot";
+}
+
 // String to bytes and such
 
 site.helpers.calcStringToKbytes = function(str) {
