@@ -74,7 +74,7 @@ public class MediaStreamerService extends Service {
 		context = getApplicationContext();
 
         // Preferences
-        sett = context.getSharedPreferences(APPTAG,2);
+        sett = context.getSharedPreferences(APPTAG,Context.MODE_MULTI_PROCESS | 2);
         settEditor = sett.edit();
 		
         // Others

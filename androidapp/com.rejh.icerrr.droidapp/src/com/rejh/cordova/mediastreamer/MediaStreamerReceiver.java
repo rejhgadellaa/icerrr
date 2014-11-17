@@ -33,7 +33,7 @@ public class MediaStreamerReceiver extends BroadcastReceiver {
 		intent = _intent;
 
         // Preferences
-        sett = context.getSharedPreferences(APPTAG,2);
+        sett = context.getSharedPreferences(APPTAG,Context.MODE_MULTI_PROCESS | 2);
         settEditor = sett.edit();
         
         // ServiceIntent

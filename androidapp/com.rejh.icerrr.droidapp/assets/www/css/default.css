@@ -291,7 +291,7 @@ section {
 }
 
 #home {
-	
+	display:block;
 }
 
 	#home .main {

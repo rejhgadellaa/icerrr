@@ -96,6 +96,8 @@ site.mp.play = function() {
 	
 	loggr.debug("site.mp.play()");
 	
+	site.mp.mpstatus = Media.MEDIA_STARTING;
+	
 	// Start MediaStreamer
 	window.mediaStreamer.play(site.session.currentstation.station_url, site.session.alarmActive, site.session.alarmVolume, 
 		function(msg) {
@@ -139,7 +141,8 @@ site.mp.stop = function() {
 site.mp.setPlaying = function() {
 	loggr.debug("site.mp.setPlaying()");
 	site.mp.serviceRunning = true;
-	if (!site.loops.mpGetStatus) { site.mp.initStatusPoll(); }
+	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
+	site.mp.initStatusPoll();
 	if (!site.mp.notifActive) { site.mp.notif(); }
 }
 

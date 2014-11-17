@@ -107,7 +107,7 @@ site.installer.update = function() {
 	
 	site.installer.logger("Update...");
 	
-	if (site.cookies.get("app_version")!=site.cfg.app_version) {
+	if (site.cookies.get("app_version")<=site.cfg.app_version) {
 		site.installer.logger("&nbsp;&gt; Settings...");
 		window.mediaStreamer.setting("bool","useWifi",true,function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	}
@@ -371,6 +371,7 @@ site.installer.downloadjson_read = function() {
 					} else {
 						site.datatemp["data"] = dataremote; // overwrite
 					}
+					site.data.stations = site.datatemp["data"];
 					break;
 				
 				default:
@@ -480,6 +481,42 @@ site.installer.finishup = function() {
 		site.storage.removefolder(site.cfg.paths.json,null,site.installer.removefolder_cberr,{recursively:true});
 	}
 	/**/
+	
+	// Clean up image folder
+	// Walk stations
+	site.installer.logger("&nbsp;&gt; Clean up image cache...");
+	var imagelist = [];
+	for (var i=0; i<site.data.stations.length; i++) {
+		var station = site.data.stations[i];
+		if (station.station_image_local) { imagelist.push(station.station_image_local); }
+		if (station.station_icon_local) { imagelist.push(station.station_icon_local); }
+	}
+	loggr.log(" > Found "+ imagelist.length +" image(s) in data");
+	// Get files list
+	site.storage.listfiles(site.cfg.paths.images,
+		function(fileEntries) {
+			var removed = 0;
+			loggr.log(" > Found "+ fileEntries.length +" files on storage");
+			for (var i=0; i<fileEntries.length; i++) {
+				var fileEntry = fileEntries[i];
+				if (fileEntry.isDirectory) { continue; }
+				if (imagelist.indexOf(fileEntry.fullPath)<0) {
+					var path = site.cfg.paths.images;
+					var name = fileEntry.name;
+					site.storage.deletefile(path,name,function(){},function(err){
+						loggr.error(" > Could not delete '"+ fileEntry.fullPath +"'",{dontupload:true});
+						loggr.error(" > "+ site.storage.getErrorType(error));
+					});
+					removed++;
+				}
+			}
+			site.installer.logger("&nbsp;&gt; Removed "+ removed +" file(s)");
+		},
+		function(error) {
+			loggr.error(" > Could not list files for cfg.paths.images",{dontupload:true});
+			loggr.error(" > "+ site.storage.getErrorType(error));
+		}
+	);
 	
 	// Create unique device ID
 	if (site.cookies.get("app_is_installed")!=1 || site.cookies.get("app_version")<0.081) {

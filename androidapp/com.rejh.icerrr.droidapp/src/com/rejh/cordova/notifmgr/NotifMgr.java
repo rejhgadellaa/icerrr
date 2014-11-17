@@ -197,6 +197,9 @@ public class NotifMgr extends CordovaPlugin {
 	        
 	        // Prio
 	        builder.setPriority(priority);
+	        if (priority>=NotificationCompat.PRIORITY_HIGH) {
+	        	//builder.setDefaults(NotificationCompat.DEFAULT_VIBRATE);
+	        }
 	        
 	        // Autocancel, ongoing, alertOnce
 	        builder.setAutoCancel(autoCancel);

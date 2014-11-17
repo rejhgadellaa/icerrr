@@ -224,6 +224,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 					site.data.stations[stationIndex].station_icon_local = fileEntry.fullPath;
 					site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
 					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
+					site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),function(){},function(){});
 				},
 				function(error) {
 					loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
