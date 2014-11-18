@@ -246,11 +246,11 @@
 	
 		<div class="block header">
 			Add/Edit station
-        </div>
+		</div>
+		
+		<form onSubmit="site.chedit.check(); return false;">
 		
 		<div class="block data1">
-		
-			<form onSubmit="site.chedit.check(); return false;">
 		
 			<input type="hidden" name="station_id" value="" />
 			
@@ -269,16 +269,13 @@
 			</p>
 			
 			<p><img class="station_icon" src="img/icons-48/ic_launcher.png" /></p>
-		
-			</form>
 			
 			<p class="info_tap_icon" style="color:#999;"><em>Note: tap the icon to search for more</em></p>
-			
 		</div>
 		
-		<div class="block data2">
+		<div class="block data2">		</div>
 		
-		</div>
+		</form>
 		
     </div>
 	
@@ -303,11 +300,11 @@
 	
 		<div class="block header">
 			Search station
-        </div>
+		</div>
+		
+		<form onSubmit="site.chsearch.searchstation(); return false;">
 		
 		<div class="block data1">
-		
-			<form onSubmit="site.chsearch.searchstation(); return false;">
 			
 			<p><label>Station name: <span style="color:#f00;">*</span></label>
 				<input class="round2" type="text" name="station_search" placeholder="Ex: BBC Radio 1" />
@@ -319,9 +316,9 @@
             
             <p>Or add a station <a href="javascript:void(0);" onClick="loggr.log(site.lifecycle.remove_section_history_item('#searchstation'));site.chedit.init(false);">manually</a></p>
 			
-			</form>
-			
 		</div>
+		
+		</form>
 		
 		<div class="resultfooter shadow_z1u">
 			<a href='javascript:void(0)' onClick="window.open('http://dirble.com/','_system');">Powered by Dirble</a>
@@ -412,7 +409,7 @@
 		
         <div class="block header">
 			Set alarm
-        </div>
+		</div>
         
         <form onSubmit="return false;">
 		
@@ -487,8 +484,7 @@
     <div class="main">
 		
         <div class="block header">
-			About
-        </div>
+			About        </div>
 		
 		<div class="block">
 		
@@ -500,9 +496,7 @@
 			
 			<p>&nbsp;</p>
 			<p>
-			<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" onClick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S6BCCM9LESNBU&lc=US&item_name=REJH%20Gadellaa&item_number=icerrr_droidapp&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted','_system');" />
-			</p>
-			
+			<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" onClick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S6BCCM9LESNBU&lc=US&item_name=REJH%20Gadellaa&item_number=icerrr_droidapp&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted','_system');" />			</p>
 		</div>
 		
 	</div>
@@ -524,8 +518,7 @@
     <div class="main">
 		
         <div class="block header">
-			Log
-        </div>
+			Log        </div>
 		
 		<div class="block content selectable">
 		<!-- ... -->
@@ -565,7 +558,6 @@
 				<div class="item subtitle">Turn on wifi when streaming</div>
 				<div class="checkboxWrap"><input name="useWifi" type="checkbox" class="checkbox" checked="checked" /></div>
 			</div>
-		
 		</div>
 		
     </div>

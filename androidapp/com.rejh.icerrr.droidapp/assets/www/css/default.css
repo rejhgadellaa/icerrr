@@ -199,8 +199,7 @@ section {
 			.main .block.header {
 				font-size:18pt;
 				font-weight:300;
-				padding-left:8px;
-				margin-top:16px;
+				background:#ddd;
 			}
 	
 	.footer {
@@ -440,7 +439,11 @@ section {
 }
 
 	#editstation .block, #searchstation .block, #alarms_add .block, #about .block, #viewlog .block {
-		padding:16px 16px 0 16px;
+		padding:0 16px 16px 16px;
+	}
+
+	#editstation .block.header, #searchstation .block.header, #alarms_add .block.header, #about .block.header, #viewlog .block.header {
+		padding:16px;
 	}
 	
 	#editstation .block label a, #searchstation .block label a, #alarms_add .block label a {
@@ -530,7 +533,6 @@ section {
 	}
 	#alarms_add .block.header {
 		padding:16px;
-		margin-top:16px;
 	}
 	#alarms_add .block.borderTop {
 		border:1px solid #ddd;
