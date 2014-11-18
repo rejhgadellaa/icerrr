@@ -200,7 +200,7 @@ section {
 				font-size:18pt;
 				font-weight:300;
 				padding-left:8px;
-				padding-top:16px;
+				margin-top:16px;
 			}
 	
 	.footer {
@@ -530,6 +530,7 @@ section {
 	}
 	#alarms_add .block.header {
 		padding:16px;
+		margin-top:16px;
 	}
 	#alarms_add .block.borderTop {
 		border:1px solid #ddd;
