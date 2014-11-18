@@ -61,7 +61,7 @@ site.alarms.drawResults = function() {
 	
 	if (alarms.length<1) {
 		loggr.log(" > No alarms set..");
-		$("#alarms .main").html('<div class="center_table"><div class="center_td">NOTHING HERE</div></div>');
+		$("#alarms .main").html('<div class="center_table"><div class="center_td"><div style="width:280px; margin:auto; color:rgba(0,0,0,0.54);">You have no alarms set</div></div></div>');
 		return;
 	}
 	

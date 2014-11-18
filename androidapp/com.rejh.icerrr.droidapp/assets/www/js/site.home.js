@@ -438,7 +438,7 @@ site.home.handleStationImage = function(src) {
 		
 		var station = site.session.currentstation;
 		
-		if (!station.station_image_local || station.station_image_local.indexOf(".base64")>0) {
+		if (!station.station_image_local || station.station_image_local.indexOf(".base64")>0 && station.icon.indexOf("file://")<0) {
 			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 			site.helpers.downloadImage($("#home .main .station_image img")[0], filename, station.station_icon,
 				function(fileEntry,imgobj) {

@@ -66,12 +66,17 @@ input,select {
 	padding:1%;
 	font-size:16pt;
 	background:#fff;
-	border:1px solid rgba(0,0,0,0.5);
+	border:1px solid rgba(0,0,0,0.16);
+	-webkit-border-radius: 2px;
+	border:1px solid rgba(0,0,0,0.16);
 }
 
 select {
 	width:100%;
 	margin:0;
+}
+
+input[type="text"] {
 }
 
 input[type="checkbox"] {
@@ -164,9 +169,11 @@ section {
 			float:left;
 			width:50%;
 			height:48px;
+			color:rgba(255,255,255,0.54);
 		}
 		.tab.active {
 			background:rgba(0,0,0,0.25);
+			color:rgba(255,255,255,0.87);
 		}
 		
 		.tab_sep {
@@ -399,7 +406,7 @@ section {
 	
 	.resultitem .resultname {
 		position:absolute;
-		bottom:22px; left:72px; right:16px;
+		bottom:22px; left:72px; right:72px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;

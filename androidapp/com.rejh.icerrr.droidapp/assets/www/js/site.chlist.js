@@ -160,7 +160,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		stations = sorter(site.chlist.getStarred());
 		if (!stations.length) { 
 			loggr.log(" > Nothin' starred..");
-			$("#channellist .main").html('<div class="center_table"><div class="center_td">NOTHING HERE</div></div>');
+			$("#channellist .main").html('<div class="center_table"><div class="center_td"><div style="width:280px; margin:auto; color:rgba(0,0,0,0.54);">There are no starred stations for you to be searching for.</div></div></div>');
 			return;
 		}
 	}
