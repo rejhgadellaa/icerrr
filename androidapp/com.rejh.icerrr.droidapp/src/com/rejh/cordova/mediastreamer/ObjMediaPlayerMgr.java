@@ -66,7 +66,6 @@ public class ObjMediaPlayerMgr {
 	private final static int MEDIA_PAUSED = 3;
 	private final static int MEDIA_STOPPED = 4;
 	
-	
 	// --------------------------------------------------
 	// Constructor
 	
@@ -384,7 +383,7 @@ public class ObjMediaPlayerMgr {
 		private void stopConnTypeChecker() {
 			Log.d(LOGTAG," -> stopConnTypeChecker()");
 			if (timer!=null) { timer.cancel(); }
-			}
+		}
 
 		// Start Conn Type Checker
 		private void startConnTypeChecker() {
@@ -399,10 +398,10 @@ public class ObjMediaPlayerMgr {
 					
 					runConnTypeChecker();
 					
-					}
-				}, 0, 5*1000);
+				}
+			}, 0, 5*1000);
 			
-			}
+		}
 		
 		// Run Conn Type Checker
 		private void runConnTypeChecker() {
@@ -424,8 +423,8 @@ public class ObjMediaPlayerMgr {
 				if (connType==2) {
 					if (netwInfoCell==null || netwInfoCell!=null && netwInfoCell.getState()!=NetworkInfo.State.DISCONNECTED) {
 						connType=1;
-						}
 					}
+				}
 				
 				// Handle Roaming
 				boolean useWifiWhenRoaming = sett.getBoolean("useWifiWhenRoaming",true);
@@ -439,18 +438,17 @@ public class ObjMediaPlayerMgr {
 					if(proxy!=null) { proxy.stop(); proxy=null; }
 					connWasLost=true;
 					return;
-					}
-				
 				}
-			catch (Exception e) {
+				
+			} catch (Exception e) {
 				Log.w(LOGTAG," -> !NetwInfo",e);
 				connType = 0;
-				}
+			}
 			
 			// Additional..
 			if (connTypeOld==-1) { 
 				connTypeOld = connType; 
-				}
+			}
 			
 			// Handle ConnType CHANGES
 			if (connType>0 && connType!=connTypeOld && !connWasLost) {
@@ -467,16 +465,15 @@ public class ObjMediaPlayerMgr {
 					Log.d(LOGTAG," -> Stream resumed");
 					connWasLost=false;
 					init(streamedUrl,isAlarm);
-					}
 				}
-			else {
+			} else {
 				Log.d(LOGTAG," -> Connection lost. Stream paused");
 				if(mp!=null) { mp.release(); mp=null; }
 				if(proxy!=null) { proxy.stop(); proxy=null; }
 				connWasLost=true;
-				}
-			
 			}
+			
+		}
 		
 		
 		
