@@ -1,3 +1,7 @@
+v0.123 (stable)
+  * Potential fix: Stream would sometimes fallback to 3FM
+  * Fixes for audio focus loss
+
 v0.122 (stable)
   * More tweaks for design
 

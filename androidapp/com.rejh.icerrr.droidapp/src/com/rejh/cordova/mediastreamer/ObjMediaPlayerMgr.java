@@ -132,9 +132,13 @@ public class ObjMediaPlayerMgr {
 		boolean initHasFailed = false;
 		
 		// Handle url (=null)
-		if (url==null) { url = streamUrlDefault; }
+		if (url==null) { url = sett.getString("streamUrlDefault", streamUrlDefault); }
 		streamUrl = url;
 		streamedUrl = url;
+		
+		// Store streamUrl as default
+		settEditor.putString("streamUrlDefault", streamUrl);
+		settEditor.commit();
 		
 		isAlarm = _isAlarm;
 		
@@ -316,7 +320,7 @@ public class ObjMediaPlayerMgr {
 		
 		// @Override
 		public void onBufferingUpdate(MediaPlayer mediaplayer, int progress) {
-			Log.d(LOGTAG," -> MP.OnBufferUpdate "+progress);
+			// Log.d(LOGTAG," -> MP.OnBufferUpdate "+progress);
 			// Unimportant ?
 			}
 		

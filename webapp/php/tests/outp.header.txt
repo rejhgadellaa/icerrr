@@ -1,10 +1,18 @@
-{"station_id":"radio538","host":"82.201.100.9","port":8000,"path":"/radio538"}
+{"station_id":"CUSTOM.Bnr_nieuwsradio_ab12f6c3fc41ec1d2e1215eed221ee97_14900f3a7a1_a9ac9","host":"icecast-bnr.cdp.triple-it.nl","port":80,"path":"/bnr_mp3_96_06"}
 
-HTTP/1.1 302 Found
-Date: Tue, 18 Nov 2014 07:17:00 GMT
-Server: Apache/2.2.3 (CentOS)
-Location: http://vip-icecast.538.lw.triple-it.nl/RADIO538_MP3
-Content-Length: 309
-Connection: close
-Content-Type: text/html; charset=iso-8859-1
+HTTP/1.0 200 OK
+Content-Type: audio/mpeg
+icy-br:96
+ice-audio-info: ice-samplerate=44100;ice-bitrate=96;ice-channels=2
+icy-br:96
+icy-description:BNR Nieuwsradio
+icy-genre:News
+icy-name:BNR Nieuwsradio
+icy-pub:1
+icy-url:http://www.bnr.nl
+Server: Icecast 2.3.3-kh5
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: Mon, 26 Jul 1997 05:00:00 GMT
+icy-metaint:16000
 

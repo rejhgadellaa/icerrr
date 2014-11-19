@@ -364,10 +364,9 @@ public class MediaStreamerService extends Service {
 	        	
 	            settEditor.putBoolean("wasPlayingWhenCalled",false);
 		    	settEditor.commit();
-		    	shutdown();
-	        	
-	            audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
-	            audioMgr.abandonAudioFocus(afChangeListener);
+		    	
+		    	Log.d(APPTAG," > Destroy self");
+		    	stopSelf();
 		    	
 	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
 	        	
