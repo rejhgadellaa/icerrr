@@ -1,18 +1,15 @@
-{"station_id":"CUSTOM.Bnr_nieuwsradio_ab12f6c3fc41ec1d2e1215eed221ee97_14900f3a7a1_a9ac9","host":"icecast-bnr.cdp.triple-it.nl","port":80,"path":"/bnr_mp3_96_06"}
+{"station_id":"CUSTOM.Slam_FM_6271d9876544d3559745f8982414e485_14928ca5693_23382","host":"edge2-icecast.538.lw.triple-it.nl","port":80,"path":"/SLAMFM_MP3"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
-icy-br:96
-ice-audio-info: ice-samplerate=44100;ice-bitrate=96;ice-channels=2
-icy-br:96
-icy-description:BNR Nieuwsradio
-icy-genre:News
-icy-name:BNR Nieuwsradio
-icy-pub:1
-icy-url:http://www.bnr.nl
-Server: Icecast 2.3.3-kh5
+icy-br:128
+ice-audio-info: bitrate=128
+icy-br:128
+icy-description:SLAMFM_MP3
+icy-name:SLAMFM_MP3
+icy-pub:0
+icy-url:SLAMFM_MP3
+Server: Icecast 2.3.3
 Cache-Control: no-cache
-Pragma: no-cache
-Expires: Mon, 26 Jul 1997 05:00:00 GMT
 icy-metaint:16000
 
