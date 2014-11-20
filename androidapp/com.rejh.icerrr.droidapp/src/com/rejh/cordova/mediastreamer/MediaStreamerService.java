@@ -136,7 +136,9 @@ public class MediaStreamerService extends Service {
 		}
 		
 		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
-		msNotifMgr.notif("Unknown station", null, -1);
+		msNotifMgr.notif("Unknown station", null, 1);
+		
+		startForeground(1,msNotifMgr.notifObj);
 		
 		return START_STICKY;
 		
@@ -266,6 +268,8 @@ public class MediaStreamerService extends Service {
 	private void shutdown() {
         
         Log.d(APPTAG," > shutdown()");
+        
+        Log.d(APPTAG," >> In foreground: "+ isServiceRunningInForeground(MediaStreamerService.class));
 
 		// WifiLock OFF
 		if (wifiLock!=null) { 
@@ -494,6 +498,17 @@ public class MediaStreamerService extends Service {
 	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 	        if (serviceClass.getName().equals(service.service.getClassName())) {
 	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	// --- Service running
+	private boolean isServiceRunningInForeground(Class<?> serviceClass) {
+	    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceClass.getName().equals(service.service.getClassName())) {
+	            return service.foreground;
 	        }
 	    }
 	    return false;

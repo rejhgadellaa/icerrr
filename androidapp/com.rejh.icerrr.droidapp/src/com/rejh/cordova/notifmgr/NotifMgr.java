@@ -19,7 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -39,6 +39,8 @@ public class NotifMgr extends CordovaPlugin {
 	// --- Variables
 	
 	final static String APPTAG = "NotifMgr";
+	
+	public Notification notifObj;
 	
 	private Context context;
 	
@@ -236,7 +238,8 @@ public class NotifMgr extends CordovaPlugin {
 	        
 	        // Kablooie
 	        NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-	        notifMgr.notify(id, builder.build());
+	        notifObj = builder.build();
+	        notifMgr.notify(id, notifObj);
 	        
 	        if (callbackContext!=null) { callbackContext.success("OK"); }
 		

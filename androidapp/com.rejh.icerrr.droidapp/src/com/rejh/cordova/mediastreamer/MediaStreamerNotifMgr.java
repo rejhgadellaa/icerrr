@@ -1,12 +1,12 @@
 package com.rejh.cordova.mediastreamer;
 
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -35,7 +35,7 @@ public class MediaStreamerNotifMgr {
 	
 	// Variables
 	
-	
+	public Notification notifObj;
 	
 	// --------------------------------------------------
 	// Constructor
@@ -144,6 +144,7 @@ public class MediaStreamerNotifMgr {
 			
 			// Call NotifMgr plugin
 			notifMgr.execute("make",args, null, context);
+			notifObj = notifMgr.notifObj;
 			
 			return (notif_id>0)?notif_id:NOTIFICATION_ID;
         	
