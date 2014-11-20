@@ -21,9 +21,10 @@
     /**
     * Start player
     */
-    MediaStreamer.prototype.play = function(stream_url, isAlarm, volume, win, fail) {
+    MediaStreamer.prototype.play = function(stream_url, isAlarm, volume, stationData, win, fail) {
 		console.log("MediaStreamer.prototype.play()");
-        cordova.exec(win, fail, "MediaStreamer", "play", [stream_url,isAlarm,volume]);
+		var sd = stationData;
+        cordova.exec(win, fail, "MediaStreamer", "play", [stream_url,isAlarm,volume,""+sd.station_id,sd.station_name,sd.station_host,""+sd.station_port,sd.station_path]);
     };
 
     /**

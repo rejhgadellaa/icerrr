@@ -31,7 +31,7 @@ public class MediaStreamerNotifMgr {
 	private CordovaInterface cordova;
 	private CordovaWebView webview;
 	
-	public static int NOTIFICATION_ID = 1;
+	public final int NOTIFICATION_ID = 1;
 	
 	// Variables
 	
@@ -72,6 +72,10 @@ public class MediaStreamerNotifMgr {
 	
 	// Notify
 	public int notif(String stationName, String nowPlaying, int notif_id) {
+		return notif(stationName, nowPlaying, notif_id, true);
+	}
+	
+	public int notif(String stationName, String nowPlaying, int notif_id, boolean onlybuild) {
 		
 		Log.d(LOGTAG,"MediaStreamerNotifMgr.notify()");
 		
@@ -82,7 +86,9 @@ public class MediaStreamerNotifMgr {
 		
 			// Create opts
 			JSONObject opts = new JSONObject();
-			opts.put("onlybuild",true);
+			
+			if (onlybuild) { opts.put("onlybuild",true); }
+			
 			opts.put("id", (notif_id>0)?notif_id:NOTIFICATION_ID);
 			opts.put("title","Icerrr: "+ stationName);
 			opts.put("message", (nowPlaying!=null) ? nowPlaying : "Now playing: Unknown");

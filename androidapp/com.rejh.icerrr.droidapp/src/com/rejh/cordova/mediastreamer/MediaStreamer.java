@@ -144,7 +144,15 @@ public class MediaStreamer extends CordovaPlugin {
         	Log.e(APPTAG," > Exception on args.getBoolean(2) - volume!!");
         }
         
-        Log.d(APPTAG," > isAlarm: "+ isAlarm);
+        // More args
+        
+        String station_id = args.getString(3);
+        String station_name = args.getString(4);
+        String station_host = args.getString(5);
+        String station_port = args.getString(6);
+        String station_path = args.getString(7);
+        
+        Log.d(APPTAG," > "+ station_host +", "+ station_port +", "+ station_path);
         
         // Start
         settEditor.putString("mediastreamer_streamUrl", stream_url);
@@ -152,7 +160,14 @@ public class MediaStreamer extends CordovaPlugin {
         serviceIntent.putExtra("stream_url", stream_url);
         serviceIntent.putExtra("isAlarm", isAlarm);
         serviceIntent.putExtra("volume", volume);
+        serviceIntent.putExtra("station_id",station_id);
+        serviceIntent.putExtra("station_name",station_name);
+        serviceIntent.putExtra("station_host",station_host);
+        serviceIntent.putExtra("station_port",station_port);
+        serviceIntent.putExtra("station_path",station_path);
         context.startService(serviceIntent);
+        
+        Log.d(APPTAG," > isAlarm: "+ isAlarm);
     	
     	callbackContext.success("OK");
     	

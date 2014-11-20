@@ -1,3 +1,7 @@
+v0.124 (beta)
+  * Moved notification handling to MediaStreamer service; should fix notifs that were canceled randomly and now playing info is updated when app is not in foreground
+  * Fix: install for new users would fail
+
 v0.123 (stable)
   * Potential fix: Stream would sometimes fallback to 3FM
   * Fix: service was not killed when audio focus was completely lost

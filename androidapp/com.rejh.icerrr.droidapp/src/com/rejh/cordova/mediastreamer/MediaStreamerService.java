@@ -1,5 +1,13 @@
 package com.rejh.cordova.mediastreamer;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import moz.http.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Service;
@@ -56,6 +64,16 @@ public class MediaStreamerService extends Service {
 	private MediaStreamerNotifMgr msNotifMgr;
     
     private String stream_url_active = null;
+    
+    private String station_id = "-1";
+    private String station_name = "Unknown station";
+    private String station_host = null;
+    private String station_port = null;
+    private String station_path = null;
+    private String nowplaying = "Now playing: Unknown";
+    
+    private Thread nowPlayingPollThread;
+    private Timer nowPlayingPollTimer;
     
     int volumeBeforeDuck = -1;
 	
@@ -116,7 +134,17 @@ public class MediaStreamerService extends Service {
 		
 		// Cmds..
 		boolean cmd_pause_resume = false;
-		if(intent!=null) { cmd_pause_resume = intent.getBooleanExtra("pause_resume", false); }
+		if(intent!=null) { 
+			if (intent.hasExtra("pause_resume")) { cmd_pause_resume = intent.getBooleanExtra("pause_resume", false); }
+			if (intent.hasExtra("station_id")) {
+				station_id = intent.getStringExtra("station_id");
+				station_name = intent.getStringExtra("station_name");
+				station_host = intent.getStringExtra("station_host");
+				station_port = intent.getStringExtra("station_port");
+				station_path = intent.getStringExtra("station_path");
+			}
+			
+		}
 		if (mpMgr!=null) {
 			if (cmd_pause_resume && !sett.getBoolean("is_paused", false)) { // pause
 				Log.d(APPTAG," > cmd_pause_resume PAUSE!");
@@ -136,9 +164,11 @@ public class MediaStreamerService extends Service {
 		}
 		
 		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
-		msNotifMgr.notif("Unknown station", null, msNotifMgr.NOTIFICATION_ID);
+		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", "Now playing: ...", msNotifMgr.NOTIFICATION_ID);
 		
 		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
+		
+		startNowPlayingPoll();
 		
 		return START_STICKY;
 		
@@ -178,6 +208,8 @@ public class MediaStreamerService extends Service {
 		catch (Exception e) { Log.w(APPTAG," -> NULLPOINTER EXCEPTION"); }
 		
 		shutdown();
+		
+		stopNowPlayingPoll();
 		
 		msNotifMgr.cancel(-1);
 		
@@ -457,6 +489,72 @@ public class MediaStreamerService extends Service {
             
         }
     }
+	
+	// ------------------
+	// THREAD: Get now playing info...
+	
+	private void startNowPlayingPoll() {
+		nowPlayingPollTimer = new Timer();
+		nowPlayingPollTimer.scheduleAtFixedRate( new TimerTask() {
+			public void run() {
+				
+				runNowPlayingPoll();
+				
+			}
+		}, 5*1000, 1*60*1000); // every ~minute
+	}
+	
+	private void stopNowPlayingPoll() {
+		if (nowPlayingPollTimer!=null) { nowPlayingPollTimer.cancel(); }
+	}
+	
+	private void runNowPlayingPoll() {
+		nowPlayingPollThread = new Thread(new Runnable(){
+			@Override
+			public void run(){
+				
+				String url = "http://rejh.nl/icerrr/api/?a=get&q={"
+						+"\"get\":\"station_info\","
+						+"\"station_id\":\""+station_id+"\","
+						+"\"station_host\":\""+station_host+"\","
+						+"\"station_port\":\""+station_port+"\","
+						+"\"station_path\":\""+station_path+"\""
+						+"}";
+				
+				Log.d(APPTAG," > NowPlayingPoll: "+ url);
+				String jsons = HttpRequest.get(url).content;
+				
+				try {
+					
+					JSONObject json = new JSONObject(jsons);
+					
+					String nowplaying_new = nowplaying;
+					if (json.has("error")) {
+						Log.e(APPTAG," > Error running nowPlayingPoll:"+ json.getString("errormsg"));
+						nowplaying_new = "Now playing: Unknown";
+					} else {
+						nowplaying_new = json.getJSONObject("data").getString("nowplaying");
+						if (nowplaying_new==null) { 
+							Log.w(APPTAG," > Nowplaying == null");
+							nowplaying_new = "Now playing: Unknown"; 
+						}
+					}
+					
+					if (!nowplaying_new.equals(nowplaying)) {
+						msNotifMgr.notif(station_name,nowplaying,msNotifMgr.NOTIFICATION_ID,false);
+						Log.d(APPTAG," > NowPlaying: "+ station_name +", "+ nowplaying);
+						nowplaying = nowplaying_new;
+					}
+					
+					
+				} catch(JSONException e) {
+					Log.e(APPTAG," > runNowPlayingPoll.JSONException!");
+					e.printStackTrace();
+				}
+			}
+		});
+		nowPlayingPollThread.start();
+	}
 	
 	// ------------------
 	// METHODS
