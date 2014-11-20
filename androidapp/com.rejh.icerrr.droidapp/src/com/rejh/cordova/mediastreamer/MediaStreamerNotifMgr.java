@@ -31,7 +31,7 @@ public class MediaStreamerNotifMgr {
 	private CordovaInterface cordova;
 	private CordovaWebView webview;
 	
-	private static int NOTIFICATION_ID = 1;
+	public static int NOTIFICATION_ID = 1;
 	
 	// Variables
 	
@@ -82,6 +82,7 @@ public class MediaStreamerNotifMgr {
 		
 			// Create opts
 			JSONObject opts = new JSONObject();
+			opts.put("onlybuild",true);
 			opts.put("id", (notif_id>0)?notif_id:NOTIFICATION_ID);
 			opts.put("title","Icerrr: "+ stationName);
 			opts.put("message", (nowPlaying!=null) ? nowPlaying : "Now playing: Unknown");

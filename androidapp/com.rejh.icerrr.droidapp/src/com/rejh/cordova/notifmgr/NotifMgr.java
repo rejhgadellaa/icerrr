@@ -239,7 +239,11 @@ public class NotifMgr extends CordovaPlugin {
 	        // Kablooie
 	        NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 	        notifObj = builder.build();
-	        notifMgr.notify(id, notifObj);
+	        if (obj.has("onlybuild")) {
+	        	Log.d(APPTAG," > Only build notification...");
+	        } else {
+	        	notifMgr.notify(id, notifObj);
+	        }
 	        
 	        if (callbackContext!=null) { callbackContext.success("OK"); }
 		

@@ -136,9 +136,9 @@ public class MediaStreamerService extends Service {
 		}
 		
 		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
-		msNotifMgr.notif("Unknown station", null, 1);
+		msNotifMgr.notif("Unknown station", null, msNotifMgr.NOTIFICATION_ID);
 		
-		startForeground(1,msNotifMgr.notifObj);
+		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 		
 		return START_STICKY;
 		
