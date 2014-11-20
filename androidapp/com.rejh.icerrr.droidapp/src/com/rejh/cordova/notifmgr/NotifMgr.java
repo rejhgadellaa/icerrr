@@ -47,7 +47,16 @@ public class NotifMgr extends CordovaPlugin {
 	
 	private String packageName;
 	
-	// --- Execute
+	// --- Execute@Override
+	public boolean execute(String action, JSONArray args, CallbackContext callbackContext, Context _context) {
+		context = _context;
+		try {
+			return execute(action, args, callbackContext);
+		} catch (JSONException e) {
+        	e.printStackTrace();
+        	return false;
+        }
+	}
 	
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -57,7 +66,7 @@ public class NotifMgr extends CordovaPlugin {
         // > Setup
         
         // Context
-        context = this.cordova.getActivity();
+        if (context==null) { context = this.cordova.getActivity(); }
         
         // Preferences
         sett = context.getSharedPreferences(APPTAG,2);
@@ -69,7 +78,7 @@ public class NotifMgr extends CordovaPlugin {
         // > Check action
         
         if (action==null) {
-        	callbackContext.error("Action is null");
+        	if (callbackContext!=null) { callbackContext.error("Action is null"); }
             return false;
         }
         
@@ -96,7 +105,7 @@ public class NotifMgr extends CordovaPlugin {
             
             // Whut??
             else {
-                callbackContext.error("NotifMgr: Action contains invalid value: "+ action);
+            	if (callbackContext!=null) { callbackContext.error("NotifMgr: Action contains invalid value: "+ action); }
                 return false;
             }
             
@@ -128,7 +137,7 @@ public class NotifMgr extends CordovaPlugin {
         // Check arguments
         JSONObject obj = args.getJSONObject(0);
         if (obj==null) { 
-        	callbackContext.error("argobj is null");
+        	if (callbackContext!=null) { callbackContext.error("argobj is null"); }
         	return; 
         }
         
@@ -156,7 +165,7 @@ public class NotifMgr extends CordovaPlugin {
         	JSONObject intentopts = obj.has("intent") ? obj.getJSONObject("intent") : null;
         	if (intentopts==null) {
         		// Defaults...?
-        		callbackContext.error("Missing arg: intent{}");
+        		if (callbackContext!=null) { callbackContext.error("Missing arg: intent{}"); }
         		return;
         	}
     		JSONArray intentExtras = intentopts.has("extras") ? intentopts.getJSONArray("extras") : null;
@@ -166,8 +175,8 @@ public class NotifMgr extends CordovaPlugin {
         	
 	        // Check required args
 	        if (id==-1 || message==null || title==null || smallicon==null) {
-	        	Log.e(APPTAG," -> Missing argsobj param: id, msg, title?");
-	        	callbackContext.error("Missing argsobj param: id, msg, title?");
+	        	Log.e(APPTAG," -> Missing argsobj param: id, msg, title, smallicon?");
+	        	if (callbackContext!=null) { callbackContext.error("Missing argsobj param: id, msg, title?"); }
 	        	return;
 	        }
 	        
@@ -229,13 +238,13 @@ public class NotifMgr extends CordovaPlugin {
 	        NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 	        notifMgr.notify(id, builder.build());
 	        
-	        callbackContext.success("OK");
+	        if (callbackContext!=null) { callbackContext.success("OK"); }
 		
         } catch (Exception e) {
 		Log.e(APPTAG," -> Error parsing argsobj");
 		Log.e(APPTAG,e.toString());
 		e.printStackTrace();
-		callbackContext.error("Error parsing argsobj");
+		if (callbackContext!=null) { callbackContext.error("Error parsing argsobj"); }
 		return;
 		}
         
@@ -256,7 +265,7 @@ public class NotifMgr extends CordovaPlugin {
         NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notifMgr.cancel(id);
         
-        callbackContext.success("OK");
+        if (callbackContext!=null) { callbackContext.success("OK"); }
         
     }
     
@@ -268,7 +277,7 @@ public class NotifMgr extends CordovaPlugin {
         NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notifMgr.cancelAll();
         
-        callbackContext.success("OK");
+        if (callbackContext!=null) { callbackContext.success("OK"); }
         
     }
     

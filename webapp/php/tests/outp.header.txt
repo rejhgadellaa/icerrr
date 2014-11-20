@@ -1,15 +1,15 @@
-{"station_id":"CUSTOM.Slam_FM_6271d9876544d3559745f8982414e485_14928ca5693_23382","host":"edge2-icecast.538.lw.triple-it.nl","port":80,"path":"/SLAMFM_MP3"}
+{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
-icy-br:128
-ice-audio-info: bitrate=128
-icy-br:128
-icy-description:SLAMFM_MP3
-icy-name:SLAMFM_MP3
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Pop
+icy-name:3FM Serious Radio
 icy-pub:0
-icy-url:SLAMFM_MP3
-Server: Icecast 2.3.3
+icy-url:http://www.3fm.nl
+Server: ics2jss.omroep.nl
 Cache-Control: no-cache
 icy-metaint:16000
 

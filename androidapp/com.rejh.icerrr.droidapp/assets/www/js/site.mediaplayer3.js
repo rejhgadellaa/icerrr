@@ -231,6 +231,8 @@ site.mp.notif = function() {
 	
 	loggr.info("site.mp.notif()");
 	
+	return;
+	
 	var opts = {};
 	
 	// Required
@@ -298,6 +300,8 @@ site.mp.notif = function() {
 site.mp.notifCancel = function(id) {
 	
 	loggr.info("site.mp.notifCancel(): "+id);
+	
+	return;
 	
 	if (!id && id!==0) { id = site.cfg.notifs.notifID_mediaplayer; }
 	

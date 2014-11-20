@@ -53,6 +53,7 @@ public class MediaStreamerService extends Service {
 	private PhoneStateListener phoneListener;
 	
 	private ObjMediaPlayerMgr mpMgr;
+	private MediaStreamerNotifMgr msNotifMgr;
     
     private String stream_url_active = null;
     
@@ -134,6 +135,9 @@ public class MediaStreamerService extends Service {
 			setup();
 		}
 		
+		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
+		msNotifMgr.notif("Unknown station", null, -1);
+		
 		return START_STICKY;
 		
 	}
@@ -173,6 +177,7 @@ public class MediaStreamerService extends Service {
 		
 		shutdown();
 		
+		msNotifMgr.cancel(-1);
 		
 	}
 	
