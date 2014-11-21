@@ -46,8 +46,6 @@ public class MediaStreamerService extends Service {
 	private Intent incomingIntent;
 	
 	private AudioManager audioMgr;
-	private RemoteControlReceiver remoteControlReceiver;
-	private ComponentName remoteControlReceiverComponent;
 	
 	private WifiManager wifiMgr;
 	private WifiManager.WifiLock wifiLock;
@@ -102,8 +100,6 @@ public class MediaStreamerService extends Service {
 		powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
         telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        remoteControlReceiver = new RemoteControlReceiver();
-        remoteControlReceiverComponent = new ComponentName(this, remoteControlReceiver.getClass());
 		
 		// Make sticky
 		try {
@@ -442,53 +438,6 @@ public class MediaStreamerService extends Service {
 	    }
 	    
 	};
-	
-	// ------------------
-	// INCLUDED BROADCAST RECEIVERS
-	
-	public class RemoteControlReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-        	
-        	Log.d(APPTAG,"RemoteControlReceiver");
-        	
-        	// Stop if needed 
-        	if (intent.getAction()==null) { return; }
-            if (!intent.getAction().equals(Intent.ACTION_MEDIA_BUTTON)) { return; }
-    		
-            // Get key event
-    		KeyEvent event = (KeyEvent)intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
-            
-    		// Event empty > return
-    		if (event == null) {
-    			Log.d(APPTAG,"event==null");
-    		    return;
-    		}
-    		
-    		int action = event.getAction();
-    		if (action == KeyEvent.ACTION_UP) {
-    			
-    		    if (event.getKeyCode()==126 || event.getKeyCode()==127) { // Play/pause
-    		    		
-    		    }
-    		    
-    		    else if (event.getKeyCode()==88) { // Previous 
-    		    		
-    		    }
-    		    
-    		    else if (event.getKeyCode()==87) { // Next 
-    		    		
-    		    }
-    		    
-    		    else {
-    		    	Log.d(APPTAG," > "+ event.getKeyCode());
-    		    }
-    			
-    		}
-            
-            
-        }
-    }
 	
 	// ------------------
 	// THREAD: Get now playing info...

@@ -33,6 +33,7 @@ import android.graphics.Color;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 public class NotifMgr extends CordovaPlugin {
@@ -242,7 +243,7 @@ public class NotifMgr extends CordovaPlugin {
 	        }
 	        
 	        // Kablooie
-	        NotificationManager notifMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+	        NotificationManagerCompat notifMgr = NotificationManagerCompat.from(context);
 	        notifObj = builder.build();
 	        if (obj.has("onlybuild")) {
 	        	Log.d(APPTAG," > Only build notification...");
