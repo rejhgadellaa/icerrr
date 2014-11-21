@@ -1,4 +1,8 @@
-v0.124 (beta)
+v0.125 (stable)
+  * Fix: Now playing info in notification was not always showing correct info
+  * Color for notification icon (Android 5.0)
+
+v0.124 (stable)
   * Moved notification handling to MediaStreamer service; should fix notifs that were canceled randomly and now playing info is updated when app is not in foreground
   * Fix: install for new users would fail
 

@@ -5,7 +5,7 @@
         <item name="windowActionBar">false</item> <!-- For 2.x version  -->
 		<item name="android:colorPrimary">#ff2d6073</item>
 		<item name="android:colorPrimaryDark">#ff2d6073</item>
-		<item name="android:colorAccent">#ffeeeeee</item>
+		<item name="android:colorAccent">#ff2d6073</item>
   </style>
  
 </resources>

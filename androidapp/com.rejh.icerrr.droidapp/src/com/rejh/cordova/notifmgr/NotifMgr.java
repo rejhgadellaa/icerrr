@@ -29,6 +29,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.support.v4.app.NotificationCompat;
@@ -156,6 +157,7 @@ public class NotifMgr extends CordovaPlugin {
         	//String intentClassName = obj.has("intentClassName") ? obj.getString("intentClassName") : null; // TODO: should be able to use 'com.rejh.icerr.doirdapp.MAIN_ACTIVITY'
         	
         	// Optional
+        	String color = obj.has("color") ? obj.getString("color") : null;
         	String largeicon = obj.has("largeicon") ? obj.getString("largeicon") : null;
         	String ticker = obj.has("ticker") ? obj.getString("ticker") : title;
         	int priority = obj.has("priority") ? getPriority(obj.getString("priority")) : NotificationCompat.PRIORITY_DEFAULT;
@@ -199,6 +201,9 @@ public class NotifMgr extends CordovaPlugin {
 	        builder.setContentIntent(notifPendingIntent);
 	        
 	        // > Optionals
+	        
+	        // Color (5.0)
+	        builder.setColor(Color.parseColor(color));
 	        
 	        // Large icon
 	        if (largeicon!=null) { builder.setLargeIcon(getIcon(largeicon)); } // TODO: create bitmap

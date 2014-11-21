@@ -164,7 +164,7 @@ public class MediaStreamerService extends Service {
 		}
 		
 		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
-		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", "Now playing: ...", msNotifMgr.NOTIFICATION_ID);
+		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", (nowplaying!=null)?nowplaying:"Now playing: ...", msNotifMgr.NOTIFICATION_ID);
 		
 		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 		
@@ -541,9 +541,9 @@ public class MediaStreamerService extends Service {
 					}
 					
 					if (!nowplaying_new.equals(nowplaying)) {
-						msNotifMgr.notif(station_name,nowplaying,msNotifMgr.NOTIFICATION_ID,false);
-						Log.d(APPTAG," > NowPlaying: "+ station_name +", "+ nowplaying);
 						nowplaying = nowplaying_new;
+						Log.d(APPTAG," > NowPlaying: "+ station_name +", "+ nowplaying);
+						msNotifMgr.notif(station_name,nowplaying,msNotifMgr.NOTIFICATION_ID,false);
 					}
 					
 					

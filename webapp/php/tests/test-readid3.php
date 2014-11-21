@@ -41,7 +41,7 @@ $queryj = json_decode($querys,true);
 	// if (!$queryj["station_id"]) { $queryj["station_id"] = "unknown"; }
 	if (!$queryj["host"]) { $queryj["host"] = "null"; }
 	if (!$queryj["port"]) { $queryj["port"] = 80; }
-	if (!$queryj["path"]) { $queryj["path"] = "/"; }
+	if (!$queryj["path"] || $queryj["path"]=="null") { $queryj["path"] = "/"; }
 	
 $timebgn = time();
 
