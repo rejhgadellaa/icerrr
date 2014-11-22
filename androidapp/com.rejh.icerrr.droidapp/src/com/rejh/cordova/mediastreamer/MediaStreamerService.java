@@ -176,6 +176,14 @@ public class MediaStreamerService extends Service {
 			}
 			
 		}
+		
+		// Check
+		if (station_id.equals("-1")) {
+			Log.e(APPTAG," > station_id == -1");
+			stopSelf();
+		}
+		
+		// Go
 		if (mpMgr!=null) {
 			if (cmd_pause_resume && !sett.getBoolean("is_paused", false)) { // pause
 				Log.d(APPTAG," > cmd_pause_resume PAUSE!");

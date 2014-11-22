@@ -1,3 +1,6 @@
+v0.128 ()
+  * Bugfixes
+
 v0.127 (stable)
   * New: Android Wear support!
   * Bonus: Control Icerrr from your lockscreen and (BT) headsets
