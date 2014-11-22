@@ -21,6 +21,16 @@ site.helpers.addCachebust = function(src) {
 	return src;
 }
 
+// ---> Quick
+
+site.helpers.shouldDownloadImage = function(val) {
+	var res = false;
+	if (!val) { return true; }
+	if (val.indexOf("file://")<0) { return true; }
+	if (val.indexOf(".base64")>0) { return true; }
+	return false;
+}
+
 // ---> Stations
 
 // Merge Stations

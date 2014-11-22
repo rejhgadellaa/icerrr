@@ -74,7 +74,8 @@ site.home.init = function() {
 		}
 	);
 	$("#home .main .station_image img").on("error",function(evt) {
-		ev.currentTarget.src = "img/icons-48/ic_launcher.png";
+		loggr.error(" > Error loading image: "+evt.currentTarget.src,{dontupload:true});
+		evt.currentTarget.src = "img/icons-48/ic_launcher.png";
 	});
 	
 	// extra ui
@@ -449,7 +450,7 @@ site.home.handleStationImage = function(src) {
 		
 		var station = site.session.currentstation;
 		
-		if (!station.station_image_local && station.station_image.indexOf("file://")<0 || station.station_image_local.indexOf(".base64")>0) {
+		if (site.helpers.shouldDownloadImage(station.station_image_local)) {
 			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 			site.helpers.downloadImage($("#home .main .station_image img")[0], filename, station.station_icon,
 				function(fileEntry,imgobj) {

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.RemoteControlClient;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
@@ -38,6 +39,8 @@ public class ObjMediaPlayerMgr {
 	
 	private SharedPreferences sett;
 	private SharedPreferences.Editor settEditor;
+	
+	private MediaStreamerService service;
 	
 	private MediaPlayer mp;
 	private StreamProxy proxy;
@@ -69,7 +72,7 @@ public class ObjMediaPlayerMgr {
 	// --------------------------------------------------
 	// Constructor
 	
-	public ObjMediaPlayerMgr(Context bindToContext, ConnectivityManager bindToConnMgr, WifiManager bindToWifiMgr) {
+	public ObjMediaPlayerMgr(Context bindToContext, ConnectivityManager bindToConnMgr, WifiManager bindToWifiMgr, MediaStreamerService bindToService) {
 		
 		Log.i(LOGTAG,"MediaPlayerMgr.Constructor()");
 		
@@ -78,6 +81,7 @@ public class ObjMediaPlayerMgr {
         settEditor = sett.edit();
         connMgr = bindToConnMgr;
         wifiMgr = bindToWifiMgr;
+        service = bindToService;
 		
         // Get SDK Version (determines use of StreamProxy for 2.1 en lower)
         sdkVersion = 0;
@@ -114,6 +118,7 @@ public class ObjMediaPlayerMgr {
 			settEditor.putInt("mediaplayerState",MEDIA_RUNNING);
 			settEditor.putInt("mediastreamer_state",MEDIA_RUNNING);
 			settEditor.commit();
+			if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PLAYING); }
 		} else {
 			// Kill self...
 			Intent serviceIntent = new Intent(context, MediaStreamerService.class);
@@ -182,6 +187,11 @@ public class ObjMediaPlayerMgr {
 			settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 			settEditor.commit();
 			
+			// Playing!
+	        if (service.remoteControlClient!=null) {
+	        	service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_BUFFERING);
+	        }
+			
 			}
 		catch (IllegalArgumentException e) { 
 			Toast.makeText(context, "MP IllArgumentException:\n"+e,Toast.LENGTH_LONG).show();
@@ -245,6 +255,7 @@ public class ObjMediaPlayerMgr {
 		if (mp==null) { return; }
 		settEditor.putInt("mediastreamer_state",MEDIA_PAUSED);
 		settEditor.commit();
+		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PAUSED); }
 		if (mp!=null) { mp.release(); mp = null; }
 		if (proxy!=null) { proxy.stop(); proxy = null; }
 		}
@@ -253,6 +264,7 @@ public class ObjMediaPlayerMgr {
 	public void resume() {
 		settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 		settEditor.commit();
+		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_BUFFERING); }
 		init(streamUrl,false);
 		}
 	
@@ -280,6 +292,11 @@ public class ObjMediaPlayerMgr {
 			settEditor.putInt("mediaplayerState",MEDIA_RUNNING);
 			settEditor.putInt("mediastreamer_state",MEDIA_RUNNING);
 			settEditor.commit();
+			
+			// Playing!
+	        if (service.remoteControlClient!=null) {
+	        	service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PLAYING);
+	        }
 			
 			// Notify
 			/* TODO: Notification

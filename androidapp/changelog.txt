@@ -1,5 +1,10 @@
+v0.127 (stable)
+  * New: Android Wear support!
+  * Bonus: Control Icerrr from your lockscreen and (BT) headsets
+  * More fixes for missing station images
+
 v0.126 (stable)
-  * Android Wear support! (That was pretty easy)
+  * Bugfixes
 
 v0.125 (stable)
   * Fix: Now playing info in notification was not always showing correct info

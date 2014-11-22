@@ -1,5 +1,9 @@
 package com.rejh.cordova.mediastreamer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,23 +14,33 @@ import org.json.JSONObject;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
+import android.media.MediaMetadataRetriever;
+import android.media.RemoteControlClient;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.StrictMode;
+import android.os.StrictMode.ThreadPolicy;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.KeyEvent;
+
+import com.example.android.musicplayer.RemoteControlClientCompat;
+import com.example.android.musicplayer.RemoteControlHelper;
 
 public class MediaStreamerService extends Service {
 
@@ -39,6 +53,8 @@ public class MediaStreamerService extends Service {
 	
 	private Context context;
 	
+	private String packageName;
+	
 	private SharedPreferences sett;
 	private SharedPreferences.Editor settEditor;
 	
@@ -46,6 +62,13 @@ public class MediaStreamerService extends Service {
 	private Intent incomingIntent;
 	
 	private AudioManager audioMgr;
+	
+	public RemoteControlReceiver remoteControlReceiver;
+	private ComponentName remoteControlReceiverComponent;
+	
+	public RemoteControlClientCompat remoteControlClient;
+	
+	private RemoteControlClientCompat.MetadataEditorCompat metadataEditor;
 	
 	private WifiManager wifiMgr;
 	private WifiManager.WifiLock wifiLock;
@@ -89,6 +112,7 @@ public class MediaStreamerService extends Service {
 		
 		// Context
 		context = getApplicationContext();
+		packageName = context.getPackageName();
 
         // Preferences
         sett = context.getSharedPreferences(APPTAG,Context.MODE_MULTI_PROCESS | 2);
@@ -100,6 +124,17 @@ public class MediaStreamerService extends Service {
 		powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
         telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        
+        remoteControlReceiver = new RemoteControlReceiver();
+        remoteControlReceiverComponent = new ComponentName(this, remoteControlReceiver.getClass());
+        audioMgr.registerMediaButtonEventReceiver(remoteControlReceiverComponent);
+        
+        Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
+        mediaButtonIntent.setComponent(remoteControlReceiverComponent);
+        PendingIntent mediaPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, mediaButtonIntent, 0);
+        remoteControlClient = new RemoteControlClientCompat(mediaPendingIntent);
+        remoteControlClient.setTransportControlFlags(RemoteControlClient.FLAG_KEY_MEDIA_PLAY_PAUSE);
+        RemoteControlHelper.registerRemoteControlClient(audioMgr,remoteControlClient);
 		
 		// Make sticky
 		try {
@@ -165,6 +200,13 @@ public class MediaStreamerService extends Service {
 		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 		
 		startNowPlayingPoll();
+        
+        // Metadata
+        metadataEditor = remoteControlClient.editMetadata(true);
+        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, "Icerrr");
+        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, station_name);
+        metadataEditor.putBitmap(100, getIcon("wear_album_art"));
+        metadataEditor.apply();
 		
 		return START_STICKY;
 		
@@ -208,6 +250,15 @@ public class MediaStreamerService extends Service {
 		stopNowPlayingPoll();
 		
 		msNotifMgr.cancel(-1);
+        
+        // Stopped!
+        if (remoteControlClient!=null) {
+        	remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_STOPPED);
+        }
+        
+        // Unreg remotecontrolclients and -receivers
+        RemoteControlHelper.unregisterRemoteControlClient(audioMgr,remoteControlClient);
+        audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
 		
 	}
 	
@@ -284,7 +335,7 @@ public class MediaStreamerService extends Service {
 		
 		// MediaPlayer
 		if (mpMgr!=null) { mpMgr.destroy(); }
-		mpMgr = new ObjMediaPlayerMgr(context, connMgr, wifiMgr);
+		mpMgr = new ObjMediaPlayerMgr(context, connMgr, wifiMgr, this);
 		mpMgr.init(stream_url,isAlarm);
         
         stream_url_active = stream_url;
@@ -561,37 +612,118 @@ public class MediaStreamerService extends Service {
 	    return false;
 	}
 	
+
+    
+    // > Icons
+    // Ripped from LocalNotification plugin: https://github.com/katzer/cordova-plugin-local-notifications/blob/master/src/android/Options.java
+    
+    private Bitmap getIcon (String icon) {
+        Bitmap bmp = null;
+
+        if (icon.startsWith("http")) {
+            bmp = getIconFromURL(icon);
+        } else if (icon.startsWith("file://")) {
+            bmp = getIconFromURI(icon);
+        }
+
+        if (bmp == null) {
+            bmp = getIconFromRes(icon);
+        }
+
+        return bmp;
+    }
+    
+    private int getSmallIcon (String iconName) {
+        int resId       = 0;
+
+        resId = getIconValue(packageName, iconName);
+
+        if (resId == 0) {
+            resId = getIconValue("android", iconName);
+        }
+
+        if (resId == 0) {
+            resId = getIconValue(packageName, "icon");
+        }
+
+        return resId;
+    }
+    
+    private int getIconValue (String className, String iconName) {
+        int icon = 0;
+
+        try {
+            Class<?> klass  = Class.forName(className + ".R$drawable");
+
+            icon = (Integer) klass.getDeclaredField(iconName).get(Integer.class);
+        } catch (Exception e) {}
+
+        return icon;
+    }
+    
+    private Bitmap getIconFromURL (String src) {
+        Bitmap bmp = null;
+        ThreadPolicy origMode = StrictMode.getThreadPolicy();
+
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            StrictMode.ThreadPolicy policy =
+                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+
+            connection.setDoInput(true);
+            connection.connect();
+
+            InputStream input = connection.getInputStream();
+
+            bmp = BitmapFactory.decodeStream(input);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        StrictMode.setThreadPolicy(origMode);
+
+        return bmp;
+    }
+    
+    private Bitmap getIconFromRes (String icon) {
+        Resources res = context.getResources();
+        int iconId = 0;
+
+        iconId = getIconValue(packageName, icon);
+
+        if (iconId == 0) {
+            iconId = getIconValue("android", icon);
+        }
+
+        if (iconId == 0) {
+            iconId = android.R.drawable.ic_menu_info_details;
+        }
+
+        Bitmap bmp = BitmapFactory.decodeResource(res, iconId);
+
+        return bmp;
+    }
+    
+    private Bitmap getIconFromURI (String src) {
+        AssetManager assets = context.getAssets();
+        Bitmap bmp = null;
+
+        try {
+            String path = src.replace("file:/", "www");
+            InputStream input = assets.open(path);
+
+            bmp = BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bmp;
+    }
+	
 	
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
