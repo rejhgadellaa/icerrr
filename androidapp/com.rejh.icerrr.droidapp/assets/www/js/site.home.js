@@ -44,6 +44,8 @@ site.home.init = function() {
 	site.home.init_ui_updates();
 	
 	// average color
+	$("#home .main .station_image img").off("load");
+	$("#home .main .station_image img").off("error");
 	$("#home .main .station_image img").on("load",
 		function(evt) { // TODO: detect transparent images..
 			var img = $("#home .main .station_image img")[0];
@@ -71,6 +73,9 @@ site.home.init = function() {
 			$("#home .main .station_image img").css("opacity",1.0);
 		}
 	);
+	$("#home .main .station_image img").on("error",function(evt) {
+		ev.currentTarget.src = "img/icons-48/ic_launcher.png";
+	});
 	
 	// extra ui
 	if (site.home.lastStationId!=site.session.currentstation.station_id) {
@@ -181,7 +186,13 @@ site.home.mpPlayToggle = function() {
 			}
 		} else {
 			loggr.log(" > No media, loadMedia()");
-			site.cast.loadMedia();
+			
+			try {
+				site.cast.loadMedia(); // <-- PROBLEM??
+			} catch(e) {
+				site.cast.session = null;
+			}
+			
 		}
 	} else {
 		loggr.log(" > Toggle mediaplayer");
@@ -438,7 +449,7 @@ site.home.handleStationImage = function(src) {
 		
 		var station = site.session.currentstation;
 		
-		if (!station.station_image_local || station.station_image_local.indexOf(".base64")>0 && station.icon.indexOf("file://")<0) {
+		if (!station.station_image_local && station.station_image.indexOf("file://")<0 || station.station_image_local.indexOf(".base64")>0) {
 			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 			site.helpers.downloadImage($("#home .main .station_image img")[0], filename, station.station_icon,
 				function(fileEntry,imgobj) {

@@ -28,6 +28,15 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 		errcb({code:-1,message:"No connection available"});
 	}
 	
+	if (targetPath.indexOf("file://")>=0) {
+		targetPath = targetPath.substr(targetPath.indexOf("file://"));
+		var res = {
+			fullPath : targetPath +"/"+ targetFile,
+			name : targetFile
+		};
+		cb(res);
+	}
+	
 	targetPath = encodeURI(targetPath);
 	targetFile = targetFile;
 	
