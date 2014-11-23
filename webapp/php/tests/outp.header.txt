@@ -1,18 +1,15 @@
-{"station_id":"Radio_10 – 80’s Hits_000cc1462348e28cab453ac05117553a_149c9d0e4be_7b201","host":"stream.radiocorp.nl","port":80,"path":"/r10_80s"}
+{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
 
 HTTP/1.0 200 OK
-Accept-Ranges: none
-Content-Type: audio/aac
-icy-br:128
-ice-audio-info: channels=2;samplerate=44100;bitrate=128
-icy-description:Liquidsoap Radio!
-icy-genre:Misc
-icy-name:r10_80s
-icy-pub:1
-icy-url:http://savonet.sf.net
-Server: Icecast 2.3.3-kh10
+Content-Type: audio/mpeg
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Pop
+icy-name:3FM Serious Radio
+icy-pub:0
+icy-url:http://www.3fm.nl
+Server: ics2sss.omroep.nl
 Cache-Control: no-cache
-Pragma: no-cache
-Expires: Mon, 26 Jul 1997 05:00:00 GMT
 icy-metaint:16000
 
