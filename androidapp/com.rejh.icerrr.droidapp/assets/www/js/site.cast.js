@@ -237,6 +237,15 @@ site.cast.loadMedia = function() {
 	
 	console.log(" > Metadata Image: "+ mediaInfo.metadata.images[0].url);
 	
+	if (!site.cast.session.loadMedia) {
+		loggr.error("site.cast.loadMedia called but site.cast.session.loadMedia is false?!");
+		try {
+			site.cast.destroy();
+		} catch(e) {
+			// ..
+		}
+		return;
+	}
 	site.cast.session.loadMedia(request,
 		function(media) {
 			site.cast.media = media;

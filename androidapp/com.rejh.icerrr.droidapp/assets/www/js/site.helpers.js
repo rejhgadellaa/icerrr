@@ -23,11 +23,11 @@ site.helpers.addCachebust = function(src) {
 
 // ---> Quick
 
-site.helpers.shouldDownloadImage = function(val) {
-	var res = false;
-	if (!val) { return true; }
-	if (val.indexOf("file://")<0) { return true; }
-	if (val.indexOf(".base64")>0) { return true; }
+site.helpers.shouldDownloadImage = function(localVal,iconVal) {
+	if (!iconVal) { iconVal = ""; }
+	if (!localVal) { return true; }
+	if (localVal.indexOf("file://")<0 && iconVal.indexOf("file://")<0) { return true; }
+	if (localVal.indexOf(".base64")>0 && iconVal.indexOf("file://")<0) { return true; }
 	return false;
 }
 

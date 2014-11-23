@@ -212,7 +212,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resulticon.addEventListener("error",function(ev){ 
 			ev.target.src = "img/icons-48/ic_launcher.png";
 		});
-		if (site.helpers.shouldDownloadImage(station.station_icon_local)) {
+		if (site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
 			var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
 			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_icon_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 			site.data.stations[stationIndex].station_icon_orig = station.station_icon // store original

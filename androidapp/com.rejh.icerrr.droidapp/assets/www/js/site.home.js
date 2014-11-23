@@ -89,6 +89,7 @@ site.home.init = function() {
 	
 	$("#home .main .station_image img").on("error",function(evt) {
 		loggr.warn(" > !onload: "+ evt.originalEvent.target.src);
+		$("#home .main .station_image img").attr("src","img/icons-48/ic_launcher.png");
 	});
 	
 	// extra events
@@ -450,7 +451,7 @@ site.home.handleStationImage = function(src) {
 		
 		var station = site.session.currentstation;
 		
-		if (site.helpers.shouldDownloadImage(station.station_image_local)) {
+		if (site.helpers.shouldDownloadImage(station.station_image_local,station.station_icon)) {
 			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 			site.helpers.downloadImage($("#home .main .station_image img")[0], filename, station.station_icon,
 				function(fileEntry,imgobj) {
