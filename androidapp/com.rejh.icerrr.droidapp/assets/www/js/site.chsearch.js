@@ -385,6 +385,7 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 			stream.type = stream.type.trim().split("\n").join("").split("\r").join("").toLowerCase();
 			loggr.log(" >> "+ stream.type +", "+ stream.stream);
 			if (stream.type == "audio/mpeg") {
+				loggr.log(" >>> SELECTED: "+ stream.stream);
 				stream_url = stream.stream;
 				break;
 			}
@@ -402,17 +403,20 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 	site.ui.showloading("Testing...","Checking station validity");
 	loggr.log(" > "+ station.station_url);
 	
+	site.vars.isTestingStation = true;
+	
 	var mediaPlayer = new Media(station.station_url,
 		function() {
 			// Do nothing..
 		},
 		function(error) {
+			if (!site.vars.isTestingStation) { return; }
 			loggr.warn(" > Station is not working");
-			loggr.log(" > Errorcode: "+error);
+			loggr.log(" > Errorcode: "+site.mp.getErrorByCode(error));
 			mediaPlayer.stop();
 			mediaPlayer.release();
 			site.ui.hideloading();
-			site.ui.showtoast("Station error, please choose another");
+			site.ui.showtoast("Can not play stream, please choose another");
 			if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
 		},
 		function(status) {
@@ -420,6 +424,8 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 			switch (status) {
 				
 				case Media.MEDIA_RUNNING:
+					
+					site.vars.isTestingStation = false;
 				
 					if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
 				
@@ -466,13 +472,14 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 
 	if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
 	site.chsearch.station_test_timeout = setTimeout(function(){
+		site.vars.isTestingStation = false;
 		loggr.warn(" > Station is not working");
 		loggr.log(" > Timed out");
 		mediaPlayer.stop();
 		mediaPlayer.release();
 		site.ui.hideloading();
-		site.ui.showtoast("Station error, please choose another");
-	},10000);
+		site.ui.showtoast("Stream did not start within a reasonable time, please choose another");
+	},15000);
 	
 }
 

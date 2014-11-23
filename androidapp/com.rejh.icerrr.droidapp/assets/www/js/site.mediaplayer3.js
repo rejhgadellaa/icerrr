@@ -251,6 +251,10 @@ site.mp.notifCancel = function(id) {
 
 site.mp.getErrorByCode = function(error) {
 	
+	if (!error.code) {
+		error = {code:error};
+	}
+	
 	switch(error.code) {
 		case MediaError.MEDIA_ERR_ABORTED: return "MediaError.MEDIA_ERR_ABORTED, "+error.message;
 		case MediaError.MEDIA_ERR_NETWORK: return "MediaError.MEDIA_ERR_NETWORK, "+error.message;

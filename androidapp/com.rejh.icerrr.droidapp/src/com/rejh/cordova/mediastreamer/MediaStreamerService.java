@@ -168,11 +168,29 @@ public class MediaStreamerService extends Service {
 		if(intent!=null) { 
 			if (intent.hasExtra("pause_resume")) { cmd_pause_resume = intent.getBooleanExtra("pause_resume", false); }
 			if (intent.hasExtra("station_id")) {
+				
+				// Get
 				station_id = intent.getStringExtra("station_id");
 				station_name = intent.getStringExtra("station_name");
 				station_host = intent.getStringExtra("station_host");
 				station_port = intent.getStringExtra("station_port");
 				station_path = intent.getStringExtra("station_path");
+				
+				// Store
+				try {
+					JSONObject station = new JSONObject();
+					station.put("station_id", station_id);
+					station.put("station_name", station_name);
+					station.put("station_host", station_host);
+					station.put("station_port", station_port);
+					station.put("station_port", station_path);
+					String stations = station.toString();
+					settEditor.putString("station_datas",stations);
+					settEditor.commit();
+				} catch(JSONException e) {
+					Log.e(APPTAG," > Could not create station jsonobject: "+e);
+				}
+				
 			}
 			
 		}
@@ -180,7 +198,32 @@ public class MediaStreamerService extends Service {
 		// Check
 		if (station_id.equals("-1")) {
 			Log.e(APPTAG," > station_id == -1");
-			stopSelf();
+			// Restore
+			String stations = sett.getString("station_datas", "{}");
+			try {
+				JSONObject station = new JSONObject(stations);
+				station_id = station.getString("station_id");
+				station_name = station.getString("station_name");
+				station_host = station.getString("station_host");
+				station_port = station.getString("station_port");
+				station_port = station.getString("station_port");
+			} catch(JSONException e) {
+				Log.e(APPTAG," > Could not get station jsonobject: "+e);
+				stopSelf();
+				return 0;
+			}
+			// Check again..
+			if (station_id==null) {
+				Log.e(APPTAG," > station_id == null");
+				stopSelf();
+				return 0;
+			}
+			if (station_id.equals("-1")) {
+				Log.e(APPTAG," > station_id == -1");
+				stopSelf();
+				return 0;
+			}
+			
 		}
 		
 		// Go
@@ -502,6 +545,7 @@ public class MediaStreamerService extends Service {
 	// THREAD: Get now playing info...
 	
 	private void startNowPlayingPoll() {
+		if (nowPlayingPollTimer!=null) { stopNowPlayingPoll(); }
 		nowPlayingPollTimer = new Timer();
 		nowPlayingPollTimer.scheduleAtFixedRate( new TimerTask() {
 			public void run() {
@@ -514,6 +558,7 @@ public class MediaStreamerService extends Service {
 	
 	private void stopNowPlayingPoll() {
 		if (nowPlayingPollTimer!=null) { nowPlayingPollTimer.cancel(); }
+		nowPlayingPollTimer = null;
 	}
 	
 	private void runNowPlayingPoll() {

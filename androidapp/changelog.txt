@@ -1,4 +1,6 @@
-v0.128 ()
+v0.128 (stable)
+  * Search station: Better feedback when validation fails
+  * Fix: MediaStreamer didn't stop polling now playing info
   * Bugfixes
 
 v0.127 (stable)
