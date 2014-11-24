@@ -1,4 +1,7 @@
-v0.129 (stable)
+v0.131 (stable)
+  * Fix: gradient scrims now work on older android versions
+
+v0.130 (stable)
   * More fixes for icons and images not loading properly (when. do. the bugs. stop... #terriblethunderbugs)
 
 v0.128 (stable)
