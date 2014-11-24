@@ -321,6 +321,9 @@ site.chedit.check = function(findStationName,silent) {
 	site.chedit.newentry.station_country = ""
 	site.chedit.newentry.station_bitrate = "-1 kbps"
 	
+	site.chedit.newentry.station_icon_local = false;
+	site.chedit.newentry.station_image_local = false;
+	
 	// Start checking the actual urls..
 	site.chedit.check_station_url(station_name, station_url, silent);
 	
