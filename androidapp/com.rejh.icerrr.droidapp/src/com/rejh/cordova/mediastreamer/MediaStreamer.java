@@ -320,8 +320,8 @@ public class MediaStreamer extends CordovaPlugin {
 			
 		}
 	
-	settEditor.commit();
-	callbackContext.success(1);
+		settEditor.commit();
+		callbackContext.success(1);
 		
 	}
 	
