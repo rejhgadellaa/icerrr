@@ -74,6 +74,8 @@ call %zipalign% -f -v 4 %cd%\bin\%name_prj%-release-unsigned.apk %cd%\..\_apks\%
 if not errorlevel 0 goto error
 if errorlevel 1 goto error
 
+copy %cd%\..\_apks\%name_prj%.apk D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_prj%.apk
+
 echo.
 echo You can now upload _apks/ScreenDoodle.apk to the Play Store!
 echo.
@@ -86,7 +88,6 @@ if not errorlevel 0 goto error
 
 %androidsdk%\platform-tools\adb -d shell am start %path_prj%/.%name_prj%
 if not errorlevel 0 goto error
-pause
 goto end
 
 :error

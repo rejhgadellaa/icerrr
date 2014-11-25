@@ -1,3 +1,7 @@
+v0.132 (stable)
+  * Fixes for icons with special characters in filename ('%' for example)
+  * Fonts are now stored and loaded locally
+
 v0.131 (stable)
   * Fix: gradient scrims now work on older android versions
 

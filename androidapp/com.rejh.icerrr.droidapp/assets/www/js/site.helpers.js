@@ -182,6 +182,17 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
 		filename += ".base64";
 	}
 	
+	// Ill chars
+	for (var i=0; i<site.cfg.illegalchars.length; i++) {
+		var illchar = site.cfg.illegalchars[i];
+		if (filename.indexOf(illchar)>=0) {
+			filename = filename.split(illchar).join("");
+		}
+		if (prefix.indexOf(illchar)>=0) {
+			prefix = prefix.split(illchar).join("");
+		}
+	}
+	
 	filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
 	
 	return filename;

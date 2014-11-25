@@ -147,6 +147,10 @@ site.chedit.save = function() {
 		site.chedit.newentry.station_edited = {};
 	}
 	
+	// Clear icon_local and image_local
+	site.chedit.newentry.station_icon_local = null;
+	site.chedit.newentry.station_image_local = null;
+	
 	// Find changes
 	var originalStationIfAny = site.data.stations[site.helpers.session.getStationIndexById(site.chedit.newentry.station_id)];
 	if (originalStationIfAny) {
@@ -321,8 +325,8 @@ site.chedit.check = function(findStationName,silent) {
 	site.chedit.newentry.station_country = ""
 	site.chedit.newentry.station_bitrate = "-1 kbps"
 	
-	site.chedit.newentry.station_icon_local = false;
-	site.chedit.newentry.station_image_local = false;
+	site.chedit.newentry.station_icon_local = null;
+	site.chedit.newentry.station_image_local = null;
 	
 	// Start checking the actual urls..
 	site.chedit.check_station_url(station_name, station_url, silent);
@@ -524,8 +528,8 @@ site.chedit.check_station_icon = function(silent) {
 		// TODO: Works
 		site.ui.hideloading();
 		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
-		newentry.station_icon_local = false;
-		newentry.station_image_local = false;
+		newentry.station_icon_local = null;
+		newentry.station_image_local = null;
 		loggr.log(" > All good :D");
 		if (confirm("Everything seems to check out! Save now?")) {
 			site.chedit.save();
