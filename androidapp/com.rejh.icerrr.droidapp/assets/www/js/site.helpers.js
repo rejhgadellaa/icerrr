@@ -25,6 +25,7 @@ site.helpers.addCachebust = function(src) {
 
 site.helpers.shouldDownloadImage = function(localVal,iconVal) {
 	if (!iconVal) { iconVal = ""; }
+	if (!localVal) { localVal = ""; }
 	if (!localVal && iconVal.indexOf("file://")<0) { return true; }
 	if (localVal.indexOf("file://")<0 && iconVal.indexOf("file://")<0) { return true; }
 	if (localVal.indexOf(".base64")>0 && iconVal.indexOf("file://")<0) { return true; }

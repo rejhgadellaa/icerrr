@@ -1,3 +1,6 @@
+v0.133 (stable)
+  * Bugfix
+
 v0.132 (stable)
   * Fixes for icons with special characters in filename ('%' for example)
   * Fonts are now stored and loaded locally
