@@ -1,4 +1,5 @@
 v0.134 (stable)
+  * Tweaked 'now playing' info for media remotes (BT, Wear, lockscreen)
   * Added 'stop' button capability for media remotes (BT, Wear, lockscreen)
 
 v0.133 (stable)

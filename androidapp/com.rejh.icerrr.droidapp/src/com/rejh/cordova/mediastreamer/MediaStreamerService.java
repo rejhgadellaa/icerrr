@@ -245,8 +245,10 @@ public class MediaStreamerService extends Service {
 			setup();
 		}
 		
+		String nowplaying_tmp = (nowplaying!=null)?nowplaying:"Now playing: ...";
+		
 		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
-		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", (nowplaying!=null)?nowplaying:"Now playing: ...", msNotifMgr.NOTIFICATION_ID);
+		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying_tmp, msNotifMgr.NOTIFICATION_ID);
 		
 		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 		
@@ -254,8 +256,9 @@ public class MediaStreamerService extends Service {
         
         // Metadata
         metadataEditor = remoteControlClient.editMetadata(true);
-        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, "Icerrr");
-        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, station_name);
+        metadataEditor.clear();
+        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
+        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, nowplaying_tmp);
         metadataEditor.putBitmap(100, getIcon("wear_album_art"));
         metadataEditor.apply();
 		
@@ -594,9 +597,18 @@ public class MediaStreamerService extends Service {
 					}
 					
 					if (!nowplaying_new.equals(nowplaying)) {
+						
 						nowplaying = nowplaying_new;
 						Log.d(APPTAG," > NowPlaying: "+ station_name +", "+ nowplaying);
 						msNotifMgr.notif(station_name,nowplaying,msNotifMgr.NOTIFICATION_ID,false);
+				        
+				        // Metadata
+						metadataEditor = remoteControlClient.editMetadata(true);
+				        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
+				        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, nowplaying_new);
+				        metadataEditor.putBitmap(100, getIcon("wear_album_art"));
+				        metadataEditor.apply();
+						
 					}
 					
 					
