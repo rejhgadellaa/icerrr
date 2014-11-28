@@ -1,3 +1,6 @@
+v0.134 (stable)
+  * Added 'stop' button capability for media remotes (BT, Wear, lockscreen)
+
 v0.133 (stable)
   * Bugfix
 

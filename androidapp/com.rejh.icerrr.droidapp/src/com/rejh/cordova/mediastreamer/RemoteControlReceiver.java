@@ -60,6 +60,13 @@ public class RemoteControlReceiver extends BroadcastReceiver {
 		    	context.startService(sIntent);
 		    }
 		    
+		    else if (event.getKeyCode()==86) { // Stop
+		    	Log.d(APPTAG," > Play/pause");
+		    	Intent ri = new Intent(context,MediaStreamerReceiver.class);
+		    	ri.putExtra("cmd", "destroy");
+		    	context.sendBroadcast(ri);
+		    }
+		    
 		    else if (event.getKeyCode()==88) { // Previous 
 		    		
 		    }

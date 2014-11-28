@@ -133,7 +133,7 @@ public class MediaStreamerService extends Service {
         mediaButtonIntent.setComponent(remoteControlReceiverComponent);
         PendingIntent mediaPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, mediaButtonIntent, 0);
         remoteControlClient = new RemoteControlClientCompat(mediaPendingIntent);
-        remoteControlClient.setTransportControlFlags(RemoteControlClient.FLAG_KEY_MEDIA_PLAY_PAUSE);
+        remoteControlClient.setTransportControlFlags(RemoteControlClient.FLAG_KEY_MEDIA_PLAY_PAUSE | RemoteControlClient.FLAG_KEY_MEDIA_STOP);
         RemoteControlHelper.registerRemoteControlClient(audioMgr,remoteControlClient);
 		
 		// Make sticky
