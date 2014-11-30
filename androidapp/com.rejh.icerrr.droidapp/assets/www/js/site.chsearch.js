@@ -396,7 +396,7 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 	}
 	
 	// Store
-	station.stream_url = stream_url;
+	station.station_url = stream_url;
 	
 	// -> Check if station actually works...
 	
@@ -420,7 +420,7 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 			if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
 		},
 		function(status) {
-			loggr.log(" > Status: "+ status);
+			loggr.log(" > Status: "+ status +": "+ site.mp.getStatusByCode(status));
 			switch (status) {
 				
 				case Media.MEDIA_RUNNING:
