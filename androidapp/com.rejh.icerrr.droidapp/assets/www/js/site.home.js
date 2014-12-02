@@ -59,7 +59,7 @@ site.home.init = function() {
 				//var color = colorThief.getColor(img);
 			}
 			$("#home .main .station_image").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
-			$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+			//$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
 			$("#home .main .station_image").css("background-blend-mode","multiply");
 			$("#home .main .station_image").css("-webkit-background-blend-mode","multiply");
 			if (colorIcon) { 
@@ -80,7 +80,7 @@ site.home.init = function() {
 	
 	// extra ui
 	if (site.home.lastStationId!=site.session.currentstation.station_id) {
-		site.home.handleStationImage(site.session.currentstation.station_icon);
+		//site.home.handleStationImage(site.session.currentstation.station_icon);
 	}
 	site.home.lastStationId = site.session.currentstation.station_id;
 	$("#home .main .station_name").html(site.session.currentstation.station_name);
@@ -271,6 +271,11 @@ site.home.run_ui_updates = function() {
 }
 
 site.home.run_station_updates = function(dontUseDirble) {
+	
+	$("#home .main .station_name").html("Fake 100% FM");
+	$("#home .main .station_nowplaying").html("Spook &amp; Chemo - Update");
+	
+	return;
 	
 	//loggr.log("site.home.run_station_updates()");
 	
