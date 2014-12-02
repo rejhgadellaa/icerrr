@@ -300,9 +300,18 @@ site.chlist.selectstation = function(resultitem,dontgohome) {
 	
 	loggr.log(" > "+ resultitem.station_id);
 	
+	// Save
 	site.session.currentstation_id = resultitem.station_id;
 	site.session.currentstation = site.data.stations[site.helpers.session.getStationIndexById(resultitem.station_id)];
-	site.mp.stop(); // should be destroyed whenever currentstation changes!
+	
+	// Start selected station if already playing
+	if (site.mp.isPlaying) {
+		site.mp.stop(function(){
+			site.mp.play();
+		});
+	}
+	
+	// And now?
 	if (site.cast.session) {
 		site.cast.loadMedia();
 	}

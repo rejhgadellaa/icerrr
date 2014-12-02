@@ -92,7 +92,7 @@ site.mp.playToggle = function() {
 	
 }
 
-site.mp.play = function() {
+site.mp.play = function(cb,cberr) {
 	
 	loggr.debug("site.mp.play()");
 	
@@ -103,18 +103,20 @@ site.mp.play = function() {
 		function(msg) {
 			loggr.log(" > mediaStreamer.play()."+msg);
 			site.mp.setPlaying();
+			if (cb) { cb(); }
 		},
 		function(errmsg) {
 			loggr.error("window.mediaStreamer.play()");
 			loggr.error(errmsg);
 			site.ui.showtoast("Error: "+errmsg);
 			site.mp.setStopped();
+			if (cberr) { cberr(); }
 		}
 	);
 	
 }
 
-site.mp.stop = function() {
+site.mp.stop = function(cb,cberr) {
 	
 	loggr.debug("site.mp.stop()");
 	
@@ -122,11 +124,13 @@ site.mp.stop = function() {
 		function(msg) {
 			loggr.log(" > mediaStreamer.stop()."+msg);
 			site.mp.setStopped();
+			if (cb) { cb(); }
 		},
 		function(errmsg) {
 			loggr.error("window.mediaStreamer.stop().Error");
 			loggr.error(errmsg);
 			site.ui.showtoast("Error: "+errmsg);
+			if (cberr) { cberr(); }
 		}
 	);
 	
