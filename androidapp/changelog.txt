@@ -1,3 +1,6 @@
+v0.137 (stable)
+  * We're back.
+
 v0.136 (stable)
   * Continue playing when changing stream (Issue #111)
 

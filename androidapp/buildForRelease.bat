@@ -1,7 +1,7 @@
 @echo off
 
 :config
-set path_prj=com.rejh.icerrr.droidapp
+set path_prj=com.rejh.icerrr.itson
 set name_prj=Icerrr
 set name_key=icerrr
 set name_jarsigner_thingie=icerrr
