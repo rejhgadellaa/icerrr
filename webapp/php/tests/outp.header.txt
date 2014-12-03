@@ -1,9 +1,15 @@
-{"station_id":"Oldies104net_27b2501b96849781_148ec27575b_bdbed","host":"ando1.cdn.radiostorm.com","port":80,"path":"/oldies-mp3"}
+{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
 
-HTTP/1.1 404 Not Found
-Date: Tue, 02 Dec 2014 20:09:27 GMT
-Server: Apache
-Accept-Ranges: bytes
-Connection: close
-Content-Type: text/html
+HTTP/1.0 200 OK
+Content-Type: audio/mpeg
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Pop
+icy-name:3FM Serious Radio
+icy-pub:0
+icy-url:http://www.3fm.nl
+Server: ics2lss.omroep.nl
+Cache-Control: no-cache
+icy-metaint:16000
 

@@ -65,6 +65,17 @@ site.lifecycle.init = function() {
 		+", cordova: "+ device.cordova
 	);
 	
+	// Stop virtual machines :|
+	try {
+		if (device.model.toLowerCase().indexOf("virtual")>=0) {
+			alert("Sorry, virtual machines are blocked");
+			site.lifecycle.exit();
+			return;
+		}
+	} catch(e) {
+		
+	}
+	
 	// Defaults..
 	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
 	
