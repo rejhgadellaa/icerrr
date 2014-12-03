@@ -101,8 +101,8 @@ public class MediaStreamerNotifMgr {
 			// Create optsIntent
 			JSONObject optsIntent = new JSONObject();
 			optsIntent.put("type","activity");
-			optsIntent.put("package","com.rejh.icerrr.droidapp");
-			optsIntent.put("classname","com.rejh.icerrr.droidapp.Icerrr");
+			optsIntent.put("package","com.rejh.icerrr.itson");
+			optsIntent.put("classname","com.rejh.icerrr.itson.Icerrr");
 			opts.put("intent", optsIntent);
 			
 			// Create actions
@@ -116,7 +116,7 @@ public class MediaStreamerNotifMgr {
 			optsAction1.put("icon","ic_stat_av_stop");
 			optsAction1.put("title","Stop playback");
 			optsAction1Intent.put("type","receiver");
-			optsAction1Intent.put("package","com.rejh.icerrr.droidapp");
+			optsAction1Intent.put("package","com.rejh.icerrr.itson");
 			optsAction1Intent.put("classname","com.rejh.cordova.mediastreamer.MediaStreamerReceiver");
 			optsAction1IntentExtra1.put("type","string");
 			optsAction1IntentExtra1.put("name","cmd");
@@ -133,7 +133,7 @@ public class MediaStreamerNotifMgr {
 			optsAction2.put("icon","ic_stat_av_pause");
 			optsAction2.put("title","Pause/Resume");
 			optsAction2Intent.put("type","receiver");
-			optsAction2Intent.put("package","com.rejh.icerrr.droidapp");
+			optsAction2Intent.put("package","com.rejh.icerrr.itson");
 			optsAction2Intent.put("classname","com.rejh.cordova.mediastreamer.MediaStreamerReceiver");
 			optsAction2IntentExtra1.put("type","string");
 			optsAction2IntentExtra1.put("name","cmd");

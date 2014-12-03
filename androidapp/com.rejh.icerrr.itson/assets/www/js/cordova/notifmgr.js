@@ -17,9 +17,9 @@
 	// 
 	opts.intent = {
 		type: "STRING" // 'activity', 'receiver', 'service'
-		package: "STRING", // ex 'com.rejh.icerrr.droidapp'
-		classname: "STRING", // ex 'com.rejh.icerrr.droidapp.MainActivity'
-		action: "STRING", // ex: com.rejh.icerrr.droidapp.actions.SERVICE
+		package: "STRING", // ex 'com.rejh.icerrr.itson'
+		classname: "STRING", // ex 'com.rejh.icerrr.itson.MainActivity'
+		action: "STRING", // ex: com.rejh.icerrr.itson.actions.SERVICE
 		extras: [ // optional
 			{type:"string", name:"string", value:"string"},
 			{type:"int", name:"string", value:0},

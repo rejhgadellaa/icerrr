@@ -409,8 +409,8 @@ site.cast.notif = function() {
 	opts.smallicon = "ic_notification_media_route";
 	opts.intent = {
 		type: "activity",
-		package: "com.rejh.icerrr.droidapp",
-		classname: "com.rejh.icerrr.droidapp.Icerrr"
+		package: "com.rejh.icerrr.itson",
+		classname: "com.rejh.icerrr.itson.Icerrr"
 	}
 	
 	// Optional

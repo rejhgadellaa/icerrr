@@ -1,3 +1,6 @@
+v0.138 (stable)
+  * Fix for notification actions not working
+
 v0.137 (stable)
   * We're back.
 

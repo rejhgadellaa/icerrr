@@ -20,9 +20,9 @@
 	opts.repeatMillis = int // optional, required when repeat is set to 'custom', millis between repeats
 	opts.intent = {
 		type: "STRING" // 'activity', 'receiver', 'service'
-		package: "STRING", // ex 'com.rejh.icerrr.droidapp'
-		classname: "STRING", // ex 'com.rejh.icerrr.droidapp.MainActivity' 	// either classname or action needs to be defined!
-		action: "STRING", // ex: 'com.rejh.icerrr.droidapp.actions.SERVICE'
+		package: "STRING", // ex 'com.rejh.icerrr.itson'
+		classname: "STRING", // ex 'com.rejh.icerrr.itson.MainActivity' 	// either classname or action needs to be defined!
+		action: "STRING", // ex: 'com.rejh.icerrr.itson.actions.SERVICE'
 		extras: [ // optional
 			{type:"string", name:"string", value:"string"},
 			{type:"int", name:"string", value:0},

@@ -348,8 +348,8 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 	
 	opts.intent = {
 		type: "activity",
-		package: "com.rejh.icerrr.droidapp",
-		classname: "com.rejh.icerrr.droidapp.Icerrr",
+		package: "com.rejh.icerrr.itson",
+		classname: "com.rejh.icerrr.itson.Icerrr",
 		extras: [
 			{ type:"string", name:"isAlarm", value:"true" },
 			{ type:"string", name:"station_id", value:alarm.station.station_id },
