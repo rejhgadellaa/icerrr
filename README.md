@@ -1,33 +1,34 @@
 Introduction
 ===========
 
-*Fed up with how TuneIn tries to be a social network these days? How it has problems running streams even if other apps do it just fine without setting the buffer to 30 seconds or more (and then still has trouble playing the stream)? Would you like an alarm feature that actually works reliably? Would you like Chromecast [1] support with that?*
+Looking for a clean and simple radio streaming app that lets you set alarms, cast your stream to Chromecast and supports Android Wear?
 
 Well, I think Icerrr may be just the thing for you!
 
-And it gets better: Icerrr is FREE [2]
+And it gets better: Icerrr is free! [2]
 
-Icerrr is FMAlarm's successor and currently (heavily) under development. It's built with Cordova/Phonegap and should eventually also support iOS and regular browsers. 
-
-For now, it's just the Android app.
-
-Expect updates. And probably a bug here and there. But you'll be helping me building this thing by using it and reporting bugs, feature requests, etc.
-
-Join the beta program:
-http://android.rejh.nl/droidapps/?app=Icerrr
+Note: The album art and info in the screenshots are fake because Google will suspend this app for showing imagery that is copyright protected. I know because they did. Blame the entertainment industry.
 
 [1] Chromecast support is prototype-ish.
 [2] Icerrr can be downloaded for free for at least a limited period of time.
 
-Keywords: radio, stream, icecast, shoutcast, chromecast, clock radio, alarm, cordova, phonegap, music
+Features
+-------------
 
-More info:
-http://android.rejh.nl/droidapps/?app=Icerrr
++ Play music streams
+Supported: mp3 (audio/mpeg), pls, m3u. Unsupported: aac
 
-Get it on Google Play
-=====================
++ Search or add stations manually
+Search Dirble.com radio directory or add them manually
 
-https://play.google.com/store/apps/details?id=com.rejh.icerrr.droidapp
++ Edit stations
+Long press station to edit
+
++ Alarms
+Set multiple alarms, choose station and repeat mode 
+
++ Chromecast support
+(Rough around the edges)
 
 Join the beta
 -------------
@@ -40,6 +41,11 @@ https://play.google.com/apps/testing/com.rejh.icerrr.droidapp
 
 and then go here:
 https://play.google.com/store/apps/details?id=com.rejh.icerrr.droidapp
+
+Keywords
+-------------
+
+radio, stream, icecast, shoutcast, chromecast, clock radio, alarm, music
 
 Resources
 =========
