@@ -59,6 +59,12 @@ site.settings.registerListeners = function() {
 		}
 	);
 	
+	// Show Album Art
+	var showAlbumArt = site.cookies.get("setting_showAlbumArt");
+	loggr.log(" > showAlbumArt: "+ showAlbumArt);
+	if (showAlbumArt==1) { $("#settings input[name='showAlbumArt']").attr("checked",true); }
+	else { $("#settings input[name='showAlbumArt']").attr("checked",false); }
+	
 	// ---> Listener
 	
 	// Use Wifi
@@ -67,6 +73,15 @@ site.settings.registerListeners = function() {
 		var targ = evt.currentTarget;
 		loggr.log(" > Setting: useWifi: "+ (targ.checked));
 		window.mediaStreamer.setting("bool","useWifi",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	});
+	
+	// Shot Album Art
+	$("#settings input[name='showAlbumArt']").off("change");
+	$("#settings input[name='showAlbumArt']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: showAlbumArt: "+ (targ.checked)?1:0);
+		site.cookies.put("setting_showAlbumArt",(targ.checked)?1:0);
+		loggr.log(" > "+ site.cookies.get("setting_showAlbumArt"));
 	});
 	
 }

@@ -1,3 +1,6 @@
+v0.139 (stable)
+  * Prompts user to enable album art
+
 v0.138 (stable)
   * Fix for notification actions not working
 

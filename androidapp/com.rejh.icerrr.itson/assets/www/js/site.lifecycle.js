@@ -193,6 +193,25 @@ site.lifecycle.initApp = function(force) {
 		}
 	}
 	
+	// Album art.. the big question
+	if (site.cookies.get("app_has_asked_about_albumart")!=0) {
+		site.cookies.put("app_has_asked_about_albumart",1);
+		var message = "Icerrr can search and show album art based on the 'now playing' information (if any) of a stream. Note, however, that the imagery that is shown may contain copyrighted material and that you, the user, have hereby agreed that Icerrr does this on your behalf and not to the benefit of the developer.\n\nShort version: The developer is not responsible for Icerrr showing copyrighted material when you enable this option.\n\nYou may change this later under Settings.";
+		navigator.notification.confirm(message,
+			function(buttonIndex){
+				loggr.error(buttonIndex,{dontupload:true});
+				if (buttonIndex==1) {
+					site.cookies.put("setting_showAlbumArt",1);
+				} else {
+					site.cookies.put("setting_showAlbumArt",0);
+				}
+				if (site.session.currentstation_id) { site.home.getAlbumArt(); } 
+			},
+			"Show album art?",
+			"Yes,No"
+		);
+	}
+	
 	// On update: re-set alarms
 	if (site.cookies.get("app_has_updated")!=0) {
 		site.vars.app_has_updated_home = true;

@@ -395,6 +395,14 @@ site.home.getAlbumArt = function() {
 	
 	loggr.info("site.home.getAlbumArt()");
 	
+	// Enabled?
+	if (site.cookies.get("setting_showAlbumArt")!=1) {
+		loggr.log(" > Disabled. Return.");
+		$("#home .main .station_image img").css("opacity",1.0);
+		$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+		return;
+	}
+	
 	// Get station
 	var station = site.session.currentstation;
 	
