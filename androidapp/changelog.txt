@@ -1,3 +1,23 @@
+v0.139 (stable)
+  * Prompts user to enable album art
+
+v0.138 (stable)
+  * Fix for notification actions not working
+
+v0.137 (stable)
+  * We're back.
+
+v0.136 (stable)
+  * Continue playing when changing stream (Issue #111)
+
+v0.135 (stable)
+  * Fix: Stations added via Dirble would sometimes not validate when having multiple stream urls
+  * Minor tweaks
+
+v0.134 (stable)
+  * Tweaked 'now playing' info for media remotes (BT, Wear, lockscreen)
+  * Added 'stop' button capability for media remotes (BT, Wear, lockscreen)
+
 v0.133 (stable)
   * Bugfix
 

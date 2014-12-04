@@ -96,8 +96,8 @@ switch($action) {
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
 				$json["info"]["desc"] = $queryobj["get"];
 				$jsons = json_encode($json);
-				//$jsons = gzencode($jsons);
-				//header('Content-Encoding: gzip');
+				$jsons = gzencode($jsons);
+				header('Content-Encoding: gzip');
 				echo $jsons;
 				break;
 				

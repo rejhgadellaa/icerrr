@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* -- SECTIONS */
+
+/* Common */
+
+/* Specific */
+
+#home {}
+	
+	#home .main .station_image {
+		position:absolute;
+		top:50%;
+		left:50%;
+		width:128px; 
+		height:128px;
+		margin:-64px auto 0 -216px;
+	}
+	
+	#home .main .station_image_wrap {
+		width:128px; 
+		height:128px;
+	}
+	
+	#home .main .station_image img {
+		width:128px;
+		max-height:128px;
+	}
+	
+	#home .main .station_name {
+		position:absolute;
+		top:80px; left:50%;
+		width:256px;
+		margin:0 auto 0 -40px;
+		text-align:left;
+		font-size:24pt; 
+		font-weight:300;
+		text-transform:capitalize;
+	}
+	
+	#home .main .station_nowplaying {
+		position:absolute;
+		top:120px; left:50%;
+		width:256px;
+		margin:0 auto 0 -40px;
+		text-align:left;
+	}
