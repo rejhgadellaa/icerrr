@@ -7,8 +7,6 @@ Well, I think Icerrr may be just the thing for you!
 
 And it gets better: Icerrr is free! [2]
 
-Note: The album art and info in the screenshots are fake because Google will suspend this app for showing imagery that is copyright protected. I know because they did. Blame the entertainment industry.
-
 [1] Chromecast support is prototype-ish.
 [2] Icerrr can be downloaded for free for at least a limited period of time.
 
