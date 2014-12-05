@@ -33,7 +33,7 @@ body {
 	height:100%; 
 	margin:0;
 	padding:0;
-	background-color:#eee;
+	background-color:#2D6073;
 }
 
 a {
@@ -85,7 +85,7 @@ section {
 	top:0; left:0; right:0; bottom:0;
 	width:100%;
 	height:100%;
-	background:#eee;
+	background:#2D6073;
 }
 
 /* Specific */
@@ -102,7 +102,7 @@ section {
 		position:absolute;
 		top:50%; left:50%;
 		width:256px;
-		margin:-128px 0 0 -128px;
+		margin:-160px 0 0 -128px;
 	}
 	
 		#home .logo img {
@@ -120,35 +120,94 @@ section {
 			text-align:center;
 		}
 		
-	#home .getit {
-		z-index:1;
+	#home .bottomwrap {
 		position:absolute;
-		bottom:48px; left:50%;
-		margin:0 0 0 -86px;
+		bottom:0; left:0; right:0;
+		height:160px;
+		background:#eee;
 	}
-	
-	#home .credits {
-		z-index:1;
-		position:absolute;
-		bottom:48px; right:48px;
-		margin:0 0 0 0;
-		text-align:right;
-		font-size:9pt;
-		color:rgba(0,0,0,0.56);
-	}
-	
-	#home .social {
-		z-index:1;
-		position:absolute;
-		bottom:48px; left:48px;
-		margin:0 0 0 0;
-	}
-	
-	#home .item_wrap {
-		margin-top:8px;
-	}
+		
+		#home .getit {
+			z-index:1;
+			position:absolute;
+			bottom:32px; left:50%;
+			margin:0 0 0 -86px;
+		}
+		
+		#home .credits {
+			z-index:1;
+			position:absolute;
+			bottom:32px; right:32px;
+			margin:0 0 0 0;
+			text-align:right;
+			font-size:9pt;
+			color:rgba(0,0,0,0.56);
+		}
+		
+		#home .social {
+			z-index:1;
+			position:absolute;
+			bottom:32px; left:32px;
+			margin:0 0 0 0;
+		}
+		
+		#home .item_wrap {
+			margin-top:8px;
+		}
 
 /* -- COMMON */
+
+/* Shadow */
+
+.textshadow25 {
+	text-shadow: 2px 2px rgba(0, 0, 0, 0.25);
+	}
+	
+.shadow_z1 {
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.shadow_z2 {
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.37);
+}
+
+.shadow_z3 {
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, .5);
+}
+
+.shadow_z4 {
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, .5);
+}
+
+.shadow_z5 {
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, .5);
+}
+	
+.shadow_z1u {
+	box-shadow: 0px -1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.shadow_z2u {
+	box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.37);
+}
+
+.shadow_z3u {
+	box-shadow: 0px -3px 6px rgba(0, 0, 0, .5);
+}
+
+.shadow_z4u {
+	box-shadow: 0px -4px 8px rgba(0, 0, 0, .5);
+}
+
+.shadow_z5u {
+	box-shadow: 0px -5px 10px rgba(0, 0, 0, .5);
+}
+	
+.shadowInset {
+	-moz-box-shadow:    inset 0 0 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+	box-shadow:         inset 0 0 10px rgba(0,0,0,0.5);
+}
 
 /* Selectable */
 

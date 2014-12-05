@@ -1,3 +1,6 @@
+v0.141 (beta)
+  * New app icon(s)
+
 v0.140 (stable)
   * Integration for Sleep As Android
   * Fix: Prompt for album art would show on every start
