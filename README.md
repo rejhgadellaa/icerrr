@@ -28,6 +28,9 @@ Set multiple alarms, choose station and repeat mode
 + Chromecast support
 (Rough around the edges)
 
++ Integration for Sleep As Android
+Get it here: https://play.google.com/store/apps/details?id=com.urbandroid.sleep
+
 Join the beta
 -------------
 
@@ -35,15 +38,16 @@ Join here:
 https://plus.google.com/communities/115139919019529491940
 
 then here:
-https://play.google.com/apps/testing/com.rejh.icerrr.droidapp
+https://play.google.com/apps/testing/com.rejh.icerrr.itson
 
 and then go here:
-https://play.google.com/store/apps/details?id=com.rejh.icerrr.droidapp
+https://play.google.com/store/apps/details?id=com.rejh.icerrr.itson
 
-Keywords
+Open source
 -------------
 
-radio, stream, icecast, shoutcast, chromecast, clock radio, alarm, music
+Icerrr is open source and distributed under the MIT license
+https://github.com/rejhgadellaa/icerrr/
 
 Resources
 =========
