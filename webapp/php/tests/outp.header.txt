@@ -1,7 +1,7 @@
 {"station_id":"radio538","host":"82.201.100.9","port":8000,"path":"/radio538"}
 
 HTTP/1.1 302 Found
-Date: Fri, 05 Dec 2014 06:55:33 GMT
+Date: Fri, 05 Dec 2014 23:40:14 GMT
 Server: Apache/2.2.3 (CentOS)
 Location: http://vip-icecast.538.lw.triple-it.nl/RADIO538_MP3
 Content-Length: 309

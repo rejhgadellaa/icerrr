@@ -1,3 +1,6 @@
+v0.143 (beta)
+  * More fixes for new icon(s) (#118)
+
 v0.142 (beta)
   * Notification doesn't get dismissed when audio focus is lost (#117)
   * Fixed some rough edges on the new icon(s) (#118)
