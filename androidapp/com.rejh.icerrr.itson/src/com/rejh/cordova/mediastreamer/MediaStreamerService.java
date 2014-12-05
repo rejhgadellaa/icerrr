@@ -499,6 +499,11 @@ public class MediaStreamerService extends Service {
 	        		settEditor.putBoolean("volumeHasDucked",false);
 	        		settEditor.commit();
 	        		setVolumeFocusGained();
+	        	} else if (sett.getBoolean("is_paused", false)) {
+	        		Log.d(APPTAG," >> Resume playback (from paused)");
+	        		settEditor.putBoolean("is_paused", false);
+					settEditor.commit();
+					mpMgr.resume();
 	        	}
 	        	
 	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
@@ -506,11 +511,18 @@ public class MediaStreamerService extends Service {
 	            // Stop playback
 	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS()");
 	        	
+	        	/*
 	            settEditor.putBoolean("wasPlayingWhenCalled",false);
 		    	settEditor.commit();
 		    	
 		    	Log.d(APPTAG," > Destroy self");
 		    	stopSelf();
+		    	/**/
+	        	
+	        	Log.d(APPTAG," > Pause the stream!");
+	        	settEditor.putBoolean("is_paused", true);
+				settEditor.commit();
+				mpMgr.pause();
 		    	
 	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
 	        	
