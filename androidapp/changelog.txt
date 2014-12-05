@@ -1,3 +1,8 @@
+v0.142 (beta)
+  * Notification doesn't get dismissed when audio focus is lost (#117)
+  * Fixed some rough edges on the new icon(s) (#118)
+  * Fix: volume always defaulted to 50% (#119)
+
 v0.141 (beta)
   * New app icon(s)
 

@@ -379,7 +379,7 @@ public class MediaStreamerService extends Service {
         if (volume>-1) {
         	Log.d(APPTAG," > Volume: "+volume);
         	setVolume(volume);
-        } else if (isAlarm) {
+        } else if (isAlarm && volume<0) {
         	setVolume(5);
         }
 
