@@ -65,6 +65,17 @@ site.settings.registerListeners = function() {
 	if (showAlbumArt==1) { $("#settings input[name='showAlbumArt']").attr("checked",true); }
 	else { $("#settings input[name='showAlbumArt']").attr("checked",false); }
 	
+	// Use SAA
+	window.mediaStreamer.getSetting("bool","useSAA",
+		function(res) {
+			if (res) { $("#settings input[name='useSAA']").attr("checked",true); }
+			else { $("#settings input[name='useSAA']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
 	// ---> Listener
 	
 	// Use Wifi
@@ -82,6 +93,17 @@ site.settings.registerListeners = function() {
 		loggr.log(" > Setting: showAlbumArt: "+ (targ.checked)?1:0);
 		site.cookies.put("setting_showAlbumArt",(targ.checked)?1:0);
 		loggr.log(" > "+ site.cookies.get("setting_showAlbumArt"));
+	});
+	
+	// Use SAA
+	$("#settings input[name='useSAA']").off("change");
+	$("#settings input[name='useSAA']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: useSAA: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","useSAA",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+		if ((targ.checked)) {
+			alert("Don't forget to set SAA's ringtone to 'silent'!");
+		}
 	});
 	
 }

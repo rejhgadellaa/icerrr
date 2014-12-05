@@ -1,3 +1,8 @@
+v0.140 (stable)
+  * Integration for Sleep As Android (Experimantal)
+  * Fix: Prompt for album art would show on every start
+  * Alarm volume will default to 50%
+
 v0.139 (stable)
   * Prompts user to enable album art
 

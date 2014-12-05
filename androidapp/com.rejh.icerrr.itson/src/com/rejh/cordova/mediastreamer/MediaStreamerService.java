@@ -379,6 +379,8 @@ public class MediaStreamerService extends Service {
         if (volume>-1) {
         	Log.d(APPTAG," > Volume: "+volume);
         	setVolume(volume);
+        } else {
+        	setVolume(5);
         }
 
         Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());

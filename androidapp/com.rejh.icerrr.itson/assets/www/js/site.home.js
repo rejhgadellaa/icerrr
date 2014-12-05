@@ -132,6 +132,11 @@ site.home.init = function() {
 	}
 	/**/
 	
+	// Save to mediastreamer
+	station.station_port = ""+station.station_port;
+	loggr.log(" > Store as default_station for MediaStreamer plugin");
+	window.mediaStreamer.setting("string","default_station",JSON.stringify(station),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	
 }
 
 // PAUSE RESUME

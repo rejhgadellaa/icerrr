@@ -19,8 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
       package="com.rejh.icerrr.itson" 
-      android:versionName="0.139" 
-      android:versionCode="139" 
+      android:versionName="0.140" 
+      android:versionCode="140" 
       android:hardwareAccelerated="true"
       >
     <supports-screens
@@ -76,6 +76,21 @@
 		</receiver>
         
         <receiver android:name="com.rejh.cordova.mediastreamer.MediaStreamerReceiver">
+        </receiver>
+        
+        <receiver android:name="com.rejh.cordova.mediastreamer.MediaStreamerExtIntentReceiver">
+            <intent-filter>
+                <action android:name="com.rejh.cordova.mediastreamer.actions.EXT_INTENT_RECEIVER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.urbandroid.sleep.alarmclock.ALARM_ALERT_START" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.urbandroid.sleep.alarmclock.ALARM_ALERT_DISMISS" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.urbandroid.sleep.alarmclock.ALARM_SNOOZE_CLICKED_ACTION" />
+            </intent-filter>
         </receiver>
         
         <receiver android:name="com.rejh.cordova.notifmgr.NotifMgrReceiver">
