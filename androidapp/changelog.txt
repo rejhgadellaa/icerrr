@@ -1,8 +1,8 @@
 v0.145 (stable)
-  * Notification got dismissed when audio focus was lost
   * Updated and cleaned up 'About' section
-  * New app icon(s)
-  * Fix for Roboto thin and light fonts on Android 4.4 and lower
+  * Materialized app icon
+  * Fix: Notification was dismissed when audio focus was lost
+  * Fix: Roboto thin and light fonts on Android 4.4 and lower
   * Cleaned up old files, app size slightly reduced
 
 v0.144 (beta)
