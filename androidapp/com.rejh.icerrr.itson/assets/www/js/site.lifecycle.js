@@ -445,7 +445,12 @@ site.lifecycle.onBackButton = function() {
 		case "":
 		case "#exit":
 		case "#home":
-			site.lifecycle.exit();
+			if (site.home.overflowMenuIsVisible) {
+				site.home.dismissOverflowMenu();
+				site.lifecycle.add_section_history("#home");
+			} else {
+				site.lifecycle.exit();
+			}
 			break;
 		
 		case "#channellist":
@@ -499,6 +504,7 @@ site.lifecycle.onBackButton = function() {
 			
 		default:
 			loggr.log(" > '<' button on unhandled section: "+ currentBackKey);
+			site.lifecycle.add_section_history(currentBackKey);
 			break;
 		
 	}

@@ -1,3 +1,8 @@
+v0.144 (beta)
+  * Fix for Roboto thin and light fonts on Android 4.4 and lower
+  * Cleaned up old files, app size slightly reduced
+  * Updated and cleaned up 'About' section
+
 v0.143 (beta)
   * More fixes for new icon(s) (#118)
 

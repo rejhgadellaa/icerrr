@@ -347,7 +347,7 @@ section {
 	
 	#home .main .station_name {
 		position:absolute;
-		top:40px; left:16px; right:16px;
+		top:40px; left:14px; right:16px;
 		margin:0;
 		font-size:24pt; 
 		font-weight:300;
@@ -623,6 +623,11 @@ section {
 		cursor:pointer;
 	}
 	
+	#about .spacer {
+		width:16px;
+		height:16px;
+	}
+	
 /* Settings */
 
 #settings {
@@ -697,6 +702,7 @@ section {
 	margin:-1px;
 	background:rgba(255,255,255,1);
 	border:1px solid #ccc;
+	transition:width 250ms, max-height 250ms;
 }
 
 .overflow_menu.active {
