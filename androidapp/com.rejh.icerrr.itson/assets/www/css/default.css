@@ -702,7 +702,7 @@ section {
 	margin:-1px;
 	background:rgba(255,255,255,1);
 	border:1px solid #ccc;
-	transition:width 250ms, max-height 250ms;
+	xtransition:width 250ms, max-height 250ms;
 }
 
 .overflow_menu.active {
