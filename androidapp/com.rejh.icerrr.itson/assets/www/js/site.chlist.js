@@ -307,6 +307,7 @@ site.chlist.selectstation = function(resultitem,dontgohome) {
 	// Start selected station if already playing
 	if (site.mp.isPlaying) {
 		site.mp.stop(function(){
+			$(".button_play_bufferAnim").fadeIn(500);
 			site.mp.play();
 		});
 	}
