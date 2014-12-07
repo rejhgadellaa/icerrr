@@ -193,7 +193,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
 	loggr.log("site.chsearch.drawResults()");
 	
-	$("#searchstation_results .title").html("Icerrr: \""+site.helpers.short(site.chsearch.searchstr,18)+"\"");
+	$("#searchstation_results .title").html("Search: \""+site.helpers.short(site.chsearch.searchstr,18)+"\"");
 	
 	// TODO: This function is a bit different from site.chlist.js, mainly because
 	//  (cont) it uses its own section
@@ -322,16 +322,18 @@ site.chsearch.addThisStation = function(evt) {
 	var stationIndex = site.helpers.session.getStationIndexById(station_id,site.chsearch.stations);
 	var station = site.chsearch.stations[stationIndex];
 	
-	if (!station) { loggr.error(" > !station"); }
+	if (!station) { loggr.error(" > !station"); return; }
 	
 	// -> Check if station exists
 	
 	for (var i in site.data.stations) {
-		if (!site.data.stations[i].station_url) { continue; }
-		if (station.station_url.toLowerCase()==site.data.stations[i].station_url.toLowerCase()) {
-			alert("A station with this url already exists: '"+site.data.stations[i].station_name+"'");
-			return;
-		}
+		try {
+			if (!site.data.stations[i].station_url) { continue; }
+			if (station.station_url.toLowerCase()==site.data.stations[i].station_url.toLowerCase()) {
+				alert("A station with this url already exists: '"+site.data.stations[i].station_name+"'");
+				return;
+			}
+		} catch(e) { }
 	}
 	
 	// Get dirble station results

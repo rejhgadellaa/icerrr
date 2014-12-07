@@ -1,3 +1,6 @@
+v0.146 (stable)
+  * Bugfix
+
 v0.145 (stable)
   * Updated and cleaned up 'About' section
   * Materialized app icon
