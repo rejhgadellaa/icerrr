@@ -1,5 +1,6 @@
 v0.148 (stable)
   * Fix: Nullpointer when now playing info returned invalid json
+  * Fix: 'Null' value in notification when now playing was not available
 
 v0.147 (stable)
   * New: Animation for play button when buffering
