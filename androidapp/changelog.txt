@@ -1,3 +1,6 @@
+v0.148 (stable)
+  * Fix: Nullpointer when now playing info returned invalid json
+
 v0.147 (stable)
   * New: Animation for play button when buffering
   * Tap (almost) anywhere to dismiss overflow menu

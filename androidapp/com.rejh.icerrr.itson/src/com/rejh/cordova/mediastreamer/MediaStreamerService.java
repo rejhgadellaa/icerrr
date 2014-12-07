@@ -592,7 +592,14 @@ public class MediaStreamerService extends Service {
 						+"}";
 				
 				Log.d(APPTAG," > NowPlayingPoll: "+ url);
-				String jsons = HttpRequest.get(url).content;
+				String jsons = "{}";
+				try {
+					jsons = HttpRequest.get(url).content;
+				} catch(Exception e) {
+					Log.e(APPTAG," > Error running httprequest: "+e);
+					e.printStackTrace();
+					return;
+				}
 				
 				try {
 					
