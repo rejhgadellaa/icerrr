@@ -1,15 +1,11 @@
-{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
+{"station_id":"veronicahitradio","host":"8563.live.streamtheworld.com","port":80,"path":"/VERONICA_SC?.wma"}
 
 HTTP/1.0 200 OK
+Expires: Thu, 01 Dec 2003 16:00:00 GMT
+Cache-Control: no-cache, must-revalidate
+Pragma: no-cache
 Content-Type: audio/mpeg
-icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Pop
-icy-name:3FM Serious Radio
-icy-pub:0
-icy-url:http://www.3fm.nl
-Server: ics2rss.omroep.nl
-Cache-Control: no-cache
+icy-br: 132
 icy-metaint:16000
+Server: MediaGateway 3.1.8-01
 

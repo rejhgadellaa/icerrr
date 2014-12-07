@@ -1,3 +1,8 @@
+v0.147 (stable)
+  * New: Animation for play button when buffering
+  * Tap (almost) anywhere to dismiss overflow menu
+  * Added help for settings
+
 v0.146 (stable)
   * Bugfix
 

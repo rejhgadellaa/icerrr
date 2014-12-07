@@ -206,6 +206,7 @@ site.home.mpPlayToggle = function() {
 		site.mp.playToggle();
 	}
 	
+	$(".button_play_bufferAnim").fadeIn(500);
 	return true;
 	
 }
@@ -246,25 +247,28 @@ site.home.run_ui_updates = function() {
 		loggr.log(" > .button.center addclass active");
 		$(".button.center").removeClass("busy"); 
 		$(".button.center").addClass("active"); 
+		$(".button_play_bufferAnim").fadeOut(250);
 		$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 	} else if (site.mp.mpstatus==Media.MEDIA_STARTING) {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy");
-		$(".button.center").addClass("busy"); 
+		$(".button.center").addClass("busy");
+		$(".button_play_bufferAnim").fadeIn(500);
 		$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 	} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").addClass("busy");
+		$(".button_play_bufferAnim").fadeIn(500);
 		$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 	} else if (site.mp.mpstatus!=Media.MEDIA_RUNNING && $(".button.center").hasClass("active")) {
-		loggr.log(" > .button.center removeclass active");
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy"); 
+		$(".button_play_bufferAnim").fadeOut(250);
 		$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
-		loggr.log(" >> "+ $(".button.center").attr("class"));
 	} else if (site.mp.mpstatus==Media.MEDIA_NONE) {
 		$(".button.center").removeClass("active"); 
 		$(".button.center").removeClass("busy"); 
+		$(".button_play_bufferAnim").fadeOut(250);
 		$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
 	}
 	

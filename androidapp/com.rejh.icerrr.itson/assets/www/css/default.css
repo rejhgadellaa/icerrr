@@ -208,8 +208,6 @@ section {
 		bottom:0; left:0; right:0;
 		width:100%;
 		height:64px;
-		xbackground-color:#616161;
-		transition:top 1000ms;
 	}
 	
 		.footer .button {
@@ -227,7 +225,7 @@ section {
 			background-repeat:no-repeat;
 		}
 		
-		.footer .button.busy {
+		.footer .button.busy img {
 			opacity:0.5;
 		}
 		
@@ -261,7 +259,6 @@ section {
 			.footer .button.center .button_inner img {
 				width:48px;
 				height:48px;
-				margin:-12px 0 0 0;
 			}
 
 /* Specific */
@@ -347,7 +344,7 @@ section {
 	
 	#home .main .station_name {
 		position:absolute;
-		top:40px; left:14px; right:16px;
+		top:40px; left:15px; right:16px;
 		margin:0;
 		font-size:24pt; 
 		font-weight:300;
@@ -366,6 +363,31 @@ section {
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
+	}
+	
+	#home .button_play_wrap {
+		position:relative;
+		left:50%;
+		width:48px; 
+		height:48px;
+		margin:-4px 0 0 -24px;
+	}
+	
+	#home .button_play_bufferAnim {
+		display:none;
+		position:absolute;
+		top:-8px;
+		width: 44px;
+		height: 44px;
+		border: 2px solid #fff;
+		border-radius: 100%;
+		position: absolute;
+		clip: rect(0px, 24px, 48px, 0px);
+		-webkit-animation-duration: 1s;
+		-webkit-animation-name: keyframes_button_play_buffer;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-fill-mode: forwards; /* Hold the last keyframe */
+		-webkit-animation-timing-function:ease-in-out; /* Linear animation */
 	}
 
 #channellist {
@@ -907,3 +929,33 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 .section_translate_in {
 	transform: translate3d(0,0,0);
 }
+
+/* -- ANIMATIONS */
+
+@-webkit-keyframes keyframes_button_play_buffer {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
