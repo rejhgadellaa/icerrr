@@ -216,7 +216,8 @@ site.mp.handleStatus = function(statusCode) {
 	
 	// Handle changed status code
 	if (statusCode==Media.MEDIA_NONE || statusCode==Media.MEDIA_STOPPED) { 
-		site.mp.setStopped(); 
+		site.mp.setStopped();
+		site.mp.isPlaying = false;
 	} else {
 		site.mp.setPlaying();
 		site.mp.isPlaying = true;

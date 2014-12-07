@@ -1,5 +1,6 @@
 0.149 (stable)
   * Fix: Buffer animation didn't show when switching stations
+  * Fix: stream would sometimes start when switching stations
 
 v0.148 (stable)
   * Fix: Nullpointer when now playing info returned invalid json
