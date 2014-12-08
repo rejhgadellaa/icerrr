@@ -599,10 +599,11 @@ site.lifecycle.checkMsgs = function() {
 	
 	site.webapi.exec(action, JSON.stringify(queryobj),
 		function(res) {
-			
+			site.lifecycle.handleMsgs(res["data"]);
 		},
 		function(err) {
 			// do nothing..
+			loggr.error(" > lifecycle.checkMsgs().Error: "+ e.message);
 		}
 	);
 	
@@ -645,7 +646,17 @@ site.lifecycle.handleMsgs = function(data) {
 		}
 		
 		// Made it so far, show message
-		navigator.notification.alert(ditem.message, function(){}, ditem.title, "OK")
+		if (ditem.action=="url" && !ditem.url) { loggr.error(" > ditem.action = url but ditem.url is false"); ditem.action = "none"; }
+		switch(ditem.action) {
+			case "url":
+				navigator.notification.alert(ditem.message, function(){
+					window.open(ditem.url,"_system");
+				}, ditem.title, "OK");
+				break;
+			default:
+				navigator.notification.alert(ditem.message, function(){}, ditem.title, "OK");
+				break;
+		}
 		
 		// Store
 		lids.push(ditem.id);
