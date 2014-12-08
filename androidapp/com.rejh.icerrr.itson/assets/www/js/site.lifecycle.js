@@ -582,6 +582,73 @@ site.lifecycle.exit = function() {
 	navigator.app.exitApp();
 }
 
+// ---> Messages
+
+site.lifecycle.checkMsgs = function() {
+	
+	loggr.info("site.lifecycle.checkMsgs()");
+	
+	var action = "get";
+	var queryobj = {
+		"get":"messages"
+	};
+	
+	site.webapi.exec(action, JSON.stringify(queryobj),
+		function(res) {
+			
+		},
+		function(err) {
+			// do nothing..
+		}
+	);
+	
+}
+
+site.lifecycle.handleMsgs(data) {
+	
+	loggr.info("site.lifecycle.handleMsgs()");
+	
+	// Get local data thingie
+	var lidsStr = site.cookies.get("message_ids");
+	if (!lidsStr) { lidsStr = "[]"; }
+	var lids = JSON.parse(lidsStr);
+	
+	for (var i=0; i<data.length; i++) {
+		
+		var ditem = data[i];
+		if (!ditem) { continue; }
+		if (!ditem.crit) { continue; }
+		
+		var critvalue;
+		switch(ditem.crit) {
+			case "version":
+				critvalue = site.cookies.get("app_version");
+				break;
+			case "time":
+				critvalue = new Date().getTime();
+				break;
+			default:
+				loggr.error(" > ditem.crit as invalid value: "+ ditem.crit);
+				continue;
+		}
+		
+		if (critvalue>ditem.critvalue || lids.indexOf(ditem.id)>0) {
+			continue;
+		}
+		
+		// Made it so far, show message
+		alert(ditem.message);
+		
+		// Store
+		lids.push(ditem.id);
+		lidsStr = JSON.stringify(lids);
+		site.cookies.put("message_ids",lidsStr);
+		break;
+		
+	}
+	
+}
+
 // ---> Others
 
 // OnResume / OnPause
