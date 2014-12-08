@@ -153,6 +153,30 @@ switch($action) {
 				error("Not implemented yet"); // TODO: todo
 				break;
 				
+			// -- MESSAGES
+			
+			case "messages":
+				$msgs = array();
+				
+				// Message: app is pulled :(
+				$msgs[] = array(
+					"id"=>2,
+					"crit"=>"version",
+					"critvalue"=>0.150,
+					"action"=>"none",
+					"title"=>"Notice",
+					"message"=>"Unfortunately Icerrr has been pulled from the Google Play Store. Again.\n\n"
+						."You may continue to use the app but I can not push any updates as long as this situation has not been resolved.\n\n"
+						."I apoligize for the inconvenience and hope to offer a solution soon."
+				);
+				
+				$json["info"] = array();
+				$json["data"] = $msgs;
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
+				
 			// -- EXTERNAL: Dirble api
 			
 			// search
