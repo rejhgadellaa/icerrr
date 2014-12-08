@@ -1,15 +1,18 @@
-{"station_id":"radio1","host":"icecast.omroep.nl","port":80,"path":"/radio1-bb-mp3"}
+{"station_id":"Harmonyfm_c04bbe20b8f360aadd8e655bbdc7c32a_1498eb39f8c_4fc3c","host":"mp3.harmonyfm.de","port":80,"path":"/harmonyfm/hqlivestream.mp3"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
-icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Talk
-icy-name:Radio 1
+icy-br:128
+ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
+icy-br:128
+icy-description:harmony.fm
+icy-genre:Various
+icy-name:harmony.fm
+icy-private:1
 icy-pub:0
-icy-url:http://www.radio1.nl
-Server: ics2oss.omroep.nl
+Server: Icecast 2.3.2-kh31
 Cache-Control: no-cache
+Expires: Mon, 26 Jul 1997 05:00:00 GMT
+Pragma: no-cache
 icy-metaint:16000
 
