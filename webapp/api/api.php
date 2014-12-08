@@ -163,6 +163,7 @@ switch($action) {
 					"id"=>1,
 					"crit"=>"version",
 					"critvalue"=>0.150,
+					"title"=>"Notice",
 					"message"=>"Unfortunately Icerrr has been pulled from the Google Play Store. Again. I apoligize for the inconvinience and hope to offer a solution soon."
 				);
 				

@@ -210,6 +210,10 @@ site.lifecycle.initApp = function(force) {
 			"Show album art?",
 			"Yes,No"
 		);
+	} 
+	// Check for messages
+	else {
+		site.lifecycle.checkMsgs();
 	}
 	
 	// On update: re-set alarms
@@ -604,7 +608,7 @@ site.lifecycle.checkMsgs = function() {
 	
 }
 
-site.lifecycle.handleMsgs(data) {
+site.lifecycle.handleMsgs = function(data) {
 	
 	loggr.info("site.lifecycle.handleMsgs()");
 	
@@ -636,8 +640,12 @@ site.lifecycle.handleMsgs(data) {
 			continue;
 		}
 		
+		if (!ditem.message) { 
+			continue; 
+		}
+		
 		// Made it so far, show message
-		alert(ditem.message);
+		navigator.notification.alert(ditem.message, function(){}, ditem.title, "OK")
 		
 		// Store
 		lids.push(ditem.id);
