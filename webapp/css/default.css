@@ -74,6 +74,16 @@ input[type="checkbox"] {
 	margin-top:8px;
 }
 
+input[type="image"] {
+	width:auto; 
+	height:auto;
+	margin:0;
+	padding:0;
+	background:none;
+	border:0;
+	cursor:pointer;
+}
+
 /* -- SECTIONS */
 
 /* Common */

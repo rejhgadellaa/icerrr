@@ -144,6 +144,7 @@ site.mp.stop = function(cb,cberr) {
 
 site.mp.setPlaying = function() {
 	loggr.debug("site.mp.setPlaying()");
+	site.mp.isPlaying = true;
 	site.mp.serviceRunning = true;
 	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
 	site.mp.initStatusPoll();
@@ -152,6 +153,7 @@ site.mp.setPlaying = function() {
 
 site.mp.setStopped = function() {
 	loggr.debug("site.mp.setStopped()");
+	site.mp.isPlaying = false;
 	site.mp.serviceRunning = false;
 	site.mp.stopStatusPoll();
 	site.mp.notifCancel();
@@ -217,10 +219,8 @@ site.mp.handleStatus = function(statusCode) {
 	// Handle changed status code
 	if (statusCode==Media.MEDIA_NONE || statusCode==Media.MEDIA_STOPPED) { 
 		site.mp.setStopped();
-		site.mp.isPlaying = false;
 	} else {
 		site.mp.setPlaying();
-		site.mp.isPlaying = true;
 	}
 	
 	// ...
