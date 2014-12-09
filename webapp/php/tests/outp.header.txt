@@ -1,17 +1,15 @@
-{"station_id":"Rix_Fm_8facac4cd1f02d6c7eb174638c94be4e_14a1f0ce768_390f","host":"stream-ice.mtgradio.com","port":8080,"path":"/stat_rix_fm"}
+{"station_id":"radio1","host":"icecast.omroep.nl","port":80,"path":"/radio1-bb-mp3"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
-icy-br:128
-ice-audio-info: bitrate=128
-icy-br:128
-icy-genre:80s/90s
-icy-name:FM01
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Talk
+icy-name:Radio 1
 icy-pub:0
-icy-url:http://www.mtgradio.com
-Server: 002
+icy-url:http://www.radio1.nl
+Server: ics2pss.omroep.nl
 Cache-Control: no-cache
-Expires: Mon, 26 Jul 1997 05:00:00 GMT
-Pragma: no-cache
 icy-metaint:16000
 

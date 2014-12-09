@@ -1,3 +1,6 @@
+0.151 (stable)
+  * Fix: buffer animation when stream is paused
+
 0.150 (stable)
   * Removed the donate button from the app
   * Implemented message-from-developer system
