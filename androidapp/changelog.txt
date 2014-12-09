@@ -1,6 +1,7 @@
 0.151 (stable)
   * Fix: buffer animation when stream is paused
   * Fix: stations update merging improved
+  * Donate button is back!
 
 0.150 (stable)
   * Removed the donate button from the app
