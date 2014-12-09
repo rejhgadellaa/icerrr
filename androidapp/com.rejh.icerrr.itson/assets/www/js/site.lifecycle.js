@@ -615,6 +615,7 @@ site.lifecycle.handleMsgs = function(data) {
 	
 	// Get local data thingie
 	var lidsStr = site.cookies.get("message_ids");
+	loggr.log(" > "+ lidsStr);
 	if (!lidsStr) { lidsStr = "[]"; }
 	var lids = JSON.parse(lidsStr);
 	
@@ -637,7 +638,7 @@ site.lifecycle.handleMsgs = function(data) {
 				continue;
 		}
 		
-		if (critvalue>ditem.critvalue || lids.indexOf(ditem.id)>0) {
+		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0) {
 			continue;
 		}
 		
@@ -645,27 +646,44 @@ site.lifecycle.handleMsgs = function(data) {
 			continue; 
 		}
 		
+		// Build message
+		var message = "";
+		for (var i=0; i<ditem.message.length; i++) {
+			message += ditem.message[i];
+		}
+		
 		// Made it so far, show message
 		if (ditem.action=="url" && !ditem.url) { loggr.error(" > ditem.action = url but ditem.url is false"); ditem.action = "none"; }
 		switch(ditem.action) {
 			case "url":
-				navigator.notification.alert(ditem.message, function(){
-					window.open(ditem.url,"_system");
-				}, ditem.title, "OK");
+				navigator.notification.confirm(message, function(buttonIndex){
+					if (buttonIndex==1) {
+						window.open(ditem.url,"_system");
+						site.lifecycle.storeMsgId(ditem.id,lids);
+					} else {
+						// do not store msg id, we need to prompt the user the next time
+					}
+				}, ditem.title, "OK,Cancel");
 				break;
 			default:
-				navigator.notification.alert(ditem.message, function(){}, ditem.title, "OK");
+				navigator.notification.alert(message, function(){}, ditem.title, "OK");
+				site.lifecycle.storeMsgId(ditem.id,lids);
 				break;
 		}
 		
-		// Store
-		lids.push(ditem.id);
-		lidsStr = JSON.stringify(lids);
-		site.cookies.put("message_ids",lidsStr);
+		// Show one message, then stop
 		break;
 		
 	}
 	
+}
+
+site.lifecycle.storeMsgId = function(id,lids) {
+	loggr.log("site.lifecycle.storeMsgId(): "+ id);
+	if (lids.indexOf(id)>=0) { return; }
+	lids.push(id);
+	lidsStr = JSON.stringify(lids);
+	site.cookies.put("message_ids",lidsStr);
 }
 
 // ---> Others

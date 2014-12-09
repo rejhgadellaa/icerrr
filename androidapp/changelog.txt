@@ -1,5 +1,6 @@
 0.150 (stable)
   * Removed the donate button from the app
+  * Implemented message-from-developer system
 
 0.149 (stable)
   * Fix: Buffer animation didn't show when switching stations
