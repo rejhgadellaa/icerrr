@@ -1,15 +1,15 @@
-{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
+{"station_id":"radio5","host":"icecast.omroep.nl","port":80,"path":"/radio5-bb-mp3"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
 icy-br:192
 ice-audio-info: bitrate=192
 icy-br:192
-icy-genre:Pop
-icy-name:3FM Serious Radio
+icy-genre:Mixed
+icy-name:Radio 5
 icy-pub:0
-icy-url:http://www.3fm.nl
-Server: ics2kss.omroep.nl
+icy-url:http://www.radio5.nl
+Server: ics2fss.omroep.nl
 Cache-Control: no-cache
 icy-metaint:16000
 

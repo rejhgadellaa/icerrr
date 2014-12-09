@@ -1,6 +1,7 @@
 0.150 (stable)
   * Removed the donate button from the app
   * Implemented message-from-developer system
+  * App now published outside of Play Store
 
 0.149 (stable)
   * Fix: Buffer animation didn't show when switching stations

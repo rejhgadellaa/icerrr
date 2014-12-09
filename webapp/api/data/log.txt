@@ -1,3 +1,11 @@
+2014-12-09 06:01:18    Error: Could not parse messages.json: 
+2014-12-09 06:01:17    GET > {"get":"messages"}
+2014-12-09 06:01:17    Cleanup json
+2014-12-09 06:00:35    GET > {"get":"messages"}
+2014-12-09 06:00:35    Cleanup json
+2014-12-09 06:00:00    Error: Could not parse messages.json: 
+2014-12-09 06:00:00    GET > {"get":"messages"}
+2014-12-09 06:00:00    Cleanup json
 2014-12-09 05:41:07    GET > {"get":"messages"}
 2014-12-09 05:41:07    Cleanup json
 2014-12-09 05:34:44    GET > {"get":"messages"}
@@ -820,5 +828,4 @@
 2014-09-17 05:34:15    Cleanup json
 2014-09-17 05:15:57    Error: Error: file '../json/station_info.radio3fm.json' not found?
 2014-09-17 05:15:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/3fm-bb-mp3"}
-2014-09-17 05:15:55    Cleanup json
-2014-09-17 05:14:48    GET > {"get":"station_info","station_id":"r
+2014-09

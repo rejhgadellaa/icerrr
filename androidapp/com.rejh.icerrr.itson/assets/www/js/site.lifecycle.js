@@ -656,6 +656,8 @@ site.lifecycle.handleMsgs = function(data) {
 		if (ditem.action=="url" && !ditem.url) { loggr.error(" > ditem.action = url but ditem.url is false"); ditem.action = "none"; }
 		switch(ditem.action) {
 			case "url":
+				var buttonLabels = "OK,Cancel";
+				if (ditem.buttonLabels) { buttonLabels = ditem.buttonLabels; }
 				navigator.notification.confirm(message, function(buttonIndex){
 					if (buttonIndex==1) {
 						window.open(ditem.url,"_system");
@@ -663,7 +665,7 @@ site.lifecycle.handleMsgs = function(data) {
 					} else {
 						// do not store msg id, we need to prompt the user the next time
 					}
-				}, ditem.title, "OK,Cancel");
+				}, ditem.title, buttonLabels);
 				break;
 			default:
 				navigator.notification.alert(message, function(){}, ditem.title, "OK");
