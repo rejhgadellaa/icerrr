@@ -89,7 +89,7 @@ site.helpers.mergeStations = function(stations1,stations2) {
 				loggr.log(" >>> Value2: "+ station2[key]);
 				continue;
 			}
-			// Overwrite if edit2 is newer
+			// Overwrite if edit2 is newer (or edit1 is not set)
 			else if (station1[key]!=station2[key] && edit1<edit2 || station1[key]!=station2[key] && !edit1) {
 				loggr.log(" >> Conflict: "+ station2.station_id +": "+ key +", overwrite value1");
 				loggr.log(" >>> Value1: "+ station1[key]);

@@ -45,6 +45,7 @@
 	<!-- Javascript: icerrr -->
     <script language="javascript" type="text/javascript" src="js/site.base.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.config.js"></script>
+    <script language="javascript" type="text/javascript" src="js/site.cookweb.js"></script>
     <script language="javascript" type="text/javascript" src="js/site.main.js"></script>
     
     <!-- Style / base -->
@@ -59,10 +60,26 @@
 	
 </head>
 
-<body>
+<body onload="site.main.onload();">
 
 <!-- Section -->
 <section id="home">
+
+	<div class="notice_playstore" onclick="$('#home .notice_playstore').fadeOut(500);">
+	<div class="notice_playstore_inner shadow_z5 round2">
+		
+		<div class="title">Notice</div>
+		<div class="message">
+			<p><strong>Icerrr has been removed from the Google Play Store. Again.</strong></p>
+			<p>Yes, Google seems to enjoy picking on small, independent developers and remove apps for reasons that others do get away with - like <a href="https://play.google.com/store/apps/details?id=tunein.player&hl=en" target="_blank">showing a screenshot on a Play Store page that includes copyrighted album art and song info</a>. And then they removed the new version because Icerrr had a donate button and donating is clearly the same thing as paying a fee (that's why "fee" is not the same word as "donation", because it's the same).</p>
+			<p>In any case: Icerrr is currently not available on the Play Store - or, as I like to call it: it's exclusively NOT available on the Play Store. The rest of the interwebz is free to enjoy my work. You can download the signed APK via the button below. This will update the app you may have already installed via the Play Store. If, for some reason, you end up with two Icerrr launcher icons in your app drawer, you may remove them and try again.</p>
+			<p>Sorry for the inconvenience, I'm working on a solution.</p>
+			<p>And thanks for your support!</p>
+			<p><strong>Roderick Gadellaa</strong><br>Developer of Icerrr</p>
+		</div>
+		<div class="close">Close</div>
+	</div>
+	</div>
 
 	<div class="logo">
     	<img src="img/web_hi_res_512_002.jpg" />

@@ -701,7 +701,7 @@ section {
 	
 	#settings .block .item.subtitle {
 		position:relative;
-		left:0; right:56px;
+		left:0; right:72px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
