@@ -1,9 +1,9 @@
 [
 	
 	{
-		"id":"app0151",
+		"id":"app0152",
 		"crit":"version",
-		"critvalue":0.150,
+		"critvalue":0.151,
 		"action":"url",
 		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
 		"title":"New version available",
@@ -14,9 +14,9 @@
 	},
 	
 	{
-		"id":"changelog151",
+		"id":"changelog152",
 		"crit":"version",
-		"critvalue":0.151,
+		"critvalue":0.152,
 		"action":"url",
 		"url":"https://github.com/rejhgadellaa/icerrr/wiki/Changelog",
 		"title":"Update installed!",

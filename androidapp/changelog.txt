@@ -1,3 +1,7 @@
+0.152 (stable)
+  * Fix: layout in overflow menu
+  * Fix: what's new dialog would not go away until 'Yes' was selected
+
 0.151 (stable)
   * Fix: buffer animation when stream is paused
   * Fix: stations update merging improved

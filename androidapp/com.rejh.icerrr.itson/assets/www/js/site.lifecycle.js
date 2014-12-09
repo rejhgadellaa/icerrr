@@ -663,7 +663,8 @@ site.lifecycle.handleMsgs = function(data) {
 						window.open(ditem.url,"_system");
 						site.lifecycle.storeMsgId(ditem.id,lids);
 					} else {
-						// do not store msg id, we need to prompt the user the next time
+						// do not store msg id if repeat==true, we need to prompt the user the next time
+						if (!ditem.repeat) { site.lifecycle.storeMsgId(ditem.id,lids); }
 					}
 				}, ditem.title, buttonLabels);
 				break;
