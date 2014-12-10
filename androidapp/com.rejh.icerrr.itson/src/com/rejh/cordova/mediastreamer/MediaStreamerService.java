@@ -150,7 +150,7 @@ public class MediaStreamerService extends Service {
 		settEditor.commit();
 	    
 	    // Audio Focus
-	    int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+		int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         
         // Listener: Telephony
 		phoneListener = new RecvEventPhonecalls();  
@@ -233,11 +233,13 @@ public class MediaStreamerService extends Service {
 				settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
 				mpMgr.pause();
+				audioMgr.abandonAudioFocus(afChangeListener);
 			} else if (sett.getBoolean("is_paused", false)) { // resume
 				Log.d(APPTAG," > cmd_pause_resume RESUME!");
 				settEditor.putBoolean("is_paused", false);
 				settEditor.commit();
 				mpMgr.resume();
+				int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 			} else {
 				Log.d(APPTAG," > cmd_pause_resume unhandled!");
 			}
