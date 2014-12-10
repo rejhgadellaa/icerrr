@@ -161,13 +161,15 @@ section {
 	#home .logo {
 		z-index:0;
 		position:absolute;
-		top:50%; left:50%;
-		width:256px;
-		margin:-160px 0 0 -128px;
+		top:0; left:0; right:0; bottom:160px;
 	}
 	
 		#home .logo img {
-			width:100%; height:100%;
+			z-index:0;
+			position:absolute;
+			top:50%; left:50%;
+			width:256px;
+			margin:-128px 0 0 -128px;
 		}
 		
 		#home .logo .title {
@@ -180,6 +182,40 @@ section {
 			display:none;
 			text-align:center;
 		}
+	
+		#home .screenwrap {
+			position:absolute;
+			bottom:-244px;
+			left:50%;
+			width:648px;
+			margin:0 0 0 -324px;
+			transition:bottom 1s;
+		}
+		
+			#home .screenwrap img {
+				width:144px;
+				margin:0;
+			}
+	
+			#home .screen {
+				display:block;
+				position:absolute;
+				top:0;
+				transition:top 1s;
+			}
+			
+				#home .screen.first {
+					left:0;
+				}
+				#home .screen.second {
+					left:168px;
+				}
+				#home .screen.third {
+					left:336px;
+				}
+				#home .screen.fourth {
+					left:504px;
+				}
 		
 	#home .bottomwrap {
 		position:absolute;

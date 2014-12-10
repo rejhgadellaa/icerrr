@@ -23,6 +23,8 @@ if (window.location.hostname.indexOf("www.rejh.nl")<0 && window.location.hostnam
 
 site.main = {};
 
+// --> Onload
+
 site.main.onload = function() {
 	
 	console.log("site.main.onload()");
@@ -40,5 +42,68 @@ site.main.onload = function() {
 	setTimeout(function(){$("#home .notice_playstore").fadeIn(500);},250);
 	
 }
+
+// --> Show/hide screens
+
+site.main.showScreens = function() {
+	
+	console.log("site.main.showScreens()");
+	
+	$(".screenwrap").css("bottom",0);
+	
+	if (site.main.timeout1) {
+		clearTimeout(site.main.timeout1);
+		clearTimeout(site.main.timeout2);
+		clearTimeout(site.main.timeout3);
+		clearTimeout(site.main.timeout4);
+	}
+	
+	site.main.timeout1 = setTimeout(function(){ $(".screen.first").css("top",-192); },1);
+	site.main.timeout2 = setTimeout(function(){ $(".screen.second").css("top",-192); },100);
+	site.main.timeout3 = setTimeout(function(){ $(".screen.third").css("top",-192); },200);
+	site.main.timeout4 = setTimeout(function(){ $(".screen.fourth").css("top",-192); },300);
+	
+}
+
+site.main.hideScreens = function() {
+	
+	console.log("site.main.hideScreens()");
+	
+	$(".screenwrap").css("bottom",0);
+	
+	if (site.main.timeout1) {
+		clearTimeout(site.main.timeout1);
+		clearTimeout(site.main.timeout2);
+		clearTimeout(site.main.timeout3);
+		clearTimeout(site.main.timeout4);
+	}
+	
+	site.main.timeout1 = setTimeout(function(){ $(".screen.first").css("top",0); },1);
+	site.main.timeout2 = setTimeout(function(){ $(".screen.second").css("top",0); },100);
+	site.main.timeout3 = setTimeout(function(){ $(".screen.third").css("top",0); },200);
+	site.main.timeout4 = setTimeout(function(){ $(".screen.fourth").css("top",0); },300);
+	
+	/**/
+	
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 

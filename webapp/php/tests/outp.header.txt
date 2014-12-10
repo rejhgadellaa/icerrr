@@ -1,15 +1,17 @@
-{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
+{"station_id":"Rix_Fm_8facac4cd1f02d6c7eb174638c94be4e_14a1f0ce768_390f","host":"stream-ice.mtgradio.com","port":8080,"path":"/stat_rix_fm"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
-icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Pop
-icy-name:3FM Serious Radio
+icy-br:128
+ice-audio-info: bitrate=128
+icy-br:128
+icy-genre:80s/90s
+icy-name:FM01
 icy-pub:0
-icy-url:http://www.3fm.nl
-Server: ics2ass.omroep.nl
+icy-url:http://www.mtgradio.com
+Server: 002
 Cache-Control: no-cache
+Expires: Mon, 26 Jul 1997 05:00:00 GMT
+Pragma: no-cache
 icy-metaint:16000
 

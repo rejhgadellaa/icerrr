@@ -60,12 +60,12 @@
 	
 </head>
 
-<body onload="site.main.onload();">
+<body onLoad="site.main.onload();">
 
 <!-- Section -->
 <section id="home">
 
-	<div class="notice_playstore" onclick="$('#home .notice_playstore').fadeOut(500);">
+	<div class="notice_playstore" onClick="$('#home .notice_playstore').fadeOut(500);">
 	<div class="notice_playstore_inner shadow_z5 round2">
 		
 		<div class="title">Notice</div>
@@ -81,13 +81,22 @@
 	</div>
 	</div>
 
-	<div class="logo">
+	<div class="logo" onmouseover="site.main.showScreens();" onmouseout="site.main.hideScreens();">
+	
     	<img src="img/web_hi_res_512_002.jpg" />
-        <div class="title"></div>
+        <div class="title">Icerrr</div>
 		<div class="subtitle"></div>
+		
+		<div class="screenwrap">
+			<img class="screen first" src="img/screen1.png" />
+			<img class="screen second" src="img/screen2.png" />
+			<img class="screen third" src="img/screen3.png" />
+			<img class="screen fourth" src="img/screen4.png" />
+		</div>
+		
 	</div>
 	
-	<div style="position:absolute; bottom:192px; right:32px; background:none;">
+	<div style="position:absolute; top:32px; right:32px; background:none;">
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 	<input type="hidden" name="cmd" value="_s-xclick">
 	<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
@@ -102,9 +111,7 @@
 		<div class="getit">
 			<!-- https://play.google.com/store/apps/details?id=com.rejh.icerrr.itson -->
 			<a href="https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1" target="_blank">
-				<img alt="Get it" src="img/notgoogleplay60.png?c=123" />
-			</a>
-		</div>
+				<img alt="Get it" src="img/notgoogleplay60.png?c=123" />			</a>		</div>
 		
 		<!-- SocialPlusLike -->
 		<div class="social">
