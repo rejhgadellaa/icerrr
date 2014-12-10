@@ -638,10 +638,20 @@ site.lifecycle.handleMsgs = function(data) {
 				continue;
 		}
 		
+		// Check critvalue && repeat
 		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0) {
 			continue;
 		}
 		
+		// Check wifiOnly && conntype (msg will wait until wifi || ethernet)
+		if (ditem.onlyOnWifi) {
+			var conntype = site.helpers.getConnType();
+			if (conntype!="WIFI" && conntype!="ETHERNET") {
+				continue;
+			}
+		}
+		
+		// Check message
 		if (!ditem.message) { 
 			continue; 
 		}

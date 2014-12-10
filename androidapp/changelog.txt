@@ -1,3 +1,6 @@
+0.154 (stable)
+  * Show 'update available' message only when on wifi (#125)
+
 0.153 (stable)
   * Fix: No longer receiving audio focus events after focus was lost once
 

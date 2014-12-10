@@ -10,7 +10,8 @@
 		"message":[
 			"An update for Icerrr is availabe. Download now?"
 			],
-		"repeat":1
+		"repeat":1,
+		"onlyOnWifi":1
 	},
 	
 	{

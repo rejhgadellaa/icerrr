@@ -1,3 +1,5 @@
+2014-12-10 19:00:53    GET > {"get":"messages"}
+2014-12-10 19:00:52    Cleanup json
 2014-12-09 06:01:18    Error: Could not parse messages.json: 
 2014-12-09 06:01:17    GET > {"get":"messages"}
 2014-12-09 06:01:17    Cleanup json
