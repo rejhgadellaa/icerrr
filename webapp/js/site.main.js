@@ -29,6 +29,8 @@ site.main.onload = function() {
 	
 	console.log("site.main.onload()");
 	
+	site.main.loaded = true;
+	
 	var shown = (site.cookweb.get("notice_playstore_shown")) ? site.cookweb.get("notice_playstore_shown") : 0;
 	
 	// Notice
@@ -41,6 +43,10 @@ site.main.onload = function() {
 	
 	setTimeout(function(){$("#home .notice_playstore").fadeIn(500);},250);
 	
+	if (site.main.screenMouseOver) {
+		site.main.showScreens();
+	}
+	
 }
 
 // --> Show/hide screens
@@ -48,6 +54,10 @@ site.main.onload = function() {
 site.main.showScreens = function() {
 	
 	console.log("site.main.showScreens()");
+	
+	site.main.screenMouseOver = true;
+	
+	if (!site.main.loaded) { return; }
 	
 	$(".screenwrap").css("bottom",0);
 	
@@ -68,6 +78,10 @@ site.main.showScreens = function() {
 site.main.hideScreens = function() {
 	
 	console.log("site.main.hideScreens()");
+	
+	site.main.screenMouseOver = false;
+	
+	if (!site.main.loaded) { return; }
 	
 	$(".screenwrap").css("bottom",0);
 	
