@@ -343,6 +343,7 @@ public class MediaStreamerService extends Service {
 	    String stream_url = null;
 	    
 	    // Is Alarm, stream_url and volume
+	    boolean incomingIntentWasNull = false;
 	    boolean isAlarm = false;
 	    int volume = -1;
         if (incomingIntent!=null) {
@@ -358,11 +359,18 @@ public class MediaStreamerService extends Service {
         	Log.d(APPTAG," > !incomingIntent");
         	stream_url = sett.getString("mediastreamer_streamUrl",null); // fallback
         	isAlarm = sett.getBoolean("isAlarm", false);
+        	incomingIntentWasNull = true;
+        }
+        if (stream_url==null) {
+        	Log.d(APPTAG," > !stream_url");
+        	stream_url = sett.getString("mediastreamer_streamUrl",null); // fallback
+        	isAlarm = sett.getBoolean("isAlarm", false);
+        	incomingIntentWasNull = true;
         }
         
         // Check
         if (stream_url==null) { shutdown(); }
-        if (stream_url==stream_url_active && !force) { 
+        if (stream_url==stream_url_active && !force && !incomingIntentWasNull) { 
             Log.d(APPTAG," -> stream already running: "+ stream_url_active);
             return; 
         }
