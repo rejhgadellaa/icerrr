@@ -651,6 +651,9 @@ public class MediaStreamerService extends Service {
 				} catch(JSONException e) {
 					Log.e(APPTAG," > runNowPlayingPoll.JSONException!");
 					e.printStackTrace();
+				} catch(Exception e) {
+					Log.e(APPTAG," > runNowPlayingPoll.Exception!");
+					e.printStackTrace();
 				}
 			}
 		});
