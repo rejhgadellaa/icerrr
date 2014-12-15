@@ -603,6 +603,11 @@ public class MediaStreamerService extends Service {
 					return;
 				}
 				
+				if (jsons==null) { 
+					Log.e(APPTAG," > jsons==null, quit thread");
+					return; 
+				}
+				
 				try {
 					
 					JSONObject json = new JSONObject(jsons);
