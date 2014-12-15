@@ -66,7 +66,7 @@ Style + design
     * [http://www.colourlovers.com/palette/3074952/Save_the_Arctic Save_the_Arctic]
 
   * Icon generators:
-    * Material: http://shreyasachar.github.io/AndroidAssetStudio/index.html
+    * Roman Nurik's Android Asset Studio: [http://romannurik.github.io/AndroidAssetStudio/index.html]
 
 Radio Directory
 ---------------
