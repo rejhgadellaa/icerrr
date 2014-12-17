@@ -1,3 +1,8 @@
+0.158 (stable)
+  * Hotfix: wifi would not turn off when stream is stopped (since v0.157)
+  * Fix: wifi would be turned on when pausing stream in some scenarios
+  * Other (minor) bugfixes
+
 0.157 (stable)
   * Fix: wifi would turn on every time the stream restarted
 

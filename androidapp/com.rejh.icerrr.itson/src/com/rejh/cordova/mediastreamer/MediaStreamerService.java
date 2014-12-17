@@ -229,13 +229,15 @@ public class MediaStreamerService extends Service {
 		}
 		
 		// Go
+		boolean shouldEnableWifi = true;
 		if (mpMgr!=null) {
 			if (cmd_pause_resume && !sett.getBoolean("is_paused", false)) { // pause
 				Log.d(APPTAG," > cmd_pause_resume PAUSE!");
 				settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
 				mpMgr.pause();
-				audioMgr.abandonAudioFocus(afChangeListener);
+				shouldEnableWifi = false;
+				// audioMgr.abandonAudioFocus(afChangeListener);
 			} else if (sett.getBoolean("is_paused", false)) { // resume
 				Log.d(APPTAG," > cmd_pause_resume RESUME!");
 				settEditor.putBoolean("is_paused", false);
@@ -267,7 +269,9 @@ public class MediaStreamerService extends Service {
         metadataEditor.apply();
         
         // Handle Wifi
-        enableWifi();
+        if (shouldEnableWifi) {
+        	enableWifi();
+        }
         
         // Store state 
         serviceIsRunning = true;
@@ -283,6 +287,8 @@ public class MediaStreamerService extends Service {
 		
 		super.onDestroy();
 		Log.i(APPTAG,"MediaStreamerService.OnDestroy");
+		
+		serviceIsRunning = false;
 		
 		// Cancel notifmgr notif if available
 		Intent notifIntent = new Intent();
@@ -326,7 +332,7 @@ public class MediaStreamerService extends Service {
         audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
         
         // Handle Wifi
-        enableWifi();
+        disableWifi();
 		
 	}
 	
@@ -613,7 +619,7 @@ public class MediaStreamerService extends Service {
 						}
 					}
 					
-					if (!nowplaying_new.equals(nowplaying)) {
+					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
 						
 						nowplaying = nowplaying_new;
 						Log.d(APPTAG," > NowPlaying: "+ station_name +", "+ nowplaying);
@@ -649,9 +655,8 @@ public class MediaStreamerService extends Service {
 		
 		Log.d(APPTAG,"enableWifi()");
         
-		boolean isAlarm = false;
-		
 		// Is Alarm?
+		boolean isAlarm = false;
 		if (incomingIntent!=null) {
         	isAlarm = incomingIntent.getBooleanExtra("isAlarm",false);
 		}
