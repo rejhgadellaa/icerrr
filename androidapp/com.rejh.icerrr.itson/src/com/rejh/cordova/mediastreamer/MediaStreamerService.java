@@ -96,6 +96,8 @@ public class MediaStreamerService extends Service {
     private Thread nowPlayingPollThread;
     private Timer nowPlayingPollTimer;
     
+    private boolean serviceIsRunning = false;
+    
     int volumeBeforeDuck = -1;
 	
 	// --------------------------------------------------
@@ -247,13 +249,13 @@ public class MediaStreamerService extends Service {
 			setup();
 		}
 		
+		// Now playing + notification
 		String nowplaying_tmp = (nowplaying!=null)?nowplaying:"Now playing: ...";
-		
 		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
 		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying_tmp, msNotifMgr.NOTIFICATION_ID);
-		
 		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 		
+		// Now playing poll
 		startNowPlayingPoll();
         
         // Metadata
@@ -263,7 +265,14 @@ public class MediaStreamerService extends Service {
         metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, nowplaying_tmp);
         metadataEditor.putBitmap(100, getIcon("wear_album_art"));
         metadataEditor.apply();
+        
+        // Handle Wifi
+        enableWifi();
+        
+        // Store state 
+        serviceIsRunning = true;
 		
+        // Return
 		return START_STICKY;
 		
 	}
@@ -315,6 +324,9 @@ public class MediaStreamerService extends Service {
         // Unreg remotecontrolclients and -receivers
         RemoteControlHelper.unregisterRemoteControlClient(audioMgr,remoteControlClient);
         audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
+        
+        // Handle Wifi
+        enableWifi();
 		
 	}
 	
@@ -333,11 +345,6 @@ public class MediaStreamerService extends Service {
 		wakelock = powerMgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, APPTAG);
 		if (wakelock.isHeld()) { wakelock.release(); }
 		wakelock.acquire();
-		
-		// WifiLock
-		wifiLock = wifiMgr.createWifiLock(WifiManager.WIFI_MODE_FULL,"Lock");
-		if (wifiLock.isHeld()) { wifiLock.release(); }
-		wifiLock.acquire();
         
         // Stream url
 	    String stream_url = null;
@@ -375,16 +382,6 @@ public class MediaStreamerService extends Service {
             return; 
         }
         
-        // Wifi
-        if (isAlarm || sett.getBoolean("useWifi", true)) {
-        	settEditor.putBoolean("wifiIsToggled", true);
-        	settEditor.commit();
-			wifiMgr.setWifiEnabled(true);
-        } else {
-        	settEditor.putBoolean("wifiIsToggled", false);
-        	settEditor.commit();
-        }
-        
         // Volume
         if (volume>-1) {
         	Log.d(APPTAG," > Volume: "+volume);
@@ -392,10 +389,6 @@ public class MediaStreamerService extends Service {
         } else if (isAlarm && volume<0) {
         	setVolume(5);
         }
-
-        Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
-        
-		settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
 		settEditor.putBoolean("is_paused", false);
 		settEditor.commit();
 		
@@ -415,24 +408,12 @@ public class MediaStreamerService extends Service {
         Log.d(APPTAG," > shutdown()");
         
         Log.d(APPTAG," >> In foreground: "+ isServiceRunningInForeground(MediaStreamerService.class));
-
-		// WifiLock OFF
-		if (wifiLock!=null) { 
-			if (wifiLock.isHeld()) {
-				wifiLock.release();
-			}
-		}
         
         // WakeLock OFF
         if (wakelock.isHeld()) { wakelock.release(); }
-    	
+        
         // Wifi
-        Log.d(APPTAG," > WifiIsToggled: "+ sett.getBoolean("wifiIsToggled", false));
-    	Log.d(APPTAG," > WifiState stored: "+ sett.getBoolean("wifiStateOnSetup",false));
-    	if (sett.getBoolean("wifiIsToggled", false) && !sett.getBoolean("wifiStateOnSetup",false)) {
-    		Log.w(APPTAG," > Turn wifi off...");
-    		wifiMgr.setWifiEnabled(false);
-    	}
+        disableWifi();
         
         // MediaPlayer
         if (mpMgr!=null) { 
@@ -660,8 +641,65 @@ public class MediaStreamerService extends Service {
 		nowPlayingPollThread.start();
 	}
 	
-	// ------------------
+	// --------------------------------------------------
 	// METHODS
+	
+	// --- Turn on wifi
+	private void enableWifi() {
+		
+		Log.d(APPTAG,"enableWifi()");
+        
+		boolean isAlarm = false;
+		
+		// Is Alarm?
+		if (incomingIntent!=null) {
+        	isAlarm = incomingIntent.getBooleanExtra("isAlarm",false);
+		}
+		
+		// WifiLock
+		wifiLock = wifiMgr.createWifiLock(WifiManager.WIFI_MODE_FULL,"Lock");
+		if (wifiLock.isHeld()) { wifiLock.release(); }
+		wifiLock.acquire();
+		
+        // Wifi
+        Log.d(APPTAG," > WifiState: "+ wifiMgr.isWifiEnabled());
+		settEditor.putBoolean("wifiStateOnSetup",wifiMgr.isWifiEnabled());
+        if (isAlarm || sett.getBoolean("useWifi", true) && !serviceIsRunning) {
+        	Log.d(APPTAG," >> Turn on...");
+        	settEditor.putBoolean("wifiIsToggled", true);
+        	settEditor.commit();
+			wifiMgr.setWifiEnabled(true);
+        } else {
+        	Log.d(APPTAG," >> Do nothing...");
+        	settEditor.putBoolean("wifiIsToggled", false);
+        	settEditor.commit();
+        }
+		
+	}
+	
+	private void disableWifi() {
+		
+		Log.d(APPTAG,"disableWifi()");
+
+		// WifiLock OFF
+		if (wifiLock!=null) { 
+			if (wifiLock.isHeld()) {
+				wifiLock.release();
+			}
+		}
+        
+        // WakeLock OFF
+        if (wakelock.isHeld()) { wakelock.release(); }
+    	
+        // Wifi
+        Log.d(APPTAG," > WifiIsToggled: "+ sett.getBoolean("wifiIsToggled", false));
+    	Log.d(APPTAG," > WifiState stored: "+ sett.getBoolean("wifiStateOnSetup",false));
+    	if (sett.getBoolean("wifiIsToggled", false) && !sett.getBoolean("wifiStateOnSetup",false)) {
+    		Log.w(APPTAG," > Turn wifi off...");
+    		wifiMgr.setWifiEnabled(false);
+    	}
+		
+	}
     
     // --- SetVolume
 	private void setVolume(int volume) {

@@ -1,3 +1,6 @@
+0.157 (stable)
+  * Fix: wifi would turn on every time the stream restarted
+
 0.156 (stable)
   * Fix: potential nullpointer exception when parsing nowplaying data
 

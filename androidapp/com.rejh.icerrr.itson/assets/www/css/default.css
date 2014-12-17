@@ -705,6 +705,7 @@ section {
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
+		border-right:1px solid #f00;
 	}
 	
 		#settings .checkboxWrap {

@@ -128,9 +128,10 @@ site.settings.helpUseWifi = function() {
 	var title = "Help: Settings";
 	var buttonName = "OK";
 	var message = ""
-		+"Always use WIFI\n\n"
-		+"When enabled, Icerrr will always turn on wifi when a stream is started to limit data usage as much as possible.\n\n"
-		+"Note: it is recommended to leave this option enabled."
+		+"Always turn on WiFi\n\n"
+		+"When enabled, Icerrr will always turn on WiFi when a stream is started to limit data usage as much as possible.\n\n"
+		+"WiFi will always be turned on when alarms fire, ignoring this setting.\n\n"
+		+"Note: It is recommended to leave this option enabled."
 		//+"All alarms that are are fired by SAA will then cause Icerrr to start the last station you listened to. It is therefore recommended to silence the alarm sound in SAA.\n\n"
 		//+"Note: Alarms set in Icerrr are not affected and will have no interaction with SAA."
 		;
