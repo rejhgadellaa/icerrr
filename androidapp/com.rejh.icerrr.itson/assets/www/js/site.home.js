@@ -421,6 +421,15 @@ site.home.getAlbumArt = function() {
 		return;
 	}
 	
+	// 3fm serious request
+	if (station.station_nowplaying.indexOf("NPO 3FM")>-1){
+		var seriousrequestImage = "img/station-art/3fmportrait.jpg";
+		if ($(window).width()>$(window).height()){
+			seriousrequestImage = "img/station-art/3fmlandscape.jpg";
+		}
+		$("#home .main .station_image img").attr("src",seriousrequestImage);
+	}
+	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
 		+ "\""+ station.station_nowplaying +"\" "
