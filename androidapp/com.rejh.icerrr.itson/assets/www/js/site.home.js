@@ -428,6 +428,7 @@ site.home.getAlbumArt = function() {
 			seriousrequestImage = "img/station-art/3fmlandscape.jpg";
 		}
 		$("#home .main .station_image img").attr("src",seriousrequestImage);
+		return;
 	}
 	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
