@@ -1,3 +1,6 @@
+0.160 (stable)
+  * Minor fix for 0.159
+
 0.159 (stable)
   * 3FM Serious Request Special Edition
 
