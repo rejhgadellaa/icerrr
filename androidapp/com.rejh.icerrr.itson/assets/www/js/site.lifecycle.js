@@ -90,7 +90,11 @@ site.lifecycle.init = function() {
 	document.addEventListener("volumedownbutton", site.lifecycle.onVolumeDown, true);
 	
 	/**/// Google Loader
-	google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
+	try {
+		google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
+	} catch(e) {
+		loggr.warn(" > google.load() has failed");
+	}
 	
 	// Init app
 	site.lifecycle.initApp();
@@ -603,7 +607,7 @@ site.lifecycle.checkMsgs = function() {
 		},
 		function(err) {
 			// do nothing..
-			loggr.error(" > lifecycle.checkMsgs().Error: "+ e.message);
+			loggr.error(" > lifecycle.checkMsgs().Error: "+ err.message);
 		}
 	);
 	

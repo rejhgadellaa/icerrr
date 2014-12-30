@@ -76,10 +76,21 @@ public class MediaStreamerNotifMgr {
 	}
 	
 	public int notif(String stationName, String nowPlaying, int notif_id, boolean onlybuild) {
+		return notif(stationName, nowPlaying, notif_id, true, null);
+	}
+	
+	public int notif(String stationName, String nowPlaying, int notif_id, boolean onlybuild, JSONObject overrideOpts) {
 		
 		Log.d(LOGTAG,"MediaStreamerNotifMgr.notify()");
 		
 		try {
+			
+			// Check overrideOpts
+			if (overrideOpts==null) {
+				overrideOpts = new JSONObject();
+			}
+			String actionPlayPauseIcon = overrideOpts.has("actionPlayPauseIcon") ? overrideOpts.getString("actionPlayPauseIcon") : "ic_stat_av_pause";
+			String actionPlayPauseTitle = overrideOpts.has("actionPlayPauseTitle") ? overrideOpts.getString("actionPlayPauseTitle") : "Pause";
 			
 			// Create args
 			JSONArray args = new JSONArray();
@@ -130,8 +141,8 @@ public class MediaStreamerNotifMgr {
 			JSONObject optsAction2Intent = new JSONObject();
 			JSONArray optsAction2IntentExtras = new JSONArray();
 			JSONObject optsAction2IntentExtra1 = new JSONObject();
-			optsAction2.put("icon","ic_stat_av_pause");
-			optsAction2.put("title","Pause/Resume");
+			optsAction2.put("icon",actionPlayPauseIcon);
+			optsAction2.put("title",actionPlayPauseTitle);
 			optsAction2Intent.put("type","receiver");
 			optsAction2Intent.put("package","com.rejh.icerrr.itson");
 			optsAction2Intent.put("classname","com.rejh.cordova.mediastreamer.MediaStreamerReceiver");

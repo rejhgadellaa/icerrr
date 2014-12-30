@@ -228,6 +228,9 @@ public class MediaStreamerService extends Service {
 			
 		}
 		
+		// Override opts for notif
+		JSONObject overrideOpts = new JSONObject();
+		
 		// Go
 		boolean shouldEnableWifi = true;
 		if (mpMgr!=null) {
@@ -236,6 +239,10 @@ public class MediaStreamerService extends Service {
 				settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
 				mpMgr.pause();
+				try {
+					overrideOpts.put("actionPlayPauseIcon","ic_stat_av_play");
+					overrideOpts.put("actionPlayPauseTitle","Resume");
+				} catch(Exception e) {}
 				shouldEnableWifi = false;
 				// audioMgr.abandonAudioFocus(afChangeListener);
 			} else if (sett.getBoolean("is_paused", false)) { // resume
@@ -254,7 +261,7 @@ public class MediaStreamerService extends Service {
 		// Now playing + notification
 		String nowplaying_tmp = (nowplaying!=null)?nowplaying:"Now playing: ...";
 		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
-		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying_tmp, msNotifMgr.NOTIFICATION_ID);
+		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying_tmp, msNotifMgr.NOTIFICATION_ID,true,overrideOpts);
 		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 		
 		// Now playing poll
