@@ -1,9 +1,9 @@
 [
 	
 	{
-		"id":"app0161",
+		"id":"app0163",
 		"crit":"version",
-		"critvalue":0.160,
+		"critvalue":0.162,
 		"action":"url",
 		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
 		"title":"New version available",
@@ -16,17 +16,19 @@
 	},
 	
 	{
-		"id":"changelog159",
+		"id":"changelog163",
 		"crit":"version",
-		"critvalue":0.160,
+		"critvalue":0.163,
 		"action":"url",
 		"url":"https://github.com/rejhgadellaa/icerrr/wiki/Changelog",
 		"title":"Update installed!",
 		"message":[
-			"Icerrr has been successfully updated to the latest version (0.159).\n\nDo you want to see what's new?"
+			"Icerrr has recently been updated.\n\n",
+            "Do you want to see the full changelog?"
 			],
 		"buttonLabels":"Yes,No",
-		"repeat":0
+		"repeat":0,
+		"onlyOnWifi":1
 	},
 	
 	{

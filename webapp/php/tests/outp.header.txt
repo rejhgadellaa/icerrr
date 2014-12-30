@@ -1,15 +1,16 @@
-{"station_id":"radio2","host":"icecast.omroep.nl","port":80,"path":"/radio2-bb-mp3"}
+{"station_id":"intergalactic_galaxia","host":"radio.intergalacticfm.com","port":80,"path":"/3"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
-icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Mixed
-icy-name:Radio 2
-icy-pub:0
-icy-url:http://www.radio2.nl
-Server: ics2fss.omroep.nl
+icy-br:128
+ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
+icy-br:128
+icy-genre:House
+icy-name:IFM 3: Radio Galaxia
+icy-private:0
+icy-pub:1
+icy-url:http://www.intergalactic.fm
+Server: Icecast 2.3.2
 Cache-Control: no-cache
 icy-metaint:16000
 
