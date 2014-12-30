@@ -58,10 +58,10 @@ site.home.init = function() {
 				//var colorThief = new ColorThief();
 				//var color = colorThief.getColor(img);
 			}
-			$("#home .main .station_image").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
+			// $("#home .main .station_image").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
+			// $("#home .main .station_image").css("-webkit-background-blend-mode","multiply");
+			// $("#home .main .station_image").css("background-blend-mode","multiply");
 			$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
-			$("#home .main .station_image").css("background-blend-mode","multiply");
-			$("#home .main .station_image").css("-webkit-background-blend-mode","multiply");
 			if (colorIcon) { 
 				if (!$("#home .main .station_image img").hasClass("shadow_z2")) { $("#home .main .station_image img").addClass("shadow_z2"); }
 				$("#home .main .station_image img").css("background-color","rgba("+colorIcon[0]+","+colorIcon[1]+","+colorIcon[2]+","+colorIcon[3]+")");

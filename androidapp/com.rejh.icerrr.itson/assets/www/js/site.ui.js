@@ -72,10 +72,13 @@ site.ui.gotosection = function(selector) {
 	$(".activatabled_active").removeClass("activatabled_active");
 		
 	if (site.vars.previousSection=="#splash") {
-		var translate = "translate3d(0px,"+ (-($(window).height()-56)) +"px,0px)";
-		loggr.log(translate);
-		$("#splash").css({"transform":translate,"-webkit-transform":translate});
+		// Resize .main
+		$(site.vars.currentSection+" .main").css("height",$(window).height()-56);
+		// Show..
 		$(selector).css("display","block");
+		// Translate splash
+		var translate = "translate3d(0px,"+ (-($(window).height()-56)) +"px,0px)";
+		$("#splash").css({"transform":translate,"-webkit-transform":translate});
 		setTimeout(function(){
 			$("#splash").fadeOut(250);
 		},750);

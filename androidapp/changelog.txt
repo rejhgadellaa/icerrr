@@ -1,3 +1,6 @@
+0.161 (stable)
+  * Improvements for startup smoothness
+
 0.160 (stable)
   * Minor fix for 0.159
 
