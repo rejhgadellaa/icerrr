@@ -1,3 +1,8 @@
+0.162 (stable)
+  * Fix: alarms would not fire when internet connection was not available on startup (#130)
+  * Tweak: Icon and text for pause/resume action in notification now reflects status (#124)
+  * Minor UI tweaks
+
 0.161 (stable)
   * Improvements for startup smoothness
 
