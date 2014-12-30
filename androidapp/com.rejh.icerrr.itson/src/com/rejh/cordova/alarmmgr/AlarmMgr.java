@@ -234,7 +234,9 @@ public class AlarmMgr extends CordovaPlugin {
 		
 		// Get id
 		int id = opts.has("id") ? opts.getInt("id") : -1;
-		if (id<0) { callbackContext.error("id<0"); return; }
+		if (id<0) { Log.e(APPTAG," --> id<0, error!"); callbackContext.error("id<0"); return; }
+		
+		Log.d(APPTAG," --> id: "+ id);
 		
 		// Cancel intent
 		Intent intent = new Intent(context, AlarmMgrReceiver.class);

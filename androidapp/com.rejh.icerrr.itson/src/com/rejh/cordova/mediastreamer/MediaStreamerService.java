@@ -885,7 +885,8 @@ public class MediaStreamerService extends Service {
         return bmp;
     }
     
-    // Airplane mode
+    // > Airplane mode
+    
     private static boolean isAirplaneModeOn(Context context) {
 	    return Settings.System.getInt(context.getContentResolver(),
 	            Settings.System.AIRPLANE_MODE_ON, 0) != 0;

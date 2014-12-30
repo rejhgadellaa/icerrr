@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -96,7 +97,7 @@ public class ObjMediaPlayerMgr {
 	// Methods Public
 	
 	private void initbackup() {
-		Log.w("MediaStreamer"," -> nrOfErrors > 10, using backup-plan!");
+		Log.w(LOGTAG," -> nrOfErrors > 10, using backup-plan!");
 		if (isAlarm) {
 			Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 		     if(alert == null){
@@ -431,6 +432,12 @@ public class ObjMediaPlayerMgr {
 			NetworkInfo netwInfo = connMgr.getActiveNetworkInfo();
 			NetworkInfo netwInfoCell = connMgr.getNetworkInfo(0);
 			
+			// Check airplane mode first..
+			if (isAirplaneModeOn(context)) {
+				initbackup();
+				return;
+			}
+			
 			try {
 				
 				// 3G=1, Wifi=2
@@ -490,6 +497,13 @@ public class ObjMediaPlayerMgr {
 				connWasLost=true;
 			}
 			
+		}
+
+		// > Airplane mode
+		
+		private static boolean isAirplaneModeOn(Context context) {
+		    return Settings.System.getInt(context.getContentResolver(),
+		            Settings.System.AIRPLANE_MODE_ON, 0) != 0;
 		}
 		
 		
