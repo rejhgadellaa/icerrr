@@ -35,6 +35,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
+import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -661,6 +662,12 @@ public class MediaStreamerService extends Service {
 	private void enableWifi() {
 		
 		Log.d(APPTAG,"enableWifi()");
+		
+		// Check airplane mode
+		if (isAirplaneModeOn(context)) {
+			Log.w(APPTAG," > Airplane mode is detected. DO NOT TOUCH WIFI");
+			return;
+		}
         
 		// Is Alarm?
 		boolean isAlarm = false;
@@ -876,6 +883,12 @@ public class MediaStreamerService extends Service {
         }
 
         return bmp;
+    }
+    
+    // Airplane mode
+    private static boolean isAirplaneModeOn(Context context) {
+	    return Settings.System.getInt(context.getContentResolver(),
+	            Settings.System.AIRPLANE_MODE_ON, 0) != 0;
     }
 	
 	

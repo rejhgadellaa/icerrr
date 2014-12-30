@@ -1,3 +1,6 @@
+0.163 (stable)
+  * Fix: wifi would be turned on even when airplane mode was enabled (#132)
+
 0.162 (stable)
   * Fix: alarms would not fire when internet connection was not available on startup (#130)
   * Tweak: Icon and text for pause/resume action in notification now reflects status (#124)
