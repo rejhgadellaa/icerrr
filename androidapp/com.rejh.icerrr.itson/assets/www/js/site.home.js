@@ -423,7 +423,7 @@ site.home.getAlbumArt = function() {
 	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
-		+ "\""+ station.station_nowplaying +"\" "
+		+ "\""+ station.station_nowplaying.toLowerCase() +"\" "
 		+ "album art";
 	
 	var opts = {
