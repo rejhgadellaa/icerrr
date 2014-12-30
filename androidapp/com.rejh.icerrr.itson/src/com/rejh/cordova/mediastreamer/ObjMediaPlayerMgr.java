@@ -433,7 +433,7 @@ public class ObjMediaPlayerMgr {
 			NetworkInfo netwInfoCell = connMgr.getNetworkInfo(0);
 			
 			// Check airplane mode first..
-			if (isAirplaneModeOn(context)) {
+			if (isAirplaneModeOn(context) && isAlarm || netwInfo==null && isAlarm) {
 				initbackup();
 				return;
 			}
