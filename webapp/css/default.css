@@ -169,18 +169,31 @@ section {
 			position:absolute;
 			top:50%; left:50%;
 			width:256px;
-			margin:-128px 0 0 -128px;
+			margin:-168px 0 0 -128px;
 		}
 		
 		#home .logo .title {
-			display:none;
+			display:block;
+			position:absolute;
+			top:50%; left:50%;
+			width:256px;
+			margin:48px 0 0 -128px;
 			text-align:center;
-			font-size:24pt;
+			font-size:32pt;
+			font-weight:300;
+			color:#D0D102;
 		}
 		
 		#home .logo .subtitle {
-			display:none;
+			display:block;
+			position:absolute;
+			top:50%; left:50%;
+			width:512px;
+			margin:112px 0 0 -256px;
 			text-align:center;
+			font-size:16pt;
+			font-weight:300;
+			color:#D0D102;
 		}
 	
 		#home .screenwrap {
