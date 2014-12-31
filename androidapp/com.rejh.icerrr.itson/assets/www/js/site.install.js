@@ -565,7 +565,7 @@ site.installer.finishup = function() {
 	setTimeout(function(){
 						
 		site.installer.logger("&nbsp;&gt; Done");
-		//site.ui.showloading("Restarting...");
+		site.ui.showloading("Restarting...");
 		
 		setTimeout(function() {
 			
