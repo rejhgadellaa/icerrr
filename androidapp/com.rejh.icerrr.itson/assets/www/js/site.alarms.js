@@ -178,7 +178,7 @@ site.alarms.edit = function(obj) {
 
 // ---> Save
 
-site.alarms.save = function() {
+site.alarms.save = function(silenced) {
 	
 	loggr.info("site.alarms.save()");
 	
@@ -210,7 +210,10 @@ site.alarms.save = function() {
 	site.alarms.setAlarm(null,alarmCfg);
 	
 	// Toast!
-	site.ui.showtoast("Alarm saved");
+	if (!silenced) { site.ui.showtoast("Alarm saved"); }
+	else {
+		site.ui.showtoast("Saved it!",0.5);
+	}
 	
 	$("#alarms_add .action.trash").css("display","block");
 	
@@ -441,7 +444,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		var value = evt.originalEvent.target.value;
 		site.alarms.newAlarmCfg.station = site.data.stations[site.helpers.session.getStationIndexById(value)];
 		loggr.log(" > Change: station "+site.alarms.newAlarmCfg.station.station_name);
-		site.alarms.save();
+		site.alarms.save(true);
 	});
 	
 	// Alarm time
@@ -475,7 +478,7 @@ site.alarms.updateForm = function(alarmCfg) {
 			date.setHours(date.getHours()-offset); // ugly...
 			date.setSeconds(0);
 			$("#alarms_add input[name='alarm_time']")[0].valueAsDate = date;
-			site.alarms.save();
+			site.alarms.save(true);
 		});
 		return false;
 	}
@@ -503,7 +506,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		var value = obj.value ? obj.value : 7;
 		loggr.log(" > Change: volume: "+value);
 		alarmCfg.volume = value;
-		site.alarms.save();
+		site.alarms.save(true);
 		$("#alarms_add input[name='alarm_volume']").blur();
 	});
 	
@@ -567,7 +570,7 @@ site.alarms.updateForm = function(alarmCfg) {
 		}
 		loggr.log(" > Repeat: "+ repeatOn);
 		site.alarms.newAlarmCfg.repeat = repeatOn;
-		site.alarms.save();
+		site.alarms.save(true);
 	});
 	/*
 	for (var i=0; i<days.length; i++) {

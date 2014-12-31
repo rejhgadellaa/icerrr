@@ -38,6 +38,11 @@
 	
     <meta charset="utf-8">
 	
+	<!-- Style now -->
+	<style>
+	html, body { background:#2D6073; width:100%; height:100%;  }
+	</style>
+	
     <!-- Title + Info -->
     <title>ICERRR</title>
     
@@ -111,11 +116,6 @@
     <link rel="stylesheet" type="text/css" href="css/size.tablet07-landscape.css" media="screen and (min-width: 800px) and (max-width: 999px) and (orientation:landscape)" />
     <link rel="stylesheet" type="text/css" href="css/size.tablet10-landscape.css" media="screen and (min-width: 1000px) and (orientation:landscape)" />
 	-->
-	
-	<!-- Style now -->
-	<style>
-	html, body { background:#2D6073; }
-	</style>
     
     <!-- Webfonts -->
     <link href='css/fonts.css' rel='stylesheet' type='text/css'>
@@ -144,7 +144,7 @@
     </div>
     
     <div class="main">
-    	<div class="log"><strong>Installing...</strong></div>
+    	<div class="log"><h1>Just a sec..</h1></div>
     </div>
 </section>
 
@@ -165,7 +165,7 @@
         </div>
     </div>
     
-    <div class="main">
+    <div class="main" style="background-image:url(img/bg_home_default.jpg);">
 		
 		<div class="station_image" onClick="site.home.dismissOverflowMenu();"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div></div>
 	  <div class="station_image_overlay"></div>
@@ -622,21 +622,21 @@
 				<div class="checkboxWrap"><input name="useWifi" type="checkbox" class="checkbox" checked="checked" /></div>
 			</div>
 			
-	  <div class="itemWrap">
+			<div class="itemWrap">
 				<div class="item spacer"></div>
 			</div>
-			
-	  <div class="itemWrap showAlbumArt">
-				<div class="item title">Show album art</div>
-				<div class="item subtitle">Search and show album art on your behalf <a href="javascript:void(0);" onClick="site.settings.helpShowAlbumArt();">(?)</a></div>
-				<div class="checkboxWrap"><input name="showAlbumArt" type="checkbox" class="checkbox" /></div>
-			</div>
-			
-	  <div class="itemWrap">
+				
+			<div class="itemWrap showAlbumArt">
+					<div class="item title">Show album art</div>
+					<div class="item subtitle">Search and show album art on your behalf <a href="javascript:void(0);" onClick="site.settings.helpShowAlbumArt();">(?)</a></div>
+					<div class="checkboxWrap"><input name="showAlbumArt" type="checkbox" class="checkbox" /></div>
+				</div>
+				
+			<div class="itemWrap">
 				<div class="item spacer"></div>
 			</div>
-			
-	  <div class="itemWrap useSAA">
+				
+			<div class="itemWrap useSAA">
 				<div class="item title">Sleep As Android integration</div>
 				<div class="item subtitle">Respond to alarms fired by SAA <a href="javascript:void(0);" onClick="site.settings.helpSaa();">(?)</a></div>
 				<div class="checkboxWrap"><input name="useSAA" type="checkbox" class="checkbox" /></div>

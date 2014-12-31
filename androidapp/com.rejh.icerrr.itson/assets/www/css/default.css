@@ -48,7 +48,7 @@ a {
 }
 
 	a:hover {
-		text-decoration:underline;
+		/* text-decoration:underline; */
 	}
 	
 h1 {
@@ -169,7 +169,7 @@ section {
 			float:left;
 			width:50%;
 			height:48px;
-			color:rgba(255,255,255,0.54);
+			color:rgba(255,255,255,0.33);
 		}
 		.tab.active {
 			background:rgba(0,0,0,0.25);
@@ -280,9 +280,13 @@ section {
 }
 
 	#install .main .log {
-		padding:16px;
+		padding:16px 0 0 32px;;
 		font-size:10pt;
 		color:rgba(0,0,0,0.54);
+	}
+	
+	#install .main .log h1 {
+		margin:16px 0 16px 0;
 	}
 	
 	#install .main .log span.e {
@@ -294,7 +298,7 @@ section {
 }
 
 #home {
-	display:none;
+	display:block;
 }
 
 	#home .main {
@@ -659,6 +663,8 @@ section {
 }
 	
 	#settings .block {
+		position:relative;
+		left:0px; right:0px;
 		padding:16px 16px 0 16px;
 	}
 
@@ -673,6 +679,7 @@ section {
 	
 	#settings .block .itemWrap {
 		position:relative;
+		left:0px; right:0px;
 	}
 	
 	#settings .block .item {
@@ -692,10 +699,10 @@ section {
 	}
 	
 	#settings .block .item.title {
+		position:relative;
+		margin-right:32px;
 		font-size:16pt;
 		font-weight:normal;
-		position:relative;
-		left:0; right:56px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
@@ -703,11 +710,7 @@ section {
 	
 	#settings .block .item.subtitle {
 		position:relative;
-		left:0; right:72px;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow:ellipsis;
-		border-right:1px solid #f00;
+		margin-right:32px;
 	}
 	
 		#settings .checkboxWrap {

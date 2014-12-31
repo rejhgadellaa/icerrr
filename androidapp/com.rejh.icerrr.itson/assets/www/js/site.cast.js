@@ -178,6 +178,8 @@ site.cast.requestSession = function() {
 		return; // <- important :)
 	}
 	
+	site.cast.session = "STARTING";
+	
 	loggr.log(" > Request session...");
 	chrome.cast.requestSession(
 		function(session) {

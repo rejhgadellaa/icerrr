@@ -64,6 +64,9 @@ site.installer.init = function(isUpdate) {
 	
 	loggr.info("site.installer.init()");
 	
+	// Hide #home
+	$("#home").css("display","none");
+	
 	if (!site.helpers.isConnected()) {
 		navigator.notification.confirm(
 			"Icerrr needs a working internet connection.\n\nYour current connections status is: "+ site.helpers.getConnType() +"\n\nPlease make sure you are connected and try again.",
@@ -84,7 +87,7 @@ site.installer.init = function(isUpdate) {
 	// - This mainly means that when the install fails we'll just finish up
 	if (isUpdate) {
 		site.installer.isUpdate = true;
-		$("#install .log").html("<strong>Updating...</strong>");
+		$("#install .log").html("<h1>Update!</h1>");
 	}
 	
 	// Well let's start by showing some loading ui
@@ -105,15 +108,25 @@ site.installer.init = function(isUpdate) {
 
 site.installer.update = function() {
 	
-	site.installer.logger("Update...");
+	//site.installer.logger("Init or update defaults");
 	
-	if (site.cookies.get("app_version")<=site.cfg.app_version) {
-		site.installer.logger("&nbsp;&gt; Settings...");
-		window.mediaStreamer.setting("bool","useWifi",true,function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	// New installs
+	if (!site.cookies.get("app_is_installed")) {
+		
+		// site.installer.logger("&nbsp;&gt; Settings...");
+		window.mediaStreamer.setting("bool","useWifi",true,function(res){},function(error){loggr.error(error);});
+		
+	}
+	
+	// Updates only
+	else if (site.cookies.get("app_version")<=site.cfg.app_version) {
+		
+		// ..
+		
 	}
 	
 	setTimeout(function(){
-		site.installer.logger("&nbsp;&gt; Done");
+		//site.installer.logger("&nbsp;&gt; Done");
 		site.installer.deletefolders();
 	},1000);
 	
@@ -123,22 +136,42 @@ site.installer.update = function() {
 
 site.installer.deletefolders = function() {
 	
-	if (!site.cookies.get("app_is_installed") || site.installer.cfg.overwrite_version >= site.cfg.app_version) { 
-		site.installer.logger("Delete folders...");
-		site.installer.logger("&nbsp;&gt; "+site.cfg.paths.root);
-		site.storage.removefolder(site.cfg.paths.root,
-			function(res) {
-				site.installer.logger("&nbsp;&gt; Done");
-				setTimeout(function(){site.installer.createfolders_init();},500);
+	if (!site.cookies.get("app_is_installed") || site.installer.cfg.overwrite_version >= site.cfg.app_version) {
+		
+		// Check if an older folder exists on install..
+		var opts = {
+			create:false
+		};
+		site.storage.getFolderEntry(site.cfg.paths.root,
+			function(entry) {
+	
+				//site.installer.logger("&nbsp;&gt; "+site.cfg.paths.root);
+				site.installer.logger("Clear old folders...");
+				
+				site.storage.removefolder(site.cfg.paths.root,
+					function(res) {
+						site.installer.logger("&nbsp;&gt; Done");
+						setTimeout(function(){site.installer.createfolders_init();},500);
+					},
+					function(fileError) {
+						loggr.error(" > removefolder.Error: "+ site.storage.getErrorType(fileError),{dontupload:true});
+						loggr.error(" > "+ fileError.message);
+						site.installer.logger("&nbsp;&gt; Done");
+						setTimeout(function(){site.installer.createfolders_init();},500);
+					},
+					{recursively:true}
+				);
+				
+				
 			},
 			function(fileError) {
-				loggr.error(" > removefolder.Error: "+ site.storage.getErrorType(fileError),{dontupload:true});
-				loggr.error(" > "+ fileError.message);
-				site.installer.logger("&nbsp;&gt; Done");
-				setTimeout(function(){site.installer.createfolders_init();},500);
+				console.error(fileError);
+				site.installer.createfolders_init();
 			},
-			{recursively:true}
+			opts
 		);
+		
+		
 	} else {
 		site.installer.createfolders_init();
 	}
@@ -198,8 +231,6 @@ site.installer.createfolders_errcb = function(error) {
 // site.installer.cfg.delete_files
 site.installer.deletefiles_init = function() {
 	
-	site.installer.logger("Delete files...");
-	
 	// skip deletefiles
 	site.installer.downloadjson_init();
 	
@@ -258,7 +289,7 @@ site.installer.deletefiles_next = function() {
 // Downloadjson...
 
 site.installer.downloadjson_init = function() {
-	site.installer.logger("Download json...");
+	site.installer.logger("Download data...");
 	setTimeout(function(){site.installer.downloadjson_next();},1000);
 }
 
@@ -354,6 +385,7 @@ site.installer.downloadjson_read = function() {
 			
 			if (!datalocalstr) { 
 				loggr.log(" >> No datalocalstr, just write the file");
+				site.installer.logger(" NEW",{use_br:false});
 				site.installer.downloadjson_write();
 				return;
 			}
@@ -380,6 +412,8 @@ site.installer.downloadjson_read = function() {
 					
 			}
 			// } catch(e) { loggr.warn(" > Switch switch(site.datatemp['info']['desc']) failed"); loggr.warn(e); }
+			
+			site.installer.logger(" OK",{use_br:false});
 			
 			// Write
 			site.installer.downloadjson_write();
@@ -470,8 +504,9 @@ site.installer.finishup = function() {
 	
 	// Set time for update
 	var now = new Date().getTime();
-	var then = now + (1000*60*60*24*7); // 1000*60*60*24 == 1 day
+	var then = now + (1000*60*60*24*14); // 1000*60*60*24 == 1 day
 	
+	site.cookies.put("app_updated_at_time",now);
 	site.cookies.put("app_update_time",then);
 	
 	// Clean up directories...
@@ -528,8 +563,10 @@ site.installer.finishup = function() {
 	
 	// Wait a sec...
 	setTimeout(function(){
+						
 		site.installer.logger("&nbsp;&gt; Done");
-		site.ui.showloading("Restarting...");
+		//site.ui.showloading("Restarting...");
+		
 		setTimeout(function() {
 			
 			site.cookies.put("app_version",site.cfg.app_version);
@@ -538,7 +575,9 @@ site.installer.finishup = function() {
 			window.location.reload(); // TODO: replace all 'window.location.reload();' with window.location.href=[current_host]/[path-to-file]
 			
 		},2500);
+		
 		//site.ui.gotosection("#home"); // TODO: no not go here, goto #firstlaunch
+		
 	},2500);
 	
 }

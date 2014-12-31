@@ -65,17 +65,6 @@ site.lifecycle.init = function() {
 		+", cordova: "+ device.cordova
 	);
 	
-	// Stop virtual machines :|
-	try {
-		if (device.model.toLowerCase().indexOf("virtual")>=0) {
-			alert("Sorry, virtual machines are blocked");
-			site.lifecycle.exit();
-			return;
-		}
-	} catch(e) {
-		
-	}
-	
 	// Defaults..
 	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
 	
@@ -112,9 +101,14 @@ site.lifecycle.initApp = function(force) {
 	site.session.isPaused = false;
 	
 	// Firstlaunch...
-	if (!site.cookies.get("app_is_installed") || site.cookies.get("app_version")!=site.cfg.app_version) {
+	if (!site.cookies.get("app_is_installed")) {
 		if (site.vars.currentSection!="#install") { 
 			setTimeout(function() { site.installer.init(); },2500);
+			return; // <- important stuff yes
+		}
+	} else if (site.cookies.get("app_version")!=site.cfg.app_version) {
+		if (site.vars.currentSection!="#install") { 
+			setTimeout(function() { site.installer.init(true); },1250);
 			return; // <- important stuff yes
 		}
 	}
@@ -625,9 +619,13 @@ site.lifecycle.handleMsgs = function(data) {
 	
 	for (var i=0; i<data.length; i++) {
 		
+		loggr.log("Ping! "+ i);
+		
 		var ditem = data[i];
 		if (!ditem) { continue; }
 		if (!ditem.crit) { continue; }
+		
+		loggr.log(" > "+ ditem.crit);
 		
 		var critvalue;
 		switch(ditem.crit) {
@@ -637,13 +635,22 @@ site.lifecycle.handleMsgs = function(data) {
 			case "time":
 				critvalue = new Date().getTime();
 				break;
+			case "install-update":
+				critvalue = site.cookies.get("app_updated_at_time");
+				break;
 			default:
 				loggr.error(" > ditem.crit as invalid value: "+ ditem.crit);
 				continue;
 		}
 		
-		// Check critvalue && repeat
-		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0) {
+		if (ditem.action=="install-update") {
+			loggr.error(" > install-update",{dontupload:true});
+			loggr.log(" > critvalue>ditem.critvalue: "+ (critvalue>ditem.critvalue));
+		}
+		
+		// Check install-update
+		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
+			loggr.log(" > Check critvalue && repeat: failed");
 			continue;
 		}
 		
@@ -651,12 +658,14 @@ site.lifecycle.handleMsgs = function(data) {
 		if (ditem.onlyOnWifi) {
 			var conntype = site.helpers.getConnType();
 			if (conntype!="WIFI" && conntype!="ETHERNET") {
+				loggr.log(" >> no wifi! next!");
 				continue;
 			}
 		}
 		
 		// Check message
 		if (!ditem.message) { 
+			loggr.log(" >> no message! next!");
 			continue; 
 		}
 		
@@ -681,6 +690,11 @@ site.lifecycle.handleMsgs = function(data) {
 						if (!ditem.repeat) { site.lifecycle.storeMsgId(ditem.id,lids); }
 					}
 				}, ditem.title, buttonLabels);
+				break;
+			case "install-update":
+				message = "An update for the stations database is available. Press OK to continue.";
+				navigator.notification.alert(message, function(){ site.installer.init(true); }, ditem.title, "OK");
+				site.lifecycle.storeMsgId(ditem.id,lids);
 				break;
 			default:
 				navigator.notification.alert(message, function(){}, ditem.title, "OK");

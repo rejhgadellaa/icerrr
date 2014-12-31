@@ -70,6 +70,11 @@ site.ui.gotosection = function(selector) {
 		
 	$(".activatablel_active").removeClass("activatablel_active");
 	$(".activatabled_active").removeClass("activatabled_active");
+	
+	// Hide home when needed (because it is shown by default so body.onload does load it)
+	if (selector!="#home") {
+		$("#home").css("display","none");
+	}
 		
 	if (site.vars.previousSection=="#splash") {
 		// Resize .main

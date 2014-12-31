@@ -30,7 +30,16 @@
 		"repeat":0,
 		"onlyOnWifi":1
 	},
-	
+    
+    {
+        "id":"stations_database",
+        "crit":"install-update",
+        "critvalue":1420012504918,
+        "action":"install-update",
+        "message":[ ],
+        "repeat":0
+    },
+        
 	{
 		"example":1,
 		"id":"changelog0",

@@ -1,3 +1,8 @@
+0.164 (stable)
+  * Updates for station database can now be triggered from server
+  * Cosmetic improvements
+  * Bug fixes
+
 0.163 (stable)
   * Fix: wifi would be turned on even when airplane mode was enabled (#132)
   * Fix: fallback for alarms (when stream fails) was not always working properly (#133)
