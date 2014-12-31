@@ -1,9 +1,9 @@
 [
 	
 	{
-		"id":"app0164",
+		"id":"app016501",
 		"crit":"version",
-		"critvalue":0.163,
+		"critvalue":0.165,
 		"action":"url",
 		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
 		"title":"New version available",
@@ -14,15 +14,22 @@
 		"repeat":1,
 		"onlyOnWifi":1
 	},
-    
-    {
-        "id":"stations_database",
-        "crit":"install-update",
-        "critvalue":1420020148658,
-        "action":"install-update",
-        "message":[ ],
-        "repeat":0
-    },
+	
+	{
+        "example":1,
+		"id":"aboutthatchangelog",
+		"crit":"version",
+		"critvalue":0.16501,
+		"action":"default",
+		"title":"About that changelog",
+		"message":[
+			"If you've just updated Icerrr and are curious as to what's new, you can now go to Settings > About. There you can find a link to the full changelog.\n\n",
+            "This also means I won't bug you with annoying messages after an update anymore! The joy!"
+			],
+		"buttonLabels":"Yes,No",
+		"repeat":0,
+		"onlyOnWifi":1
+	},
     
     {
         "id":"remove_station_0001",
@@ -36,22 +43,15 @@
         "message":[ ],
         "repeat":0
     },
-	
-	{
-        "example":1,
-		"id":"aboutthatchangelog",
-		"crit":"version",
-		"critvalue":0.001,
-		"action":"default",
-		"title":"About that changelog",
-		"message":[
-			"If you've just updated Icerrr and are curious as to what's new, you can now go to Settings > About. There you can find a link to the full changelog.\n\n",
-            "So I won't bug you with annoying messages after an update anymore! The joy!"
-			],
-		"buttonLabels":"Yes,No",
-		"repeat":0,
-		"onlyOnWifi":1
-	},
+    
+    {
+        "id":"stations_database",
+        "crit":"install-update",
+        "critvalue":1420020148658,
+        "action":"install-update",
+        "message":[ ],
+        "repeat":0
+    },
 	
 	{
         "example":1,
