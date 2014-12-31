@@ -213,7 +213,7 @@ section {
 		.footer .button {
 			width:33.3%;
 			height:64px;
-			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.99) 5%, rgba(0, 0, 0, 0.0) 75%);
+			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.50) 5%, rgba(0, 0, 0, 0.0) 75%);
 			background-size:64px 64px;
 			background-position:center;
 			background-repeat:no-repeat;
