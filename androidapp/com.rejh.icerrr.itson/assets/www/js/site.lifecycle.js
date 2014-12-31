@@ -613,7 +613,7 @@ site.lifecycle.handleMsgs = function(data) {
 	
 	// Get local data thingie
 	var lidsStr = site.cookies.get("message_ids");
-	loggr.log(" > "+ lidsStr);
+	loggr.log(" > Stored message ids: "+ lidsStr);
 	if (!lidsStr) { lidsStr = "[]"; }
 	var lids = JSON.parse(lidsStr);
 	
@@ -636,6 +636,9 @@ site.lifecycle.handleMsgs = function(data) {
 			case "install-update":
 				critvalue = site.cookies.get("app_updated_at_time");
 				break;
+			case "remove_station":
+				critvalue = 0;
+				break;
 			default:
 				loggr.error(" > ditem.crit as invalid value: "+ ditem.crit);
 				continue;
@@ -643,7 +646,7 @@ site.lifecycle.handleMsgs = function(data) {
 		
 		// Check install-update
 		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
-			loggr.log(" > Check critvalue && repeat: failed");
+			loggr.log(" >> Skip");
 			continue;
 		}
 		
@@ -658,7 +661,7 @@ site.lifecycle.handleMsgs = function(data) {
 		
 		// Check message
 		if (!ditem.message) { 
-			loggr.log(" >> no message! next!");
+			loggr.log(" >> No message! next!");
 			continue; 
 		}
 		
@@ -687,6 +690,47 @@ site.lifecycle.handleMsgs = function(data) {
 			case "install-update":
 				message = "An update for the stations database is available. Press OK to continue.";
 				navigator.notification.alert(message, function(){ site.installer.init(true); }, ditem.title, "OK");
+				site.lifecycle.storeMsgId(ditem.id,lids);
+				break;
+			case "remove_station":
+				if (!ditem.station_ids) { 
+					loggr.error(" >> remove_station message: !station_ids");
+					continue; 
+				}
+				for (var j=0; j<ditem.station_ids.length; j++) {
+					var station_id = ditem.station_ids[j];
+					var index = site.helpers.session.getStationIndexById(station_id);
+					if (index<0) { loggr.log(" > Station not found: "+ station_id); continue; }
+					loggr.log(" >> Remove station: "+ station_id +" @ index "+ j);
+					site.data.stations[index] = null;
+				}
+				var newstations = [];
+				for (var j=0; j<site.data.stations.length; j++) {
+					var station_data = site.data.stations[j];
+					if (station_data) { newstations.push(station_data); }
+					else {
+						loggr.log(" >> Remove @ index: "+ j);
+					}
+				}
+				site.data.stations = newstations;
+				site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+					function(evt) { 
+						loggr.log(" >> stations.json saved");
+					},
+					function(e){ 
+						loggr.error(" >> Could not save station.json!",{dontupload:true});
+						loggr.error(site.storage.getErrorType(e)); 
+					}
+				);
+				if (ditem.station_ids.indexOf(site.session.currentstation_id)>=0) {
+					// clear current station
+					loggr.log(" >> Removed currentstation, let user choose another");
+					site.session.currentstation_id = null;
+					site.session.currentstation = null;
+					site.helpers.storeSession();
+					alert("The station you were listening to has been removed from the database (probably because it no longer exists).\n\nPress OK to choose another.");
+					site.chlist.init();
+				}
 				site.lifecycle.storeMsgId(ditem.id,lids);
 				break;
 			default:

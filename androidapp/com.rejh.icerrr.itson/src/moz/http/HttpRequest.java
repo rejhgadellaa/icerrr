@@ -92,7 +92,7 @@ public class HttpRequest {
                         for (Iterator<Entry<String, List<String>>> i = hKeys.iterator(); i.hasNext();) {
                                 Entry<String, List<String>> m = i.next();
  
-                                Log.w("HEADER_KEY", m.getKey() + "");
+                                //Log.w("HEADER_KEY", m.getKey() + "");
                                 if (m.getKey()==null) { continue; }
                                 ret.headers.put(m.getKey(), m.getValue().toString());
                                 if (m.getKey().equals("set-cookie"))

@@ -409,6 +409,7 @@ site.cast.notif = function() {
 	opts.title = "Icerrr: "+ site.session.currentstation.station_name;
 	opts.message = "Casting to '"+ site.cast.session.receiver.friendlyName +"'";
 	opts.smallicon = "ic_notification_media_route";
+	opts.color = "#2D6073";
 	opts.intent = {
 		type: "activity",
 		package: "com.rejh.icerrr.itson",
@@ -427,7 +428,7 @@ site.cast.notif = function() {
 			loggr.log(" > Notification: "+ res);
 		},
 		function(errmsg) {
-			loggr.log(" > Error creating notification: "+errmsg);
+			loggr.error(" > Error creating notification: "+errmsg);
 		},
 		opts
 	);

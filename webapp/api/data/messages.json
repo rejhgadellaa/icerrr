@@ -14,11 +14,50 @@
 		"repeat":1,
 		"onlyOnWifi":1
 	},
+    
+    {
+        "id":"stations_database",
+        "crit":"install-update",
+        "critvalue":1420020148658,
+        "action":"install-update",
+        "message":[ ],
+        "repeat":0
+    },
+    
+    {
+        "id":"remove_station_0001",
+        "crit":"remove_station",
+        "critvalue":1,
+        "action":"remove_station",
+        "station_ids":[
+            "intergalactic_freeradiorobotron",
+            "intergalactic_freerobotron"
+            ],
+        "message":[ ],
+        "repeat":0
+    },
 	
 	{
-		"id":"changelog164",
+        "example":1,
+		"id":"aboutthatchangelog",
 		"crit":"version",
-		"critvalue":0.164,
+		"critvalue":0.001,
+		"action":"default",
+		"title":"About that changelog",
+		"message":[
+			"If you've just updated Icerrr and are curious as to what's new, you can now go to Settings > About. There you can find a link to the full changelog.\n\n",
+            "So I won't bug you with annoying messages after an update anymore! The joy!"
+			],
+		"buttonLabels":"Yes,No",
+		"repeat":0,
+		"onlyOnWifi":1
+	},
+	
+	{
+        "example":1,
+		"id":"example1",
+		"crit":"version",
+		"critvalue":0.001,
 		"action":"url",
 		"url":"https://github.com/rejhgadellaa/icerrr/wiki/Changelog",
 		"title":"Update installed!",
@@ -30,34 +69,10 @@
 		"repeat":0,
 		"onlyOnWifi":1
 	},
-    
-    {
-        "id":"stations_database",
-        "crit":"install-update",
-        "critvalue":1420020148658,
-        "action":"install-update",
-        "message":[ ],
-        "repeat":0
-    },
-        
-	{
-		"example":1,
-		"id":"changelog0",
-		"crit":"version",
-		"critvalue":0.001,
-		"action":"url",
-		"url":"https://github.com/rejhgadellaa/icerrr/wiki/Changelog",
-		"title":"Update installed!",
-		"message":[
-			"Icerrr has been successfully updated to the latest version.\n\nDo you want to see what's new?"
-			],
-		"buttonLabels":"Yes,No",
-		"repeat":0
-	},
 	
 	{
 		"example":1,
-		"id":2,
+		"id":"example2",
 		"crit":"version",
 		"critvalue":0.001,
 		"action":"default",

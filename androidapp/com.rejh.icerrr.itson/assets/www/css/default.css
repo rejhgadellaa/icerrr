@@ -213,7 +213,10 @@ section {
 		.footer .button {
 			width:33.3%;
 			height:64px;
-			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.25) 5%, rgba(0, 0, 0, 0.0) 75%);
+			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.99) 5%, rgba(0, 0, 0, 0.0) 75%);
+			background-size:64px 64px;
+			background-position:center;
+			background-repeat:no-repeat;
 			color:rgba(255,255,255,0.87);
 		}
 		
@@ -280,13 +283,13 @@ section {
 }
 
 	#install .main .log {
-		padding:16px 0 0 32px;;
+		padding:16px;
 		font-size:10pt;
 		color:rgba(0,0,0,0.54);
 	}
 	
 	#install .main .log h1 {
-		margin:16px 0 16px 0;
+		margin:0 0 16px 0;
 	}
 	
 	#install .main .log span.e {

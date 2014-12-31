@@ -9,7 +9,7 @@ icy-genre:Mixed
 icy-name:Radio 2
 icy-pub:0
 icy-url:http://www.radio2.nl
-Server: ics2fss.omroep.nl
+Server: ics2vss.omroep.nl
 Cache-Control: no-cache
 icy-metaint:16000
 

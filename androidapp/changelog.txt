@@ -1,3 +1,8 @@
+0.165 (stable)
+  * Stations can be removed from database by trigger from server
+  * Fix: chromecast notification wasn't showing up anymore
+  * Cosmetic improvements for tablets (now playing info)
+
 0.164 (stable)
   * Updates for station database can now be triggered from server
   * Cosmetic improvements

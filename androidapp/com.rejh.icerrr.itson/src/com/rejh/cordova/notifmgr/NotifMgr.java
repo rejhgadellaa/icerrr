@@ -158,7 +158,7 @@ public class NotifMgr extends CordovaPlugin {
         	//String intentClassName = obj.has("intentClassName") ? obj.getString("intentClassName") : null; // TODO: should be able to use 'com.rejh.icerr.doirdapp.MAIN_ACTIVITY'
         	
         	// Optional
-        	String color = obj.has("color") ? obj.getString("color") : null;
+        	String color = obj.has("color") ? obj.getString("color") : "#999999";
         	String largeicon = obj.has("largeicon") ? obj.getString("largeicon") : null;
         	String ticker = obj.has("ticker") ? obj.getString("ticker") : title;
         	int priority = obj.has("priority") ? getPriority(obj.getString("priority")) : NotificationCompat.PRIORITY_DEFAULT;
