@@ -233,40 +233,6 @@
       "rating_average": -1
   },
   {
-      "station_id": "intergalactic_freeradiorobotron",
-      "dirble_id":11300,
-      "station_edited":{},
-      "station_name": "Intergalactic FM 6",
-      "station_url": "http://radio.intergalacticfm.com/6",
-      "station_icon": "https://intergalacticfm.com/images/AppIFM6-100.png",
-      "station_image": 0,
-      "station_host": "radio.intergalacticfm.com",
-      "station_port": 80,
-      "station_path": "/5",
-      "station_country":"NL",
-      "station_bitrate":"-1 kbps",
-      "rating_custom": -1,
-      "rating_soundcloud": -1,
-      "rating_average": -1
-  },
-  {
-    "station_id": "intergalactic_freerobotron",
-    "dirble_id":11301,
-    "station_edited":{},
-    "station_name": "Intergalactic FM 6",
-    "station_url": "http://radio.intergalacticfm.com/6",
-    "station_icon": "https://intergalacticfm.com/images/AppIFM6-100.png",
-    "station_image": 0,
-    "station_host": "radio.intergalacticfm.com",
-    "station_port": 80,
-    "station_path": "/6",
-    "station_country":"NL",
-    "station_bitrate":"-1 kbps",
-    "rating_custom": -1,
-    "rating_soundcloud": -1,
-    "rating_average": -1
-},
-{
     "station_id": "soma_groovesalad",
     "dirble_id":11540,
     "station_edited":{},
@@ -282,8 +248,8 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
-},
-{
+  },
+  {
     "station_id": "soma_lush",
     "dirble_id":11540,
     "station_edited":{},
@@ -299,8 +265,8 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
-},
-{
+  },
+  {
     "station_id": "soma_spacestationsoma",
     "dirble_id":11540,
     "station_edited":{},
@@ -316,8 +282,8 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
-},
-{
+  },
+  {
     "station_id": "soma_digitalis",
     "dirble_id":11540,
     "station_edited":{},
@@ -333,8 +299,8 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
-},
-{
+  },
+  {
     "station_id": "soma_poptron",
     "dirble_id":11540,
     "station_edited":{},
@@ -350,8 +316,8 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
-},
-{
+  },
+  {
     "station_id": "soma_indiepoprocks",
     "dirble_id":11540,
     "station_edited":{},
@@ -367,8 +333,8 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
-},
-{
+  },
+  {
     "station_id": "soma_bagelradio",
     "dirble_id":11540,
     "station_edited":{},
@@ -384,8 +350,8 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
-},
-{
+  },
+  {
     "station_id": "soma_seveninchsoul",
     "dirble_id":11540,
     "station_edited":{},
@@ -401,5 +367,5 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
-}
+  }
 ]
