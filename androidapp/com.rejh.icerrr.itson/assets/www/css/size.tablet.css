@@ -1,0 +1,19 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* -- SECTIONS */
+
+/* Common */
+
+/* Specific */
+
+#home {}
+
+	#home .main .station_name {
+		left:14px;
+		font-size:32pt;
+	}
+	
+	#home .main .station_nowplaying {
+		font-size:16pt;
+	}

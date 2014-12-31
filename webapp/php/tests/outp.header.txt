@@ -1,4 +1,4 @@
-{"station_id":"radio6","host":"icecast.omroep.nl","port":80,"path":"/radio6-bb-mp3"}
+{"station_id":"radio2","host":"icecast.omroep.nl","port":80,"path":"/radio2-bb-mp3"}
 
 HTTP/1.0 200 OK
 Content-Type: audio/mpeg
@@ -6,9 +6,9 @@ icy-br:192
 ice-audio-info: bitrate=192
 icy-br:192
 icy-genre:Mixed
-icy-name:Radio 6 Soul & Jazz
+icy-name:Radio 2
 icy-pub:0
-icy-url:http://www.radio6.nl
+icy-url:http://www.radio2.nl
 Server: ics2nss.omroep.nl
 Cache-Control: no-cache
 icy-metaint:16000
