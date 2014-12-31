@@ -619,13 +619,11 @@ site.lifecycle.handleMsgs = function(data) {
 	
 	for (var i=0; i<data.length; i++) {
 		
-		loggr.log("Ping! "+ i);
-		
 		var ditem = data[i];
 		if (!ditem) { continue; }
 		if (!ditem.crit) { continue; }
 		
-		loggr.log(" > "+ ditem.crit);
+		loggr.log(" > "+ ditem.id);
 		
 		var critvalue;
 		switch(ditem.crit) {
@@ -641,11 +639,6 @@ site.lifecycle.handleMsgs = function(data) {
 			default:
 				loggr.error(" > ditem.crit as invalid value: "+ ditem.crit);
 				continue;
-		}
-		
-		if (ditem.action=="install-update") {
-			loggr.error(" > install-update",{dontupload:true});
-			loggr.log(" > critvalue>ditem.critvalue: "+ (critvalue>ditem.critvalue));
 		}
 		
 		// Check install-update
