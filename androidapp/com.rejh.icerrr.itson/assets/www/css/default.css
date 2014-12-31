@@ -289,7 +289,7 @@ section {
 	}
 	
 	#install .main .log h1 {
-		margin:0 0 16px 0;
+		margin:0 0 0 0;
 	}
 	
 	#install .main .log span.e {
