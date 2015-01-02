@@ -17,8 +17,7 @@ Features
 
 + Search or add stations manually; Search Dirble.com radio directory or add them manually
 
-+ Edit stations
-Long press station to edit
++ Edit stations; Long press a station to edit
 
 + Alarms
 Set multiple alarms, choose station and repeat mode 
