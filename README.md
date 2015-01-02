@@ -19,8 +19,7 @@ Features
 
 + Edit stations; Long press a station to edit
 
-+ Alarms
-Set multiple alarms, choose station and repeat mode 
++ Alarms; Set multiple alarms, choose station and repeat mode 
 
 + Chromecast support (Rough around the edges)
 
