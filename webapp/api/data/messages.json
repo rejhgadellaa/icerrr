@@ -1,9 +1,9 @@
 [
 	
 	{
-		"id":"app016501",
+		"id":"app0166",
 		"crit":"version",
-		"critvalue":0.165,
+		"critvalue":0.166,
 		"action":"url",
 		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
 		"title":"New version available",
@@ -12,22 +12,6 @@
 			],
 		"buttonLabels":"Yes,No",
 		"repeat":1,
-		"onlyOnWifi":1
-	},
-	
-	{
-        "example":1,
-		"id":"aboutthatchangelog",
-		"crit":"version",
-		"critvalue":0.16501,
-		"action":"default",
-		"title":"About that changelog",
-		"message":[
-			"If you've just updated Icerrr and are curious as to what's new, you can now go to Menu > About. There you can find a link to the full changelog.\n\n",
-            "This also means I won't bug you with annoying messages after an update anymore! The joy!"
-			],
-		"buttonLabels":"Yes,No",
-		"repeat":0,
 		"onlyOnWifi":1
 	},
     
