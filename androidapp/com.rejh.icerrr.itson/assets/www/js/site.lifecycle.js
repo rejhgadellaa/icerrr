@@ -640,7 +640,7 @@ site.lifecycle.handleMsgs = function(data) {
 				critvalue = 0;
 				break;
 			default:
-				loggr.error(" > ditem.crit as invalid value: "+ ditem.crit);
+				loggr.error(" > ditem.crit as invalid value: '"+ ditem.crit +"'");
 				continue;
 		}
 		
@@ -654,8 +654,9 @@ site.lifecycle.handleMsgs = function(data) {
 		if (ditem.onlyOnWifi) {
 			var conntype = site.helpers.getConnType();
 			if (conntype!="WIFI" && conntype!="ETHERNET") {
-				loggr.log(" >> no wifi! next!");
-				continue;
+				loggr.log(" >> no wifi! wait until we have it");
+				break; // -> onlyOnWifi should be blocking other messages?
+				// continue;
 			}
 		}
 		

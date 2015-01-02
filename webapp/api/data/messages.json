@@ -23,7 +23,7 @@
 		"action":"default",
 		"title":"About that changelog",
 		"message":[
-			"If you've just updated Icerrr and are curious as to what's new, you can now go to Settings > About. There you can find a link to the full changelog.\n\n",
+			"If you've just updated Icerrr and are curious as to what's new, you can now go to Menu > About. There you can find a link to the full changelog.\n\n",
             "This also means I won't bug you with annoying messages after an update anymore! The joy!"
 			],
 		"buttonLabels":"Yes,No",

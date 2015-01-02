@@ -102,14 +102,15 @@ public class AlarmMgr extends CordovaPlugin {
             }
         	
         } catch (JSONException e) {
+	    	Log.e(APPTAG, "JSONException!",e);
         	e.printStackTrace();
         	return false;
         } catch (Exception e) {
-	    	Log.e(APPTAG, "Exception!");
+	    	Log.e(APPTAG, "Exception!",e);
 	        e.printStackTrace();
 	        return false;
 	    } catch (Error e) {
-	    	Log.e(APPTAG, "Error!");
+	    	Log.e(APPTAG, "Error!",e);
 	        e.printStackTrace();
 	        return false;
 	    }

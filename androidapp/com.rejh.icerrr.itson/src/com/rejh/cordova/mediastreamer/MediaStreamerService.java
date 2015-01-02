@@ -601,7 +601,7 @@ public class MediaStreamerService extends Service {
 				try {
 					jsons = HttpRequest.get(url).content;
 				} catch(Exception e) {
-					Log.e(APPTAG," > Error running httprequest: "+e);
+					Log.e(APPTAG," > Error running httprequest: "+e,e);
 					e.printStackTrace();
 					return;
 				}
@@ -644,10 +644,10 @@ public class MediaStreamerService extends Service {
 					
 					
 				} catch(JSONException e) {
-					Log.e(APPTAG," > runNowPlayingPoll.JSONException!");
+					Log.e(APPTAG," > runNowPlayingPoll.JSONException!",e);
 					e.printStackTrace();
 				} catch(Exception e) {
-					Log.e(APPTAG," > runNowPlayingPoll.Exception!");
+					Log.e(APPTAG," > runNowPlayingPoll.Exception!",e);
 					e.printStackTrace();
 				}
 			}
@@ -842,6 +842,7 @@ public class MediaStreamerService extends Service {
 
             bmp = BitmapFactory.decodeStream(input);
         } catch (Exception e) {
+        	Log.e(APPTAG," > getIconURL error",e);
             e.printStackTrace();
         }
 
@@ -879,6 +880,7 @@ public class MediaStreamerService extends Service {
 
             bmp = BitmapFactory.decodeStream(input);
         } catch (IOException e) {
+        	Log.e(APPTAG," > IOException",e);
             e.printStackTrace();
         }
 

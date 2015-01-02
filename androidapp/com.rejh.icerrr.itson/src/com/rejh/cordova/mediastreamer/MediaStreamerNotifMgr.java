@@ -168,13 +168,13 @@ public class MediaStreamerNotifMgr {
 			return (notif_id>0)?notif_id:NOTIFICATION_ID;
         	
         } catch (JSONException e) {
-        	Log.e(LOGTAG, "JSONException!");
+        	Log.e(LOGTAG, "JSONException!",e);
         	e.printStackTrace();
         } catch (Exception e) {
-	    	Log.e(LOGTAG, "Exception!");
+	    	Log.e(LOGTAG, "Exception!",e);
 	        e.printStackTrace();
 	    } catch (Error e) {
-	    	Log.e(LOGTAG, "Error!");
+	    	Log.e(LOGTAG, "Error!",e);
 	        e.printStackTrace();
 	    }
 		
@@ -201,13 +201,13 @@ public class MediaStreamerNotifMgr {
 			notifMgr.execute("cancel", args, null, context);
     	
 	    } catch (JSONException e) {
-	    	Log.e(LOGTAG, "JSONException!");
+	    	Log.e(LOGTAG, "JSONException!",e);
 	    	e.printStackTrace();
 	    } catch (Exception e) {
-	    	Log.e(LOGTAG, "Exception!");
+	    	Log.e(LOGTAG, "Exception!",e);
 	        e.printStackTrace();
 	    } catch (Error e) {
-	    	Log.e(LOGTAG, "Error!");
+	    	Log.e(LOGTAG, "Error!",e);
 	        e.printStackTrace();
 	    }
 		
