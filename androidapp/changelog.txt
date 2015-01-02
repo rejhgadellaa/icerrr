@@ -1,3 +1,7 @@
+0.166 (stable)
+  * Bumped minimum required version of Android to 4.1.x (Jellybean)
+  * Error logs now also include logcat data
+
 0.165 (stable)
   * Stations can be removed from database by trigger from server
   * Fix: chromecast notification wasn't showing up anymore

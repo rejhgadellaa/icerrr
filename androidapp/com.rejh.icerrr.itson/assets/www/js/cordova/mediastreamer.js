@@ -96,6 +96,14 @@
 	}
 	
 	/**
+	* Getlog
+	*/
+	MediaStreamer.prototype.getlog = function(win,fail) {
+		console.log("MediaStreamer.prototype.getlog()");
+        cordova.exec(win, fail, "MediaStreamer", "getlog", []);
+	}
+	
+	/**
 	* Register the plugin
 	*/
 	try {

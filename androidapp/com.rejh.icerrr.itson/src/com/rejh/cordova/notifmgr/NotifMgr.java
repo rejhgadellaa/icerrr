@@ -57,6 +57,7 @@ public class NotifMgr extends CordovaPlugin {
 		try {
 			return execute(action, args, callbackContext);
 		} catch (JSONException e) {
+			Log.e(APPTAG," > JSONException",e);
         	e.printStackTrace();
         	return false;
         }
@@ -115,14 +116,15 @@ public class NotifMgr extends CordovaPlugin {
             
         	
         } catch (JSONException e) {
+	    	Log.e(APPTAG, "JSONException!",e);
         	e.printStackTrace();
         	return false;
         } catch (Exception e) {
-	    	Log.e(APPTAG, "Exception!");
+	    	Log.e(APPTAG, "Exception!",e);
 	        e.printStackTrace();
 	        return false;
 	    } catch (Error e) {
-	    	Log.e(APPTAG, "Error!");
+	    	Log.e(APPTAG, "Error!",e);
 	        e.printStackTrace();
 	        return false;
 	    }
@@ -254,7 +256,7 @@ public class NotifMgr extends CordovaPlugin {
 	        if (callbackContext!=null) { callbackContext.success("OK"); }
 		
         } catch (Exception e) {
-		Log.e(APPTAG," -> Error parsing argsobj");
+		Log.e(APPTAG," -> Error parsing argsobj",e);
 		Log.e(APPTAG,e.toString());
 		e.printStackTrace();
 		if (callbackContext!=null) { callbackContext.error("Error parsing argsobj"); }

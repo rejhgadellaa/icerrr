@@ -111,7 +111,7 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
         
         } catch(Exception e) {
         	e.printStackTrace();
-        	Log.e(APPTAG," > Exception, probably JSON related");
+        	Log.e(APPTAG," > Exception, probably JSON related",e);
         }
 
 	}

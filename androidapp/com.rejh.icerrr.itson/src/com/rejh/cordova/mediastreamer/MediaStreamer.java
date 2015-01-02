@@ -8,6 +8,10 @@ package com.rejh.cordova.mediastreamer;
 * 
 */
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
@@ -67,47 +71,82 @@ public class MediaStreamer extends CordovaPlugin {
             		
             // Call the function
         	if (action.equals("play")) {
+        		
         		// Play
         		this.play(args, callbackContext);
+        	
         	} else if (action.equals("stop")) {
+        		
         		// Stop
         		this.stop(callbackContext);
+        	
         	} else if (action.equals("setVolume")) {
+        		
         		// setVolume
         		this.setVolume(args,callbackContext);
         		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
+        	
         	} else if (action.equals("incrVolume")) {
+        		
         		// incrVolume
         		this.incrVolume(callbackContext);
         		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
+        	
         	} else if (action.equals("decrVolume")) {
+        		
         		// decrVolume
         		this.decrVolume(callbackContext);
         		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
+        	
         	} else if (action.equals("getStatus")) {
+        		
         		// getStatus
         		this.getStatus(callbackContext);
+        	
         	} else if (action.equals("isServiceRunning")) {
+        		
         		isServiceRunning(callbackContext);
+        	
         	} else if (action.equals("setting")) {
+        		
         		setting(args, callbackContext);
+        	
         	} else if (action.equals("getSetting")) {
         		getSetting(args, callbackContext);
-        	} else {
+
+            	
+        	} else if (action.equals("getlog")) {
+        		
+        		StringBuilder log=new StringBuilder();
+        		try {
+                    Process process = Runtime.getRuntime().exec("logcat -d ^(?!chromium)");
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                    	log.append(line+"\n");
+                    }
+                } catch (IOException e) {
+                	callbackContext.error("MediaStreamer: getlog.IOException: "+e.toString());
+                }
+        		callbackContext.success(log.toString());
+        	}
+        	else {
         		// Nothin?
         		callbackContext.error("MediaStreamer: Action contains invalid value: "+ action);
                 return false;
         	}
         	
         } catch (JSONException e) {
+	    	Log.e(APPTAG, "JSONException!",e);
         	e.printStackTrace();
         	return false;
         } catch (Exception e) {
-	    	Log.e(APPTAG, "Exception!");
+	    	Log.e(APPTAG, "Exception!",e);
 	        e.printStackTrace();
 	        return false;
 	    } catch (Error e) {
-	    	Log.e(APPTAG, "Error!");
+	    	Log.e(APPTAG, "Error!",e);
 	        e.printStackTrace();
 	        return false;
 	    }

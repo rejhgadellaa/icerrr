@@ -165,7 +165,7 @@ loggr.save = function() {
 
 // ---> Upload
 
-loggr.upload = function() {
+loggr.upload = function(logcat_html) {
 	
 	// TODO: Not ready for primetime
 	
@@ -187,11 +187,119 @@ loggr.upload = function() {
 	loggr.log(" > App version: "+ site.cfg.app_version);
 	
 	setTimeout(function(){
+		
+		// Get more html..
+		if (window.mediaStreamer && !logcat_html) {
+			loggr.log(" > Get logcat..");
+			window.mediaStreamer.getlog(
+				function(res) {
+				
+					var lines = res.split("\n");
+					
+					var outp = "";
+					outp = "<table class='logcat'>";
+					
+					for (var i=0; i<lines.length; i++) {
+						
+						var line = lines[i];
+						var lineparts = line.split("(");
+						
+						// Check linepart 0..
+						if (!lineparts[0]) { continue; }
+						if (!lineparts[0].length) { continue; }
+						
+						// Shift linepart 0 (linetd1) from lineparts..
+						var linetd1 = lineparts.shift();
+						
+						// Handle rest of line (linetd2)
+						var linetd2 = lineparts.join("(");
+						if (linetd2) {
+							linetd2 = linetd2.substr(linetd2.indexOf("):")+2);
+							linetd2 = linetd2.split(" ").join("&nbsp;");
+						} else {
+							continue;
+						}
+						
+						// Filter "i/chromium"
+						if (linetd1.toLowerCase().indexOf("i/chromium")>=0) {
+							continue;
+						}
+						
+						// Handle length..
+						if (linetd1.length>16) {
+							linetd1 = "<span title='"+ linetd1 +"'>"+ linetd1.substr(0,14) +"..</span>";
+						}
+						
+						// Style linetd1
+						var linetype = line.substr(0,2);
+						switch(linetype.toLowerCase()) {
+							case "e/":
+								linetd1 = "<span style='color:#f00'>"+ linetd1 +"</span>";
+								linetd2 = "<span style='color:#f00'>"+ linetd2 +"</span>";
+								break;
+							case "w/":
+								linetd1 = "<span style='color:#f60'>"+ linetd1 +"</span>";
+								linetd2 = "<span style='color:#f60'>"+ linetd2 +"</span>";
+								break;
+							case "i/":
+								linetd1 = "<span style='color:#00c'>"+ linetd1 +"</span>";
+								linetd2 = "<span style='color:#00c'>"+ linetd2 +"</span>";
+								break;
+							case "d/":
+								// linetd1 = "<span style='color:#000'>"+ linetd1 +"</span>";
+								break;
+							case "v/":
+								linetd1 = "<span style='color:#999'>"+ linetd1 +"</span>";
+								linetd2 = "<span style='color:#999'>"+ linetd2 +"</span>";
+								break;
+						}
+						
+						// Htmlize line
+						outp += "<tr>"
+							+"<td valign='top'>"+ linetd1 +"</td>"
+							+"<td valign='top'>"+ linetd2 +"</td>"
+						+"</tr>";
+						
+					}
+					
+					outp += "</table>";
+					
+					outp = "<p><hr></p>"+outp;
+					
+					loggr.uploading = false;
+					loggr.upload(outp);
+				
+				},
+				function(err) {
+					loggr.uploading = false;
+					loggr.error(" > Could not get logcat: "+ err,{dontupload:true});
+					loggr.upload("--LOGCAT FAILED--");
+				}
+			);
+			loggr.uploading = false;
+			return;
+		}
 	
+		// Save
 		loggr.save();
 		
+		// Get html
 		var html = loggr.gethtml(512); // last 512 lines
 		var text = loggr.gettext
+		
+		// Add logcat html..
+		if (logcat_html) {
+			loggr.log(" > Add logcat");
+			html += logcat_html;
+		}
+		
+		// Wrap html..
+		var html = "<html>"
+			+"<head><style>"
+				+"html,body,table,td{ font-family:Roboto, sans-serif; font-size:10pt; }"
+			+"</style></head>"
+			+"<body>"+ html +"</body>"
+		+"</html>";
 		
 		loggr.log(" >> "+ html.length)
 		
