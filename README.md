@@ -31,17 +31,12 @@ Set multiple alarms, choose station and repeat mode
 + Integration for Sleep As Android
 Get it here: https://play.google.com/store/apps/details?id=com.urbandroid.sleep
 
-Join the beta
+Get the app!
 -------------
 
-Join here:
-https://plus.google.com/communities/115139919019529491940
+Icerrr is currently not available through the Play Store but you can download and install it manually:
 
-then here:
-https://play.google.com/apps/testing/com.rejh.icerrr.itson
-
-and then go here:
-https://play.google.com/store/apps/details?id=com.rejh.icerrr.itson
+http://www.rejh.nl/icerrr/
 
 Open source
 -------------
