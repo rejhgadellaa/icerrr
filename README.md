@@ -13,11 +13,9 @@ And it gets better: Icerrr is free! [2]
 Features
 -------------
 
-+ Play music streams
-Supported: mp3 (audio/mpeg), pls, m3u. Unsupported: aac
++ Play music streams; Supported: mp3 (audio/mpeg), pls, m3u. Unsupported: aac
 
-+ Search or add stations manually
-Search Dirble.com radio directory or add them manually
++ Search or add stations manually; Search Dirble.com radio directory or add them manually
 
 + Edit stations
 Long press station to edit
@@ -25,11 +23,9 @@ Long press station to edit
 + Alarms
 Set multiple alarms, choose station and repeat mode 
 
-+ Chromecast support
-(Rough around the edges)
++ Chromecast support (Rough around the edges)
 
-+ Integration for Sleep As Android
-Get it here: https://play.google.com/store/apps/details?id=com.urbandroid.sleep
++ Integration for Sleep As Android, get it here: https://play.google.com/store/apps/details?id=com.urbandroid.sleep
 
 Get the app!
 -------------
