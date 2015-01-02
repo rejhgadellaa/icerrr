@@ -598,7 +598,7 @@ site.home.sendfeedback = function() {
 	info += "\nApp version: "+ site.cfg.app_version;
 	
 	// Upload log..
-	loggr.upload();
+	loggr.upload(false,true);
 	
 	// Send mail intent
 	var extras = {};

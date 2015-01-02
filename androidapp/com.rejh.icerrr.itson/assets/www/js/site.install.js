@@ -62,7 +62,7 @@ site.installer.cfg.overwrite_versions = [0.014,0.019,0.027,0.035,0.036,0.037,0.0
 
 site.installer.init = function(isUpdate) {
 	
-	loggr.info("site.installer.init()");
+	loggr.debug("site.installer.init()");
 	
 	// Hide #home
 	$("#home").css("display","none");
@@ -108,20 +108,39 @@ site.installer.init = function(isUpdate) {
 
 site.installer.update = function() {
 	
+	loggr.debug("site.installer.update()");
+	
 	//site.installer.logger("Init or update defaults");
 	
 	// New installs
 	if (!site.cookies.get("app_is_installed")) {
 		
 		// site.installer.logger("&nbsp;&gt; Settings...");
+		loggr.log(" > Init settings for fresh install..");
+		
+		loggr.log(" >> Setting: 'useWifi' = true");
 		window.mediaStreamer.setting("bool","useWifi",true,function(res){},function(error){loggr.error(error);});
+		
+		loggr.log(" >> Setting: 'sendLogs' = true");
+		site.cookies.put("setting_sendLogs",1);
 		
 	}
 	
 	// Updates only
 	else if (site.cookies.get("app_version")<=site.cfg.app_version) {
 		
+		loggr.log(" > Update from older version..");
 		// ..
+		
+	}
+	
+	// Specific updates
+	if (site.cookies.get("app_version")<=0.166) {
+		
+		loggr.error(" > Update to 0.166..",{dontupload:true});
+		
+		loggr.log(" >> Setting: 'sendLogs' = true");
+		site.cookies.put("setting_sendLogs",1);
 		
 	}
 	

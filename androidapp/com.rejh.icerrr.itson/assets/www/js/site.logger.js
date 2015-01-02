@@ -165,10 +165,17 @@ loggr.save = function() {
 
 // ---> Upload
 
-loggr.upload = function(logcat_html) {
+loggr.upload = function(logcat_html, issuedByUser) {
 	
 	// TODO: Not ready for primetime
 	
+	// Check settings..
+	if (!issuedByUser && !site.cookies.get("setting_sendLogs")) {
+		loggr.error(" > Uploading logs automatically is disabled by user",{dontupload:true});
+		return;
+	}
+	
+	// Check if already uploading..
 	if (loggr.uploading) {
 		console.log("loggr.uploading==true");
 		return;
@@ -198,7 +205,7 @@ loggr.upload = function(logcat_html) {
 					
 					var outp = "";
 					outp = "<table class='logcat'>";
-					
+				
 					for (var i=0; i<lines.length; i++) {
 						
 						var line = lines[i];
@@ -211,53 +218,71 @@ loggr.upload = function(logcat_html) {
 						// Shift linepart 0 (linetd1) from lineparts..
 						var linetd1 = lineparts.shift();
 						
+						// Substract datetime
+						var linetd1_parts = linetd1.split(" ");
+						var linetd1_date = linetd1_parts[0];
+						var linetd1_time = linetd1_parts[1].substr(0,linetd1_parts[1].indexOf("."));
+						linetd1 = linetd1_parts[2];
+						
 						// Handle rest of line (linetd2)
 						var linetd2 = lineparts.join("(");
-						if (linetd2) {
-							linetd2 = linetd2.substr(linetd2.indexOf("):")+2);
-							linetd2 = linetd2.split(" ").join("&nbsp;");
-						} else {
+						if (!linetd2) {
 							continue;
 						}
+						
+						// Trim
+						linetd1 = linetd1.trim();
+						linetd2 = linetd2.trim();
 						
 						// Filter "i/chromium"
 						if (linetd1.toLowerCase().indexOf("i/chromium")>=0) {
 							continue;
 						}
 						
+						// More td2 stuff
+						linetd2 = linetd2.substr(linetd2.indexOf("):")+2).trim();
+						// linetd2 = linetd2.split(" ").join("&nbsp;");
+						
+						// Handle time already present in bla
+						var linetd2_orig = linetd2.split('"').join("'");
+						if (linetd1.toLowerCase().indexOf("d/cordovalog")>=0 && linetd2.indexOf("    ")>=0) {
+							linetd2 = linetd2.substr(11);
+						}
+						if (linetd2_orig==linetd2.split('"').join("'")) { linetd2_orig = "-"; }
+						
 						// Handle length..
 						if (linetd1.length>16) {
-							linetd1 = "<span title='"+ linetd1 +"'>"+ linetd1.substr(0,14) +"..</span>";
+							linetd1 = linetd1.substr(0,14)+"..";
 						}
 						
 						// Style linetd1
-						var linetype = line.substr(0,2);
+						var linetype = linetd1.substr(0,2);
+						var rowcolor = "#000";
 						switch(linetype.toLowerCase()) {
 							case "e/":
-								linetd1 = "<span style='color:#f00'>"+ linetd1 +"</span>";
-								linetd2 = "<span style='color:#f00'>"+ linetd2 +"</span>";
+								rowcolor = "#f00";
 								break;
 							case "w/":
-								linetd1 = "<span style='color:#f60'>"+ linetd1 +"</span>";
-								linetd2 = "<span style='color:#f60'>"+ linetd2 +"</span>";
+								rowcolor = "#f60";
 								break;
 							case "i/":
-								linetd1 = "<span style='color:#00c'>"+ linetd1 +"</span>";
-								linetd2 = "<span style='color:#00c'>"+ linetd2 +"</span>";
+								rowcolor = "#00c";
 								break;
 							case "d/":
-								// linetd1 = "<span style='color:#000'>"+ linetd1 +"</span>";
+								rowcolor = "#000";
 								break;
 							case "v/":
-								linetd1 = "<span style='color:#999'>"+ linetd1 +"</span>";
-								linetd2 = "<span style='color:#999'>"+ linetd2 +"</span>";
+								rowcolor = "#999";
+								break;
+							default:
+								rowcolor = "#090";
 								break;
 						}
 						
-						// Htmlize line
-						outp += "<tr>"
+						outp += "<tr style='color:"+ rowcolor +";'>"
+							+"<td valign='top'>"+ linetd1_time +"&nbsp;&nbsp;</td>"
 							+"<td valign='top'>"+ linetd1 +"</td>"
-							+"<td valign='top'>"+ linetd2 +"</td>"
+							+"<td valign='top' title=\""+ linetd2_orig +"\">"+ linetd2 +"</td>"
 						+"</tr>";
 						
 					}
@@ -267,13 +292,13 @@ loggr.upload = function(logcat_html) {
 					outp = "<p><hr></p>"+outp;
 					
 					loggr.uploading = false;
-					loggr.upload(outp);
+					loggr.upload(outp,issuedByUser);
 				
 				},
 				function(err) {
 					loggr.uploading = false;
 					loggr.error(" > Could not get logcat: "+ err,{dontupload:true});
-					loggr.upload("--LOGCAT FAILED--");
+					loggr.upload("--LOGCAT FAILED--",issuedByUser);
 				}
 			);
 			loggr.uploading = false;

@@ -1,6 +1,7 @@
 0.166 (stable)
-  * Bumped minimum required version of Android to 4.1.x (Jellybean)
-  * Error logs now also include logcat data
+  * Icerrr now requires Android 4.1 Jellybean or higher
+  * New: option to disable sending of error logs to developer
+  * Error logs now also include Icerrr's logcat data
 
 0.165 (stable)
   * Stations can be removed from database by trigger from server

@@ -76,6 +76,12 @@ site.settings.registerListeners = function() {
 		}
 	);
 	
+	// Send Logs
+	var sendLogs = site.cookies.get("setting_sendLogs");
+	loggr.log(" > sendLogs: "+ sendLogs);
+	if (sendLogs==1) { $("#settings input[name='sendLogs']").attr("checked",true); }
+	else { $("#settings input[name='sendLogs']").attr("checked",false); }
+	
 	// ---> Listener
 	
 	// Use Wifi
@@ -104,6 +110,15 @@ site.settings.registerListeners = function() {
 		if ((targ.checked)) {
 			alert("Don't forget to set SAA's ringtone to 'silent'!");
 		}
+	});
+	
+	// Send Logs
+	$("#settings input[name='sendLogs']").off("change");
+	$("#settings input[name='sendLogs']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: sendLogs: "+ (targ.checked)?1:0);
+		site.cookies.put("setting_sendLogs",(targ.checked)?1:0);
+		loggr.log(" > "+ site.cookies.get("setting_sendLogs"));
 	});
 	
 }
@@ -161,6 +176,18 @@ site.settings.helpSaa = function() {
 		+"Usage: enable this option and set up one or more alarms in Sleep As Android. Now, when SAA has detected that it's a good time to wake you up Icerrr will start the last station you listened to. You can then use SAA's snooze and dismiss buttons to (temporary) stop the stream."
 		//+"All alarms that are are fired by SAA will then cause Icerrr to start the last station you listened to. It is therefore recommended to silence the alarm sound in SAA.\n\n"
 		//+"Note: Alarms set in Icerrr are not affected and will have no interaction with SAA."
+		;
+	navigator.notification.alert(message, function(){}, title, buttonName)
+}
+
+site.settings.helpSendLogs = function() {
+	loggr.log("site.settings.helpSendLogs()");
+	var title = "Help: Settings";
+	var buttonName = "OK";
+	var message = ""
+		+"Send error logs\n\n"
+		+"Help improve Icerrr by automatically sending logs to the developer whenever an error occurs.\n\n"
+		+"For those who care about their privacy (if you don't: you should): Icerrr encrypts your device ID so A. the developer can compare logs from the same device and B. your device ID is not (easily) tracebale to you."
 		;
 	navigator.notification.alert(message, function(){}, title, buttonName)
 }

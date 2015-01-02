@@ -119,7 +119,7 @@ public class MediaStreamer extends CordovaPlugin {
         		
         		StringBuilder log=new StringBuilder();
         		try {
-                    Process process = Runtime.getRuntime().exec("logcat -d ^(?!chromium)");
+                    Process process = Runtime.getRuntime().exec("logcat -v time -d ^(?!chromium)");
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
                     String line;
