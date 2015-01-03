@@ -50,6 +50,8 @@ public class Icerrr extends DroidGap
         super.appView.getSettings().setAllowFileAccess(true);
         
         // Set by <content src="index.html" /> in config.xml
+        super.setStringProperty("url", null); 
+        super.setStringProperty("errorUrl",null); 
         super.loadUrl(Config.getStartUrl());
         
         //super.loadUrl("file:///android_asset/www/index.html")
