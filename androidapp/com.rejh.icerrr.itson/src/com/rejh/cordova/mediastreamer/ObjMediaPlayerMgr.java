@@ -11,18 +11,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RemoteControlClient;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnInfoListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.media.RemoteControlClient;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
@@ -179,6 +180,8 @@ public class ObjMediaPlayerMgr {
 			mp.setOnInfoListener(onInfoListener);
 			mp.setOnBufferingUpdateListener(onBufferingUpdateListener);
 			mp.setOnCompletionListener(onCompletionListener);
+			
+			mp.setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK);
 			
 			mp.prepareAsync();
 			

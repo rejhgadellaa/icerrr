@@ -70,9 +70,11 @@
         <service android:name="com.rejh.cordova.mediastreamer.MediaStreamerService" android:launchMode="singleTask" android:process=":mediastreamer" />
     	
         <receiver android:name="com.rejh.cordova.mediastreamer.RemoteControlReceiver" android:enabled="true">
-		    <intent-filter android:priority="2147483647" >
+		<!-- TODO: comment this out? -->
+            <intent-filter android:priority="2147483647" >
 		        <action android:name="android.intent.action.MEDIA_BUTTON" />
 		    </intent-filter>
+		<!-- END TODO -->
 		</receiver>
         
         <receiver android:name="com.rejh.cordova.mediastreamer.MediaStreamerReceiver">

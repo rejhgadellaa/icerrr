@@ -76,8 +76,8 @@ public class MediaStreamerService extends Service {
 	
 	private ConnectivityManager connMgr;
 	
-	private PowerManager powerMgr;
-	private PowerManager.WakeLock wakelock;
+	//private PowerManager powerMgr;
+	//private PowerManager.WakeLock wakelock;
 	
 	private TelephonyManager telephonyMgr;
 	private PhoneStateListener phoneListener;
@@ -356,9 +356,9 @@ public class MediaStreamerService extends Service {
         Log.d(APPTAG," > setup()");
 		
 		// Wakelock
-		wakelock = powerMgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, APPTAG);
-		if (wakelock.isHeld()) { wakelock.release(); }
-		wakelock.acquire();
+		//wakelock = powerMgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, APPTAG);
+		//if (wakelock.isHeld()) { wakelock.release(); }
+		//wakelock.acquire();
         
         // Stream url
 	    String stream_url = null;
@@ -424,7 +424,7 @@ public class MediaStreamerService extends Service {
         Log.d(APPTAG," >> In foreground: "+ isServiceRunningInForeground(MediaStreamerService.class));
         
         // WakeLock OFF
-        if (wakelock.isHeld()) { wakelock.release(); }
+        // if (wakelock.isHeld()) { wakelock.release(); }
         
         // Wifi
         disableWifi();
@@ -708,7 +708,7 @@ public class MediaStreamerService extends Service {
 		}
         
         // WakeLock OFF
-        if (wakelock.isHeld()) { wakelock.release(); }
+        // if (wakelock.isHeld()) { wakelock.release(); }
     	
         // Wifi
         Log.d(APPTAG," > WifiIsToggled: "+ sett.getBoolean("wifiIsToggled", false));
