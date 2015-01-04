@@ -250,7 +250,7 @@ public class MediaStreamerService extends Service {
 				mpMgr.pause();
 				try {
 					overrideOpts.put("actionPlayPauseIcon","ic_stat_av_play");
-					overrideOpts.put("actionPlayPauseTitle","Resume");
+					overrideOpts.put("actionPlayPauseTitle","Play");
 				} catch(Exception e) {}
 				shouldEnableWifi = false;
 				// audioMgr.abandonAudioFocus(afChangeListener);
@@ -643,6 +643,7 @@ public class MediaStreamerService extends Service {
 				        
 				        // Metadata
 						metadataEditor = remoteControlClient.editMetadata(true);
+				        metadataEditor.clear();
 				        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
 				        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, nowplaying_new);
 				        metadataEditor.putBitmap(100, getIcon("wear_album_art"));

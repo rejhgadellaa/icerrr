@@ -1,13 +1,15 @@
-{"station_id":"soma_lush","host":"uwstream1.somafm.com","port":80,"path":"/"}
+{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
 
-ICY 200 OK
-icy-notice1:<BR>This stream requires <a href="http://www.winamp.com/">Winamp</a><BR>
-icy-notice2:SHOUTcast Distributed Network Audio Server/Linux v1.9.5<BR>
-icy-name:Groove Salad: a nicely chilled plate of ambient beats and grooves. [SomaFM]
-icy-genre:Ambient Chill
-icy-url:http://somafm.com
-content-type:audio/mpeg
-icy-pub:1
-icy-metaint:45000
-icy-br:128
+HTTP/1.0 200 OK
+Content-Type: audio/mpeg
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Pop
+icy-name:3FM Serious Radio
+icy-pub:0
+icy-url:http://www.3fm.nl
+Server: ics2lss.omroep.nl
+Cache-Control: no-cache
+icy-metaint:16000
 
