@@ -50,6 +50,7 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
 		
 		// --> Handle actions
         
+        // Sleep As Android..
         if (sett.getBoolean("useSAA",false)) {
         	
         	Log.d(APPTAG," > UseSAA: true");
@@ -69,6 +70,14 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
 	        	stopAlarm();
 	        }
 	        
+        }
+        
+        // Headphone unplugged
+        if (action.equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
+        	
+        	Intent recvIntent = new Intent(context, MediaStreamerReceiver.class);
+        	recvIntent.putExtra("cmd", "pause");
+        	
         }
 
 	}

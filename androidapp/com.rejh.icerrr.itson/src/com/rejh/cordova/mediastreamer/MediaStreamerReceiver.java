@@ -63,6 +63,11 @@ public class MediaStreamerReceiver extends BroadcastReceiver {
         		context.startService(serviceIntent);
         	}
         	
+        	else if (cmd.equals("pause")) {
+        		serviceIntent.putExtra("pause",true);
+        		context.startService(serviceIntent);
+        	}
+        	
         	// Alarm
         	else if (cmd.equals("alarm")) {
         		serviceIntent.putExtra("isAlarm", true);

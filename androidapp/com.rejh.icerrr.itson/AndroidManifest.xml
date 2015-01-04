@@ -93,6 +93,9 @@
             <intent-filter>
                 <action android:name="com.urbandroid.sleep.alarmclock.ALARM_SNOOZE_CLICKED_ACTION" />
             </intent-filter>
+			<intent-filter>
+				<action android:name="android.media.AUDIO_BECOMING_NOISY" />
+			</intent-filter>
         </receiver>
         
         <receiver android:name="com.rejh.cordova.notifmgr.NotifMgrReceiver">

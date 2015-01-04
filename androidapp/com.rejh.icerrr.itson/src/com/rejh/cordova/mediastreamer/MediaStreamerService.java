@@ -124,7 +124,7 @@ public class MediaStreamerService extends Service {
         // Others
 		wifiMgr = (WifiManager) context.getSystemService(WIFI_SERVICE);
         connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		// powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
         telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         
@@ -168,8 +168,16 @@ public class MediaStreamerService extends Service {
 		
 		// Cmds..
 		boolean cmd_pause_resume = false;
-		if(intent!=null) { 
-			if (intent.hasExtra("pause_resume")) { cmd_pause_resume = intent.getBooleanExtra("pause_resume", false); }
+		boolean cmd_pause = false;
+		if(intent!=null) {
+			
+			if (intent.hasExtra("pause_resume")) { 
+				cmd_pause_resume = intent.getBooleanExtra("pause_resume", false); 
+			}
+			if (intent.hasExtra("pause")) {
+				cmd_pause = intent.getBooleanExtra("pause", false);
+			}
+			
 			if (intent.hasExtra("station_id")) {
 				
 				// Get
@@ -235,7 +243,7 @@ public class MediaStreamerService extends Service {
 		// Go
 		boolean shouldEnableWifi = true;
 		if (mpMgr!=null) {
-			if (cmd_pause_resume && !sett.getBoolean("is_paused", false)) { // pause
+			if (cmd_pause_resume && !sett.getBoolean("is_paused", false) || cmd_pause) { // pause
 				Log.d(APPTAG," > cmd_pause_resume PAUSE!");
 				settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
