@@ -1,3 +1,6 @@
+0.171 (stable)
+  * Fix: notification would always pop up when headphones were unplugged
+
 0.170 (stable)
   * Bug fixes
 

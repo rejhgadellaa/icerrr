@@ -3,6 +3,8 @@ package com.rejh.cordova.mediastreamer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -75,9 +77,11 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
         // Headphone unplugged
         if (action.equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
         	
-        	Intent recvIntent = new Intent(context, MediaStreamerReceiver.class);
-        	recvIntent.putExtra("cmd", "pause");
-        	context.sendBroadcast(recvIntent);
+        	if (isServiceRunning(MediaStreamerService.class)) {
+        		Intent recvIntent = new Intent(context, MediaStreamerReceiver.class);
+            	recvIntent.putExtra("cmd", "pause");
+            	context.sendBroadcast(recvIntent);
+        	}
         	
         }
 
@@ -144,6 +148,20 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
 		
 		Log.d(APPTAG," > SnoozeAlarm()");
 		
+	}
+	
+	// --------------------------------------------------
+	// Helpers
+	
+	// --- Service running
+	private boolean isServiceRunning(Class<?> serviceClass) {
+	    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceClass.getName().equals(service.service.getClassName())) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 
 }
