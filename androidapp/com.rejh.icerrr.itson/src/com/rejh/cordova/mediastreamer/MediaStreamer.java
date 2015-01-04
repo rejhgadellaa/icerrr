@@ -112,8 +112,8 @@ public class MediaStreamer extends CordovaPlugin {
         		setting(args, callbackContext);
         	
         	} else if (action.equals("getSetting")) {
+        		
         		getSetting(args, callbackContext);
-
             	
         	} else if (action.equals("getlog")) {
         		
