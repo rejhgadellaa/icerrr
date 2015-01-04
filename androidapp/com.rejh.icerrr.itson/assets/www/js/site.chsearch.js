@@ -407,6 +407,17 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 	
 	site.vars.isTestingStation = true;
 	
+	if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
+	site.chsearch.station_test_timeout = setTimeout(function(){
+		site.vars.isTestingStation = false;
+		loggr.warn(" > Station is not working");
+		loggr.log(" > Timed out");
+		mediaPlayer.stop();
+		mediaPlayer.release();
+		site.ui.hideloading();
+		site.ui.showtoast("Stream did not start within a reasonable time, please choose another");
+	},15000);
+	
 	var mediaPlayer = new Media(station.station_url,
 		function() {
 			// Do nothing..
@@ -471,17 +482,6 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 	);
 	
 	mediaPlayer.play();
-
-	if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
-	site.chsearch.station_test_timeout = setTimeout(function(){
-		site.vars.isTestingStation = false;
-		loggr.warn(" > Station is not working");
-		loggr.log(" > Timed out");
-		mediaPlayer.stop();
-		mediaPlayer.release();
-		site.ui.hideloading();
-		site.ui.showtoast("Stream did not start within a reasonable time, please choose another");
-	},15000);
 	
 }
 

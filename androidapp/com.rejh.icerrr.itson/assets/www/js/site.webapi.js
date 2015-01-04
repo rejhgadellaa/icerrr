@@ -17,53 +17,6 @@ site.webapi.ajaxRequests = {};
 
 // TODO: implement timeout!
 
-// ---> App update!
-
-site.webapi.checkappupdate = function() {
-	
-	loggr.debug("site.webapi.checkappupdate()");
-	
-	var url = site.cfg.urls.api +'a=checkappupdate&q=' + encodeURIComponent('{"version":'+site.cfg.app_version+'}');
-	loggr.log(" > "+ url);
-	
-	var ajaxReqIdentifier = site.helpers.getUniqueID();
-	var ajaxReq = $.getJSON(url, function(results) {
-		// ok
-		if (results["error"]) {
-			loggr.error(" > site.webapi.checkappupdate().Error: "+ results["errormsg"]);
-			site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
-			return;
-		} else {
-			
-			var size_kb = site.helpers.calcStringToKbytes(JSON.stringify(results));
-			loggr.log(" > site.webapi.checkappupdate().results: ~"+ size_kb +" kb");
-			site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
-			
-			if (results.updateAvailable>0) {
-				
-				loggr.log(JSON.stringify(results));
-				
-				if (confirm('An update for RookMelder is availabe. Download now?')) {
-					loggr.error(" > Update! "+ results.url);
-					window.open(results.url,"_system");
-				}
-			}
-			
-			return;
-		}
-	})
-	.error(function(jqXHR, textStatus, errorThrown) { 
-		// error
-		loggr.error(" > site.webapi.checkappupdate().Error: \n"+ textStatus +", "+ errorThrown);
-		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
-	});
-	
-	// Store apireq
-	site.webapi.ajaxRequests[ajaxReqIdentifier] = ajaxReq;
-	return ajaxReqIdentifier;
-	
-}
-
 // ---> Download
 
 site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {

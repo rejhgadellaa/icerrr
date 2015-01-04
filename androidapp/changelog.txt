@@ -1,3 +1,6 @@
+0.170 (stable)
+  * Bug fixes
+
 0.169 (stable)
   * Icerrr now only responds to 'media button' events when service is active (#143)
   * Bug fixes

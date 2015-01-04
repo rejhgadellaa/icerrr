@@ -336,7 +336,7 @@ public class MediaStreamerService extends Service {
 		
 		stopNowPlayingPoll();
 		
-		msNotifMgr.cancel(-1);
+		if (msNotifMgr!=null) { msNotifMgr.cancel(-1); }
         
         // Stopped!
         if (remoteControlClient!=null) {

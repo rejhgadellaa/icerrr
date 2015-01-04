@@ -177,20 +177,6 @@ switch($action) {
 			// -- MESSAGES
 			
 			case "messages":
-				$msgs = array();
-				
-				// Message: app is pulled :(
-				$msgs[] = array(
-					"id"=>2,
-					"crit"=>"version",
-					"critvalue"=>0.150,
-					"action"=>"none",
-					"title"=>"Notice",
-					"message"=>"Unfortunately Icerrr has been pulled from the Google Play Store. Again.\n\n"
-						."You may continue to use the app but I can not push any updates as long as this situation has not been resolved.\n\n"
-						."I apoligize for the inconvenience and hope to offer a solution soon."
-				);
-				
 				$msgsStr = fg("{$cfg['icerrr_local_url']}api/data/messages.json");
 				if (!msgsStr) { error("Could not load messages.json"); }
 				$msgs = json_decode($msgsStr,true);
