@@ -46,7 +46,7 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
         	Log.e(APPTAG," > Intent action == null");
         	return;
         }
-        Log.d(APPTAG," > "+ action);
+        Log.d(APPTAG," > Intent action: "+ action);
 		
 		// --> Handle actions
         
@@ -77,6 +77,7 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
         	
         	Intent recvIntent = new Intent(context, MediaStreamerReceiver.class);
         	recvIntent.putExtra("cmd", "pause");
+        	context.sendBroadcast(recvIntent);
         	
         }
 
