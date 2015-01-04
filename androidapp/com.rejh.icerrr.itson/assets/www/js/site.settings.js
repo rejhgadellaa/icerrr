@@ -159,7 +159,8 @@ site.settings.helpShowAlbumArt = function() {
 	var buttonName = "OK";
 	var message = ""
 		+"Show album art\n\n"
-		+"Icerrr can use Google Image Search to find and show album art. However, since (most) album art is copyrighted this is disabled by default because Icerrr could be held responsible for showing artwork it is not licensed to show. This is why Icerrr will do this on *your* behalf.\n\n"
+		+"Icerrr can search and show album art based on the 'now playing' information (if any) of a stream.\n\n"
+		+"However, since (most) album art is copyrighted this feature is disabled by default because Icerrr could be held responsible for showing artwork it is not licensed to show. If you enable this option, you agree that Icerrr searches and shows this album art on your behalf and not to the benefit of the developer.\n\n"
 		//+"All alarms that are are fired by SAA will then cause Icerrr to start the last station you listened to. It is therefore recommended to silence the alarm sound in SAA.\n\n"
 		//+"Note: Alarms set in Icerrr are not affected and will have no interaction with SAA."
 		;
@@ -187,7 +188,7 @@ site.settings.helpSendLogs = function() {
 	var message = ""
 		+"Send error logs\n\n"
 		+"Help improve Icerrr by automatically sending logs to the developer whenever an error occurs.\n\n"
-		+"For those who care about their privacy (if you don't: you should): Icerrr encrypts your device ID so A. the developer can compare logs from the same device and B. your device ID is not (easily) tracebale to you."
+		+"Regarding your privacy: Logs include information to identify your device so the developer can find other logs from your device (if any). However, to protect your privacy, this information is encrypted and can only be compared between (Icerrr's) logs and can not (easily) be used to trace them back to you."
 		;
 	navigator.notification.alert(message, function(){}, title, buttonName)
 }
