@@ -1,3 +1,6 @@
+0.169 (stable)
+  * Bug fixes
+
 0.168 (stable)
   * Replaced custom wakelock implementation with MediaPlayer.setWakeMode
   * Icerrr will now pause playback when headphones are unplugged

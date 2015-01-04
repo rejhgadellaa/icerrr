@@ -194,7 +194,7 @@ public class MediaStreamerService extends Service {
 					station.put("station_name", station_name);
 					station.put("station_host", station_host);
 					station.put("station_port", station_port);
-					station.put("station_port", station_path);
+					station.put("station_path", station_path);
 					String stations = station.toString();
 					settEditor.putString("station_datas",stations);
 					settEditor.commit();
@@ -217,7 +217,7 @@ public class MediaStreamerService extends Service {
 				station_name = station.getString("station_name");
 				station_host = station.getString("station_host");
 				station_port = station.getString("station_port");
-				station_port = station.getString("station_port");
+				station_path = station.getString("station_path");
 			} catch(JSONException e) {
 				Log.e(APPTAG," > Could not get station jsonobject: "+e);
 				stopSelf();
@@ -398,7 +398,7 @@ public class MediaStreamerService extends Service {
         }
         
         // Check
-        if (stream_url==null) { shutdown(); }
+        if (stream_url==null) { shutdown(); return; }
         if (stream_url==stream_url_active && !force && !incomingIntentWasNull) { 
             Log.d(APPTAG," -> stream already running: "+ stream_url_active);
             return; 
