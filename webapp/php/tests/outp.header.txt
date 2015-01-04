@@ -1,15 +1,19 @@
-{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
+{"station_id":"Harmonyfm_c04bbe20b8f360aadd8e655bbdc7c32a_1498eb39f8c_4fc3c","host":"mp3.harmonyfm.de","port":80,"path":"/harmonyfm/hqlivestream.mp3"}
 
 HTTP/1.0 200 OK
+Accept-Ranges: none
 Content-Type: audio/mpeg
-icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Pop
-icy-name:3FM Serious Radio
+icy-br:128
+ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
+icy-br:128
+icy-description:harmony.fm
+icy-genre:Various
+icy-name:harmony.fm
+icy-private:1
 icy-pub:0
-icy-url:http://www.3fm.nl
-Server: ics2gss.omroep.nl
+Server: Icecast 2.3.3-kh10
 Cache-Control: no-cache
+Pragma: no-cache
+Expires: Mon, 26 Jul 1997 05:00:00 GMT
 icy-metaint:16000
 

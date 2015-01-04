@@ -1,6 +1,7 @@
 0.168 (stable)
-  * Replaced wakelock implementation with MediaPlayer.setWakeMode
+  * Replaced custom wakelock implementation with MediaPlayer.setWakeMode
   * Icerrr will now pause playback when headphones are unplugged
+  * New default/placeholder album art (with credits in About)
 
 0.167 (stable)
   * Patch for severe Cordova security vulnerability (CVE-2014-3500)
