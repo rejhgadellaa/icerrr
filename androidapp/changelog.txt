@@ -1,3 +1,6 @@
+0.175 (stable)
+  * Fixes for settings not syncing between processes
+
 0.174 (stable)
   * Hotfixes for notification's "Next" action
   * Displays version number in About section
