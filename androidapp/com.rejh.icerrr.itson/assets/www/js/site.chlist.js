@@ -311,21 +311,38 @@ site.chlist.selectstation = function(resultitem,dontgohome) {
 	site.session.currentstation_id = resultitem.station_id;
 	site.session.currentstation = site.data.stations[site.helpers.session.getStationIndexById(resultitem.station_id)];
 	
-	// Start selected station if already playing
-	if (site.mp.isPlaying) {
-		site.mp.stop(function(){
-			$(".button_play_bufferAnim").fadeIn(500);
-			site.mp.play();
-		});
-	}
-	
-	// And now?
-	if (site.cast.session) {
-		site.cast.loadMedia();
-	}
-	if (!dontgohome) {
-		site.home.init();
-	}
+	// Send to MediaStreamer	
+	loggr.log(" > Send to MediaStreamer");
+	window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
+		function(res) {
+			
+			loggr.log(" > Starred stations sent to MediaStreamer");
+			
+			// Save session
+			site.helpers.storeSession();
+			
+			// Start selected station if already playing
+			if (site.mp.isPlaying) {
+				site.mp.stop(function(){
+					$(".button_play_bufferAnim").fadeIn(500);
+					site.mp.play();
+				});
+			}
+			
+			// And now?
+			if (site.cast.session) {
+				site.cast.loadMedia();
+			}
+			if (!dontgohome) {
+				site.home.init();
+			}			
+			
+		},
+		function(err) {
+			loggr.error(" > Error sending starred stations to MediaStreamer",{dontupload:true});
+			loggr.error(err);
+		}
+	);
 	
 }
 

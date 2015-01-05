@@ -67,7 +67,8 @@
             </intent-filter>
         </activity>
         
-        <service android:name="com.rejh.cordova.mediastreamer.MediaStreamerService" android:launchMode="singleTask" android:process=":mediastreamer" />
+        <!-- android:process=":mediastreamer" -->
+        <service android:name="com.rejh.cordova.mediastreamer.MediaStreamerService" android:launchMode="singleTask" />
     	
         <receiver android:name="com.rejh.cordova.mediastreamer.RemoteControlReceiver" android:enabled="true">
 		<!--

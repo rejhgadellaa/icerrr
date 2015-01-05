@@ -137,7 +137,7 @@ public class MediaStreamerService extends Service {
         mediaButtonIntent.setComponent(remoteControlReceiverComponent);
         PendingIntent mediaPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, mediaButtonIntent, 0);
         remoteControlClient = new RemoteControlClientCompat(mediaPendingIntent);
-        remoteControlClient.setTransportControlFlags(RemoteControlClient.FLAG_KEY_MEDIA_PLAY_PAUSE | RemoteControlClient.FLAG_KEY_MEDIA_STOP);
+        remoteControlClient.setTransportControlFlags(RemoteControlClient.FLAG_KEY_MEDIA_PLAY_PAUSE | RemoteControlClient.FLAG_KEY_MEDIA_STOP | RemoteControlClient.FLAG_KEY_MEDIA_NEXT | RemoteControlClient.FLAG_KEY_MEDIA_PREVIOUS);
         RemoteControlHelper.registerRemoteControlClient(audioMgr,remoteControlClient);
 		
 		// Make sticky
@@ -164,6 +164,8 @@ public class MediaStreamerService extends Service {
 	
 	@Override
 	public int onStartCommand (Intent intent, int flags, int startId) {
+		
+		Log.i(APPTAG,"MediaStreamerService.onStartCommand");
 
         // Preferences, reload it because we're running in another process..
         sett = context.getSharedPreferences(APPTAG,Context.MODE_MULTI_PROCESS | 2);
@@ -175,6 +177,8 @@ public class MediaStreamerService extends Service {
 		boolean cmd_pause_resume = false;
 		boolean cmd_pause = false;
 		boolean cmd_next = false;
+		boolean cmd_prev = false;
+		boolean cmd_next_restart_intent = false;
 		if(intent!=null) {
 			
 			if (intent.hasExtra("pause_resume")) { 
@@ -185,6 +189,12 @@ public class MediaStreamerService extends Service {
 			}
 			if (intent.hasExtra("next")) {
 				cmd_next = intent.getBooleanExtra("next", false);
+			}
+			if (intent.hasExtra("prev")) {
+				cmd_prev = intent.getBooleanExtra("prev", false);
+			}
+			if (intent.hasExtra("next_restart_intent")) {
+				cmd_next_restart_intent = true;
 			}
 			
 			if (intent.hasExtra("station_id")) {
@@ -251,7 +261,7 @@ public class MediaStreamerService extends Service {
 		
 		// Go
 		boolean shouldEnableWifi = true;
-		if (mpMgr!=null) {
+		if (mpMgr!=null && !cmd_next_restart_intent) {
 			if (cmd_pause_resume && !sett.getBoolean("is_paused", false) || cmd_pause) { // pause
 				Log.d(APPTAG," > cmd_pause_resume PAUSE!");
 				settEditor.putBoolean("is_paused", true);
@@ -270,6 +280,7 @@ public class MediaStreamerService extends Service {
 				mpMgr.resume();
 				int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 			} else if (cmd_next) {
+				
 				try {
 					
 					// Get stations
@@ -290,23 +301,46 @@ public class MediaStreamerService extends Service {
 					Log.d(APPTAG," > Cmd_next: "+ index +", "+ station.getString("station_name"));
 					
 					// Stop!
-					stopSelf();
-					
-					// Restart time!
-					Intent restartIntent = new Intent(context, MediaStreamerService.class);
-					restartIntent.putExtra("stream_url", station.getString("station_url"));
-					restartIntent.putExtra("isAlarm", false);
-					restartIntent.putExtra("volume", -1);
-					restartIntent.putExtra("station_id",station.getString("station_id"));
-					restartIntent.putExtra("station_name",station.getString("station_name"));
-					restartIntent.putExtra("station_host",station.getString("station_host"));
-					restartIntent.putExtra("station_port",station.getString("station_port"));
-					restartIntent.putExtra("station_path",station.getString("station_path"));
-			        context.startService(restartIntent);
+					// stopSelf();
+					restartServiceWithStation(station);
+			        
+			        return START_STICKY;
 					
 					
 				} catch (JSONException e) {
 					Log.e(APPTAG," > Error handling 'cmd_next', JSONException",e);
+				}
+				
+			} else if (cmd_prev) {
+				
+				try {
+					
+					// Get stations
+					String starredStationsJsons = sett.getString("starredStations", "[]");
+					JSONArray starredStations = new JSONArray(starredStationsJsons);
+					
+					// Get index
+					int index = sett.getInt("starredStationsIndex", -1);
+					index -= 1;
+					if (index<0) { index = starredStations.length()-1; }
+					settEditor.putInt("starredStationsIndex",index);
+					settEditor.commit();
+					
+					// Get station
+					JSONObject station = starredStations.getJSONObject(index);
+					
+					// Log
+					Log.d(APPTAG," > Cmd_prev: "+ index +", "+ station.getString("station_name"));
+					
+					// Stop!
+					// stopSelf();
+					restartServiceWithStation(station);
+			        
+			        return START_STICKY;
+					
+					
+				} catch (JSONException e) {
+					Log.e(APPTAG," > Error handling 'cmd_prev', JSONException",e);
 				}
 				
 			} else {
@@ -952,6 +986,24 @@ public class MediaStreamerService extends Service {
     private static boolean isAirplaneModeOn(Context context) {
 	    return Settings.System.getInt(context.getContentResolver(),
 	            Settings.System.AIRPLANE_MODE_ON, 0) != 0;
+    }
+    
+    // Restart service with station
+    private void restartServiceWithStation(JSONObject station) throws JSONException {
+
+    	// Restart time!
+		Intent restartIntent = new Intent(context, MediaStreamerService.class);
+		restartIntent.putExtra("next_restart_intent",true);
+		restartIntent.putExtra("stream_url", station.getString("station_url"));
+		restartIntent.putExtra("isAlarm", false);
+		restartIntent.putExtra("volume", -1);
+		restartIntent.putExtra("station_id",station.getString("station_id"));
+		restartIntent.putExtra("station_name",station.getString("station_name"));
+		restartIntent.putExtra("station_host",station.getString("station_host"));
+		restartIntent.putExtra("station_port",station.getString("station_port"));
+		restartIntent.putExtra("station_path",station.getString("station_path"));
+        context.startService(restartIntent);
+        
     }
 	
 	

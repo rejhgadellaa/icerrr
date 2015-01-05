@@ -1,3 +1,8 @@
+0.177
+  * Previous/back on (BT) remotes and lockscreen now also work
+  * Moved service back to main thread
+  * Tweaks and some fixes
+
 0.176 (stable)
   * Icerrr will clear the list of starred stations to prevent new bugs regarding starred stations
   * Fix: removing a station could cause problems with starred stations
