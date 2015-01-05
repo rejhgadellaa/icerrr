@@ -144,6 +144,16 @@ site.installer.update = function() {
 		
 	}
 	
+	// Specific updates
+	if (site.cookies.get("app_is_installed") && site.cookies.get("app_version")<=0.175) {
+		
+		loggr.error(" > Update to 0.176..",{dontupload:true});
+		
+		loggr.log(" >> Set flag to upgrade starred stations");
+		site.cookies.put("upgrade_starred_stations",1);
+		
+	}
+	
 	setTimeout(function(){
 		//site.installer.logger("&nbsp;&gt; Done");
 		site.installer.deletefolders();

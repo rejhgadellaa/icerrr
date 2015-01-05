@@ -1,9 +1,9 @@
 [
 	
 	{
-		"id":"app0174",
+		"id":"app0175",
 		"crit":"version",
-		"critvalue":0.173,
+		"critvalue":0.174,
 		"action":"url",
 		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
 		"title":"New version available",

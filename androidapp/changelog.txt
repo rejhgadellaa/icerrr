@@ -1,5 +1,7 @@
-0.175 (stable)
-  * Fixes for settings not syncing between processes
+0.176 (stable)
+  * Icerrr will clear the list of starred stations to prevent new bugs regarding starred stations
+  * Fix: removing a station could cause problems with starred stations
+  * Fix: settings could run out of sync between processes
 
 0.174 (stable)
   * Hotfixes for notification's "Next" action

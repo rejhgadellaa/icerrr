@@ -20,8 +20,12 @@ site.chlist.init = function(forceRedraw) {
 	
 	site.ui.hideloading();
 	
-	// Bzzt
-	site.chlist.getStarred();
+	// Bzzzt
+	if (site.cookies.get("upgrade_starred_stations")==1) {
+		loggr.error(" > Upgrade starred stations",{dontupload:true});
+		site.chlist.upgradeStarred();
+		site.cookies.put("upgrade_starred_stations",0);
+	}
 	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#channellist");
@@ -565,8 +569,6 @@ site.chlist.getStarred = function() {
 	
 	loggr.info("site.chlist.getStarred()");
 	
-	var sendToMediaStreamer = false;
-	
 	// Empty?
 	if (!site.session.starred) { 
 		loggr.log(" > Nothing starred, return");
@@ -586,12 +588,6 @@ site.chlist.getStarred = function() {
 			var station = site.data.stations[j];
 			
 			if (starred.station_id==station.station_id) {
-				if (!starred.station_name) {
-					loggr.log(" > Upgrade 0.173, for 'next' action: "+ starred.station_id);
-					// upgrade for "next" stuff
-					site.session.starred[i] = station;
-					sendToMediaStreamer = true;
-				}
 				newlist.push(station);
 			}
 			
@@ -599,23 +595,53 @@ site.chlist.getStarred = function() {
 		
 	}
 	
-	// upgrade for "next" stuff
-	if (sendToMediaStreamer) {
-		site.session.starred = site.sorts.station_by_name(site.session.starred);
-		window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
-			function(res) {
-				loggr.log(" > Starred stations sent to MediaStreamer");
-			},
-			function(err) {
-				loggr.error(" > Error sending starred stations to MediaStreamer",{dontupload:true});
-				loggr.error(err);
-			}
-		);
-	}
-	
 	// Return
 	loggr.log(" > Results: "+ newlist.length);
 	return newlist;
+	
+}
+
+site.chlist.upgradeStarred = function() {
+	
+	loggr.debug("site.chlist.upgradeStarred()");
+	
+	loggr.log(" > Find starred stations that need upgrading...");
+	
+	// Empty?
+	if (!site.session.starred) { 
+		loggr.log(" > Nothing starred, return");
+	}
+	
+	// Walk
+	for (var i=0; i<site.session.starred.length; i++) {
+		
+		var starred = site.session.starred[i];
+		
+		for (var j=0; j<site.data.stations.length; j++) {
+			
+			var station = site.data.stations[j];
+			
+			if (starred.station_id==station.station_id) {
+				loggr.log(" >> Upgrade "+ station.station_id);
+				site.session.starred[i] = station;
+			}
+			
+		}
+		
+	}
+		
+	loggr.log(" > Send to MediaStreamer");
+	window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
+		function(res) {
+			loggr.log(" > Starred stations sent to MediaStreamer");
+		},
+		function(err) {
+			loggr.error(" > Error sending starred stations to MediaStreamer",{dontupload:true});
+			loggr.error(err);
+		}
+	);
+	
+	site.helpers.storeSession();
 	
 }
 
