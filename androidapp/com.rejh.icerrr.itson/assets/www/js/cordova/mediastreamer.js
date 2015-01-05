@@ -84,6 +84,18 @@
     };
 	
 	/**
+	* Store starred stations
+	*/
+	MediaStreamer.prototype.storeStarredStations = function(starredStations,currentStation,win,fail) {
+		console.log("MediaStreamer.prototype.storeStarredStations()");
+		if (currentStation && site.helpers.session.getStationIndexById(currentStation.station_id,starredStations)<0 && starredStations.length>0) {
+			console.log(" > Add currentStation to starredStations..");
+			starredStations.unshift(currentStation);
+		}
+        cordova.exec(win, fail, "MediaStreamer", "storeStarredStations", [starredStations]);
+	}
+	
+	/**
 	* Setting
 	*/
 	MediaStreamer.prototype.setting = function(type,key,value,win,fail) {

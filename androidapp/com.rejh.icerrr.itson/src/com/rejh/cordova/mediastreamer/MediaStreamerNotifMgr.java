@@ -48,6 +48,10 @@ public class MediaStreamerNotifMgr {
 		context = _context;
 		cordova = _cordova;
 		webview = _webview;
+
+        // Preferences
+        sett = context.getSharedPreferences(LOGTAG,Context.MODE_MULTI_PROCESS | 2);
+        settEditor = sett.edit();
 		
 		// Create NotifMgr Cordova plugin instance
 		notifMgr = new NotifMgr();
@@ -61,6 +65,10 @@ public class MediaStreamerNotifMgr {
 		
 		// Store values
 		context = _context;
+
+        // Preferences
+        sett = context.getSharedPreferences(LOGTAG,Context.MODE_MULTI_PROCESS | 2);
+        settEditor = sett.edit();
 		
 		// Create NotifMgr Cordova plugin instance
 		notifMgr = new NotifMgr();
@@ -153,9 +161,40 @@ public class MediaStreamerNotifMgr {
 			optsAction2Intent.put("extras", optsAction2IntentExtras);
 			optsAction2.put("intent", optsAction2Intent);
 			
+			// -> Action 3(?)
+			JSONObject optsAction3 = null;
+			try {
+				
+				// Get jsons -> json
+				String starredStationsJsons = sett.getString("starredStations", "[]");
+				JSONArray starredStations = new JSONArray(starredStationsJsons);
+				
+				if (starredStations.length()>1) {
+					optsAction3 = new JSONObject();
+					JSONObject optsAction3Intent = new JSONObject();
+					JSONArray optsAction3IntentExtras = new JSONArray();
+					JSONObject optsAction3IntentExtra1 = new JSONObject();
+					optsAction3.put("icon","ic_stat_av_next");
+					optsAction3.put("title","Next");
+					optsAction3Intent.put("type","receiver");
+					optsAction3Intent.put("package","com.rejh.icerrr.itson");
+					optsAction3Intent.put("classname","com.rejh.cordova.mediastreamer.MediaStreamerReceiver");
+					optsAction3IntentExtra1.put("type","string");
+					optsAction3IntentExtra1.put("name","cmd");
+					optsAction3IntentExtra1.put("value","next");
+					optsAction3IntentExtras.put(optsAction3IntentExtra1);
+					optsAction3Intent.put("extras", optsAction3IntentExtras);
+					optsAction3.put("intent", optsAction3Intent);
+				}
+				
+			} catch (JSONException e) {
+				Log.e(LOGTAG," > Error parsing starredStations jsons",e);
+			}
+			
 			// Store actions
 			optsActions.put(optsAction1);
 			optsActions.put(optsAction2);
+			if (optsAction3!=null) { optsActions.put(optsAction3); }
 			opts.put("actions",optsActions);
 			
 			// Put opts in args

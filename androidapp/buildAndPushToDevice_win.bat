@@ -96,4 +96,4 @@ goto end
 :end
 cd ..
 echo.
-pause
+REM pause

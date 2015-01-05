@@ -1,6 +1,7 @@
 0.172 (stable)
   * Notification: "Stop playback" is now "Quit" and "Resume" is now "Play"
-  * Fix: notification often did not update "now playing" info
+  * Notification: New "Next" action, use it to skip through starred stations (if any)
+  * Fix: notification often failed to update "now playing" info
 
 0.171 (stable)
   * Fix: notification would always pop up when headphones were unplugged

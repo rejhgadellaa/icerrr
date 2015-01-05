@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 import moz.http.HttpRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -169,6 +170,7 @@ public class MediaStreamerService extends Service {
 		// Cmds..
 		boolean cmd_pause_resume = false;
 		boolean cmd_pause = false;
+		boolean cmd_next = false;
 		if(intent!=null) {
 			
 			if (intent.hasExtra("pause_resume")) { 
@@ -176,6 +178,9 @@ public class MediaStreamerService extends Service {
 			}
 			if (intent.hasExtra("pause")) {
 				cmd_pause = intent.getBooleanExtra("pause", false);
+			}
+			if (intent.hasExtra("next")) {
+				cmd_next = intent.getBooleanExtra("next", false);
 			}
 			
 			if (intent.hasExtra("station_id")) {
@@ -260,8 +265,50 @@ public class MediaStreamerService extends Service {
 				settEditor.commit();
 				mpMgr.resume();
 				int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+			} else if (cmd_next) {
+				try {
+					
+					// Get stations
+					String starredStationsJsons = sett.getString("starredStations", "[]");
+					JSONArray starredStations = new JSONArray(starredStationsJsons);
+					
+					// Get index
+					int index = sett.getInt("starredStationsIndex", -1);
+					index += 1;
+					if (index>=starredStations.length()) { index = 0; }
+					settEditor.putInt("starredStationsIndex",index);
+					settEditor.commit();
+					
+					// Get station
+					JSONObject station = starredStations.getJSONObject(index);
+					
+					// Log
+					Log.d(APPTAG," > Cmd_next: "+ index +", "+ station.getString("station_name"));
+					
+					// Stop!
+					stopSelf();
+					
+					// Restart time!
+					Intent restartIntent = new Intent(context, MediaStreamerService.class);
+					restartIntent.putExtra("stream_url", station.getString("station_url"));
+					restartIntent.putExtra("isAlarm", false);
+					restartIntent.putExtra("volume", -1);
+					restartIntent.putExtra("station_id",station.getString("station_id"));
+					restartIntent.putExtra("station_name",station.getString("station_name"));
+					restartIntent.putExtra("station_host",station.getString("station_host"));
+					restartIntent.putExtra("station_port",station.getString("station_port"));
+					restartIntent.putExtra("station_path",station.getString("station_path"));
+			        context.startService(restartIntent);
+					
+					
+				} catch (JSONException e) {
+					Log.e(APPTAG," > Error handling 'cmd_next', JSONException",e);
+				}
+				
 			} else {
-				Log.d(APPTAG," > cmd_pause_resume unhandled!");
+				Log.d(APPTAG," > cmd(_pause_resume) unhandled?!");
+				settEditor.putInt("starredStationsIndex",0); // reset some values..
+				settEditor.commit();
 			}
 		} else {
 			setup();

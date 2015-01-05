@@ -490,9 +490,24 @@ site.chlist.setStarred = function(station_id) {
 	
 	// Add on TOP of stack :D
 	// -> Disadventage of site.data.stations: it's only available when in chlist.. should maybe load this anyway?
-	site.session.starred.unshift({
-		station_id:station_id
-	});
+	var index = site.helpers.session.getStationIndexById(station_id,site.data.stations);
+	var station = site.data.stations[index];
+	site.session.starred.unshift(station);
+	site.session.starred = site.sorts.station_by_name(site.session.starred); // sort :D
+	
+	// Send to MediaStreamer
+	window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
+		function(res) {
+			loggr.log(" > Starred stations sent to MediaStreamer");
+		},
+		function(err) {
+			loggr.error(" > Error sending starred stations to MediaStreamer",{dontupload:true});
+			loggr.error(err);
+		}
+	);
+	
+	// Store
+	site.helpers.storeSession();
 	
 }
 
@@ -508,6 +523,7 @@ site.chlist.unsetStarred = function(station_id) {
 		return;
 	}
 	
+	// Create new list..
 	for (var i=0; i<site.session.starred.length; i++) {
 		if (site.session.starred[i].station_id==station_id) {
 			continue; // dont add
@@ -515,8 +531,25 @@ site.chlist.unsetStarred = function(station_id) {
 			newlist.push(site.session.starred[i]);
 		}
 	}
+	if (newlist.length>0) {
+		site.session.starred = site.sorts.station_by_name(newlist);
+	} else {
+		site.session.starred = [];
+	}
 	
-	site.session.starred = newlist;
+	// Send to MediaStreamer
+	window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
+		function(res) {
+			loggr.log(" > Starred stations sent to MediaStreamer");
+		},
+		function(err) {
+			loggr.error(" > Error sending starred stations to MediaStreamer",{dontupload:true});
+			loggr.error(err);
+		}
+	);
+	
+	// Store
+	site.helpers.storeSession();
 	
 }
 

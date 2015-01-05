@@ -106,6 +106,10 @@ public class MediaStreamer extends CordovaPlugin {
         	} else if (action.equals("isServiceRunning")) {
         		
         		isServiceRunning(callbackContext);
+        		
+        	} else if (action.equals("storeStarredStations")) {
+        		
+        		storeStarredStations(args, callbackContext);
         	
         	} else if (action.equals("setting")) {
         		
@@ -180,7 +184,7 @@ public class MediaStreamer extends CordovaPlugin {
         try {
         	volume = args.getInt(2);
         } catch(Exception e) {
-        	Log.e(APPTAG," > Exception on args.getBoolean(2) - volume!!");
+        	Log.e(APPTAG," > Exception on args.getInt(2) - volume!!");
         }
         
         // More args
@@ -310,6 +314,17 @@ public class MediaStreamer extends CordovaPlugin {
 	        }
 	    }
 	    callbackContext.success(0);
+	}
+	
+	private void storeStarredStations(JSONArray args, CallbackContext callbackContext) throws JSONException {
+		
+		JSONArray starredStations = args.getJSONArray(0);
+		String starredStationsString = starredStations.toString();
+		settEditor.putString("starredStations", starredStationsString);
+		settEditor.putInt("starredStationsIndex",0); // reset some values..
+		settEditor.commit();
+		callbackContext.success("OK");
+		
 	}
     
 	private void setting(JSONArray args, CallbackContext callbackContext) throws JSONException {
