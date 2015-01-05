@@ -18,6 +18,9 @@ site.home.init = function() {
 	loggr.info("------------------------------------");
 	loggr.info("site.home.init();");
 	
+	// Lalala
+	$("#version_string").html("You're currently rocking version "+ site.cfg.app_version);
+	
 	// Check if station has been selected
 	if (!site.session.currentstation_id) {
 		loggr.log(site.session.currentstation_id);

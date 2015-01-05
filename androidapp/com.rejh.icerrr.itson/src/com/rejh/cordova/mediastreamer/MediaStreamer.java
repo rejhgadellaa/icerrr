@@ -320,8 +320,12 @@ public class MediaStreamer extends CordovaPlugin {
 		
 		JSONArray starredStations = args.getJSONArray(0);
 		String starredStationsString = starredStations.toString();
+		int starredStationsIndex = args.getInt(1);
+		
+		Log.d(APPTAG," > Current station index: "+ starredStationsIndex +", nr of stations: "+ starredStations.length());
+		
 		settEditor.putString("starredStations", starredStationsString);
-		settEditor.putInt("starredStationsIndex",0); // reset some values..
+		settEditor.putInt("starredStationsIndex",starredStationsIndex); // reset some values..
 		settEditor.commit();
 		callbackContext.success("OK");
 		

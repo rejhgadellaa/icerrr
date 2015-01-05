@@ -164,6 +164,10 @@ public class MediaStreamerService extends Service {
 	
 	@Override
 	public int onStartCommand (Intent intent, int flags, int startId) {
+
+        // Preferences, reload it because we're running in another process..
+        sett = context.getSharedPreferences(APPTAG,Context.MODE_MULTI_PROCESS | 2);
+        settEditor = sett.edit();
 		
 		if(intent!=null) { incomingIntent = intent; }
 		
@@ -307,7 +311,7 @@ public class MediaStreamerService extends Service {
 				
 			} else {
 				Log.d(APPTAG," > cmd(_pause_resume) unhandled?!");
-				settEditor.putInt("starredStationsIndex",0); // reset some values..
+				settEditor.putInt("starredStationsIndex",-1); // reset some values..
 				settEditor.commit();
 			}
 		} else {

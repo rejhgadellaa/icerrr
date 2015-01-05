@@ -1,3 +1,7 @@
+0.174 (stable)
+  * Hotfixes for notification's "Next" action
+  * Displays version number in About section
+
 0.172 (stable)
   * Notification: "Stop playback" is now "Quit" and "Resume" is now "Play"
   * Notification: New "Next" action, use it to skip through starred stations (if any)

@@ -20,6 +20,9 @@ site.chlist.init = function(forceRedraw) {
 	
 	site.ui.hideloading();
 	
+	// Bzzt
+	site.chlist.getStarred();
+	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#channellist");
 	
@@ -452,6 +455,7 @@ site.chlist.isStarred = function(station_id) {
 	if (!site.session.starred) { return false; }
 	
 	for (var i=0; i<site.session.starred.length; i++) {
+		loggr.log(" > "+ site.session.starred[i].station_id);
 		if (site.session.starred[i].station_id==station_id) {
 			return true;
 		}
@@ -471,7 +475,7 @@ site.chlist.toggleStarred = function(station_id) {
 	
 	if (site.chlist.isStarred(station_id)) {
 		site.chlist.unsetStarred(station_id);
-		return false // now unstarred
+		return false; // now unstarred
 	} else {
 		site.chlist.setStarred(station_id);
 		return true; // now starred
@@ -525,6 +529,7 @@ site.chlist.unsetStarred = function(station_id) {
 	
 	// Create new list..
 	for (var i=0; i<site.session.starred.length; i++) {
+		loggr.log(" > "+ site.session.starred[i].station_id);
 		if (site.session.starred[i].station_id==station_id) {
 			continue; // dont add
 		} else {
@@ -560,11 +565,13 @@ site.chlist.getStarred = function() {
 	
 	loggr.info("site.chlist.getStarred()");
 	
+	var sendToMediaStreamer = false;
+	
 	// Empty?
 	if (!site.session.starred) { 
 		loggr.log(" > Nothing starred, return");
 		return []; 
-		}
+	}
 	
 	// New list
 	var newlist = [];
@@ -579,11 +586,31 @@ site.chlist.getStarred = function() {
 			var station = site.data.stations[j];
 			
 			if (starred.station_id==station.station_id) {
+				if (!starred.station_name) {
+					loggr.log(" > Upgrade 0.173, for 'next' action: "+ starred.station_id);
+					// upgrade for "next" stuff
+					site.session.starred[i] = station;
+					sendToMediaStreamer = true;
+				}
 				newlist.push(station);
 			}
 			
 		}
 		
+	}
+	
+	// upgrade for "next" stuff
+	if (sendToMediaStreamer) {
+		site.session.starred = site.sorts.station_by_name(site.session.starred);
+		window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
+			function(res) {
+				loggr.log(" > Starred stations sent to MediaStreamer");
+			},
+			function(err) {
+				loggr.error(" > Error sending starred stations to MediaStreamer",{dontupload:true});
+				loggr.error(err);
+			}
+		);
 	}
 	
 	// Return
