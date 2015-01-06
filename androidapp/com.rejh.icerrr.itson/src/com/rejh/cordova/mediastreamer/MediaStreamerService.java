@@ -306,7 +306,6 @@ public class MediaStreamerService extends Service {
 			        
 			        return START_STICKY;
 					
-					
 				} catch (JSONException e) {
 					Log.e(APPTAG," > Error handling 'cmd_next', JSONException",e);
 				}
@@ -337,7 +336,6 @@ public class MediaStreamerService extends Service {
 					restartServiceWithStation(station);
 			        
 			        return START_STICKY;
-					
 					
 				} catch (JSONException e) {
 					Log.e(APPTAG," > Error handling 'cmd_prev', JSONException",e);

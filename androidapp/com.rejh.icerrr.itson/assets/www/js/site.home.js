@@ -545,10 +545,7 @@ site.home.handleStationImage = function(src) {
 	site.timeouts.handleStationImage = setTimeout(function(){
 		// 3fm serious request
 		if (station.station_nowplaying.indexOf("NPO 3FM")>-1){
-			var seriousrequestImage = "img/station-art/3fmportrait.jpg";
-			if ($(window).width()>$(window).height()){
-				seriousrequestImage = "img/station-art/3fmlandscape.jpg";
-			}
+			var seriousrequestImage = "img/station-art/3fmlandscape.jpg";
 			site.home.stationImagePreloader.src = seriousrequestImage;
 			return;
 		} else {
