@@ -449,7 +449,7 @@ site.home.getAlbumArt = function() {
 	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
-		+ "\""+ station.station_nowplaying.toLowerCase() +"\" "
+		+ ""+ station.station_nowplaying.toLowerCase() +" "
 		+ "album art";
 	
 	var opts = {
@@ -544,13 +544,15 @@ site.home.handleStationImage = function(src) {
 	if (site.timeouts.handleStationImage) { clearTimeout(site.timeouts.handleStationImage); }
 	site.timeouts.handleStationImage = setTimeout(function(){
 		// 3fm serious request
+		/*
 		if (station.station_nowplaying.indexOf("NPO 3FM")>-1){
 			var seriousrequestImage = "img/station-art/3fmlandscape.jpg";
 			site.home.stationImagePreloader.src = seriousrequestImage;
 			return;
 		} else {
+		/**/
 			site.home.stationImagePreloader.src = site.helpers.addCachebust(src);
-		}
+		//}
 	},1000);
 	
 	

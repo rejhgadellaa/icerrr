@@ -88,6 +88,7 @@
 	*/
 	MediaStreamer.prototype.storeStarredStations = function(starredStations,currentStation,win,fail) {
 		console.log("MediaStreamer.prototype.storeStarredStations()");
+		if (!starredStations) { starredStations = []; }
 		var newlist = [];
 		for (var i=0; i<starredStations.length; i++) { // need to copy list because it overwrites the original variable..? :S
 			newlist.push(starredStations[i]);

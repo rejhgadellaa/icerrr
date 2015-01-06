@@ -148,12 +148,12 @@ foreach($lines as $line) {
 	if (!$key || !$val) { continue; }
 	
 	// store
-	$array[$key] = $val;
+	$array[$key] = utf8_encode($val);
 	
 }
 
 // Add title
-$array["nowplaying"] = $title;
+$array["nowplaying"] = utf8_encode($title);
 
 // Add station_id, timestamp
 $array["station_id"] = $queryj["station_id"];

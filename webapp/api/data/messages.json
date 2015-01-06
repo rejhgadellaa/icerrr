@@ -1,9 +1,9 @@
 [
 	
 	{
-		"id":"app0176",
+		"id":"app0178",
 		"crit":"version",
-		"critvalue":0.175,
+		"critvalue":0.177,
 		"action":"url",
 		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
 		"title":"New version available",
@@ -14,6 +14,21 @@
 		"repeat":1,
 		"onlyOnWifi":1
 	},
+    
+    {
+        "id":"signpetition",
+        "crit":"version",
+		"critvalue":0.178,
+		"action":"url",
+		"url":"http://goo.gl/dSSKp4",
+		"title":"Support Icerrr",
+		"message":[
+			"As you might know, Icerrr is currently not available on the Google Play Store because Google suspended it (twice). And it's not just Icerrr, it looks like Google is on a suspending spree, removing apps without so much as a warning.\n\n",
+            "Well, the guys from Phandroid started a petition to ask (demand?) that Google will handle these takedowns in a less automated way, prodiving actual reasons for removal and offering solutions.\n\n",
+            "Long story short: I'm asking you to sign the petition. =Bambi eyes="
+			],
+		"buttonLabels":"Yes,No"
+    },
     
     {
         "id":"remove_station_0001",

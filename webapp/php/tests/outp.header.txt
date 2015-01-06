@@ -1,10 +1,15 @@
-{"station_id":"radio538","host":"82.201.100.9","port":8000,"path":"/radio538"}
+{"station_id":"radio2","host":"icecast.omroep.nl","port":80,"path":"/radio2-bb-mp3"}
 
-HTTP/1.1 302 Found
-Date: Tue, 06 Jan 2015 07:40:16 GMT
-Server: Apache/2.2.3 (CentOS)
-Location: http://vip-icecast.538.lw.triple-it.nl/RADIO538_MP3
-Content-Length: 309
-Connection: close
-Content-Type: text/html; charset=iso-8859-1
+HTTP/1.0 200 OK
+Content-Type: audio/mpeg
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Mixed
+icy-name:Radio 2
+icy-pub:0
+icy-url:http://www.radio2.nl
+Server: ics2ess.omroep.nl
+Cache-Control: no-cache
+icy-metaint:16000
 
