@@ -1,0 +1,134 @@
+
+<!--
+
+	ICERRR Chromecast Receiver App
+	
+	https://github.com/rejhgadellaa/icerrr
+
+--> 
+
+<html>
+
+<head>
+    
+    <title>Icerrr Chromecast Receiver App</title>
+    
+    <script src="https//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+    <script src="https://www.dropbox.com/s/w1bb2ud6hkaact5/jquery-1.9.1.min.js?dl=1"></script>
+    
+    <style>
+    
+    	html, body {
+			width:100%; height:100%;
+			margin:0; padding:0;
+			background:#2D6073;
+			font-family: 'Roboto', sans-serif;
+			font-size:12pt;
+			color:rgba(255,255,255,0.87);
+		}
+		
+		section {
+			display:none;
+			position:absolute;
+			top:0; left:0; right:0; bottom:0;
+			width:100%; height:100%;
+			background:#2D6073;
+		}
+		
+		section#launch {
+			
+		}
+		
+			#launch img {
+				position:absolute;
+				top:50%; left:50%;
+				width:512px; height:512px;
+				margin:-256px 0 0 -256px;
+			}
+			
+		section#main {
+		display:block;
+			background-image:url(https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1);
+			background-position:center;
+			background-repeat:no-repeat;
+			background-size:cover;
+		}
+		
+			#main .nowplaying {
+				position:absolute;
+				top:50%; left:0; right:0; bottom:0;
+				width:100%; height:50%;
+				background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.50) 100%);
+				text-shadow: 2px 2px rgba(0, 0, 0, 0.25);
+			}
+			
+			#main .nowplaying .icon {
+				position:absolute;
+				bottom:32px; left:32px;
+			}
+			
+			#main .nowplaying .icon img {
+				width:128px; height:128px;
+				box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.37);
+			}
+			
+			#main .nowplaying .station {
+				position:absolute;
+				bottom:28px; left:188px;
+				font-size:48pt;
+				font-weight:200;
+			}
+			
+			#main .nowplaying .title {
+				position:absolute;
+				bottom:124px; left:192px;
+				font-size:16pt;
+				font-weight:300;
+			}
+    
+    </style>
+
+</head>
+
+<body onload="cc.init();">
+
+<!-- Audio element -->
+<audio id="media"></audio>
+
+<!-- Section: launch -->
+<section id="launch">
+	<img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" />
+</section>
+
+<!-- Section: main -->
+<section id="main">
+	
+    <div class="nowplaying">
+    	<div class="icon"><img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" /></div>
+    	<div class="title">Now playing: ...</div>
+        <div class="station">Loading station...</div>
+    </div>
+    
+</section>
+
+<!-- Script -->
+<script>
+
+// ==========================================
+// CC, or ChromeCast :)
+
+var cc = {};
+
+cc.init = function() {
+	cc.mediaElement = document.getElementById("media");
+	cc.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
+	cc.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+	cc.castReceiverManager.start();
+	$("section").css("display","none");
+	$("section#main").css("display","block");
+}
+
+</script>
+
+</body>
+</html>
