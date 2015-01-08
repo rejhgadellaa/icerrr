@@ -142,7 +142,8 @@
 
 <!-- Section: launch -->
 <section id="launch">
-	<img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" /></section>
+	<img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" />
+</section>
 
 <!-- Section: main -->
 <section id="main">
@@ -202,7 +203,7 @@ loggr.show = function() {
 	loggr.timeout_hide = setTimeout(function(){
 		//$(".debug").css("display","none");
 		$(".debug").fadeOut(500,function(){ loggr.lines = []; });
-	},2500);
+	},5000);
 }
 
 // ==========================================
@@ -311,6 +312,14 @@ cc.init = function() {
 		cc.mediaManager['onLoadMetadataOrig'](event);
 	}
 	
+	// MetadataError
+	cc.mediaManager['onLoadMetadataErrorOrig'] = cc.mediaManager.onLoadMetadataError;
+	cc.mediaManager.onLoadMetadataError = function(event) {
+		loggr.error("cc.mediaManager.onLoadMetadataError()");
+		loggr.log(" > "+ JSON.stringify(event));
+		cc.mediaManager['onLoadMetadataErrorOrig'](event);
+	}
+	
 	// OnLoad
 	cc.mediaManager['onLoadOrig'] = cc.mediaManager.onLoad;
 	cc.mediaManager.onLoad = function(event) {
@@ -339,17 +348,12 @@ cc.init = function() {
 			
 			// Icon
 			if (event.data['media']['metadata']['images'] && event.data['media']['metadata']['images'][0]) {
+				loggr.log(" > Icon: "+ event.data['media']['metadata']['images'][0].url);
 				$(".nowplaying .icon img").attr("src",event.data['media']['metadata']['images'][0].url);
 			}
 			
-			// Image?
-			if (event.data['media']['metadata']['images'] && event.data['media']['metadata']['images'][1]) {
-				loggr.log(" > Album art available!");
-				loggr.log(" > "+ event.data['media']['metadata']['images'][1].url);
-				$("#main").css("background-image","url('"+ event.data['media']['metadata']['images'][1].url +"')");
-			} else {
-				$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
-			}
+			// Image
+			$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
 			
 		}
 			

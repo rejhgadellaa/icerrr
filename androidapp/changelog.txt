@@ -1,3 +1,6 @@
+0.180
+  * Tweaks for communicating with new chromecast receiver app
+
 0.179
   * Custom chromecast receiver app with now playing info and album art!
 
