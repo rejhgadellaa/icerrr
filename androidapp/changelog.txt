@@ -1,3 +1,6 @@
+0.179
+  * Custom chromecast receiver app with now playing info and album art!
+
 0.178
   * Fix: could only select a station when at least one was starred
 

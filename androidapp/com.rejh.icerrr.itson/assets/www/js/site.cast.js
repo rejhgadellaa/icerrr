@@ -256,16 +256,7 @@ site.cast.loadMedia = function() {
 			site.cast.media.addUpdateListener(site.cast.mediaUpdateListener);
 			site.cast.updateicon(2);
 			site.cast.play();
-			
-			site.cast.session.sendMessage("urn:x-cast:com.rejh.icerrr.chromecastapp",{"set_currentstation":site.session.currentstation},
-				function(res){
-					loggr.log(" > Message sent: "+ res);
-				},
-				function(err) {
-					loggr.error(" > Message not sent: "+ err);
-					console.error(err);
-				}
-			);
+			site.cast.updateCurrentstation();
 			
 		},
 		site.cast.onerror
@@ -279,7 +270,30 @@ site.cast.mediaUpdateListener = function(res) {
 	loggr.info("site.cast.mediaUpdateListener()");
 }
 
-// ---> Media metadata
+// ---> Update currentstation
+
+site.cast.updateCurrentstation = function() {
+	
+	loggr.info("site.cast.updateCurrentstation()");
+	
+	if (!site.cast.session) { loggr.log(" > !site.cast.session, return"); return; }
+	
+	if (site.timeouts.updateCurrentstation) { clearTimeout(site.timeouts.updateCurrentstation); }
+	
+	site.cast.session.sendMessage("urn:x-cast:com.rejh.icerrr.chromecastapp",{"set_currentstation":site.session.currentstation},
+		function(res){
+			loggr.log(" > Message sent: "+ res);
+		},
+		function(err) {
+			loggr.error(" > Message not sent: "+ err,{dontupload:true});
+			if (site.timeouts.updateCurrentstation) { clearTimeout(site.timeouts.updateCurrentstation); }
+			site.timeouts.updateCurrentstation = setTimeout(function(){site.cast.updateCurrentstation();},5000);
+		}
+	);
+	
+}
+
+// ---> Update metadata
 
 site.cast.updateMetadata = function() {
 	
