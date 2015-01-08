@@ -359,14 +359,19 @@ public class ChromecastSession
 		@Override
 		public void onResult(ApplicationConnectionResult result) {
 			
+			Log.i("CordCast","ResultCallback.onResult()");
+			Log.d("CordCast"," > "+ result.toString());
+			
+			
 			ApplicationMetadata metadata = result.getApplicationMetadata();
 			ChromecastSession.this.sessionId = result.getSessionId();
-			ChromecastSession.this.displayName = metadata.getName();
-			ChromecastSession.this.appImages = metadata.getImages();
+			//ChromecastSession.this.displayName = metadata.getName(); // TODO: uncomment these lines for prod!
+			//ChromecastSession.this.appImages = metadata.getImages();
 		
 			Status status = result.getStatus();
 			
 			if (status.isSuccess()) {
+				Log.d("CordCast"," > Success");
 				try {
 					ChromecastSession.this.launchCallback.onSuccess(ChromecastSession.this);
 					connectRemoteMediaPlayer();
@@ -377,6 +382,7 @@ public class ChromecastSession
 					e.printStackTrace();
 				}
 			} else {
+				Log.d("CordCast"," > Failed?");
 				ChromecastSession.this.isConnected = false;
 			}
 		}

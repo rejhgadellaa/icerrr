@@ -535,6 +535,19 @@ site.home.handleStationImage = function(src) {
 	site.home.stationImagePreloader = new Image();
 	site.home.stationImagePreloader.onload = function() {
 		// $("#home .main .station_image").css("background-color","#333");
+		/*
+		if (site.cast.session && this.src.indexOf("http")==0) { 
+			site.cast.session.sendMessage("urn:x-cast:com.rejh.icerrr.chromecastapp",{"set_album_art":this.src},
+				function(res){
+					loggr.log(" > Message sent: "+ res);
+				},
+				function(err) {
+					loggr.error(" > Message not sent: "+ err);
+					console.error(err);
+				}
+			);
+		}
+		/**/
 		$("#home .main .station_image").css("background-image","url('"+ this.src +"')");
 		$("#home .main .station_image img").css("opacity",0.0);
 		$("#home .main .station_image").css("background-blend-mode","normal");

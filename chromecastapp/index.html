@@ -4,6 +4,10 @@
 	ICERRR Chromecast Receiver App
 	
 	https://github.com/rejhgadellaa/icerrr
+	
+	https://www.dropbox.com/s/3u03s0cvx75kami/index.html?dl=1
+	
+	Open CC console (<ip>:9222) and type "$('#main .debug').css('display','block');" to show debug info
 
 --> 
 
@@ -12,13 +16,22 @@
 <head>
     
     <title>Icerrr Chromecast Receiver App</title>
+	
+	<!-- Cache || TODO: For prod it should cache? -->
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
     
-    <script src="https//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
-    <script src="https://www.dropbox.com/s/w1bb2ud6hkaact5/jquery-1.9.1.min.js?dl=1"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/mediaplayer/0.7.0/media_player.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	
+    <script type="text/javascript" src="https://www.dropbox.com/s/w1bb2ud6hkaact5/jquery-1.9.1.min.js?dl=1"></script>
+	<script type="text/javascript" src="https://www.dropbox.com/s/loiazr6pftg5r7e/json2.js?dl=1"></script>
     
     <style>
     
     	html, body {
+			overflow:hidden;
 			width:100%; height:100%;
 			margin:0; padding:0;
 			background:#2D6073;
@@ -36,7 +49,7 @@
 		}
 		
 		section#launch {
-			
+			display:block;
 		}
 		
 			#launch img {
@@ -47,12 +60,20 @@
 			}
 			
 		section#main {
-		display:block;
+			
 			background-image:url(https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1);
 			background-position:center;
 			background-repeat:no-repeat;
 			background-size:cover;
 		}
+		
+			#main .debug {
+				display:none;
+				position:absolute;
+				top:0; left:0; right:0;
+				padding:32px;
+				background:rgba(0,0,0,0.5);
+			}
 		
 			#main .nowplaying {
 				position:absolute;
@@ -72,14 +93,14 @@
 				box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.37);
 			}
 			
-			#main .nowplaying .station {
+			#main .nowplaying .title {
 				position:absolute;
-				bottom:28px; left:188px;
+				bottom:28px; left:190px;
 				font-size:48pt;
 				font-weight:200;
 			}
 			
-			#main .nowplaying .title {
+			#main .nowplaying .subtitle {
 				position:absolute;
 				bottom:124px; left:192px;
 				font-size:16pt;
@@ -102,11 +123,13 @@
 
 <!-- Section: main -->
 <section id="main">
+
+	<div class="debug">Loading assets...</div>
 	
     <div class="nowplaying">
     	<div class="icon"><img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" /></div>
-    	<div class="title">Now playing: ...</div>
-        <div class="station">Loading station...</div>
+    	<div class="subtitle"></div>
+        <div class="title"></div>
     </div>
     
 </section>
@@ -115,20 +138,502 @@
 <script>
 
 // ==========================================
+// Google Image Search..
+
+google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
+
+// ==========================================
+// Logger
+
+var loggr = {};
+loggr.lines = [];
+loggr.error = function(msg) {
+	loggr.lines.push("<span style='color:#fc0;'>"+ msg +"</span>");
+	while (loggr.lines.length>4) { loggr.lines.shift(); }
+	$(".debug").html(loggr.lines.join("<br>"));
+	console.error(msg);
+}
+loggr.debug = function(msg) {
+	loggr.lines.push("<span style='color:#0f0;'>"+ msg +"</span>");
+	while (loggr.lines.length>4) { loggr.lines.shift(); }
+	$(".debug").html(loggr.lines.join("<br>"));
+	console.debug(msg);
+}
+loggr.log = function(msg) {
+	loggr.lines.push(msg);
+	while (loggr.lines.length>4) { loggr.lines.shift(); }
+	$(".debug").html(loggr.lines.join("<br>"));
+	console.log(msg);
+}
+
+// ==========================================
 // CC, or ChromeCast :)
 
 var cc = {};
+cc.helpers = {}; 
 
 cc.init = function() {
-	cc.mediaElement = document.getElementById("media");
-	cc.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
-	cc.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
-	cc.castReceiverManager.start();
+
+	loggr.debug("cc.init()");
+	
+	// -- INIT CC
+	
+	try {
+	
+		// Prep some objects
+		// .. Media Element
+		cc.mediaElement = document.getElementById("media");
+		cc.mediaElement.autoplay = true;
+		// .. Media Manager
+		cc.mediaManager = new cast.receiver.MediaManager(cc.mediaElement);
+		// .. Receiver Manager
+		cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+		cc.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+		// .. Message Bus
+		cc.messageBus = cc.castReceiverManager.getCastMessageBus('urn:x-cast:com.rejh.icerrr.chromecastapp');
+		// .. MediaPlayer
+		cc.mediaPlayer = null;
+	
+	} catch(e) {
+		loggr.log(" > Error occured:");
+		loggr.log(e);
+	}
+	
+	// -- EVENTS
+	
+	// - ReceiverManager
+	
+	// On Ready
+	cc.castReceiverManager.onReady = function(event) {
+		loggr.debug("cc.castReceiverManager.onReady()");
+		loggr.log(" > "+ JSON.stringify(event));
+	}
+	
+	// Sender connected
+	cc.castReceiverManager.onSenderConnected = function(event) {
+		loggr.debug("cc.castReceiverManager.onSenderConnected()");
+		loggr.log(" > "+ JSON.stringify(event));
+	}
+	
+	// Sender disconnected
+	cc.castReceiverManager.onSenderDisconnected = function(event) {
+		loggr.debug("cc.castReceiverManager.onSenderDisconnected()");
+		loggr.log(" > "+ JSON.stringify(event));
+		if(cc.castReceiverManager.getSenders().length == 0 && event.reason == cast.receiver.system.DisconnectReason.REQUESTED_BY_SENDER) {
+			window.close();
+		}
+	}
+	
+	// - MessageBus
+	
+	// Custom Messages
+	cc.messageBus.onMessage = function(event) {
+	
+		loggr.debug("cc.messageBus.onMessage()");
+		loggr.log(" > "+ event.data);
+		
+		try {
+		
+			var data = JSON.parse(event.data);
+			
+			if (data['set_currentstation']) {
+				cc.currentstation = data['set_currentstation'];
+				cc.run_nowplaying_poll();
+			}
+			
+		} catch(e) {
+			loggr.error(" > Exception while handling message: "+e);
+		}
+		
+	}
+	
+	// - MediaManager
+	
+	// Ended
+	cc.mediaManager['onEndedOrig'] = cc.mediaManager.onEnded;
+	cc.mediaManager.onEnded = function() {
+		loggr.debug("cc.mediaManager.onEnded()");
+		cc.mediaManager['onEndedOrig']();
+	}
+	
+	// Error
+	cc.mediaManager['onErrorOrig'] = cc.mediaManager.onError;
+	cc.mediaManager.onError = function(obj) {
+		loggr.error("cc.mediaManager.onError()");
+		loggr.log(" > "+ JSON.stringify(obj));
+		cc.mediaManager['onErrorOrig'](obj);
+	}
+	
+	// MetadataLoaded
+	cc.mediaManager['onLoadMetadataOrig'] = cc.mediaManager.onLoadMetadataLoaded;
+	cc.mediaManager.onLoadMetadataLoaded = function(event) {
+		loggr.debug("cc.mediaManager.onLoadMetadataLoaded()");
+		loggr.log(" > "+ JSON.stringify(event));
+		cc.mediaManager['onLoadMetadataOrig'](event);
+	}
+	
+	// OnLoad
+	cc.mediaManager['onLoadOrig'] = cc.mediaManager.onLoad;
+	cc.mediaManager.onLoad = function(event) {
+	
+		loggr.debug("cc.mediaManager.onLoad()");
+		//loggr.log(" > "+ cc.helpers.arrToString(event.data));
+		
+		if(cc.mediaPlayer !== null) {
+			cc.mediaPlayer.unload(); // Ensure unload before loading again
+		}
+		
+		// Metadata
+		if (event.data['media'] && event.data['media']['metadata']) {
+		
+			loggr.log(" > Set title, subtitle and icon..");
+			
+			// Title
+			if (event.data['media']['metadata']['title']) {
+				$(".nowplaying .title").html(event.data['media']['metadata']['title']);
+			}
+			
+			// Subtitle
+			if (event.data['media']['metadata']['subtitle']) {
+				$(".nowplaying .subtitle").html(event.data['media']['metadata']['subtitle']);
+			}
+			
+			// Icon
+			if (event.data['media']['metadata']['images'] && event.data['media']['metadata']['images'][0]) {
+				$(".nowplaying .icon img").attr("src",event.data['media']['metadata']['images'][0].url);
+			}
+			
+			// Image?
+			if (event.data['media']['metadata']['images'] && event.data['media']['metadata']['images'][1]) {
+				loggr.log(" > Album art available!");
+				loggr.log(" > "+ event.data['media']['metadata']['images'][1].url);
+				$("#main").css("background-image","url('"+ event.data['media']['metadata']['images'][1].url +"')");
+			} else {
+				$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+			}
+			
+		}
+			
+		if (event.data['media'] && event.data['media']['contentId']) {
+		
+			var url = event.data['media']['contentId'];
+			cc.mediaHost = new cast.player.api.Host({
+				'mediaElement': cc.mediaElement,
+				'url': url
+			});
+			
+			cc.mediaHost.onError = function (errorCode) {
+				console.error('### HOST ERROR - Fatal Error: code = ' + errorCode);
+				if (cc.mediaPlayer !== null) {
+					cc.mediaPlayer.unload();
+				}
+			}
+		
+		}
+		
+		cc.mediaManager['onLoadOrig'](event);
+		
+	}
+	
+	// -- DONE
+	
+	// Show #main
 	$("section").css("display","none");
 	$("section#main").css("display","block");
+	
+	// Start ReceiverManager
+	cc.castReceiverManager.start();
+	
+}
+
+// ==========================================
+// Now playing..
+
+cc.run_nowplaying_poll = function() {
+	
+	loggr.debug("cc.run_nowplaying_poll()");
+	
+	var id = cc.currentstation.station_id;
+	var host = cc.currentstation.station_host;
+	var port = cc.currentstation.station_port;
+	var path = cc.currentstation.station_path;
+	
+	var apiqueryobj = {
+		"get":"station_info",
+		"station_id":id,
+		"station_host":host,
+		"station_port":port,
+		"station_path":path
+	}
+	
+	var apiaction = "get";
+	var apiquerystr = encodeURIComponent(JSON.stringify(apiqueryobj));
+	
+	var apiurl = "http://www.rejh.nl/icerrr/api/?a=get&q="+ apiquerystr +"&cache="+(new Date().getTime());
+	
+	$.getJSON(apiurl, function(results) {
+		// ok
+		if (results["error"]) {
+			loggr.error(" > "+ results["errormsg"]);
+			return;
+		} else {
+			
+			cc.currentstation.nowplaying = results["data"]["nowplaying"];
+			cc.updateNowplaying();
+			
+			if (cc.currentstation.nowplaying && cc.currentstation.nowplaying.toLowerCase()!="now playing: unknown") {
+				
+				var opts = {
+					maxresults:4,
+					restrictions:[[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_LARGE]]
+				}
+			
+				cc.helpers.googleImageSearch(cc.currentstation.nowplaying.toLowerCase() +" album art",
+					function(res) {
+						var res = res[0];
+						if (!res) { 
+							loggr.log(" > No album art :(");
+							$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+						} else {
+							
+							var image = new Image;
+							image.onload = function() {
+								loggr.log(" > Found album art: "+ res.url);
+								$("#main").css("background-image","url('"+ this.src +"')");
+							}
+							image.onerror = function() {
+								loggr.log(" > Found album art but loading failed: "+ this.src);
+								$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+							}
+							image.src = res.url;
+							
+						}
+					},
+					function(err) {
+						$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+					},
+					opts
+				);
+				
+			} else {
+				$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+			}
+			
+			
+		}
+	})
+	.error(function(jqXHR, textStatus, errorThrown) { 
+		loggr.error(" > cc.run_nowplaying_poll().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown);
+	});
+	
+	if (cc.timeout_nowplaying_poll) { clearTimeout(cc.timeout_nowplaying_poll); }
+	cc.timeout_nowplaying_poll = setTimeout(function(){ cc.run_nowplaying_poll(); },1000*30);
+	
+}
+
+cc.updateNowplaying = function() {
+	
+	loggr.debug("cc.updateNowplaying()");
+	
+	if (!cc.currentstation.nowplaying) { cc.currentstation.nowplaying = "Now playing: Unknown"; }
+	$("#main .nowplaying .subtitle").html(cc.currentstation.nowplaying);
+	
+}
+
+// Google Image Search
+
+cc.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull) {
+	
+	loggr.debug("cc.helpers.googleImageSearch()");
+	loggr.log(" > Search: '"+searchstring+"'");
+	
+	// HELP: https://developers.google.com/image-search/v1/devguide
+	
+	// New imagesearch, get unique id
+	var searchid = (new Date().getTime()).toString(16);
+	if (!cc.thesearch) { cc.thesearch = {}; }
+	if (!cc.thesearchresults) { cc.thesearchresults = []; }
+	if (!cc.thesearchbusy) { cc.thesearchbusy = {}; }
+	cc.thesearch[searchid] = new google.search.ImageSearch();
+	cc.thesearchresults[searchid] = [];
+	cc.thesearchbusy[searchid] = true;
+	
+	// Set some properties
+	// -> Restrictions
+	// ->> opts.restrictions = [ [google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM] ]
+	if (opts.restrictions) {
+		for (var i=0; i<opts.restrictions.length; i++) {
+			if (!opts.restrictions[i][0] || !opts.restrictions[i][1]) { continue; }
+			cc.thesearch[searchid].setRestriction(
+				opts.restrictions[i][0],
+				opts.restrictions[i][1]
+			);
+		}
+	}
+	
+	// more opts
+	if (!opts) { opts = {}; }
+	if (!opts.maxresults) { opts.maxresults = 64; }
+	
+	// Callback
+	cc.thesearch[searchid].setSearchCompleteCallback(this, 
+		function() {
+			
+			var thesearch = cc.thesearch[searchid];
+			var cursor = {};
+			var results = []
+			
+			// Store results (if any)
+			if (cc.thesearch[searchid].results && cc.thesearch[searchid].results.length > 0) {
+				results = cc.thesearch[searchid].results;
+				for (var i in results) {
+					cc.thesearchresults[searchid].push(results[i]);
+				}
+			}
+			
+			// Check for more results :D
+			if (thesearch.cursor) {
+				cursor = thesearch.cursor;
+				var currPage = cursor.currentPageIndex;
+				var pages = cursor.pages;
+				// loggr.log(" > "+ currPage +", out of "+ pages.length);
+				if (currPage < pages.length-1 && cc.thesearchresults[searchid].length < opts.maxresults) {
+					// get more...
+					// loggr.log(" > Getting more results... ("+pages.length+" page(s) total)");
+					thesearch.gotoPage(currPage+1);
+					return;
+				} else {
+					// return results..
+					// loggr.log(" > Results: "+ cc.thesearchresults[searchid].length);
+					cb(cc.thesearchresults[searchid]);
+					cc.thesearchbusy[searchid] = false;
+					cc.helpers.googleImageSearchCleanup();
+					return;
+				}
+			}
+			
+			// Errcb
+			if (!cc.thesearchresults[searchid]) { cc.thesearchresults[searchid] = []; }
+			if (cc.thesearchresults[searchid].length<1) {
+				loggr.log(" > Search failed, no results");
+				errcb();
+				cc.thesearchbusy[searchid] = false;
+				cc.helpers.googleImageSearchCleanup();
+			}
+			
+		},
+		null
+	);
+	
+	// Execute
+	cc.thesearch[searchid].execute(searchstring);
+	
+}
+
+cc.helpers.googleImageSearchCleanup = function() {
+	
+	// Check if searches are busy..
+	var anybusy = false;
+	for (var searchid in cc.thesearchbusy) {
+		if (cc.thesearchbusy[searchid]) { anybusy = true; break; }
+	}
+	
+	// All done? destroy thesearch[]
+	if (!anybusy) {
+		//loggr.log("cc.helpers.googleImageSearchCleanup(): Cleanup...");
+		cc.thesearch = {};
+		cc.thesearchresults = [];
+		cc.thesearchbusy = {};
+	}
+	
+}
+
+// ==========================================
+// More...
+
+// Override onError
+window.onerror = function(message, file, line, column, errorObj) {
+    loggr.error(message+"\n > "+file+" at line "+line);
+	if (errorObj) {
+		loggr.debug(errorObj.stack);
+	}
+}
+
+// Temp // TODO
+if (!cc.helpers) { cc.helpers = {}; }
+cc.helpers.arrToString = function(arr,depth,newline) {
+	var char = "&nbsp;";
+	if (!depth) { depth = 0; }
+	if (!newline) { newline = "<br>"; }
+	if (newline=="\n") { char = " "; }
+	var res = "";
+	depth++;
+	if (typeof(arr)=="string") {
+		return arr;
+	} else {
+		for (var i in arr) {
+			if (typeof(arr[i])=="object" || typeof(arr[i])=="array") {
+				res += cc.helpers.getIndents(depth,char) + i + newline;
+				res += cc.helpers.arrToString(arr[i],depth,newline) + newline;
+			} else {
+				res += cc.helpers.getIndents(depth,char) + i +" = "+ arr[i] + newline;
+			}
+		}
+	}
+	return res;
+}
+cc.helpers.getIndents = function(depth,char) {
+	var res = "";
+	if (!char) { char = "&nbsp;"; }
+	for (var i=0; i<depth; i++) { res += char+char+char+char; }
+	return res;
 }
 
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

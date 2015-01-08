@@ -75,7 +75,7 @@ site.cast.init = function() {
 	// Initialize
 	site.cast.cfg.apiCfg = {
 		sessionRequest:{
-			appId:"9B4DB672",
+			appId:"B6089660",
 			capabilities:[chrome.cast.Capability.AUDIO_OUT],
 			dialRequest:null
 		},
@@ -230,8 +230,9 @@ site.cast.loadMedia = function() {
 		mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
 		mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.GENERIC;
 		mediaInfo.metadata.title = station.station_name;
-		mediaInfo.metadata.subtitle = "Icerrr Chromecast";
+		mediaInfo.metadata.subtitle = $("#home .main .station_nowplaying").html();;
 		mediaInfo.metadata.images = [{'url': station.station_icon}];
+		mediaInfo.metadata.images.push({'url': 'https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1'});
 	var request = new chrome.cast.media.LoadRequest(mediaInfo);
 		request.autoplay = true;
 	
@@ -250,10 +251,22 @@ site.cast.loadMedia = function() {
 	}
 	site.cast.session.loadMedia(request,
 		function(media) {
+			
 			site.cast.media = media;
 			site.cast.media.addUpdateListener(site.cast.mediaUpdateListener);
 			site.cast.updateicon(2);
 			site.cast.play();
+			
+			site.cast.session.sendMessage("urn:x-cast:com.rejh.icerrr.chromecastapp",{"set_currentstation":site.session.currentstation},
+				function(res){
+					loggr.log(" > Message sent: "+ res);
+				},
+				function(err) {
+					loggr.error(" > Message not sent: "+ err);
+					console.error(err);
+				}
+			);
+			
 		},
 		site.cast.onerror
 	);
