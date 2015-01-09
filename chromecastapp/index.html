@@ -41,15 +41,19 @@
 		}
 		
 		section {
-			display:none;
+			display:block;
 			position:absolute;
 			top:0; left:0; right:0; bottom:0;
 			width:100%; height:100%;
-			background:#2D6073;
+			background:#eee;
 		}
 		
 		section#launch {
+			z-index:90;
 			display:block;
+			background:#2D6073;
+			-webkit-transition: opacity 500ms;
+			transition: opacity 1000ms;
 		}
 		
 			#launch img {
@@ -60,7 +64,6 @@
 			}
 			
 		section#main {
-			
 			background-image:url(https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1);
 			background-position:center;
 			background-repeat:no-repeat;
@@ -69,18 +72,20 @@
 		
 			#main .debug {
 				display:none;
+				z-index:99;
 				position:absolute;
 				top:0; left:0; right:0;
 				padding:32px;
 				text-align:right;
 				font-size:10pt;
+				background:rgba(0,0,0,0.25);
 			}
 		
 			#main .topbar {
 				position:absolute;
 				top:0; left:0; right:0;
-				width:100%; height:96px;
-				background: -webkit-linear-gradient(rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.25) 25%, rgba(0,0,0,0.0) 100%);
+				width:100%; height:50%;
+				background: -webkit-linear-gradient(rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.33) 25%, rgba(0,0,0,0.0) 100%);
 			}
 			
 			#main .topbar .topbar_watermark {
@@ -97,15 +102,15 @@
 				top:35px; left:72px;
 				font-size:16pt;
 				color:#D0D102;
-				text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+				text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.33);
 			}
 		
 			#main .nowplaying {
 				position:absolute;
-				top:50%; left:0; right:0; bottom:0;
-				width:100%; height:50%;
-				background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.33) 50%, rgba(0,0,0,0.67) 100%);
-				text-shadow: 2px 2px rgba(0, 0, 0, 0.25);
+				top:25%; left:0; right:0; bottom:0;
+				width:100%; height:75%;
+				background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.33) 75%, rgba(0,0,0,0.50) 100%);
+				
 			}
 			
 			#main .nowplaying .icon {
@@ -119,16 +124,24 @@
 			
 			#main .nowplaying .title {
 				position:absolute;
-				bottom:34px; left:188px;
-				font-size:48pt;
-				font-weight:300;
+				bottom:116px; left:192px; right:32px;
+				font-size:16pt;
+				font-weight:400;
+				text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.75);
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
 			}
 			
 			#main .nowplaying .subtitle {
 				position:absolute;
-				bottom:116px; left:192px;
-				font-size:16pt;
-				font-weight:400;
+				bottom:34px; left:188px; right:32px;
+				font-size:48pt;
+				font-weight:300;
+				text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.50);
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
 			}
     
     </style>
@@ -192,7 +205,7 @@ loggr.debug = function(msg) {
 }
 loggr.log = function(msg) {
 	loggr.lines.push(msg);
-	while (loggr.lines.length>4) { loggr.lines.shift(); }
+	while (loggr.lines.length>8) { loggr.lines.shift(); }
 	$(".debug").html(loggr.lines.join("<br>"));
 	console.log(msg);
 	//loggr.show();
@@ -211,6 +224,7 @@ loggr.show = function() {
 
 var cc = {};
 cc.helpers = {}; 
+cc.vars = {};
 
 cc.init = function() {
 
@@ -325,7 +339,7 @@ cc.init = function() {
 	cc.mediaManager.onLoad = function(event) {
 	
 		loggr.debug("cc.mediaManager.onLoad()");
-		//loggr.log(" > "+ cc.helpers.arrToString(event.data));
+		// loggr.log(" > "+ cc.helpers.arrToString(event.data));
 		
 		if(cc.mediaPlayer !== null) {
 			cc.mediaPlayer.unload(); // Ensure unload before loading again
@@ -338,18 +352,28 @@ cc.init = function() {
 			
 			// Title
 			if (event.data['media']['metadata']['title']) {
+				//loggr.log(" > Title: "+ event.data['media']['metadata']['title']);
 				$(".nowplaying .title").html(event.data['media']['metadata']['title']);
+			} else {
+				$(".nowplaying .title").html("Unknown radio station");
 			}
 			
 			// Subtitle
 			if (event.data['media']['metadata']['subtitle']) {
+				//loggr.log(" > Subtitle: "+ event.data['media']['metadata']['subtitle']);
 				$(".nowplaying .subtitle").html(event.data['media']['metadata']['subtitle']);
+			} else {
+				$(".nowplaying .subtitle").html("Now playing: Unknown");
 			}
+			// TOOD: tmp
+			$(".nowplaying .subtitle").html("Now playing: Unknown");
 			
 			// Icon
 			if (event.data['media']['metadata']['images'] && event.data['media']['metadata']['images'][0]) {
-				loggr.log(" > Icon: "+ event.data['media']['metadata']['images'][0].url);
+				//loggr.log(" > Icon: "+ event.data['media']['metadata']['images'][0].url);
 				$(".nowplaying .icon img").attr("src",event.data['media']['metadata']['images'][0].url);
+			} else {
+				$(".nowplaying .icon img").attr("src","https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1");
 			}
 			
 			// Image
@@ -381,7 +405,7 @@ cc.init = function() {
 	// -- DONE
 	
 	// Show #main
-	$("section").css("display","none");
+	$("section#launch").css("opacity",0);
 	$("section#main").css("display","block");
 	
 	// Start ReceiverManager
@@ -422,6 +446,8 @@ cc.run_nowplaying_poll = function() {
 		} else {
 			
 			cc.currentstation.nowplaying = results["data"]["nowplaying"];
+			if (cc.currentstation.nowplaying.trim()=="-" || cc.currentstation.nowplaying==" - ") { cc.currentstation.nowplaying = "Now playing: Unknown"; }
+			
 			cc.updateNowplaying();
 			
 			if (cc.currentstation.nowplaying && cc.currentstation.nowplaying.toLowerCase()!="now playing: unknown") {
@@ -430,8 +456,13 @@ cc.run_nowplaying_poll = function() {
 					maxresults:4,
 					restrictions:[[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_LARGE]]
 				}
+				
+				var searchstr = cc.currentstation.nowplaying.toLowerCase();
+				if (searchstr.indexOf("|")>0) { searchstr = searchstr.substr(0, searchstr.indexOf("|")-1); }
+				searchstr = searchstr.split("-").join("");
+				//searchstr += " album art"
 			
-				cc.helpers.googleImageSearch(cc.currentstation.nowplaying.toLowerCase() +" album art",
+				cc.helpers.googleImageSearch(searchstr,
 					function(res) {
 						var res = res[0];
 						if (!res) { 
@@ -441,8 +472,13 @@ cc.run_nowplaying_poll = function() {
 							
 							var image = new Image;
 							image.onload = function() {
+								if (this.src==cc.vars.background_image) {
+									loggr.log(" > Found SAME album art: "+ res.url);
+									return;
+								}
 								loggr.log(" > Found album art: "+ res.url);
 								$("#main").css("background-image","url('"+ this.src +"')");
+								cc.vars.background_image = res.url;
 							}
 							image.onerror = function() {
 								loggr.log(" > Found album art but loading failed: "+ this.src);
@@ -480,6 +516,10 @@ cc.updateNowplaying = function() {
 	
 	if (!cc.currentstation.nowplaying) { cc.currentstation.nowplaying = "Now playing: Unknown"; }
 	$("#main .nowplaying .subtitle").html(cc.currentstation.nowplaying);
+	
+	if (cc.currentstation.station_icon) {
+		$(".nowplaying .icon img").attr("src",cc.currentstation.station_icon);
+	}
 	
 }
 

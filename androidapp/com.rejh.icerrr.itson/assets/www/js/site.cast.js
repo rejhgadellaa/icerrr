@@ -286,8 +286,8 @@ site.cast.updateCurrentstation = function() {
 		},
 		function(err) {
 			loggr.error(" > Message not sent: "+ err,{dontupload:true});
-			if (site.timeouts.updateCurrentstation) { clearTimeout(site.timeouts.updateCurrentstation); }
-			site.timeouts.updateCurrentstation = setTimeout(function(){site.cast.updateCurrentstation();},10000);
+			//if (site.timeouts.updateCurrentstation) { clearTimeout(site.timeouts.updateCurrentstation); }
+			//site.timeouts.updateCurrentstation = setTimeout(function(){site.cast.updateCurrentstation();},10000);
 		}
 	);
 	
