@@ -5,8 +5,6 @@
 	
 	https://github.com/rejhgadellaa/icerrr
 	
-	https://www.dropbox.com/s/3u03s0cvx75kami/index.html?dl=1
-	
 	Open CC console (<ip>:9222) and type "$('#main .debug').css('display','block');" to show debug info
 
 --> 
@@ -45,7 +43,7 @@
 			position:absolute;
 			top:0; left:0; right:0; bottom:0;
 			width:100%; height:100%;
-			background:#eee;
+			background:#333;
 		}
 		
 		section#launch {
@@ -472,7 +470,7 @@ cc.run_nowplaying_poll = function() {
 							
 							var image = new Image;
 							image.onload = function() {
-								if (this.src==cc.vars.background_image) {
+								if ($("#main").css("background-image") && $("#main").css("background-image").indexOf(this.src)>=0) {
 									loggr.log(" > Found SAME album art: "+ res.url);
 									return;
 								}
@@ -484,7 +482,7 @@ cc.run_nowplaying_poll = function() {
 								loggr.log(" > Found album art but loading failed: "+ this.src);
 								$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
 							}
-							image.src = res.url;
+							image.src = decodeURIComponent(res.url);
 							
 						}
 					},

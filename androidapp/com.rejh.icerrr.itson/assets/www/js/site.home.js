@@ -449,8 +449,9 @@ site.home.getAlbumArt = function() {
 	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""
-		+ ""+ station.station_nowplaying.toLowerCase() +" "
-		+ "album art";
+		+ ""+ station.station_nowplaying.toLowerCase()
+	//	+ " album art";
+	searchstring = searchstring.split("-").join("");
 	
 	var opts = {
 		maxresults:4
@@ -473,7 +474,7 @@ site.home.getAlbumArt = function() {
 		function(results) {
 			// pick an image
 			var result = results[0];
-			site.home.handleStationImage(result.url);
+			site.home.handleStationImage(decodeURIComponent(result.url));
 		},
 		function() {
 			site.home.handleStationImage(site.session.currentstation.station_icon);

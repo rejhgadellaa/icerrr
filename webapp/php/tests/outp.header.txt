@@ -1,11 +1,17 @@
-{"station_id":"veronicahitradio","host":"8563.live.streamtheworld.com","port":80,"path":"/VERONICA_SC?.wma"}
+{"station_id":"Radio_Paradise  Modern  Classic Rock Electronica World Music  More_c221167c9505d421f21a9921a58d7a87_14acb28e845_671aa","host":"stream-dc1.radioparadise.com","port":80,"path":"/mp3-128"}
 
 HTTP/1.0 200 OK
-Expires: Thu, 01 Dec 2003 16:00:00 GMT
-Cache-Control: no-cache, must-revalidate
-Pragma: no-cache
 Content-Type: audio/mpeg
-icy-br: 132
-icy-metaint:16000
-Server: MediaGateway 3.1.8-01
+icy-br:128
+icy-genre:eclectic rock
+icy-name:Radio Paradise - DJ-mixed modern & classic rock, world, electronica & more - info: radioparadise.com
+icy-notice1:<BR>This stream requires <a href="http://www.winamp.com/">Winamp</a><BR>
+icy-notice2:SHOUTcast Distributed Network Audio Server/Linux v1.9.8<BR>
+icy-pub:0
+icy-url:http://www.radioparadise.com
+Server: Icecast 2.3.3-kh9
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: Mon, 26 Jul 1997 05:00:00 GMT
+icy-metaint:32768
 
