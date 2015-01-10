@@ -569,13 +569,12 @@ cc.updateNowplaying = function(showBigUI) {
 		$("#main .nowplaying").css("display","block");
 		$("#main .nowplayingsmall").css("display","none");
 		
-		loggr.log(" > "+ $("#main .nowplaying .subtitle").prop("scrollWidth") +" vs "+ $("#main .nowplaying .subtitle").width());
-		
 		$("#main .nowplaying .subtitle").scrollLeft(0);
-		if ($("#main .nowplaying .subtitle").prop("scrollWidth") > $("#main .nowplaying .subtitle").width()) {
-			loggr.log(" > Scroll subtitle!");
-			$("#main .nowplaying .subtitle").animate({scrollLeft: $("#main .nowplaying .subtitle").prop("scrollWidth")-$("#main .nowplaying .subtitle").width()}, 29000, "linear");
-		}
+		setTimeout(function(){
+			if ($("#main .nowplaying .subtitle").prop("scrollWidth") > $("#main .nowplaying .subtitle").width()) {
+				$("#main .nowplaying .subtitle").animate({scrollLeft: ($("#main .nowplaying .subtitle").prop("scrollWidth")-$("#main .nowplaying .subtitle").width())}, 29000, "linear");
+			}
+		},1000);
 		
 	} else {
 		$("#main .nowplaying").css("display","none");
