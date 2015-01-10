@@ -335,6 +335,9 @@ site.home.run_station_updates = function(dontUseDirble) {
 				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
 				site.home.handleStationImage(site.session.currentstation.station_icon);
+			} else if (data["data"]["nowplaying"].trim()=="-" || data["data"]["nowplaying"]==" - ") {
+				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
+				site.home.handleStationImage(site.session.currentstation.station_icon);
 			} else {
 				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
 				site.session.currentstation.station_nowplaying = data["data"]["nowplaying"];

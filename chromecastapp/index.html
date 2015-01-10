@@ -97,7 +97,7 @@
 			
 			#main .topbar .topbar_title {
 				position:absolute;
-				top:35px; left:72px;
+				top:35px; left:88px;
 				font-size:16pt;
 				color:#D0D102;
 				text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.33);
@@ -122,7 +122,7 @@
 			
 			#main .nowplaying .title {
 				position:absolute;
-				bottom:116px; left:192px; right:32px;
+				bottom:116px; left:192px; right:0px;
 				font-size:16pt;
 				font-weight:400;
 				text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.75);
@@ -133,10 +133,41 @@
 			
 			#main .nowplaying .subtitle {
 				position:absolute;
-				bottom:34px; left:188px; right:32px;
+				bottom:34px; left:188px; right:0px;
+				padding-right:32px;
 				font-size:48pt;
 				font-weight:300;
 				text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.50);
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow:clip;
+				/*
+				white-space: nowrap;
+				text-overflow:ellipsis;
+				/**/
+			}
+			
+			#main .nowplayingsmall {
+				display:none;
+				position:absolute;
+				top:25%; left:0; right:0; bottom:0;
+				width:100%; height:75%;
+				background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.33) 75%, rgba(0,0,0,0.50) 100%);
+			}
+			
+			#main .nowplayingsmall .icon {
+				position:absolute;
+				bottom:32px; left:32px;
+			}
+			
+			#main .nowplayingsmall .icon img {
+				width:32px; height:32px;
+			}
+			
+			#main .nowplayingsmall .title {
+				position:absolute;
+				bottom:32px; left:88px; right:32px;
+				font-size:18pt;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow:ellipsis;
@@ -171,6 +202,11 @@
     	<div class="subtitle"></div>
         <div class="title"></div>
     </div>
+	
+	<div class="nowplayingsmall">
+		<div class="icon"><img src="https://www.dropbox.com/s/owwambeb35eccgq/watermark.png?dl=1" /></div>
+		<div class="title">NPO Radio 3fm - Kensington - We won't go to war</div>
+	</div>
     
 </section>
 
@@ -443,10 +479,17 @@ cc.run_nowplaying_poll = function() {
 			return;
 		} else {
 			
-			cc.currentstation.nowplaying = results["data"]["nowplaying"];
-			if (cc.currentstation.nowplaying.trim()=="-" || cc.currentstation.nowplaying==" - ") { cc.currentstation.nowplaying = "Now playing: Unknown"; }
+			var showBigUI = false;
+			if (results["data"]["nowplaying"]!=cc.currentstation.nowplaying) {
+				showBigUI = true;
+			}
 			
-			cc.updateNowplaying();
+			if (!results["data"]["nowplaying"]) { results["data"]["nowplaying"] = "Now playing: Unknown"; }
+			if (results["data"]["nowplaying"].trim()=="-" || results["data"]["nowplaying"]==" - ") { results["data"]["nowplaying"] = "Now playing: Unknown"; }
+			
+			cc.currentstation.nowplaying = results["data"]["nowplaying"];
+			
+			cc.updateNowplaying(showBigUI);
 			
 			if (cc.currentstation.nowplaying && cc.currentstation.nowplaying.toLowerCase()!="now playing: unknown") {
 				
@@ -508,15 +551,35 @@ cc.run_nowplaying_poll = function() {
 	
 }
 
-cc.updateNowplaying = function() {
+cc.updateNowplaying = function(showBigUI) {
 	
 	loggr.debug("cc.updateNowplaying()");
 	
 	if (!cc.currentstation.nowplaying) { cc.currentstation.nowplaying = "Now playing: Unknown"; }
 	$("#main .nowplaying .subtitle").html(cc.currentstation.nowplaying);
+	$("#main .nowplayingsmall .title").html(cc.currentstation.station_name +" - "+ cc.currentstation.nowplaying);
 	
 	if (cc.currentstation.station_icon) {
 		$(".nowplaying .icon img").attr("src",cc.currentstation.station_icon);
+		$(".nowplayingsmall .icon img").attr("src",cc.currentstation.station_icon);
+	}
+	
+	if (showBigUI) {
+		
+		$("#main .nowplaying").css("display","block");
+		$("#main .nowplayingsmall").css("display","none");
+		
+		loggr.log(" > "+ $("#main .nowplaying .subtitle").prop("scrollWidth") +" vs "+ $("#main .nowplaying .subtitle").width());
+		
+		$("#main .nowplaying .subtitle").scrollLeft(0);
+		if ($("#main .nowplaying .subtitle").prop("scrollWidth") > $("#main .nowplaying .subtitle").width()) {
+			loggr.log(" > Scroll subtitle!");
+			$("#main .nowplaying .subtitle").animate({scrollLeft: $("#main .nowplaying .subtitle").prop("scrollWidth")-$("#main .nowplaying .subtitle").width()}, 29000, "linear");
+		}
+		
+	} else {
+		$("#main .nowplaying").css("display","none");
+		$("#main .nowplayingsmall").css("display","block");
 	}
 	
 }

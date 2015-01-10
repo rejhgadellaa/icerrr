@@ -448,10 +448,6 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 					// -> Gogo
 					
 					if (!confirm("Add '"+ station.station_name +"'?")) { site.ui.hideloading(); return; }
-					
-					// Auto star
-					site.chlist.setStarred(station.station_id);
-					site.chedit.changesHaveBeenMadeGotoStarred = true;
 			
 					// TODO: we need a helper for 'edited' stations
 					
@@ -476,6 +472,10 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 							loggr.log(site.storage.getErrorType(e)); 
 						}
 					);
+					
+					// Auto star
+					site.chlist.setStarred(station.station_id);
+					site.chedit.changesHaveBeenMadeGotoStarred = true;
 					
 			}
 		}
