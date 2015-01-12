@@ -1,9 +1,9 @@
 [
 	
 	{
-		"id":"app0181",
+		"id":"app0182",
 		"crit":"version",
-		"critvalue":0.180,
+		"critvalue":0.181,
 		"action":"url",
 		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
 		"title":"New version available",
@@ -18,7 +18,7 @@
     {
         "id":"signpetition",
         "crit":"version",
-		"critvalue":0.181,
+		"critvalue":0.182,
 		"action":"url",
 		"url":"http://goo.gl/dSSKp4",
 		"title":"Support Icerrr",

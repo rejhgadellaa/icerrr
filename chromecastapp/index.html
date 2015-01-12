@@ -108,7 +108,12 @@
 				top:25%; left:0; right:0; bottom:0;
 				width:100%; height:75%;
 				background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.33) 75%, rgba(0,0,0,0.50) 100%);
-				
+			}
+			
+			#main .nowplaying .wrap {
+				position:absolute;
+				bottom:0; left:0; right:0;
+				-webkit-transition: -webkit-transform 750ms ease-in-out;
 			}
 			
 			#main .nowplaying .icon {
@@ -133,44 +138,44 @@
 			
 			#main .nowplaying .subtitle {
 				position:absolute;
-				bottom:34px; left:188px; right:0px;
+				bottom:34px; left:188px; right:8px;
 				padding-right:32px;
 				font-size:48pt;
 				font-weight:300;
 				text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.50);
 				overflow: hidden;
 				white-space: nowrap;
-				text-overflow:clip;
-				/*
-				white-space: nowrap;
 				text-overflow:ellipsis;
-				/**/
 			}
 			
 			#main .nowplayingsmall {
-				display:none;
 				position:absolute;
 				top:25%; left:0; right:0; bottom:0;
 				width:100%; height:75%;
-				background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.33) 75%, rgba(0,0,0,0.50) 100%);
+			}
+			
+			#main .nowplayingsmall .wrap {
+				position:absolute;
+				bottom:0; left:0; right:0;
+				opacity:0;
+				-webkit-transition: -webkit-transform 500ms ease-in-out, opacity 500ms;
 			}
 			
 			#main .nowplayingsmall .icon {
+				display:none;
 				position:absolute;
 				bottom:32px; left:32px;
 			}
 			
 			#main .nowplayingsmall .icon img {
 				width:32px; height:32px;
+				box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.37);
 			}
 			
 			#main .nowplayingsmall .title {
 				position:absolute;
-				bottom:32px; left:88px; right:32px;
+				bottom:32px; left:32px; right:32px;
 				font-size:18pt;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow:ellipsis;
 			}
     
     </style>
@@ -198,14 +203,18 @@
     </div>
 	
 	<div class="nowplaying">
-    	<div class="icon"><img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" /></div>
-    	<div class="subtitle"></div>
-        <div class="title"></div>
+		<div class="wrap">
+	    	<div class="icon"><img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" /></div>
+    		<div class="subtitle">Loading...</div>
+        	<div class="title"></div>
+		</div>
     </div>
 	
 	<div class="nowplayingsmall">
-		<div class="icon"><img src="https://www.dropbox.com/s/owwambeb35eccgq/watermark.png?dl=1" /></div>
-		<div class="title">NPO Radio 3fm - Kensington - We won't go to war</div>
+		<div class="wrap">
+			<div class="icon"><img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" /></div>
+			<div class="title"></div>
+		</div>
 	</div>
     
 </section>
@@ -393,14 +402,8 @@ cc.init = function() {
 			}
 			
 			// Subtitle
-			if (event.data['media']['metadata']['subtitle']) {
-				//loggr.log(" > Subtitle: "+ event.data['media']['metadata']['subtitle']);
-				$(".nowplaying .subtitle").html(event.data['media']['metadata']['subtitle']);
-			} else {
-				$(".nowplaying .subtitle").html("Now playing: Unknown");
-			}
-			// TOOD: tmp
-			$(".nowplaying .subtitle").html("Now playing: Unknown");
+			if (!cc.currentstation) { cc.currentstation = {}; }
+			cc.currentstation.nowplaying = "Now playing: ...";
 			
 			// Icon
 			if (event.data['media']['metadata']['images'] && event.data['media']['metadata']['images'][0]) {
@@ -412,6 +415,9 @@ cc.init = function() {
 			
 			// Image
 			$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+			
+			// Update!
+			cc.updateNowplaying(true,true);
 			
 		}
 			
@@ -482,7 +488,13 @@ cc.run_nowplaying_poll = function() {
 			var showBigUI = false;
 			if (results["data"]["nowplaying"]!=cc.currentstation.nowplaying) {
 				showBigUI = true;
+			} else {
+				if (!cc.nrOfTimesPollHasRun) { cc.nrOfTimesPollHasRun = 1; }
+				else { cc.nrOfTimesPollHasRun++; }
+				if (cc.nrOfTimesPollHasRun>20) { cc.currentstation.nowplaying = ""; showBigUI = true; }
 			}
+			
+			if (results["data"]["nowplaying"].indexOf("&")>0) { results["data"]["nowplaying"] = results["data"]["nowplaying"].split("&").join(" & "); }
 			
 			if (!results["data"]["nowplaying"]) { results["data"]["nowplaying"] = "Now playing: Unknown"; }
 			if (results["data"]["nowplaying"].trim()=="-" || results["data"]["nowplaying"]==" - ") { results["data"]["nowplaying"] = "Now playing: Unknown"; }
@@ -497,6 +509,8 @@ cc.run_nowplaying_poll = function() {
 					maxresults:4,
 					restrictions:[[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_LARGE]]
 				}
+				
+				// opts = { maxresults:1 }
 				
 				var searchstr = cc.currentstation.nowplaying.toLowerCase();
 				if (searchstr.indexOf("|")>0) { searchstr = searchstr.substr(0, searchstr.indexOf("|")-1); }
@@ -551,34 +565,58 @@ cc.run_nowplaying_poll = function() {
 	
 }
 
-cc.updateNowplaying = function(showBigUI) {
+cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 	
 	loggr.debug("cc.updateNowplaying()");
 	
 	if (!cc.currentstation.nowplaying) { cc.currentstation.nowplaying = "Now playing: Unknown"; }
-	$("#main .nowplaying .subtitle").html(cc.currentstation.nowplaying);
-	$("#main .nowplayingsmall .title").html(cc.currentstation.station_name +" - "+ cc.currentstation.nowplaying);
 	
-	if (cc.currentstation.station_icon) {
-		$(".nowplaying .icon img").attr("src",cc.currentstation.station_icon);
-		$(".nowplayingsmall .icon img").attr("src",cc.currentstation.station_icon);
+	var title_bigui = cc.currentstation.nowplaying;
+	var title_smallui = "<div>"+cc.currentstation.station_name +" - "+ cc.currentstation.nowplaying+"</div>";
+	
+	$("#main .nowplaying .subtitle").html(title_bigui);
+	if (title_smallui!=$("#main .nowplayingsmall .title").html()) { 
+		$("#main .nowplayingsmall .title").html(title_smallui); 
 	}
+	
+	if (cc.currentstation.station_icon && !dontUpdateIcon) {
+		$(".nowplaying .icon img").attr("src",cc.currentstation.station_icon);
+		//$(".nowplayingsmall .icon img").attr("src",cc.currentstation.station_icon);
+	}
+	
+	var translateDown = "translate3d(0px,160px,0px)";
+	var translateZero = "translate3d(0px,0px,0px)";
+	var translateUp = "translate3d(0px,-192px,0px)";
 	
 	if (showBigUI) {
 		
-		$("#main .nowplaying").css("display","block");
-		$("#main .nowplayingsmall").css("display","none");
+		$("#main .nowplaying .wrap").css({"transform":translateZero,"-webkit-transform":translateZero});
+		// $("#main .nowplaying").css("display","block");
 		
-		$("#main .nowplaying .subtitle").scrollLeft(0);
-		setTimeout(function(){
-			if ($("#main .nowplaying .subtitle").prop("scrollWidth") > $("#main .nowplaying .subtitle").width()) {
-				$("#main .nowplaying .subtitle").animate({scrollLeft: ($("#main .nowplaying .subtitle").prop("scrollWidth")-$("#main .nowplaying .subtitle").width())}, 29000, "linear");
-			}
-		},1000);
+		//setTimeout(function(){
+			$("#main .nowplayingsmall .wrap").css({"transform":translateUp,"-webkit-transform":translateUp});
+			$("#main .nowplayingsmall .wrap").css("opacity",0.0);
+			// $("#main .nowplayingsmall .wrap").css("display","none");
+		//},250);
+		
+		$("#main .topbar_watermark").css("display","block");
+		$("#main .topbar_title").css("display","block");
+		
 		
 	} else {
-		$("#main .nowplaying").css("display","none");
-		$("#main .nowplayingsmall").css("display","block");
+		
+		$("#main .nowplaying .wrap").css({"transform":translateDown,"-webkit-transform":translateDown});
+		//$("#main .nowplaying").css("display","none");
+		
+		setTimeout(function(){
+			$("#main .nowplayingsmall .wrap").css({"transform":translateZero,"-webkit-transform":translateZero});
+			$("#main .nowplayingsmall .wrap").css("opacity",1.0);
+			// $("#main .nowplayingsmall .wrap").css("display","block");
+		},500);
+		
+		$("#main .topbar_watermark").css("display","none");
+		$("#main .topbar_title").css("display","none");
+		
 	}
 	
 }

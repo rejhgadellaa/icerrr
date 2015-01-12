@@ -340,6 +340,7 @@ site.home.run_station_updates = function(dontUseDirble) {
 				site.home.handleStationImage(site.session.currentstation.station_icon);
 			} else {
 				// if (data["data"]["icy-name"]) { site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); }
+				if (data["data"]["nowplaying"].indexOf("&")>0) { data["data"]["nowplaying"] = data["data"]["nowplaying"].split("&").join(" & "); }
 				site.session.currentstation.station_nowplaying = data["data"]["nowplaying"];
 				site.home.getAlbumArt();
 			}

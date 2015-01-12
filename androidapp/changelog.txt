@@ -1,3 +1,6 @@
+0.182
+  * Minor tweaks
+
 0.181
   * Fix: automatically starring a new station after adding it failed
 
