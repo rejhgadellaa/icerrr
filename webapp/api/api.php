@@ -91,7 +91,7 @@ switch($action) {
 				$filename = "../json/station_info.".$queryobj["station_id"].".json";
 				if (@filemtime($filename)<time()-30) { // refresh file every xx secs
 					// $id3_reader_url = "http://". $_SERVER['HTTP_HOST'] ."/icerrr/php/tests/test-readid3.php?q="; // TODO: rejh.nl only opens fsock on port 80
-					$id3_reader_url = $cfg["icerrr_remote_url"] . "php/tests/test-readid3.php?q=";
+					$id3_reader_url = $cfg["icerrr_local_url"] . "php/tests/test-readid3.php?q=";
 					// "http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=";
 					$id3_reader_q = urlencode('{"station_id":"'. $queryobj["station_id"] .'","host":"'. $queryobj["station_host"] .'","port":'. $queryobj["station_port"] .',"path":"'. $queryobj["station_path"] .'"}');
 					// retry this a couple of times..
@@ -177,7 +177,7 @@ switch($action) {
 			// -- MESSAGES
 			
 			case "messages":
-				$msgsStr = fg("{$cfg['icerrr_remote_url']}api/data/messages.json");
+				$msgsStr = fg("{$cfg['icerrr_local_url']}api/data/messages.json");
 				if (!msgsStr) { error("Could not load messages.json"); }
 				$msgs = json_decode($msgsStr,true);
 				if (!$msgs) { error("Could not parse messages.json: {$msgs}"); }
