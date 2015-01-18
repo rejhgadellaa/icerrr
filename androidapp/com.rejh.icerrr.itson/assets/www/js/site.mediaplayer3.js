@@ -98,8 +98,18 @@ site.mp.play = function(cb,cberr) {
 	
 	site.mp.mpstatus = Media.MEDIA_STARTING;
 	
+	// Check if !wifi && station_url_lowquality, else use default
+	var station_url = site.session.currentstation.station_url;
+	if (site.helpers.isConnectedWifi(true)) {
+		loggr.warn(" > High quality: "+ site.session.currentstation.station_url_highquality);
+		if (site.session.currentstation.station_url_highquality) {
+			loggr.warn(" > Wifi or ethernet && high quality stream available :D");
+			station_url = site.session.currentstation.station_url_highquality;
+		}
+	}
+	
 	// Start MediaStreamer
-	window.mediaStreamer.play(site.session.currentstation.station_url, site.session.alarmActive, site.session.alarmVolume, site.session.currentstation,
+	window.mediaStreamer.play(station_url, site.session.alarmActive, site.session.alarmVolume, site.session.currentstation,
 		function(msg) {
 			loggr.log(" > mediaStreamer.play()."+msg);
 			site.mp.setPlaying();

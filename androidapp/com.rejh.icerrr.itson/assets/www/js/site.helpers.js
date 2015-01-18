@@ -899,6 +899,25 @@ site.helpers.isConnected = function() {
 	
 }
 
+site.helpers.isConnectedWifi = function(allowEthernet) {
+	
+	if (allowEthernet!==false) { allowEthernet = true; }
+	
+	var type = site.helpers.getConnType();
+	
+	switch(type) {
+		case "ETHERNET":
+			if (!allowEthernet) { return false; }
+			// else: continue to next 'case'
+		case "WIFI":
+			return true;
+		default:
+			return false;
+		
+	}
+	
+}
+
 // ---> Masonry
 
 site.helpers.masonryinit = function(selector,opts) {

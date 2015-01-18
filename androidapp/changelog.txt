@@ -1,3 +1,7 @@
+0.184
+  * New: NPO stations default to low quality streams when not connected to wifi
+  * (This behaviour will be improved upon in future releases)
+
 0.183
   * Bug fix
 
