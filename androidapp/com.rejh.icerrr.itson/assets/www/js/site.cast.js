@@ -135,11 +135,18 @@ site.cast.receiverListener = function(arg) {
 				if (typeof(site.cast.session.stop) != "function") {
 					site.cast.destroy();
 					if (!site.session.alarmActive) {
-						if(confirm("An existing Chromecast session has been found. Would you like to reconnect?")) {
-							setTimeout(function(){ 
-								site.cast.requestSession();
-							},1000);
-						}
+						navigator.notification.confirm(
+							"An existing Chromecast session has been found. Would you like to reconnect?",
+							function(buttonIndex) {
+								if (buttonIndex==1) { 
+									setTimeout(function(){ 
+										site.cast.requestSession(); 
+									},1000);
+								}
+							},
+							"Continue the cast?",
+							"Yes,No"
+						);
 					}
 				}
 			} else {
