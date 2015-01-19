@@ -63,14 +63,14 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
         	JSONObject opts = new JSONObject(optsStr);
     		
     		// Get args
-    		long timeMillis = opts.has("timeMillis") ? opts.getLong("timeMillis") : 0;
+    		// long timeMillis = opts.has("timeMillis") ? opts.getLong("timeMillis") : 0;
     		String repeat = opts.has("repeat") ? opts.getString("repeat") : "off";
     		JSONArray repeatDaily = opts.has("repeatDaily") ? opts.getJSONArray("repeatDaily") : new JSONArray();
     		JSONObject intentOpts = opts.has("intent") ? opts.getJSONObject("intent") : null;
     		
     		// Handle date
     		Calendar cal = Calendar.getInstance();
-    		cal.setTimeInMillis(timeMillis);
+    		cal.setTimeInMillis(System.currentTimeMillis());
     		
     		// Handle repeat: daily
 			boolean fireToday = true;
