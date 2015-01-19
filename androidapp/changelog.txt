@@ -1,3 +1,6 @@
+0.185
+  * Fix: alarm would sometimes not fire (#154)
+
 0.184
   * New: NPO stations default to low quality streams when not connected to wifi
   * (This behaviour will be improved upon in future releases)
