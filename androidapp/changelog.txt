@@ -1,3 +1,6 @@
+0.186
+  * NPO stations will switch quality when connection type changes
+
 0.185
   * Fix: alarm would sometimes not fire (#154)
 

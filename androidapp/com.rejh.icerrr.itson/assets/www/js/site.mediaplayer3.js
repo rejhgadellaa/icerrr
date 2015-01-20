@@ -98,7 +98,7 @@ site.mp.play = function(cb,cberr) {
 	
 	site.mp.mpstatus = Media.MEDIA_STARTING;
 	
-	// Check if !wifi && station_url_lowquality, else use default
+	// Check if wifi && station_url_highquality, else use default
 	var station_url = site.session.currentstation.station_url;
 	if (site.helpers.isConnectedWifi(true)) {
 		loggr.warn(" > High quality: "+ site.session.currentstation.station_url_highquality);

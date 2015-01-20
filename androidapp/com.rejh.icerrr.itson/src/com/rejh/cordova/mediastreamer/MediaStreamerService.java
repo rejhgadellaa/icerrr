@@ -88,7 +88,7 @@ public class MediaStreamerService extends Service {
     
     private String stream_url_active = null;
     
-    private String station_id = "-1";
+    public String station_id = "-1";
     private String station_name = "Unknown station";
     private String station_host = null;
     private String station_port = null;

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.npr.android.news.StreamProxy;
 
 import android.content.Context;
@@ -269,7 +272,7 @@ public class ObjMediaPlayerMgr {
 		settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 		settEditor.commit();
 		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_BUFFERING); }
-		init(streamUrl,false);
+		init(getStreamUrl(),false);
 		}
 	
 	// ISPLAYING
@@ -329,7 +332,7 @@ public class ObjMediaPlayerMgr {
 				if (nrOfErrors > 8) { initbackup(); return; }
 				nrOfErrors++;
 				Log.w(LOGTAG,"  -> Restarting stream...");
-				init(streamedUrl,isAlarm);
+				init(getStreamUrl(),isAlarm);
 				}
 			}
 		
@@ -384,7 +387,7 @@ public class ObjMediaPlayerMgr {
 			settEditor.commit();
 			
 			Log.d(LOGTAG," -> Restarting stream...");
-			init(streamedUrl,isAlarm);
+			init(getStreamUrl(),isAlarm);
 			
 			return false;
 			}
@@ -397,6 +400,7 @@ public class ObjMediaPlayerMgr {
 		// MediaPlayerChecker
 		// Handle data-connection / wifi
 		
+		private int connType = -1;
 		private int connTypeOld = -1;
 		private boolean connWasLost = false;
 
@@ -429,7 +433,7 @@ public class ObjMediaPlayerMgr {
 			
 			Log.i(LOGTAG,"ConnTypeChecker");
 			
-			int connType;
+			connType = -1;
 			
 			// NetworkInfo
 			NetworkInfo netwInfo = connMgr.getActiveNetworkInfo();
@@ -482,7 +486,7 @@ public class ObjMediaPlayerMgr {
 				
 				Log.d(LOGTAG," -> ConnType CHANGE "+connTypeOld+"="+connType);
 				connTypeOld = connType;
-				init(streamedUrl,isAlarm);
+				init(getStreamUrl(),isAlarm);
 				
 			}
 			
@@ -491,7 +495,7 @@ public class ObjMediaPlayerMgr {
 				if (connWasLost) {
 					Log.d(LOGTAG," -> Stream resumed");
 					connWasLost=false;
-					init(streamedUrl,isAlarm);
+					init(getStreamUrl(),isAlarm);
 				}
 			} else {
 				Log.d(LOGTAG," -> Connection lost. Stream paused");
@@ -507,6 +511,59 @@ public class ObjMediaPlayerMgr {
 		private static boolean isAirplaneModeOn(Context context) {
 		    return Settings.System.getInt(context.getContentResolver(),
 		            Settings.System.AIRPLANE_MODE_ON, 0) != 0;
+		}
+		
+		// > Get Stream Url
+		
+		private String getStreamUrl() {
+			
+			Log.i(LOGTAG," -> MPMGR.getStreamUrl()");
+			
+			// Default..
+			String theStreamUrl = (streamedUrl!=null) ? streamedUrl : streamUrl;
+			
+			try {
+				
+				// Get stations
+				String starredStationsJsons = sett.getString("starredStations", "[]");
+				JSONArray starredStations = new JSONArray(starredStationsJsons);
+				
+				// Find current station
+				int index = -1;
+				for (int i=0; i<starredStations.length(); i++) {
+					JSONObject starredStation = starredStations.getJSONObject(i);
+					String id = starredStation.getString("station_id");
+					if (service.station_id.equals(id)) {
+						index = i;
+						break;
+					}
+				}
+				
+				if (index<0) {
+					Log.w(LOGTAG," --> Could not find station, return default");
+					return theStreamUrl;
+				}
+				
+				JSONObject station = starredStations.getJSONObject(index);
+				if (connType!=2) {
+					// Not wifi, assume mobile data
+					Log.d(LOGTAG," --> No wifi, assume mobile data");
+					theStreamUrl = station.getString("station_url");
+					Log.d(LOGTAG," --> "+ theStreamUrl);
+				} else {
+					// Wifi
+					Log.d(LOGTAG," --> Wifi, try high quality stream");
+					theStreamUrl = station.has("station_url_highquality") ? station.getString("station_url_highquality") : station.getString("station_url"); 
+					Log.d(LOGTAG," --> "+ theStreamUrl);
+				}
+				
+			} catch (JSONException e) {
+				Log.e(LOGTAG," > JSONException",e);
+			}
+			
+			// Return
+			return theStreamUrl;
+			
 		}
 		
 		
