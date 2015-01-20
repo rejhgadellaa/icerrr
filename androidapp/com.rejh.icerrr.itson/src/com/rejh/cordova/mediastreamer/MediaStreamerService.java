@@ -619,6 +619,13 @@ public class MediaStreamerService extends Service {
 	        	settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
 				mpMgr.pause();
+				
+				JSONObject overrideOpts = new JSONObject();
+				try {
+					overrideOpts.put("actionPlayPauseIcon","ic_stat_av_play");
+					overrideOpts.put("actionPlayPauseTitle","Play");
+				} catch(Exception e) {}
+				msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying, msNotifMgr.NOTIFICATION_ID,false,overrideOpts);
 		    	
 	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
 	        	
