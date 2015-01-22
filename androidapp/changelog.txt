@@ -1,3 +1,6 @@
+0.188
+  * Icon has materialized. Thanks Android Asset Studio! (lmgtfy)
+
 0.187
   * Bug fix (#156)
 

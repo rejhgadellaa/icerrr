@@ -41,7 +41,7 @@ if not errorlevel 0 goto error
 :askifcleanbuild
 echo.
 echo Run a clean build (this will take longer)?
-choice /C YN /N /T 3 /D N /M "(Y/N)"
+choice /C YN /N /T 2 /D N /M "(Y/N)"
 if errorlevel 2 goto buildincr
 if errorlevel 1 goto buildclean
 goto error
@@ -97,4 +97,4 @@ goto end
 :end
 cd ..
 echo.
-REM pause
+pause
