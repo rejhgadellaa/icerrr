@@ -688,6 +688,10 @@ site.lifecycle.handleMsgs = function(data) {
 					}
 				}, ditem.title, buttonLabels);
 				break;
+			case "install-update-app":
+				site.lifecycle.installUpdateApp();
+				site.lifecycle.storeMsgId(ditem.id,lids);
+				break;
 			case "install-update":
 				message = "An update for the stations database is available. Press OK to continue.";
 				navigator.notification.alert(message, function(){ site.installer.init(true); }, ditem.title, "OK");
@@ -753,6 +757,55 @@ site.lifecycle.storeMsgId = function(id,lids) {
 	lids.push(id);
 	lidsStr = JSON.stringify(lids);
 	site.cookies.put("message_ids",lidsStr);
+}
+
+// Download apk
+
+site.lifecycle.installUpdateApp = function(url) {
+	
+	loggr.info("site.lifecycle.installUpdateApp_init()");
+	
+	// Prep some stuff
+	var targetPath = site.cfg.paths.other;
+	var targetFile = Icerrr.apk;
+	
+	// We'll just assume we need to download the file, we're not going to check if it exists whatever...
+	site.webapi.download(url,targetPath,targetFile,
+		function(fileEntry){
+			
+			loggr.log(" > Downloaded: "+ fileEntry.fullPath);
+			
+			// success -> Prompt user
+			message = "An update for Icerrr is availabe. Do you want to install it now?";
+			var buttonLabels = "OK,Cancel";
+			navigator.notification.confirm(message, function(buttonIndex){
+				if (buttonIndex==1) {
+					
+					// A-go-go
+					window.mediaStreamer.installUpdateApp(
+						fileEntry.fullPath,
+						function() {
+							loggr.log(" > mediaStreamer.installUpdateApp success :D");
+						},
+						function() {
+							loggr.error(" > mediaStreamer.installUpdateApp failed?!");
+						}
+					);
+					
+				} else {
+					// nothin..
+				}
+			}, "Update available", buttonLabels);
+			
+		},
+		function(fileError) {
+			// Error -> Log
+			loggr.error("Error downloading icerrr.apk: "+ site.storage.getErrorType(err));
+			// Just to be sure: remove the file if it somehow already exists..
+			site.storage.deletefile(targetPath,targetFile,function(){},function(){});
+		}
+	);
+	
 }
 
 // ---> Others

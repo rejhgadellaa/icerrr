@@ -123,6 +123,15 @@
 	}
 	
 	/**
+	* Install-update-app
+	* TODO: Total hack, this doesn't belong in MediaStreamer plugin...
+	*/
+	MediaStreamer.prototype.installUpdateApp = function(filePath,win,fail) {
+		console.log("MediaStreamer.prototype.installUpdateApp()");
+        cordova.exec(win, fail, "MediaStreamer", "Install-update-app", [filePath]);
+	}
+	
+	/**
 	* Register the plugin
 	*/
 	try {

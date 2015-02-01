@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.util.Log;
 
 public class MediaStreamer extends CordovaPlugin {
@@ -134,8 +135,19 @@ public class MediaStreamer extends CordovaPlugin {
                 	callbackContext.error("MediaStreamer: getlog.IOException: "+e.toString());
                 }
         		callbackContext.success(log.toString());
-        	}
-        	else {
+        		
+        	} else if (action.equals("install-update-app")) {
+        		
+        		// New intent
+        		Intent installIntent = new Intent();
+        		installIntent.setAction(Intent.ACTION_VIEW);
+        		installIntent.setPackage("com.android.packageinstaller");
+        		installIntent.setData(Uri.parse(args.getString(0)));
+        		installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        		
+        		(this.cordova.getActivity()).startActivity(installIntent);
+        		
+        	} else {
         		// Nothin?
         		callbackContext.error("MediaStreamer: Action contains invalid value: "+ action);
                 return false;
