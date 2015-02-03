@@ -267,7 +267,7 @@ section {
 		.fab {
 			z-index:50;
 			position:fixed;
-			bottom:24px; right:24px;
+			bottom:16px; right:16px;
 			width:56px; 
 			height:56px;
 			border-radius:50%;
