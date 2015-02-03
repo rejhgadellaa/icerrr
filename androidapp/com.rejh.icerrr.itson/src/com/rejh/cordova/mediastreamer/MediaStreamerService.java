@@ -719,8 +719,11 @@ public class MediaStreamerService extends Service {
 						nowplaying_new = "Now playing: Unknown";
 					} else {
 						nowplaying_new = json.getJSONObject("data").getString("nowplaying");
-						if (nowplaying_new==null || nowplaying_new=="null" || nowplaying_new=="") { 
+						if (nowplaying_new==null) { 
 							Log.w(APPTAG," > Nowplaying == null");
+							nowplaying_new = "Now playing: Unknown"; 
+						} else if (nowplaying_new.equals("null") || nowplaying_new.equals("")) {
+							Log.w(APPTAG," > Nowplaying == 'null' or ''");
 							nowplaying_new = "Now playing: Unknown"; 
 						}
 					}
