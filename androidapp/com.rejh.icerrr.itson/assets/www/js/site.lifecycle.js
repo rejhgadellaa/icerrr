@@ -689,7 +689,7 @@ site.lifecycle.handleMsgs = function(data) {
 				}, ditem.title, buttonLabels);
 				break;
 			case "install-update-app":
-				site.lifecycle.installUpdateApp();
+				site.lifecycle.installUpdateApp(ditem.url);
 				site.lifecycle.storeMsgId(ditem.id,lids);
 				break;
 			case "install-update":
@@ -767,7 +767,7 @@ site.lifecycle.installUpdateApp = function(url) {
 	
 	// Prep some stuff
 	var targetPath = site.cfg.paths.other;
-	var targetFile = Icerrr.apk;
+	var targetFile = "Icerrr.apk";
 	
 	// We'll just assume we need to download the file, we're not going to check if it exists whatever...
 	site.webapi.download(url,targetPath,targetFile,
