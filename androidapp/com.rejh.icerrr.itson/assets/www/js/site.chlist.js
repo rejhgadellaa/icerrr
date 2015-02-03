@@ -294,6 +294,11 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	
 	// TODO: how to load more pages...?
 	
+	// Build item spacer for fab
+	var resultitem = document.createElement("div");
+	resultitem.className = "resultitem resultitem_spacer";
+	$("#channellist .main").append(resultitem);
+	
 	// update window
 	site.lifecycle.onResize();
 	

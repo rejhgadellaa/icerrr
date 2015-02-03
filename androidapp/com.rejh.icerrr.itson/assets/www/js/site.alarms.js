@@ -128,6 +128,11 @@ site.alarms.drawResults = function() {
 		
 	}
 	
+	// Build item spacer for fab
+	var resultitem = document.createElement("div");
+	resultitem.className = "resultitem resultitem_spacer";
+	$("#alarms .main").append(resultitem);
+	
 }
 
 // ---> Add

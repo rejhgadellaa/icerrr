@@ -1,3 +1,9 @@
+0.190a
+  * New: lockscreen and wear show station icon (sometimes..)
+  * New: the FAB experience :D
+  * More design tweaks
+  * Minor tweaks and fixes
+
 0.189
   * Improved update process, less action required from user
   * Fix for when now playing info returned an empty string

@@ -162,26 +162,26 @@
         <div class="title">ICERRR</div>
         
 		<div class="actions">
-        	<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_core_overflow.png" title="Tap for more options" /></div>
-            <div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" title="Chromecast" /></div>
+        	<div class="action activatablel" onclick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_core_overflow.png" title="Tap for more options" /></div>
+            <div class="action activatablel"><img class="cast_icon cast_unavailable" onclick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" title="Chromecast" /></div>
         </div>
     </div>
     
     <div class="main" style="background-image:url(img/bg_home_default.jpg);">
 		
-		<div class="station_image" onClick="site.home.dismissOverflowMenu();"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div></div>
+		<div class="station_image" onclick="site.home.dismissOverflowMenu();"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div></div>
 	  <div class="station_image_overlay"></div>
 	  <div class="station_name textshadow25">...</div>
       <div class="station_nowplaying textshadow25">...</div>
 	  <div class="station_image_overlay_bottom"></div>
 		
   <div class="footer">
-			<div class="button left activatablel" onClick="site.alarms.init();">
+			<div class="button left activatablel" onclick="site.alarms.init();">
 				<div class="button_inner">
 					<div class="center_table"><div class="center_td"><img title="Go to alarms" src="img/icons-96/ic_alarms.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
 				</div>
 			</div>
-			<div class="button center activatablel" id="home_play" onClick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
+			<div class="button center activatablel" id="home_play" onclick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
 				<div class="button_inner">
 					<div class="button_play_wrap">
 						<img src="img/icons-96/ic_play_w.png" />
@@ -189,7 +189,7 @@
 					</div>
 			  </div>
 			</div>
-			<div class="button right activatablel" onClick="site.chlist.init();">
+			<div class="button right activatablel" onclick="site.chlist.init();">
 				<div class="button_inner">
 					<div class="center_table"><div class="center_td"><img title="Go to stations" src="img/icons-96/ic_list.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
 				</div>
@@ -205,21 +205,23 @@
 	
     <div class="actionbar shadow_z2">
     	
-        <div class="icon_app  activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app  activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Stations</div>
         
 		<div class="actions">
-            <div class="action activatablel" onClick="site.chsearch.init();">
+			<!--
+            <div class="action activatablel" onclick="site.chsearch.init();">
 				<img src="img/icons-48/ic_add_green.png" title="Add station" />
 			</div>
+			-->
         </div>
     </div>
     
     <div class="tabbar shadow_z1">
-    	<div class="tab activatablel stations active" onClick="site.chlist.ontabclick(this)">
+    	<div class="tab activatablel stations active" onclick="site.chlist.ontabclick(this)">
         	<div class="center_table"><div class="center_td">All</div></div>
         </div>
-    	<div class="tab activatablel starred" onClick="site.chlist.ontabclick(this);">
+    	<div class="tab activatablel starred" onclick="site.chlist.ontabclick(this);">
         	<div class="center_table"><div class="center_td">Starred</div></div>
         </div>
     </div>
@@ -227,6 +229,8 @@
     <div class="main">
 		
     </div>
+	
+	<div class="fab shadow_z5" onclick="site.chsearch.init();"><img src="img/icons-48/ic_add_green.png" /></div>
 
 </section>
 
@@ -235,14 +239,14 @@
 	
     <div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Stations</div>
         
 		<div class="actions">
-			<div class="action save activatablel" onClick="site.chedit.check();">
+			<div class="action save activatablel" onclick="site.chedit.check();">
 				<img src="img/icons-48/ic_save_green.png" title="Save station" />
 			</div>
-            <div class="action trash activatablel" onClick="site.chedit.remove();">
+            <div class="action trash activatablel" onclick="site.chedit.remove();">
 				<img src="img/icons-48/ic_trash_green.png" title="Remove station" />
 			</div>
         </div>
@@ -269,7 +273,7 @@
 			</p>
 			
 			<p><label>Station icon: 
-				<!-- <a class="googleit" href="javascript:void(0);" onClick="site.ui.showtoast('One moment...');site.chedit.searchicon();">Google it</a>
+				<!-- <a class="googleit" href="javascript:void(0);" onclick="site.ui.showtoast('One moment...');site.chedit.searchicon();">Google it</a>
 				--></label>
 				<input class="round2" type="text" name="station_icon" placeholder="http://www.host.com/path-to-icon.png" />
 			</p>
@@ -279,7 +283,7 @@
 			<p class="info_tap_icon" style="color:#999;"><em>Note: tap the icon to search for more</em></p>
 		</div>
 		
-		<div class="block data2">		</div>
+		<div class="block data2"></div>
 		
 		</form>
 		
@@ -292,11 +296,11 @@
 	
     <div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Stations</div>
         
 		<div class="actions">
-			<div class="action save activatablel" onClick="site.chsearch.searchstation();">
+			<div class="action save activatablel" onclick="site.chsearch.searchstation();">
 				<img src="img/icons-48/ic_search_green.png" title="Search" />
 			</div>
         </div>
@@ -318,16 +322,16 @@
             
             <p>&nbsp;</p>
 			
-			<p>Can't find your station but you know how to get hold of the stream url? Consider <a href='javascript:void(0);' onClick="window.open('http://dirble.com/','_system');">signing up for a Dirble account</a> and add it to the database!</p>
+			<p>Can't find your station but you know how to get hold of the stream url? Consider <a href='javascript:void(0);' onclick="window.open('http://dirble.com/','_system');">signing up for a Dirble account</a> and add it to the database!</p>
             
-            <p>Or add a station <a href="javascript:void(0);" onClick="loggr.log(site.lifecycle.remove_section_history_item('#searchstation'));site.chedit.init(false);">manually</a></p>
+            <p>Or add a station <a href="javascript:void(0);" onclick="loggr.log(site.lifecycle.remove_section_history_item('#searchstation'));site.chedit.init(false);">manually</a></p>
 			
 		</div>
 		
 		</form>
 		
 		<div class="resultfooter shadow_z1u">
-			<a href='javascript:void(0)' onClick="window.open('http://dirble.com/','_system');">Powered by Dirble</a>
+			<a href='javascript:void(0)' onclick="window.open('http://dirble.com/','_system');">Powered by Dirble</a>
 		</div>
 	
     </div>
@@ -339,7 +343,7 @@
 	
     <div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Stations</div>
         
 		<div class="actions">
@@ -358,7 +362,7 @@
 	
     <div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Stations</div>
         
 		<div class="actions">
@@ -377,19 +381,23 @@
 
 	<div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Alarms</div>
         
 		<div class="actions">
-            <div class="action activatablel" onClick="site.alarms.add();">
+			<!--
+            <div class="action activatablel" onclick="site.alarms.add();">
 				<img src="img/icons-48/ic_add_green.png" title="Add alarm" />
 			</div>
+			-->
         </div>
     </div>
     
     <div class="main">
 	
     </div>
+	
+	<div class="fab shadow_z5" onclick="site.alarms.add();"><img src="img/icons-48/ic_add_green.png" /></div>
     
 </section>
 
@@ -398,14 +406,14 @@
 
 	<div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Alarms</div>
         
 		<div class="actions">
-			<div class="action save activatablel" onClick="site.alarms.save();">
+			<div class="action save activatablel" onclick="site.alarms.save();">
 				<img src="img/icons-48/ic_save_green.png" title="Save alarm" />
 			</div>
-            <div class="action trash activatablel" onClick="site.alarms.remove();">
+            <div class="action trash activatablel" onclick="site.alarms.remove();">
 				<img src="img/icons-48/ic_trash_green.png" title="Remove alarm" />
 			</div>
         </div>
@@ -480,7 +488,7 @@
 
 	<div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">About</div>
         
 		<div class="actions">
@@ -499,9 +507,9 @@
 			
 			<p id="version_string"></p>
 			
-			<p>An open source project (MIT License)<br><a href="javascript:void(0);" onClick="window.open('http://github.com/rejhgadellaa/icerrr/','_system');">http://github.com/rejhgadellaa/icerrr/</a></p>
+			<p>An open source project (MIT License)<br><a href="javascript:void(0);" onclick="window.open('http://github.com/rejhgadellaa/icerrr/','_system');">http://github.com/rejhgadellaa/icerrr/</a></p>
 			
-			<p>See what's new:<br><a href="javascript:void(0);" onClick="window.open('https://github.com/rejhgadellaa/icerrr/wiki/Changelog','_system');">https://github.com/(..)/wiki/Changelog</a></p>
+			<p>See what's new:<br><a href="javascript:void(0);" onclick="window.open('https://github.com/rejhgadellaa/icerrr/wiki/Changelog','_system');">https://github.com/(..)/wiki/Changelog</a></p>
 			
 			<p>Copyright (c) 2014 REJH Gadellaa</p>
 			
@@ -519,22 +527,22 @@
 			
 			<ul>
 				<li>Dirble Radio Directory (search)<br>
-					<a href="javascript:void(0);" onClick="window.open('http://www.dirble.com','_system');">http://www.dirble.com</a></li>
+					<a href="javascript:void(0);" onclick="window.open('http://www.dirble.com','_system');">http://www.dirble.com</a></li>
 					
 				<li>Google Image Search<br>
-					<a href="javascript:void(0);" onClick="window.open('https://developers.google.com/image-search/','_system');">https://developers.google.com/(..)</a></li>
+					<a href="javascript:void(0);" onclick="window.open('https://developers.google.com/image-search/','_system');">https://developers.google.com/(..)</a></li>
 					
 				<li>Cordova<br>
-					<a href="javascript:void(0);" onClick="window.open('http://cordova.apache.org/','_system');">http://cordova.apache.org/</a></li>
+					<a href="javascript:void(0);" onclick="window.open('http://cordova.apache.org/','_system');">http://cordova.apache.org/</a></li>
 					
 				<li>Cordova Chromecast (plugin, modified)<br>
-					<a href="javascript:void(0);" onClick="window.open('https://github.com/GetVideostream/cordova-chromecast','_system');">https://github.com/GetVideo(..)</a></li>
+					<a href="javascript:void(0);" onclick="window.open('https://github.com/GetVideostream/cordova-chromecast','_system');">https://github.com/GetVideo(..)</a></li>
 					
 				<li>Cordova Datepicker (plugin, modified)<br>
-					<a href="javascript:void(0);" onClick="window.open('https://github.com/VitaliiBlagodir/cordova-plugin-datepicker','_system');">https://github.com/Vitalii(..)</a></li>
+					<a href="javascript:void(0);" onclick="window.open('https://github.com/VitaliiBlagodir/cordova-plugin-datepicker','_system');">https://github.com/Vitalii(..)</a></li>
 					
 				<li>Cordova Webintent (plugin, modified)<br>
-					<a href="javascript:void(0);" onClick="window.open('https://github.com/Initsogar/cordova-webintent','_system');">https://github.com/Inits(..)</a></li>
+					<a href="javascript:void(0);" onclick="window.open('https://github.com/Initsogar/cordova-webintent','_system');">https://github.com/Inits(..)</a></li>
 					
 				<li>JS JQuery</li>
 				<li>JS Dateformat</li>	
@@ -546,7 +554,7 @@
 			</ul>
 			
 			<p>Default/placeholder album art photo:<br>
-			<a href="javascript:void(0);" onClick="window.open('https://www.flickr.com/photos/90871503@N05/8322808792','_system');">Jeff Holt, CC license</a></p>
+			<a href="javascript:void(0);" onclick="window.open('https://www.flickr.com/photos/90871503@N05/8322808792','_system');">Jeff Holt, CC license</a></p>
 			
 			<div class="spacer"></div>
 			
@@ -560,11 +568,11 @@
 		
 			<p><strong>REJH Gadellaa</strong></p>
 			
-			<p>Find me on <a href="javascript:void(0);" onClick="window.open('https://plus.google.com/+RoderickGadellaa/about','_system');">Google+</a>, <a href="javascript:void(0);" onClick="window.open('https://twitter.com/RGadellaa','_system');">Twitter</a>, <a href="javascript:void(0);" onClick="window.open('https://github.com/rejhgadellaa/','_system');">GitHub</a>, or <a href="mailto:droidapps@rejh.nl?subject=Icerrr">send me an email</a></p>
+			<p>Find me on <a href="javascript:void(0);" onclick="window.open('https://plus.google.com/+RoderickGadellaa/about','_system');">Google+</a>, <a href="javascript:void(0);" onclick="window.open('https://twitter.com/RGadellaa','_system');">Twitter</a>, <a href="javascript:void(0);" onclick="window.open('https://github.com/rejhgadellaa/','_system');">GitHub</a>, or <a href="mailto:droidapps@rejh.nl?subject=Icerrr">send me an email</a></p>
 			
 			<div class="spacer"></div>
 			
-			<p><center><img src="img/gadellskiin_droidapps_128.png" style="width:64px;" onClick="window.open('http://android.rejh.nl/','_system');" /></center></p>
+			<p><center><img src="img/gadellskiin_droidapps_128.png" style="width:64px;" onclick="window.open('http://android.rejh.nl/','_system');" /></center></p>
 			
 			<div class="spacer"></div>
 			<div class="spacer"></div>
@@ -580,7 +588,7 @@
 
 	<div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Log</div>
         
 		<div class="actions">
@@ -605,7 +613,7 @@
 
 	<div class="actionbar shadow_z2">
     	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Settings</div>
         
 		<div class="actions">
@@ -627,7 +635,7 @@
 			
 			<div class="itemWrap useFlickrImages">
 				<div class="item title">Always turn on WiFi</div>
-				<div class="item subtitle">Turn on wifi when streaming <a href="javascript:void(0);" onClick="site.settings.helpUseWifi();">(?)</a></div>
+				<div class="item subtitle">Turn on wifi when streaming <a href="javascript:void(0);" onclick="site.settings.helpUseWifi();">(?)</a></div>
 				<div class="checkboxWrap"><input name="useWifi" type="checkbox" class="checkbox" checked="checked" /></div>
 			</div>
 			
@@ -637,7 +645,7 @@
 				
 			<div class="itemWrap showAlbumArt">
 					<div class="item title">Show album art</div>
-					<div class="item subtitle">Search and show album art on your behalf <a href="javascript:void(0);" onClick="site.settings.helpShowAlbumArt();">(?)</a></div>
+					<div class="item subtitle">Search and show album art on your behalf <a href="javascript:void(0);" onclick="site.settings.helpShowAlbumArt();">(?)</a></div>
 					<div class="checkboxWrap"><input name="showAlbumArt" type="checkbox" class="checkbox" /></div>
 				</div>
 				
@@ -647,7 +655,7 @@
 				
 			<div class="itemWrap useSAA">
 				<div class="item title">Sleep As Android integration</div>
-				<div class="item subtitle">Respond to alarms fired by SAA <a href="javascript:void(0);" onClick="site.settings.helpSaa();">(?)</a></div>
+				<div class="item subtitle">Respond to alarms fired by SAA <a href="javascript:void(0);" onclick="site.settings.helpSaa();">(?)</a></div>
 				<div class="checkboxWrap"><input name="useSAA" type="checkbox" class="checkbox" /></div>
 			</div>
 				
@@ -657,7 +665,7 @@
 				
 			<div class="itemWrap sendLogs">
 				<div class="item title">Send error logs</div>
-				<div class="item subtitle">Automatically upload (error) logs to help improve Icerrr <a href="javascript:void(0);" onClick="site.settings.helpSendLogs();">(?)</a></div>
+				<div class="item subtitle">Automatically upload (error) logs to help improve Icerrr <a href="javascript:void(0);" onclick="site.settings.helpSendLogs();">(?)</a></div>
 				<div class="checkboxWrap"><input name="sendLogs" type="checkbox" class="checkbox" checked="checked" /></div>
 			</div>
 			
@@ -679,23 +687,23 @@
 <!-- Overflow_Menu -->
 <div id="overflow_menu" class="overflow_menu shadow_z2">
 	
-	<div class="menu_item activatablel" onClick="site.settings.init();site.home.dismissOverflowMenu();">
+	<div class="menu_item activatablel" onclick="site.settings.init();site.home.dismissOverflowMenu();">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;<strong>Settings</strong></div></div>
 	</div>
 
-	<div class="menu_item activatablel" onClick="site.home.sendfeedback();site.home.dismissOverflowMenu();">
+	<div class="menu_item activatablel" onclick="site.home.sendfeedback();site.home.dismissOverflowMenu();">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;Send feedback</div></div>
 	</div>
 	
-	<div class="menu_item activatablel" onClick="site.home.viewlog();site.home.dismissOverflowMenu();">
+	<div class="menu_item activatablel" onclick="site.home.viewlog();site.home.dismissOverflowMenu();">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;View log</div></div>
 	</div>
 	
-	<div class="menu_item activatablel" onClick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S6BCCM9LESNBU&lc=US&item_name=REJH%20Gadellaa&item_number=icerrr_droidapp&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted','_system');site.home.dismissOverflowMenu();">
+	<div class="menu_item activatablel" onclick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S6BCCM9LESNBU&lc=US&item_name=REJH%20Gadellaa&item_number=icerrr_droidapp&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted','_system');site.home.dismissOverflowMenu();">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;Donate</div></div>
 	</div>
 	
-	<div class="menu_item activatablel" onClick="site.ui.gotosection('#about');site.home.dismissOverflowMenu();" style="border:none;">
+	<div class="menu_item activatablel" onclick="site.ui.gotosection('#about');site.home.dismissOverflowMenu();" style="border:none;">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;About</div></div>
 	</div>
 	

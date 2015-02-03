@@ -1,10 +1,11 @@
-{"station_id":"radio538","host":"82.201.100.9","port":8000,"path":"/radio538"}
+{"station_id":"veronicahitradio","host":"8563.live.streamtheworld.com","port":80,"path":"/VERONICA_SC?.wma"}
 
-HTTP/1.1 302 Found
-Date: Tue, 03 Feb 2015 08:09:09 GMT
-Server: Apache/2.2.3 (CentOS)
-Location: http://vip-icecast.538.lw.triple-it.nl/RADIO538_MP3
-Content-Length: 309
-Connection: close
-Content-Type: text/html; charset=iso-8859-1
+HTTP/1.0 200 OK
+Expires: Thu, 01 Dec 2003 16:00:00 GMT
+Cache-Control: no-cache, must-revalidate
+Pragma: no-cache
+Content-Type: audio/mpeg
+icy-br: 132
+icy-metaint:16000
+Server: MediaGateway 3.1.8-01
 
