@@ -1,3 +1,7 @@
+0.189
+  * Improved update process, less action required from user
+  * Fix for when now playing info returned an empty string
+
 0.188
   * Icon has materialized. Thanks Android Asset Studio! (lmgtfy)
 

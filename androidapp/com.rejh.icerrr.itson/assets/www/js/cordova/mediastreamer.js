@@ -128,7 +128,7 @@
 	*/
 	MediaStreamer.prototype.installUpdateApp = function(filePath,win,fail) {
 		console.log("MediaStreamer.prototype.installUpdateApp()");
-        cordova.exec(win, fail, "MediaStreamer", "Install-update-app", [filePath]);
+        cordova.exec(win, fail, "MediaStreamer", "install-update-app", [filePath]);
 	}
 	
 	/**

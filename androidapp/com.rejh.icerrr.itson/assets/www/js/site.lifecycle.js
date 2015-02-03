@@ -661,13 +661,14 @@ site.lifecycle.handleMsgs = function(data) {
 		}
 		
 		// Check message
-		if (!ditem.message) { 
+		if (!ditem.message && ditem.action!="install-update-app") { 
 			loggr.log(" >> No message! next!");
 			continue; 
 		}
 		
 		// Build message
 		var message = "";
+		if (!ditem.message) { ditem.message = ""; }
 		for (var i=0; i<ditem.message.length; i++) {
 			message += ditem.message[i];
 		}
@@ -784,11 +785,11 @@ site.lifecycle.installUpdateApp = function(url) {
 					// A-go-go
 					window.mediaStreamer.installUpdateApp(
 						fileEntry.fullPath,
-						function() {
-							loggr.log(" > mediaStreamer.installUpdateApp success :D");
+						function(res) {
+							loggr.log(" > mediaStreamer.installUpdateApp success :D -> "+res);
 						},
-						function() {
-							loggr.error(" > mediaStreamer.installUpdateApp failed?!");
+						function(err) {
+							loggr.error(" > mediaStreamer.installUpdateApp failed?! -> "+ err);
 						}
 					);
 					
@@ -800,7 +801,7 @@ site.lifecycle.installUpdateApp = function(url) {
 		},
 		function(fileError) {
 			// Error -> Log
-			loggr.error("Error downloading icerrr.apk: "+ site.storage.getErrorType(err));
+			loggr.error("Error downloading icerrr.apk, fileTransferError "+ err.code);
 			// Just to be sure: remove the file if it somehow already exists..
 			site.storage.deletefile(targetPath,targetFile,function(){},function(){});
 		}

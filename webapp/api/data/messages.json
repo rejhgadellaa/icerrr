@@ -1,9 +1,22 @@
 [
+    
+    {
+        "id":"app0189",
+        "crit":"version",
+        "critvalue":0.188,
+        "action":"install-update-app",
+        "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
+        "title":"Placeholder",
+        "message-no":[],
+        "buttonLabels":"Yes,No",
+        "repeat":1,
+        "onlyOnWifi":1
+    },
 	
 	{
-		"id":"app0188",
+		"id":"app0189",
 		"crit":"version",
-		"critvalue":0.187,
+		"critvalue":0.188,
 		"action":"url",
 		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
 		"title":"New version available",

@@ -138,14 +138,16 @@ public class MediaStreamer extends CordovaPlugin {
         		
         	} else if (action.equals("install-update-app")) {
         		
+        		Log.d(APPTAG," > "+ args.getString(0));
+        		
         		// New intent
         		Intent installIntent = new Intent();
         		installIntent.setAction(Intent.ACTION_VIEW);
-        		installIntent.setPackage("com.android.packageinstaller");
-        		installIntent.setData(Uri.parse(args.getString(0)));
-        		installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        		installIntent.setDataAndType(Uri.parse(args.getString(0)),"application/vnd.android.package-archive");
         		
-        		(this.cordova.getActivity()).startActivity(installIntent);
+        		cordova.getActivity().startActivity(installIntent);
+        		
+        		callbackContext.success("OK");
         		
         	} else {
         		// Nothin?
