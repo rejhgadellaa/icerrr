@@ -728,39 +728,38 @@ public class MediaStreamerService extends Service {
 						}
 					}
 					
+					// Update notif only when nowplaying changed
 					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
 						
 						nowplaying = nowplaying_new;
 						Log.d(APPTAG," > NowPlaying: "+ station_name +", "+ nowplaying);
 						msNotifMgr.notif(station_name,nowplaying,msNotifMgr.NOTIFICATION_ID,false);
-				        
-				        // Metadata
-						metadataEditor = remoteControlClient.editMetadata(true);
-				        metadataEditor.clear();
-				        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
-				        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, nowplaying_new);
-
-						// Metadata > Get station icon
-						try {
-							Log.d(APPTAG," > Station icon?");
-							String starredStationsJsons = sett.getString("starredStations", "[]");
-							JSONArray starredStations = new JSONArray(starredStationsJsons);
-							int index = sett.getInt("starredStationsIndex", 0);
-							if (index<0) { index = 0; }
-							JSONObject station = starredStations.getJSONObject(index);
-					        metadataEditor.putBitmap(100, getIconFromURL(station.getString("station_icon")));
-						} catch(JSONException e) {
-							Log.w(APPTAG," > JSONException!",e);
-							Log.w(APPTAG," > Okay okay, use default icon");
-							metadataEditor.putBitmap(100, getIcon("wear_album_art"));
-						}
-						
-						Log.d(APPTAG,"HALLO HALLO!");
-						
-						// Apply metadata
-				        metadataEditor.apply();
 						
 					}
+					
+					// Update metadata always
+					metadataEditor = remoteControlClient.editMetadata(true);
+			        metadataEditor.clear();
+			        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
+			        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, nowplaying_new);
+
+					// Metadata > Get station icon
+					try {
+						Log.d(APPTAG," > Station icon?");
+						String starredStationsJsons = sett.getString("starredStations", "[]");
+						JSONArray starredStations = new JSONArray(starredStationsJsons);
+						int index = sett.getInt("starredStationsIndex", 0);
+						if (index<0) { index = 0; }
+						JSONObject station = starredStations.getJSONObject(index);
+				        metadataEditor.putBitmap(100, getIconFromURL(station.getString("station_icon")));
+					} catch(JSONException e) {
+						Log.w(APPTAG," > JSONException!",e);
+						Log.w(APPTAG," > Okay okay, use default icon");
+						metadataEditor.putBitmap(100, getIcon("wear_album_art"));
+					}
+					
+					// Apply metadata
+			        metadataEditor.apply();
 					
 					
 				} catch(JSONException e) {

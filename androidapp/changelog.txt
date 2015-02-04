@@ -1,3 +1,6 @@
+0.191
+  * Fix: lockscreen/wear sometimes not showing station icon
+
 0.190
   * New: lockscreen and wear show station icon (sometimes..)
   * New: the FAB experience :D
