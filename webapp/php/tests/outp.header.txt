@@ -1,13 +1,17 @@
-{"station_id":"CUSTOM.Sonic_Universe (SomaFM)_c221167c9505d421f21a9921a58d7a87_14b0c4b0efa_bf91d","host":"uwstream2.somafm.com","port":8604,"path":"/;"}
+{"station_id":"intergalactic_classix","host":"radio.intergalacticfm.com","port":80,"path":"/2"}
 
-ICY 200 OK
-icy-notice1:<BR>This stream requires <a href="http://www.winamp.com/">Winamp</a><BR>
-icy-notice2:SHOUTcast Distributed Network Audio Server/Linux v1.9.5<BR>
-icy-name:Sonic Universe. Nu Jazz plus avant-garde Euro Jazz: Transcending the boundaries of jazz with experimental takes on tradition. [SomaFM]
-icy-genre:Experimental NuJazz
-icy-url:http://somafm.com
-content-type:audio/mpeg
+HTTP/1.0 200 OK
+Content-Type: audio/mpeg
+icy-br:128
+ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
+icy-br:128
+icy-description:Music Pro Galaxy
+icy-genre:Classix
+icy-name:Intergalactic Classix
+icy-private:0
 icy-pub:1
-icy-metaint:45000
-icy-br:192
+icy-url:http://Intergalactic.FM
+Server: Icecast 2.3.2
+Cache-Control: no-cache
+icy-metaint:16000
 
