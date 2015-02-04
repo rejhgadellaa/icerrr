@@ -1,5 +1,6 @@
 0.191
   * Fix: lockscreen/wear sometimes not showing station icon
+  * Style fix
 
 0.190
   * New: lockscreen and wear show station icon (sometimes..)
