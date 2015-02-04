@@ -1,15 +1,13 @@
-{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
+{"station_id":"CUSTOM.Sonic_Universe (SomaFM)_c221167c9505d421f21a9921a58d7a87_14b0c4b0efa_bf91d","host":"uwstream2.somafm.com","port":8604,"path":"/;"}
 
-HTTP/1.0 200 OK
-Content-Type: audio/mpeg
+ICY 200 OK
+icy-notice1:<BR>This stream requires <a href="http://www.winamp.com/">Winamp</a><BR>
+icy-notice2:SHOUTcast Distributed Network Audio Server/Linux v1.9.5<BR>
+icy-name:Sonic Universe. Nu Jazz plus avant-garde Euro Jazz: Transcending the boundaries of jazz with experimental takes on tradition. [SomaFM]
+icy-genre:Experimental NuJazz
+icy-url:http://somafm.com
+content-type:audio/mpeg
+icy-pub:1
+icy-metaint:45000
 icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Pop
-icy-name:3FM Serious Radio
-icy-pub:0
-icy-url:http://www.3fm.nl
-Server: ics2iss.omroep.nl
-Cache-Control: no-cache
-icy-metaint:16000
 

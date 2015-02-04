@@ -1,4 +1,4 @@
-0.190a
+0.190
   * New: lockscreen and wear show station icon (sometimes..)
   * New: the FAB experience :D
   * More design tweaks

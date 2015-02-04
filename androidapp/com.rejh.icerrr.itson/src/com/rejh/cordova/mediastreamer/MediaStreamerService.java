@@ -1016,6 +1016,8 @@ public class MediaStreamerService extends Service {
     
     // Restart service with station
     private void restartServiceWithStation(JSONObject station) throws JSONException {
+        
+        nowplaying = "...";
 
     	// Restart time!
 		Intent restartIntent = new Intent(context, MediaStreamerService.class);
