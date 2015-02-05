@@ -203,7 +203,7 @@
 <!-- Section -->
 <section id="channellist">
 	
-    <div class="actionbar shadow_z2">
+    <div class="actionbar">
     	
         <div class="icon_app  activatablel"><img src="img/icons-48/ic_arrow_back.png" onclick="site.lifecycle.onBackButton();" /></div>
         <div class="title">Stations</div>
@@ -217,7 +217,7 @@
         </div>
     </div>
     
-    <div class="tabbar shadow_z1">
+    <div class="tabbar shadow_z2">
     	<div class="tab activatablel stations active" onclick="site.chlist.ontabclick(this)">
         	<div class="center_table"><div class="center_td">All</div></div>
         </div>
@@ -278,7 +278,7 @@
 				<input class="round2" type="text" name="station_icon" placeholder="http://www.host.com/path-to-icon.png" />
 			</p>
 			
-			<p><img class="station_icon" src="img/icons-48/ic_launcher.png" /></p>
+			<p><img class="station_icon" src="img/icons-80/ic_station_default.png" /></p>
 			
 			<p class="info_tap_icon" style="color:#999;"><em>Note: tap the icon to search for more</em></p>
 		</div>
@@ -300,9 +300,11 @@
         <div class="title">Stations</div>
         
 		<div class="actions">
+			<!--
 			<div class="action save activatablel" onclick="site.chsearch.searchstation();">
 				<img src="img/icons-48/ic_search_green.png" title="Search" />
 			</div>
+			-->
         </div>
     </div>
     
@@ -333,6 +335,8 @@
 		<div class="resultfooter shadow_z1u">
 			<a href='javascript:void(0)' onclick="window.open('http://dirble.com/','_system');">Powered by Dirble</a>
 		</div>
+		
+		<div class="fab shadow_z5" onclick="site.chsearch.searchstation();;"><img src="img/icons-48/ic_search_green.png" /></div>
 	
     </div>
 

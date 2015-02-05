@@ -78,7 +78,7 @@ site.home.init = function() {
 	);
 	$("#home .main .station_image img").on("error",function(evt) {
 		loggr.error(" > Error loading image: "+evt.currentTarget.src,{dontupload:true});
-		evt.currentTarget.src = "img/icons-48/ic_launcher.png";
+		evt.currentTarget.src = "img/icons-80/ic_station_default.png";
 	});
 	
 	// extra ui
@@ -92,7 +92,7 @@ site.home.init = function() {
 	
 	$("#home .main .station_image img").on("error",function(evt) {
 		loggr.warn(" > !onload: "+ evt.originalEvent.target.src);
-		$("#home .main .station_image img").attr("src","img/icons-48/ic_launcher.png");
+		$("#home .main .station_image img").attr("src","img/icons-80/ic_station_default.png");
 	});
 	
 	// extra events
@@ -514,7 +514,7 @@ site.home.handleStationImage = function(src) {
 				function(error) {
 					loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
 					console.error(error);
-					$("#home .main .station_image img").attr("src","img/icons-48/ic_launcher.png");
+					$("#home .main .station_image img").attr("src","img/icons-80/ic_station_default.png");
 				}
 			);
 		} else {

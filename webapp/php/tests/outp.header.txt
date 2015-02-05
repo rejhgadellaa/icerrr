@@ -1,14 +1,19 @@
-{"station_id":"Sublime_FM_d063f7e914752b0b22a50cc0d90c543b_14b559117ee_49b9e","host":"82.201.47.68","port":80,"path":"/SublimeFM2"}
+{"station_id":"CUSTOM.Slamfm_9d4c99b9302303fcadd90c3277d42402_14b3b69587d_d5cb9","host":"edge2-icecast.538.lw.triple-it.nl","port":80,"path":"/SLAMFM_MP3"}
 
 HTTP/1.0 200 OK
+Server: Icecast 2.4.1
+Date: Thu, 05 Feb 2015 06:58:36 GMT
 Content-Type: audio/mpeg
-icy-br:128
-ice-audio-info: bitrate=128
-icy-genre:Jazz
-icy-name:SublimeFM2
-icy-pub:1
-icy-url:http://www.SublimeFM.nl
-Server: Icecast 2.3.3
 Cache-Control: no-cache
+Expires: Mon, 26 Jul 1997 05:00:00 GMT
+Pragma: no-cache
+icy-br:128
+ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
+icy-br:128
+icy-description:POWER TO THE BEAT
+icy-genre:Various
+icy-name:SLAM!FM
+icy-pub:1
+icy-url:http://www.slamfm.nl
 icy-metaint:16000
 

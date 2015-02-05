@@ -1,3 +1,6 @@
+0.192
+  * More design tweaks
+
 0.191
   * Fix: lockscreen/wear sometimes not showing station icon
   * Style fix

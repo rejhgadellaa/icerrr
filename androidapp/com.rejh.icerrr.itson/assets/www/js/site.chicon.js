@@ -96,7 +96,7 @@ site.chicon.init = function(station_id) {
 			var resultitem = document.createElement("div");
 			resultitem.className = "resultitem_chicon shadow_z1 activatablel";
 			resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
-				+ '<img class="resulticon_chicon" src="img/icons-48/ic_launcher.png" />'
+				+ '<img class="resulticon_chicon" src="img/icons-80/ic_station_default.png" />'
 				+ '</div></div>'
 				;
 			

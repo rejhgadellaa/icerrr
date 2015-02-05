@@ -364,7 +364,7 @@ public class MediaStreamerService extends Service {
         metadataEditor.clear();
         metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
         metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, "Now playing: ...");
-        metadataEditor.putBitmap(100, getIcon("wear_album_art"));
+        metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
         metadataEditor.apply();
         
         // Handle Wifi
@@ -755,7 +755,7 @@ public class MediaStreamerService extends Service {
 					} catch(JSONException e) {
 						Log.w(APPTAG," > JSONException!",e);
 						Log.w(APPTAG," > Okay okay, use default icon");
-						metadataEditor.putBitmap(100, getIcon("wear_album_art"));
+						metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
 					}
 					
 					// Apply metadata

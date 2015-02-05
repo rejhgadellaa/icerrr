@@ -217,7 +217,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
 		resulticon.addEventListener("error",function(ev){ 
-			ev.target.src = "img/icons-48/ic_launcher.png";
+			ev.target.src = "img/icons-80/ic_station_default.png";
 		});
 		if (site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
 			var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
@@ -236,7 +236,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 				function(error) {
 					loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
 					console.error(error);
-					resulticon.src = "img/icons-48/ic_launcher.png";
+					resulticon.src = "img/icons-80/ic_station_default.png";
 				}
 			);
 		} else {
@@ -430,7 +430,7 @@ site.chlist.imagesearch = function(station_data,fullSizeImage) {
 			
 			// err
 			loggr.log(" > No image found...");
-			$("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src","img/icons-48/ic_launcher.png");
+			$("#chlist_resultitem_"+ station_data.station_id +" .resulticon").attr("src","img/icons-80/ic_station_default.png");
 			
 		},
 		opts

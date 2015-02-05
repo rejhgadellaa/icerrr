@@ -79,7 +79,7 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 		$("#editstation input[name='station_name']")[0].value = ""
 		$("#editstation input[name='station_url']")[0].value = ""
 		$("#editstation input[name='station_icon']")[0].value = ""
-		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
+		$("#editstation img.station_icon").attr("src","img/icons-80/ic_station_default.png");
 		$("#editstation img.station_icon").off("click");
 		$("#editstation img.station_icon")[0].onclick = function() {
 			loggr.error(" > chedit.searchicon() (1)",{dontupload:true});
@@ -92,7 +92,7 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 		$("#editstation .action.save").css("display","none");
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
-		$("#editstation img.station_icon").attr("src","img/icons-48/ic_launcher.png");
+		$("#editstation img.station_icon").attr("src","img/icons-80/ic_station_default.png");
 		$("#editstation img.station_icon").off("click");
 		$("#editstation img.station_icon")[0].onclick = function() {
 			loggr.error(" > chedit.searchicon() (2)",{dontupload:true});

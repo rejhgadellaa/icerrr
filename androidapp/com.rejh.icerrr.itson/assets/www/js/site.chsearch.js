@@ -262,7 +262,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
-		resulticon.src = "img/icons-48/ic_launcher.png";
+		resulticon.src = "img/icons-80/ic_station_default.png";
 		
 		var resultname = document.createElement("div");
 		resultname.className = "resultname";
