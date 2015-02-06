@@ -602,6 +602,7 @@ cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 		$("#main .topbar_watermark").css("display","block");
 		$("#main .topbar_title").css("display","block");
 		
+		cc.burnInProtector();
 		
 	} else {
 		
@@ -619,6 +620,28 @@ cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 		
 	}
 	
+}
+
+cc.burnInProtector = function() {
+	
+	loggr.debug("cc.burnInProtector()");
+	
+	if (cc.timeoutBurnInProtector) { clearTimeout(cc.timeoutBurnInProtector); }
+	cc.timeoutBurnInProtector = setTimeout(function(){
+		
+		loggr.debug("cc.burnInProtector() > timed out > run");
+		
+		// Toggle background..
+		if ($("#main").css("background-image").indexOf("https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1")>=0) {
+			$("#main").css("background-image","url('https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1')");
+		} else {
+			$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+		}
+		
+		cc.burnInProtector();
+		
+	},1000*60*0.25);
+
 }
 
 // Google Image Search

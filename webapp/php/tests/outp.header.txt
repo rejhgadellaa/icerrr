@@ -1,19 +1,15 @@
-{"station_id":"CUSTOM.Slamfm_9d4c99b9302303fcadd90c3277d42402_14b3b69587d_d5cb9","host":"edge2-icecast.538.lw.triple-it.nl","port":80,"path":"/SLAMFM_MP3"}
+{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
 
 HTTP/1.0 200 OK
-Server: Icecast 2.4.1
-Date: Thu, 05 Feb 2015 06:58:36 GMT
 Content-Type: audio/mpeg
+icy-br:192
+ice-audio-info: bitrate=192
+icy-br:192
+icy-genre:Pop
+icy-name:3FM Serious Radio
+icy-pub:0
+icy-url:http://www.3fm.nl
+Server: ics2hss.omroep.nl
 Cache-Control: no-cache
-Expires: Mon, 26 Jul 1997 05:00:00 GMT
-Pragma: no-cache
-icy-br:128
-ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
-icy-br:128
-icy-description:POWER TO THE BEAT
-icy-genre:Various
-icy-name:SLAM!FM
-icy-pub:1
-icy-url:http://www.slamfm.nl
 icy-metaint:16000
 
