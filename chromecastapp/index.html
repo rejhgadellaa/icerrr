@@ -490,8 +490,10 @@ cc.run_nowplaying_poll = function() {
 			return;
 		} else {
 		
+			loggr.log(" > Nowplaying results: "+ results["data"]["nowplaying"]);
+		
 			// Null!
-			if (!results["data"]["nowplaying"]) { results["data"]["nowplaying" = ""; }
+			if (!results["data"]["nowplaying"]) { loggr.log(" > result.data.nowplaying==null"); results["data"]["nowplaying"] = ""; }
 			
 			// Handle some chars..
 			if (results["data"]["nowplaying"].indexOf("&")>0) { results["data"]["nowplaying"] = results["data"]["nowplaying"].split("&").join(" & "); }
