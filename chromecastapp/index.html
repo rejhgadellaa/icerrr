@@ -175,7 +175,10 @@
 			#main .nowplayingsmall .title {
 				position:absolute;
 				bottom:32px; left:32px; right:32px;
-				font-size:18pt;
+				font-size:24pt;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
 			}
     
     </style>
@@ -478,6 +481,8 @@ cc.run_nowplaying_poll = function() {
 	
 	var apiurl = "http://www.rejh.nl/icerrr/api/?a=get&q="+ apiquerystr +"&cache="+(new Date().getTime());
 	
+	loggr.log(" > "+ apiurl);
+	
 	$.getJSON(apiurl, function(results) {
 		// ok
 		if (results["error"]) {
@@ -485,28 +490,39 @@ cc.run_nowplaying_poll = function() {
 			return;
 		} else {
 			
+			// Handle some chars..
+			if (results["data"]["nowplaying"].indexOf("&")>0) { results["data"]["nowplaying"] = results["data"]["nowplaying"].split("&").join(" & "); }
+			
+			// Handle false results
+			if (!results["data"]["nowplaying"]) { results["data"]["nowplaying"] = "Now playing: Unknown"; }
+			if (results["data"]["nowplaying"].trim()=="-" || results["data"]["nowplaying"]==" - ") { results["data"]["nowplaying"] = "Now playing: Unknown"; }
+			
+			// Toggle UI style (big/small) on change
 			var showBigUI = false;
 			if (results["data"]["nowplaying"]!=cc.currentstation.nowplaying) {
 				showBigUI = true;
 			} else {
 				if (!cc.nrOfTimesPollHasRun) { cc.nrOfTimesPollHasRun = 1; }
 				else { cc.nrOfTimesPollHasRun++; }
-				if (cc.nrOfTimesPollHasRun>20) { cc.currentstation.nowplaying = ""; showBigUI = true; }
+				if (cc.nrOfTimesPollHasRun>=10) { cc.nrOfTimesPollHasRun = 0; cc.currentstation.nowplaying = ""; showBigUI = true; }
 			}
 			
-			if (results["data"]["nowplaying"].indexOf("&")>0) { results["data"]["nowplaying"] = results["data"]["nowplaying"].split("&").join(" & "); }
+			// Debug
+			loggr.log(" > New: "+ results["data"]["nowplaying"]);
+			loggr.log(" > Old: "+ cc.currentstation.nowplaying);
+			loggr.log(" > Big: "+ showBigUI +", nrOfTimesPollHasRun: "+ cc.nrOfTimesPollHasRun);
 			
-			if (!results["data"]["nowplaying"]) { results["data"]["nowplaying"] = "Now playing: Unknown"; }
-			if (results["data"]["nowplaying"].trim()=="-" || results["data"]["nowplaying"]==" - ") { results["data"]["nowplaying"] = "Now playing: Unknown"; }
-			
+			// Store
 			cc.currentstation.nowplaying = results["data"]["nowplaying"];
 			
+			// Update now playing
 			cc.updateNowplaying(showBigUI);
 			
-			if (cc.currentstation.nowplaying && cc.currentstation.nowplaying.toLowerCase()!="now playing: unknown") {
+			// Search for artwork
+			if (cc.currentstation.nowplaying) {
 				
 				var opts = {
-					maxresults:4,
+					maxresults:1,
 					restrictions:[[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_LARGE]]
 				}
 				
@@ -515,6 +531,10 @@ cc.run_nowplaying_poll = function() {
 				var searchstr = cc.currentstation.nowplaying.toLowerCase();
 				if (searchstr.indexOf("|")>0) { searchstr = searchstr.substr(0, searchstr.indexOf("|")-1); }
 				searchstr = searchstr.split("-").join("");
+				
+				if (cc.currentstation.nowplaying.toLowerCase()=="now playing: unknown") {
+					searchstr = cc.currentstation.station_name;
+				}
 				//searchstr += " album art"
 			
 				cc.helpers.googleImageSearch(searchstr,
@@ -534,12 +554,17 @@ cc.run_nowplaying_poll = function() {
 								loggr.log(" > Found album art: "+ res.url);
 								$("#main").css("background-image","url('"+ this.src +"')");
 								cc.vars.background_image = res.url;
+								cc.burnInProtector();
 							}
 							image.onerror = function() {
 								loggr.log(" > Found album art but loading failed: "+ this.src);
 								$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
 							}
-							image.src = decodeURIComponent(res.url);
+							if (searchstr=="NPO Radio 3fm") {
+								image.src = "http://a1094.phobos.apple.com/us/r30/Purple5/v4/47/3a/5d/473a5dab-5ba6-9e1b-255b-dce76abdce54/mzl.lgbuvbki.png";
+							} else {
+								image.src = decodeURIComponent(res.url);
+							}
 							
 						}
 					},
@@ -572,7 +597,7 @@ cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 	if (!cc.currentstation.nowplaying) { cc.currentstation.nowplaying = "Now playing: Unknown"; }
 	
 	var title_bigui = cc.currentstation.nowplaying;
-	var title_smallui = "<div>"+cc.currentstation.station_name +" - "+ cc.currentstation.nowplaying+"</div>";
+	var title_smallui = "<div>ICERRR: "+cc.currentstation.station_name +" - "+ cc.currentstation.nowplaying+"</div>";
 	
 	$("#main .nowplaying .subtitle").html(title_bigui);
 	if (title_smallui!=$("#main .nowplayingsmall .title").html()) { 
@@ -581,7 +606,7 @@ cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 	
 	if (cc.currentstation.station_icon && !dontUpdateIcon) {
 		$(".nowplaying .icon img").attr("src",cc.currentstation.station_icon);
-		//$(".nowplayingsmall .icon img").attr("src",cc.currentstation.station_icon);
+		$(".nowplayingsmall .icon img").attr("src",cc.currentstation.station_icon);
 	}
 	
 	var translateDown = "translate3d(0px,160px,0px)";
@@ -590,14 +615,14 @@ cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 	
 	if (showBigUI) {
 		
-		$("#main .nowplaying .wrap").css({"transform":translateZero,"-webkit-transform":translateZero});
+		$("#main .nowplayingsmall .wrap").css("opacity",0.0);
 		// $("#main .nowplaying").css("display","block");
 		
-		//setTimeout(function(){
-			$("#main .nowplayingsmall .wrap").css({"transform":translateUp,"-webkit-transform":translateUp});
-			$("#main .nowplayingsmall .wrap").css("opacity",0.0);
+		setTimeout(function(){
+			//$("#main .nowplayingsmall .wrap").css({"transform":translateUp,"-webkit-transform":translateUp});
 			// $("#main .nowplayingsmall .wrap").css("display","none");
-		//},250);
+			$("#main .nowplaying .wrap").css({"transform":translateZero,"-webkit-transform":translateZero});
+		},750);
 		
 		$("#main .topbar_watermark").css("display","block");
 		$("#main .topbar_title").css("display","block");
@@ -610,10 +635,10 @@ cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 		//$("#main .nowplaying").css("display","none");
 		
 		setTimeout(function(){
-			$("#main .nowplayingsmall .wrap").css({"transform":translateZero,"-webkit-transform":translateZero});
+			//$("#main .nowplayingsmall .wrap").css({"transform":translateZero,"-webkit-transform":translateZero});
 			$("#main .nowplayingsmall .wrap").css("opacity",1.0);
 			// $("#main .nowplayingsmall .wrap").css("display","block");
-		},500);
+		},750);
 		
 		$("#main .topbar_watermark").css("display","none");
 		$("#main .topbar_title").css("display","none");
@@ -626,21 +651,33 @@ cc.burnInProtector = function() {
 	
 	loggr.debug("cc.burnInProtector()");
 	
-	if (cc.timeoutBurnInProtector) { clearTimeout(cc.timeoutBurnInProtector); }
-	cc.timeoutBurnInProtector = setTimeout(function(){
+	// Check if image has changed..
+	if (cc.burnInProtectorLastImage==$("#main").css("background-image")) {
+	
+		loggr.log(" > Image has not changed, let existing timeout run");
 		
-		loggr.debug("cc.burnInProtector() > timed out > run");
+	} else {
+	
+		loggr.log(" > Image has changed, set timeout..");
 		
-		// Toggle background..
-		if ($("#main").css("background-image").indexOf("https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1")>=0) {
-			$("#main").css("background-image","url('https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1')");
-		} else {
-			$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
-		}
+		if (cc.timeoutBurnInProtector) { clearTimeout(cc.timeoutBurnInProtector); }
+		cc.timeoutBurnInProtector = setTimeout(function(){
+			
+			loggr.debug("cc.burnInProtector() > timed out > run");
+			
+			// Toggle background..
+			if ($("#main").css("background-image").indexOf("https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1")>=0) {
+				$("#main").css("background-image","url('https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1')");
+			} else {
+				$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+			}
+			
+			cc.burnInProtector();
+			
+		},1000*60*10);
 		
-		cc.burnInProtector();
-		
-	},1000*60*0.25);
+	}
+	cc.burnInProtectorLastImage=$("#main").css("background-image");
 
 }
 
