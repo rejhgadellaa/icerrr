@@ -175,6 +175,7 @@
 			#main .nowplayingsmall .title {
 				position:absolute;
 				bottom:32px; left:32px; right:32px;
+				text-align:center;
 				font-size:24pt;
 				overflow: hidden;
 				white-space: nowrap;
@@ -287,7 +288,7 @@ cc.init = function() {
 		// .. Media Manager
 		cc.mediaManager = new cast.receiver.MediaManager(cc.mediaElement);
 		// .. Receiver Manager
-		cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+		cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.NONE); // (cast.receiver.LoggerLevel.DEBUG);
 		cc.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
 		// .. Message Bus
 		cc.messageBus = cc.castReceiverManager.getCastMessageBus('urn:x-cast:com.rejh.icerrr.chromecastapp');

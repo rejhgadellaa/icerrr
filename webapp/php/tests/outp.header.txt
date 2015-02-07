@@ -6,7 +6,7 @@ Content-Type: audio/mpeg
 icy-br:128
 ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
 icy-br:128
-icy-description:de Grootste Hits Aller Tijden!
+icy-description:De Grootste Hits Aller Tijden!
 icy-genre:POP
 icy-name:Radio 10
 icy-private:0
