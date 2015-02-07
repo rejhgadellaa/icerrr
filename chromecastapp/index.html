@@ -489,6 +489,9 @@ cc.run_nowplaying_poll = function() {
 			loggr.error(" > "+ results["errormsg"]);
 			return;
 		} else {
+		
+			// Null!
+			if (!results["data"]["nowplaying"]) { results["data"]["nowplaying" = ""; }
 			
 			// Handle some chars..
 			if (results["data"]["nowplaying"].indexOf("&")>0) { results["data"]["nowplaying"] = results["data"]["nowplaying"].split("&").join(" & "); }
