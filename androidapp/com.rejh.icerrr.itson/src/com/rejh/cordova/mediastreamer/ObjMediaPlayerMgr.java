@@ -74,6 +74,10 @@ public class ObjMediaPlayerMgr {
 	private final static int MEDIA_PAUSED = 3;
 	private final static int MEDIA_STOPPED = 4;
 	
+	private int oldAudioManagerMode = -1;
+	private boolean oldAudioManagerBTA2DPOn;
+	private boolean oldAudioManagerSpeakerphoneOn;
+	
 	// --------------------------------------------------
 	// Constructor
 	
@@ -149,7 +153,23 @@ public class ObjMediaPlayerMgr {
 		settEditor.putString("streamUrlDefault", streamUrl);
 		settEditor.commit();
 		
+		// Is alarm?
 		isAlarm = _isAlarm;
+		
+		// If alarm: go through speakers..
+		// if (isAlarm && sett.getBoolean("sett_useSpeakerForAlarms", true)) {
+		/*
+		if (sett.getBoolean("sett_useSpeakerForAlarms", true)) {
+			Log.d(LOGTAG," > UseSpeakerForAlarms = true");
+			AudioManager audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+			oldAudioManagerMode = audioMgr.getMode();
+			oldAudioManagerBTA2DPOn = audioMgr.isBluetoothA2dpOn();
+			oldAudioManagerSpeakerphoneOn = audioMgr.isSpeakerphoneOn();
+			audioMgr.setMode(AudioManager.MODE_IN_CALL);
+			audioMgr.setBluetoothA2dpOn(false);
+			audioMgr.setSpeakerphoneOn(true);
+		}
+		/**/
 		
 		// Prepare Proxy (if needed)
 		// For Android 2.1 en lower (sdk<8)
@@ -168,7 +188,7 @@ public class ObjMediaPlayerMgr {
 		Log.d(LOGTAG," -> STREAM "+streamUrl);
 		
 		// Prepare MP
-		// Cstch exceptions
+		// Catch exceptions
 		try {
 			
 			// Init & setup
@@ -246,6 +266,14 @@ public class ObjMediaPlayerMgr {
 		settEditor.putInt("mediaplayerState",MEDIA_NONE);
 		settEditor.putInt("mediastreamer_state",MEDIA_NONE);
 		settEditor.commit();
+		
+		// Restore some stuff
+		/*
+		AudioManager audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+		audioMgr.setMode(oldAudioManagerMode);
+		audioMgr.setBluetoothA2dpOn(oldAudioManagerBTA2DPOn);
+		audioMgr.setSpeakerphoneOn(oldAudioManagerSpeakerphoneOn);
+		/**/
 
 		// Notify
 		/* TODO: Notification

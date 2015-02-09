@@ -97,4 +97,4 @@ goto end
 :end
 cd ..
 echo.
-REM pause
+choice /C QYN /N /T 10 /D N /M "Press 'Q' to quit"
