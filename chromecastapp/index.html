@@ -653,12 +653,12 @@ cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 	
 }
 
-cc.burnInProtector = function() {
+cc.burnInProtector = function(force) {
 	
-	loggr.debug("cc.burnInProtector()");
+	loggr.debug("cc.burnInProtector(): "+ force);
 	
 	// Check if image has changed..
-	if (cc.burnInProtectorLastImage==$("#main").css("background-image")) {
+	if (cc.burnInProtectorLastImage==$("#main").css("background-image") && !force) {
 	
 		loggr.log(" > Image has not changed, let existing timeout run");
 		
@@ -678,7 +678,7 @@ cc.burnInProtector = function() {
 				$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
 			}
 			
-			cc.burnInProtector();
+			cc.burnInProtector(true);
 			
 		},1000*60*10);
 		

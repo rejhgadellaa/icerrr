@@ -59,6 +59,17 @@ site.settings.registerListeners = function() {
 		}
 	);
 	
+	// Use Speaker Phone For Alarms
+	window.mediaStreamer.getSetting("bool","useSpeakerForAlarms",
+		function(res) {
+			if (res) { $("#settings input[name='useSpeakerForAlarms']").attr("checked",true); }
+			else { $("#settings input[name='useSpeakerForAlarms']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
 	// Show Album Art
 	var showAlbumArt = site.cookies.get("setting_showAlbumArt");
 	loggr.log(" > showAlbumArt: "+ showAlbumArt);
@@ -90,6 +101,14 @@ site.settings.registerListeners = function() {
 		var targ = evt.currentTarget;
 		loggr.log(" > Setting: useWifi: "+ (targ.checked));
 		window.mediaStreamer.setting("bool","useWifi",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	});
+	
+	// Use Speaker Phone For Alarms
+	$("#settings input[name='useSpeakerForAlarms']").off("change");
+	$("#settings input[name='useSpeakerForAlarms']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: useSpeakerForAlarms: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","useSpeakerForAlarms",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
 	
 	// Shot Album Art
@@ -146,6 +165,21 @@ site.settings.helpUseWifi = function() {
 		+"Always turn on WiFi\n\n"
 		+"When enabled, Icerrr will always turn on WiFi when a stream is started to limit data usage as much as possible.\n\n"
 		+"WiFi will always be turned on when alarms fire, ignoring this setting.\n\n"
+		+"Note: It is recommended to leave this option enabled."
+		//+"All alarms that are are fired by SAA will then cause Icerrr to start the last station you listened to. It is therefore recommended to silence the alarm sound in SAA.\n\n"
+		//+"Note: Alarms set in Icerrr are not affected and will have no interaction with SAA."
+		;
+	navigator.notification.alert(message, function(){}, title, buttonName)
+}
+
+site.settings.helpUseSpeakerForAlarms = function() {
+	loggr.log("site.settings.helpUseSpeakerForAlarms()");
+	var title = "Help: Settings";
+	var buttonName = "OK";
+	var message = ""
+		+"Force alarms through speaker\n\n"
+		+"When enabled, Icerrr will always use the built-in speaker when alarms fire.\n\n"
+		+"This prevents the alarm to play through any connected accessoires like headphones, BT headsets, etc.\n\n"
 		+"Note: It is recommended to leave this option enabled."
 		//+"All alarms that are are fired by SAA will then cause Icerrr to start the last station you listened to. It is therefore recommended to silence the alarm sound in SAA.\n\n"
 		//+"Note: Alarms set in Icerrr are not affected and will have no interaction with SAA."

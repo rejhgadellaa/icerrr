@@ -134,7 +134,7 @@ site.installer.update = function() {
 		
 	}
 	
-	// Specific updates
+	// Specific updates: 0.166
 	if (site.cookies.get("app_version")<=0.166) {
 		
 		loggr.error(" > Update to 0.166..",{dontupload:true});
@@ -144,7 +144,17 @@ site.installer.update = function() {
 		
 	}
 	
-	// Specific updates
+	// Specific updates: 0.193
+	if (site.cookies.get("app_version")<=0.192) {
+		
+		loggr.error(" > Update to 0.193..",{dontupload:true});
+		
+		loggr.log(" >> Setting: 'useSpeakerForAlarms' = true");
+		window.mediaStreamer.setting("bool","useSpeakerForAlarms",true,function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+		
+	}
+	
+	// Specific updates: installed + 0.175
 	if (site.cookies.get("app_is_installed") && site.cookies.get("app_version")<=0.175) {
 		
 		loggr.error(" > Update to 0.176..",{dontupload:true});

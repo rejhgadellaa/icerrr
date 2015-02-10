@@ -1,3 +1,6 @@
+0.193
+  * Option to force alarm playback through built-in speaker (#163)
+
 0.192
   * More design tweaks
 
