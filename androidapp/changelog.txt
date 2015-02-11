@@ -1,3 +1,7 @@
+0.194
+  * Fix: volume for alarms was not set since 0.193
+  * Installation is (a lot) faster :D
+
 0.193
   * Option to force alarm playback through built-in speaker (#163)
 

@@ -99,7 +99,7 @@ site.installer.init = function(isUpdate) {
 	// Bla
 	site.installer.cfg.overwrite_version = site.installer.cfg.overwrite_versions.pop()
 	
-	// Initiate first step: create folders
+	// Initiate first step: "update"
 	setTimeout(function(){site.installer.update();},1000);
 	
 }
@@ -167,7 +167,7 @@ site.installer.update = function() {
 	setTimeout(function(){
 		//site.installer.logger("&nbsp;&gt; Done");
 		site.installer.deletefolders();
-	},1000);
+	},500);
 	
 }
 
@@ -221,7 +221,8 @@ site.installer.deletefolders = function() {
 
 site.installer.createfolders_init = function() {
 	site.installer.logger("Create folders...");
-	setTimeout(function(){site.installer.createfolders_next();},500);
+	// setTimeout(function(){site.installer.createfolders_next();},500);
+	site.installer.createfolders_next();
 }
 
 site.installer.createfolders_next = function() {
@@ -279,47 +280,7 @@ site.installer.deletefiles_next = function() {
 	
 	// TODO: deprecated?!
 	
-	loggr.info("site.installer.deletefiles_next()");
-	
-	// Check jsonNum
-	if (!site.installer.vars.delNum && site.installer.vars.delNum!==0) { site.installer.vars.delNum = -1;	}
-	site.installer.vars.delNum++;
-	
-	// Get current job
-	currentjob = site.installer.cfg.delete_files[site.installer.vars.delNum];
-	loggr.log(" > currentjob: "+ currentjob.file_name);
-	
-	// downloadjson finished?
-	if (!currentjob.put) { 
-		site.installer.logger("&nbsp;&gt; Done");
-		site.installer.downloadjson_init();
-		return; // <- important stuff happening here.
-	}
-	
-	// Stuff
-	var path = currentjob.file_path;
-	var filename = currentjob.file_name;
-	var data = currentjob.put;
-	
-	loggr.log(" > Path: "+ path);
-	loggr.log(" > Filename: "+ filename);
-	loggr.log(" > Data: "+ data);
-	
-	// Some output..
-	site.installer.logger("&nbsp;&gt;&gt; Write: "+ path +"/"+ filename);
-	
-	// Do it
-	site.storage.writefile(path,filename,data,
-		function(res) {
-			site.installer.deletefiles_next();
-		},
-		function(err) {
-			loggr.error(" > Could not write/delete");
-			loggr.error(err);
-		}
-	);
-	
-	
+	site.installer.downloadjson_init();
 	
 }
 
@@ -329,7 +290,8 @@ site.installer.deletefiles_next = function() {
 
 site.installer.downloadjson_init = function() {
 	site.installer.logger("Download data...");
-	setTimeout(function(){site.installer.downloadjson_next();},1000);
+	// setTimeout(function(){site.installer.downloadjson_next();},1000);
+	site.installer.downloadjson_next();
 }
 
 site.installer.downloadjson_next = function() {
@@ -603,21 +565,23 @@ site.installer.finishup = function() {
 	// Wait a sec...
 	setTimeout(function(){
 						
-		site.installer.logger("&nbsp;&gt; Done");
-		site.ui.showloading("Restarting...");
+		site.installer.logger("&nbsp;&gt; Done!");
+		//site.ui.showloading("Restarting...");
 		
 		setTimeout(function() {
 			
 			site.cookies.put("app_version",site.cfg.app_version);
 			site.cookies.put("app_is_installed",1);
 			site.cookies.put("app_has_updated",1);
-			window.location.reload(); // TODO: replace all 'window.location.reload();' with window.location.href=[current_host]/[path-to-file]
 			
-		},2500);
+			window.location.reload();
+			
+		},1000);
+		/**/
 		
 		//site.ui.gotosection("#home"); // TODO: no not go here, goto #firstlaunch
 		
-	},2500);
+	},1000);
 	
 }
 

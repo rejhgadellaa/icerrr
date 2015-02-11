@@ -302,8 +302,11 @@ public class MediaStreamer extends CordovaPlugin {
 	
 	private void incrVolume(CallbackContext callbackContext) {
 		
+		boolean isAlarm = sett.getBoolean("isAlarm", false);
+		int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
+		
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
+		audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_RAISE, 1);
 		
 		callbackContext.success("OK");
 		
@@ -311,8 +314,11 @@ public class MediaStreamer extends CordovaPlugin {
 	
 	private void decrVolume(CallbackContext callbackContext) {
 		
+		boolean isAlarm = sett.getBoolean("isAlarm", false);
+		int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
+		
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
+		audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_LOWER, 1);
 		
 		callbackContext.success("OK");
 		

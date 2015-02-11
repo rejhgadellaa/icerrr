@@ -88,6 +88,8 @@ public class MediaStreamerService extends Service {
     
     private String stream_url_active = null;
     
+    private boolean isAlarm;
+    
     public String station_id = "-1";
     private String station_name = "Unknown station";
     private String station_host = null;
@@ -100,7 +102,9 @@ public class MediaStreamerService extends Service {
     
     private boolean serviceIsRunning = false;
     
-    int volumeBeforeDuck = -1;
+    private int volumeBeforeDuck = -1;
+    
+    private int mediaType = -1;
 	
 	// --------------------------------------------------
 	// Lifecycle
@@ -456,7 +460,7 @@ public class MediaStreamerService extends Service {
 	    
 	    // Is Alarm, stream_url and volume
 	    boolean incomingIntentWasNull = false;
-	    boolean isAlarm = false;
+	    isAlarm = false;
 	    int volume = -1;
         if (incomingIntent!=null) {
         	// incomingIntent = this.getIntent(); // sett.getString("mediastreamer_streamUrl",null);
@@ -844,6 +848,13 @@ public class MediaStreamerService extends Service {
 		
 		// SCALE :: 0 - 10
 		
+		// Get mediaType
+		if (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) {
+			mediaType = AudioManager.STREAM_ALARM;
+		} else {
+			mediaType = AudioManager.STREAM_MUSIC;
+		}
+		
 		boolean allowdown = true;
         
         // Check arguments
@@ -852,19 +863,13 @@ public class MediaStreamerService extends Service {
 		
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		
-		float maxvol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		float curvol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		float maxvol = audioManager.getStreamMaxVolume(mediaType);
+		float curvol = audioManager.getStreamVolume(mediaType);
 		float targvol = Math.round((setvol*maxvol)/10);
 		int difvol = Math.round(targvol-curvol);
 		
-		if (allowdown) {
-			if (curvol>targvol) { Log.d(APPTAG,"ChangedVolume: --"); for (int ivol=0; ivol>difvol; ivol--) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1); } }
-			if (curvol<targvol) { Log.d(APPTAG,"ChangedVolume: ++"); for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1); } }
-			}
-		else {
-			Log.d(APPTAG,"ChangedVolume: ++ (upOnly)");
-			for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1); }
-			}
+		if (curvol>targvol) { Log.d(APPTAG,"ChangedVolume: --"); for (int ivol=0; ivol>difvol; ivol--) { audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_LOWER, 1); } }
+		if (curvol<targvol) { Log.d(APPTAG,"ChangedVolume: ++"); for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_RAISE, 1); } }
 		
 		Log.d(APPTAG,"ChangedVolume: set:"+setvol+" --> max:"+maxvol+", cur:"+curvol+", dif:"+difvol);
 		

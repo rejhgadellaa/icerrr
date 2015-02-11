@@ -1,16 +1,13 @@
-{"station_id":"intergalactic_galaxia","host":"radio.intergalacticfm.com","port":80,"path":"/3"}
+{"station_id":"soma_lush","host":"uwstream1.somafm.com","port":80,"path":"/;"}
 
-HTTP/1.0 200 OK
-Content-Type: audio/mpeg
-icy-br:128
-ice-audio-info: ice-samplerate=44100;ice-bitrate=128;ice-channels=2
-icy-br:128
-icy-genre:House
-icy-name:IFM 3: Radio Galaxia
-icy-private:0
+ICY 200 OK
+icy-notice1:<BR>This stream requires <a href="http://www.winamp.com/">Winamp</a><BR>
+icy-notice2:SHOUTcast Distributed Network Audio Server/Linux v1.9.5<BR>
+icy-name:Groove Salad: a nicely chilled plate of ambient beats and grooves. [SomaFM]
+icy-genre:Ambient Chill
+icy-url:http://somafm.com
+content-type:audio/mpeg
 icy-pub:1
-icy-url:http://www.intergalactic.fm
-Server: Icecast 2.3.2
-Cache-Control: no-cache
-icy-metaint:16000
+icy-metaint:45000
+icy-br:128
 
