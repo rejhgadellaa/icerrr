@@ -1,9 +1,9 @@
 [
     
     {
-        "id":"app0194",
+        "id":"app0195",
         "crit":"version",
-        "critvalue":0.193,
+        "critvalue":0.194,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Placeholder",
@@ -26,60 +26,6 @@
 		"buttonLabels":"Yes,No",
 		"repeat":1,
 		"onlyOnWifi":1
-	},
-    
-    {
-        "id":"remove_station_0001",
-        "crit":"remove_station",
-        "critvalue":1,
-        "action":"remove_station",
-        "station_ids":[
-            "intergalactic_freeradiorobotron",
-            "intergalactic_freerobotron"
-            ],
-        "message":[ ],
-        "repeat":0
-    },
-    
-    {
-        "id":"stations_database",
-        "crit":"install-update",
-        "critvalue":1420736423778,
-        "action":"install-update",
-        "message":[ ],
-        "repeat":0
-    },
-	
-	{
-        "example":1,
-		"id":"example1",
-		"crit":"version",
-		"critvalue":0.001,
-		"action":"url",
-		"url":"https://github.com/rejhgadellaa/icerrr/wiki/Changelog",
-		"title":"Update installed!",
-		"message":[
-			"Icerrr has recently been updated to the latest version.\n\n",
-            "Do you want to see what's new?"
-			],
-		"buttonLabels":"Yes,No",
-		"repeat":0,
-		"onlyOnWifi":1
-	},
-	
-	{
-		"example":1,
-		"id":"example2",
-		"crit":"version",
-		"critvalue":0.001,
-		"action":"default",
-		"title":"Notice",
-		"message":[
-			"Unfortunately Icerrr has been pulled from the Google Play Store. Again.\n\n",
-			"You may continue to use the app but I can not push any updates as long as this situation has not been resolved.\n\n",
-			"I apoligize for the inconvenience and hope to offer a solution soon."
-			],
-		"repeat":0
 	}
 	
 ]
