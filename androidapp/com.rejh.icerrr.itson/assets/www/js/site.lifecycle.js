@@ -586,9 +586,23 @@ site.lifecycle.exit = function() {
 
 // ---> Messages
 
-site.lifecycle.checkMsgs = function() {
+site.lifecycle.checkMsgs = function(startedByUser) {
 	
 	loggr.info("site.lifecycle.checkMsgs()");
+	
+	if (startedByUser) {
+		
+		// Check conntype
+		var conntype = site.helpers.getConnType();
+		if (conntype!="WIFI" && conntype!="ETHERNET") {
+			alert("Please enable wifi and try again");
+			return;
+		}
+		
+		// Set flag..
+		site.lifecycle.checkingForUpdates = true;
+		
+	}
 	
 	var action = "get";
 	var queryobj = {
@@ -692,6 +706,7 @@ site.lifecycle.handleMsgs = function(data) {
 			case "install-update-app":
 				site.lifecycle.installUpdateApp(ditem.url);
 				site.lifecycle.storeMsgId(ditem.id,lids);
+				site.lifecycle.checkingForUpdates = false;
 				break;
 			case "install-update":
 				message = "An update for the stations database is available. Press OK to continue.";
@@ -750,6 +765,12 @@ site.lifecycle.handleMsgs = function(data) {
 		
 	}
 	
+	if (site.lifecycle.checkingForUpdates) {
+		message = "Icerrr is up to date (version "+ site.cfg.app_version +")";
+		navigator.notification.alert(message, function(){ }, "Up to date!", "OK");
+	}
+	site.lifecycle.checkingForUpdates = false;
+	
 }
 
 site.lifecycle.storeMsgId = function(id,lids) {
@@ -765,6 +786,10 @@ site.lifecycle.storeMsgId = function(id,lids) {
 site.lifecycle.installUpdateApp = function(url) {
 	
 	loggr.info("site.lifecycle.installUpdateApp_init()");
+	
+	if (site.lifecycle.checkingForUpdates) {
+		site.ui.showtoast("Downloading update...");
+	}
 	
 	// Prep some stuff
 	var targetPath = site.cfg.paths.other;

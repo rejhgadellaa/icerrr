@@ -62,7 +62,7 @@
 	<!-- Javascript: Other -->
     <script language="javascript" type="text/javascript" src="js/plugs/json2.js"></script>
     <script type="text/javascript" language="javascript" src="js/plugs/dateformat.js"></script>
-    <!-- <script type="text/javascript" language="javascript" src="js/plugs/smoothie.js"></script> -->
+    <script type="text/javascript" language="javascript" src="js/plugs/smoothie.js"></script> <!-- req for chrome.cast -->
     <script type="text/javascript" language="javascript" src="js/plugs/md5.js"></script>
     
     <!-- Javascript : Cordova -->
@@ -704,6 +704,10 @@
 	
 	<div class="menu_item activatablel" onClick="site.settings.init();site.home.dismissOverflowMenu();">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;<strong>Settings</strong></div></div>
+	</div>
+	
+	<div class="menu_item activatablel" onClick="site.lifecycle.checkMsgs(true);site.home.dismissOverflowMenu();">
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;Check for updates</div></div>
 	</div>
 
 	<div class="menu_item activatablel" onClick="site.home.sendfeedback();site.home.dismissOverflowMenu();">

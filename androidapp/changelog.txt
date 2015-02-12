@@ -1,3 +1,7 @@
+0.196
+  * New: "Check for updates" option in overflow menu
+  * Fix: Chromecast support
+
 0.195
   * Potential fix for BT devices sometimes causing service to start when it should not
 
