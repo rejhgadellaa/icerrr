@@ -1,3 +1,6 @@
+0.195
+  * Potential fix for BT devices sometimes causing service to start when it should not
+
 0.194
   * Fix: volume for alarms was not set since 0.193
   * Installation is (a lot) faster :D

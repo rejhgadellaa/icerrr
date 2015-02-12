@@ -133,10 +133,14 @@ public class MediaStreamerService extends Service {
         telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         
+        // Remote Control Receiver
         remoteControlReceiver = new RemoteControlReceiver();
         remoteControlReceiverComponent = new ComponentName(this, remoteControlReceiver.getClass());
+        
+        // Deprecated in api level 21..
         audioMgr.registerMediaButtonEventReceiver(remoteControlReceiverComponent);
         
+        // More
         Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
         mediaButtonIntent.setComponent(remoteControlReceiverComponent);
         PendingIntent mediaPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, mediaButtonIntent, 0);
@@ -351,7 +355,12 @@ public class MediaStreamerService extends Service {
 				settEditor.commit();
 			}
 		} else {
-			setup();
+			boolean setupOkay = setup();
+			if (!setupOkay) {
+				Log.w(APPTAG," > !setupOkay, shutdown..");
+				stopSelf();
+				return 0;
+			}
 		}
 		
 		// Now playing + notification
@@ -432,6 +441,8 @@ public class MediaStreamerService extends Service {
         
         // Unreg remotecontrolclients and -receivers
         RemoteControlHelper.unregisterRemoteControlClient(audioMgr,remoteControlClient);
+        
+        // Deprecated:
         audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
         
         // Handle Wifi
@@ -442,11 +453,11 @@ public class MediaStreamerService extends Service {
 	// --------------------------------------------------
 	// Setup
 	
-	private void setup() {
-		setup(false);
+	private boolean setup() {
+		return setup(false);
 	}
 	
-	private void setup(boolean force) {
+	private boolean setup(boolean force) {
         
         Log.d(APPTAG," > setup()");
 		
@@ -485,10 +496,10 @@ public class MediaStreamerService extends Service {
         }
         
         // Check
-        if (stream_url==null) { shutdown(); return; }
+        if (stream_url==null) { shutdown(); return false; }
         if (stream_url==stream_url_active && !force && !incomingIntentWasNull) { 
             Log.d(APPTAG," -> stream already running: "+ stream_url_active);
-            return; 
+            return true; 
         }
         
         // Volume
@@ -507,6 +518,8 @@ public class MediaStreamerService extends Service {
 		mpMgr.init(stream_url,isAlarm);
         
         stream_url_active = stream_url;
+        
+        return true;
 		
 	}
 	
