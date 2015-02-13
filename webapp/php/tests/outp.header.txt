@@ -1,15 +1,13 @@
-{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
+{"station_id":"CUSTOM.Arrow_classic rock pls_583557cd4d2421ddd92625cf6cbf152d_14b7e4d9431_78b81","host":"91.221.151.155","port":80,"path":"/;"}
 
-HTTP/1.0 200 OK
-Content-Type: audio/mpeg
-icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Pop
-icy-name:3FM Serious Radio
-icy-pub:0
-icy-url:http://www.3fm.nl
-Server: ics2kss.omroep.nl
-Cache-Control: no-cache
-icy-metaint:16000
+ICY 200 OK
+icy-notice1:<BR>This stream requires <a href="http://www.winamp.com/">Winamp</a><BR>
+icy-notice2:SHOUTcast Distributed Network Audio Server/Linux v1.9.8<BR>
+icy-name:Arrow Classic Rock
+icy-genre:Rock
+icy-url:http://www.arrow.nl
+content-type:audio/mpeg
+icy-pub:1
+icy-metaint:32768
+icy-br:128
 
