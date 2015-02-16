@@ -889,7 +889,7 @@ site.helpers.isConnected = function() {
 	var type = site.helpers.getConnType();
 	
 	switch(type) {
-		case "UNKNOWN":
+		//case "UNKNOWN":
 		case "NONE":
 			return false;
 		default:

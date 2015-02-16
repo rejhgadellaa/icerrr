@@ -1,3 +1,6 @@
+0.198
+  * Fix: Network connection 'UNKNOWN' is no longer regarded as 'no connection'
+
 0.197
   * Fix: force resize when resuming app
 
