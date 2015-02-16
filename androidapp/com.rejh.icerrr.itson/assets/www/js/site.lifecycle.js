@@ -765,25 +765,25 @@ site.lifecycle.installUpdateApp = function(url) {
 	
 	loggr.info("site.lifecycle.installUpdateApp_init()");
 	
-	if (site.lifecycle.checkingForUpdates) {
-		site.ui.showtoast("Downloading update...");
-	}
-	
 	// Prep some stuff
 	var targetPath = site.cfg.paths.other;
 	var targetFile = "Icerrr.apk";
+			
+	// success -> Prompt user
+	message = "An update for Icerrr is availabe. Do you want to install it now?";
+	var buttonLabels = "OK,Cancel";
+	navigator.notification.confirm(message, function(buttonIndex){
+		if (buttonIndex==1) {
 	
-	// We'll just assume we need to download the file, we're not going to check if it exists whatever...
-	site.webapi.download(url,targetPath,targetFile,
-		function(fileEntry){
-			
-			loggr.log(" > Downloaded: "+ fileEntry.fullPath);
-			
-			// success -> Prompt user
-			message = "An update for Icerrr is availabe. Do you want to install it now?";
-			var buttonLabels = "OK,Cancel";
-			navigator.notification.confirm(message, function(buttonIndex){
-				if (buttonIndex==1) {
+			site.ui.showloading(false,"Downloading update...");
+	
+			// We'll just assume we need to download the file, we're not going to check if it exists whatever...
+			site.webapi.download(url,targetPath,targetFile,
+				function(fileEntry){
+					
+					loggr.log(" > Downloaded: "+ fileEntry.fullPath);
+							
+					site.ui.hideloading();
 					
 					// A-go-go
 					window.mediaStreamer.installUpdateApp(
@@ -793,22 +793,26 @@ site.lifecycle.installUpdateApp = function(url) {
 						},
 						function(err) {
 							loggr.error(" > mediaStreamer.installUpdateApp failed?! -> "+ err);
+							site.ui.showtoast("Install failed :(");
+							site.ui.hideloading();
 						}
 					);
 					
-				} else {
-					// nothin..
+				},
+				function(fileError) {
+					// Error -> Log
+					loggr.error("Error downloading icerrr.apk, fileTransferError "+ err.code);
+					// Just to be sure: remove the file if it somehow already exists..
+					site.storage.deletefile(targetPath,targetFile,function(){},function(){});
+					site.ui.showtoast("Download failed :(");
+					site.ui.hideloading();
 				}
-			}, "Update available", buttonLabels);
-			
-		},
-		function(fileError) {
-			// Error -> Log
-			loggr.error("Error downloading icerrr.apk, fileTransferError "+ err.code);
-			// Just to be sure: remove the file if it somehow already exists..
-			site.storage.deletefile(targetPath,targetFile,function(){},function(){});
+			);
+					
+		} else {
+			// nothin..
 		}
-	);
+	}, "Update available", buttonLabels);
 	
 }
 

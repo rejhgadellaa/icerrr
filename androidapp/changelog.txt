@@ -1,3 +1,6 @@
+0.199
+  * Loading overlay when downloading update
+
 0.198
   * Fix: Network connection 'UNKNOWN' is no longer regarded as 'no connection'
 

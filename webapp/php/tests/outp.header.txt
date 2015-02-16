@@ -1,15 +1,10 @@
-{"station_id":"radio3fm","host":"icecast.omroep.nl","port":80,"path":"/3fm-bb-mp3"}
+{"station_id":"radio538","host":"82.201.100.9","port":8000,"path":"/radio538"}
 
-HTTP/1.0 200 OK
-Content-Type: audio/mpeg
-icy-br:192
-ice-audio-info: bitrate=192
-icy-br:192
-icy-genre:Pop
-icy-name:3FM Serious Radio
-icy-pub:0
-icy-url:http://www.3fm.nl
-Server: ics2kss.omroep.nl
-Cache-Control: no-cache
-icy-metaint:16000
+HTTP/1.1 302 Found
+Date: Mon, 16 Feb 2015 07:09:42 GMT
+Server: Apache/2.2.3 (CentOS)
+Location: http://vip-icecast.538.lw.triple-it.nl/RADIO538_MP3
+Content-Length: 309
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
 
