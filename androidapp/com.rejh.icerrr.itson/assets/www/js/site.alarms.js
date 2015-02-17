@@ -226,12 +226,14 @@ site.alarms.save = function(silenced) {
 
 // ---> Remove
 
-site.alarms.remove = function() {
+site.alarms.remove = function(dontask) {
 	
 	loggr.info("site.alarms.remove()");
 	
-	if (!confirm("Are you sure you want to remove this alarm?")) {
-		return;
+	if (!dontask) {
+		if (!confirm("Are you sure you want to remove this alarm?")) {
+			return;
+		}
 	}
 	
 	var alarmCfg = site.alarms.newAlarmCfg;

@@ -148,6 +148,9 @@ site.mp.stop = function(cb,cberr) {
 	site.session.alarmVolume = -1;
 	site.mp.mpstatus = Media.MEDIA_NONE;
 	
+	// Remove snooze alarm if any
+	site.home.alarmSnoozeCancel();
+	
 }
 
 // ---> Set Playing, stopped

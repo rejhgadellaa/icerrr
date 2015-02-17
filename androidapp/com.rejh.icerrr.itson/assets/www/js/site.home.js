@@ -140,6 +140,17 @@ site.home.init = function() {
 	loggr.log(" > Store as default_station for MediaStreamer plugin");
 	window.mediaStreamer.setting("string","default_station",JSON.stringify(station),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	
+	// Alarm dialog?
+	if (site.session.alarmActive) {
+		$("#home .alarm_dialog").fadeIn(500);
+	}
+	
+	// Alarm snoozed?
+	if (site.mp.isPlaying && site.session.snoozeAlarm) {
+		loggr.log(" > Cancel snoozed alarm(s)");
+		site.home.alarmSnoozeCancel();
+	}
+	
 }
 
 // PAUSE RESUME
@@ -652,6 +663,77 @@ site.home.viewlog = function() {
 		$("#viewlog .main .block.content").html(loghtml);
 		
 	},500);
+	
+}
+
+// ---> Alarm dialog
+
+site.home.alarmSnooze = function() {
+	
+	loggr.info("site.home.alarmSnooze()");
+	
+	// Stop playback
+	loggr.log(" > Stop playback..");
+	site.mp.stop();
+	
+	// Set tmp alarm 10 minutes in future..
+	var id = site.helpers.getUniqueID();
+	var alarm_id = site.alarms.getUniqueAlarmID();
+	var date = new Date();
+		date.setMinutes(date.getMinutes()+1)
+	var hour = date.getHours();
+	var minute = date.getMinutes();
+	var alarmCfg = {
+		id: id,
+		alarm_id: alarm_id,
+		timeMillis: site.alarms.getAlarmDate(hour,minute).getTime(),
+		hour: hour,
+		minute: minute,
+		volume: 7,
+		repeat: false,
+		repeatCfg: [0,0,0,0,0,0,0],
+		station: site.session.currentstation
+	};
+	
+	// Store
+	site.session.snoozeAlarm = alarmCfg;
+	site.helpers.storeSession();
+	
+	// Set
+	site.alarms.setAlarm(alarm_id,alarmCfg);
+	
+	// Hide dialog
+	$("#home .alarm_dialog").fadeOut(500);
+	
+}
+
+site.home.alarmSnoozeCancel = function() {
+	
+	loggr.info("site.home.alarmSnoozeCancel()");
+	
+	if (site.session.snoozeAlarm) {
+		if (!site.alarms) { site.alarms = {}; }
+		site.alarms.newAlarmCfg = site.session.snoozeAlarm;
+		site.alarms.remove(true);
+	} else {
+		loggr.log(" > No alarm snoozed? => !site.vars.snoozeAlarm");
+	}
+	
+	site.session.snoozeAlarm = null;
+	site.helpers.storeSession();
+	
+}
+
+site.home.alarmStop = function() {
+	
+	loggr.info("site.home.alarmStop()");
+	
+	// Stop playback
+	loggr.log(" > Stop playback..");
+	site.mp.stop();
+	
+	// Hide dialog
+	$("#home .alarm_dialog").fadeOut(500);
 	
 }
 

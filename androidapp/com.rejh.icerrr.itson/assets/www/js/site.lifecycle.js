@@ -330,7 +330,9 @@ site.lifecycle.onNewIntent = function(result) {
 			site.home.init(); // refresh home
 			site.session.alarmActive = true; // set alarm active
 			site.session.alarmVolume = thealarm.volume;
+			site.helpers.storeSession(); // store session
 			site.mp.play(); // and play
+			$("#home .alarm_dialog").fadeIn(500); // And show dialog
 		}, function(err) {
 			loggr.error(" > isAlarm but !station_id? "+err);
 			site.vars.thealarm = null;
