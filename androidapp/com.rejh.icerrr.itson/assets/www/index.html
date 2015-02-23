@@ -171,12 +171,12 @@
     <div class="main" style="background-image:url(img/bg_home_default.jpg);">
 		
 		<div class="station_image" onClick="site.home.dismissOverflowMenu();"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div></div>
-	  <div class="station_image_overlay"></div>
-	  <div class="station_name textshadow25">...</div>
-      <div class="station_nowplaying textshadow25">...</div>
-	  <div class="station_image_overlay_bottom"></div>
+		<div class="station_image_overlay"></div>
+		<div class="station_name textshadow25">...</div>
+    	<div class="station_nowplaying textshadow25">...</div>
+		<div class="station_image_overlay_bottom"></div>
 		
-  <div class="footer">
+		<div class="footer">
 			<div class="button left activatablel" onClick="site.alarms.init();">
 				<div class="button_inner">
 					<div class="center_table"><div class="center_td"><img title="Go to alarms" src="img/icons-96/ic_alarms.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
@@ -195,6 +195,14 @@
 					<div class="center_table"><div class="center_td"><img title="Go to stations" src="img/icons-96/ic_list.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
 				</div>
 			</div>
+		</div>
+		
+        <div class="alarm_dialog">
+            <div class="alarm_dialog_inner shadow_z5 round2">
+                <div class="time">00<blink>:</blink>00</div>
+                <div class="button snooze activatablel" onClick="site.home.alarmSnooze();">SNOOZE</div>
+                <div class="button stop activatablel" onClick="site.home.alarmStop();">STOP</div>
+            </div>
 		</div>
 		
 	</div>

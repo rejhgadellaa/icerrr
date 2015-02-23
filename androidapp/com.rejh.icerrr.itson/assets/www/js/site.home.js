@@ -118,27 +118,23 @@ site.home.init = function() {
 	//$("#searchstation_results .main").html("");
 	//$("#searchicon .main").html("");
 	
-	// App updated
-	/*
-	if (site.cookies.get("donate_button_shown")!=1 && site.vars.app_has_updated_home) {
-		site.vars.app_has_updated_home = false; // do once
-		site.cookies.put("donate_button_shown",1);
-		$("#dialog").fadeIn(500);
-		$("#dialog_inner").html(""
-			+"<h2>Icerrr <span style='font-size:12pt'>"+ site.cfg.app_version +"</span></h2>"
-			+"<p>Thanks for using Icerrr!</p>"
-			+"<p>Please consider making a small donation to keep the project (and me) alive :)</p>"
-			+"<p>(This message will auto-destruct in ~5 seconds)</p>"
-			+"<img src=\"https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif\" onclick=\"window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S6BCCM9LESNBU&lc=US&item_name=REJH%20Gadellaa&item_number=icerrr_droidapp&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted','_system');\" style='position:absolute; bottom:32px; left:50%; margin-left:-72px;' />"
-		);
-		setTimeout(function(){ $("#dialog").fadeOut(500); },5500);
-	}
-	/**/
-	
 	// Save to mediastreamer
 	station.station_port = ""+station.station_port;
 	loggr.log(" > Store as default_station for MediaStreamer plugin");
 	window.mediaStreamer.setting("string","default_station",JSON.stringify(station),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	
+	// Alarm dialog?
+	if (site.session.alarmActive) {
+		loggr.log(" > Alarm detected, show dialog + alarmUpdateTime()");
+		$("#home .alarm_dialog").fadeIn(500);
+		site.home.alarmUpdateTime();
+	}
+	
+	// Alarm snoozed?
+	if (site.mp.isPlaying && site.session.snoozeAlarm) {
+		loggr.log(" > Cancel snoozed alarm(s)");
+		site.home.alarmSnoozeCancel();
+	}
 	
 }
 
@@ -153,6 +149,7 @@ site.home.onpause = function() {
 site.home.onresume = function() {
 	loggr.info("site.home.onresume()");
 	site.home.init_ui_updates();
+	site.home.alarmUpdateTime();
 }
 
 // ---> Media: play, stop
@@ -652,6 +649,98 @@ site.home.viewlog = function() {
 		$("#viewlog .main .block.content").html(loghtml);
 		
 	},500);
+	
+}
+
+// ---> Alarm dialog
+
+site.home.alarmUpdateTime = function() {
+	
+	loggr.info("site.home.alarmUpdateTime()");
+	
+	if (site.session.alarmActive) {
+	
+		var date = new Date();
+		var hour = site.helpers.formatNum(date.getHours());
+		var minute = site.helpers.formatNum(date.getMinutes());
+		
+		$("#home .alarm_dialog .time").html(hour +"<blink>:</blink>"+ minute);
+		
+		if (site.timeouts.alarmUpdateTimeTimeout) { clearTimeout(site.timeouts.alarmUpdateTimeTimeout); }
+		site.timeouts.alarmUpdateTimeTimeout = setTimeout(function(){
+			site.home.alarmUpdateTime();
+		},10*1000);
+		
+	}
+	
+}
+
+site.home.alarmSnooze = function() {
+	
+	loggr.info("site.home.alarmSnooze()");
+	
+	// Stop playback
+	loggr.log(" > Stop playback..");
+	site.mp.stop();
+	
+	// Set tmp alarm 10 minutes in future..
+	var id = site.helpers.getUniqueID();
+	var alarm_id = site.alarms.getUniqueAlarmID();
+	var date = new Date();
+		date.setMinutes(date.getMinutes()+10)
+	var hour = date.getHours();
+	var minute = date.getMinutes();
+	var alarmCfg = {
+		id: id,
+		alarm_id: alarm_id,
+		timeMillis: site.alarms.getAlarmDate(hour,minute).getTime(),
+		hour: hour,
+		minute: minute,
+		volume: 7,
+		repeat: false,
+		repeatCfg: [0,0,0,0,0,0,0],
+		station: site.session.currentstation
+	};
+	
+	// Store
+	site.session.snoozeAlarm = alarmCfg;
+	site.helpers.storeSession();
+	
+	// Set
+	site.alarms.setAlarm(alarm_id,alarmCfg);
+	
+	// Hide dialog
+	$("#home .alarm_dialog").fadeOut(500);
+	
+}
+
+site.home.alarmSnoozeCancel = function() {
+	
+	loggr.info("site.home.alarmSnoozeCancel()");
+	
+	if (site.session.snoozeAlarm) {
+		if (!site.alarms) { site.alarms = {}; }
+		site.alarms.newAlarmCfg = site.session.snoozeAlarm;
+		site.alarms.remove(true);
+	} else {
+		loggr.log(" > No alarm snoozed? => !site.vars.snoozeAlarm");
+	}
+	
+	site.session.snoozeAlarm = null;
+	site.helpers.storeSession();
+	
+}
+
+site.home.alarmStop = function() {
+	
+	loggr.info("site.home.alarmStop()");
+	
+	// Stop playback
+	loggr.log(" > Stop playback..");
+	site.mp.stop();
+	
+	// Hide dialog
+	$("#home .alarm_dialog").fadeOut(500);
 	
 }
 
