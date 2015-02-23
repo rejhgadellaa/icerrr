@@ -219,9 +219,11 @@ site.lifecycle.initApp = function(force) {
 		site.vars.app_has_updated_home = true;
 		loggr.log(" > App_has_updated: "+site.cookies.get("app_has_updated"));
 		site.cookies.put("app_has_updated",0);
-		site.alarms.setAlarms();
 		site.helpers.uploadStations();
 	}
+	
+	// Re-set alarms
+	site.alarms.setAlarms();
 	
 	// Hacks..
 	site.ui.hackActiveCssRule();
@@ -248,7 +250,8 @@ site.lifecycle.onNewIntent = function(result) {
 	var alarmOkay = false;
 	var hour = new Date().getHours();
 	var minute = new Date().getMinutes();
-	var alarms = site.session.alarms;
+	var alarms = jQuery.extend(true, [], site.session.alarms);
+	if (site.session.snoozeAlarm) { alarms.push(site.session.snoozeAlarm); }
 	var thealarm;
 	for (var i in alarms) {
 		
@@ -333,6 +336,7 @@ site.lifecycle.onNewIntent = function(result) {
 			site.helpers.storeSession(); // store session
 			site.mp.play(); // and play
 			$("#home .alarm_dialog").fadeIn(500); // And show dialog
+			site.home.alarmUpdateTime();
 		}, function(err) {
 			loggr.error(" > isAlarm but !station_id? "+err);
 			site.vars.thealarm = null;

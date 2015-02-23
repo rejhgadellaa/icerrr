@@ -249,7 +249,7 @@ site.alarms.remove = function(dontask) {
 		}
 	}
 	
-	if (alarmIndex<0) {
+	if (alarmIndex<0 && !dontask) {
 		loggr.error(" > Could not find alarm by id: "+ alarmCfg.id);
 		return;
 	}
@@ -266,9 +266,10 @@ site.alarms.remove = function(dontask) {
 	// Cancel alarm
 	window.alarmMgr.cancel(
 		function(msg) {
-			site.ui.showtoast("Alarm removed");
-			site.lifecycle.onBackButton();
+			if (!dontask) { site.ui.showtoast("Alarm removed"); }
+			if (!dontask) { site.lifecycle.onBackButton(); }
 			site.alarms.writesession();
+			site.alarms.setAlarms();
 		},
 		function(err) {
 			loggr.error(err);

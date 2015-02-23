@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.AlarmManager;
@@ -44,9 +43,10 @@ public class AlarmMgrOnBoot extends BroadcastReceiver {
 		boolean isUpdateAndRun = false;
 		try {
 			String dataString = _intent.getDataString();
-			if (dataString!=null) {
+			String action = _intent.getAction();
+			if (dataString!=null && action.equals("android.intent.action.PACKAGE_REPLACED")) {
 				isUpdate = true;
-				if (dataString.contains("com.rejh.icerrr.droidapp")){
+				if (dataString.contains("com.rejh.icerrr.itson")){
 					isUpdate = true;
 					isUpdateAndRun = true;
 				}
@@ -188,6 +188,15 @@ public class AlarmMgrOnBoot extends BroadcastReceiver {
         	e.printStackTrace();
         	Log.e(APPTAG," > Exception, probably JSON related",e);
         }
+		
+		// Start app when it's an update :D
+		if (isUpdate) {
+			Log.d(APPTAG," > Start Icerrr...");
+			Intent appIntent = new Intent();
+			appIntent.setClassName("com.rejh.icerrr.itson", "com.rejh.icerrr.itson.Icerrr");
+			appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startActivity(appIntent);
+		}
 
 	}
     
