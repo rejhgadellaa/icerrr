@@ -226,12 +226,14 @@ site.alarms.save = function(silenced) {
 
 // ---> Remove
 
-site.alarms.remove = function() {
+site.alarms.remove = function(dontask) {
 	
 	loggr.info("site.alarms.remove()");
 	
-	if (!confirm("Are you sure you want to remove this alarm?")) {
-		return;
+	if (!dontask) {
+		if (!confirm("Are you sure you want to remove this alarm?")) {
+			return;
+		}
 	}
 	
 	var alarmCfg = site.alarms.newAlarmCfg;
@@ -247,7 +249,7 @@ site.alarms.remove = function() {
 		}
 	}
 	
-	if (alarmIndex<0) {
+	if (alarmIndex<0 && !dontask) {
 		loggr.error(" > Could not find alarm by id: "+ alarmCfg.id);
 		return;
 	}
@@ -264,9 +266,10 @@ site.alarms.remove = function() {
 	// Cancel alarm
 	window.alarmMgr.cancel(
 		function(msg) {
-			site.ui.showtoast("Alarm removed");
-			site.lifecycle.onBackButton();
+			if (!dontask) { site.ui.showtoast("Alarm removed"); }
+			if (!dontask) { site.lifecycle.onBackButton(); }
 			site.alarms.writesession();
+			site.alarms.setAlarms();
 		},
 		function(err) {
 			loggr.error(err);

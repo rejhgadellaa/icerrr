@@ -414,6 +414,50 @@ section {
 		-webkit-animation-fill-mode: forwards; /* Hold the last keyframe */
 		-webkit-animation-timing-function:ease-in-out; /* Linear animation */
 	}
+	
+	#home .alarm_dialog {
+		z-index:3;
+		display:none;
+		position:absolute;
+		top:0; left:0; right:0; bottom:0;
+		background:rgba(0,0,0,0.5);
+	}
+	
+	#home .alarm_dialog_inner {	
+		display:block;
+		position:absolute;
+		top:50%; left:50%;
+		width:280px; height:280px;
+		margin:-140px 0 0 -140px;
+		background:rgba(255,255,255,0.87);
+		color:rgba(0,0,0,0.87);
+	}
+	
+	#home .alarm_dialog .time {
+		position:absolute;
+		top:100px; left:0; right:0;
+		text-align:center;
+		font-size:48pt;
+		font-weight:300;
+	}
+	
+	#home .alarm_dialog .button {
+		position:absolute;
+		bottom:0;
+		width:100px;
+		padding:16px;
+		text-align:center;
+		font-size:16pt;
+		color:#2D6073;
+	}
+	
+		#home .alarm_dialog .button.snooze {
+			left:0;
+		}
+		
+		#home .alarm_dialog .button.stop {
+			right:0;
+		}
 
 #channellist {
 	
