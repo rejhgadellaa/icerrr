@@ -32,3 +32,8 @@ cache/
 webapp/json/
 !webapp/json/stations.json
 !webapp/json/stations.example.json
+
+# nowplaying debug files
+outp.header.txt
+outp.meta.txt
+outp.txt
