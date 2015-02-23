@@ -26,6 +26,15 @@
 		"buttonLabels":"Yes,No",
 		"repeat":1,
 		"onlyOnWifi":1
-	}
+	},
+    
+    {
+        "id":"stations_database",
+        "crit":"install-update",
+        "critvalue":1424707400920,
+        "action":"install-update",
+        "message":[ ],
+        "repeat":0
+    }
 	
 ]
