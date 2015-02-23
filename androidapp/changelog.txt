@@ -1,3 +1,6 @@
+0.200
+  * Fix: alarms would not fire in certain circumstances
+
 0.199
   * Loading overlay when downloading update
 
