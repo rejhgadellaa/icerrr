@@ -377,7 +377,7 @@ site.installer.downloadjson_read = function() {
 	loggr.log(" > Filename: "+ filename);
 	
 	// Some output..
-	site.installer.logger("&nbsp;&gt;&gt; Read: "+ path +"/"+ filename);
+	site.installer.logger("&nbsp;&gt;&gt; Merge: "+ path +"/"+ filename);
 	
 	site.storage.readfile(path,filename,
 		function(datalocalstr) {

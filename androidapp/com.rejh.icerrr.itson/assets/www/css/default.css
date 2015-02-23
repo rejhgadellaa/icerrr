@@ -435,19 +435,19 @@ section {
 	
 	#home .alarm_dialog .time {
 		position:absolute;
-		top:100px; left:0; right:0;
+		top:88px; left:0; right:0;
 		text-align:center;
-		font-size:48pt;
+		font-size:56pt;
 		font-weight:300;
 	}
 	
 	#home .alarm_dialog .button {
 		position:absolute;
 		bottom:0;
-		width:100px;
+		width:108px;
 		padding:16px;
 		text-align:center;
-		font-size:16pt;
+		font-size:14pt;
 		color:#2D6073;
 	}
 	
@@ -773,7 +773,7 @@ section {
 	#settings .block .item.title {
 		position:relative;
 		margin-right:32px;
-		font-size:16pt;
+		font-size:14pt;
 		font-weight:normal;
 		overflow: hidden;
 		white-space: nowrap;
@@ -782,12 +782,14 @@ section {
 	
 	#settings .block .item.subtitle {
 		position:relative;
+		margin-top:4px;
 		margin-right:32px;
+		font-size:10pt;
 	}
 	
 		#settings .checkboxWrap {
 			position:absolute;
-			top:4px; right:0px;
+			top:0px; right:0px;
 		}
 	
 /* -- OVERFLOW_MENU */
@@ -802,7 +804,6 @@ section {
 	margin:-1px;
 	background:rgba(255,255,255,1);
 	border:1px solid #ccc;
-	xtransition:width 250ms, max-height 250ms;
 }
 
 .overflow_menu.active {
@@ -832,13 +833,15 @@ section {
 	top:0; left:0; right:0; bottom:0;
 	width:100%;
 	height:100%;
-	background:rgba(0,0,0,0.5);
+	background:rgba(0,0,0,0.67);
 	font-size:24pt;
 	font-weight:300;
 	color:#fff;
 }
 
-	.overlay_wrap
+	.overlay_submsg {
+		font-size:12pt;
+	}
 	
 /* Specific */
 
@@ -865,11 +868,13 @@ section {
 	z-index:99;
 	display:none;
 	position:absolute;
-	left:32px; right:32px; bottom:32px;
+	/* left:24px; right:24px; bottom:24px; /**/
+	left:0; right:0; bottom:0;
 	height:auto;
-	padding:16px 24px 16px 24px;
+	/* padding:16px 16px 16px 16px; /**/
+	padding:24px 24px 22px 24px;
 	color:rgba(255,255,255,0.87);
-	background-color:rgba(0,0,0,0.5);
+	background-color:rgba(0,0,0,0.67);
 	pointer-events:none;
 }
 
@@ -908,7 +913,7 @@ section {
 /* Shadow */
 
 .textshadow25 {
-	text-shadow: 2px 2px rgba(0, 0, 0, 0.25);
+	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 	}
 	
 .shadow_z1 {

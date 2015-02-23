@@ -55,7 +55,7 @@
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 	
 	<!-- Javascript: jQuery -->
-    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" language="javascript" src="js/jquery/jquery.longclick-simple.js"></script>
 	<!-- <script type="text/javascript" language="javascript" src="js/jquery/jquery.bounceback.js"></script> -->
 	
@@ -185,7 +185,7 @@
 			<div class="button center activatablel" id="home_play" onClick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
 				<div class="button_inner">
 					<div class="button_play_wrap">
-						<img src="img/icons-96/ic_play_w.png" />
+						<img title="Play/Stop" src="img/icons-96/ic_play_w.png" />
 						<div class="button_play_bufferAnim"></div>
 					</div>
 			  </div>
@@ -198,7 +198,7 @@
 		</div>
 		
         <div class="alarm_dialog">
-            <div class="alarm_dialog_inner shadow_z5 round2">
+            <div class="alarm_dialog_inner shadow_z5 round4">
                 <div class="time">00<blink>:</blink>00</div>
                 <div class="button snooze activatablel" onClick="site.home.alarmSnooze();">SNOOZE</div>
                 <div class="button stop activatablel" onClick="site.home.alarmStop();">STOP</div>
@@ -688,10 +688,9 @@
 				
 			<div class="itemWrap sendLogs">
 				<div class="item title">Send error logs</div>
-				<div class="item subtitle">Automatically upload (error) logs to help improve Icerrr <a href="javascript:void(0);" onClick="site.settings.helpSendLogs();">(?)</a></div>
+				<div class="item subtitle">Automatically upload logs to help improve Icerrr <a href="javascript:void(0);" onClick="site.settings.helpSendLogs();">(?)</a></div>
 				<div class="checkboxWrap"><input name="sendLogs" type="checkbox" class="checkbox" checked="checked" /></div>
 			</div>
-			
 	  </div>
 		
     </div>
@@ -702,7 +701,7 @@
 <div id="loading" class="overlay_wrap">
 	<div class="center_table">
 	<div class="center_td">
-		<div class="message">mmrRRMZzz</div>
+		<div class="message textshadow25">mmrRRMZzz</div>
 	</div>
 	</div>
 </div>
@@ -744,7 +743,7 @@
 </div>
 
 <!-- Overlay: Toast -->
-<div id="overlay_toast" class="round4">Toast!</div>
+<div id="overlay_toast" class="textshadow25">Toast!</div>
 
 </body>
 

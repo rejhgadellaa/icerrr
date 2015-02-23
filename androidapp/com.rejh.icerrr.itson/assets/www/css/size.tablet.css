@@ -17,3 +17,15 @@
 	#home .main .station_nowplaying {
 		font-size:16pt;
 	}
+	
+/* -- OVERLAYS */
+
+/* Common */
+
+.overlay_wrap {
+	font-size:32pt;
+}
+
+	.overlay_submsg {
+		font-size:16pt;
+	}

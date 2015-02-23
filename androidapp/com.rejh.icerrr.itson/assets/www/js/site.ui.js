@@ -106,7 +106,7 @@ site.ui.gotosection = function(selector) {
 site.ui.showloading = function(message,submsg) {
 	loggr.log("site.ui.showloading()");
 	if (!message) { message = site.helpers.getRandomListEntry(site.data.strings.loading); }
-	if (submsg) { message += "<br><span style='font-size:12pt;'>"+submsg+"</span>"; }
+	if (submsg) { message += "<br><span class='overlay_submsg'>"+submsg+"</span>"; }
 	site.vars.isLoading = true;
 	$("#loading.overlay_wrap .message").html(message);
 	$("#loading.overlay_wrap").fadeIn(500); // TODO: animation gpu powered..
@@ -125,16 +125,18 @@ site.ui.hideloading = function() {
 
 site.ui.showtoast = function(msg, timeInSec) {
 	loggr.log("site.ui.showtoast()");
-	if (site.timeouts.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
-	if (!timeInSec) { timeInSec = 3.0; }
+	if (site.ui.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
+	if (!timeInSec) { timeInSec = 1.5; }
 	var timeInMsec = timeInSec * 1000;
 	$("#overlay_toast").html(msg);
 	$("#overlay_toast").fadeIn(250);
-	site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec); 
+	site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec);
+	loggr.log(" > "+ timeInMsec +" ms");
 }
 
 site.ui.hidetoast = function() {
 	loggr.log("site.ui.hidetoast()");
+	if (site.timeouts.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
 	$("#overlay_toast").fadeOut(250);
 }
 
@@ -170,7 +172,7 @@ site.ui.setLongclickHelp = function() {
 			navigator.notification.vibrate(100);
 			
 			try {
-			site.ui.showtoast(obj.title);
+			site.ui.showtoast("Info: "+ obj.title);
 			} catch(e) { loggr.warn(" > Attribute missing: 'title' on "+obj); }
 			
 			

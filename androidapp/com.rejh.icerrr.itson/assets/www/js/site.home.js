@@ -712,6 +712,8 @@ site.home.alarmSnooze = function() {
 	// Hide dialog
 	$("#home .alarm_dialog").fadeOut(500);
 	
+	site.ui.showtoast("Alarm snoozed <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>Cancel</span>",5);
+	
 }
 
 site.home.alarmSnoozeCancel = function() {
@@ -722,6 +724,7 @@ site.home.alarmSnoozeCancel = function() {
 		if (!site.alarms) { site.alarms = {}; }
 		site.alarms.newAlarmCfg = site.session.snoozeAlarm;
 		site.alarms.remove(true);
+		site.ui.showtoast("Snooze canceled")
 	} else {
 		loggr.log(" > No alarm snoozed? => !site.vars.snoozeAlarm");
 	}

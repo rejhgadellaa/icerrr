@@ -1,3 +1,10 @@
+0.201 [BETA]
+  * New: You can now snooze alarms!
+  * Tweaked UI for tablets (larger fonts where appropriate)
+  * Tweaked looks: toast messages, settings
+  * Upgraded jquery to 1.11.2 (from 1.9.1)
+  * Big fuxes. Yes.
+
 0.200
   * Fix: alarms would not fire in certain circumstances
 

@@ -256,6 +256,7 @@ site.alarms.remove = function(dontask) {
 	
 	// Build new alarm list
 	newAlarms = [];
+	if (!site.session.alarms) { site.session.alarms = []; }
 	for (var i=0; i<site.session.alarms.length; i++) {
 		if (i!=alarmIndex) { newAlarms.push(site.session.alarms[i]); }
 	}
