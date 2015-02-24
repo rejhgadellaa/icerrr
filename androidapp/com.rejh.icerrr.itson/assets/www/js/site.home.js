@@ -132,12 +132,6 @@ site.home.init = function() {
 	// Test: chromecast
 	site.cast.setup();
 	
-	// Cleanup other containers || TODO
-	//$("#alarms .main").html("");
-	//$("#channellist .main").html("");
-	//$("#searchstation_results .main").html("");
-	//$("#searchicon .main").html("");
-	
 	// Save to mediastreamer
 	station.station_port = ""+station.station_port;
 	loggr.log(" > Store as default_station for MediaStreamer plugin");
@@ -155,6 +149,13 @@ site.home.init = function() {
 		loggr.log(" > Cancel snoozed alarm(s)");
 		site.home.alarmSnoozeCancel();
 	}
+	
+	// Some events..
+	$(".overflow_menu_button_close").off("click");
+	$(".overflow_menu_button_close").on("click",function(evt) {
+		site.home.dismissOverflowMenu();
+		evt.preventDefault();
+	});
 	
 }
 
@@ -595,12 +596,6 @@ site.home.handleStationImage = function(src) {
 
 // ---> Overflow menu
 
-site.home.dismissOverflowMenu = function() {
-	site.home.overflowMenuIsVisible = false;
-	$(".overflow_menu").fadeOut(125);
-	$(".overflow_menu").removeClass("active");
-}
-
 site.home.toggleOverflowMenu = function() {
 	
 	loggr.info("site.home.toggleOverflowMenu()");
@@ -617,6 +612,12 @@ site.home.toggleOverflowMenu = function() {
 		$(".overflow_menu").removeClass("active");
 	}
 	
+}
+
+site.home.dismissOverflowMenu = function() {
+	site.home.overflowMenuIsVisible = false;
+	$(".overflow_menu").fadeOut(125);
+	$(".overflow_menu").removeClass("active");
 }
 
 // ---> Send feedback
@@ -732,7 +733,7 @@ site.home.alarmSnooze = function() {
 	// Hide dialog
 	$("#home .alarm_dialog").fadeOut(500);
 	
-	site.ui.showtoast("Alarm snoozed <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>Cancel</span>",5);
+	site.ui.showtoast("Alarm snoozed <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5);
 	
 }
 

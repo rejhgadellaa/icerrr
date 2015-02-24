@@ -108,16 +108,6 @@ site.mp.play = function(cb,cberr) {
 		}
 	}
 	
-	// Debug, temp, TODO: remove
-	try {
-	for (var i=0; i<site.session.starred.length; i++) {
-		// loggr.log(" > Station "+ site.session.starred[i].station_name +", "+ site.session.starred[i].station_icon);
-		if (!site.session.starred[i].station_icon || site.session.starred[i].station_icon == "null") {
-			loggr.error(" > No station_icon? "+ JSON.stringify(site.session.starred[i]), {dontupload:true});
-		}
-	}
-	} catch(e) { }
-	
 	// Send starred stations 
 	window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
 		function(res) {

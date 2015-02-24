@@ -4,8 +4,7 @@
 /*
 
 	ICERRR - default css
-	This css is targeted at phones (~320 x ~480), tablets will be targeted with media queries and additional css files
-	Also: landscape...
+	This css is targeted at phones (~320 x ~480)
 	
 	Notes:
 	* Palettes
@@ -187,7 +186,7 @@ section {
 		z-index:1;
 		overflow:auto;
 		position:relative;
-		top:56px; left:0; right:0;
+		top:56px; left:0; right:0; bottom:0;
 		width:100%;
 		xheight:*; /* TODO: smart way to set height dynamically so it uses all available space? */
 	}
@@ -272,6 +271,7 @@ section {
 			height:56px;
 			border-radius:50%;
 			background:#2D6073;
+			transition:bottom 250ms;
 		}
 		
 			.fab img {
@@ -319,6 +319,15 @@ section {
 #home {
 	display:block;
 }
+
+	#home .actionbar .icon_app {
+		width:24px; height:24px;
+		padding:16px;
+	}
+	
+		#home .actionbar .icon_app img {
+			width:24px; height:24px;
+		}
 
 	#home .main {
 		overflow:hidden;
@@ -411,8 +420,8 @@ section {
 		-webkit-animation-duration: 1s;
 		-webkit-animation-name: keyframes_button_play_buffer;
 		-webkit-animation-iteration-count: infinite;
-		-webkit-animation-fill-mode: forwards; /* Hold the last keyframe */
-		-webkit-animation-timing-function:ease-in-out; /* Linear animation */
+		-webkit-animation-fill-mode: forwards;
+		-webkit-animation-timing-function:ease-in-out;
 	}
 	
 	#home .alarm_dialog {
@@ -423,41 +432,41 @@ section {
 		background:rgba(0,0,0,0.67);
 	}
 	
-	#home .alarm_dialog_inner {	
-		display:block;
-		position:absolute;
-		top:50%; left:50%;
-		width:280px; height:280px;
-		margin:-140px 0 0 -140px;
-		background:rgba(255,255,255,0.87);
-		color:rgba(0,0,0,0.87);
-	}
-	
-	#home .alarm_dialog .time {
-		position:absolute;
-		top:88px; left:0; right:0;
-		text-align:center;
-		font-size:56pt;
-		font-weight:300;
-	}
-	
-	#home .alarm_dialog .button {
-		position:absolute;
-		bottom:0;
-		width:108px;
-		padding:16px;
-		text-align:center;
-		font-size:14pt;
-		color:#2D6073;
-	}
-	
-		#home .alarm_dialog .button.snooze {
-			left:0;
+		#home .alarm_dialog_inner {	
+			position:absolute;
+			top:50%; left:50%;
+			width:280px; height:280px;
+			margin:-140px 0 0 -140px;
+			background:rgba(255,255,255,0.87);
+			color:rgba(0,0,0,0.87);
 		}
 		
-		#home .alarm_dialog .button.stop {
-			right:0;
+		#home .alarm_dialog .time {
+			position:absolute;
+			top:88px; left:0; right:0;
+			text-align:center;
+			font-size:56pt;
+			font-weight:300;
+			color:rgba(0,0,0,0.54);
 		}
+		
+		#home .alarm_dialog .button {
+			position:absolute;
+			bottom:0;
+			width:108px;
+			padding:16px;
+			text-align:center;
+			font-size:14pt;
+			color:#2D6073;
+		}
+		
+			#home .alarm_dialog .button.snooze {
+				left:0;
+			}
+			
+			#home .alarm_dialog .button.stop {
+				right:0;
+			}
 
 #channellist {
 	
@@ -493,7 +502,7 @@ section {
 		width:40px; 
 		height:40px;
 		padding:16px;
-		border-radius:50px;
+		border-radius:40px;
 	}
 	
 	.resultitem .resultname {
@@ -796,14 +805,13 @@ section {
 
 .overflow_menu {
 	display:none;
+	z-index:80;
 	overflow:hidden;
 	position:absolute;
-	z-index:80;
-	top:60px; right:4px;
+	top:4px; right:4px;
 	width:0px; max-height:0px;
-	margin:-1px;
+	margin:0;
 	background:rgba(255,255,255,1);
-	border:1px solid #ccc;
 }
 
 .overflow_menu.active {
@@ -811,16 +819,34 @@ section {
 	max-height:600px;
 }
 
+	.overflow_menu .menu_item_space {
+		display:none;
+		position:relative;
+		width:100%; height:8px;
+	}
+
 	.overflow_menu .menu_item {
 		position:relative;
 		width:100%;
-		height:48px;
-		border-bottom:1px solid #ccc;
+		height:47px;
+		padding-top:1px;
+		border-bottom:1px solid #eee;
 	}
 	
 	.overflow_menu .menu_item .center_td {
 		text-align:left;
 	}
+	
+	.overflow_menu_button_close {
+		z-index:2;
+		position:absolute;
+		top:0; right:0;
+		padding:12px;
+	}
+	
+		.overflow_menu_button_close img {
+			width:24px; height:24px;
+		}
 
 /* -- OVERLAYS */
 
@@ -875,7 +901,7 @@ section {
 	padding:24px 24px 22px 24px;
 	color:rgba(255,255,255,0.87);
 	background-color:rgba(0,0,0,0.67);
-	pointer-events:none;
+	pointer-events:auto;
 }
 
 /* -- COMMON */
@@ -902,13 +928,13 @@ section {
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
-	}
+}
 
 .roundedCorners4, .round4 {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
-	}
+}
 
 /* Shadow */
 

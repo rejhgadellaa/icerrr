@@ -108,17 +108,6 @@
     
     <!-- Style / responsive :: NOTE: only detecting tablets in general for now -->
 	<link rel="stylesheet" type="text/css" href="css/size.tablet.css" media="screen and (min-width: 599px)" />
-	
-	<!--
-    <link rel="stylesheet" type="text/css" href="css/size.phone-small.css" media="screen and (max-width: 321px) (orientation:portrait)" />
-    <link rel="stylesheet" type="text/css" href="css/size.phone.css" media="screen and (min-width: 322px) and (max-width: 480px) (orientation:portrait)" />
-	<link rel="stylesheet" type="text/css" href="css/size.tablet07.css" media="screen and (min-width: 481px) and (max-width: 600px) and (orientation:portrait)" />
-	<link rel="stylesheet" type="text/css" href="css/size.tablet10.css" media="screen and (min-width: 601px) and (orientation:portrait)" />
-	
-    <link rel="stylesheet" type="text/css" href="css/size.phone-landscape.css" media="screen and (max-width: 800px) and (orientation:landscape)" />
-    <link rel="stylesheet" type="text/css" href="css/size.tablet07-landscape.css" media="screen and (min-width: 800px) and (max-width: 999px) and (orientation:landscape)" />
-    <link rel="stylesheet" type="text/css" href="css/size.tablet10-landscape.css" media="screen and (min-width: 1000px) and (orientation:landscape)" />
-	-->
     
     <!-- Webfonts -->
     <link href='css/fonts.css' rel='stylesheet' type='text/css'>
@@ -157,13 +146,13 @@
 <!-- Section: Home -->
 <section id="home">
 	
-    <div class="actionbar shadow_z2">
+    <div class="actionbar shadow_z2" onclick="//site.home.dismissOverflowMenu();">
     	
         <div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
         <div class="title">ICERRR</div>
         
 		<div class="actions">
-        	<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_core_overflow.png" title="Tap for more options" /></div>
+        	<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_overflow_green.png" title="Tap for more options" /></div>
             <div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" title="Chromecast" /></div>
         </div>
     </div>
@@ -197,7 +186,7 @@
 			</div>
 		</div>
 		
-        <div class="alarm_dialog">
+        <div class="alarm_dialog" onclick="site.home.dismissOverflowMenu();">
             <div class="alarm_dialog_inner shadow_z5 round4">
                 <div class="time">00<blink>:</blink>00</div>
                 <div class="button snooze activatablel" onClick="site.home.alarmSnooze();">SNOOZE</div>
@@ -708,30 +697,36 @@
 
 <!-- Overflow_Menu -->
 <div id="overflow_menu" class="overflow_menu shadow_z2">
+
+	<div class="overflow_menu_button_close"><img src="img/icons-48/ic_action_overflow_dark.png" /></div>
+    
+    <div class="menu_item_space"></div>
 	
 	<div class="menu_item activatablel" onClick="site.settings.init();site.home.dismissOverflowMenu();">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;<strong>Settings</strong></div></div>
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;<strong>Settings</strong></div></div>
 	</div>
 	
 	<div class="menu_item activatablel" onClick="site.lifecycle.checkMsgs(true);site.home.dismissOverflowMenu();">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;Check for updates</div></div>
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;Check for updates</div></div>
 	</div>
 
 	<div class="menu_item activatablel" onClick="site.home.sendfeedback();site.home.dismissOverflowMenu();">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;Send feedback</div></div>
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;Send feedback</div></div>
 	</div>
 	
 	<div class="menu_item activatablel" onClick="site.home.viewlog();site.home.dismissOverflowMenu();">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;View log</div></div>
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;View log</div></div>
 	</div>
 	
 	<div class="menu_item activatablel" onClick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S6BCCM9LESNBU&lc=US&item_name=REJH%20Gadellaa&item_number=icerrr_droidapp&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted','_system');site.home.dismissOverflowMenu();">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;Donate</div></div>
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;Donate</div></div>
 	</div>
 	
 	<div class="menu_item activatablel" onClick="site.ui.gotosection('#about');site.home.dismissOverflowMenu();" style="border:none;">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;About</div></div>
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;About</div></div>
 	</div>
+    
+    <div class="menu_item_space"></div>
 	
 </div>
 

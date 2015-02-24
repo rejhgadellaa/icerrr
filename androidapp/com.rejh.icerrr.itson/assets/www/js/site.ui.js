@@ -82,7 +82,7 @@ site.ui.gotosection = function(selector) {
 		// Show..
 		$(selector).css("display","block");
 		// Translate splash
-		var translate = "translate3d(0px,"+ (-($(window).height()-56)) +"px,0px)";
+		var translate = "translate3d(0px,"+ (-($(window).height()-$(".actionbar").height())) +"px,0px)";
 		$("#splash").css({"transform":translate,"-webkit-transform":translate});
 		setTimeout(function(){
 			$("#splash").fadeOut(250);
@@ -96,8 +96,6 @@ site.ui.gotosection = function(selector) {
 	setTimeout(site.lifecycle.onResize,10);
 	
 	site.ui.setLongclickHelp();
-		
-	//},100);
 	
 }
 
@@ -130,14 +128,15 @@ site.ui.showtoast = function(msg, timeInSec) {
 	var timeInMsec = timeInSec * 1000;
 	$("#overlay_toast").html(msg);
 	$("#overlay_toast").fadeIn(250);
+	$(".fab").css("bottom",80);
 	site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec);
-	loggr.log(" > "+ timeInMsec +" ms");
 }
 
 site.ui.hidetoast = function() {
 	loggr.log("site.ui.hidetoast()");
 	if (site.timeouts.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
 	$("#overlay_toast").fadeOut(250);
+	$(".fab").css("bottom",16);
 }
 
 site.ui.createtoast = function() {

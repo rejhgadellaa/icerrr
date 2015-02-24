@@ -248,7 +248,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resultname.innerHTML = station.station_name;
 		
 		var resultstar = document.createElement("img");
-		resultstar.className = "resultstar";
+		resultstar.className = "resultstar activatablel";
 		resultstar.onclick = function(event) {
 			event.preventDefault(); 
 			event.stopPropagation();
