@@ -768,7 +768,12 @@ public class MediaStreamerService extends Service {
 						int index = sett.getInt("starredStationsIndex", 0);
 						if (index<0) { index = 0; }
 						JSONObject station = starredStations.getJSONObject(index);
-				        metadataEditor.putBitmap(100, getIconFromURL(station.getString("station_icon")));
+						Log.d(APPTAG," >> "+ station.getString("station_name"));
+				        if (station.getString("station_icon")!=null && !station.getString("station_icon").equals("null")) { 
+				        	metadataEditor.putBitmap(100, getIconFromURL(station.getString("station_icon")));
+				        } else {
+				        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+				        }
 					} catch(JSONException e) {
 						Log.w(APPTAG," > JSONException!",e);
 						Log.w(APPTAG," > Okay okay, use default icon");

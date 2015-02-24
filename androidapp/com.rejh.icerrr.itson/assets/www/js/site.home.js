@@ -32,6 +32,26 @@ site.home.init = function() {
 	// Get station
 	var station = site.session.currentstation;
 	
+	// Update currentstation...
+	if (station) {
+		var currentStationIndex = site.helpers.session.getStationIndexById(station.station_id,site.data.stations);
+		if (currentStationIndex>=0) {
+			site.session.currentstation = site.data.stations[currentStationIndex];
+			station = site.session.currentstation;
+		}
+	}
+	
+	// Update starred stations data
+	if (site.session.starred) {
+		for (var i=0; i<site.session.starred.length; i++) {
+			var index = site.helpers.session.getStationIndexById(site.session.starred[i].station_id,site.data.stations);
+			if (index>=0) {
+				site.session.starred[i] = site.data.stations[index];
+			}
+			
+		}
+	}
+	
 	// Clear lifecycle history || TODO: NOTE: IMPORTANT: always do 'clear_section_history()' before 'gotosection()'...
 	site.lifecycle.clear_section_history();
 	

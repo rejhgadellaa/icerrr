@@ -1,8 +1,9 @@
-0.201 [BETA]
+0.202
   * New: You can now snooze alarms!
   * Tweaked UI for tablets (larger fonts where appropriate)
   * Tweaked looks: toast messages, settings
   * Upgraded jquery to 1.11.2 (from 1.9.1)
+  * Fix for lockscreen (and wear) background
   * Big fuxes. Yes.
 
 0.200

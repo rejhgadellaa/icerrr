@@ -337,6 +337,7 @@ site.lifecycle.onNewIntent = function(result) {
 			site.mp.play(); // and play
 			$("#home .alarm_dialog").fadeIn(500); // And show dialog
 			site.home.alarmUpdateTime();
+			site.session.snoozeAlarm = null;
 		}, function(err) {
 			loggr.error(" > isAlarm but !station_id? "+err);
 			site.vars.thealarm = null;

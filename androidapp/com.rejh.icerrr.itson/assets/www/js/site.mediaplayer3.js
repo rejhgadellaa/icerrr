@@ -108,19 +108,45 @@ site.mp.play = function(cb,cberr) {
 		}
 	}
 	
-	// Start MediaStreamer
-	window.mediaStreamer.play(station_url, site.session.alarmActive, site.session.alarmVolume, site.session.currentstation,
-		function(msg) {
-			loggr.log(" > mediaStreamer.play()."+msg);
-			site.mp.setPlaying();
-			if (cb) { cb(); }
+	// Debug, temp, TODO: remove
+	try {
+	for (var i=0; i<site.session.starred.length; i++) {
+		// loggr.log(" > Station "+ site.session.starred[i].station_name +", "+ site.session.starred[i].station_icon);
+		if (!site.session.starred[i].station_icon || site.session.starred[i].station_icon == "null") {
+			loggr.error(" > No station_icon? "+ JSON.stringify(site.session.starred[i]), {dontupload:true});
+		}
+	}
+	} catch(e) { }
+	
+	// Send starred stations 
+	window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
+		function(res) {
+			
+			loggr.log(" > Starred stations sent to MediaStreamer: "+res);
+			
+			// Save session
+			site.helpers.storeSession();
+	
+			// Start MediaStreamer
+			window.mediaStreamer.play(station_url, site.session.alarmActive, site.session.alarmVolume, site.session.currentstation,
+				function(msg) {
+					loggr.log(" > mediaStreamer.play()."+msg);
+					site.mp.setPlaying();
+					if (cb) { cb(); }
+				},
+				function(errmsg) {
+					loggr.error("window.mediaStreamer.play()");
+					loggr.error(errmsg);
+					site.ui.showtoast("Error: "+errmsg);
+					site.mp.setStopped();
+					if (cberr) { cberr(); }
+				}
+			);
+		
 		},
-		function(errmsg) {
-			loggr.error("window.mediaStreamer.play()");
-			loggr.error(errmsg);
-			site.ui.showtoast("Error: "+errmsg);
-			site.mp.setStopped();
-			if (cberr) { cberr(); }
+		function(err) {
+			loggr.error(" > Error sending starred stations to MediaStreamer",{dontupload:true});
+			loggr.error(err);
 		}
 	);
 	

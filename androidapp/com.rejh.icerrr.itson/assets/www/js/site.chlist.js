@@ -321,7 +321,7 @@ site.chlist.selectstation = function(resultitem,dontgohome) {
 	window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,
 		function(res) {
 			
-			loggr.log(" > Starred stations sent to MediaStreamer");
+			loggr.log(" > Starred stations sent to MediaStreamer: "+res);
 			
 			// Save session
 			site.helpers.storeSession();
