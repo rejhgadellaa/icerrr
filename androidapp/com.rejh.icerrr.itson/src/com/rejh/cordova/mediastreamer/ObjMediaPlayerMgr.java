@@ -134,7 +134,11 @@ public class ObjMediaPlayerMgr {
 	// INIT
 	public boolean init(String url, boolean _isAlarm) {
 		
-		if (mp!=null || proxy!=null) { destroy(); SystemClock.sleep(1000);  }
+		if (mp!=null || proxy!=null) {
+			Log.d(LOGTAG," -> MPMGR.Init() -> Destroy()");
+			destroy(); 
+			SystemClock.sleep(1000);  
+		}
 		
 		Log.d(LOGTAG," -> MPMGR.Init()");
 		
@@ -422,6 +426,7 @@ public class ObjMediaPlayerMgr {
 		private void stopConnTypeChecker() {
 			Log.d(LOGTAG," -> stopConnTypeChecker()");
 			if (timer!=null) { timer.cancel(); }
+			timer = null;
 		}
 
 		// Start Conn Type Checker
@@ -508,14 +513,15 @@ public class ObjMediaPlayerMgr {
 			if (netwInfo != null && netwInfo.getState() == NetworkInfo.State.CONNECTED) {
 				if (connWasLost) {
 					Log.d(LOGTAG," -> Stream resumed");
-					connWasLost=false;
+					connWasLost = false;
+					connTypeOld = connType;
 					init(getStreamUrl(),isAlarm);
 				}
 			} else {
 				Log.d(LOGTAG," -> Connection lost. Stream paused");
 				if(mp!=null) { mp.release(); mp=null; }
 				if(proxy!=null) { proxy.stop(); proxy=null; }
-				connWasLost=true;
+				connWasLost = true;
 			}
 			
 		}
