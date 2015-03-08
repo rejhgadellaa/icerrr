@@ -188,13 +188,13 @@ public class ObjMediaPlayerMgr {
 			if (mp!=null) { mp.release(); mp = null;}
 			mp = new MediaPlayer();
 			
-			mp.setDataSource(streamUrl);
-			
 			if (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) {
 				mp.setAudioStreamType(AudioManager.STREAM_ALARM);
 			} else {
 				mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			}
+			
+			mp.setDataSource(streamUrl);
 			
 			mp.setOnPreparedListener(onPreparedListener);
 			mp.setOnErrorListener(onErrorListener);
