@@ -687,18 +687,25 @@ site.home.alarmUpdateTime = function() {
 	
 	loggr.info("site.home.alarmUpdateTime()");
 	
-	if (site.session.alarmActive) {
+	if (site.session.alarmActive && site.mp.mpstatus!=Media.MEDIA_NONE) {
 	
 		var date = new Date();
 		var hour = site.helpers.formatNum(date.getHours());
 		var minute = site.helpers.formatNum(date.getMinutes());
 		
-		$("#home .alarm_dialog .time").html(hour +"<blink>:</blink>"+ minute);
+		$("#home .alarm_dialog .time").html(hour +":"+ minute);
 		
 		if (site.timeouts.alarmUpdateTimeTimeout) { clearTimeout(site.timeouts.alarmUpdateTimeTimeout); }
 		site.timeouts.alarmUpdateTimeTimeout = setTimeout(function(){
 			site.home.alarmUpdateTime();
 		},10*1000);
+		
+	} else {
+		
+		loggr.log(" > !site.session.alarmActive || site.mp.mpstatus==Media.MEDIA_NONE");
+		
+		site.session.alarmActive = false;
+		$("#home .alarm_dialog").fadeOut(500);
 		
 	}
 	

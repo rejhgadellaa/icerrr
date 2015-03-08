@@ -283,21 +283,21 @@ public class ObjMediaPlayerMgr {
 		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PAUSED); }
 		if (mp!=null) { mp.release(); mp = null; }
 		if (proxy!=null) { proxy.stop(); proxy = null; }
-		}
+	}
 	
 	// RESUME
 	public void resume() {
 		settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 		settEditor.commit();
 		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_BUFFERING); }
-		init(getStreamUrl(),false);
-		}
+		init(getStreamUrl(),isAlarm);
+	}
 	
 	// ISPLAYING
 	public boolean isPlaying() {
 		if (mp==null) { return false; }
 		return mp.isPlaying();
-		}
+	}
 	
 	// --------------------------------------------------
 	// Listeners
