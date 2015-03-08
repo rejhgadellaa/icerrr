@@ -895,7 +895,7 @@ section {
 	display:none;
 	position:absolute;
 	/* left:24px; right:24px; bottom:24px; /**/
-	left:0; right:0; bottom:0;
+	left:0; right:0; bottom:-56px;
 	height:auto;
 	/* padding:16px 16px 16px 16px; /**/
 	padding:24px 24px 22px 24px;
