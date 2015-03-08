@@ -1,3 +1,6 @@
+0.204
+  * Minor fixes
+
 0.203
   * Lots of design tweaks (you probably won't notice), mostly for tablets: #168
 
