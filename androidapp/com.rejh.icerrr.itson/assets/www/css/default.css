@@ -528,7 +528,7 @@ section {
 	
 	.resultitem_spacer {
 		/* for bottom, space for fab */
-		height:56px;
+		height:64px;
 		background:#eee;
 		border:none;
 	}

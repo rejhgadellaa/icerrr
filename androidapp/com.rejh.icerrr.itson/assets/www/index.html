@@ -106,8 +106,10 @@
     <link rel="stylesheet" type="text/css" href="css/default.css" />
     <link rel="stylesheet" type="text/css" href="css/add.cast.css" />
     
-    <!-- Style / responsive :: NOTE: only detecting tablets in general for now -->
+    <!-- Style / responsive -->
 	<link rel="stylesheet" type="text/css" href="css/size.tablet.css" media="screen and (min-width: 599px)" />
+	<!-- <link rel="stylesheet" type="text/css" href="css/size.tablet-landscape.css" media="screen and (min-height: 599px) and (orientation: landscape)" /> -->
+	<link rel="stylesheet" type="text/css" href="css/size.phone-landscape.css" media="screen and (max-width: 599px) and (orientation: landscape)" />
     
     <!-- Webfonts -->
     <link href='css/fonts.css' rel='stylesheet' type='text/css'>
@@ -146,7 +148,7 @@
 <!-- Section: Home -->
 <section id="home">
 	
-    <div class="actionbar shadow_z2" onclick="//site.home.dismissOverflowMenu();">
+    <div class="actionbar shadow_z2" onClick="//site.home.dismissOverflowMenu();">
     	
         <div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
         <div class="title">ICERRR</div>
@@ -186,7 +188,7 @@
 			</div>
 		</div>
 		
-        <div class="alarm_dialog" onclick="site.home.dismissOverflowMenu();">
+        <div class="alarm_dialog" onClick="site.home.dismissOverflowMenu();">
             <div class="alarm_dialog_inner shadow_z5 round4">
                 <div class="time">00<blink>:</blink>00</div>
                 <div class="button snooze activatablel" onClick="site.home.alarmSnooze();">SNOOZE</div>
