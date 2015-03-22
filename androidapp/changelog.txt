@@ -1,3 +1,6 @@
+0.206
+  * Added stylesheet for landscape (mostly actionbar related)
+
 0.204
   * Minor fixes
 

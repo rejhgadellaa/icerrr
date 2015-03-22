@@ -61,6 +61,18 @@ section { }
 		top:96px;
 	}
 	
+#editstation, #searchstation, #searchstation_results {
+	
+}
+
+	#editstation .block, #searchstation .block, #alarms_add .block, #about .block, #viewlog .block {
+		padding:0 12px 12px 12px;
+	}
+
+	#editstation .block.header, #searchstation .block.header, #alarms_add .block.header, #about .block.header, #viewlog .block.header {
+		padding:12px;
+	}
+	
 /* -- OVERFLOW_MENU */
 
 .overflow_menu {
