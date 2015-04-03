@@ -404,6 +404,8 @@ public class ObjMediaPlayerMgr {
 			settEditor.putInt("mediastreamer_state",MEDIA_NONE);
 			settEditor.commit();
 			
+			SystemClock.sleep(1000);
+			
 			Log.d(LOGTAG," -> Restarting stream...");
 			init(getStreamUrl(),isAlarm);
 			

@@ -472,6 +472,14 @@ section {
 	
 }
 
+	#channellist .actionbar {
+		height:58px;
+	}
+	
+	#channellist .actionbar .title {
+		bottom:16px;
+	}
+
 	#channellist .main {
 		top:104px;
 	}

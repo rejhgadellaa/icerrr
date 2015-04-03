@@ -1,3 +1,7 @@
+0.207
+  * Some quickfixes for Chrome ARC support
+  * Refresh button in the View Log screen
+
 0.206
   * Added stylesheet for landscape (mostly actionbar related)
 
