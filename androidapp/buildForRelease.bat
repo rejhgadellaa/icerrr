@@ -1,4 +1,5 @@
 @echo off
+title Checking...
 
 :config
 set path_prj=com.rejh.icerrr.itson
@@ -28,6 +29,7 @@ echo Error: could not locate zipalign.exe
 goto error
 
 :clean_stuff
+title Clean stuff...
 set projcd=%cd%
 echo.
 echo Updating libraries...
@@ -42,6 +44,7 @@ cd %projcd%
 
 :sdkfound
 :checklist
+title Ready to go?
 echo.
 echo Checklist:
 echo  - Incement versioncode in AndroidManifest.xml ?
@@ -51,17 +54,20 @@ if errorlevel 2 goto end
 
 cd %path_prj%
 
+title Update project..
 echo.
 echo Updating project
 echo.
 call %androidsdk%tools\android.bat update project -p %cd% -s -t android-21
 
+title Building..
 echo.
 echo Building project
 echo.
 call ant clean release
 if errorlevel 1 goto error
 
+title Sign app plz
 echo.
 echo Signing app
 echo.
@@ -76,6 +82,7 @@ if errorlevel 1 goto error
 
 copy %cd%\..\_apks\%name_prj%.apk D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_prj%.apk
 
+title Install?
 echo.
 echo You can now upload _apks/ScreenDoodle.apk to the Play Store!
 echo.
@@ -83,6 +90,7 @@ choice /C YN /N /T 10 /D N /M "Install app on phone? (Y/N)"
 if errorlevel 2 goto end
 
 :install_app
+title Installing..
 %androidsdk%\platform-tools\adb -d install -r %cd%\..\_apks\%name_prj%.apk
 if not errorlevel 0 goto error
 
@@ -91,6 +99,7 @@ if not errorlevel 0 goto error
 goto end
 
 :error
+title Error!
 echo.
 echo Error! Aborted build.
 echo.
@@ -98,6 +107,7 @@ pause
 goto end
 
 :end
+title Done!
 cd ..
 echo.
 REM pause

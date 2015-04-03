@@ -212,7 +212,7 @@ site.helpers.downloadImage = function(imgobj, filename, url, cb, cberr, cbprogre
 	
 	site.webapi.download(url, site.cfg.paths.images, filename,
 		function(fileEntry) {
-			imgobj.src = fileEntry.fullPath;
+			imgobj.src = fileEntry.fullPath+"?c="+ new Date().getTime();
 			cb(fileEntry,imgobj);
 		},
 		function(error) {

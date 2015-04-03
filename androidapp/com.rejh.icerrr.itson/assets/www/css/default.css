@@ -360,6 +360,7 @@ section {
 		padding:8px;
 		transition:opacity 500ms;
 		opacity:0.0;
+		border-radius: 136px;
 	}
 	
 	#home .main .station_image_overlay {

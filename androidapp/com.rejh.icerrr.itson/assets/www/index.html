@@ -159,7 +159,7 @@
         </div>
     </div>
     
-    <div class="main" style="background-image:url(img/bg_home_default.jpg);">
+    <div class="main">
 		
 		<div class="station_image" onClick="site.home.dismissOverflowMenu();"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div></div>
 		<div class="station_image_overlay"></div>
@@ -596,7 +596,7 @@
         <div class="title">Log</div>
         
 		<div class="actions">
-			<div class="action activatablel" onClick="site.home.viewlog();"><img src="img/icons-48/ic_reload_green.png" title="Tap for more options" /></div>
+			<div class="action activatablel" onClick="site.home.viewlog();"><img src="img/icons-48/ic_reload_green.png" title="Refresh log" /></div>
         </div>
     </div>
     
@@ -662,6 +662,16 @@
 				<div class="item title">Show album art</div>
 				<div class="item subtitle">Search and show album art on your behalf <a href="javascript:void(0);" onClick="site.settings.helpShowAlbumArt();">(?)</a></div>
 				<div class="checkboxWrap"><input name="showAlbumArt" type="checkbox" class="checkbox" /></div>
+			</div>
+			
+			<div class="itemWrap">
+				<div class="item spacer"></div>
+			</div>
+				
+			<div class="itemWrap showStationIcon">
+				<div class="item title">Show station icon</div>
+				<div class="item subtitle">Show station icon in app and lockscreen <!--<a href="javascript:void(0);" onClick="site.settings.helpShowStationIcon();">(?)</a>--></div>
+				<div class="checkboxWrap"><input name="showStationIcon" type="checkbox" class="checkbox" /></div>
 			</div>
 				
 			<div class="itemWrap">

@@ -154,6 +154,17 @@ site.installer.update = function() {
 		
 	}
 	
+	// Specific updates: 0.207
+	if (site.cookies.get("app_version")<=0.206) {
+		
+		loggr.error(" > Update to 0.207..",{dontupload:true});
+		
+		loggr.log(" >> Setting: 'showStationIcon' = true");
+		site.cookies.put("setting_showStationIcon",1);
+		window.mediaStreamer.setting("bool","showStationIcon",true,function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+		
+	}
+	
 	// Specific updates: installed + 0.175
 	if (site.cookies.get("app_is_installed") && site.cookies.get("app_version")<=0.175) {
 		

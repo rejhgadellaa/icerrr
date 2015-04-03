@@ -33,6 +33,12 @@ site.alarms.init = function() {
 	// Get alarm data..
 	if (!site.session.alarms) { site.session.alarms = []; }
 	
+	// Check for chrome app runtime
+	if (device.model=="App Runtime for Chrome") {
+		alert("Sorry, the alarm feature is currently not working on ARC");
+		site.lifecycle.onBackButton();
+	}
+	
 	// Draw
 	site.alarms.drawResults();
 	

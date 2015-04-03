@@ -76,6 +76,17 @@ site.settings.registerListeners = function() {
 	if (showAlbumArt==1) { $("#settings input[name='showAlbumArt']").attr("checked",true); }
 	else { $("#settings input[name='showAlbumArt']").attr("checked",false); }
 	
+	// Show Station Icon
+	window.mediaStreamer.getSetting("bool","showStationIcon",
+		function(res) {
+			if (res) { $("#settings input[name='showStationIcon']").attr("checked",true); }
+			else { $("#settings input[name='showStationIcon']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
 	// Use SAA
 	window.mediaStreamer.getSetting("bool","useSAA",
 		function(res) {
@@ -117,7 +128,15 @@ site.settings.registerListeners = function() {
 		var targ = evt.currentTarget;
 		loggr.log(" > Setting: showAlbumArt: "+ (targ.checked)?1:0);
 		site.cookies.put("setting_showAlbumArt",(targ.checked)?1:0);
-		loggr.log(" > "+ site.cookies.get("setting_showAlbumArt"));
+	});
+	
+	// Shot Station Icon
+	$("#settings input[name='showStationIcon']").off("change");
+	$("#settings input[name='showStationIcon']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: showStationIcon: "+ (targ.checked)?1:0);
+		site.cookies.put("setting_showStationIcon",(targ.checked)?1:0);
+		window.mediaStreamer.setting("bool","showStationIcon",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
 	
 	// Use SAA
@@ -195,6 +214,19 @@ site.settings.helpShowAlbumArt = function() {
 		+"Show album art\n\n"
 		+"Icerrr can search and show album art based on the 'now playing' information (if any) of a stream.\n\n"
 		+"However, since (most) album art is copyrighted this feature is disabled by default because Icerrr could be held responsible for showing artwork it is not licensed to show. If you enable this option, you agree that Icerrr searches and shows this album art on your behalf and not to the benefit of the developer.\n\n"
+		//+"All alarms that are are fired by SAA will then cause Icerrr to start the last station you listened to. It is therefore recommended to silence the alarm sound in SAA.\n\n"
+		//+"Note: Alarms set in Icerrr are not affected and will have no interaction with SAA."
+		;
+	navigator.notification.alert(message, function(){}, title, buttonName)
+}
+
+site.settings.helpShowStationIcon = function() {
+	loggr.log("site.settings.helpShowStationIcon()");
+	var title = "Help: Settings";
+	var buttonName = "OK";
+	var message = ""
+		+"Show station icon\n\n"
+		+"When disabled Icerrr will no longer show station icons in the app and lockscreen"
 		//+"All alarms that are are fired by SAA will then cause Icerrr to start the last station you listened to. It is therefore recommended to silence the alarm sound in SAA.\n\n"
 		//+"Note: Alarms set in Icerrr are not affected and will have no interaction with SAA."
 		;
