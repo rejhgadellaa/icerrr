@@ -800,7 +800,7 @@ site.lifecycle.installUpdateApp = function(url) {
 						},
 						function(err) {
 							loggr.error(" > mediaStreamer.installUpdateApp failed?! -> "+ err);
-							site.ui.showtoast("Install failed :(");
+							alert("Sorry, the installation failed :(");
 							site.ui.hideloading();
 						}
 					);
