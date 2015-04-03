@@ -160,9 +160,6 @@ public class MediaStreamerService extends Service {
 		settEditor.putBoolean("mediastreamer_serviceRunning", true);
 		settEditor.putBoolean("is_paused", false);
 		settEditor.commit();
-	    
-	    // Audio Focus
-		int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         
         // Listener: Telephony
 		phoneListener = new RecvEventPhonecalls();  
@@ -286,7 +283,14 @@ public class MediaStreamerService extends Service {
 				settEditor.putBoolean("is_paused", false);
 				settEditor.commit();
 				mpMgr.resume();
-				int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+				// int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+				int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
+				int result = audioMgr.requestAudioFocus(afChangeListener, mediaType, AudioManager.AUDIOFOCUS_GAIN);
+				if (mediaType==AudioManager.STREAM_ALARM) {
+					Log.e(APPTAG," > Mediatype: ALARM");
+				} else {
+					Log.e(APPTAG," > Mediatype: MEDIA");
+				}
 			} else if (cmd_next) {
 				
 				try {
@@ -511,6 +515,15 @@ public class MediaStreamerService extends Service {
         }
 		settEditor.putBoolean("is_paused", false);
 		settEditor.commit();
+	    
+	    // Audio Focus
+		int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
+		int result = audioMgr.requestAudioFocus(afChangeListener, mediaType, AudioManager.AUDIOFOCUS_GAIN);
+		if (mediaType==AudioManager.STREAM_ALARM) {
+			Log.e(APPTAG," > Mediatype: ALARM");
+		} else {
+			Log.e(APPTAG," > Mediatype: MEDIA");
+		}
 		
 		// MediaPlayer
 		if (mpMgr!=null) { mpMgr.destroy(); }

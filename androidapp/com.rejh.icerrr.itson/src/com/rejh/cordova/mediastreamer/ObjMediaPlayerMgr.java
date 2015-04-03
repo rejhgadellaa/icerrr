@@ -134,7 +134,11 @@ public class ObjMediaPlayerMgr {
 	// INIT
 	public boolean init(String url, boolean _isAlarm) {
 		
-		if (mp!=null || proxy!=null) { destroy(); SystemClock.sleep(1000);  }
+		if (mp!=null || proxy!=null) {
+			Log.d(LOGTAG," -> MPMGR.Init() -> Destroy()");
+			destroy(); 
+			SystemClock.sleep(1000);  
+		}
 		
 		Log.d(LOGTAG," -> MPMGR.Init()");
 		
@@ -184,13 +188,13 @@ public class ObjMediaPlayerMgr {
 			if (mp!=null) { mp.release(); mp = null;}
 			mp = new MediaPlayer();
 			
-			mp.setDataSource(streamUrl);
-			
 			if (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) {
 				mp.setAudioStreamType(AudioManager.STREAM_ALARM);
 			} else {
 				mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			}
+			
+			mp.setDataSource(streamUrl);
 			
 			mp.setOnPreparedListener(onPreparedListener);
 			mp.setOnErrorListener(onErrorListener);
@@ -279,21 +283,21 @@ public class ObjMediaPlayerMgr {
 		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PAUSED); }
 		if (mp!=null) { mp.release(); mp = null; }
 		if (proxy!=null) { proxy.stop(); proxy = null; }
-		}
+	}
 	
 	// RESUME
 	public void resume() {
 		settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 		settEditor.commit();
 		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_BUFFERING); }
-		init(getStreamUrl(),false);
-		}
+		init(getStreamUrl(),isAlarm);
+	}
 	
 	// ISPLAYING
 	public boolean isPlaying() {
 		if (mp==null) { return false; }
 		return mp.isPlaying();
-		}
+	}
 	
 	// --------------------------------------------------
 	// Listeners
@@ -400,6 +404,8 @@ public class ObjMediaPlayerMgr {
 			settEditor.putInt("mediastreamer_state",MEDIA_NONE);
 			settEditor.commit();
 			
+			SystemClock.sleep(1000);
+			
 			Log.d(LOGTAG," -> Restarting stream...");
 			init(getStreamUrl(),isAlarm);
 			
@@ -422,6 +428,7 @@ public class ObjMediaPlayerMgr {
 		private void stopConnTypeChecker() {
 			Log.d(LOGTAG," -> stopConnTypeChecker()");
 			if (timer!=null) { timer.cancel(); }
+			timer = null;
 		}
 
 		// Start Conn Type Checker
@@ -508,14 +515,15 @@ public class ObjMediaPlayerMgr {
 			if (netwInfo != null && netwInfo.getState() == NetworkInfo.State.CONNECTED) {
 				if (connWasLost) {
 					Log.d(LOGTAG," -> Stream resumed");
-					connWasLost=false;
+					connWasLost = false;
+					connTypeOld = connType;
 					init(getStreamUrl(),isAlarm);
 				}
 			} else {
 				Log.d(LOGTAG," -> Connection lost. Stream paused");
 				if(mp!=null) { mp.release(); mp=null; }
 				if(proxy!=null) { proxy.stop(); proxy=null; }
-				connWasLost=true;
+				connWasLost = true;
 			}
 			
 		}

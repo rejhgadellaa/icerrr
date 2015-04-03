@@ -3,7 +3,7 @@
 
 /*
 
-	ICERRR - default css
+	ICERRR - tablet css
 	This css is targeted at tablets following most Material Design guidelines at http://goo.gl/8640JE
 	
 	Notes:
@@ -54,10 +54,6 @@ section { }
 		width:32px; height:32px;
 		padding:20px;
 	}
-	
-		#home .actionbar .icon_appx img {
-			width:32px; height:32px;
-		}
 
 	#home .main .station_name {
 		top: 44px; left:18px; right:20px;

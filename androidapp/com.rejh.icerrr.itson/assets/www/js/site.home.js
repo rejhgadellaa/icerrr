@@ -269,28 +269,32 @@ site.home.run_ui_updates = function() {
 		// -> MediaPlayer
 		
 		if (site.mp.mpstatus==Media.MEDIA_RUNNING && !$(".button.center").hasClass("active")) {
-			loggr.log(" > .button.center addclass active");
+			loggr.log(" > Media.MEDIA_RUNNING > .active");
 			$(".button.center").removeClass("busy"); 
 			$(".button.center").addClass("active"); 
 			$(".button_play_bufferAnim").fadeOut(250);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_STARTING) {
+			loggr.log(" > Media.MEDIA_STARTING > .busy");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy");
 			$(".button.center").addClass("busy");
 			$(".button_play_bufferAnim").fadeIn(500);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {
+			loggr.log(" > Media.MEDIA_PAUSED > .busy");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").addClass("busy");
 			$(".button_play_bufferAnim").fadeOut(250);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus!=Media.MEDIA_RUNNING && $(".button.center").hasClass("active")) {
+			loggr.log(" > Media.MEDIA_RUNNING > .active");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy"); 
 			$(".button_play_bufferAnim").fadeOut(250);
 			$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_NONE) {
+			loggr.log(" > Media.MEDIA_NONE > ...");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy"); 
 			$(".button_play_bufferAnim").fadeOut(250);
@@ -679,18 +683,25 @@ site.home.alarmUpdateTime = function() {
 	
 	loggr.info("site.home.alarmUpdateTime()");
 	
-	if (site.session.alarmActive) {
+	if (site.session.alarmActive && site.mp.mpstatus!=Media.MEDIA_NONE) {
 	
 		var date = new Date();
 		var hour = site.helpers.formatNum(date.getHours());
 		var minute = site.helpers.formatNum(date.getMinutes());
 		
-		$("#home .alarm_dialog .time").html(hour +"<blink>:</blink>"+ minute);
+		$("#home .alarm_dialog .time").html(hour +":"+ minute);
 		
 		if (site.timeouts.alarmUpdateTimeTimeout) { clearTimeout(site.timeouts.alarmUpdateTimeTimeout); }
 		site.timeouts.alarmUpdateTimeTimeout = setTimeout(function(){
 			site.home.alarmUpdateTime();
 		},10*1000);
+		
+	} else {
+		
+		loggr.log(" > !site.session.alarmActive || site.mp.mpstatus==Media.MEDIA_NONE");
+		
+		site.session.alarmActive = false;
+		$("#home .alarm_dialog").fadeOut(500);
 		
 	}
 	

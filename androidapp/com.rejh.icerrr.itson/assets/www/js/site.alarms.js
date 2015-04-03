@@ -411,6 +411,7 @@ site.alarms.updateForm = function(alarmCfg) {
 	
 	// Create dummy
 	if (!alarmCfg) {
+		loggr.log(" > Create alarmCfg");
 		var id = site.helpers.getUniqueID();
 		var alarm_id = site.alarms.getUniqueAlarmID();
 		var hour = new Date().getHours();
@@ -537,8 +538,8 @@ site.alarms.updateForm = function(alarmCfg) {
 	
 	// Repeat days
 	var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	var repeatOn = false;
 	for (var i=0; i<days.length; i++) {
-		var repeatOn = false;
 		var daylc = days[i].toLowerCase();
 		var selector = "#alarms_add .weekschedule ."+daylc;
 		if (alarmCfg.repeatCfg[i]>0) {
@@ -547,8 +548,8 @@ site.alarms.updateForm = function(alarmCfg) {
 		} else {
 			$(selector).removeClass("active");
 		}
-		site.alarms.newAlarmCfg.repeat = repeatOn;
 	}
+	site.alarms.newAlarmCfg.repeat = repeatOn;
 	$("#alarms_add .weekschedule .weekboxWrap").off("click");
 	$("#alarms_add .weekschedule .weekboxWrap").on("click",function(evt) {
 		loggr.log("weekboxWrap.on(click)");
@@ -644,6 +645,9 @@ site.alarms.genRepeatString = function(repeat,repeatCfg) {
 	for (var i in repeatCfg) {
 		if (repeatCfg[i]>0) { days.push(list[i]); }
 	}
+	
+	loggr.log(" > Repeat str: "+ days.length +", "+ repeat);
+	
 	if (days.length<1 || repeat=="off" || !repeat) { return "Repeat off"; }
 	return "Repeat: "+ days.join(", ");
 	

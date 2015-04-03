@@ -1,0 +1,92 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+
+	ICERRR - phone-landscape css
+	This css is targeted at phones in landscape, following most Material Design guidelines at http://goo.gl/8640JE
+	
+	Notes:
+	* Palettes
+	   * http://www.colourlovers.com/business/trends/branding/7880/Papeterie_Haute-Ville_Logo
+	
+*/
+
+/* -- SECTIONS */
+
+/* Common */
+
+section { }
+
+	.actionbar {
+		height:48px;
+	}
+	
+		.actionbar .icon_app {
+			padding:12px;
+		}
+		
+		.actionbar .title {
+			bottom:10px; left:48px;
+		}
+		
+		.actionbar .actions {
+			height:48px;
+		}
+		
+			.actionbar .actions .action {
+				padding:12px;
+			}
+			
+	.tabbar {
+		top:48px;
+	}
+		
+	.main {
+		top:48px;
+	}
+
+/* Specific */
+
+#home {}
+
+	#home .actionbar .icon_app {
+		width:24px; height:24px;
+		padding:12px;
+	}
+	
+#channellist {}
+
+	#channellist .main {
+		top:96px;
+	}
+	
+#editstation, #searchstation, #searchstation_results {
+	
+}
+
+	#editstation .block, #searchstation .block, #alarms_add .block, #about .block, #viewlog .block {
+		padding:0 12px 12px 12px;
+	}
+
+	#editstation .block.header, #searchstation .block.header, #alarms_add .block.header, #about .block.header, #viewlog .block.header {
+		padding:12px;
+	}
+	
+/* -- OVERFLOW_MENU */
+
+.overflow_menu {
+	top:4px;
+}
+
+	.overflow_menu .menu_item {
+		height:39px;
+	}
+	
+	.overflow_menu_button_close {
+		padding:8px;
+	}
+	
+		.overflow_menu_button_close img {
+			width:24px; height:24px;
+		}
