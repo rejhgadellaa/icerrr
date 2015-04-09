@@ -57,6 +57,14 @@ section { }
 	
 #channellist {}
 
+	#channellist .actionbar {
+		height:50px;
+	}
+	
+	#channellist .actionbar .title {
+		bottom:12px;
+	}
+
 	#channellist .main {
 		top:96px;
 	}

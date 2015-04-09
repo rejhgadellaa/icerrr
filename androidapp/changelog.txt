@@ -1,3 +1,6 @@
+0.209
+  * Minor UI fix
+
 0.208
   * New setting: Show station icon
   * Minor optimizations for Chrome ARC support
