@@ -596,7 +596,7 @@ site.lifecycle.checkMsgs = function(startedByUser) {
 	
 	site.webapi.exec(action, JSON.stringify(queryobj),
 		function(res) {
-			site.lifecycle.handleMsgs(res["data"]);
+			site.lifecycle.handleMsgs(res["data"],startedByUser);
 		},
 		function(err) {
 			// do nothing..
@@ -606,7 +606,7 @@ site.lifecycle.checkMsgs = function(startedByUser) {
 	
 }
 
-site.lifecycle.handleMsgs = function(data) {
+site.lifecycle.handleMsgs = function(data,startedByUser) {
 	
 	loggr.info("site.lifecycle.handleMsgs()");
 	
@@ -689,7 +689,7 @@ site.lifecycle.handleMsgs = function(data) {
 				}, ditem.title, buttonLabels);
 				break;
 			case "install-update-app":
-				site.lifecycle.installUpdateApp(ditem.url);
+				site.lifecycle.installUpdateApp(ditem.url,startedByUser);
 				site.lifecycle.storeMsgId(ditem.id,lids);
 				site.lifecycle.checkingForUpdates = false;
 				break;
@@ -768,13 +768,27 @@ site.lifecycle.storeMsgId = function(id,lids) {
 
 // Download apk
 
-site.lifecycle.installUpdateApp = function(url) {
+site.lifecycle.installUpdateApp = function(url,startedByUser) {
 	
 	loggr.info("site.lifecycle.installUpdateApp_init()");
 	
 	// Prep some stuff
 	var targetPath = site.cfg.paths.other;
 	var targetFile = "Icerrr.apk";
+	
+	// Check chrome runtime
+	if (device.model=="App Runtime for Chrome") {
+		
+		if (startedByUser) {
+			alert("App Runtime for Chrome does not yet support Icerrr's automatic update mechanism. Press OK to download the apk manually and use ARC Welder to install it.");
+			window.open(url.split("dl=1").join("dl=0"),'_system');
+			return;
+		} else {
+			loggr.warn(" > Don't prompt for update because we're in App Runtime for Chrome");
+			return;
+		}
+		
+	}
 			
 	// success -> Prompt user
 	message = "An update for Icerrr is availabe. Do you want to install it now?";
