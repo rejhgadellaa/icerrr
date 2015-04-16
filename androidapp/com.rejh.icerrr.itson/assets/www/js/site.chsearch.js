@@ -15,7 +15,7 @@ site.chsearch = {};
 
 site.chsearch.init = function() {
 	
-	loggr.log("site.chsearch.init()");
+	loggr.debug("site.chsearch.init()");
 	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#searchstation");
@@ -36,12 +36,12 @@ site.chsearch.init = function() {
 // - Important stuff: this is function that will be called whenever site.ui.gotosection is called
 
 site.chsearch.onpause = function() {
-	loggr.log("site.chsearch.onpause()");
+	loggr.debug("site.chsearch.onpause()");
 	// not needed now
 }
 
 site.chsearch.onresume = function() {
-	loggr.log("site.chsearch.site.home.()");
+	loggr.debug("site.chsearch.site.home.()");
 	// not needed now
 }
 
@@ -49,17 +49,17 @@ site.chsearch.onresume = function() {
 
 site.chsearch.searchstation = function(nextpage) {
 	
-	loggr.log("site.chsearch.searchstation()");
+	loggr.debug("site.chsearch.searchstation()");
 	
 	if (!site.chsearch.searchpage) {
-		site.chsearch.searchpage = 0;
+		site.chsearch.searchpage = 1;
 	}
 	
 	if (nextpage) {
 		site.chsearch.searchpage++;
 	} else {
 		site.chsearch.results = [];
-		site.chsearch.searchpage = 0;
+		site.chsearch.searchpage = 1;
 	}
 	
 	// Get value
@@ -77,8 +77,8 @@ site.chsearch.searchstation = function(nextpage) {
 	
 	// Webapi time!
 	var apiqueryobj = {
-		"get":"search_dirble",
-		"search":name +"/count/"+ 10 +"/from/"+ site.chsearch.searchpage // site.cfg.chlist.maxItemsPerBatch
+		"get":"search_dirble_v2",
+		"search":name // +"/page/"+ site.chsearch.searchpage // site.cfg.chlist.maxItemsPerBatch
 	}
 	
 	// > Go
@@ -91,23 +91,15 @@ site.chsearch.searchstation = function(nextpage) {
 				site.ui.showtoast(data["errormsg"]);
 				site.ui.hideloading();
 			} else {
-				if (data["data"].length>0 && site.chsearch.results.length<20) {
-					loggr.log(data["data"]);
-					for (var i in data["data"]) {
-						if (!data["data"][i]) { continue; }
-						if (!data["data"][i].name) { continue; }
-						site.chsearch.results.push(data["data"][i]);
-					}
-					if (site.timeouts.dirblesearch) { clearTimeout(site.timeouts.dirblesearch); }
-					site.timeouts.dirblesearch = setTimeout(function(){ site.chsearch.searchstation(true); }, 500);
-					//site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
-					//site.chsearch.resultsToStationData();
-					//site.ui.hideloading();
-				} else {
-					site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
-					site.chsearch.resultsToStationData();
-					site.ui.hideloading();
+				for (var i in data["data"]) {
+					if (!data["data"][i]) { continue; }
+					if (!data["data"][i].name) { continue; }
+					loggr.log(" > Station: '"+ data["data"][i].name +"'");
+					site.chsearch.results.push(data["data"][i]);
 				}
+				site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
+				site.chsearch.resultsToStationData();
+				site.ui.hideloading();
 			}
 		},
 		function(error) {
@@ -143,12 +135,13 @@ site.chsearch.searchstation_more = function() {
 
 site.chsearch.resultsToStationData = function(results) {
 	
-	loggr.log("site.chsearch.resultsToStationData()");
+	loggr.debug("site.chsearch.resultsToStationData()");
 	
 	if (!results) { results = site.chsearch.results; }
 	if (!results) { loggr.error("!results && !site.chsearch.results"); }
 	
 	site.chsearch.stations = [];
+	site.chsearch.stationData = results;
 	
 	loggr.log(results.length);
 	
@@ -158,25 +151,29 @@ site.chsearch.resultsToStationData = function(results) {
 		
 		//result = JSON.parse(result);
 		
-		loggr.log(result.streamurl);
+		loggr.log(" > "+ result.name);
 		
-		if (result.status!=1) { continue; } // TODO: The status can not be 100% sure yet. Its mainly just working for shoutcast and some Icecast
+		// deprecated in v2 || TODO: remove it alltogether
+		// if (result.status!=1) { loggr.warn(" -> status!=1, skip"); continue; } // TODO: The status can not be 100% sure yet. Its mainly just working for shoutcast and some Icecast
 		
-		var hostPortAndPath = site.chsearch.getHostPortAndPathFromUrl(result.streamurl);
+		var bestStreamUrl = site.chsearch.getBestStream(result);
+		
+		var hostPortAndPath = site.chsearch.getHostPortAndPathFromUrl(bestStreamUrl);
 		
 		var station = {
-			station_id:site.helpers.genUniqueStationId(result.name).replace(" ","_"),
+			station_id:site.helpers.genUniqueStationId(result.name).split(" ").join("_"),
 			dirble_id:result.id,
 			station_edited:{},
 			station_name:result.name,
-			station_url:result.streamurl,
+			station_url:bestStreamUrl,
 			station_icon:"null",
 			station_image:"null",
 			station_host:hostPortAndPath[0],
 			station_port:hostPortAndPath[1],
 			station_path:hostPortAndPath[2],
 			station_country:result.country,
-			station_bitrate:result.bitrate
+			station_bitrate:result.bitrate,
+			station_data:result
 		}
 		
 		site.chsearch.stations.push(station);
@@ -191,7 +188,7 @@ site.chsearch.resultsToStationData = function(results) {
 
 site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	
-	loggr.log("site.chsearch.drawResults()");
+	loggr.debug("site.chsearch.drawResults()");
 	
 	$("#searchstation_results .title").html("Search: \""+site.helpers.short(site.chsearch.searchstr,18)+"\"");
 	
@@ -217,6 +214,8 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	var stations = [];
 	stations = sorter(site.chsearch.stations);
 	
+	loggr.log(" > Stations: "+ site.chsearch.stations.length, +",  sorted: "+ stations.length);
+	
 	// Clean main
 	$("#searchstation_results .main").html("");
 	
@@ -233,22 +232,12 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	var ibgn = pagenum*site.cfg.chlist.maxItemsPerBatch;
 	var imax = (pagenum+1)*site.cfg.chlist.maxItemsPerBatch;
 	
-	// Init masonry || TODO: handle opts for other formfactors
-	site.helpers.masonryinit("#searchstation_results .main"); // TODO: move to helpers?
-	site.helpers.masonryupdate();
-	
 	// Fragment
 	var fragment = document.createDocumentFragment();
 	var elems = [];
 	
 	// For loop!
-	for (i=ibgn; i<imax; i++) {
-		
-		// check if i>stations.length
-		if (i>=stations.length) {
-			loggr.log(" > End of list");
-			break;
-		}
+	for (i=0; i<stations.length; i++) {
 		
 		// station..
 		var station = stations[i];
@@ -310,7 +299,7 @@ site.chsearch.addThisStation = function(evt) {
 			
 	// TODO: quick hack :D
 
-	loggr.log("site.chsearch.HACK.save()");
+	loggr.debug("site.chsearch.HACK.save()");
 	
 	// -> Get station
 	
@@ -340,7 +329,7 @@ site.chsearch.addThisStation = function(evt) {
 	
 	// Webapi time!
 	var apiqueryobj = {
-		"get":"nowplaying_dirble",
+		"get":"nowplaying_dirble_v2",
 		"dirble_id": station.dirble_id
 	}
 	
@@ -348,6 +337,7 @@ site.chsearch.addThisStation = function(evt) {
 	var apiaction = "get";
 	var apiquerystr = JSON.stringify(apiqueryobj);
 	
+	/*
 	site.chsearch.searchAjaxRequestId = site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
 			if (data["error"]) {
@@ -364,21 +354,25 @@ site.chsearch.addThisStation = function(evt) {
 			site.ui.hideloading();
 		}
 	);
+	/**/
+	
+	site.chsearch.testStation(station, stationIndex);
 	
 	
 	
 	
 }
 
-site.chsearch.testStation = function(station, stationIndex, stationData) {
+site.chsearch.testStation = function(station, stationIndex) {
 	
 	loggr.info("site.chsearch.testStation()");
 	
 	// -> Handle stationData:
 	// http://api.dirble.com/v1/station/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/9954
 	
-	var stream_url = station.stream_url;
+	var stream_url = site.chsearch.getBestStream(station.station_data);
 		
+	/*
 	try {
 		var streams = stationData.streams;
 		loggr.log(" > Found "+ streams.length +" stream(s)");
@@ -396,6 +390,7 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 		console.warn(streams);
 		console.error(e);
 	}
+	/**/
 	
 	// Store
 	station.station_url = stream_url;
@@ -448,6 +443,9 @@ site.chsearch.testStation = function(station, stationIndex, stationData) {
 					// -> Gogo
 					
 					if (!confirm("Add '"+ station.station_name +"'?")) { site.ui.hideloading(); return; }
+					
+					// Clear some data
+					station.station_data = {};
 			
 					// TODO: we need a helper for 'edited' stations
 					
@@ -531,7 +529,46 @@ site.chsearch.getHostPortAndPathFromUrl = function(station_url) {
 
 }
 
+// ---> Helper: get mpeg stream
 
+site.chsearch.getBestStream = function(stationData,highq) {
+	
+	loggr.log("site.chsearch.getBestStream()");
+	
+	console.log(stationData);
+	
+	var stream_url = "";
+	
+	var streams = stationData.streams;
+	loggr.log(" > Found "+ streams.length +" stream(s)");
+	
+	var bestQuality = 0;
+	
+	for (var i=0; i<streams.length; i++) {
+		var stream = streams[i];
+		stream.type = stream.content_type.trim().split("\n").join("").split("\r").join("").toLowerCase();
+		loggr.log(" >> "+ stream.content_type +", "+ stream.stream);
+		if (stream.type == "audio/mpeg") {
+			
+			// hq ?
+			if (!highq) {
+				if (bestQuality<128 || !stream_url) {
+					loggr.log(" >>> SELECTED: "+ stream.stream);
+					stream_url = stream.stream;
+				}
+			} else {
+				if (bestQuality>128 || !stream_url) {
+					loggr.log(" >>> SELECTED: "+ stream.stream +" (HQ!)");
+					stream_url = stream.stream;
+				}
+			}
+			
+		}
+	}
+	
+	return stream_url;
+	
+}
 
 
 

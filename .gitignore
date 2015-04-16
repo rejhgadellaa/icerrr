@@ -33,6 +33,10 @@ webapp/json/
 !webapp/json/stations.json
 !webapp/json/stations.example.json
 
+#webapp logs
+webapp/api/logs_users/
+webapp/api/stations_users/
+
 # nowplaying debug files
 outp.header.txt
 outp.meta.txt

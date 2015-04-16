@@ -206,10 +206,39 @@ switch($action) {
 				header('Content-Encoding: gzip');
 				echo $jsons;
 				break;
+			
+			// search
+			case "search_dirble_v2":
+				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
+				$dirble_url = "http://api.dirble.com/v2/search/";
+				$dirble_query = rawurlencode("{$queryobj['search']}");
+				$fg = fg($dirble_url . $dirble_query . "?token={$cfg['dirble_apikey']}");
+				if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
+				$json["data"] = json_decode($fg,true);
+				$json["info"] = array();
+				// TODO: catch errors
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
 				
 			case "nowplaying_dirble":
 				if (!$queryobj["dirble_id"]) { error("Error: 'dirble_id' not defined for get:{$queryobj['get']}"); }
 				$dirble_url = "http://api.dirble.com/v1/station/apikey/{$cfg['dirble_apikey']}/id/";
+				$dirble_query = rawurlencode("{$queryobj['dirble_id']}");
+				$fg = fg($dirble_url.$dirble_query);
+				if (!$fg) { error("Error running query on Dirble: '". $dirble_url.$dirble_query."'"); }
+				$json["data"] = json_decode($fg,true);
+				$json["info"] = array();
+				// TODO: catch errors
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
+				
+			case "nowplaying_dirble_v2":
+				if (!$queryobj["dirble_id"]) { error("Error: 'dirble_id' not defined for get:{$queryobj['get']}"); }
+				$dirble_url = "http://api.dirble.com/v2/station/id/";
 				$dirble_query = rawurlencode("{$queryobj['dirble_id']}");
 				$fg = fg($dirble_url.$dirble_query);
 				if (!$fg) { error("Error running query on Dirble: '". $dirble_url.$dirble_query."'"); }

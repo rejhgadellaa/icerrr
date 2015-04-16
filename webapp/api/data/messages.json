@@ -31,7 +31,7 @@
     {
         "id":"stations_database",
         "crit":"install-update",
-        "critvalue":1000,
+        "critvalue":1001,
         "action":"install-update",
         "message":[ ],
         "repeat":0
