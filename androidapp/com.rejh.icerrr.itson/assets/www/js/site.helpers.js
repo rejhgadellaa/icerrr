@@ -472,9 +472,11 @@ site.helpers.storeSession = function() {
 				loggr.log("site.helpers.storeSession > write local site.session OK");
 			},
 			function(err) {
-				loggr.log("site.helpers.storeSession > write local site.session Error");
+				loggr.error("site.helpers.storeSession > write local site.session Error");
 			}
 		);
+	} else {
+		loggr.error(" > !site.session_ready ?!?!?!");
 	}
 }
 
@@ -633,7 +635,7 @@ site.helpers.getUniqueID = function(prefix,suffix) {
 	var res = CryptoJS.MD5(device.uuid);
 	res += "_"+ (new Date().getTime()).toString(16);
 	res += "_"+ Math.round((Math.random()*1024*1024)).toString(16);
-	loggr.debug("site.helpers.getUniqueID(): "+ res);
+	loggr.log("site.helpers.getUniqueID(): "+ res);
 	return res;
 }
 

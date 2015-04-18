@@ -486,6 +486,7 @@ site.lifecycle.onBackButton = function() {
 			if (lastsection=="#editstation") {
 				site.chedit.init(site.chicon.station.station_id);
 			} else {
+				site.lifecycle.add_section_history("#searchicon");
 				site.ui.showtoast("Please choose an icon");
 			}
 			break;

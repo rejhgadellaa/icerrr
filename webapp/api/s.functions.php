@@ -77,6 +77,17 @@ function sendEmail($to,$subject,$message,$add_headers=false,$add_params=false) {
 	@mail($to,$subject,$message,$add_headers,$add_params);
 }
 
+// ---> Url queries
+
+function urlAddGetParam($url,$key,$value) {
+	if (strpos($url,"?")!==FALSE) {
+		$url .= "&{key}={$value}";
+	} else {
+		$url .= "?{key}={$value}";
+	}
+	return $url;
+}
+
 // ---> File i/o
 
 function readJsonsFile($file) {

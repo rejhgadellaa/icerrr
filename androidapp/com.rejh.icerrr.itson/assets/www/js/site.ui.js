@@ -128,7 +128,7 @@ site.ui.showtoast = function(msg, timeInSec) {
 	var timeInMsec = timeInSec * 1000;
 	$("#overlay_toast").html(msg);
 	$("#overlay_toast").fadeIn(250);
-	$(".fab").css("bottom",80);
+	$(".fab").css("bottom",$("#overlay_toast").height()+16);
 	site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec);
 }
 

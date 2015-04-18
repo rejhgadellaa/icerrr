@@ -24,7 +24,7 @@ site.home.init = function() {
 	// Check if station has been selected
 	if (!site.session.currentstation_id) {
 		loggr.log(site.session.currentstation_id);
-		site.ui.showtoast("Please choose a station");
+		site.ui.showtoast("Please choose a station",5);
 		site.chlist.init();
 		return; // <- important
 	}
@@ -342,6 +342,8 @@ site.home.run_ui_updates = function() {
 site.home.run_station_updates = function(dontUseDirble) {
 	
 	//loggr.log("site.home.run_station_updates()");
+	
+	dontUseDirble = true;
 	
 	if (site.session.currentstation.dirble_id && !dontUseDirble) {
 		site.home.useDirbleNowPlaying();

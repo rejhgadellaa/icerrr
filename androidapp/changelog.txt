@@ -1,3 +1,8 @@
+0.212
+  * Upgraded search to Dirble API v2
+  * Some additional tweaks for station search
+  * Some big fuxes. Uhm. Bug fixes.
+
 0.211
   * Chrome Runtime won't prompt for updates automatically
   * Minor optimizations

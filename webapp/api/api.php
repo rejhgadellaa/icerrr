@@ -207,8 +207,8 @@ switch($action) {
 				echo $jsons;
 				break;
 			
-			// search
-			case "search_dirble_v2":
+			// search v2
+			case "search_dirble_v2_o":
 				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
 				$dirble_url = "http://api.dirble.com/v2/search/";
 				$dirble_query = rawurlencode("{$queryobj['search']}");
@@ -220,6 +220,87 @@ switch($action) {
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
 				echo $jsons;
+				break;
+				
+			// search v2 -> more
+			case "search_dirble_v2":
+				
+				// Prep
+				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
+				$dirble_url = "http://api.dirble.com/v2/search/";
+				$dirble_query = rawurlencode("{$queryobj['search']}");
+				$drible_url = $dirble_url . $dirble_query . "?token={$cfg['dirble_apikey']}";
+				$searchresults = array();
+				$results_primary = array();
+				$results_secundary = array();
+				$page = 1;
+				
+				// First query
+				$fg = fg($drible_url);
+				if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
+				$res = json_decode($fg,true);
+				if (!$res) { $res = array(); }
+				
+				// Add results
+				for ($i=0; $i<count($res); $i++) {
+					if (!$res[$i]) { continue; }
+					$namelower = strtolower($res[$i]["name"]);
+					$querylower = strtolower($queryobj['search']);
+					
+					// Primary/secundary results..
+					if (strpos($namelower,$querylower)!==FALSE) {
+						$results_primary[] = $res[$i];
+					} else {
+						$results_secundary[] = $res[$i];
+					}
+				}
+				
+				// Keep getting results..
+				while(count($res)>0) {
+					
+					$page++;
+					$fg = fg($drible_url . "&page={$page}");
+					if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
+					$res = json_decode($fg,true);
+					if (!$res) { $res = array(); }
+					
+					//header("Content-Type: text/plain");
+					//print_r($res);
+					// echo "oi<br>";
+					
+					// Add results
+					for ($i=0; $i<count($res); $i++) {
+						if (!$res[$i]) { continue; }
+						$namelower = strtolower($res[$i]["name"]);
+						$querylower = strtolower($queryobj['search']);
+						
+						// Primary/secundary results..
+						if (strpos($namelower,$querylower)!==FALSE) {
+							$results_primary[] = $res[$i];
+						} else {
+							$results_secundary[] = $res[$i];
+						}
+					}
+					
+					// Merge
+					$searchresults = array_merge($results_primary,$results_secundary);
+					
+					// Count
+					if (count($searchresults)>=64) {
+						break;
+					}
+					
+				}
+				// Build response
+				$json["data"] = $searchresults;
+				$json["info"] = array();
+				// TODO: catch errors
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
+				
+				
 				break;
 				
 			case "nowplaying_dirble":

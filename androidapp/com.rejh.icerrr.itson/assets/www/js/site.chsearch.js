@@ -77,7 +77,7 @@ site.chsearch.searchstation = function(nextpage) {
 	
 	// Webapi time!
 	var apiqueryobj = {
-		"get":"search_dirble_v2",
+		"get":"search_dirble",
 		"search":name // +"/page/"+ site.chsearch.searchpage // site.cfg.chlist.maxItemsPerBatch
 	}
 	
@@ -97,7 +97,7 @@ site.chsearch.searchstation = function(nextpage) {
 					loggr.log(" > Station: '"+ data["data"][i].name +"'");
 					site.chsearch.results.push(data["data"][i]);
 				}
-				site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)");
+				site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)",2.5);
 				site.chsearch.resultsToStationData();
 				site.ui.hideloading();
 			}
@@ -156,7 +156,17 @@ site.chsearch.resultsToStationData = function(results) {
 		// deprecated in v2 || TODO: remove it alltogether
 		// if (result.status!=1) { loggr.warn(" -> status!=1, skip"); continue; } // TODO: The status can not be 100% sure yet. Its mainly just working for shoutcast and some Icecast
 		
-		var bestStreamUrl = site.chsearch.getBestStream(result);
+		var bestStream = site.chsearch.getBestStream(result);
+		var bestStreamUrl = (bestStream.stream) ? bestStream.stream : null;
+		
+		if (!bestStreamUrl) { 
+			loggr.error(" -> Skip, no stream url?",{dontupload:true});
+			continue; 
+		}
+		
+		var bitrate = bestStream.bitrate;
+		if (!bitrate) { bitrate = "? kbps"; }
+		else { bitrate += ""; bitrate = (bitrate.toLowerCase().indexOf("kb")>=0) ? bitrate : bitrate +" kbps"; }
 		
 		var hostPortAndPath = site.chsearch.getHostPortAndPathFromUrl(bestStreamUrl);
 		
@@ -172,7 +182,7 @@ site.chsearch.resultsToStationData = function(results) {
 			station_port:hostPortAndPath[1],
 			station_path:hostPortAndPath[2],
 			station_country:result.country,
-			station_bitrate:result.bitrate,
+			station_bitrate: bitrate,
 			station_data:result
 		}
 		
@@ -325,37 +335,8 @@ site.chsearch.addThisStation = function(evt) {
 		} catch(e) { }
 	}
 	
-	// Get dirble station results
 	
-	// Webapi time!
-	var apiqueryobj = {
-		"get":"nowplaying_dirble_v2",
-		"dirble_id": station.dirble_id
-	}
-	
-	// > Go
-	var apiaction = "get";
-	var apiquerystr = JSON.stringify(apiqueryobj);
-	
-	/*
-	site.chsearch.searchAjaxRequestId = site.webapi.exec(apiaction,apiquerystr,
-		function(data) {
-			if (data["error"]) {
-				site.ui.showtoast(data["errormsg"]);
-				site.ui.hideloading();
-			} else {
-				site.chsearch.testStation(station, stationIndex, data["data"]);
-				// site.chsearch.getStreamFromPlaylist(station, stationIndex, data["data"]);
-			}
-		},
-		function(error) {
-			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
-			else { loggr.log(error); }
-			site.ui.hideloading();
-		}
-	);
-	/**/
-	
+	// Test!
 	site.chsearch.testStation(station, stationIndex);
 	
 	
@@ -370,27 +351,13 @@ site.chsearch.testStation = function(station, stationIndex) {
 	// -> Handle stationData:
 	// http://api.dirble.com/v1/station/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/9954
 	
-	var stream_url = site.chsearch.getBestStream(station.station_data);
-		
-	/*
-	try {
-		var streams = stationData.streams;
-		loggr.log(" > Found "+ streams.length +" stream(s)");
-		for (var i=0; i<streams.length; i++) {
-			var stream = streams[i];
-			stream.type = stream.type.trim().split("\n").join("").split("\r").join("").toLowerCase();
-			loggr.log(" >> "+ stream.type +", "+ stream.stream);
-			if (stream.type == "audio/mpeg") {
-				loggr.log(" >>> SELECTED: "+ stream.stream);
-				stream_url = stream.stream;
-				break;
-			}
-		}
-	} catch(e) { 
-		console.warn(streams);
-		console.error(e);
+	var stream_url = site.chsearch.getBestStreamUrl(station.station_data);
+	var stream_url_hq = site.chsearch.getBestStreamUrl(station.station_data,true);
+	
+	if (stream_url_hq && stream_url!=stream_url_hq) {
+		loggr.error(" -> High quality stream! > "+ site.chsearch.getBestStream(station.station_data,true).bitrate,{dontupload:true});
+		station.station_url_highquality = stream_url_hq;
 	}
-	/**/
 	
 	// Store
 	station.station_url = stream_url;
@@ -411,7 +378,7 @@ site.chsearch.testStation = function(station, stationIndex) {
 		mediaPlayer.release();
 		site.ui.hideloading();
 		site.ui.showtoast("Stream did not start within a reasonable time, please choose another");
-	},15000);
+	},20000);
 	
 	var mediaPlayer = new Media(station.station_url,
 		function() {
@@ -437,12 +404,39 @@ site.chsearch.testStation = function(station, stationIndex) {
 				
 					if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
 				
-					mediaPlayer.stop();
-					mediaPlayer.release();
+					//mediaPlayer.stop();
+					//mediaPlayer.release();
+					
+					// -> Infostr
+					
+					var streamData = site.chsearch.getBestStream(station.station_data);
+					
+					var infostr = "\n";
+					infostr += "\n"+ "Stream info:";
+					// infostr += "\n"+ "URL: "+ station.station_url;
+					infostr += "\n"+ "Type: "+ streamData.content_type;
+					infostr += "\n"+ "Quality: "+ streamData.bitrate +" kbps";
+					
+					if (station.station_url_highquality) {
+						var streamDataHQ = site.chsearch.getBestStream(station.station_data,true);
+						infostr += "\n";
+						infostr += "\n"+ "High quality:";
+						// infostr += "\n"+ "URL: "+ station.station_url_highquality;
+						infostr += "\n"+ "Type: "+ streamDataHQ.content_type;
+						infostr += "\n"+ "Quality: "+ streamDataHQ.bitrate +" kbps";
+					}
 	
 					// -> Gogo
 					
-					if (!confirm("Add '"+ station.station_name +"'?")) { site.ui.hideloading(); return; }
+					if (!confirm("Add '"+ station.station_name +"'?"+infostr)) { 
+						mediaPlayer.stop();
+						mediaPlayer.release();
+						site.ui.hideloading(); 
+						return; 
+					}
+					
+					mediaPlayer.stop();
+					mediaPlayer.release();
 					
 					// Clear some data
 					station.station_data = {};
@@ -455,8 +449,14 @@ site.chsearch.testStation = function(station, stationIndex) {
 					var addstations = [station];
 					var newstations = site.helpers.mergeStations(addstations, site.data.stations);
 					
-					// Store!
+					// -> put back into data.stations
 					site.data.stations = newstations;
+					
+					// Auto star
+					site.chlist.setStarred(station.station_id);
+					site.chedit.changesHaveBeenMadeGotoStarred = true;
+					
+					// Store!
 					site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
 						function(evt) { 
 							site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
@@ -470,10 +470,6 @@ site.chsearch.testStation = function(station, stationIndex) {
 							loggr.log(site.storage.getErrorType(e)); 
 						}
 					);
-					
-					// Auto star
-					site.chlist.setStarred(station.station_id);
-					site.chedit.changesHaveBeenMadeGotoStarred = true;
 					
 			}
 		}
@@ -533,40 +529,69 @@ site.chsearch.getHostPortAndPathFromUrl = function(station_url) {
 
 site.chsearch.getBestStream = function(stationData,highq) {
 	
-	loggr.log("site.chsearch.getBestStream()");
+	loggr.log("site.chsearch.getBestStream(): "+ stationData.name +", hq="+ highq);
 	
-	console.log(stationData);
+	// TODO: debug, remove
+	//console.log(stationData);
 	
-	var stream_url = "";
+	var bestStream = "";
 	
 	var streams = stationData.streams;
 	loggr.log(" > Found "+ streams.length +" stream(s)");
 	
-	var bestQuality = 0;
+	var bestQuality = -1;
 	
 	for (var i=0; i<streams.length; i++) {
+		
 		var stream = streams[i];
+		
 		stream.type = stream.content_type.trim().split("\n").join("").split("\r").join("").toLowerCase();
-		loggr.log(" >> "+ stream.content_type +", "+ stream.stream);
+		loggr.log(" >> "+ stream.content_type +", "+ stream.stream +", "+ stream.bitrate);
+		
+		var bitrate = (stream.bitrate) ? stream.bitrate : 0;
+		
+		// Find audio/mpeg
 		if (stream.type == "audio/mpeg") {
 			
 			// hq ?
 			if (!highq) {
-				if (bestQuality<128 || !stream_url) {
+				if (bestQuality>bitrate || !bestStream) {
 					loggr.log(" >>> SELECTED: "+ stream.stream);
-					stream_url = stream.stream;
+					bestStream = stream;
+					bestQuality = bitrate;
 				}
 			} else {
-				if (bestQuality>128 || !stream_url) {
+				if (bestQuality<bitrate || !bestStream) {
 					loggr.log(" >>> SELECTED: "+ stream.stream +" (HQ!)");
-					stream_url = stream.stream;
+					bestStream = stream;
+					bestQuality = bitrate;
 				}
 			}
 			
 		}
+		
+		// Fallback
+		else if (!bestStream) {
+			//bestStream = stream;
+			//bestQuality = -1;
+		}
+		
+		
 	}
 	
-	return stream_url;
+	return bestStream;
+	
+	
+	
+}
+
+site.chsearch.getBestStreamUrl = function(stationData,highq) {
+	
+	loggr.log("site.chsearch.getBestStreamUrl()");
+	
+	var stream = site.chsearch.getBestStream(stationData,highq);
+	
+	return (stream.stream) ? stream.stream : "";
 	
 }
 
