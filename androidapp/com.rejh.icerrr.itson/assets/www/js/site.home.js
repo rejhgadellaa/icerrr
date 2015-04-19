@@ -24,7 +24,7 @@ site.home.init = function() {
 	// Check if station has been selected
 	if (!site.session.currentstation_id) {
 		loggr.log(site.session.currentstation_id);
-		site.ui.showtoast("Please choose a station",5);
+		site.ui.showtoast("Please choose a station");
 		site.chlist.init();
 		return; // <- important
 	}

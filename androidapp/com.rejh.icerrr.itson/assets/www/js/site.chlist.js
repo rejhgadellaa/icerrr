@@ -511,17 +511,10 @@ site.chlist.toggleStarred = function(station_id) {
 
 // Store starred
 
-site.chlist.setStarred = function(station_id) {
+site.chlist.setStarredByStationObj = function(station) {
 	
-	loggr.info("site.chlist.setStarred(): "+station_id);
+	loggr.info("site.chlist.setStarredByStationObj(): "+station.station_id);
 	
-	// Create list if it doesn't exist
-	if (!site.session.starred) { site.session.starred = []; }
-	
-	// Add on TOP of stack :D
-	// -> Disadventage of site.data.stations: it's only available when in chlist.. should maybe load this anyway?
-	var index = site.helpers.session.getStationIndexById(station_id,site.data.stations);
-	var station = site.data.stations[index];
 	site.session.starred.unshift(station);
 	site.session.starred = site.sorts.station_by_name(site.session.starred); // sort :D
 	
@@ -538,6 +531,26 @@ site.chlist.setStarred = function(station_id) {
 	
 	// Store
 	site.helpers.storeSession();
+	
+}
+
+site.chlist.setStarred = function(station_id) {
+	
+	loggr.info("site.chlist.setStarred(): "+station_id);
+	
+	// Create list if it doesn't exist
+	if (!site.session.starred) { site.session.starred = []; }
+	
+	// Add on TOP of stack :D
+	// -> Disadventage of site.data.stations: it's only available when in chlist.. should maybe load this anyway?
+	var index = site.helpers.session.getStationIndexById(station_id,site.data.stations);
+	var station = site.data.stations[index];
+	
+	if (!station || index<0) {
+		loggr.error(" > !station ("+ station +") || index<0 ("+ index +")");
+	}
+	
+	site.chlist.setStarredByStationObj(station);
 	
 }
 
@@ -603,6 +616,10 @@ site.chlist.getStarred = function() {
 	// Walk
 	for (var i=0; i<site.session.starred.length; i++) {
 		
+		//loggr.error(" > "+ site.session.starred[i].station_name, {dontupload:true});
+		
+		var pushed = false;
+		
 		var starred = site.session.starred[i];
 		
 		for (var j=0; j<site.data.stations.length; j++) {
@@ -610,9 +627,15 @@ site.chlist.getStarred = function() {
 			var station = site.data.stations[j];
 			
 			if (starred.station_id==station.station_id) {
+				//loggr.error(" -> FOUND "+ site.session.starred[i].station_name, {dontupload:true});
+				pushed = true;
 				newlist.push(station);
 			}
 			
+		}
+		
+		if (!pushed) {
+			//loggr.error(" -> NOT FOUND NOT FOUND "+ site.session.starred[i].station_name, {dontupload:true});
 		}
 		
 	}

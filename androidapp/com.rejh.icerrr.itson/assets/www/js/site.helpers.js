@@ -460,7 +460,7 @@ site.sorts.station_by_name = function(stations) {
 
 site.helpers.session = {};
 
-site.helpers.storeSession = function() {
+site.helpers.storeSession = function(cb) {
 	loggr.debug("site.helpers.storeSession()");
 	if (!site.session_ready) { // get session before writing
 		site.helpers.readSession();
@@ -470,6 +470,7 @@ site.helpers.storeSession = function() {
 		site.storage.writefile(site.cfg.paths.json,"local.site_session.json",site.cookies.get("site.session"), // write
 			function() {
 				loggr.log("site.helpers.storeSession > write local site.session OK");
+				if (cb) { cb(); }
 			},
 			function(err) {
 				loggr.error("site.helpers.storeSession > write local site.session Error");

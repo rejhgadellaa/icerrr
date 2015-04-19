@@ -492,6 +492,9 @@ section {
 		top:0; left:0; right:0;
 		height:16px;
 		padding:16px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
 		border-bottom:1px solid #ccc;
 		text-transform:uppercase;
 	}
@@ -500,7 +503,7 @@ section {
 		float:left;
 		position:relative;
 		width:100%;
-		height:72px;
+		height:71px;
 		background:#fff;
 		border-bottom:1px solid #ddd;
 	}

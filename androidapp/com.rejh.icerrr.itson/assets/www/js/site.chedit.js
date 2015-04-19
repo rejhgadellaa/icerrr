@@ -531,9 +531,12 @@ site.chedit.check_station_icon = function(silent) {
 		newentry.station_icon_local = null;
 		newentry.station_image_local = null;
 		loggr.log(" > All good :D");
+		site.chedit.save();
+		/*
 		if (confirm("Everything seems to check out! Save now?")) {
 			site.chedit.save();
 		}
+		/**/
 	}
 	img.onerror = function(evt) {
 		// Search the google :D

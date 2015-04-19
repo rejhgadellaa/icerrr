@@ -77,7 +77,7 @@ site.chsearch.searchstation = function(nextpage) {
 	
 	// Webapi time!
 	var apiqueryobj = {
-		"get":"search_dirble",
+		"get":"search_dirble_v2",
 		"search":name // +"/page/"+ site.chsearch.searchpage // site.cfg.chlist.maxItemsPerBatch
 	}
 	
@@ -97,7 +97,6 @@ site.chsearch.searchstation = function(nextpage) {
 					loggr.log(" > Station: '"+ data["data"][i].name +"'");
 					site.chsearch.results.push(data["data"][i]);
 				}
-				site.ui.showtoast("Success! Found "+ site.chsearch.results.length +" result(s)",2.5);
 				site.chsearch.resultsToStationData();
 				site.ui.hideloading();
 			}
@@ -141,20 +140,12 @@ site.chsearch.resultsToStationData = function(results) {
 	if (!results) { loggr.error("!results && !site.chsearch.results"); }
 	
 	site.chsearch.stations = [];
-	site.chsearch.stationData = results;
-	
-	loggr.log(results.length);
 	
 	for (var i in results) {
 		
 		var result = results[i];
 		
-		//result = JSON.parse(result);
-		
 		loggr.log(" > "+ result.name);
-		
-		// deprecated in v2 || TODO: remove it alltogether
-		// if (result.status!=1) { loggr.warn(" -> status!=1, skip"); continue; } // TODO: The status can not be 100% sure yet. Its mainly just working for shoutcast and some Icecast
 		
 		var bestStream = site.chsearch.getBestStream(result);
 		var bestStreamUrl = (bestStream.stream) ? bestStream.stream : null;
@@ -189,6 +180,8 @@ site.chsearch.resultsToStationData = function(results) {
 		site.chsearch.stations.push(station);
 		
 	}
+	
+	site.ui.showtoast("Success! Found "+ site.chsearch.stations.length +" result(s)",2.5);
 	
 	site.chsearch.drawResults();
 	
@@ -291,11 +284,6 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 	// add list
 	$("#searchstation_results .main").append(fragment);
 	
-	// masonry!
-	// $("#searchstation_results .main").masonry( 'appended', elems )
-	
-	// TODO: how to load more pages...?
-	
 	// update window
 	site.lifecycle.onResize();
 	
@@ -349,11 +337,12 @@ site.chsearch.testStation = function(station, stationIndex) {
 	loggr.info("site.chsearch.testStation()");
 	
 	// -> Handle stationData:
-	// http://api.dirble.com/v1/station/apikey/08a3da4597ba300ba13fc63ab2b0ab6aa560e11d/id/9954
 	
+	// Get streams
 	var stream_url = site.chsearch.getBestStreamUrl(station.station_data);
 	var stream_url_hq = site.chsearch.getBestStreamUrl(station.station_data,true);
 	
+	// HQ stream?
 	if (stream_url_hq && stream_url!=stream_url_hq) {
 		loggr.error(" -> High quality stream! > "+ site.chsearch.getBestStream(station.station_data,true).bitrate,{dontupload:true});
 		station.station_url_highquality = stream_url_hq;
@@ -404,6 +393,7 @@ site.chsearch.testStation = function(station, stationIndex) {
 				
 					if (site.chsearch.station_test_timeout) { clearTimeout(site.chsearch.station_test_timeout); }
 				
+					// TODO: deprecated?
 					//mediaPlayer.stop();
 					//mediaPlayer.release();
 					
@@ -462,8 +452,7 @@ site.chsearch.testStation = function(station, stationIndex) {
 							site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
 							site.chedit.changesHaveBeenMade = true;
 							site.ui.showtoast("Saved!");
-							// site.chlist.init(true);
-							site.chicon.init(site.chsearch.station_id); // TODO: Finish this
+							site.chicon.init(site.chsearch.station_id);
 						},
 						function(e){ 
 							alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 

@@ -197,7 +197,6 @@ site.lifecycle.initApp = function(force) {
 		var message = "Icerrr can search and show album art based on the 'now playing' information (if any) of a stream. Note, however, that the imagery that is shown may contain copyrighted material and that you, the user, have hereby agreed that Icerrr does this on your behalf and not to the benefit of the developer.\n\nShort version: The developer is not responsible for Icerrr showing copyrighted material when you enable this option.\n\nYou may change this later under Settings.";
 		navigator.notification.confirm(message,
 			function(buttonIndex){
-				loggr.error(buttonIndex,{dontupload:true});
 				if (buttonIndex==1) {
 					site.cookies.put("setting_showAlbumArt",1);
 				} else {
@@ -449,7 +448,7 @@ site.lifecycle.onBackButton = function() {
 	if (site.vars.isLoading) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
 	
 	var currentBackKey = site.lifecycle.get_section_history_item();
-	loggr.log(currentBackKey);
+	loggr.log(" > currentBackKey: "+ currentBackKey);
 	
 	// Okay, that out of the way...
 	switch(currentBackKey) {
@@ -862,8 +861,11 @@ site.lifecycle.add_section_history = function(selector) {
 	loggr.debug("site.lifecycle.add_section_history()");
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { site.session.lifecycle.section_history = []; }
-	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] == selector) { return; }
-	site.session.lifecycle.section_history.push(selector);
+	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] != selector) {
+		site.session.lifecycle.section_history.push(selector);
+	} else {
+		loggr.log(" > Selector exsits in history: "+ selector);
+	}
 	loggr.log(" > "+ JSON.stringify(site.session.lifecycle.section_history));
 }
 
