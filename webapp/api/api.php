@@ -92,14 +92,18 @@ switch($action) {
 				if (@filemtime($filename)<time()-30) { // refresh file every xx secs
 					// $id3_reader_url = "http://". $_SERVER['HTTP_HOST'] ."/icerrr/php/tests/test-readid3.php?q="; // TODO: rejh.nl only opens fsock on port 80
 					$id3_reader_url = $cfg["icerrr_local_url"] . "php/tests/test-readid3.php?q=";
+					if ($queryobj["station_port"]==80) {
+						$id3_reader_url = $cfg["icerrr_remote_url"] . "php/tests/test-readid3.php?q=";
+					}
 					// "http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=";
 					if (!$queryobj["station_port"]) { $queryobj["station_port"] = 80; }
 					$id3_reader_q = urlencode('{"station_id":"'. $queryobj["station_id"] .'","host":"'. $queryobj["station_host"] .'","port":'. $queryobj["station_port"] .',"path":"'. $queryobj["station_path"] .'"}');
+					
 					// retry this a couple of times..
 					$fgjson = false;
 					$whilenum = 0;
 					while(!$fgjson) {
-						logg(" >> Read file... $whilenum");
+						logg(" >> Read stream... $whilenum $id3_reader_url");
 						$whilenum++;
 						if ($whilenum>=4) { break; }
 						$fg = fg($id3_reader_url.$id3_reader_q);
@@ -116,6 +120,7 @@ switch($action) {
 				if (!$json["data"]) { logg(" >> ".$fr); error("Error: could not parse json: '$filename'"); }
 				//$json["data"] = json_decode($json["data"],true);
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
+				$json["info"]["last_update_timeago_sec"] = time() - filemtime($filename);
 				$json["info"]["last_update_date"] = date("Y-m-d H:i:s",filemtime($filename));
 				$json["info"]["desc"] = $queryobj["get"];
 				$jsons = json_encode($json);

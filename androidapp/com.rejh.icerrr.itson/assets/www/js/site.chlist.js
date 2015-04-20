@@ -547,7 +547,9 @@ site.chlist.setStarred = function(station_id) {
 	var station = site.data.stations[index];
 	
 	if (!station || index<0) {
-		loggr.error(" > !station ("+ station +") || index<0 ("+ index +")");
+		loggr.error(" > !station ("+ station +") || index<0 ("+ index +")",{dontupload:true});
+		loggr.error(" > Could not star station, sorry :(");
+		return;
 	}
 	
 	site.chlist.setStarredByStationObj(station);

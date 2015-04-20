@@ -52,13 +52,28 @@ function cleanupjson() {
 	$dir = "../json/";
 	$files = rd($dir);
 	foreach($files as $fnum => $fname) {
+		
+		// Stuff..
 		$fpath = "{$dir}{$fname}";
 		if (is_dir($fpath)) { continue; }
+		
+		// Clear temp files...
 		if (strpos($fpath,"station_info.TMP.")!==FALSE) {
-			logg(" - {$fpath}");
+			logg(" - TMP: {$fpath}");
 			unlink($fpath);
 		}
+		
+		// Clear old station_info files..
+		elseif (strpos($fpath,"station_info.")!==FALSE) {
+			$timeold = time() - (60*60*24); // 60s * 60m = 1 hour // -> calced in seconds
+			if (filemtime($fpath)<$timeold) {
+				logg(" - OLD: {$fpath}");
+				unlink($fpath);
+			}
+		}
+		
 	}
+	/**/
 }
 
 // ---> Send email
