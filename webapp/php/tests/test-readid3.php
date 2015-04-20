@@ -43,6 +43,11 @@ $queryj = json_decode($querys,true);
 	if (!$queryj["port"]) { $queryj["port"] = 80; }
 	if (!$queryj["path"] || $queryj["path"]=="null") { $queryj["path"] = "/"; }
 	
+	// -> Hack: icecast.omroep.nl
+	if ($queryj["host"]=="icecast.omroep.nl") {
+		$queryj["path"] = str_replace("-sb-","-bb-",$queryj["path"]);
+	}
+	
 $timebgn = time();
 
 // Open a socket
