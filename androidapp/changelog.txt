@@ -1,3 +1,6 @@
+0.213
+  * Fix: adding new station manually wasn't working properly (issue #176)
+
 0.212
   * Upgraded search to Dirble API v2
   * Some additional tweaks for station search

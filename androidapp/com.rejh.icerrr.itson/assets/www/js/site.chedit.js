@@ -128,14 +128,15 @@ site.chedit.save = function() {
 	
 	loggr.log("site.chedit.save()");
 	
+	var isNewStation = false;
+	
 	// Overwrite data.stations :| || TODO: is this safe?
 	if ($("#editstation input[name='station_id']")[0].value) {
 		site.chedit.newentry.station_id = $("#editstation input[name='station_id']")[0].value.trim();
 	}
 	// New station: auto star it
 	else {
-		site.chlist.setStarred(site.chedit.newentry.station_id);
-		site.chedit.changesHaveBeenMadeGotoStarred = true;
+		isNewStation = true; // <- will later be used to determine wether setStarred should be called
 	}
 	
 	// Remove tmp data
@@ -188,6 +189,12 @@ site.chedit.save = function() {
 			loggr.log(site.storage.getErrorType(e)); 
 		}
 	);
+	
+	// Auto-star new station?
+	if (isNewStation) {
+		site.chlist.setStarred(site.chedit.newentry.station_id);
+		site.chedit.changesHaveBeenMadeGotoStarred = true;
+	}
 	
 }
 
