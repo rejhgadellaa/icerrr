@@ -116,6 +116,7 @@ switch($action) {
 				if (!$json["data"]) { logg(" >> ".$fr); error("Error: could not parse json: '$filename'"); }
 				//$json["data"] = json_decode($json["data"],true);
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
+				$json["info"]["last_update_date"] = date("Y-m-d H:i:s",filemtime($filename));
 				$json["info"]["desc"] = $queryobj["get"];
 				$jsons = json_encode($json);
 				$jsons = gzencode($jsons);
