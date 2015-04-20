@@ -136,7 +136,7 @@ site.chedit.save = function() {
 	}
 	// New station: auto star it
 	else {
-		isNewStation = true; // <- will later be used to determine wether setStarred should be called
+		isNewStation = true; // <- will later be used to determine whether setStarred should be called
 	}
 	
 	// Remove tmp data
@@ -182,7 +182,7 @@ site.chedit.save = function() {
 				// New station! Set starred
 				site.chlist.setStarred(site.chedit.newentry.station_id);
 				site.chedit.changesHaveBeenMadeGotoStarred = true;
-				// Goto list on first save (long story.. but there is a difference how this script handles new and existing entries
+				// Reload chedit
 				site.chedit.init(site.chedit.newentry.station_id, site.chedit.askedAboutStationName, site.chedit.askedAboutNowplaying, site.chedit.checkedPlayability, site.chedit.isPlayable);
 			}
 			site.helpers.uploadStation(site.chedit.newentry);
