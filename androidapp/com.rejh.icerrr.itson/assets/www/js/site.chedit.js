@@ -178,7 +178,10 @@ site.chedit.save = function() {
 			site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
 			site.chedit.changesHaveBeenMade = true;
 			site.ui.showtoast("Saved!");
-			if (!$("#editstation input[name='station_id']")[0].value.trim()) {
+			if (isNewStation) { 
+				// New station! Set starred
+				site.chlist.setStarred(site.chedit.newentry.station_id);
+				site.chedit.changesHaveBeenMadeGotoStarred = true;
 				// Goto list on first save (long story.. but there is a difference how this script handles new and existing entries
 				site.chedit.init(site.chedit.newentry.station_id, site.chedit.askedAboutStationName, site.chedit.askedAboutNowplaying, site.chedit.checkedPlayability, site.chedit.isPlayable);
 			}
@@ -189,12 +192,6 @@ site.chedit.save = function() {
 			loggr.log(site.storage.getErrorType(e)); 
 		}
 	);
-	
-	// Auto-star new station?
-	if (isNewStation) {
-		site.chlist.setStarred(site.chedit.newentry.station_id);
-		site.chedit.changesHaveBeenMadeGotoStarred = true;
-	}
 	
 }
 
