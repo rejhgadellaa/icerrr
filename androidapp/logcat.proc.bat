@@ -19,7 +19,8 @@ goto error
 
 :initlogcat
 REM call %androidsdk%platform-tools\adb logcat -s CordovaLog
-call %androidsdk%platform-tools\adb -d logcat com.rejh.icerrr.droidapp:V -s chromium:S
+echo Begin Log:
+call adb logcat com.rejh.icerrr.itson:V -s chromium:S
 goto end
 
 :end

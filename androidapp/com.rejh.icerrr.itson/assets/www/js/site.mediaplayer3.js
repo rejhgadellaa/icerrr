@@ -187,6 +187,8 @@ site.mp.setStopped = function() {
 	site.mp.stopStatusPoll();
 	site.mp.notifCancel();
 	site.mp.getStatus(); // just once.
+	//site.session.alarmActive = false;
+	//site.helpers.storeSession();
 }
 
 // ---> Status Polls

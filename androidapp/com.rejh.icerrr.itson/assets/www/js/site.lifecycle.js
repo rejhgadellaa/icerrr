@@ -535,7 +535,8 @@ site.lifecycle.onResize = function() {
 	if (site.timeouts.onresize) { clearTimeout(site.timeouts.onresize); }
 	site.timeouts.onresize = setTimeout(function(){
 		$(site.vars.currentSection+" .main").css("height",
-			$(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height()) // $(site.vars.currentSection+" .footer").height()
+			// $(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height()) // $(site.vars.currentSection+" .footer").height()
+			$(window).height() - ($(site.vars.currentSection+" .main").offset().top)
 		);
 	},50);
 	

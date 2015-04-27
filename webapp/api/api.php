@@ -90,15 +90,14 @@ switch($action) {
 				if (!$queryobj["station_id"]) { error("Error: 'station_id' not defined for get:station_info"); }
 				$filename = "../json/station_info.".$queryobj["station_id"].".json";
 				if (@filemtime($filename)<time()-30) { // refresh file every xx secs
+					if (!$queryobj["station_port"]) { $queryobj["station_port"] = 80; }
 					// $id3_reader_url = "http://". $_SERVER['HTTP_HOST'] ."/icerrr/php/tests/test-readid3.php?q="; // TODO: rejh.nl only opens fsock on port 80
 					$id3_reader_url = $cfg["icerrr_local_url"] . "php/tests/test-readid3.php?q=";
 					if ($queryobj["station_port"]==80) {
 						$id3_reader_url = $cfg["icerrr_remote_url"] . "php/tests/test-readid3.php?q=";
 					}
 					// "http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=";
-					if (!$queryobj["station_port"]) { $queryobj["station_port"] = 80; }
 					$id3_reader_q = urlencode('{"station_id":"'. $queryobj["station_id"] .'","host":"'. $queryobj["station_host"] .'","port":'. $queryobj["station_port"] .',"path":"'. $queryobj["station_path"] .'"}');
-					
 					// retry this a couple of times..
 					$fgjson = false;
 					$whilenum = 0;

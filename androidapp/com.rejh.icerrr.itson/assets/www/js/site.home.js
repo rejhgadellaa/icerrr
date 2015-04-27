@@ -150,6 +150,7 @@ site.home.init = function() {
 	window.mediaStreamer.setting("string","default_station",JSON.stringify(station),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	
 	// Alarm dialog?
+	loggr.error(" > site.session.alarmActive: "+ site.session.alarmActive,{dontupload:true});
 	if (site.session.alarmActive) {
 		loggr.log(" > Alarm detected, show dialog + alarmUpdateTime()");
 		$("#home .alarm_dialog").fadeIn(500);
@@ -716,7 +717,8 @@ site.home.alarmUpdateTime = function() {
 	
 	loggr.info("site.home.alarmUpdateTime()");
 	
-	if (site.session.alarmActive && site.mp.mpstatus!=Media.MEDIA_NONE) {
+	if (site.session.alarmActive) {
+		//  && site.mp.mpstatus!=Media.MEDIA_NONE
 	
 		var date = new Date();
 		var hour = site.helpers.formatNum(date.getHours());

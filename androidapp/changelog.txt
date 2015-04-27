@@ -1,3 +1,7 @@
+0.214
+  * Fix: alarm/snooze dialog should be more consistent
+  * Visual tweaks
+
 0.213
   * Fix: adding new station manually wasn't working properly (issue #176)
 
