@@ -265,7 +265,7 @@ site.mp.handleStatus = function(statusCode) {
 
 site.mp.notif = function() {
 	
-	loggr.info("site.mp.notif()");
+	loggr.debug("site.mp.notif()");
 	
 	site.mp.notifActive = true;
 	
@@ -275,7 +275,7 @@ site.mp.notif = function() {
 
 site.mp.notifCancel = function(id) {
 	
-	loggr.info("site.mp.notifCancel(): "+id);
+	loggr.debug("site.mp.notifCancel(): "+id);
 	
 	site.mp.notifActive = false;
 	

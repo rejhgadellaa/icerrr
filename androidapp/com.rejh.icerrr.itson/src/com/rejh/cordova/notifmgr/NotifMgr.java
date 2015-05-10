@@ -87,7 +87,7 @@ public class NotifMgr extends CordovaPlugin {
             return false;
         }
         
-        Log.d(APPTAG," -> "+ action);
+        //Log.d(APPTAG," -> "+ action);
         
         // > A GOGO
         

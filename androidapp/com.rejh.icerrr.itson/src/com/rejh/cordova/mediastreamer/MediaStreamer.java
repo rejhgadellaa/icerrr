@@ -45,7 +45,11 @@ public class MediaStreamer extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
-        Log.d(APPTAG, APPTAG+" > execute: "+action);
+		if (action!=null) {
+			if (!action.equals("getStatus")) {
+				Log.d(APPTAG, APPTAG+" > execute: "+action);
+			}
+		}
         
         // > Setup
         

@@ -74,6 +74,9 @@ public class ObjMediaPlayerMgr {
 	private final static int MEDIA_PAUSED = 3;
 	private final static int MEDIA_STOPPED = 4;
 	
+	private int mediaPlayerInfoLastCode = -1;
+	private int mediaPlayerInfoLastExtra = -1;
+	
 	// --------------------------------------------------
 	// Constructor
 	
@@ -323,16 +326,6 @@ public class ObjMediaPlayerMgr {
 	        	service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PLAYING);
 	        }
 			
-			// Notify
-			/* TODO: Notification
-			Intent ni = new Intent(context, RecvNotifier.class);
-				ni.putExtra("ticker","FMAlarm Active ("+sett.getString("selectedShoutcastName","Radio 3FM")+")");
-				ni.putExtra("title","FMAlarm is active...");
-				ni.putExtra("text","Playing: "+sett.getString("selectedShoutcastName","Radio 3FM"));
-				ni.putExtra("ongoing",true);
-			context.sendBroadcast(ni);
-			/**/
-			
 			nrOfErrors = 0;
 			
 			}
@@ -361,7 +354,7 @@ public class ObjMediaPlayerMgr {
 		
 		// @Override
 		public void onBufferingUpdate(MediaPlayer mediaplayer, int progress) {
-			// Log.d(LOGTAG," -> MP.OnBufferUpdate "+progress);
+			Log.d(LOGTAG," -> MP.OnBufferUpdate "+progress);
 			// Unimportant ?
 			}
 		
@@ -371,9 +364,23 @@ public class ObjMediaPlayerMgr {
 	private OnInfoListener onInfoListener = new OnInfoListener() {
 		
 		// @Override
-		public boolean onInfo(MediaPlayer mediaplayer, int arg1, int arg2) {
-			Log.d(LOGTAG," -> MP.OnInfo(" + arg1 + ", " + arg2 + ")");
-			// Unimportant ?
+		public boolean onInfo(MediaPlayer mediaplayer, int code, int extra) {
+			Log.d(LOGTAG," -> MP.OnInfo(" + code + ", " + extra + ")");
+			
+			// Check code/extra for 703/192
+			if (code==703) { // code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==192) {
+				Log.w(LOGTAG, " --> Code 701 after 703, restart stream");
+				if (nrOfErrors > 8) { initbackup(); return false; }
+				nrOfErrors++;
+				mediaPlayerInfoLastCode = -1;
+				mediaPlayerInfoLastExtra = -1;
+				init(getStreamUrl(),isAlarm);
+				return false;
+			}
+			// Store code && extra..
+			mediaPlayerInfoLastCode = code;
+			mediaPlayerInfoLastExtra = extra;
+			
 			return false;
 			}
 		
@@ -452,7 +459,7 @@ public class ObjMediaPlayerMgr {
 		// Run Conn Type Checker
 		private void runConnTypeChecker() {
 			
-			Log.i(LOGTAG,"ConnTypeChecker");
+			//Log.i(LOGTAG,"ConnTypeChecker");
 			
 			connType = -1;
 			
@@ -530,9 +537,15 @@ public class ObjMediaPlayerMgr {
 
 		// > Airplane mode
 		
-		private static boolean isAirplaneModeOn(Context context) {
-		    return Settings.System.getInt(context.getContentResolver(),
-		            Settings.System.AIRPLANE_MODE_ON, 0) != 0;
+		private boolean isAirplaneModeOn(Context context) {
+			if (Build.VERSION.SDK_INT<17) {
+				Log.d(LOGTAG," -> MPMGR.isAirplaneModeOn() > SDK: "+ Build.VERSION.SDK_INT);
+				return Settings.System.getInt(context.getContentResolver(),
+			            Settings.System.AIRPLANE_MODE_ON, 0) != 0;
+			} else {
+			    return Settings.Global.getInt(context.getContentResolver(),
+			            Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
+			}
 		}
 		
 		// > Get Stream Url

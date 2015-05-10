@@ -90,10 +90,6 @@ public class MediaStreamerNotifMgr {
 	public int notif(String stationName, String nowPlaying, int notif_id, boolean onlybuild, JSONObject overrideOpts) {
 		
 		Log.d(LOGTAG,"MediaStreamerNotifMgr.notify()");
-
-        // Preferences, reload it because we're running in another process..
-        sett = context.getSharedPreferences(LOGTAG,Context.MODE_MULTI_PROCESS | 2);
-        settEditor = sett.edit();
 		
 		try {
 			
