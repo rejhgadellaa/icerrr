@@ -1,6 +1,6 @@
-0.215
-  * Fix: Issue #177 ?
+0.216
   * Some cleanup in MediaPlayer code
+  * Minor improvements
 
 0.214
   * Fix: alarm/snooze dialog should be more consistent
