@@ -33,12 +33,9 @@ import android.media.RemoteControlClient;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.provider.Settings;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.example.android.musicplayer.RemoteControlClientCompat;
@@ -76,12 +73,14 @@ public class MediaStreamerService extends Service {
 	private WifiManager.WifiLock wifiLock;
 	
 	private ConnectivityManager connMgr;
-	
+
+	// TODO: DEPRECATED
 	//private PowerManager powerMgr;
 	//private PowerManager.WakeLock wakelock;
 	
-	private TelephonyManager telephonyMgr;
-	private PhoneStateListener phoneListener;
+	// TODO: DEPRECATED
+	//private TelephonyManager telephonyMgr;
+	//private PhoneStateListener phoneListener;
 	
 	private ObjMediaPlayerMgr mpMgr;
 	private MediaStreamerNotifMgr msNotifMgr;
@@ -129,8 +128,8 @@ public class MediaStreamerService extends Service {
         // Others
 		wifiMgr = (WifiManager) context.getSystemService(WIFI_SERVICE);
         connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		// powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+		// powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE); // TODO: DEPRECATED
+        // telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE); // TODO: DEPRECATED
         audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         
         // Remote Control Receiver
@@ -162,8 +161,9 @@ public class MediaStreamerService extends Service {
 		settEditor.commit();
         
         // Listener: Telephony
-		phoneListener = new RecvEventPhonecalls();  
-	    telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+		// TODO: DEPRECATED 0.219
+		// phoneListener = new RecvEventPhonecalls();   
+	    // telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 		
 	}
 	
@@ -426,9 +426,10 @@ public class MediaStreamerService extends Service {
     	settEditor.commit();
 		
 		// Telephone Listener
+    	// TODO: DEPRECATED
 		try {
-			Log.d(APPTAG,"  -> Stop listeners (telephony...)");
-			telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
+			//Log.d(APPTAG,"  -> Stop listeners (telephony...)");
+			//telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
 			} 
 		catch (Exception e) { Log.w(APPTAG," -> NULLPOINTER EXCEPTION"); }
 		
@@ -568,6 +569,8 @@ public class MediaStreamerService extends Service {
 	// Listeners
 	
 	// SetPhoneListener
+	// TODO: DEPRECATED 0.219
+	/*
 	private class RecvEventPhonecalls extends PhoneStateListener {
 		@Override
 	    public void onCallStateChanged(int state, String incomingNumber) {
@@ -595,6 +598,7 @@ public class MediaStreamerService extends Service {
 		    }
 		}
 	}
+	/**/
 	
 	// On Audio Focus Change Listener
 	OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {

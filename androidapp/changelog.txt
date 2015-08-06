@@ -1,3 +1,7 @@
+0.219 [TEST RELEASE]
+  * Fix: Stream would not resume after a phonecall (needs testing)
+  * Some fixes for Chrome App Runtime
+
 0.218
   * Some cleanup in MediaPlayer code
   * Minor improvements

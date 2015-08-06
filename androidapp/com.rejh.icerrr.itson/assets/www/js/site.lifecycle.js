@@ -778,7 +778,7 @@ site.lifecycle.installUpdateApp = function(url,startedByUser) {
 	var targetFile = "Icerrr.apk";
 	
 	// Check chrome runtime
-	if (device.model=="App Runtime for Chrome") {
+	if (device.model.indexOf("App Runtime for Chrome")>=0) {
 		
 		if (startedByUser) {
 			alert("App Runtime for Chrome does not yet support Icerrr's automatic update mechanism. Press OK to download the apk manually and use ARC Welder to install it.");
