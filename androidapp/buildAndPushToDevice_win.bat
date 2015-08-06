@@ -80,10 +80,12 @@ copy bin\%name_prj%-debug.apk D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_
 copy bin\%name_prj%-debug.apk D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_prj%-arc.apk
 
 %androidsdk%platform-tools\adb devices
-%androidsdk%platform-tools\adb -e install -r bin\%name_prj%-debug.apk
+%androidsdk%platform-tools\adb -d install -r bin\%name_prj%-debug.apk
+REM emulator %androidsdk%platform-tools\adb -e install -r bin\%name_prj%-debug.apk
 if not errorlevel 0 goto error
 
 %androidsdk%platform-tools\adb -d shell am start %path_prj%/.%name_prj%
+REM emulator %androidsdk%platform-tools\adb -e shell am start %path_prj%/.%name_prj%
 if not errorlevel 0 goto error
 
 goto end
