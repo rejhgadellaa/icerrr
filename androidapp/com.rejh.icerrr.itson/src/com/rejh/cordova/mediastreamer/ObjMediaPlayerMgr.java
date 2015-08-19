@@ -302,6 +302,13 @@ public class ObjMediaPlayerMgr {
 		return mp.isPlaying();
 	}
 	
+	public boolean setVolume(float vol) {
+		if (mp==null) { return false; }
+		if (!isPlaying()) { return false; }
+		mp.setVolume(vol,vol);
+		return true;
+	}
+	
 	// --------------------------------------------------
 	// Listeners
 	

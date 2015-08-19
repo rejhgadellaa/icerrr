@@ -101,6 +101,7 @@ public class MediaStreamerService extends Service {
     
     private boolean serviceIsRunning = false;
     
+    private int lastFocusState = -1;
     private int volumeBeforeDuck = -1;
     
     private int mediaType = -1;
@@ -128,8 +129,6 @@ public class MediaStreamerService extends Service {
         // Others
 		wifiMgr = (WifiManager) context.getSystemService(WIFI_SERVICE);
         connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		// powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE); // TODO: DEPRECATED
-        // telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE); // TODO: DEPRECATED
         audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         
         // Remote Control Receiver
@@ -159,11 +158,6 @@ public class MediaStreamerService extends Service {
 		settEditor.putBoolean("mediastreamer_serviceRunning", true);
 		settEditor.putBoolean("is_paused", false);
 		settEditor.commit();
-        
-        // Listener: Telephony
-		// TODO: DEPRECATED 0.219
-		// phoneListener = new RecvEventPhonecalls();   
-	    // telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 		
 	}
 	
@@ -427,14 +421,6 @@ public class MediaStreamerService extends Service {
         settEditor.putBoolean("wasPlayingWhenCalled",false);
     	settEditor.commit();
 		
-		// Telephone Listener
-    	// TODO: DEPRECATED
-		try {
-			//Log.d(APPTAG,"  -> Stop listeners (telephony...)");
-			//telephonyMgr.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
-			} 
-		catch (Exception e) { Log.w(APPTAG," -> NULLPOINTER EXCEPTION"); }
-		
 		shutdown();
 		
 		stopNowPlayingPoll();
@@ -467,11 +453,6 @@ public class MediaStreamerService extends Service {
 	private boolean setup(boolean force) {
         
         Log.d(APPTAG," > setup()");
-		
-		// Wakelock
-		//wakelock = powerMgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, APPTAG);
-		//if (wakelock.isHeld()) { wakelock.release(); }
-		//wakelock.acquire();
         
         // Stream url
 	    String stream_url = null;
@@ -570,64 +551,20 @@ public class MediaStreamerService extends Service {
 	// --------------------------------------------------
 	// Listeners
 	
-	// SetPhoneListener
-	// TODO: DEPRECATED 0.219
-	/*
-	private class RecvEventPhonecalls extends PhoneStateListener {
-		@Override
-	    public void onCallStateChanged(int state, String incomingNumber) {
-			
-			// Hoi
-			Log.i(APPTAG,"RecvEventPhonecalls (@MainService)");
-			
-			// Switch!
-		    switch (state) {
-			    case TelephonyManager.CALL_STATE_OFFHOOK:
-			    case TelephonyManager.CALL_STATE_RINGING:
-				    // Phone going offhook or ringing
-			    	settEditor.putBoolean("wasPlayingWhenCalled",true);
-			    	settEditor.commit();
-			    	shutdown();
-				    break;
-			    case TelephonyManager.CALL_STATE_IDLE:
-				    // Phone idle
-			    	settEditor.putBoolean("wasPlayingWhenCalled",false);
-			    	settEditor.commit();
-			    	if (!isServiceRunning(MediaStreamerService.class)) { return; }
-			    	if (!sett.getBoolean("wasPlayingWhenCalled",false)) { return; }
-			    	setup();
-				    break;
-		    }
-		}
-	}
-	/**/
-	
 	// On Audio Focus Change Listener
 	OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
 		
 	    public void onAudioFocusChange(int focusChange) {
 	    	Log.i(APPTAG,"MediaStreamerService.onAudioFocusChange(): "+ focusChange);
-	        if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-	            
-	        	// Pause playback
-	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS_TRANSIENT()");
-	        	
-	        	settEditor.putBoolean("wasPlayingWhenCalled",true);
-		    	settEditor.commit();
-		    	shutdown();
-		    	
-	        } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+	    	
+	    	// GAIN
+	        if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
 	        	
 	            // Resume playback 
-	        	Log.d(APPTAG," > AUDIOFOCUS_GAIN()");
+	        	Log.d(APPTAG," > AUDIOFOCUS_GAIN");
 	        	
-	        	if (sett.getBoolean("wasPlayingWhenCalled",false) && isServiceRunning(MediaStreamerService.class)) {
-	        		Log.d(APPTAG," >> Resume playback");
-	        		settEditor.putBoolean("wasPlayingWhenCalled",false);
-	        		settEditor.commit();
-	        		setup(true);
-	        	} else if (sett.getBoolean("volumeHasDucked", false) && isServiceRunning(MediaStreamerService.class)) {
-	        		Log.d(APPTAG," >> Volume++");
+	        	if (sett.getBoolean("volumeHasDucked", false)) {
+	        		Log.d(APPTAG," >> Volume++ (was ducked)");
 	        		settEditor.putBoolean("volumeHasDucked",false);
 	        		settEditor.commit();
 	        		setVolumeFocusGained();
@@ -637,25 +574,23 @@ public class MediaStreamerService extends Service {
 					settEditor.commit();
 					mpMgr.resume();
 	        	}
+				
+				// Update notif
+				msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying, msNotifMgr.NOTIFICATION_ID,true);
+				startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 	        	
-	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+	        // LOSS_TRANSIENT && LOSS (in case of loss we still want to hold on to the notification)
+	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS) {
 	            
 	            // Stop playback
-	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS()");
-	        	
-	        	/*
-	            settEditor.putBoolean("wasPlayingWhenCalled",false);
-		    	settEditor.commit();
-		    	
-		    	Log.d(APPTAG," > Destroy self");
-		    	stopSelf();
-		    	/**/
+	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS");
 	        	
 	        	Log.d(APPTAG," > Pause the stream!");
 	        	settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
 				mpMgr.pause();
 				
+				// Update notif
 				JSONObject overrideOpts = new JSONObject();
 				try {
 					overrideOpts.put("actionPlayPauseIcon","ic_stat_av_play");
@@ -663,6 +598,7 @@ public class MediaStreamerService extends Service {
 				} catch(Exception e) {}
 				msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying, msNotifMgr.NOTIFICATION_ID,false,overrideOpts);
 		    	
+			// DUCK
 	        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
 	        	
                 // Lower the volume
@@ -676,23 +612,30 @@ public class MediaStreamerService extends Service {
 	    }
 	    
 	    private void setVolumeDucked() {
+	    	if (isAlarm) { return; } // dont duck alarms
+	    	if (volumeBeforeDuck>0) { return; } // already ducked
 	    	volumeBeforeDuck = audioMgr.getStreamVolume(AudioManager.STREAM_MUSIC);
-	    	int levelsDown = 5;
-	    	if (volumeBeforeDuck<=5) { levelsDown = volumeBeforeDuck-1; }
-	    	Log.d(APPTAG," > setVolumeDucked, from "+ volumeBeforeDuck +" go to "+ (volumeBeforeDuck-levelsDown));
-	    	for (int i=0; i<levelsDown; i++) {
-	    		audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-	    	}
+	    	// TODO: DEPRECATED ?
+	    	int levelsDown = 7;
+	    	float newVolume = 0.25f; // (volumeBeforeDuck-levelsDown)>=0 ? volumeBeforeDuck-levelsDown : 0;
+	    	Log.d(APPTAG," > setVolumeDucked, from "+ volumeBeforeDuck +" go to "+ newVolume +", calced: "+ (volumeBeforeDuck-levelsDown));
+	    	// -> Set volume for realz
+	    	Log.d(APPTAG," >> "+ mpMgr.setVolume(newVolume) );
+	    	// audioMgr.setStreamVolume(AudioManager.STREAM_MUSIC, volumeBeforeDuck-levelsDown, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 	    }
 	    
 	    private void setVolumeFocusGained() {
-	    	int levelsUp = 5;
+	    	if (isAlarm) { return; } // dont duck alarms
+	    	if (volumeBeforeDuck<0) { return; } // not ducked
+	    	// TODO: DEPRECATED ?
+	    	int levelsUp = 7;
 	    	int volumeNow = audioMgr.getStreamVolume(AudioManager.STREAM_MUSIC);
-	    	if (volumeBeforeDuck<=levelsUp+volumeNow) { levelsUp = (volumeBeforeDuck-volumeNow); }
-	    	Log.d(APPTAG," > setVolumeFocusGained, from "+ volumeNow +" go to "+ (volumeNow+levelsUp));
-	    	for (int i=0; i<levelsUp; i++) {
-	    		audioMgr.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-	    	}
+	    	//if (volumeBeforeDuck<=levelsUp+volumeNow) { levelsUp = (volumeBeforeDuck-volumeNow); } // WHAT WAS I THINKING?
+	    	Log.d(APPTAG," > setVolumeFocusGained, from "+ volumeNow +" go to "+ (volumeBeforeDuck) +", calced: "+ (volumeNow+levelsUp));
+	    	// -> Set volume for realz
+	    	Log.d(APPTAG," >> "+ mpMgr.setVolume(1.0f) );
+	    	// audioMgr.setStreamVolume(AudioManager.STREAM_MUSIC, volumeBeforeDuck, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+	    	volumeBeforeDuck = -1; // reset duck
 	    }
 	    
 	};
@@ -944,8 +887,9 @@ public class MediaStreamerService extends Service {
 		float targvol = Math.round((setvol*maxvol)/10);
 		int difvol = Math.round(targvol-curvol);
 		
-		if (curvol>targvol) { Log.d(APPTAG,"ChangedVolume: --"); for (int ivol=0; ivol>difvol; ivol--) { audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_LOWER, 1); } }
-		if (curvol<targvol) { Log.d(APPTAG,"ChangedVolume: ++"); for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_RAISE, 1); } }
+		//if (curvol>targvol) { Log.d(APPTAG,"ChangedVolume: --"); for (int ivol=0; ivol>difvol; ivol--) { audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_LOWER, 1); } }
+		//if (curvol<targvol) { Log.d(APPTAG,"ChangedVolume: ++"); for (int ivol=0; ivol<difvol; ivol++) { audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_RAISE, 1); } }
+		audioMgr.setStreamVolume(mediaType, Math.round(targvol), 1);
 		
 		Log.d(APPTAG,"ChangedVolume: set:"+setvol+" --> max:"+maxvol+", cur:"+curvol+", dif:"+difvol);
 		

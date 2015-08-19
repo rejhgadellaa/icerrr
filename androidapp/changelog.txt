@@ -1,3 +1,6 @@
+0.221
+  * Improved handling of audio focus (handling of calls. notif sounds, voice input/output)
+
 0.220
   * Fix: Notification play/pause icon would sometimes display wrong state
   * Notification would sometimes take a long time before showing "now playing" info
