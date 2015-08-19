@@ -1,5 +1,9 @@
-0.219 [TEST RELEASE]
-  * Fix: Stream would not resume after a phonecall (needs testing)
+0.220
+  * Fix: Notification play/pause icon would sometimes display wrong state
+  * Notification would sometimes take a long time before showing "now playing" info
+
+0.219
+  * Fix: Stream would not resume after a phonecall
   * Some fixes for Chrome App Runtime
 
 0.218

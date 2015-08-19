@@ -84,6 +84,8 @@ REM copy %cd%\..\_apks\%name_prj%.apk D:\Desktop\Dropbox\__Static\icerrr\tmp_apk
 
 title Install?
 echo.
+echo You can now upload _apks/ScreenDoodle.apk to the Play Store!
+echo.
 choice /C YN /N /T 10 /D Y /M "Install app on phone? (Y/N)"
 if errorlevel 2 goto end
 

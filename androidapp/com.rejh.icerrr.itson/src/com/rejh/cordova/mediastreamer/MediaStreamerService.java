@@ -272,6 +272,7 @@ public class MediaStreamerService extends Service {
 				settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
 				mpMgr.pause();
+				nowplaying = "...";
 				try {
 					overrideOpts.put("actionPlayPauseIcon","ic_stat_av_play");
 					overrideOpts.put("actionPlayPauseTitle","Play");
@@ -283,6 +284,7 @@ public class MediaStreamerService extends Service {
 				settEditor.putBoolean("is_paused", false);
 				settEditor.commit();
 				mpMgr.resume();
+				nowplaying = "...";
 				// int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 				int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
 				int result = audioMgr.requestAudioFocus(afChangeListener, mediaType, AudioManager.AUDIOFOCUS_GAIN);
@@ -707,7 +709,7 @@ public class MediaStreamerService extends Service {
 				runNowPlayingPoll();
 				
 			}
-		}, 5*1000, 1*60*1000); // every ~minute
+		}, 1*1000, 1*60*1000); // every ~minute
 	}
 	
 	private void stopNowPlayingPoll() {
@@ -716,6 +718,7 @@ public class MediaStreamerService extends Service {
 	}
 	
 	private void runNowPlayingPoll() {
+		Log.d(APPTAG," > runNowPlayingPoll()");
 		nowPlayingPollThread = new Thread(new Runnable(){
 			@Override
 			public void run(){
@@ -743,10 +746,12 @@ public class MediaStreamerService extends Service {
 					return; 
 				}
 				
+				// Received json, let's check it out
 				try {
 					
 					JSONObject json = new JSONObject(jsons);
 					
+					// Get now playing, check if new
 					String nowplaying_new = nowplaying;
 					if (json.has("error")) {
 						Log.e(APPTAG," > Error running nowPlayingPoll:"+ json.getString("errormsg"));
@@ -762,11 +767,36 @@ public class MediaStreamerService extends Service {
 						}
 					}
 					
+					// Do some for "Now playing: ..."
+					if (nowplaying.equals("Now playing: ...")) {
+						nowplaying = "Now playing: ?";
+					}
+					
 					// Update notif only when nowplaying changed
 					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
 						
+						// Override opts for notif
+						JSONObject overrideOpts = new JSONObject();
+						
+						// Change notif icons/action?
+						if (sett.getBoolean("is_paused", false)) { // paused
+							try {
+								overrideOpts.put("actionPlayPauseIcon","ic_stat_av_play");
+								overrideOpts.put("actionPlayPauseTitle","Play");
+							} catch(Exception e) {}
+							
+						}
+						
+						// Update notif
+						// Should I re-use startForeground?
+						//msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", "Now playing: ...", msNotifMgr.NOTIFICATION_ID,true,overrideOpts);
+						//startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
+						
 						Log.d(APPTAG," > NowPlaying: "+ station_name +", "+ nowplaying);
-						msNotifMgr.notif(station_name,nowplaying_new,msNotifMgr.NOTIFICATION_ID,false);
+						//msNotifMgr.notif(station_name,nowplaying_new,msNotifMgr.NOTIFICATION_ID,false,overrideOpts);
+						
+						msNotifMgr.notif(station_name,nowplaying_new,msNotifMgr.NOTIFICATION_ID,true,overrideOpts);
+						startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 						
 					}
 					
