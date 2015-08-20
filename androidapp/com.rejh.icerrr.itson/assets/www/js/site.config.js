@@ -14,7 +14,7 @@ site.cfg = {};
 // ---> Important stuff
 
 // App
-site.cfg.app_version = 0.221; // TODO: Note: app bump causes install to run at launch
+site.cfg.app_version = 0.222; // TODO: Note: app bump causes install to run at launch
 
 // Urls
 // Note: url paths should end with / if folder || TODO: check this..

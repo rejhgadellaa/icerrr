@@ -560,19 +560,31 @@ public class MediaStreamerService extends Service {
 	    	// GAIN
 	        if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
 	        	
-	            // Resume playback 
 	        	Log.d(APPTAG," > AUDIOFOCUS_GAIN");
 	        	
+	        	// Was ducked
 	        	if (sett.getBoolean("volumeHasDucked", false)) {
+	        		
 	        		Log.d(APPTAG," >> Volume++ (was ducked)");
 	        		settEditor.putBoolean("volumeHasDucked",false);
 	        		settEditor.commit();
 	        		setVolumeFocusGained();
+	        	
+	        	// Was paused
 	        	} else if (sett.getBoolean("is_paused", false)) {
-	        		Log.d(APPTAG," >> Resume playback (from paused)");
+	        		
+	        		// LastFocusState was LOSS_TRANSIENT so resume playback :D
+	        		if (lastFocusState==AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+		        		Log.d(APPTAG," >> Resume playback (from paused)");
+						mpMgr.resume();
+	        		} else {
+	        			Log.d(APPTAG," >> Do not resume playback, keep notification");
+	        		}
+	        		
+	        		// Reset flags
 	        		settEditor.putBoolean("is_paused", false);
 					settEditor.commit();
-					mpMgr.resume();
+					
 	        	}
 				
 				// Update notif
@@ -609,6 +621,10 @@ public class MediaStreamerService extends Service {
 	        	setVolumeDucked();
 	        	
             }
+	        
+	        // Remember focusState
+	        lastFocusState = focusChange;
+	        
 	    }
 	    
 	    private void setVolumeDucked() {

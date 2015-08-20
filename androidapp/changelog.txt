@@ -1,3 +1,6 @@
+0.222
+  * Fix: playback will not resume when audio focus is lost for unknown duration (but notification is preserved)
+
 0.221
   * Improved handling of audio focus (handling of calls. notif sounds, voice input/output)
 
