@@ -166,6 +166,7 @@ $array["time_ms"] = time()*1000;
 // $array["querys"] = $querys;
 $array["queryj"] = $queryj;
 $array["time_read"] = time()-$timebgn;
+// $array["read-id3-host"] = $_SESSION["HOST"];
 
 // Write file
 $filename = $queryj["station_id"].".json";
