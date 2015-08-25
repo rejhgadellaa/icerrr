@@ -95,13 +95,13 @@ public class MediaStreamer extends CordovaPlugin {
         		
         		// incrVolume
         		this.incrVolume(callbackContext);
-        		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
+        		//callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
         	
         	} else if (action.equals("decrVolume")) {
         		
         		// decrVolume
         		this.decrVolume(callbackContext);
-        		callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
+        		//callbackContext.error("MediaStreamer.setVolume() - Not implemented yet");
         	
         	} else if (action.equals("getStatus")) {
         		
@@ -254,14 +254,7 @@ public class MediaStreamer extends CordovaPlugin {
     	// Log.d(APPTAG, APPTAG+" > getStatus");
         
         // Check service first
-        boolean serviceRunning = false;
-        Class<?> serviceClass = MediaStreamerService.class;
-	    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-	        if (serviceClass.getName().equals(service.service.getClassName())) {
-	            serviceRunning = true;
-	        }
-	    }
+        boolean serviceRunning = isServiceRunning();
         
         String state = null;
         if (!serviceRunning) { state = "0"; }
@@ -306,11 +299,20 @@ public class MediaStreamer extends CordovaPlugin {
 	
 	private void incrVolume(CallbackContext callbackContext) {
 		
-		boolean isAlarm = sett.getBoolean("isAlarm", false);
-		int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
-		
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_RAISE, 1);
+		
+		// MediaStreamer: Active
+		if (isServiceRunning()) {
+			Log.d(APPTAG," -> AdjustStreamVolume");
+			boolean isAlarm = sett.getBoolean("isAlarm", false);
+			int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
+			audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_RAISE, 1);
+		} 
+		// MediaStreamer: Inactive
+		else {
+			Log.d(APPTAG," -> AdjustVolume");
+			audioManager.adjustVolume(AudioManager.ADJUST_RAISE,1);
+		}
 		
 		callbackContext.success("OK");
 		
@@ -318,11 +320,20 @@ public class MediaStreamer extends CordovaPlugin {
 	
 	private void decrVolume(CallbackContext callbackContext) {
 		
-		boolean isAlarm = sett.getBoolean("isAlarm", false);
-		int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
-		
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_LOWER, 1);
+		
+		// MediaStreamer: Active
+		if (isServiceRunning()) {
+			Log.d(APPTAG," -> AdjustStreamVolume");
+			boolean isAlarm = sett.getBoolean("isAlarm", false);
+			int mediaType = (isAlarm && sett.getBoolean("useSpeakerForAlarms", false)) ? AudioManager.STREAM_ALARM : AudioManager.STREAM_MUSIC;
+			audioManager.adjustStreamVolume(mediaType, AudioManager.ADJUST_LOWER, 1);
+		} 
+		// MediaStreamer: Inactive
+		else {
+			Log.d(APPTAG," -> AdjustVolume");
+			audioManager.adjustVolume(AudioManager.ADJUST_LOWER,1);
+		}
 		
 		callbackContext.success("OK");
 		
@@ -330,14 +341,18 @@ public class MediaStreamer extends CordovaPlugin {
 	
 	// --- isServiceRunning
 	private void isServiceRunning(CallbackContext callbackContext) {
+		if (isServiceRunning()) { callbackContext.success(1); }
+		else { callbackContext.success(0); }
+	}
+	private boolean isServiceRunning() {
 		Class<?> serviceClass = MediaStreamerService.class;
 	    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 	        if (serviceClass.getName().equals(service.service.getClassName())) {
-	            callbackContext.success(1);
+	            return true;
 	        }
 	    }
-	    callbackContext.success(0);
+	    return false;
 	}
 	
 	private void storeStarredStations(JSONArray args, CallbackContext callbackContext) throws JSONException {

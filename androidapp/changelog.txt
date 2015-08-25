@@ -1,3 +1,6 @@
+0.223
+  * Improvements for handling hardware volume buttons when in app (#178)
+
 0.222
   * Fix: playback will not resume when audio focus is lost for unknown duration (but notification is preserved)
 
