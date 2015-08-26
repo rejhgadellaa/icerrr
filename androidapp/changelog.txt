@@ -1,4 +1,5 @@
 0.224
+  * New loading animation in actionbar when updating "now playing" and album art
   * Cleaned up install/update process
 
 0.223

@@ -997,6 +997,39 @@ section {
 	box-shadow:         inset 0 0 10px rgba(0,0,0,0.5);
 }
 
+/* -- LOADER BAR */
+
+.loadbar {
+	display:none;
+	overflow:hidden;
+	position:absolute;
+	top:54px; left:0; right:0;
+	height:2px;
+	background:none;
+}
+
+.loadbar_inner_base {
+	position:absolute;
+	top:0; left:-48px;
+	width:48px; height:2px;
+	background:#D0D102;
+}
+
+.loadbar_inner_1 {
+	-webkit-animation: loadbar_inner 2s infinite;
+}
+.loadbar_inner_2 {
+	-webkit-animation: loadbar_inner 2s 0.5s infinite;
+}
+.loadbar_inner_3 {
+	-webkit-animation: loadbar_inner 2s 1s infinite;
+}
+
+@-webkit-keyframes loadbar_inner {
+  0% {left:-48px;}
+  100% {left:100%;}
+} 
+
 /* Selectable */
 
 * {

@@ -163,7 +163,7 @@ site.helpers.calcAverageColor = function(pixelArray) {
 
 // Image convert url to filename
 
-site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
+site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp) {
 	
 	loggr.debug("site.helpers.imageUrlToFilename()");
 	
@@ -183,18 +183,14 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64) {
 		filename += ".base64";
 	}
 	
-	// Ill chars
-	for (var i=0; i<site.cfg.illegalchars.length; i++) {
-		var illchar = site.cfg.illegalchars[i];
-		if (filename.indexOf(illchar)>=0) {
-			filename = filename.split(illchar).join("");
-		}
-		if (prefix.indexOf(illchar)>=0) {
-			prefix = prefix.split(illchar).join("");
-		}
-	}
+	filename = site.helpers.stripIllChars(filename);
+	prefix = site.helpers.stripIllChars(prefix);
 	
-	filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
+	if (!dontUseTimestamp) { // default
+		filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
+	} else {
+		filename = prefix +"_"+ filename;
+	}
 	
 	return filename;
 	
@@ -212,11 +208,11 @@ site.helpers.downloadImage = function(imgobj, filename, url, cb, cberr, cbprogre
 	
 	site.webapi.download(url, site.cfg.paths.images, filename,
 		function(fileEntry) {
-			imgobj.src = fileEntry.fullPath+"?c="+ new Date().getTime();
+			if (imgobj) { imgobj.src = fileEntry.fullPath+"?c="+ new Date().getTime(); }
 			cb(fileEntry,imgobj);
 		},
 		function(error) {
-			imgobj.src = url; // fallback || TODO: do this?
+			if (imgobj) { imgobj.src = url; } // fallback || TODO: do this?
 			cberr(error);
 		},
 		function(pEvent) {
@@ -403,6 +399,22 @@ site.helpers.calcStringToBytes = function(str) {
 	// Matches only the 10.. bytes that are non-initial characters in a multi-byte sequence.
 	var m = encodeURIComponent(str).match(/%[89ABab]/g);
 	return str.length + (m ? m.length : 0);
+}
+
+// ---> Illchars
+
+site.helpers.stripIllChars = function(str) {
+	
+	// Ill chars
+	for (var i=0; i<site.cfg.illegalchars.length; i++) {
+		var illchar = site.cfg.illegalchars[i];
+		if (str.indexOf(illchar)>=0) {
+			str = str.split(illchar).join("");
+		}
+	}
+	
+	return str;
+	
 }
 
 // ---> Sort stuff

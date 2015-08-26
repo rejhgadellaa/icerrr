@@ -94,3 +94,10 @@ section { }
 		.overflow_menu_button_close img {
 			width:24px; height:24px;
 		}
+
+
+/* -- LOADER BAR */
+
+.loadbar {
+	top:46px;
+}

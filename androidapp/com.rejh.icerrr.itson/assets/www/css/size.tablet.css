@@ -128,3 +128,10 @@ section { }
 	.overlay_submsg {
 		font-size:16pt;
 	}
+
+
+/* -- LOADER BAR */
+
+.loadbar {
+	top:62px;
+}
