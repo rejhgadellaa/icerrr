@@ -88,6 +88,9 @@ site.installer.init = function(isUpdate) {
 	if (isUpdate) {
 		site.installer.isUpdate = true;
 		$("#install .log").html("<h1>Update!</h1>");
+		site.installer.logger("Just doing some routine checks. This shouldn't take long...<br>");
+	} else {
+		site.installer.logger("Icerrr needs to set up some stuff before it's ready to use...<br>");
 	}
 	
 	// Well let's start by showing some loading ui

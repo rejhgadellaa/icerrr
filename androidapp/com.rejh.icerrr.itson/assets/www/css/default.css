@@ -296,7 +296,8 @@ section {
 
 	#install .main .log {
 		padding:16px;
-		font-size:10pt;
+		font-size:16pt;
+		font-weight:300;
 		color:rgba(0,0,0,0.54);
 	}
 	
