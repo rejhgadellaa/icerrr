@@ -200,13 +200,13 @@ site.installer.deletefolders = function() {
 				
 				site.storage.removefolder(site.cfg.paths.root,
 					function(res) {
-						site.installer.logger("&nbsp;&gt; Done");
+						//site.installer.logger("&nbsp;&gt; Done");
 						setTimeout(function(){site.installer.createfolders_init();},500);
 					},
 					function(fileError) {
 						loggr.error(" > removefolder.Error: "+ site.storage.getErrorType(fileError),{dontupload:true});
 						loggr.error(" > "+ fileError.message);
-						site.installer.logger("&nbsp;&gt; Done");
+						//site.installer.logger("&nbsp;&gt; Done");
 						setTimeout(function(){site.installer.createfolders_init();},500);
 					},
 					{recursively:true}
@@ -231,7 +231,8 @@ site.installer.deletefolders = function() {
 // ---> Step 1 : create folders
 
 site.installer.createfolders_init = function() {
-	site.installer.logger("Create folders...");
+	if (!site.installer.isUpdate) { site.installer.logger("Create folders..."); }
+	else { site.installer.logger("Check folders..."); }
 	// setTimeout(function(){site.installer.createfolders_next();},500);
 	site.installer.createfolders_next();
 }
@@ -250,13 +251,13 @@ site.installer.createfolders_next = function() {
 	
 	// Createfolders finished?
 	if (!currentpath) { 
-		site.installer.logger("&nbsp;&gt; Done");
+		//site.installer.logger("&nbsp;&gt; Done");
 		site.installer.deletefiles_init();
 		return; // <- important stuff happening here.
 	}
 	
 	// Some output..
-	site.installer.logger("&nbsp;&gt; "+ currentpath);
+	//site.installer.logger("&nbsp;&gt; "+ currentpath);
 	
 	// Do it!
 	site.storage.createfolder(currentpath,site.installer.createfolders_cb,site.installer.createfolders_errcb);
@@ -266,7 +267,7 @@ site.installer.createfolders_next = function() {
 
 site.installer.createfolders_cb = function(directoryEntry) {
 	loggr.info("site.installer.createfolders_cb()");
-	site.installer.logger(" OK",{use_br:false});
+	//site.installer.logger(" OK",{use_br:false});
 	site.installer.createfolders_next();
 }
 
@@ -300,7 +301,8 @@ site.installer.deletefiles_next = function() {
 // Downloadjson...
 
 site.installer.downloadjson_init = function() {
-	site.installer.logger("Download data...");
+	if (!site.installer.isUpdate) { site.installer.logger("Download station data..."); }
+	else { site.installer.logger("Update station data..."); }
 	// setTimeout(function(){site.installer.downloadjson_next();},1000);
 	site.installer.downloadjson_next();
 }
@@ -319,7 +321,7 @@ site.installer.downloadjson_next = function() {
 	
 	// downloadjson finished?
 	if (!currentjob.query) { 
-		site.installer.logger("&nbsp;&gt; Done");
+		//site.installer.logger("&nbsp;&gt; Done");
 		site.installer.finishup();
 		return; // <- important stuff happening here.
 	}
@@ -327,7 +329,7 @@ site.installer.downloadjson_next = function() {
 	// downloadjson finished?
 	// TODO: what is this one doing here?
 	if (currentjob.query=="{}") { 
-		site.installer.logger("&nbsp;&gt; Done");
+		//site.installer.logger("&nbsp;&gt; Done");
 		site.installer.downloadjson_next();
 		return; // <- important stuff happening here.
 	}
@@ -337,8 +339,8 @@ site.installer.downloadjson_next = function() {
 	var apiaction = "get";
 	
 	// Some output..
-	site.installer.logger("&nbsp;&gt; Download: "+ currentjob.dest_name);
-	site.installer.logger("&nbsp;&gt;&gt; ?a="+ apiaction +"&amp;q="+ apiquerystr);
+	//site.installer.logger("&nbsp;&gt; Download: "+ currentjob.dest_name);
+	//site.installer.logger("&nbsp;&gt;&gt; ?a="+ apiaction +"&amp;q="+ apiquerystr);
 	
 	// Do it!
 	site.webapi.exec(apiaction,apiquerystr,site.installer.downloadjson_cb,site.installer.downloadjson_errcb);
@@ -350,7 +352,7 @@ site.installer.downloadjson_next = function() {
 
 site.installer.downloadjson_cb = function(res) {
 	loggr.info("site.installer.downloadjson_cb(): "+ site.helpers.countObj(res["data"]));
-	site.installer.logger(" OK",{use_br:false});
+	//site.installer.logger(" OK",{use_br:false});
 	site.datatemp = res; // TODO: look at this variable.. it's just sad
 	site.installer.downloadjson_read();
 }
@@ -388,7 +390,7 @@ site.installer.downloadjson_read = function() {
 	loggr.log(" > Filename: "+ filename);
 	
 	// Some output..
-	site.installer.logger("&nbsp;&gt;&gt; Merge: "+ path +"/"+ filename);
+	//site.installer.logger("&nbsp;&gt;&gt; Merge: "+ path +"/"+ filename);
 	
 	site.storage.readfile(path,filename,
 		function(datalocalstr) {
@@ -397,7 +399,7 @@ site.installer.downloadjson_read = function() {
 			
 			if (!datalocalstr) { 
 				loggr.log(" >> No datalocalstr, just write the file");
-				site.installer.logger(" NEW",{use_br:false});
+				//site.installer.logger(" NEW",{use_br:false});
 				site.installer.downloadjson_write();
 				return;
 			}
@@ -425,7 +427,7 @@ site.installer.downloadjson_read = function() {
 			}
 			// } catch(e) { loggr.warn(" > Switch switch(site.datatemp['info']['desc']) failed"); loggr.warn(e); }
 			
-			site.installer.logger(" OK",{use_br:false});
+			//site.installer.logger(" OK",{use_br:false});
 			
 			// Write
 			site.installer.downloadjson_write();
@@ -469,7 +471,7 @@ site.installer.downloadjson_write = function() {
 	loggr.log(" > Data: "+ data);
 	
 	// Some output..
-	site.installer.logger("&nbsp;&gt;&gt; Write: "+ path +"/"+ filename);
+	//site.installer.logger("&nbsp;&gt;&gt; Write: "+ path +"/"+ filename);
 	
 	// Do it
 	site.storage.writefile(path,filename,data,site.installer.downloadjson_write_cb,site.installer.downloadjson_write_errcb);
@@ -478,7 +480,7 @@ site.installer.downloadjson_write = function() {
 
 site.installer.downloadjson_write_cb = function(evt) {
 	loggr.info("site.installer.downloadjson_write_cb()");
-	site.installer.logger(" OK",{use_br:false});
+	//site.installer.logger(" OK",{use_br:false});
 	//loggr.log(" > target: \n > "+site.helpers.arrToString(evt.target,0,"\n"));
 	site.installer.downloadjson_next();
 }
@@ -506,8 +508,6 @@ site.installer.finishup = function() {
 	
 	loggr.info("site.installer.finishup()");
 	
-	site.installer.logger("Finish up...");
-	
 	// Clear cookies..
 	if (site.installer.cfg.overwrite_version >= site.cfg.app_version && site.cookies.get("app_version")!=site.cfg.app_version) {
 		site.installer.logger("&nbsp;&gt; Clear localstorage...");
@@ -532,7 +532,7 @@ site.installer.finishup = function() {
 	// Clean up image folder
 	// Walk stations
 	if (site.data.stations) {
-		site.installer.logger("&nbsp;&gt; Clean up image cache...");
+		site.installer.logger("Clean up image cache...");
 		var imagelist = [];
 		for (var i=0; i<site.data.stations.length; i++) {
 			var station = site.data.stations[i];
@@ -576,7 +576,7 @@ site.installer.finishup = function() {
 	// Wait a sec...
 	setTimeout(function(){
 						
-		site.installer.logger("&nbsp;&gt; Done!");
+		site.installer.logger("Done!");
 		//site.ui.showloading("Restarting...");
 		
 		setTimeout(function() {
@@ -586,6 +586,7 @@ site.installer.finishup = function() {
 			site.cookies.put("app_has_updated",1);
 			
 			window.location.reload();
+			/**/
 			
 		},1000);
 		/**/
