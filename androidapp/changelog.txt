@@ -1,3 +1,6 @@
+0.224
+  * Cleaned up install/update process
+
 0.223
   * Improvements for handling hardware volume buttons when in app (#178)
 
