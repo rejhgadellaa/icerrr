@@ -64,6 +64,8 @@ site.installer.init = function(isUpdate) {
 	
 	loggr.debug("site.installer.init()");
 	
+	site.ui.showLoadbar();
+	
 	// Hide #home
 	$("#home").css("display","none");
 	

@@ -119,6 +119,26 @@ site.ui.hideloading = function() {
 	$("#loading.overlay_wrap").fadeOut(500); // TODO: animation gpu powered..
 }
 
+// ---> Loadbar
+
+site.ui.showLoadbar = function() {
+	
+	loggr.log("site.ui.showLoadbar()");
+	
+	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
+	$(".loadbar").css("display","block");
+	
+}
+
+site.ui.hideLoadbar = function() {
+	
+	loggr.log("site.ui.hideLoadbar()");
+	
+	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
+	site.timeouts.fadeOutLoadbar = setTimeout(function(){$(".loadbar").fadeOut(250,function(){$(".loadbar").css("display","none");})},1000);
+	
+}
+
 // ---> Hoverbox (toasts!)
 
 site.ui.showtoast = function(msg, timeInSec) {

@@ -351,7 +351,7 @@ site.home.run_station_updates = function(dontUseDirble) {
 		return;
 	}
 	
-	site.home.showLoadbar();
+	site.ui.showLoadbar();
 	
 	var apiqueryobj = {
 		"get":"station_info",
@@ -397,14 +397,14 @@ site.home.run_station_updates = function(dontUseDirble) {
 		function(error) {
 			if (error.message) { site.ui.showtoast(error.message); loggr.warn(error.message); }
 			else { loggr.log(error); }
-			site.home.hideLoadbar();
+			site.ui.hideLoadbar();
 		}
 	);
 	
 	// When paused, stop updates...
 	if (site.session.isPaused) {
 		site.home.stop_ui_updates();
-		site.home.hideLoadbar();
+		site.ui.hideLoadbar();
 	}
 	
 	if (site.mp.serviceRunning) {
@@ -545,7 +545,7 @@ site.home.handleStationImage = function(src) {
 	loggr.log("site.home.handleStationImage()");
 	loggr.log(" > "+ src);
 	
-	site.home.showLoadbar();
+	site.ui.showLoadbar();
 		
 	var station = site.session.currentstation;
 	
@@ -559,7 +559,7 @@ site.home.handleStationImage = function(src) {
 			loggr.log(" > !setting_showStationIcon: "+ site.cookies.get("setting_showStationIcon"));
 			$("#home .main .station_image img").css("opacity",0.0);
 			$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
-			site.home.hideLoadbar();
+			site.ui.hideLoadbar();
 			return;
 		}
 		
@@ -586,7 +586,7 @@ site.home.handleStationImage = function(src) {
 		}
 		
 		// $("#home .main .station_image img").attr("src",site.helpers.addCachebust(src));
-		site.home.hideLoadbar();
+		site.ui.hideLoadbar();
 		return;
 		
 	}
@@ -594,7 +594,7 @@ site.home.handleStationImage = function(src) {
 	// Check if image already loaded..
 	if ($("#home .main .station_image").css("background-image").indexOf(src)>=0) {
 		loggr.log(" > Image already loaded: "+ src);
-		site.home.hideLoadbar();
+		site.ui.hideLoadbar();
 		return;
 	}
 	
@@ -614,7 +614,7 @@ site.home.handleStationImage = function(src) {
 		$("#home .main .station_image img").css("opacity",0.0);
 		$("#home .main .station_image").css("background-blend-mode","normal");
 		$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
-		site.home.hideLoadbar();
+		site.ui.hideLoadbar();
 	}
 	
 	if (site.timeouts.handleStationImage) { clearTimeout(site.timeouts.handleStationImage); }
@@ -628,7 +628,7 @@ site.home.handleStationImage = function(src) {
 	if (site.timeouts.handleStationImage) { clearTimeout(site.timeouts.handleStationImage); }
 	site.timeouts.handleStationImage = setTimeout(function(){
 														   
-		site.home.showLoadbar();
+		site.ui.showLoadbar();
 		
 		if (site.helpers.shouldDownloadImage(src)) {
 			
@@ -649,7 +649,7 @@ site.home.handleStationImage = function(src) {
 					$("#home .main .station_image img").css("opacity",0.0);
 					$("#home .main .station_image").css("background-blend-mode","normal");
 					$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
-					site.home.hideLoadbar();
+					site.ui.hideLoadbar();
 				},
 				function(err) { // dont exist
 					site.helpers.downloadImage(null, filename, src,
@@ -658,12 +658,13 @@ site.home.handleStationImage = function(src) {
 							$("#home .main .station_image img").css("opacity",0.0);
 							$("#home .main .station_image").css("background-blend-mode","normal");
 							$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
-							site.home.hideLoadbar();
+							site.ui.hideLoadbar();
 						},
 						function(error) {
 							loggr.error(" > Error downloading '"+ src +"'",{dontupload:true});
 							console.error(error);
-							site.home.hideLoadbar();
+							$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+							site.ui.hideLoadbar();
 						}
 					);
 				}
@@ -855,26 +856,6 @@ site.home.alarmStop = function() {
 	
 	// Hide dialog
 	$("#home .alarm_dialog").fadeOut(500);
-	
-}
-
-// ---> Loadbar
-
-site.home.showLoadbar = function() {
-	
-	loggr.log("site.home.showLoadbar()");
-	
-	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
-	$("#home .loadbar").css("display","block");
-	
-}
-
-site.home.hideLoadbar = function() {
-	
-	loggr.log("site.home.hideLoadbar()");
-	
-	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
-	site.timeouts.fadeOutLoadbar = setTimeout(function(){$("#home .loadbar").fadeOut(250,function(){$("#home .loadbar").css("display","none");})},1000);
 	
 }
 
