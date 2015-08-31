@@ -117,6 +117,17 @@ public class MediaStreamerNotifMgr {
 			opts.put("alertOnce",true);
 			opts.put("color", "#2D6073");
 			
+			// Add large icon?
+			// station_icon_local
+			JSONObject stationData = getStation();
+			if (stationData!=null) {
+				if (stationData.has("station_icon_local")) {
+					String station_icon_local = stationData.getString("station_icon_local");
+					Log.e(LOGTAG," --> Set largeicon: "+station_icon_local);
+					opts.put("largeicon", station_icon_local);
+				}
+			}
+			
 			// Create optsIntent
 			JSONObject optsIntent = new JSONObject();
 			optsIntent.put("type","activity");
@@ -255,7 +266,33 @@ public class MediaStreamerNotifMgr {
 	}
 	
 	
-	// CancelAll
+	// HELPERS
+	
+	private JSONObject getStation() {
+		
+		JSONObject station;
+		
+		try {
+
+		// Get stations
+		String starredStationsJsons = sett.getString("starredStations", "[]");
+		JSONArray starredStations = new JSONArray(starredStationsJsons);
+		
+		// Get index
+		int index = sett.getInt("starredStationsIndex", -1);
+		
+		// Get station
+		station = starredStations.getJSONObject(index);
+		
+		} catch(JSONException e) {
+			Log.e(LOGTAG,"MediaStreamerNotifMgr.getStation().JSONEXCEPTION! "+e);
+			Log.e(LOGTAG,e.toString());
+			return null;
+		}
+		
+		return station;
+		
+	}
 	
 	
 	

@@ -1,3 +1,6 @@
+0.225
+  * Added "large icon" for notification (shows station icon)
+
 0.224
   * New loading animation in actionbar when updating "now playing" and album art
   * Cleaned up install/update process

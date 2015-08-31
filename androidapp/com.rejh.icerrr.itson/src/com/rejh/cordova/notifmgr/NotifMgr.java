@@ -30,6 +30,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.support.v4.app.NotificationCompat;
@@ -209,7 +210,12 @@ public class NotifMgr extends CordovaPlugin {
 	        builder.setColor(Color.parseColor(color));
 	        
 	        // Large icon
-	        if (largeicon!=null) { builder.setLargeIcon(getIcon(largeicon)); } // TODO: create bitmap
+	        if (largeicon!=null) { 
+	        	Bitmap largeIconBmp = getIcon(largeicon);
+	        	if (largeIconBmp!=null) {
+	        		builder.setLargeIcon(largeIconBmp);
+	        	}
+	        } // TODO: create bitmap
 	        
 	        // Ticker
 	        builder.setTicker(ticker);
@@ -433,6 +439,7 @@ public class NotifMgr extends CordovaPlugin {
     }
     
     private Bitmap getIconFromURL (String src) {
+    	//Log.d(APPTAG,"getIconFromURL");
         Bitmap bmp = null;
         ThreadPolicy origMode = StrictMode.getThreadPolicy();
 
@@ -461,6 +468,7 @@ public class NotifMgr extends CordovaPlugin {
     }
     
     private Bitmap getIconFromRes (String icon) {
+    	//Log.d(APPTAG,"getIconFromRes");
         Resources res = context.getResources();
         int iconId = 0;
 
@@ -480,15 +488,17 @@ public class NotifMgr extends CordovaPlugin {
     }
     
     private Bitmap getIconFromURI (String src) {
+    	//Log.d(APPTAG,"getIconFromURI");
         AssetManager assets = context.getAssets();
         Bitmap bmp = null;
 
         try {
-            String path = src.replace("file:/", "www");
-            InputStream input = assets.open(path);
-
-            bmp = BitmapFactory.decodeStream(input);
-        } catch (IOException e) {
+            String path = src.replace("file://", "");
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        	bmp = BitmapFactory.decodeFile(path,options);
+        } catch (Exception e) {
+        	Log.e(APPTAG," -> Exception: "+ src +", "+ e);
             e.printStackTrace();
         }
 
