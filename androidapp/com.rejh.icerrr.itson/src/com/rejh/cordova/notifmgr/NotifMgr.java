@@ -8,7 +8,6 @@ package com.rejh.cordova.notifmgr;
 * 
 */
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -29,8 +28,13 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
-import android.os.Environment;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.support.v4.app.NotificationCompat;
@@ -213,7 +217,7 @@ public class NotifMgr extends CordovaPlugin {
 	        if (largeicon!=null) { 
 	        	Bitmap largeIconBmp = getIcon(largeicon);
 	        	if (largeIconBmp!=null) {
-	        		builder.setLargeIcon(largeIconBmp);
+	        		builder.setLargeIcon(getCircleBitmap(largeIconBmp));
 	        	}
 	        } // TODO: create bitmap
 	        
@@ -503,6 +507,29 @@ public class NotifMgr extends CordovaPlugin {
         }
 
         return bmp;
+    }
+    
+    private Bitmap getCircleBitmap(Bitmap bitmap) {
+    	 final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+    	  bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+    	 final Canvas canvas = new Canvas(output);
+
+    	 final int color = Color.RED;
+    	 final Paint paint = new Paint();
+    	 final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+    	 final RectF rectF = new RectF(rect);
+
+    	 paint.setAntiAlias(true);
+    	 canvas.drawARGB(0, 0, 0, 0);
+    	 paint.setColor(color);
+    	 canvas.drawOval(rectF, paint);
+
+    	 paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+    	 canvas.drawBitmap(bitmap, rect, rect, paint);
+
+    	 bitmap.recycle();
+
+    	 return output;
     }
     
     

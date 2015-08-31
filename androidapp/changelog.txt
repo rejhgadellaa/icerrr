@@ -1,3 +1,7 @@
+0.226
+  * Large icon for notification is now circular
+  * Slightly improved quality of image on launch screen
+
 0.225
   * Added "large icon" for notification (shows station icon)
 
