@@ -380,7 +380,16 @@ public class MediaStreamerService extends Service {
         metadataEditor.clear();
         metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
         metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, "Now playing: ...");
-        metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+        
+        // -> Bitmap
+        Bitmap bmp = getStationImage(getStationData());
+        if (bmp!=null) {
+        	metadataEditor.putBitmap(100, bmp);
+        } else {
+        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+		}
+        
+        // -> Apply
         metadataEditor.apply();
         
         // Handle Wifi
@@ -783,8 +792,10 @@ public class MediaStreamerService extends Service {
 								Log.d(APPTAG," -> Get artwork for: "+ station.getString("station_name"));
 								Bitmap bmp = getStationImage(station);
 								if (bmp!=null) {
+									Log.d(APPTAG," --> getStationImage() ok, putBitmap()");
 									metadataEditor.putBitmap(100, bmp);
 						        } else {
+						        	Log.w(APPTAG," --> getStationImage() failed??? Using default..");
 						        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
 						        }
 							} catch(JSONException e) {
@@ -1187,6 +1198,30 @@ public class MediaStreamerService extends Service {
         
     }
 	
+    // Get Station data
+    private JSONObject getStationData() {
+    	try {
+			
+			// Get stations
+			String starredStationsJsons = sett.getString("starredStations", "[]");
+			JSONArray starredStations = new JSONArray(starredStationsJsons);
+			
+			// Get index
+			int index = sett.getInt("starredStationsIndex", -1);
+			
+			// Get station
+			JSONObject station = starredStations.getJSONObject(index);
+	    	
+			// Return
+	    	return station;
+			
+		} catch (JSONException e) {
+			Log.e(APPTAG," > Error handling 'getStationData()', JSONException",e);
+		}
+    	
+    	return null;
+    	
+    }
 	
 
 }
