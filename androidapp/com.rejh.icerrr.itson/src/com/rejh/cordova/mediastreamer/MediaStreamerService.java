@@ -1,5 +1,8 @@
 package com.rejh.cordova.mediastreamer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -22,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +34,7 @@ import android.media.MediaMetadataRetriever;
 import android.media.RemoteControlClient;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
@@ -778,24 +781,11 @@ public class MediaStreamerService extends Service {
 								if (index<0) { index = 0; }
 								JSONObject station = starredStations.getJSONObject(index);
 								Log.d(APPTAG," >> "+ station.getString("station_name"));
-								boolean imageok = false;
-								if (station.has("station_image_local")) {
-									String image_local = station.getString("station_image_local");
-									Log.d(APPTAG," -> Station_image_local: "+image_local);
-									if (station.getString("station_image_local")!=null && !station.getString("station_image_local").equals("null")) { 
-										metadataEditor.putBitmap(100, getIconFromURI(image_local));
-										imageok = true;
-									} else {
-										Log.w(APPTAG," --> Didn't work :(");
-									}
-								}
-						        if (!imageok && station.getString("station_icon")!=null && !station.getString("station_icon").equals("null")) {
-						        	Log.d(APPTAG," -> getIconFromURL(): station_icon");
-						        	metadataEditor.putBitmap(100, getIconFromURL(station.getString("station_icon")));
-						        	imageok = true;
-						        } else if (!imageok) {
+								Bitmap bmp = getStationImage(station);
+								if (bmp!=null) {
+									metadataEditor.putBitmap(100, getStationImage(station));
+						        } else {
 						        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
-						        	Log.d(APPTAG," -> getIcon(): default");
 						        }
 							} catch(JSONException e) {
 								Log.w(APPTAG," > JSONException!",e);
@@ -947,7 +937,115 @@ public class MediaStreamerService extends Service {
 	    return false;
 	}
 	
+	// Download station_image
+	private Bitmap getStationImage(JSONObject station) {
+		
+		Log.e(APPTAG,"MediaStreamerService.getStationImage()");
+		
+		// ---> PREP PREP PREP
+		
+		// Prep: Stuff
+		Bitmap bmp = null;
+		ThreadPolicy origMode = StrictMode.getThreadPolicy();
+		
+		// Prep: Get json variables
+		String station_id = null;
+		String src = null;
+		try {
+			station_id = station.getString("station_id");
+			src = station.getString("station_icon");
+		} catch(JSONException e) {
+			Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e);
+			e.printStackTrace();
+			return null;
+		}
+        
+        // Prep: Write bitmap to storage..
+        // -> Path..
+        String root = Environment.getExternalStorageDirectory().toString();
+        File path = new File(root + "/Icerrr/images");
+        path.mkdirs(); // should not be needed but lets do it anyway
+        // -> Filename
+        String filename = "tmp_lockscreen_station_image_"+ station_id +".png";
+        
+        // ---> GO GO GO
+        
+        Log.d(APPTAG," -> Path: "+ path);
+        Log.d(APPTAG," -> File: "+ filename);
+		
+		// Already downloaded?
+		JSONObject tmpStationImageData = null;
+        try {
+        	
+        	String tmpStationImageDataStr = sett.getString("temp_station_image_data","{}");
+        	tmpStationImageData = new JSONObject(tmpStationImageDataStr);
+        	
+        	if (tmpStationImageData.has(station_id)) {
+        		Log.d(APPTAG," -> Load station_image from storage :D");
+        		String filepath = path.getAbsolutePath() +"/"+ tmpStationImageData.getString(station_id);
+        		Log.d(APPTAG," -> Filepath: "+ filepath);
+        		return getIconFromURI(filepath);
+        	}
+        	
+        } catch(JSONException e) {
+        	Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e);
+			e.printStackTrace();
+        }
+		
+		// Download image into Bitmap
+        try {
+        	Log.d(APPTAG," -> Download: "+ src);
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            connection.setDoInput(true);
+            connection.connect();
+
+            InputStream input = connection.getInputStream();
+
+            bmp = BitmapFactory.decodeStream(input);
+            
+        } catch (Exception e) {
+        	Log.e(APPTAG,"MediaStreamerService.getStationImage().Exception: ",e);
+            e.printStackTrace();
+            return null;
+        }
+        
+        // Write file..
+        try {
+            File file = new File(path, filename);
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            Log.d(APPTAG, "MediaStreamerService.getStationImage().FileNotFoundException: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d(APPTAG, "MediaStreamerService.getStationImage().IOException: " + e.getMessage());
+        } 
+        
+        // Store that this file exists..
+        try {
+        	Log.d(APPTAG," -> Store: "+ station_id);
+        	tmpStationImageData.put(station_id, filename);
+        	settEditor.putString("temp_station_image_data",tmpStationImageData.toString());
+        	settEditor.commit();
+        } catch(JSONException e) {
+        	Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e);
+			e.printStackTrace();
+        }
+        
+        // ---> DONE DONE DONE :D
+        
+        // Re-set thread policy
+        StrictMode.setThreadPolicy(origMode);
+        
+        // Done, return
+        return bmp;
+		
+	}
     
     // > Icons
     // Ripped from LocalNotification plugin: https://github.com/katzer/cordova-plugin-local-notifications/blob/master/src/android/Options.java
