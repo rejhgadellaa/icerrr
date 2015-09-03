@@ -984,7 +984,8 @@ public class MediaStreamerService extends Service {
         		Log.d(APPTAG," -> Load station_image from storage :D");
         		String filepath = path.getAbsolutePath() +"/"+ tmpStationImageData.getString(station_id);
         		Log.d(APPTAG," -> Filepath: "+ filepath);
-        		return getIconFromURI(filepath);
+        		Bitmap couldThisBeTheBitmapWeReLookingFor = getIconFromURI(filepath);
+        		if (couldThisBeTheBitmapWeReLookingFor!=null) { return couldThisBeTheBitmapWeReLookingFor; }
         	}
         	
         } catch(JSONException e) {
