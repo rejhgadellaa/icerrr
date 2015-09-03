@@ -1,3 +1,6 @@
+0.229
+  * Lockscreen artwork will now always be cached (reducing data usage, #179)
+
 0.228
   * Improved data usage of "now playing" poll (notification, lock screen)
   * More visual tweaks for install/update screen

@@ -680,7 +680,7 @@ public class MediaStreamerService extends Service {
 				runNowPlayingPoll();
 				
 			}
-		}, 1*1000, 1*60*1000); // every ~minute
+		}, 1*1000, (int)1*60*1000); // every ~minute
 	}
 	
 	private void stopNowPlayingPoll() {
