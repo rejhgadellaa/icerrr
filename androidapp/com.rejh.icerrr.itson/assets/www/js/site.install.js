@@ -90,9 +90,9 @@ site.installer.init = function(isUpdate) {
 	if (isUpdate) {
 		site.installer.isUpdate = true;
 		$("#install .log").html("<h1>Update!</h1>");
-		site.installer.logger("Just doing some routine checks. This shouldn't take long...<br>");
+		site.installer.logger("Just doing some routine checks. This shouldn't take long...<br><br>",{nobullet:true});
 	} else {
-		site.installer.logger("Icerrr needs to set up some stuff before it's ready to use...<br>");
+		site.installer.logger("Icerrr needs to set up some stuff before it's ready to use...<br><br>",{nobullet:true});
 	}
 	
 	// Well let's start by showing some loading ui
@@ -586,6 +586,7 @@ site.installer.finishup = function() {
 		
 		setTimeout(function() {
 			
+			/**/
 			site.cookies.put("app_version",site.cfg.app_version);
 			site.cookies.put("app_is_installed",1);
 			site.cookies.put("app_has_updated",1);
@@ -632,7 +633,9 @@ site.installer.logger = function(msg,opts) {
 	loggr.log(" (i) "+msg);
 	
 	if (opts.is_e) { msg = "<span class='e'>"+msg+"</span>"; }
-	if (opts.use_br) { msg = "<br>"+msg; }
+	// if (opts.use_br) { msg = msg; }
+	if (!opts.nobullet) { msg = "<li>"+ msg +"</li>"; }
+	else { msg = "<br>"+msg; }
 	
 	$("#install .log").append(msg);
 	

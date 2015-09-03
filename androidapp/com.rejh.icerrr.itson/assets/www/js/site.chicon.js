@@ -181,9 +181,9 @@ site.chicon.save = function(target) {
 			
 	// And save to stations stuff
 	station_data.station_icon = target.src;
+	if (!station_data.station_image) { station_data.station_image = target.src; } // also finds image.. should do this for all?
 	station_data.station_image_local = null;
 	station_data.station_icon_local = null;
-	if (!station_data.station_image) { station_data.station_image = target.src; } // also finds image.. should do this for all?
 	var station_index = site.helpers.session.getStationIndexById(station_data.station_id);
 	site.data.stations[station_index] = jQuery.extend(true, {}, station_data);
 	

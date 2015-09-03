@@ -123,7 +123,7 @@ public class MediaStreamerNotifMgr {
 			if (stationData!=null) {
 				if (stationData.has("station_icon_local")) {
 					String station_icon_local = stationData.getString("station_icon_local");
-					Log.e(LOGTAG," --> Set largeicon: "+station_icon_local);
+					Log.d(LOGTAG," --> Set largeicon: "+station_icon_local);
 					opts.put("largeicon", station_icon_local);
 				}
 			}

@@ -493,7 +493,6 @@ public class NotifMgr extends CordovaPlugin {
     
     private Bitmap getIconFromURI (String src) {
     	//Log.d(APPTAG,"getIconFromURI");
-        AssetManager assets = context.getAssets();
         Bitmap bmp = null;
 
         try {

@@ -778,10 +778,24 @@ public class MediaStreamerService extends Service {
 								if (index<0) { index = 0; }
 								JSONObject station = starredStations.getJSONObject(index);
 								Log.d(APPTAG," >> "+ station.getString("station_name"));
-						        if (station.getString("station_icon")!=null && !station.getString("station_icon").equals("null")) { 
+								boolean imageok = false;
+								if (station.has("station_image_local")) {
+									String image_local = station.getString("station_image_local");
+									Log.d(APPTAG," -> Station_image_local: "+image_local);
+									if (station.getString("station_image_local")!=null && !station.getString("station_image_local").equals("null")) { 
+										metadataEditor.putBitmap(100, getIconFromURI(image_local));
+										imageok = true;
+									} else {
+										Log.w(APPTAG," --> Didn't work :(");
+									}
+								}
+						        if (!imageok && station.getString("station_icon")!=null && !station.getString("station_icon").equals("null")) {
+						        	Log.d(APPTAG," -> getIconFromURL(): station_icon");
 						        	metadataEditor.putBitmap(100, getIconFromURL(station.getString("station_icon")));
-						        } else {
+						        	imageok = true;
+						        } else if (!imageok) {
 						        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+						        	Log.d(APPTAG," -> getIcon(): default");
 						        }
 							} catch(JSONException e) {
 								Log.w(APPTAG," > JSONException!",e);
@@ -1031,16 +1045,16 @@ public class MediaStreamerService extends Service {
     }
     
     private Bitmap getIconFromURI (String src) {
-        AssetManager assets = context.getAssets();
+    	//Log.d(APPTAG,"getIconFromURI");
         Bitmap bmp = null;
 
         try {
-            String path = src.replace("file:/", "www");
-            InputStream input = assets.open(path);
-
-            bmp = BitmapFactory.decodeStream(input);
-        } catch (IOException e) {
-        	Log.e(APPTAG," > IOException",e);
+            String path = src.replace("file://", "");
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        	bmp = BitmapFactory.decodeFile(path,options);
+        } catch (Exception e) {
+        	Log.e(APPTAG," -> Exception: "+ src +", "+ e);
             e.printStackTrace();
         }
 

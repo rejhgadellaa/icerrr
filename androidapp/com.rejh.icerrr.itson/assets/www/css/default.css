@@ -305,6 +305,11 @@ section {
 		margin:0 0 0 0;
 	}
 	
+	#install .main .log li {
+		margin-left:1em;
+		font-size:14pt;
+	}
+	
 	#install .main .log span.e {
 		color:#f00;
 	}
@@ -574,6 +579,10 @@ section {
 	
 	#editstation .block .button, #searchstation .block .button {
 		
+	}
+	
+	#editstation #chedit_station_url_hq {
+		display:none;
 	}
 	
 #searchstation_results {

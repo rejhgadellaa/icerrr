@@ -50,14 +50,23 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 		$("#editstation .action.save").css("display","block");
 		$("#editstation .action.trash").css("display","block");
 		$("#editstation input[name='station_id']")[0].value = station_id_to_edit;
-		$("#editstation input[name='station_name']")[0].value = station_info.station_name
-		$("#editstation input[name='station_url']")[0].value = station_info.station_url
-		$("#editstation input[name='station_icon']")[0].value = station_info.station_icon
+		$("#editstation input[name='station_name']")[0].value = station_info.station_name;
+		$("#editstation input[name='station_url']")[0].value = station_info.station_url;
+		if (station_info.station_url_highquality) { 
+			// TODO
+			//$("#editstation input[name='station_url_hq']")[0].value = station_info.station_url_highquality;
+			//$("#editstation #chedit_station_url_hq").css("display","block");
+		} else {
+			//$("#editstation input[name='station_url_hq']")[0].value = "";
+			//$("#editstation #chedit_station_url_hq").css("display","none");
+		}
+		$("#editstation input[name='station_icon']")[0].value = station_info.station_icon;
 		site.chedit.newentry = {
 			station_id: station_id_to_edit,
 			station_edited: station_info.station_edited,
 			station_name: station_info.station_name,
 			station_url: station_info.station_url,
+			//station_url_highquality: station_info.station_url_highquality, // TODO
 			station_icon: station_info.station_icon,
 			station_image: station_info.station_icon,
 			station_host: station_info.station_host,
@@ -76,9 +85,11 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 		$("#editstation .action.save").css("display","none");
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
-		$("#editstation input[name='station_name']")[0].value = ""
-		$("#editstation input[name='station_url']")[0].value = ""
-		$("#editstation input[name='station_icon']")[0].value = ""
+		$("#editstation input[name='station_name']")[0].value = "";
+		$("#editstation input[name='station_url']")[0].value = "";
+		$("#editstation input[name='station_url_hq']")[0].value = "";
+		$("#editstation #chedit_station_url_hq").css("display","none");
+		$("#editstation input[name='station_icon']")[0].value = "";
 		$("#editstation img.station_icon").attr("src","img/icons-80/ic_station_default.png");
 		$("#editstation img.station_icon").off("click");
 		$("#editstation img.station_icon")[0].onclick = function() {
@@ -92,6 +103,7 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 		$("#editstation .action.save").css("display","none");
 		$("#editstation .action.trash").css("display","none");
 		$("#editstation input[name='station_id']")[0].value = "";
+		$("#editstation #chedit_station_url_hq").css("display","none");
 		$("#editstation img.station_icon").attr("src","img/icons-80/ic_station_default.png");
 		$("#editstation img.station_icon").off("click");
 		$("#editstation img.station_icon")[0].onclick = function() {
