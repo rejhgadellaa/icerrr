@@ -774,16 +774,16 @@ public class MediaStreamerService extends Service {
 						// Metadata > Get station icon
 				        if (sett.getBoolean("showStationIcon", true)) {
 							try {
-								Log.d(APPTAG," > Station icon?");
+								Log.d(APPTAG," > MetadataEditor -> Lockscreen artwork..?");
 								String starredStationsJsons = sett.getString("starredStations", "[]");
 								JSONArray starredStations = new JSONArray(starredStationsJsons);
 								int index = sett.getInt("starredStationsIndex", 0);
 								if (index<0) { index = 0; }
 								JSONObject station = starredStations.getJSONObject(index);
-								Log.d(APPTAG," >> "+ station.getString("station_name"));
+								Log.d(APPTAG," -> Get artwork for: "+ station.getString("station_name"));
 								Bitmap bmp = getStationImage(station);
 								if (bmp!=null) {
-									metadataEditor.putBitmap(100, getStationImage(station));
+									metadataEditor.putBitmap(100, bmp);
 						        } else {
 						        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
 						        }
@@ -940,7 +940,7 @@ public class MediaStreamerService extends Service {
 	// Download station_image
 	private Bitmap getStationImage(JSONObject station) {
 		
-		Log.e(APPTAG,"MediaStreamerService.getStationImage()");
+		Log.d(APPTAG,"MediaStreamerService.getStationImage()");
 		
 		// ---> PREP PREP PREP
 		
