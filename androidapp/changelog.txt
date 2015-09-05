@@ -1,3 +1,6 @@
+0.232
+  * Fix: station icon would not always update in stations list after editing
+
 0.231
   * Fixed issue where service would crash when lockscreen artwork could not be loaded
 

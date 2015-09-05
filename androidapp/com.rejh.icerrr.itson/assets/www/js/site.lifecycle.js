@@ -39,7 +39,7 @@ site.lifecycle.onDeviceReady = function() {
 
 site.lifecycle.init = function() {
 	
-	loggr.debug("\n==================================================================================\n\n");
+	loggr.debug("==================================================================================");
 	loggr.debug("site.lifecycle.init()");
 	
 	// Detect android/ios

@@ -342,7 +342,7 @@ site.home.run_ui_updates = function() {
 
 site.home.run_station_updates = function(dontUseDirble) {
 	
-	//loggr.log("site.home.run_station_updates()");
+	loggr.debug("site.home.run_station_updates()");
 	
 	dontUseDirble = true;
 	

@@ -25,10 +25,6 @@ site.helpers.addCachebust = function(src) {
 
 site.helpers.shouldDownloadImage = function(localVal,iconVal) {
 	
-	//loggr.log("site.helpers.shouldDownloadImage()");
-	//loggr.log(" -> "+ localVal);
-	//loggr.log(" -> "+ iconVal);
-	
 	if (!iconVal) { iconVal = ""; }
 	if (!localVal) { localVal = ""; }
 	
@@ -42,19 +38,7 @@ site.helpers.shouldDownloadImage = function(localVal,iconVal) {
 	if (localVal.indexOf("file://")<0) { return true; }
 	if (localVal.indexOf(".base64")>0) { return true; }
 	
-	// Check if localVal exists..
-	/*
-	var filename = localVal.substr(localVal.lastIndexOf("/")+1);
-	site.storage.getFileEntry(site.cfg.paths.images,filename,
-		function(res) { // exists
-			if (localVal.indexOf(".base64")>0) { return true; }
-			return false;
-		},
-		function(err) { // does not exist
-			return true; // yea always download..
-		}
-	);
-	/**/
+	// Default: don't download
 	return false;
 	
 	
@@ -70,6 +54,13 @@ site.helpers.mergeStations = function(stations1,stations2) {
 	
 	loggr.debug("site.helpers.mergeStations()");
 	
+	// -> Skipkeys
+	var skipkeys = [
+		"station_icon_local",
+		"station_image_local"
+		]
+	
+	// Test..
 	if (!stations1 && !stations2) { return []; }
 	else if (!stations1) { return stations2; }
 	else if (!stations2) { return stations1; }
@@ -105,7 +96,7 @@ site.helpers.mergeStations = function(stations1,stations2) {
 			if (!edit2) { edit2 = 1; }
 			
 			// Special case: station_icon_local + .._image_local
-			if (key=="station_icon_local" || key=="station_image_local") {
+			if (skipkeys.indexOf(key)>=0) {
 				if (!station1[key] || !station2[key]) {
 					station1[key] = null;
 				} else {
@@ -530,10 +521,14 @@ site.helpers.storeSession = function(cb) {
 }
 
 site.helpers.readSession = function() {
+	
 	loggr.debug("site.helpers.readSession()");
-	loggr.log(" > Restore site.session: "+ site.cookies.get("site.session"));
-	site.session = JSON.parse(site.cookies.get("site.session"));
-	if (!site.session) { 
+	
+	loggr.log(" > Restore site.session via cookie..");
+	var cookiedata = site.cookies.get("site.session")
+	
+	if (!cookiedata) { 
+		
 		loggr.warn(" > Error getting session from cookie, trying storage...");
 		site.session = {}; // just a placeholder so the app can continue working.. // TODO: dangerous, user might do stuff that is not remembered..
 		site.storage.readfile(site.cfg.paths.json,"local.site_session.json",
@@ -551,9 +546,17 @@ site.helpers.readSession = function() {
 				site.session_ready = true;
 			}
 		);
+		return false;
+		
 	} else {
+		
+		loggr.log(" -> OK: "+ site.helpers.calcAutoByteStr(site.helpers.calcStringToBytes(cookiedata)));
+		site.session = JSON.parse(cookiedata);
 		site.session_ready = true;
+		return true;
+		
 	}
+	
 }
 
 // TODO: I want this function for other places too, not just session data
