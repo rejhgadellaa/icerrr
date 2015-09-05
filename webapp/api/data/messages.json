@@ -1,9 +1,9 @@
 [
     
     {
-        "id":"app229",
+        "id":"app231",
         "crit":"version",
-        "critvalue":0.228,
+        "critvalue":0.230,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Placeholder",
@@ -27,6 +27,15 @@
 		"repeat":1,
 		"onlyOnWifi":1
 	},
+    
+    {
+        "id":"stations_database",
+        "crit":"install-update",
+        "critvalue":1441437565603,
+        "action":"install-update",
+        "message":[ ],
+        "repeat":0
+    },
     
     {
         "id":"stations_database",

@@ -482,7 +482,11 @@ public class NotifMgr extends CordovaPlugin {
             iconId = getIconValue("android", icon);
         }
 
-        if (iconId == 0) {
+        if (iconId == 0) { // fallback
+            iconId = getIconValue(packageName,"web_hi_res_512_002");
+        }
+
+        if (iconId == 0) { // ultimate fallback :(
             iconId = android.R.drawable.ic_menu_info_details;
         }
 

@@ -14,7 +14,7 @@ site.cfg = {};
 // ---> Important stuff
 
 // App
-site.cfg.app_version = 0.229; // Note: change causes install/update to run at launch
+site.cfg.app_version = 0.231; // Note: change causes install/update to run at launch
 
 // Urls
 // Note: url paths should end with / if folder || TODO: check this..

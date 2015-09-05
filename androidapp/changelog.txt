@@ -1,3 +1,6 @@
+0.231
+  * Fixed issue where service would crash when lockscreen artwork could not be loaded
+
 0.229
   * Lockscreen artwork will now always be cached (reducing data usage, #179)
 
