@@ -15,8 +15,8 @@ site.home = {};
 
 site.home.init = function() {
 	
-	loggr.info("------------------------------------");
-	loggr.info("site.home.init();");
+	loggr.debug("------------------------------------");
+	loggr.debug("site.home.init();");
 	
 	// Lalala
 	$("#version_string").html("You're currently rocking version "+ site.cfg.app_version);
@@ -176,12 +176,12 @@ site.home.init = function() {
 // - Important stuff: this is function that will be called whenever site.ui.gotosection is called
 
 site.home.onpause = function() {
-	loggr.info("site.home.onpause()");
+	loggr.debug("site.home.onpause()");
 	site.home.stop_ui_updates();
 }
 
 site.home.onresume = function() {
-	loggr.info("site.home.onresume()");
+	loggr.debug("site.home.onresume()");
 	site.home.init_ui_updates();
 	site.home.alarmUpdateTime();
 }
@@ -190,7 +190,7 @@ site.home.onresume = function() {
 
 site.home.mpPlayToggle = function() {
 	
-	loggr.info("site.home.mpPlayToggle()");
+	loggr.debug("site.home.mpPlayToggle()");
 	
 	// Limit button presses to 1 per .. second?
 	// If user start bashing let him through..
@@ -251,7 +251,7 @@ site.home.mpPlayToggle = function() {
 
 site.home.init_ui_updates = function() {
 	
-	loggr.info("site.home.init_ui_updates()");
+	loggr.debug("site.home.init_ui_updates()");
 	
 	if (site.loops.home_ui_timeout) { clearInterval(site.loops.home_ui_timeout); }
 	site.loops.home_ui_timeout = setInterval(function(){site.home.run_ui_updates()},2000);
@@ -265,7 +265,7 @@ site.home.init_ui_updates = function() {
 
 site.home.stop_ui_updates = function() {
 	
-	loggr.info("site.home.stop_ui_updates()");
+	loggr.debug("site.home.stop_ui_updates()");
 	
 	if (site.loops.home_ui_timeout) { clearInterval(site.loops.home_ui_timeout); }
 	if (site.loops.home_station_timeout) { clearInterval(site.loops.home_station_timeout); }
@@ -417,7 +417,7 @@ site.home.run_station_updates = function(dontUseDirble) {
 
 site.home.useDirbleNowPlaying = function() {
 	
-	loggr.info("site.home.useDirbleNowPlaying()");
+	loggr.debug("site.home.useDirbleNowPlaying()");
 	
 	var apiqueryobj = {
 		"get":"nowplaying_dirble",
@@ -474,7 +474,7 @@ site.home.useDirbleNowPlaying = function() {
 
 site.home.getAlbumArt = function() {
 	
-	loggr.info("site.home.getAlbumArt()");
+	loggr.debug("site.home.getAlbumArt()");
 	
 	// Statio  icon?
 	if (site.cookies.get("setting_showStationIcon")==0) {
@@ -681,7 +681,7 @@ site.home.handleStationImage = function(src) {
 
 site.home.toggleOverflowMenu = function() {
 	
-	loggr.info("site.home.toggleOverflowMenu()");
+	loggr.debug("site.home.toggleOverflowMenu()");
 	
 	var visible = site.home.overflowMenuIsVisible;
 	
@@ -707,7 +707,7 @@ site.home.dismissOverflowMenu = function() {
 
 site.home.sendfeedback = function() {
 	
-	loggr.info("site.home.sendfeedback()");
+	loggr.debug("site.home.sendfeedback()");
 	
 	// Gather some info
 	var info = ""
@@ -742,7 +742,7 @@ site.home.sendfeedback = function() {
 	
 site.home.viewlog = function() {
 	
-	loggr.info("site.home.viewLog()");
+	loggr.debug("site.home.viewLog()");
 	
 	var loghtml = loggr.gethtml(128) +"<p>&nbsp;</p>";
 	
@@ -760,7 +760,7 @@ site.home.viewlog = function() {
 
 site.home.alarmUpdateTime = function() {
 	
-	loggr.info("site.home.alarmUpdateTime()");
+	loggr.debug("site.home.alarmUpdateTime()");
 	
 	if (site.session.alarmActive) {
 		//  && site.mp.mpstatus!=Media.MEDIA_NONE
@@ -789,7 +789,7 @@ site.home.alarmUpdateTime = function() {
 
 site.home.alarmSnooze = function() {
 	
-	loggr.info("site.home.alarmSnooze()");
+	loggr.debug("site.home.alarmSnooze()");
 	
 	// Stop playback
 	loggr.log(" > Stop playback..");
@@ -830,7 +830,7 @@ site.home.alarmSnooze = function() {
 
 site.home.alarmSnoozeCancel = function() {
 	
-	loggr.info("site.home.alarmSnoozeCancel()");
+	loggr.debug("site.home.alarmSnoozeCancel()");
 	
 	if (site.session.snoozeAlarm) {
 		if (!site.alarms) { site.alarms = {}; }
@@ -848,7 +848,7 @@ site.home.alarmSnoozeCancel = function() {
 
 site.home.alarmStop = function() {
 	
-	loggr.info("site.home.alarmStop()");
+	loggr.debug("site.home.alarmStop()");
 	
 	// Stop playback
 	loggr.log(" > Stop playback..");

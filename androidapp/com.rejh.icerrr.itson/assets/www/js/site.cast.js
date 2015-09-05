@@ -21,7 +21,7 @@ site.cast.cfg.apiCfg = {}
 
 site.cast.setup = function() {
 	
-	loggr.info("site.cast.setup()");
+	loggr.debug("site.cast.setup()");
 	
 	// Prep
 	site.cast.routes = [];
@@ -65,7 +65,7 @@ site.cast.onerror = function(errorCode, errorDescription, errorData) {
 
 site.cast.init = function() {
 	
-	loggr.info("site.cast.init()");
+	loggr.debug("site.cast.init()");
 	
 	// Restore session data
 	if (!site.cast.session) {
@@ -96,7 +96,7 @@ site.cast.init = function() {
 
 site.cast.sessionListener = function(session) {
 	
-	loggr.info("site.cast.sessionListener()");
+	loggr.debug("site.cast.sessionListener()");
 	
 	loggr.log(" > Session_id: "+ session.sessionId);
 	
@@ -123,7 +123,7 @@ site.cast.sessionListener = function(session) {
 
 site.cast.receiverListener = function(arg) {
 	
-	loggr.info("site.cast.receiverListener()");
+	loggr.debug("site.cast.receiverListener()");
 	
 	switch(arg) {
 		
@@ -174,7 +174,7 @@ site.cast.receiverListener = function(arg) {
 
 site.cast.requestSession = function() {
 	
-	loggr.info("site.cast.requestSession()");
+	loggr.debug("site.cast.requestSession()");
 	
 	// chk
 	if (site.cast.session) {
@@ -206,7 +206,7 @@ site.cast.requestSession = function() {
 
 site.cast.loadMedia = function() {
 	
-	loggr.info("site.cast.loadMedia()");
+	loggr.debug("site.cast.loadMedia()");
 	
 	site.ui.showtoast("Cast: Loading media...");
 	
@@ -274,14 +274,14 @@ site.cast.loadMedia = function() {
 // ---> Media Update Listener
 
 site.cast.mediaUpdateListener = function(res) {
-	loggr.info("site.cast.mediaUpdateListener()");
+	loggr.debug("site.cast.mediaUpdateListener()");
 }
 
 // ---> Update currentstation
 
 site.cast.updateCurrentstation = function() {
 	
-	loggr.info("site.cast.updateCurrentstation()");
+	loggr.debug("site.cast.updateCurrentstation()");
 	
 	if (!site.cast.session) { loggr.log(" > !site.cast.session, return"); return; }
 	
@@ -304,7 +304,7 @@ site.cast.updateCurrentstation = function() {
 
 site.cast.updateMetadata = function() {
 	
-	loggr.info("site.cast.updateMetadata()");
+	loggr.debug("site.cast.updateMetadata()");
 	
 	if (!site.cast.session) { return; }
 	
@@ -326,7 +326,7 @@ site.cast.updateMetadata = function() {
 
 site.cast.play = function() {
 	
-	loggr.info("site.cast.play()");
+	loggr.debug("site.cast.play()");
 	
 	// Stop mediaplayers
 	if (site.mp.serviceRunning) {
@@ -343,7 +343,7 @@ site.cast.play = function() {
 
 site.cast.stop = function() {
 	
-	loggr.info("site.cast.play()");
+	loggr.debug("site.cast.play()");
 	
 	site.cast.media.stop();
 	
@@ -432,9 +432,9 @@ site.cast.destroy = function(silent) {
 
 site.cast.notif = function() {
 	
-	loggr.info("site.cast.notif()");
+	loggr.debug("site.cast.notif()");
 	
-	loggr.info("site.mp.notif()");
+	loggr.debug("site.mp.notif()");
 	
 	var opts = {};
 	
@@ -471,7 +471,7 @@ site.cast.notif = function() {
 
 site.cast.notifCancel = function(id) {
 	
-	loggr.info("site.cast.notifCancel()");
+	loggr.debug("site.cast.notifCancel()");
 	
 	if (!id && id!==0) { id = site.cfg.notifs.notifID_cast; }
 	
@@ -494,7 +494,7 @@ site.cast.notifCancel = function(id) {
 
 site.cast.updateicon = function(mode) {
 	
-	loggr.info("site.cast.updateicon(): "+mode);
+	loggr.debug("site.cast.updateicon(): "+mode);
 	
 	if (!mode) { mode = 0; } // unavailable
 	

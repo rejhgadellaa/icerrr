@@ -15,8 +15,8 @@ site.chlist = {};
 
 site.chlist.init = function(forceRedraw) {
 	
-	loggr.info("------------------------------------");
-	loggr.info("site.chlist.init()");
+	loggr.debug("------------------------------------");
+	loggr.debug("site.chlist.init()");
 	
 	site.ui.hideloading();
 	
@@ -84,7 +84,7 @@ site.chlist.init = function(forceRedraw) {
 // - Important stuff: this is function that will be called whenever site.ui.gotosection is called
 
 site.chlist.onpause = function() {
-	loggr.info("site.chedit.onpause()");
+	loggr.debug("site.chedit.onpause()");
 	site.session.chlist_currenttab = site.chlist.currenttab;
 	site.session.chlist_main_scrollTop = site.chlist.main_scrollTop;
 }
@@ -98,7 +98,7 @@ site.chlist.onresume = function() {
 
 site.chlist.ontabclick = function(tabObj) {
 	
-	loggr.info("site.chlist.ontabclick(): "+ tabObj.className);
+	loggr.debug("site.chlist.ontabclick(): "+ tabObj.className);
 	
 	// Detect
 	var tab = "stations";
@@ -124,7 +124,7 @@ site.chlist.ontabclick = function(tabObj) {
 
 site.chlist.drawResults = function(pagenum,forcerun) {
 	
-	loggr.info("site.chlist.drawResults()");
+	loggr.debug("site.chlist.drawResults()");
 	
 	// Check if needs to run..
 	if (!forcerun && !site.chedit.changesHaveBeenMade) {
@@ -308,7 +308,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 
 site.chlist.selectstation = function(resultitem,dontgohome) {
 	
-	loggr.info("site.chlist.selectstation()");
+	loggr.debug("site.chlist.selectstation()");
 	
 	loggr.log(" > "+ resultitem.station_id);
 	
@@ -355,7 +355,7 @@ site.chlist.selectstation = function(resultitem,dontgohome) {
 
 site.chlist.imagesearch = function(station_data,fullSizeImage) {
 	
-	loggr.info("site.chlist.imagesearch()");
+	loggr.debug("site.chlist.imagesearch()");
 	
 	if (!station_data.station_name) { 
 		loggr.log(" > !station_data.station_data:");
@@ -449,13 +449,13 @@ site.chlist.imagesearch_cb = function() {
 // ---> Load data
 
 site.chlist.readstations = function(customCB) {
-	loggr.info("site.chlist.readstations()");
+	loggr.debug("site.chlist.readstations()");
 	if (!customCB) { customCB = site.chlist.readstations_cb; }
 	site.storage.readfile(site.cfg.paths.json,"stations.json",customCB,site.chlist.readstations_errcb)
 }
 
 site.chlist.readstations_cb = function(resultstr) {
-	loggr.info("site.chlist.loadstations_cb()");
+	loggr.debug("site.chlist.loadstations_cb()");
 	loggr.log(" > "+resultstr.substr(0,64)+"...");
 	resultjson = JSON.parse(resultstr);
 	if (!resultjson) { alert("site.chlist.readstations_cb().Error: !resultjson"); }
@@ -464,7 +464,7 @@ site.chlist.readstations_cb = function(resultstr) {
 }
 
 site.chlist.readstations_errcb = function(error) {
-	loggr.info("site.chlist.loadstations_errcb()");
+	loggr.debug("site.chlist.loadstations_errcb()");
 	alert("site.chlist.readstations_errcb().Error: "+site.storage.getErrorType(error));
 	site.installer.init();
 	// TODO: YES.. What now..
@@ -476,12 +476,12 @@ site.chlist.readstations_errcb = function(error) {
 
 site.chlist.isStarred = function(station_id) {
 	
-	loggr.info("site.chlist.isStarred(): "+station_id);
+	//loggr.debug("site.chlist.isStarred(): "+station_id);
 	
 	if (!site.session.starred) { return false; }
 	
 	for (var i=0; i<site.session.starred.length; i++) {
-		loggr.log(" > "+ site.session.starred[i].station_id);
+		//loggr.log(" > "+ site.session.starred[i].station_id);
 		if (site.session.starred[i].station_id==station_id) {
 			return true;
 		}
@@ -497,7 +497,7 @@ site.chlist.isStarred = function(station_id) {
 
 site.chlist.toggleStarred = function(station_id) {
 	
-	loggr.info("site.chlist.toggleStarred(): "+station_id);
+	loggr.debug("site.chlist.toggleStarred(): "+station_id);
 	
 	if (site.chlist.isStarred(station_id)) {
 		site.chlist.unsetStarred(station_id);
@@ -513,7 +513,7 @@ site.chlist.toggleStarred = function(station_id) {
 
 site.chlist.setStarredByStationObj = function(station) {
 	
-	loggr.info("site.chlist.setStarredByStationObj(): "+station.station_id);
+	loggr.debug("site.chlist.setStarredByStationObj(): "+station.station_id);
 	
 	site.session.starred.unshift(station);
 	site.session.starred = site.sorts.station_by_name(site.session.starred); // sort :D
@@ -536,7 +536,7 @@ site.chlist.setStarredByStationObj = function(station) {
 
 site.chlist.setStarred = function(station_id) {
 	
-	loggr.info("site.chlist.setStarred(): "+station_id);
+	loggr.debug("site.chlist.setStarred(): "+station_id);
 	
 	// Create list if it doesn't exist
 	if (!site.session.starred) { site.session.starred = []; }
@@ -560,7 +560,7 @@ site.chlist.setStarred = function(station_id) {
 
 site.chlist.unsetStarred = function(station_id) {
 	
-	loggr.info("site.chlist.unsetStarred(): "+station_id);
+	loggr.debug("site.chlist.unsetStarred(): "+station_id);
 	
 	var newlist = [];
 	
@@ -604,7 +604,7 @@ site.chlist.unsetStarred = function(station_id) {
 
 site.chlist.getStarred = function() {
 	
-	loggr.info("site.chlist.getStarred()");
+	loggr.debug("site.chlist.getStarred()");
 	
 	// Empty?
 	if (!site.session.starred) { 

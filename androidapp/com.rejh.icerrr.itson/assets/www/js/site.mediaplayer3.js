@@ -20,7 +20,7 @@ site.mp.lastmpstatus = -1;
 
 site.mp.init = function() {
 	
-	loggr.info("site.mp.init()");
+	loggr.debug("site.mp.init()");
 	
 	// Check if a station is selected
 	if (!site.session.currentstation){
@@ -64,7 +64,7 @@ site.mp.init = function() {
 
 site.mp.playToggle = function() {
 	
-	loggr.info("site.mp.playToggle()");
+	loggr.debug("site.mp.playToggle()");
 	
 	// Check if we're casting..
 	if (site.cast.session) {
@@ -196,7 +196,7 @@ site.mp.setStopped = function() {
 // Init, stop
 
 site.mp.initStatusPoll = function() {
-	loggr.info("site.mp.initStatusPoll()");
+	loggr.debug("site.mp.initStatusPoll()");
 	site.mp.stopStatusPoll();
 	site.mp.getStatus(site.mp.handleStatus);
 	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
@@ -207,7 +207,7 @@ site.mp.initStatusPoll = function() {
 }
 
 site.mp.stopStatusPoll = function(force) {
-	loggr.info("site.mp.stopStatusPoll()"); 
+	loggr.debug("site.mp.stopStatusPoll()"); 
 	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
 	site.loops.mpGetStatus = setInterval(function(){
 		site.mp.getStatus(site.mp.handleStatus); // actually, don't stop but do it on a much slower cycle!

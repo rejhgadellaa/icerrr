@@ -293,7 +293,7 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 
 site.chsearch.addThisStation = function(evt) {
 	
-	loggr.info("site.chsearch.addThisStation()");
+	loggr.debug("site.chsearch.addThisStation()");
 			
 	// TODO: quick hack :D
 
@@ -334,7 +334,7 @@ site.chsearch.addThisStation = function(evt) {
 
 site.chsearch.testStation = function(station, stationIndex) {
 	
-	loggr.info("site.chsearch.testStation()");
+	loggr.debug("site.chsearch.testStation()");
 	
 	// -> Handle stationData:
 	

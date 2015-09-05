@@ -244,7 +244,7 @@ site.installer.createfolders_init = function() {
 
 site.installer.createfolders_next = function() {
 	
-	loggr.info("site.installer.createfolders_next()");
+	loggr.debug("site.installer.createfolders_next()");
 	
 	// Check pathsNum
 	if (!site.installer.vars.pathNum && site.installer.vars.pathNum!==0) { site.installer.vars.pathNum = -1;	}
@@ -271,13 +271,13 @@ site.installer.createfolders_next = function() {
 }
 
 site.installer.createfolders_cb = function(directoryEntry) {
-	loggr.info("site.installer.createfolders_cb()");
+	loggr.debug("site.installer.createfolders_cb()");
 	//site.installer.logger(" OK",{use_br:false});
 	site.installer.createfolders_next();
 }
 
 site.installer.createfolders_errcb = function(error) {
-	loggr.info("site.installer.createfolders_errcb()");
+	loggr.debug("site.installer.createfolders_errcb()");
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+site.storage.getErrorType(error)+"",{is_e:true});
 	// TODO: YES.. What now..
@@ -314,7 +314,7 @@ site.installer.downloadjson_init = function() {
 
 site.installer.downloadjson_next = function() {
 	
-	loggr.info("site.installer.downloadjson_next()");
+	loggr.debug("site.installer.downloadjson_next()");
 	
 	// Check jsonNum
 	if (!site.installer.vars.jsonNum && site.installer.vars.jsonNum!==0) { site.installer.vars.jsonNum = -1;	}
@@ -356,14 +356,14 @@ site.installer.downloadjson_next = function() {
 }
 
 site.installer.downloadjson_cb = function(res) {
-	loggr.info("site.installer.downloadjson_cb(): "+ site.helpers.countObj(res["data"]));
+	loggr.debug("site.installer.downloadjson_cb(): "+ site.helpers.countObj(res["data"]));
 	//site.installer.logger(" OK",{use_br:false});
 	site.datatemp = res; // TODO: look at this variable.. it's just sad
 	site.installer.downloadjson_read();
 }
 
 site.installer.downloadjson_errcb = function(error) {
-	loggr.info("site.installer.downloadjson_errcb()");
+	loggr.debug("site.installer.downloadjson_errcb()");
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+error["message"]+"",{is_e:true});
 	if (site.installer.isUpdate) { 
@@ -376,7 +376,7 @@ site.installer.downloadjson_errcb = function(error) {
 
 site.installer.downloadjson_read = function() {
 	
-	loggr.info("site.installer.downloadjson_read()");
+	loggr.debug("site.installer.downloadjson_read()");
 	
 	// Check jsonNum
 	if (!site.installer.vars.jsonNum && site.installer.vars.jsonNum!==0) { 
@@ -455,7 +455,7 @@ site.installer.downloadjson_read = function() {
 
 site.installer.downloadjson_write = function() {
 	
-	loggr.info("site.installer.downloadjson_write()");
+	loggr.debug("site.installer.downloadjson_write()");
 	
 	// Check jsonNum
 	if (!site.installer.vars.jsonNum && site.installer.vars.jsonNum!==0) { 
@@ -484,14 +484,14 @@ site.installer.downloadjson_write = function() {
 }
 
 site.installer.downloadjson_write_cb = function(evt) {
-	loggr.info("site.installer.downloadjson_write_cb()");
+	loggr.debug("site.installer.downloadjson_write_cb()");
 	//site.installer.logger(" OK",{use_br:false});
 	//loggr.log(" > target: \n > "+site.helpers.arrToString(evt.target,0,"\n"));
 	site.installer.downloadjson_next();
 }
 
 site.installer.downloadjson_write_errcb = function(error) {
-	loggr.info("site.installer.downloadjson_write_errcb()");
+	loggr.debug("site.installer.downloadjson_write_errcb()");
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 	site.installer.logger("&nbsp;&gt; "+site.storage.getErrorType(error)+"",{is_e:true});
 	// TODO: YES.. What now..
@@ -502,7 +502,7 @@ site.installer.downloadjson_write_errcb = function(error) {
 // clearcache_init
 
 site.installer.clearcache_init = function() {
-	loggr.info("site.installer.clearcache_init()");
+	loggr.debug("site.installer.clearcache_init()");
 	site.installer.logger(" ERR",{use_br:false,is_e:true});
 }
 
@@ -511,7 +511,7 @@ site.installer.clearcache_init = function() {
 
 site.installer.finishup = function() {
 	
-	loggr.info("site.installer.finishup()");
+	loggr.debug("site.installer.finishup()");
 	
 	// Clear cookies..
 	if (site.installer.cfg.overwrite_version >= site.cfg.app_version && site.cookies.get("app_version")!=site.cfg.app_version) {

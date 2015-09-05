@@ -91,7 +91,7 @@ site.webapi.getajax = function(url,dataType,cb,errcb) {
 	
 	// -> http://www.sitepoint.com/web-foundations/mime-types-complete-list/
 	
-	loggr.info("site.webapi.getajax()");
+	loggr.debug("site.webapi.getajax()");
 	loggr.log(" > "+url);
 	
 	if (!dataType) { dataType = "text/plain"; }
@@ -217,7 +217,7 @@ site.webapi.post = function(apiaction,apiquerystr,data,cb,errcb) {
 
 site.webapi.abort = function(ajaxReqIdentifier) {
 	
-	loggr.info("site.webapi.cancel(): "+ajaxReqIdentifier);
+	loggr.debug("site.webapi.cancel(): "+ajaxReqIdentifier);
 	
 	loggr.log(" > Abort..");
 	var ajaxReq = site.webapi.ajaxRequests[ajaxReqIdentifier];
@@ -233,7 +233,7 @@ site.webapi.abort = function(ajaxReqIdentifier) {
 
 site.webapi.cleanupAjaxRequests = function(ajaxReqIdentifier) {
 	
-	loggr.info("site.webapi.cleanupAjaxRequests(): "+ajaxReqIdentifier);
+	loggr.debug("site.webapi.cleanupAjaxRequests(): "+ajaxReqIdentifier);
 	
 	var ajaxReq = site.webapi.ajaxRequests[ajaxReqIdentifier];
 	if (!ajaxReq) { loggr.warn(" > Ajax request does not exist (anymore)"); return; }

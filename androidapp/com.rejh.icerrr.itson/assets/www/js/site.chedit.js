@@ -15,8 +15,8 @@ site.chedit = {};
 
 site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAboutNowplaying, checkedPlayability, isPlayable) {
 	
-	loggr.info("------------------------------------");
-	loggr.info("site.chedit.init()");
+	loggr.debug("------------------------------------");
+	loggr.debug("site.chedit.init()");
 	
 	site.ui.hideloading();
 	
@@ -163,6 +163,8 @@ site.chedit.save = function() {
 	// Clear icon_local and image_local
 	site.chedit.newentry.station_icon_local = null;
 	site.chedit.newentry.station_image_local = null;
+	site.chicon.updateLockscreenArtworkData(site.chedit.newentry);
+	site.chedit.changesHaveBeenMade = true;
 	
 	// Find changes
 	var originalStationIfAny = site.data.stations[site.helpers.session.getStationIndexById(site.chedit.newentry.station_id)];
@@ -343,6 +345,8 @@ site.chedit.check = function(findStationName,silent) {
 	
 	site.chedit.newentry.station_icon_local = null;
 	site.chedit.newentry.station_image_local = null;
+	site.chicon.updateLockscreenArtworkData(site.chedit.newentry);
+	site.chedit.changesHaveBeenMade = true;
 	
 	// Start checking the actual urls..
 	site.chedit.check_station_url(station_name, station_url, silent);
@@ -546,6 +550,8 @@ site.chedit.check_station_icon = function(silent) {
 		$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
 		newentry.station_icon_local = null;
 		newentry.station_image_local = null;
+		site.chicon.updateLockscreenArtworkData(newentry);
+		site.chedit.changesHaveBeenMade = true;
 		loggr.log(" > All good :D");
 		site.chedit.save();
 		/*

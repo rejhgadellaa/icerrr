@@ -15,8 +15,8 @@ site.chicon = {};
 
 site.chicon.init = function(station_id) {
 	
-	loggr.info("------------------------------------");
-	loggr.info("site.chicon.init()");
+	loggr.debug("------------------------------------");
+	loggr.debug("site.chicon.init()");
 	
 	// Add lifecycle history
 	site.lifecycle.add_section_history("#searchicon");
@@ -181,9 +181,10 @@ site.chicon.save = function(target) {
 			
 	// And save to stations stuff
 	station_data.station_icon = target.src;
-	if (!station_data.station_image) { station_data.station_image = target.src; } // also finds image.. should do this for all?
+	station_data.station_image = target.src; // also finds image.. should do this for all?
 	station_data.station_image_local = null;
 	station_data.station_icon_local = null;
+	site.chicon.updateLockscreenArtworkData(station_data);
 	var station_index = site.helpers.session.getStationIndexById(station_data.station_id);
 	site.data.stations[station_index] = jQuery.extend(true, {}, station_data);
 	
@@ -200,7 +201,7 @@ site.chicon.save = function(target) {
 			// Goto ...
 			site.lifecycle.get_section_history_item(); // remove self from list
 			var lastsection = site.lifecycle.get_section_history_item();
-			site.chedit.changesHaveBeenMadeGotoStarred = true;
+			//site.chedit.changesHaveBeenMadeGotoStarred = true;
 			site.chedit.changesHaveBeenMade = true;
 			if (lastsection=="#editstation") {
 				site.chedit.init(site.chicon.station.station_id);
@@ -219,7 +220,50 @@ site.chicon.save = function(target) {
 	
 }
 
+// Lockscreen artwork
 
+site.chicon.updateLockscreenArtworkData = function(station_data) {
+	
+	loggr.debug("site.chicon.updateLockscreenArtworkData()");
+	
+	// Get data from service..
+	window.mediaStreamer.getSetting("string","temp_station_image_data",
+		function(res) {
+			
+			var newData = {};
+			
+			loggr.log(res);
+			var tmpStationImageData = JSON.parse(res);
+			for (var station_id in tmpStationImageData) {
+				
+				if (station_id == station_data.station_id) {
+					loggr.log(" -> FOUND: "+ station_id);
+				} else {
+					newData[station_id] = tmpStationImageData[station_id];
+				}
+				
+			}
+			
+			newDataStr = JSON.stringify(newData);
+			loggr.log(newDataStr);
+			
+			// -> Write to service
+			window.mediaStreamer.setting("string","temp_station_image_data",newDataStr,
+				function(res) {
+					loggr.log(" -> Saved temp_station_image_data");
+				},
+				function(err) {
+					loggr.error(err);
+				}
+			);
+			
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
+}
 
 
 

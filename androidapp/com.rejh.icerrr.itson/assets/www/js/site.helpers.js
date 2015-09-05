@@ -24,12 +24,40 @@ site.helpers.addCachebust = function(src) {
 // ---> Quick
 
 site.helpers.shouldDownloadImage = function(localVal,iconVal) {
+	
+	//loggr.log("site.helpers.shouldDownloadImage()");
+	//loggr.log(" -> "+ localVal);
+	//loggr.log(" -> "+ iconVal);
+	
 	if (!iconVal) { iconVal = ""; }
 	if (!localVal) { localVal = ""; }
-	if (!localVal && iconVal.indexOf("file://")<0) { return true; }
-	if (localVal.indexOf("file://")<0 && iconVal.indexOf("file://")<0) { return true; }
-	if (localVal.indexOf(".base64")>0 && iconVal.indexOf("file://")<0) { return true; }
+	
+	// If iconVal contains file:// it's already local, no need for download
+	if (iconVal.indexOf("file://")>=0) { return false; }
+	
+	// Check if localVal actually is set..
+	if (!localVal) { return true; }
+	
+	// Check if localVal contains file (if not, do download)
+	if (localVal.indexOf("file://")<0) { return true; }
+	if (localVal.indexOf(".base64")>0) { return true; }
+	
+	// Check if localVal exists..
+	/*
+	var filename = localVal.substr(localVal.lastIndexOf("/")+1);
+	site.storage.getFileEntry(site.cfg.paths.images,filename,
+		function(res) { // exists
+			if (localVal.indexOf(".base64")>0) { return true; }
+			return false;
+		},
+		function(err) { // does not exist
+			return true; // yea always download..
+		}
+	);
+	/**/
 	return false;
+	
+	
 }
 
 // ---> Stations
@@ -76,8 +104,16 @@ site.helpers.mergeStations = function(stations1,stations2) {
 			if (!edit1) { edit1 = 0; }
 			if (!edit2) { edit2 = 1; }
 			
+			// Special case: station_icon_local + .._image_local
+			if (key=="station_icon_local" || key=="station_image_local") {
+				if (!station1[key] || !station2[key]) {
+					station1[key] = null;
+				} else {
+					station1[key] == station2[key];
+				}
+			}
 			// Doesn't exist
-			if (!station1[key] || !edit1) {
+			else if (!station1[key] || !edit1) {
 				loggr.log(" >> New key: "+ station2.station_id +": "+ key +", "+ station1[key] +", "+ edit1);
 				loggr.log(" >>> Value: "+ station2[key]);
 				station1[key] = station2[key];
@@ -937,7 +973,7 @@ site.helpers.isConnectedWifi = function(allowEthernet) {
 
 site.helpers.masonryinit = function(selector,opts) {
 	/*
-	loggr.info("site.helpers.masonryinit(): "+selector);
+	loggr.debug("site.helpers.masonryinit(): "+selector);
 	if (!site.vars.masonries) { site.vars.masonries = []; }
 	if (site.vars.masonries.indexOf(selector)<0 && typeof selector =="string") { site.vars.masonries.push(selector); }
 	if (!opts) { 

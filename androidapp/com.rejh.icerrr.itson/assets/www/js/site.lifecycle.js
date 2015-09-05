@@ -20,7 +20,7 @@ site.lifecycle.deviceReady = false;
 // Onload + device ready
 
 site.lifecycle.onload = function() {
-	loggr.info("site.lifecycle.onload()");
+	loggr.debug("site.lifecycle.onload()");
 	site.lifecycle.loaded = true;
 	if (site.lifecycle.loaded && site.lifecycle.deviceReady) {
 		setTimeout(function(){site.lifecycle.init();},250);
@@ -28,7 +28,7 @@ site.lifecycle.onload = function() {
 }
 
 site.lifecycle.onDeviceReady = function() {
-	loggr.info("site.lifecycle.onDeviceReady()");
+	loggr.debug("site.lifecycle.onDeviceReady()");
 	site.lifecycle.deviceReady = true;
 	if (site.lifecycle.loaded && site.lifecycle.deviceReady) {
 		setTimeout(function(){site.lifecycle.init();},250);
@@ -39,8 +39,8 @@ site.lifecycle.onDeviceReady = function() {
 
 site.lifecycle.init = function() {
 	
-	loggr.info("\n==================================================================================\n\n");
-	loggr.info("site.lifecycle.init()");
+	loggr.debug("\n==================================================================================\n\n");
+	loggr.debug("site.lifecycle.init()");
 	
 	// Detect android/ios
 	if( /Android/i.test(navigator.userAgent) ) {
@@ -94,7 +94,7 @@ site.lifecycle.init = function() {
 
 site.lifecycle.initApp = function(force) {
 	
-	loggr.info("site.lifecycle.initApp();");
+	loggr.debug("site.lifecycle.initApp();");
 		
 	// some stuff
 	site.vars.currentSection = "#splash";
@@ -233,7 +233,7 @@ site.lifecycle.initApp = function(force) {
 
 site.lifecycle.onNewIntent = function(result) {
 	
-	loggr.info("site.lifecycle.onNewIntent()");
+	loggr.debug("site.lifecycle.onNewIntent()");
 	
 	// We need session.alarms..
 	if (!site.session.alarms) {
@@ -352,7 +352,7 @@ site.lifecycle.onNewIntent = function(result) {
 
 site.lifecycle.onResume = function() {
 	
-	loggr.info("site.lifecycle.onResume()");
+	loggr.debug("site.lifecycle.onResume()");
 		
 	// some stuff
 	site.session.isPaused = false;
@@ -380,7 +380,7 @@ site.lifecycle.onResume = function() {
 
 site.lifecycle.onPause = function() {
 	
-	loggr.info("site.lifecycle.onPause()");
+	loggr.debug("site.lifecycle.onPause()");
 	
 	// Store some stuff
 	site.helpers.storeSession();
@@ -421,7 +421,7 @@ site.lifecycle.onPause = function() {
 
 site.lifecycle.onDestroy = function() {
 	
-	loggr.info("site.lifecycle.onDestroy()");
+	loggr.debug("site.lifecycle.onDestroy()");
 	
 	// Call pause..
 	site.lifecycle.onPause();
@@ -435,7 +435,7 @@ site.lifecycle.onDestroy = function() {
 
 site.lifecycle.onBackButton = function() {
 	
-	loggr.info("site.lifecycle.onBackButton()");
+	loggr.debug("site.lifecycle.onBackButton()");
 	
 	// List of selectors that when display==block, then ignore back!
 	var thedonts = {
@@ -530,7 +530,7 @@ site.lifecycle.onBackButton = function() {
 
 site.lifecycle.onResize = function() {
 	
-	loggr.info("site.lifecycle.onResize()");
+	loggr.debug("site.lifecycle.onResize()");
 	
 	if (site.timeouts.onresize) { clearTimeout(site.timeouts.onresize); }
 	site.timeouts.onresize = setTimeout(function(){
@@ -565,7 +565,7 @@ site.lifecycle.onVolumeDown = function() {
 // Exit, ..
 
 site.lifecycle.exit = function() {
-	loggr.info("site.lifecycle.exit()");
+	loggr.debug("site.lifecycle.exit()");
 	site.lifecycle.onDestroy();
 	navigator.app.exitApp();
 }
@@ -574,7 +574,7 @@ site.lifecycle.exit = function() {
 
 site.lifecycle.checkMsgs = function(startedByUser) {
 	
-	loggr.info("site.lifecycle.checkMsgs()");
+	loggr.debug("site.lifecycle.checkMsgs()");
 	
 	if (startedByUser) {
 		
@@ -609,7 +609,7 @@ site.lifecycle.checkMsgs = function(startedByUser) {
 
 site.lifecycle.handleMsgs = function(data,startedByUser) {
 	
-	loggr.info("site.lifecycle.handleMsgs()");
+	loggr.debug("site.lifecycle.handleMsgs()");
 	
 	// Get local data thingie
 	var lidsStr = site.cookies.get("message_ids");
@@ -771,7 +771,7 @@ site.lifecycle.storeMsgId = function(id,lids) {
 
 site.lifecycle.installUpdateApp = function(url,startedByUser) {
 	
-	loggr.info("site.lifecycle.installUpdateApp_init()");
+	loggr.debug("site.lifecycle.installUpdateApp_init()");
 	
 	// Prep some stuff
 	var targetPath = site.cfg.paths.other;

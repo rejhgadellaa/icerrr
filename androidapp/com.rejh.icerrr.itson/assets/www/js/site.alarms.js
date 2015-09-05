@@ -15,8 +15,8 @@ site.alarms = {};
 
 site.alarms.init = function() {
 	
-	loggr.info("------------------------------------");
-	loggr.info("site.alarms.init()");
+	loggr.debug("------------------------------------");
+	loggr.debug("site.alarms.init()");
 	
 	// Check stations
 	if (!site.data.stations) {
@@ -48,7 +48,7 @@ site.alarms.init = function() {
 
 site.alarms.drawResults = function() {
 	
-	loggr.info("site.alarms.drawResults()");
+	loggr.debug("site.alarms.drawResults()");
 	
 	var alarms = site.session.alarms;
 	
@@ -145,8 +145,8 @@ site.alarms.drawResults = function() {
 
 site.alarms.add = function() {
 	
-	loggr.info("------------------------------------");
-	loggr.info("site.alarms.add()");
+	loggr.debug("------------------------------------");
+	loggr.debug("site.alarms.add()");
 	
 	site.lifecycle.add_section_history("#alarms_add");
 	site.ui.gotosection("#alarms_add");
@@ -162,8 +162,8 @@ site.alarms.add = function() {
 
 site.alarms.edit = function(obj) {
 	
-	loggr.info("------------------------------------");
-	loggr.info("site.alarms.edit()");
+	loggr.debug("------------------------------------");
+	loggr.debug("site.alarms.edit()");
 	
 	var id = obj.edit_id;
 	var alarm_id = obj.alarm_id;
@@ -191,7 +191,7 @@ site.alarms.edit = function(obj) {
 
 site.alarms.save = function(silenced) {
 	
-	loggr.info("site.alarms.save()");
+	loggr.debug("site.alarms.save()");
 	
 	var alarmCfg = site.alarms.newAlarmCfg;
 	
@@ -234,7 +234,7 @@ site.alarms.save = function(silenced) {
 
 site.alarms.remove = function(dontask) {
 	
-	loggr.info("site.alarms.remove()");
+	loggr.debug("site.alarms.remove()");
 	
 	if (!dontask) {
 		if (!confirm("Are you sure you want to remove this alarm?")) {
@@ -295,7 +295,7 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 	
 	alarm_id = (alarm!=null) ? alarm.alarm_id : alarm_id;
 	
-	loggr.info("site.alarms.setAlarm(): "+alarm_id);
+	loggr.debug("site.alarms.setAlarm(): "+alarm_id);
 	
 	if (!alarm_id && !alarm) {
 		loggr.warn(" > !alarm_id && !alarm");
@@ -396,7 +396,7 @@ site.alarms.setAlarm = function(alarm_id,alarm) {
 
 site.alarms.setAlarms = function() {
 	
-	loggr.info("site.alarms.setAlarms()");
+	loggr.debug("site.alarms.setAlarms()");
 	
 	for (var i in site.session.alarms) {
 		
@@ -407,7 +407,7 @@ site.alarms.setAlarms = function() {
 }
 
 site.alarms.writesession = function() {
-	loggr.info("site.alarms.writesession()");
+	loggr.debug("site.alarms.writesession()");
 	site.helpers.storeSession();
 }
 
@@ -613,13 +613,13 @@ site.alarms.updateForm = function(alarmCfg) {
 // ---> Get stations
 
 site.alarms.readstations = function(customCB) {
-	loggr.info("site.alarms.readstations()");
+	loggr.debug("site.alarms.readstations()");
 	if (!customCB) { customCB = site.alarms.readstations_cb; }
 	site.storage.readfile(site.cfg.paths.json,"stations.json",customCB,site.alarms.readstations_errcb)
 }
 
 site.alarms.readstations_cb = function(resultstr) {
-	loggr.info("site.alarms.loadstations_cb()");
+	loggr.debug("site.alarms.loadstations_cb()");
 	loggr.log(" > "+resultstr.substr(0,64)+"...");
 	resultjson = JSON.parse(resultstr);
 	if (!resultjson) { alert("site.chlist.readstations_cb().Error: !resultjson"); }
@@ -628,7 +628,7 @@ site.alarms.readstations_cb = function(resultstr) {
 }
 
 site.alarms.readstations_errcb = function(error) {
-	loggr.info("site.alarms.loadstations_errcb()");
+	loggr.debug("site.alarms.loadstations_errcb()");
 	alert("site.alarms.readstations_errcb().Error: "+site.storage.getErrorType(error));
 	site.installer.init();
 	// TODO: YES.. What now..

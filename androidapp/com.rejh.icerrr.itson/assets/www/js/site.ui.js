@@ -170,7 +170,7 @@ site.ui.createtoast = function() {
 
 site.ui.setLongclickHelp = function() {
 	
-	loggr.info("site.ui.setLongclickHelp()");
+	loggr.debug("site.ui.setLongclickHelp()");
 	
 	// Bind actionbar longpress help stuff
 	
