@@ -59,7 +59,22 @@ $queryj = json_decode($querys,true);
 // Prep blacklist..
 $blacklist_filename = "blacklist_". str_replace(".","",$queryj["host"]) ."-". $queryj["port"] .".txt";
 if (fr($blacklist_filename)) {
-	error("Stream has been blacklisted");
+	
+	//error("Stream has been blacklisted");
+	$array["nowplaying"] = utf8_encode("Not available");
+	$array["station_id"] = $queryj["station_id"];
+	$array["time_ms"] = time()*1000;
+	$array["queryj"] = $queryj;
+	$array["time_read"] = time()-$timebgn;
+	$jsons = json_encode($array);
+	$filename2 = "../../json/station_info.". $queryj["station_id"].".json";
+	$fw = fw($filename2,$jsons);
+	
+	// Output
+	header("Content-Type: application/json");
+	// header("Access-Control-Allow-Origin: *"); // TODO: enable this? Not needed because api.php is on same server (and ignores it anyway)
+	echo $jsons;
+	
 }
 	
 // Begin..
