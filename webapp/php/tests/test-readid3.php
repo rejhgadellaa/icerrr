@@ -74,7 +74,7 @@ if (fr($blacklist_filename)) {
 	header("Content-Type: application/json");
 	// header("Access-Control-Allow-Origin: *"); // TODO: enable this? Not needed because api.php is on same server (and ignores it anyway)
 	echo $jsons;
-	
+	die();
 }
 	
 // Begin..
