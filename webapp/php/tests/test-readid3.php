@@ -61,7 +61,7 @@ $blacklist_filename = "blacklist_". str_replace(".","",$queryj["host"]) ."-". $q
 if (fr($blacklist_filename)) {
 	
 	//error("Stream has been blacklisted");
-	$array["nowplaying"] = utf8_encode("Now playing: Not available");
+	$array["nowplaying"] = false;
 	$array["station_id"] = $queryj["station_id"];
 	$array["time_ms"] = time()*1000;
 	$array["queryj"] = $queryj;
