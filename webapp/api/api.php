@@ -103,12 +103,15 @@ switch($action) {
 					$whilenum = 0;
 					while(!$fgjson) {
 						logg(" >> Read stream... $whilenum $id3_reader_url");
+						if ($whilenum>=1) { break; }
 						$whilenum++;
-						if ($whilenum>=4) { break; }
 						$fg = fg($id3_reader_url.$id3_reader_q);
 						$fgjson = @json_decode($fg,true);
 					}
-					if (!$fg) { error("Error talking to id3 reader: '".$id3_reader_url.$id3_reader_q."', '$fg', ". json_encode(error_get_last())); }
+					// logg($id3_reader_q);
+					if (!$fg) { 
+						error("Error talking to id3 reader: '".$id3_reader_url.$id3_reader_q."', '$fg', ". json_encode(error_get_last())); 
+					}
 					$fw = fw($filename,$fg);
 					if (!$fw) { error("Could not write $filename"); }
 				}

@@ -21,6 +21,14 @@ function fw($path,$content,$append=false) {
 	return $fw;
 }
 
+// Function: fr
+function fr($path) {
+	$fo = @fopen($path,"r");
+	$fr = @fread($fo,@filesize($path));
+	@fclose($fo);
+	return $fr;
+}
+
 // Function: error
 function error($message) {
 	$json = array(
@@ -47,7 +55,14 @@ $queryj = json_decode($querys,true);
 	if ($queryj["host"]=="icecast.omroep.nl") {
 		$queryj["path"] = str_replace("-sb-","-bb-",$queryj["path"]);
 	}
+
+// Prep blacklist..
+$blacklist_filename = "blacklist_". str_replace(".","",$queryj["host"]) ."-". $queryj["port"] .".txt";
+if (fr($blacklist_filename)) {
+	error("Stream has been blacklisted");
+}
 	
+// Begin..
 $timebgn = time();
 
 // Open a socket
@@ -111,7 +126,13 @@ while (!feof($fsock)) {
 	if ($whilenum>2048) { fclose($fsock); error("Whilenum exceeded at 'while (!feof($fsock))'"); }
 	
 	$timerunning = time() - $timebgn;
-	if ($timerunning>16) { fclose($fsock); error("Exceeded 24 seconds of running time.."); }
+	if ($timerunning>16) { 
+		fclose($fsock); 
+		// blacklist..
+		fw($blacklist_filename,"BLACKLISTED");
+		// err
+		error("Exceeded 24 seconds of running time.."); 
+	}
 	
 	$line = fgets($fsock);
 	$res .= $line;
