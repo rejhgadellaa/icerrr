@@ -54,7 +54,7 @@ site.mp.init = function() {
 	site.lifecycle.addOnResumeCb(site.mp.initStatusPoll); 
 	
 	// Poll status at least once
-	site.mp.initStatusPoll();
+	site.mp.stopStatusPoll();
 	
 }
 
@@ -217,6 +217,8 @@ site.mp.stopStatusPoll = function(force) {
 // Get status
  
 site.mp.getStatus = function(cb) {
+	
+	//loggr.error("site.mp.getStatus()",{dontupload:true});
 	
 	if (cb) { site.mp.getStatusCb = cb; }
 	else { site.mp.getStatusCb = site.mp.handleStatus; }

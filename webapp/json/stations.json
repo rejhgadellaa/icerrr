@@ -374,5 +374,21 @@
     "rating_custom": -1,
     "rating_soundcloud": -1,
     "rating_average": -1
+  },
+  {
+    "station_id": "radio_10",
+    "station_edited":{},
+    "station_name": "Radio 10",
+    "station_url": "http://stream.radio10.nl/radio10",
+    "station_icon": "http://a3.mzstatic.com/us/r30/Purple2/v4/d0/bc/44/d0bc44ef-2389-68eb-e0ee-66187c32c2a6/icon175x175.png",
+    "station_image": 0,
+    "station_host": "stream.radio10.nl",
+    "station_port": 80,
+    "station_path": "/radio10",
+    "station_country":"NL",
+    "station_bitrate":"128 kbps",
+    "rating_custom": -1,
+    "rating_soundcloud": -1,
+    "rating_average": -1
   }
 ]

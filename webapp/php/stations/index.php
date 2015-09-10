@@ -19,6 +19,8 @@ foreach ($files_stations as $file_stations) {
 	$jsons_stations = fr($path_stations.$file_stations);
 	$json_stations = json_decode($jsons_stations,true);
 	
+	if (!$json_stations) { continue; }
+	
 	$file_nameparts = explode("_",$file_stations);
 	$device_id = $file_nameparts[1];
 	

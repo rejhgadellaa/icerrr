@@ -133,22 +133,7 @@ site.lifecycle.initApp = function(force) {
 				loggr.error(" > Could not read stations.json? "+err);
 			}
 		);
-		/*
-		setTimeout(function() { // TODO: it's ugly but I need to check if this continues...
-			if (!site.data.stations) {
-				loggr.error("DAFAQUE why doesn't site.lifecycle.initApp > readstations not work?! RETRY BITCH!");
-				site.lifecycle.initApp();
-			}
-		},5000);
-		/**/
 		return; // <- important stuff yes
-	}
-	
-	// Restore user preferences
-	site.data.userprefs = JSON.parse(site.cookies.get("userprefs"));
-	if (!site.data.userprefs) {
-		loggr.log(" > No userprefs found, copying defaults...");
-		site.data.userprefs = jQuery.extend(true, {}, site.cfg.defaults.userprefs);
 	}
 	
 	// Restore user session
@@ -538,7 +523,7 @@ site.lifecycle.onResize = function() {
 			// $(window).height() - ($(site.vars.currentSection+" .actionbar").height() + $(site.vars.currentSection+" .tabbar").height()) // $(site.vars.currentSection+" .footer").height()
 			$(window).height() - ($(site.vars.currentSection+" .main").offset().top)
 		);
-	},50);
+	},10);
 	
 	site.ui.hackActiveCssRule();
 	
@@ -613,7 +598,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 	
 	// Get local data thingie
 	var lidsStr = site.cookies.get("message_ids");
-	loggr.log(" > Stored message ids: "+ lidsStr);
+	loggr.log(" > Stored message ids: "+ lidsStr, {toconsole:site.cfg.debugging});
 	if (!lidsStr) { lidsStr = "[]"; }
 	var lids = JSON.parse(lidsStr);
 	
@@ -623,7 +608,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		if (!ditem) { continue; }
 		if (!ditem.crit) { continue; }
 		
-		loggr.log(" > "+ ditem.id);
+		loggr.log(" > "+ ditem.id, {toconsole:site.cfg.debugging});
 		
 		var critvalue;
 		switch(ditem.crit) {
@@ -646,7 +631,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		
 		// Check install-update
 		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
-			loggr.log(" >> Skip");
+			loggr.log(" >> Skip", {toconsole:site.cfg.debugging});
 			continue;
 		}
 		
@@ -662,7 +647,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		
 		// Check message
 		if (!ditem.message && ditem.action!="install-update-app") { 
-			loggr.log(" >> No message! next!");
+			loggr.log(" >> No message! next!", {toconsole:site.cfg.debugging});
 			continue; 
 		}
 		

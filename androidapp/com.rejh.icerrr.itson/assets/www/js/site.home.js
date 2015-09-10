@@ -150,7 +150,7 @@ site.home.init = function() {
 	window.mediaStreamer.setting("string","default_station",JSON.stringify(station),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	
 	// Alarm dialog?
-	loggr.error(" > site.session.alarmActive: "+ site.session.alarmActive,{dontupload:true});
+	loggr.log(" > site.session.alarmActive: "+ site.session.alarmActive,{dontupload:true});
 	if (site.session.alarmActive) {
 		loggr.log(" > Alarm detected, show dialog + alarmUpdateTime()");
 		$("#home .alarm_dialog").fadeIn(500);

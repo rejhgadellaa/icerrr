@@ -56,25 +56,30 @@ loggr.log = function(str,opts) {
 	
 	if (!opts) { opts = {}; }
 	if (!opts.type) { opts.type = "log"; }
+	if (opts.toconsole!==false) { opts.toconsole = true; }
 	
 	str = new Date().format("H:i:s") +"    "+ str;
 	
-	switch(opts.type) {
-		case "error":
-			console.error(str);
-			break;
-		case "warn":
-			console.warn(str);
-			break;
-		case "debug":
-			console.debug(str);
-			break;
-		case "info":
-			console.info(str);
-			break;
-		default:
-			console.log(str);
-			break;
+	if (opts.toconsole) {
+	
+		switch(opts.type) {
+			case "error":
+				console.error(str);
+				break;
+			case "warn":
+				console.warn(str);
+				break;
+			case "debug":
+				console.debug(str);
+				break;
+			case "info":
+				console.info(str);
+				break;
+			default:
+				console.log(str);
+				break;
+		}
+		
 	}
 	
 	/**/

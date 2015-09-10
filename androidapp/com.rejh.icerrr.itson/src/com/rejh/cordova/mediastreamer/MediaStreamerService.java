@@ -708,7 +708,7 @@ public class MediaStreamerService extends Service {
 					jsons = HttpRequest.get(url).content;
 				} catch(Exception e) {
 					Log.e(APPTAG," > Error running httprequest: "+e,e);
-					e.printStackTrace();
+					//e.printStackTrace();
 					return;
 				}
 				
@@ -818,10 +818,10 @@ public class MediaStreamerService extends Service {
 					
 				} catch(JSONException e) {
 					Log.e(APPTAG," > runNowPlayingPoll.JSONException!",e);
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch(Exception e) {
 					Log.e(APPTAG," > runNowPlayingPoll.Exception!",e);
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		});
@@ -966,8 +966,12 @@ public class MediaStreamerService extends Service {
 			station_id = station.getString("station_id");
 			src = station.getString("station_icon");
 		} catch(JSONException e) {
-			Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e);
-			e.printStackTrace();
+			Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e,e);
+			//e.printStackTrace();
+			return null;
+		} catch(Exception e) {
+			Log.e(APPTAG,"MediaStreamerService.getStationImage().Exception: "+e,e);
+			//e.printStackTrace();
 			return null;
 		}
         
@@ -1000,8 +1004,8 @@ public class MediaStreamerService extends Service {
         	}
         	
         } catch(JSONException e) {
-        	Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e);
-			e.printStackTrace();
+        	Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e,e);
+			//e.printStackTrace();
         }
 		
 		// Download image into Bitmap
@@ -1022,7 +1026,7 @@ public class MediaStreamerService extends Service {
             
         } catch (Exception e) {
         	Log.e(APPTAG,"MediaStreamerService.getStationImage().Exception: ",e);
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
         
@@ -1048,8 +1052,8 @@ public class MediaStreamerService extends Service {
         	settEditor.putString("temp_station_image_data",tmpStationImageData.toString());
         	settEditor.commit();
         } catch(JSONException e) {
-        	Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e);
-			e.printStackTrace();
+        	Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e,e);
+			//e.printStackTrace();
         }
         
         // ---> DONE DONE DONE :D
@@ -1130,7 +1134,7 @@ public class MediaStreamerService extends Service {
             bmp = BitmapFactory.decodeStream(input);
         } catch (Exception e) {
         	Log.e(APPTAG," > getIconURL error",e);
-            e.printStackTrace();
+            // e.printStackTrace();
         }
 
         StrictMode.setThreadPolicy(origMode);
@@ -1171,8 +1175,8 @@ public class MediaStreamerService extends Service {
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         	bmp = BitmapFactory.decodeFile(path,options);
         } catch (Exception e) {
-        	Log.e(APPTAG," -> Exception: "+ src +", "+ e);
-            e.printStackTrace();
+        	Log.e(APPTAG," -> Exception: "+ src +", "+ e,e);
+            //e.printStackTrace();
         }
 
         return bmp;

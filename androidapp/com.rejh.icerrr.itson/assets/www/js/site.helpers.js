@@ -105,8 +105,8 @@ site.helpers.mergeStations = function(stations1,stations2) {
 			}
 			// Doesn't exist
 			else if (!station1[key] || !edit1) {
-				loggr.log(" >> New key: "+ station2.station_id +": "+ key +", "+ station1[key] +", "+ edit1);
-				loggr.log(" >>> Value: "+ station2[key]);
+				loggr.log(" >> New key: "+ station2.station_id +": "+ key +", "+ station1[key] +", "+ edit1, {toconsole:site.cfg.debugging});
+				loggr.log(" >>> Value: "+ station2[key], {toconsole:site.cfg.debugging});
 				station1[key] = station2[key];
 			}
 			// Keep local data when conflicted
