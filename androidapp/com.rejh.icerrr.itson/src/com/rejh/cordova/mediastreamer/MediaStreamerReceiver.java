@@ -35,14 +35,15 @@ public class MediaStreamerReceiver extends BroadcastReceiver {
 		
 		Log.i(APPTAG,"MediaStreamerReceiver.onReceive()");
 		
+		// Context & intent
+		context = _context;
+		intent = _intent;
+		
+		// Wakelock
 		Log.d(APPTAG," -> Wakelock 60s");
 		PowerManager powerMgr = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 		PowerManager.WakeLock wakelock = powerMgr.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, APPTAG);
 		wakelock.acquire(60000);
-		
-		// Context & intent
-		context = _context;
-		intent = _intent;
 
         // Preferences
         sett = context.getSharedPreferences(APPTAG,Context.MODE_MULTI_PROCESS | 2);
@@ -143,6 +144,7 @@ public class MediaStreamerReceiver extends BroadcastReceiver {
         		Intent activityIntent = new Intent(context, com.rejh.icerrr.itson.Icerrr.class);
         		activityIntent.putExtra("cmd", "alarm");
         		activityIntent.putExtra("station_id", intent.getStringExtra("station_id"));
+        		activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         		context.startActivity(activityIntent);
         		
         	}

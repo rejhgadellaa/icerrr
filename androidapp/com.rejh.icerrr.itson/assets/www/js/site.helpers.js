@@ -587,6 +587,18 @@ site.helpers.session.putRecursive = function(sessionelem,data,isarray) {
 	return newsessionelem;
 }
 
+// Get station by id
+
+site.helpers.session.getStationById = function(station_id, stations) {
+	if (!site.data.stations && !stations) { loggr.log("site.helpers.getStationById().Error: !site.data.stations"); return -1; }
+	if (!stations) { stations = site.data.stations; }
+	for (var index in stations) {
+		if (!stations[index]) { continue; }
+		if (stations[index].station_id == station_id) { return stations[index]; }
+	}
+	return null;
+}
+
 // Get station index by id
 
 site.helpers.session.getStationIndexById = function(station_id, stations) {

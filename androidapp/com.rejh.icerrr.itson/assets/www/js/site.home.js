@@ -731,56 +731,61 @@ site.home.alarmUpdateTime = function(alsoCheckIsAlarm) {
 	
 	loggr.debug("site.home.alarmUpdateTime()");
 	
-	// Alarm active..
-	if (site.session.alarmActive) {
-		//  && site.mp.mpstatus!=Media.MEDIA_NONE
-					
-		var date = new Date();
-		var hour = site.helpers.formatNum(date.getHours());
-		var minute = site.helpers.formatNum(date.getMinutes());
-		
-		$("#home .alarm_dialog .time").html(hour +":"+ minute);
-		
-		if ($("#home .alarm_dialog").css("display")!="block") {
-			$("#home .alarm_dialog").fadeIn(500);
-		}
+	if (!site.session.alarmActiveRetries) { site.session.alarmActiveRetries = 0; }
 	
-		
-	// No alarm active..
-	} else {
-		
-		loggr.log(" > !site.session.alarmActive");
-		
-		site.session.alarmActive = false;
-		$("#home .alarm_dialog").fadeOut(500);
-		
-	}
-	
-	// Check with service.. (only when fired by timeout)
-	if (alsoCheckIsAlarm) {
-		window.mediaStreamer.getSetting("bool","isAlarm",
-			function(res) {
-				loggr.log(" -> window.mediaStreamer.getSetting(bool,isAlarm).Result: "+ res);
-				if (site.session.alarmActive != (res) ? true : false) {
-					site.session.alarmActive = (res) ? true : false;
-					site.home.alarmUpdateTime();
-				}
-				
-			},
-			function(err) {
-				loggr.error(" -> window.mediaStreamer.getSetting(bool,isAlarm).Failed: "+err);
-				site.session.alarmActive = false;
+	// 
+	window.mediaStreamer.getSetting("bool","isAlarm",
+		function(res) {
+			
+			// Changes?
+			if (site.session.alarmActive != (res) ? true : false) {
+				loggr.log(" -> window.mediaStreamer.getSetting(bool,isAlarm).Result_change: "+ res);
+				site.session.alarmActive = (res) ? true : false;
+				site.session.alarmActiveRetries = 0;
 			}
-		);
-	}
+			
+			// Alarm active..
+			if (site.session.alarmActive) {
+				//  && site.mp.mpstatus!=Media.MEDIA_NONE
+							
+				var date = new Date();
+				var hour = site.helpers.formatNum(date.getHours());
+				var minute = site.helpers.formatNum(date.getMinutes());
+				
+				$("#home .alarm_dialog .time").html(hour +":"+ minute);
+				
+				if ($("#home .alarm_dialog").css("display")!="block") {
+					$("#home .alarm_dialog").fadeIn(500);
+				}
+			
+				
+			// No alarm active..
+			} else {
+				
+				loggr.log(" > !site.session.alarmActive");
+				
+				site.session.alarmActive = false;
+				$("#home .alarm_dialog").fadeOut(500);
+				
+			}
+			
+		},
+		function(err) {
+			loggr.error(" -> window.mediaStreamer.getSetting(bool,isAlarm).Failed: "+err);
+			site.session.alarmActive = false;
+		}
+	);
 	
 	// Calc timeout
 	var timeout_ms = 2.5*1000;
-	if (!site.session.alarmActive) {
+	if (!site.session.alarmActive && site.session.alarmActiveRetries>3) {
 		timeout_ms = 10*1000;
+	} else {
+		site.session.alarmActiveRetries++;
 	}
 	
 	// Re-set timeout
+	loggr.log(" > alarmUpdateTime timeout: "+ timeout_ms +", "+ site.session.alarmActiveRetries);
 	if (site.timeouts.alarmUpdateTimeTimeout) { clearTimeout(site.timeouts.alarmUpdateTimeTimeout); }
 	site.timeouts.alarmUpdateTimeTimeout = setTimeout(function(){
 		site.home.alarmUpdateTime(true);
@@ -834,7 +839,7 @@ site.home.alarmSnooze = function() {
 	notif.title = "Icerrr: "+ site.session.currentstation.station_name;
 	notif.message = "Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute);
 	notif.smallicon = "ic_stat_av_snooze";
-	notif.priority = "HIGH";
+	notif.priority = "MAX"; // HIGH
 	notif.ongoing = false;
 	notif.color = "#2D6073";
 	notif.intent = {
@@ -845,8 +850,8 @@ site.home.alarmSnooze = function() {
 	
 	// Notif actions
 	var action1 = {
-		icon:"ic_stat_av_quit",
-		title:"Cancel",
+		icon:"ic_stat_action_alarm_off",
+		title:"DISMISS NOW",
 		intent:{
 			type:"activity",
 			package:"com.rejh.icerrr.itson",

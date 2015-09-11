@@ -306,7 +306,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 
 // ---> Select station
 
-site.chlist.selectstation = function(resultitem,dontgohome) {
+site.chlist.selectstation = function(resultitem,dontgohome,dontStopPlaying) {
 	
 	loggr.debug("site.chlist.selectstation()");
 	
@@ -327,7 +327,7 @@ site.chlist.selectstation = function(resultitem,dontgohome) {
 			site.helpers.storeSession();
 			
 			// Start selected station if already playing
-			if (site.mp.isPlaying) {
+			if (site.mp.isPlaying && !dontStopPlaying) {
 				site.mp.stop(function(){
 					$(".button_play_bufferAnim").fadeIn(500);
 					site.mp.play();

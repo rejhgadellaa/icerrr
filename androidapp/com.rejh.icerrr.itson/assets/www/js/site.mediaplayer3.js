@@ -118,7 +118,7 @@ site.mp.play = function(cb,cberr) {
 			site.helpers.storeSession();
 	
 			// Start MediaStreamer
-			window.mediaStreamer.play(station_url, site.session.alarmActive, site.session.alarmVolume, site.session.currentstation,
+			window.mediaStreamer.play(station_url, site.session.alarmActive, -1, site.session.currentstation,
 				function(msg) {
 					loggr.log(" > mediaStreamer.play()."+msg);
 					site.mp.setPlaying();
@@ -161,7 +161,6 @@ site.mp.stop = function(cb,cberr) {
 	);
 	
 	site.session.alarmActive = false;
-	site.session.alarmVolume = -1;
 	site.mp.mpstatus = Media.MEDIA_NONE;
 	
 	// Remove snooze alarm if any

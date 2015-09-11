@@ -689,7 +689,44 @@ site.alarms.getAlarmDate = function(hour,minute) {
 }
 
 
+// ------------------>
+// TEMP TODO REMOVE IT
 
+site.alarms.testAlarm = function() {
+	
+	loggr.error("site.alarms.testAlarm()",{dontupload:true});
+	
+	var newalarm = {};
+	var id = "TEST_ALARM_777";
+	var alarm_id = 777;
+	var hour = new Date().getHours();
+	var minute = new Date().getMinutes() + 1;
+	var alarmCfg = {
+		id: id,
+		alarm_id: alarm_id,
+		timeMillis: site.alarms.getAlarmDate(hour,minute).getTime() + (60*1000),
+		hour: hour,
+		minute: minute,
+		volume: 7,
+		repeat: true,
+		repeatCfg: [0,1,1,1,1,1,1],
+		station: site.helpers.session.getStationById("radio3fm")
+	}
+	
+	site.session.alarms[0] = alarmCfg;
+	window.alarmMgr.cancel(
+		function(msg) {
+			site.alarms.writesession();
+			site.alarms.setAlarms();
+		},
+		function(err) {
+			loggr.error(err);
+			alert(err);
+		},
+		{id:alarmCfg.alarm_id}
+	);
+	
+}
 
 
 

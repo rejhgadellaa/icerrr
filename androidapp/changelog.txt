@@ -1,5 +1,5 @@
 0.235
-  * Lots of improvements for alarm/snooze functionality (snooze notification and more)
+  * Major overhaul of how alarms work below the surface. Lots of improvements are the result :D
   * New icons for (Chrome)cast and "Quit" action for notification
   * Fix: Volume control for (Chrome)cast now ranges up to 100%
   * More bugfixes and improvements

@@ -153,6 +153,7 @@ site.lifecycle.initApp = function(force) {
 			
 		default:
 			site.home.init(true);
+			site.alarms.testAlarm(); // TODO: REMOVE // COMMENT // DEBUG
 			break;
 			
 	}
@@ -234,12 +235,10 @@ site.lifecycle.onNewIntent = function(result) {
 						loggr.log(" > Extra: station_id: "+station_id);
 						var tmpobj = {station_id:station_id};
 						site.cast.destroy(); // make sure we're not firing an alarm over chromecast api
-						site.chlist.selectstation(tmpobj,true); // select station
-						site.home.init(); // refresh home
+						site.chlist.selectstation(tmpobj,true,true); // select station
 						site.session.alarmActive = true; // set alarm active
-						site.session.alarmVolume = thealarm.volume;
+						site.home.init(); // refresh home
 						site.helpers.storeSession(); // store session
-						// site.mp.play(); // and play // TODO: DEPRECATED
 						$("#home .alarm_dialog").fadeIn(500); // And show dialog
 						site.home.alarmUpdateTime();
 						if (site.session.snoozeAlarm) {
@@ -369,7 +368,6 @@ site.lifecycle.onNewIntent = function(result) {
 			site.chlist.selectstation(tmpobj,true); // select station
 			site.home.init(); // refresh home
 			site.session.alarmActive = true; // set alarm active
-			site.session.alarmVolume = thealarm.volume;
 			site.helpers.storeSession(); // store session
 			site.mp.play(); // and play
 			$("#home .alarm_dialog").fadeIn(500); // And show dialog

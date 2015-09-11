@@ -99,10 +99,10 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		String intentType = intentOpts.has("type") ? intentOpts.getString("type") : "activity";
     		JSONArray intentExtras = intentOpts.has("extras") ? intentOpts.getJSONArray("extras") : null;
     		Intent runIntent = createIntent(intentOpts, intentExtras);
+    		runIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		
     		if (intentType.equals("activity")) {
     			Log.d(APPTAG," > StartActivity()");
-    			runIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     			context.startActivity(runIntent);
     		} else if (intentType.equals("service")) {
     			Log.d(APPTAG," > StartService()");
