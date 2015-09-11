@@ -367,6 +367,8 @@ public class NotifMgr extends CordovaPlugin {
 	    	notifPendingIntent = PendingIntent.getActivity(context, requestCode, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
 	    } else if (intentType.equals("receiver")) {
 	    	notifPendingIntent = PendingIntent.getBroadcast(context, requestCode, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // TODO: options!
+	    } else if (intentType.equals("service")) {
+	    	notifPendingIntent = PendingIntent.getService(context, requestCode, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 	    }
 	    
 	    return notifPendingIntent;

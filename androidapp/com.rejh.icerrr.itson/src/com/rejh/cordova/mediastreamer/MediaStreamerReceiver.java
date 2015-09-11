@@ -1,9 +1,16 @@
 package com.rejh.cordova.mediastreamer;
 
+import java.util.Iterator;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.PowerManager;
 import android.util.Log;
 
 public class MediaStreamerReceiver extends BroadcastReceiver {
@@ -27,6 +34,11 @@ public class MediaStreamerReceiver extends BroadcastReceiver {
 	public void onReceive(Context _context, Intent _intent) {
 		
 		Log.i(APPTAG,"MediaStreamerReceiver.onReceive()");
+		
+		Log.d(APPTAG," -> Wakelock 60s");
+		PowerManager powerMgr = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+		PowerManager.WakeLock wakelock = powerMgr.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, APPTAG);
+		wakelock.acquire(60000);
 		
 		// Context & intent
 		context = _context;
@@ -80,8 +92,59 @@ public class MediaStreamerReceiver extends BroadcastReceiver {
         	
         	// Alarm
         	else if (cmd.equals("alarm")) {
-        		serviceIntent.putExtra("isAlarm", true);
+        		
+        		// Has station_data extra?
+        		if (!intent.hasExtra("station_data")) {
+        			Log.e(APPTAG," -> Could not start alarm: !intent.hasExtra('station_data')");
+        			return; // <- important
+        		}
+        		
+        		// Get station_data + handle it
+        		String station_datas = intent.getStringExtra("station_data");
+        		Log.d(APPTAG," > Read and iterate station_data...");
+        		try {
+        			
+        			// Iterate through station_data and include it as extras
+        			JSONObject station_data = new JSONObject(station_datas);
+        			Iterator<?> keys = station_data.keys();
+        			while(keys.hasNext()) {
+        			    String key = (String)keys.next();
+        			    if (station_data.get(key) instanceof JSONObject) {
+        			    	Log.w(APPTAG," -> '"+ key +"' = JSONObject, skip");
+        			    	//Log.w(APPTAG," --> "+ station_data.get(key).toString());
+        			    }
+        			    else if (station_data.get(key) instanceof JSONArray) {
+        			    	Log.w(APPTAG," -> '"+ key +"' = JSONArray, skip");
+        			    	//Log.w(APPTAG," --> "+ station_data.get(key).toString());
+        			    }
+        			    else {
+        			    	Log.d(APPTAG," -> '"+ key +"' = "+ station_data.get(key).toString() +", Type: "+ station_data.get(key).getClass());
+        			    	serviceIntent.putExtra(key, (String)""+station_data.get(key).toString());
+        			    }
+        			}
+        			
+        			// Some required 'extra' stuff
+        			serviceIntent.putExtra("stream_url",station_data.getString("station_url"));
+        			serviceIntent.putExtra("volume", intent.getIntExtra("volume", -1));
+        			serviceIntent.putExtra("isAlarm", true);
+        			
+        			// Some weird setting?
+        			settEditor.putString("mediastreamer_streamUrl", station_data.getString("station_url"));
+        	        settEditor.commit();
+        			
+        		} catch(JSONException e) {
+        			Log.e(APPTAG," -> MediaStreamerReceiver.onReceive(): Cmd ALARM JSON Exception: "+ e,e);
+        		}
+        		
+        		Log.d(APPTAG," > Start service...");
         		context.startService(serviceIntent);
+        		
+        		Log.d(APPTAG," > Start activity...");
+        		Intent activityIntent = new Intent(context, com.rejh.icerrr.itson.Icerrr.class);
+        		activityIntent.putExtra("cmd", "alarm");
+        		activityIntent.putExtra("station_id", intent.getStringExtra("station_id"));
+        		context.startActivity(activityIntent);
+        		
         	}
         	
         	// Huh?

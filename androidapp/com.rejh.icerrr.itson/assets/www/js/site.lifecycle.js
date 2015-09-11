@@ -227,6 +227,32 @@ site.lifecycle.onNewIntent = function(result) {
 			
 			loggr.log(" > GetExtra 'cmd': "+ cmd);
 			
+			// Alarm
+			if (cmd == "alarm") {
+				window.plugins.webintent.getExtra("station_id",
+					function (station_id) {
+						loggr.log(" > Extra: station_id: "+station_id);
+						var tmpobj = {station_id:station_id};
+						site.cast.destroy(); // make sure we're not firing an alarm over chromecast api
+						site.chlist.selectstation(tmpobj,true); // select station
+						site.home.init(); // refresh home
+						site.session.alarmActive = true; // set alarm active
+						site.session.alarmVolume = thealarm.volume;
+						site.helpers.storeSession(); // store session
+						// site.mp.play(); // and play // TODO: DEPRECATED
+						$("#home .alarm_dialog").fadeIn(500); // And show dialog
+						site.home.alarmUpdateTime();
+						if (site.session.snoozeAlarm) {
+							site.home.alarmSnoozeCancel(true);
+						}
+						
+					},
+					function(err) {
+						loggr.warn("site.lifecycle.onNewIntent.getExtra 'station_id' failed: "+ err);
+					}
+				);
+			}
+			
 			// Cancel_snooze
 			if (cmd == "cancel_snooze") {
 				setTimeout(function(){site.home.alarmSnoozeCancel();},1000);
@@ -242,6 +268,10 @@ site.lifecycle.onNewIntent = function(result) {
 			loggr.warn("site.lifecycle.onNewIntent.getExtra 'cmd' failed: "+ err);
 		}
 	);
+	
+	return; // <-- STOP IT HERE
+	
+	// TODO: DEPRECATED ---->
 	
 	// We need session.alarms..
 	if (!site.session.alarms) {

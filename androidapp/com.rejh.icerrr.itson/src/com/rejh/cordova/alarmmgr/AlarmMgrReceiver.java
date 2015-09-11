@@ -101,11 +101,14 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		Intent runIntent = createIntent(intentOpts, intentExtras);
     		
     		if (intentType.equals("activity")) {
+    			Log.d(APPTAG," > StartActivity()");
     			runIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     			context.startActivity(runIntent);
-    		} else if (intentType.equals("activity")) {
+    		} else if (intentType.equals("service")) {
+    			Log.d(APPTAG," > StartService()");
     			context.startService(runIntent);
-    		} else if (intentType.equals("activity")) {
+    		} else if (intentType.equals("receiver")) {
+    			Log.d(APPTAG," > SendBroadcast()");
     			context.sendBroadcast(runIntent);
     		}
         
