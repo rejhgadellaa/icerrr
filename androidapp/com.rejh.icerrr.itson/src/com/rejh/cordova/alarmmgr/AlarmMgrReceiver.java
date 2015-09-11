@@ -157,6 +157,7 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
 				Log.d(APPTAG," >> "+ type +", "+ name);
 				if (type.equals("string")) {
 					notifIntent.putExtra(name, intentExtra.getString("value"));
+					//Log.e(APPTAG," -->> "+ intentExtra.getString("value"));
 				} else if (type.equals("int")) {
 					notifIntent.putExtra(name, intentExtra.getInt("value"));
 				} else if (type.equals("float") || type.equals("double")) {

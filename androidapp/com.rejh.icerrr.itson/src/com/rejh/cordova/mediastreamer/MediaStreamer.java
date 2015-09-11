@@ -195,7 +195,16 @@ public class MediaStreamer extends CordovaPlugin {
         try {
         	isAlarm = args.getBoolean(1);
         } catch(Exception e) {
-        	Log.e(APPTAG," > Exception on args.getBoolean(1) - isAlarm!!");
+        	Log.e(APPTAG," > Exception on args.getBoolean(1) - isAlarm!!",e);
+        }
+        
+        if (!isAlarm) {
+        	try {
+        		String isAlarmStr = args.getString(1);
+        		Log.e(APPTAG," > isAlarm: "+ isAlarmStr);
+        	} catch(Exception e) {
+            	Log.e(APPTAG," > Exception on args.getString(1) - isAlarm!!",e);
+            }
         }
         
         int volume = -1;

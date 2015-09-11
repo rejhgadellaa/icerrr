@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -494,6 +496,10 @@ public class MediaStreamerService extends Service {
         	isAlarm = sett.getBoolean("isAlarm", false);
         	incomingIntentWasNull = true;
         }
+		
+		// Setting: alarm
+		settEditor.putBoolean("isAlarm", isAlarm);
+		settEditor.commit();
         
         // Check
         if (stream_url==null) { shutdown(); return false; }
@@ -671,7 +677,7 @@ public class MediaStreamerService extends Service {
 	// ------------------
 	// THREAD: Get now playing info...
 	
-	private void startNowPlayingPoll() {
+	public void startNowPlayingPoll() {
 		if (nowPlayingPollTimer!=null) { stopNowPlayingPoll(); }
 		nowPlayingPollTimer = new Timer();
 		nowPlayingPollTimer.scheduleAtFixedRate( new TimerTask() {
@@ -683,7 +689,7 @@ public class MediaStreamerService extends Service {
 		}, 1*1000, (int)1*60*1000); // every ~minute
 	}
 	
-	private void stopNowPlayingPoll() {
+	public void stopNowPlayingPoll() {
 		if (nowPlayingPollTimer!=null) { nowPlayingPollTimer.cancel(); }
 		nowPlayingPollTimer = null;
 	}
@@ -694,7 +700,9 @@ public class MediaStreamerService extends Service {
 			@Override
 			public void run(){
 				
-				String url = "http://rejh.nl/icerrr/api/?a=get&q={"
+				// Url, query
+				String url = "http://rejh.nl/icerrr/api/?a=get&q=";
+				String query = "{"
 						+"\"get\":\"station_info\","
 						+"\"station_id\":\""+station_id+"\","
 						+"\"station_host\":\""+station_host+"\","
@@ -702,7 +710,18 @@ public class MediaStreamerService extends Service {
 						+"\"station_path\":\""+station_path+"\""
 						+"}";
 				
+				// Encode query
+				try {
+					query = URLEncoder.encode(query, "UTF-8");
+				} catch(UnsupportedEncodingException e) {
+					Log.e(APPTAG," -> URLEncoder failed: "+e,e);
+				}
+				
+				// Combine
+				url = url + query;
 				Log.d(APPTAG," > NowPlayingPoll: "+ url);
+				
+				// Go
 				String jsons = "{}";
 				try {
 					jsons = HttpRequest.get(url).content;
@@ -1198,7 +1217,7 @@ public class MediaStreamerService extends Service {
 		Intent restartIntent = new Intent(context, MediaStreamerService.class);
 		restartIntent.putExtra("next_restart_intent",true);
 		restartIntent.putExtra("stream_url", station.getString("station_url"));
-		restartIntent.putExtra("isAlarm", false);
+		restartIntent.putExtra("isAlarm", isAlarm);
 		restartIntent.putExtra("volume", -1);
 		restartIntent.putExtra("station_id",station.getString("station_id"));
 		restartIntent.putExtra("station_name",station.getString("station_name"));

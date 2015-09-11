@@ -531,12 +531,14 @@ public class ObjMediaPlayerMgr {
 					Log.d(LOGTAG," -> Stream resumed");
 					connWasLost = false;
 					connTypeOld = connType;
+					service.startNowPlayingPoll();
 					init(getStreamUrl(),isAlarm);
 				}
 			} else {
 				Log.d(LOGTAG," -> Connection lost. Stream paused");
 				if(mp!=null) { mp.release(); mp=null; }
 				if(proxy!=null) { proxy.stop(); proxy=null; }
+				service.stopNowPlayingPoll();
 				connWasLost = true;
 			}
 			

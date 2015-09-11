@@ -343,11 +343,9 @@ site.cast.play = function() {
 
 site.cast.stop = function() {
 	
-	loggr.debug("site.cast.play()");
+	loggr.debug("site.cast.stop()");
 	
-	site.cast.media.stop();
-	
-	site.cast.notifCancel();
+	site.cast.destroy();
 	
 }
 
@@ -356,7 +354,7 @@ site.cast.stop = function() {
 site.cast.onVolumeUp = function() {
 	loggr.debug("site.cast.onVolumeUp()");
 	var level = site.cast.media.volume.level;
-	level = (level+0.1>0.95) ? level = 1 : level+0.1;
+	level = (level+0.1>0.95) ? 1.0 : level+0.1;
 	site.cast.setVolume(level,
 		function() {
 			site.ui.showtoast("Volume: "+ Math.round(level*100) +"%");
@@ -371,7 +369,7 @@ site.cast.onVolumeUp = function() {
 site.cast.onVolumeDown = function() {
 	loggr.debug("site.cast.onVolumeDown()");
 	var level = site.cast.media.volume.level;
-	level = (level-0.1<0.05) ? level = 0 : level-0.1;
+	level = (level-0.1<0.05) ? 0.0 : level-0.1;
 	site.cast.setVolume(level,
 		function() {
 			site.ui.showtoast("Volume: "+ Math.round(level*100) +"%");
@@ -379,6 +377,7 @@ site.cast.onVolumeDown = function() {
 		function(err) {
 			loggr.log(" > Volume DOWN FAILED");
 			loggr.warn(err);
+			console.warn(err);
 		}
 	);
 }
@@ -434,15 +433,13 @@ site.cast.notif = function() {
 	
 	loggr.debug("site.cast.notif()");
 	
-	loggr.debug("site.mp.notif()");
-	
 	var opts = {};
 	
 	// Required
 	opts.id = 2;
 	opts.title = "Icerrr: "+ site.session.currentstation.station_name;
 	opts.message = "Casting to '"+ site.cast.session.receiver.friendlyName +"'";
-	opts.smallicon = "ic_notification_media_route";
+	opts.smallicon = "ic_stat_hardware_cast_connected";
 	opts.color = "#2D6073";
 	opts.intent = {
 		type: "activity",
@@ -455,6 +452,26 @@ site.cast.notif = function() {
 	opts.priority = "HIGH";
 	opts.ongoing = true;
 	opts.alertOnce = true;
+	
+	// Actions..
+	var action1 = {
+		icon:"ic_stat_av_quit",
+		title:"Quit",
+		intent:{
+			type:"activity",
+			package:"com.rejh.icerrr.itson",
+			classname:"com.rejh.icerrr.itson.Icerrr",
+			extras:[
+				{type:"string", name:"cmd", value:"cast_quit"}
+			]
+		}
+	}
+	opts.actions = [action1];
+	
+	// Large icon?
+	if (site.session.currentstation.station_icon_local) {
+		opts.largeicon = site.session.currentstation.station_icon_local;
+	}
 	
 	// Exec
 	window.notifMgr.make(

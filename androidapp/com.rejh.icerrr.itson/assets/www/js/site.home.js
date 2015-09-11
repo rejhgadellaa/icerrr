@@ -154,13 +154,14 @@ site.home.init = function() {
 	if (site.session.alarmActive) {
 		loggr.log(" > Alarm detected, show dialog + alarmUpdateTime()");
 		$("#home .alarm_dialog").fadeIn(500);
-		site.home.alarmUpdateTime();
+		// site.home.alarmUpdateTime();
 	}
+	site.home.alarmUpdateTime();
 	
 	// Alarm snoozed?
 	if (site.mp.isPlaying && site.session.snoozeAlarm) {
 		loggr.log(" > Cancel snoozed alarm(s)");
-		site.home.alarmSnoozeCancel();
+		//site.home.alarmSnoozeCancel(); // TODO: DEPRECATED
 	}
 	
 	// Some events..
@@ -202,7 +203,7 @@ site.home.mpPlayToggle = function() {
 	site.vars.mpPlayToggleBusy = true;
 	setTimeout(function(){ site.vars.mpPlayToggleBusy = false; },1250);
 	
-	// MP or cast?
+	// Chromecast.. lot's of stuff and checking..
 	if (site.cast.session) {
 		loggr.log(" > Chromecast session found...");
 		// check mp
@@ -235,6 +236,7 @@ site.home.mpPlayToggle = function() {
 			}
 			
 		}
+	// MediaPlayer :D
 	} else {
 		loggr.log(" > Toggle mediaplayer");
 		site.mp.playToggle();
@@ -340,16 +342,9 @@ site.home.run_ui_updates = function() {
 	
 }
 
-site.home.run_station_updates = function(dontUseDirble) {
+site.home.run_station_updates = function() {
 	
 	loggr.debug("site.home.run_station_updates()");
-	
-	dontUseDirble = true;
-	
-	if (site.session.currentstation.dirble_id && !dontUseDirble) {
-		site.home.useDirbleNowPlaying();
-		return;
-	}
 	
 	site.ui.showLoadbar();
 	
@@ -419,58 +414,13 @@ site.home.useDirbleNowPlaying = function() {
 	
 	loggr.debug("site.home.useDirbleNowPlaying()");
 	
-	var apiqueryobj = {
-		"get":"nowplaying_dirble",
-		"dirble_id":site.session.currentstation.dirble_id,
-	}
-	
-	var apiaction = "get";
-	var apiquerystr = JSON.stringify(apiqueryobj);
-	
-	site.webapi.exec(apiaction,apiquerystr,
-		function(data) {
-			if (!data["data"]["songhistory"]) { 
-				site.home.run_station_updates(true);
-			} else {
-				try {
-				site.session.currentstation.station_nowplaying = site.helpers.capitalize(data["data"]["songhistory"][0].name,1) +" - "+ site.helpers.capitalize(data["data"]["songhistory"][0].title,1);
-				if ((data["data"]["songhistory"][0].date.sec*1000) < (new Date().getTime()+(1000*60*60))) {
-					site.home.run_station_updates(true);
-					return;
-				}
-				} catch(e) { 
-					site.home.run_station_updates(true);
-					return;
-				}
-			}
-			$("#home .main .station_name").html(site.session.currentstation.station_name);
-			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
-			try {
-				if (data["data"]["songhistory"][0].info.image) {
-					site.home.handleStationImage(data["data"]["songhistory"][0].info.image);
-				} else {
-					site.home.getAlbumArt();
-				}
-			} catch(e) {
-				site.home.getAlbumArt();
-			}
-		},
-		function(error) {
-			if (error.message) { site.ui.showtoast(error.message); loggr.log(error.message); }
-			else { loggr.warn(error); }
-			site.home.run_station_updates(true);
-		}
-	);
-	
-	if (site.session.isPaused) {
-		site.home.stop_ui_updates();
-	}
-	
-	if (site.mp.serviceRunning) {
-		site.mp.notif();
-	}
+	// TODO
+	// DEPRECATED
+	// DUPLICATE?
 	
 }
+
+// ---> Get Album Art + Handle Art
 
 site.home.getAlbumArt = function() {
 	
@@ -501,6 +451,47 @@ site.home.getAlbumArt = function() {
 	if (station.station_nowplaying=="Now playing: Unknown") {
 		site.home.handleStationImage(site.session.currentstation.station_icon);
 		return;
+	}
+	
+	// Check pre-programmed stuff..
+	switch (station.station_nowplaying.toLowerCase().trim()) {
+		
+		case "npo 3fm - dit is domien - bnn":
+			var imgurl = "http://www.3fm.nl/data/thumb/abc_media_image/127000/127177/w718.8f717_247a48f9097302b0af5964b6310fb44f.jpg";
+			//imgurl = site.session.currentstation.station_icon;
+			site.home.handleStationImage(imgurl);
+			return;
+			
+		case "npo 3fm - giel - vara":
+			var imgurl = "http://media.nu.nl/m/m1mx5raa5fnk_wd1280.jpg/giel-beelen-wil-altijd-morning-man-blijven.jpg";
+			// imgurl = site.session.currentstation.station_icon;
+			site.home.handleStationImage(imgurl);
+			return;
+			
+		case "npo 3fm - metmichiel - ntr":
+			var imgurl = "http://images.poms.omroep.nl/image/109268.png";
+			// imgurl = site.session.currentstation.station_icon;
+			site.home.handleStationImage(imgurl);
+			return;
+			
+		case "npo 3fm - superrradio - bnn":
+			var imgurl = "http://www.3fm.nl/data/thumb/abc_media_image/126000/126705/w718.8f717_0e7cae38010a3c69970536c7ed3aa6b8.jpg";
+			// imgurl = site.session.currentstation.station_icon;
+			site.home.handleStationImage(imgurl);
+			return;
+			
+		case "npo 3fm - rabradio - kro-ncrv":
+			var imgurl = "http://statischecontent.nl/img/etalage/01b89c2f-3b21-43a1-b392-d64bb6df49e8.jpg";
+			// imgurl = site.session.currentstation.station_icon;
+			site.home.handleStationImage(imgurl);
+			return;
+		
+		case "":
+			var imgurl = "";
+			imgurl = site.session.currentstation.station_icon;
+			site.home.handleStationImage();
+			return;
+		
 	}
 	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
@@ -602,28 +593,6 @@ site.home.handleStationImage = function(src) {
 	if (site.home.stationImagePreloader) {
 		site.home.stationImagePreloader.onload = function() {};
 	}
-	
-	/*
-	
-	// TODO: DEPRECATED?
-	
-	site.home.stationImagePreloader = new Image();
-	site.home.stationImagePreloader.onload = function() {
-		loggr.log(" > Loaded album art: "+ this.src);
-		$("#home .main .station_image").css("background-image","url('"+ this.src +"')");
-		$("#home .main .station_image img").css("opacity",0.0);
-		$("#home .main .station_image").css("background-blend-mode","normal");
-		$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
-		site.ui.hideLoadbar();
-	}
-	
-	if (site.timeouts.handleStationImage) { clearTimeout(site.timeouts.handleStationImage); }
-	site.timeouts.handleStationImage = setTimeout(function(){
-			site.home.stationImagePreloader.src = site.helpers.addCachebust(src);
-		//}
-	},1000);
-	
-	/**/
 	
 	if (site.timeouts.handleStationImage) { clearTimeout(site.timeouts.handleStationImage); }
 	site.timeouts.handleStationImage = setTimeout(function(){
@@ -758,32 +727,64 @@ site.home.viewlog = function() {
 
 // ---> Alarm dialog
 
-site.home.alarmUpdateTime = function() {
+site.home.alarmUpdateTime = function(alsoCheckIsAlarm) {
 	
 	loggr.debug("site.home.alarmUpdateTime()");
 	
+	// Alarm active..
 	if (site.session.alarmActive) {
 		//  && site.mp.mpstatus!=Media.MEDIA_NONE
-	
+					
 		var date = new Date();
 		var hour = site.helpers.formatNum(date.getHours());
 		var minute = site.helpers.formatNum(date.getMinutes());
 		
 		$("#home .alarm_dialog .time").html(hour +":"+ minute);
 		
-		if (site.timeouts.alarmUpdateTimeTimeout) { clearTimeout(site.timeouts.alarmUpdateTimeTimeout); }
-		site.timeouts.alarmUpdateTimeTimeout = setTimeout(function(){
-			site.home.alarmUpdateTime();
-		},10*1000);
+		if ($("#home .alarm_dialog").css("display")!="block") {
+			$("#home .alarm_dialog").fadeIn(500);
+		}
+	
 		
+	// No alarm active..
 	} else {
 		
-		loggr.log(" > !site.session.alarmActive || site.mp.mpstatus==Media.MEDIA_NONE");
+		loggr.log(" > !site.session.alarmActive");
 		
 		site.session.alarmActive = false;
 		$("#home .alarm_dialog").fadeOut(500);
 		
 	}
+	
+	// Check with service.. (only when fired by timeout)
+	if (alsoCheckIsAlarm) {
+		window.mediaStreamer.getSetting("bool","isAlarm",
+			function(res) {
+				loggr.log(" -> window.mediaStreamer.getSetting(bool,isAlarm).Result: "+ res);
+				if (site.session.alarmActive != (res) ? true : false) {
+					site.session.alarmActive = (res) ? true : false;
+					site.home.alarmUpdateTime();
+				}
+				
+			},
+			function(err) {
+				loggr.error(" -> window.mediaStreamer.getSetting(bool,isAlarm).Failed: "+err);
+				site.session.alarmActive = false;
+			}
+		);
+	}
+	
+	// Calc timeout
+	var timeout_ms = 2.5*1000;
+	if (!site.session.alarmActive) {
+		timeout_ms = 10*1000;
+	}
+	
+	// Re-set timeout
+	if (site.timeouts.alarmUpdateTimeTimeout) { clearTimeout(site.timeouts.alarmUpdateTimeTimeout); }
+	site.timeouts.alarmUpdateTimeTimeout = setTimeout(function(){
+		site.home.alarmUpdateTime(true);
+	},timeout_ms);
 	
 }
 
@@ -794,6 +795,9 @@ site.home.alarmSnooze = function() {
 	// Stop playback
 	loggr.log(" > Stop playback..");
 	site.mp.stop();
+	
+	// Alarm active ==> false
+	site.session.alarmActive = false;
 	
 	// Set tmp alarm 10 minutes in future..
 	var id = site.helpers.getUniqueID();
@@ -824,11 +828,52 @@ site.home.alarmSnooze = function() {
 	// Hide dialog
 	$("#home .alarm_dialog").fadeOut(500);
 	
+	// Notif..
+	var notif = {};
+	notif.id = site.cfg.notifs.notifID_snoozed;
+	notif.title = "Icerrr: "+ site.session.currentstation.station_name;
+	notif.message = "Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute);
+	notif.smallicon = "ic_stat_av_snooze";
+	notif.priority = "HIGH";
+	notif.ongoing = false;
+	notif.color = "#2D6073";
+	notif.intent = {
+		type:"activity",
+		package:"com.rejh.icerrr.itson",
+		classname:"com.rejh.icerrr.itson.Icerrr"
+	};
+	
+	// Notif actions
+	var action1 = {
+		icon:"ic_stat_av_quit",
+		title:"Cancel",
+		intent:{
+			type:"activity",
+			package:"com.rejh.icerrr.itson",
+			classname:"com.rejh.icerrr.itson.Icerrr",
+			extras:[
+				{type:"string", name:"cmd", value:"cancel_snooze"}
+			]
+		}
+	}
+	notif.actions = [action1];
+	
+	// Notif: exec
+	window.notifMgr.make(
+		function(res){
+			loggr.log(" -> Snooze notif OK: "+ res);
+		},
+		function(err){
+			loggr.error("Snooze notif error: "+err);
+		},
+		notif
+	);
+	
 	site.ui.showtoast("Alarm snoozed <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5);
 	
 }
 
-site.home.alarmSnoozeCancel = function() {
+site.home.alarmSnoozeCancel = function(notByUser) {
 	
 	loggr.debug("site.home.alarmSnoozeCancel()");
 	
@@ -836,13 +881,24 @@ site.home.alarmSnoozeCancel = function() {
 		if (!site.alarms) { site.alarms = {}; }
 		site.alarms.newAlarmCfg = site.session.snoozeAlarm;
 		site.alarms.remove(true);
-		site.ui.showtoast("Snooze canceled")
+		// site.ui.showtoast("Snooze canceled");
+		if (!notByUser) {
+			site.ui.showtoast("Snooze canceled <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnooze();'>UNDO</span>",5);
+		}
 	} else {
 		loggr.log(" > No alarm snoozed? => !site.vars.snoozeAlarm");
 	}
 	
+	window.notifMgr.cancel(
+		function(res){},
+		function(err){ alert("alarmSnoozeCancel.notifMgr.cancel Error: "+ e); },
+		{id:site.cfg.notifs.notifID_snoozed}
+	);
+	
 	site.session.snoozeAlarm = null;
 	site.helpers.storeSession();
+	
+	
 	
 }
 

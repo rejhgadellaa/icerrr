@@ -1,3 +1,9 @@
+0.235
+  * Lots of improvements for alarm/snooze functionality (snooze notification and more)
+  * New icons for (Chrome)cast and "Quit" action for notification
+  * Fix: Volume control for (Chrome)cast now ranges up to 100%
+  * More bugfixes and improvements
+
 0.233
   * Fix: Icerrr would sometimes crash when playing stream and no stations were starred
 

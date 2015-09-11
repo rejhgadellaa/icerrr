@@ -220,6 +220,29 @@ site.lifecycle.onNewIntent = function(result) {
 	
 	loggr.debug("site.lifecycle.onNewIntent()");
 	
+	// Handle intents other than alarms (like snooze_cancel cmd)
+	// Check for cmd intent..
+	window.plugins.webintent.getExtra("cmd",
+		function(cmd) {
+			
+			loggr.log(" > GetExtra 'cmd': "+ cmd);
+			
+			// Cancel_snooze
+			if (cmd == "cancel_snooze") {
+				setTimeout(function(){site.home.alarmSnoozeCancel();},1000);
+			}
+			
+			// Cast: quit
+			if (cmd == "cast_quit") {
+				setTimeout(function(){site.cast.destroy();},1000);
+			}
+			
+		},
+		function(err) {
+			loggr.warn("site.lifecycle.onNewIntent.getExtra 'cmd' failed: "+ err);
+		}
+	);
+	
 	// We need session.alarms..
 	if (!site.session.alarms) {
 		// Retry once...
@@ -565,7 +588,7 @@ site.lifecycle.checkMsgs = function(startedByUser) {
 		
 		// Check conntype
 		var conntype = site.helpers.getConnType();
-		if (conntype!="WIFI" && conntype!="ETHERNET") {
+		if (conntype!="WIFI" && conntype!="ETHERNET" && conntype!="UNKNOWN") {
 			alert("Please enable wifi and try again");
 			return;
 		}
@@ -638,7 +661,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		// Check wifiOnly && conntype (msg will wait until wifi || ethernet)
 		if (ditem.onlyOnWifi) {
 			var conntype = site.helpers.getConnType();
-			if (conntype!="WIFI" && conntype!="ETHERNET") {
+			if (conntype!="WIFI" && conntype!="ETHERNET" && conntype!="UNKNOWN") {
 				loggr.log(" >> no wifi! wait until we have it");
 				break; // -> onlyOnWifi should be blocking other messages?
 				// continue;

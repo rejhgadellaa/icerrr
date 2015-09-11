@@ -17,12 +17,12 @@
 
 .cast_off {
 	display:block;
-	mask: url(../img/icons-cast/ic_media_route_off_mono_light.png) top left / cover;
-	-webkit-mask: url(../img/icons-cast/ic_media_route_off_mono_light.png) top left / cover;
+	mask: url(../img/icons-cast/icn_media_route_off.png) top left / cover;
+	-webkit-mask: url(../img/icons-cast/icn_media_route_off.png) top left / cover;
 }
 
 .cast_on {
 	display:block;
-	mask: url(../img/icons-cast/ic_media_route_on_mono_light.png) top left / cover;
-	-webkit-mask: url(../img/icons-cast/ic_media_route_on_mono_light.png) top left / cover;
+	mask: url(../img/icons-cast/icn_media_route_on.png) top left / cover;
+	-webkit-mask: url(../img/icons-cast/icn_media_route_on.png) top left / cover;
 }

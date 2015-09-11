@@ -14,7 +14,7 @@ site.cfg = {};
 // ---> Important stuff
 
 // App
-site.cfg.app_version = 0.233; // Note: change causes install/update to run at launch
+site.cfg.app_version = 0.235; // Note: change causes install/update to run at launch
 site.cfg.debugging = false;
 
 // Urls
@@ -41,6 +41,7 @@ site.cfg.files = {};
 site.cfg.notifs = {};
 site.cfg.notifs.notifID_mediaplayer = 1;
 site.cfg.notifs.notifID_cast = 2;
+site.cfg.notifs.notifID_snoozed = 3;
 
 
 // ---> Defaults

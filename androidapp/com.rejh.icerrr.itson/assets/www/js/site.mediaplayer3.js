@@ -165,7 +165,7 @@ site.mp.stop = function(cb,cberr) {
 	site.mp.mpstatus = Media.MEDIA_NONE;
 	
 	// Remove snooze alarm if any
-	site.home.alarmSnoozeCancel();
+	// site.home.alarmSnoozeCancel(true); // TODO: DEPRECATED
 	
 }
 

@@ -71,12 +71,16 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext cbContext) throws JSONException {
     	try {
+    		Log.d("CordCast",action +", args: "+ args.toString());
     		Method[] list = this.getClass().getMethods();
     		Method methodToExecute = null;
     		for (Method method : list) {
     			if (method.getName().equals(action)) {
+					//Log.d("CordCast"," -> Method found: "+ method.getName());
     				Type[] types = method.getGenericParameterTypes();
     				if (args.length() + 1 == types.length) { // +1 is the cbContext
+    					//Log.d("CordCast"," -> Args length OK");
+    					// if (action.equals("setMediaVolume")) { Log.d("CordCast"," -> Arg: "+ args.get(0).getClass()); }
     					boolean isValid = true;
         				for (int i = 0; i < args.length(); i++) {
             				Class arg = args.get(i).getClass();
@@ -92,6 +96,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
             				break;
         				}
     				}
+    				
     			}
     		}
     		if (methodToExecute != null) {
@@ -530,6 +535,9 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
     	}
     	
     	return true;
+    } // Whooptie added this because JS thinks 1.0 == an integer :(
+    public boolean setMediaVolume(Integer level, CallbackContext callbackContext) {
+    	return setMediaVolume((double)level,callbackContext);
     }
     
     /**
