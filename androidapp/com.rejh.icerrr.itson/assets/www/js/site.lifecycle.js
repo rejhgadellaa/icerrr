@@ -217,9 +217,16 @@ site.lifecycle.initApp = function(force) {
 
 // New Intent
 
-site.lifecycle.onNewIntent = function(result) {
+site.lifecycle.onNewIntent = function(result,intentTime) {
 	
 	loggr.debug("site.lifecycle.onNewIntent()");
+	
+	// Check intentTime..
+	if (site.vars.onNewIntentTime==intentTime) {
+		loggr.log(" > intentTime not changed, return");
+		alert("Hehe got it! :D");
+	}
+	site.vars.onNewIntentTime=intentTime;
 	
 	// Handle intents other than alarms (like snooze_cancel cmd)
 	// Check for cmd intent..

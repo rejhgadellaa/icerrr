@@ -19,6 +19,8 @@
 
 package com.rejh.icerrr.itson;
 
+import java.util.Calendar;
+
 import org.apache.cordova.Config;
 import org.apache.cordova.DroidGap;
 
@@ -44,7 +46,7 @@ public class Icerrr extends DroidGap
     
 	final static String APPTAG = "Icerrr";
 	
-	private boolean newIntentSent = false;
+	private long intentTime = -1;
 	
 	KeyguardManager keyguardManager;
 	KeyguardLock lock;
@@ -94,14 +96,13 @@ public class Icerrr extends DroidGap
         Log.d(APPTAG,APPTAG +".onResume()");
         super.onResume();
         Intent incomingIntent = getIntent(); 
-    	super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "'); },1);");
+    	super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "',"+ intentTime +"); },1);");
     }
     
     @Override
     public void onPause() {
     	Log.d(APPTAG,APPTAG+".onPause()");
     	super.onPause();
-    	//skiplock(false);
     }
     
     @Override
@@ -111,14 +112,18 @@ public class Icerrr extends DroidGap
     	Log.d(APPTAG,APPTAG +".onNewIntent()");
     	super.onNewIntent(newIntent);
     	setIntent(newIntent);
-    	newIntentSent = false;
+    	
+    	// Store intentTime so the app doesn't respond to onResume firing the same intent..
+    	Calendar calnow = Calendar.getInstance();
+		calnow.setTimeInMillis(System.currentTimeMillis());
+		intentTime = calnow.getTimeInMillis();
     	
     	// Check if extra cmd==alarm, dismiss keyguard
     	if (newIntent.hasExtra("cmd")) {
     		if (newIntent.getStringExtra("cmd").equals("alarm")) {
     			Log.w(APPTAG," -> onNewIntent: Extra 'cmd' == 'alarm', dismiss keyguard || turn screen on :D");
-    			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-    			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+    			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON); // doesn't dismiss keyguard at all
+    			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON); // meh keeps keyguard dismissed for activity..
     			skiplock(true);
     		}
     	} else {
