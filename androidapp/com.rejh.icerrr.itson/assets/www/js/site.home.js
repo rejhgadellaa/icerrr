@@ -256,7 +256,7 @@ site.home.init_ui_updates = function() {
 	loggr.debug("site.home.init_ui_updates()");
 	
 	if (site.loops.home_ui_timeout) { clearInterval(site.loops.home_ui_timeout); }
-	site.loops.home_ui_timeout = setInterval(function(){site.home.run_ui_updates()},2000);
+	site.loops.home_ui_timeout = setInterval(function(){site.home.run_ui_updates()},1000);
 	site.home.run_ui_updates(); // run once because interval will only fire after xxx sec
 	
 	if (site.loops.home_station_timeout) { clearInterval(site.loops.home_station_timeout); }
@@ -284,32 +284,32 @@ site.home.run_ui_updates = function() {
 		// -> MediaPlayer
 		
 		if (site.mp.mpstatus==Media.MEDIA_RUNNING && !$(".button.center").hasClass("active")) {
-			//loggr.log(" > Media.MEDIA_RUNNING > .active");
+			loggr.log(" > Media.MEDIA_RUNNING > .active");
 			$(".button.center").removeClass("busy"); 
 			$(".button.center").addClass("active"); 
 			$(".button_play_bufferAnim").fadeOut(250);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_STARTING) {
-			//loggr.log(" > Media.MEDIA_STARTING > .busy");
+			loggr.log(" > Media.MEDIA_STARTING > .busy");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy");
 			$(".button.center").addClass("busy");
 			$(".button_play_bufferAnim").fadeIn(500);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {
-			//loggr.log(" > Media.MEDIA_PAUSED > .busy");
+			loggr.log(" > Media.MEDIA_PAUSED > .busy");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").addClass("busy");
 			$(".button_play_bufferAnim").fadeOut(250);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus!=Media.MEDIA_RUNNING && $(".button.center").hasClass("active")) {
-			//loggr.log(" > Media.MEDIA_RUNNING > .active");
+			loggr.log(" > Media.MEDIA_RUNNING > .active");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy"); 
 			$(".button_play_bufferAnim").fadeOut(250);
 			$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_NONE) {
-			//loggr.log(" > Media.MEDIA_NONE > ...");
+			loggr.log(" > Media.MEDIA_NONE > ...");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy"); 
 			$(".button_play_bufferAnim").fadeOut(250);

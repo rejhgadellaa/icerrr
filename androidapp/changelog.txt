@@ -1,4 +1,4 @@
-0.236
+0.237
   * Major overhaul of how alarms work, new 'snoozed' notification, and more!
   * New icons for (Chrome)cast and improvements for notification
   * Fix: Volume control for (Chrome)cast now ranges up to 100%

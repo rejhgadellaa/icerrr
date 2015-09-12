@@ -164,8 +164,10 @@ public class Icerrr extends DroidGap
     private void skiplock(boolean action) {
     	
     	Log.d(APPTAG,APPTAG+".skiplock(): "+ action);
+    	
+    	/*
         
-        //
+        // TODO: Make this optional before rolling out..
         if (action == true) {
             
         	// Power up display
@@ -194,6 +196,8 @@ public class Icerrr extends DroidGap
             lock.reenableKeyguard();
             //Toast.makeText(getApplicationContext(), "Lockscreen Enabled", Toast.LENGTH_SHORT).show(); // DEBUG // TODO
         }
+    
+    	/**/
     }
     
     // --------------------------------------

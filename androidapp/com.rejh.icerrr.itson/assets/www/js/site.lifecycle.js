@@ -252,7 +252,6 @@ site.lifecycle.onNewIntent = function(result,intentTime) {
 						site.session.alarmActive = true; // set alarm active
 						site.home.init(); // refresh home
 						site.helpers.storeSession(); // store session
-						$("#home .alarm_dialog").fadeIn(500); // And show dialog
 						site.home.alarmUpdateTime();
 						if (site.session.snoozeAlarm) {
 							site.home.alarmSnoozeCancel(true);

@@ -207,10 +207,12 @@ site.mp.initStatusPoll = function() {
 
 site.mp.stopStatusPoll = function(force) {
 	loggr.debug("site.mp.stopStatusPoll()"); 
+	/*
 	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
 	site.loops.mpGetStatus = setInterval(function(){
 		site.mp.getStatus(site.mp.handleStatus); // actually, don't stop but do it on a much slower cycle!
-	},5000);
+	},2000);
+	/**/
 }
 
 // Get status
