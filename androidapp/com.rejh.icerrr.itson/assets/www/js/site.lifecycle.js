@@ -221,10 +221,16 @@ site.lifecycle.onNewIntent = function(result,intentTime) {
 	
 	loggr.debug("site.lifecycle.onNewIntent()");
 	
+	loggr.log(" -> site.vars.onNewIntentTime: "+ site.vars.onNewIntentTime);
+	loggr.log(" -> intentTime: "+ intentTime);
+	loggr.log(" -> Same: "+ (site.vars.onNewIntentTime==intentTime));
+	
 	// Check intentTime..
+	if (!site.vars.onNewIntentTime) { site.vars.onNewIntentTime = -2; }
 	if (site.vars.onNewIntentTime==intentTime) {
 		loggr.log(" > intentTime not changed, return");
-		alert("Hehe got it! :D");
+		//alert("Hehe got it! :D");
+		return;
 	}
 	site.vars.onNewIntentTime=intentTime;
 	

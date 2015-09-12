@@ -96,7 +96,9 @@ public class Icerrr extends DroidGap
         Log.d(APPTAG,APPTAG +".onResume()");
         super.onResume();
         Intent incomingIntent = getIntent(); 
-    	super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "',"+ intentTime +"); },1);");
+        String functionCall = "setTimeout(function() { site.lifecycle.onNewIntent('" + incomingIntent.getDataString() + "',"+ intentTime +"); },1);";
+        Log.d(APPTAG," > "+ functionCall);
+    	super.sendJavascript(functionCall);
     }
     
     @Override
@@ -108,9 +110,10 @@ public class Icerrr extends DroidGap
     @Override
     public void onNewIntent(Intent newIntent) {
         
-    	// Normal stuff..
     	Log.d(APPTAG,APPTAG +".onNewIntent()");
     	super.onNewIntent(newIntent);
+    	
+    	// Store new intent
     	setIntent(newIntent);
     	
     	// Store intentTime so the app doesn't respond to onResume firing the same intent..
@@ -126,8 +129,6 @@ public class Icerrr extends DroidGap
     			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON); // meh keeps keyguard dismissed for activity..
     			skiplock(true);
     		}
-    	} else {
-    		//skiplock(false);
     	}
     }
     
@@ -167,6 +168,7 @@ public class Icerrr extends DroidGap
         //
         if (action == true) {
             
+        	// Power up display
         	Log.d(APPTAG," -> Wakelock: turn on display, 30s");
     		PowerManager powerMgr = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
     		PowerManager.WakeLock wakelock = powerMgr.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK 
@@ -174,16 +176,18 @@ public class Icerrr extends DroidGap
     				  | PowerManager.ACQUIRE_CAUSES_WAKEUP), APPTAG);
     		wakelock.acquire(30000);
         	
+    		// Disable keyguard
         	lock.disableKeyguard();
             
             //Toast.makeText(getApplicationContext(), "Lockscreen Disabled", Toast.LENGTH_SHORT).show(); // DEBUG // TODO
             
+        	// Enable keyguard after xx seconds..
             Handler handler = new Handler(); 
             handler.postDelayed(new Runnable() { 
                  public void run() { 
                 	 skiplock(false);
                  } 
-            }, 15000);
+            }, 30000);
         }
         //
         else if (action==false) {
