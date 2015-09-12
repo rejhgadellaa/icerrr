@@ -119,7 +119,7 @@ public class MediaStreamerNotifMgr {
 			
 			// Add large icon?
 			// station_icon_local
-			JSONObject stationData = getStation();
+			JSONObject stationData = getStation(stationName);
 			if (stationData!=null) {
 				if (stationData.has("station_icon_local")) {
 					String station_icon_local = stationData.getString("station_icon_local");
@@ -268,7 +268,7 @@ public class MediaStreamerNotifMgr {
 	
 	// HELPERS
 	
-	private JSONObject getStation() {
+	private JSONObject getStation(String station_name) {
 		
 		JSONObject station;
 		
@@ -280,6 +280,21 @@ public class MediaStreamerNotifMgr {
 		
 		// Get index
 		int index = sett.getInt("starredStationsIndex", -1);
+		
+		// Index -1?
+		if (index<0) {
+			Log.w(LOGTAG,"MediaStreamerNotifMgr.getStation(): index -1, lookup..");
+			for (int i=0; i<starredStations.length(); i++){
+				JSONObject starredStation = starredStations.getJSONObject(i);
+				if (station_name.equals(starredStation.getString("station_name"))) {
+					index = i;
+					settEditor.putInt("starredStationsIndex",index);
+					settEditor.commit();
+					break;
+				}
+			}
+			Log.d(LOGTAG," -> Index found: "+ index);
+		}
 		
 		// Get station
 		station = starredStations.getJSONObject(index);

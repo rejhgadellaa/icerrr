@@ -105,6 +105,7 @@ public class MediaStreamerReceiver extends BroadcastReceiver {
         		Log.d(APPTAG," > Read and iterate station_data...");
         		try {
         			
+        			
         			// Iterate through station_data and include it as extras
         			JSONObject station_data = new JSONObject(station_datas);
         			Iterator<?> keys = station_data.keys();
@@ -128,10 +129,49 @@ public class MediaStreamerReceiver extends BroadcastReceiver {
         			serviceIntent.putExtra("stream_url",station_data.getString("station_url"));
         			serviceIntent.putExtra("volume", intent.getIntExtra("volume", -1));
         			serviceIntent.putExtra("isAlarm", true);
+        			serviceIntent.putExtra("alarm", true); // <- cmd_alarm
         			
         			// Some weird setting?
         			settEditor.putString("mediastreamer_streamUrl", station_data.getString("station_url"));
         	        settEditor.commit();
+        			
+        			// Do stuff for starredStations
+        	        Log.d(APPTAG," > Lookup station in starredStations..");
+        			String starredStationsJsons = sett.getString("starredStations", "[]");
+        			JSONArray starredStationsJson = new JSONArray(starredStationsJsons);
+        			
+        			// -> loookup station_id in starred..
+        			String station_id = station_data.getString("station_id");
+        			int station_index = -1;
+        			for (int i=0; i<starredStationsJson.length(); i++) {
+        				JSONObject station = starredStationsJson.getJSONObject(i);
+        				if (station_id.equals(station.getString("station_id"))) {
+        					station_index = i;
+        					break;
+        				}
+        			}
+        			Log.d(APPTAG," -> Station_index: "+ station_id);
+        			
+        			// found station in starred!
+        			if (station_index>=0) {
+        				settEditor.putInt("starredStationsIndex", station_index);
+        				settEditor.commit();
+        			} 
+        			// NOT foudn in starred! add it :D
+        			else {
+        				Log.d(APPTAG," -> Add to starred: "+ station_id);
+        				
+        				JSONArray newStarred = new JSONArray();
+        				newStarred.put(station_data);
+        				for (int i=0; i<starredStationsJson.length(); i++) {
+        					newStarred.put(starredStationsJson.get(i));
+        				}
+        				
+        				settEditor.putString("starredStations", newStarred.toString());
+        				settEditor.putInt("starredStationsIndex", 0);
+        				settEditor.commit();
+        				
+        			}
         			
         		} catch(JSONException e) {
         			Log.e(APPTAG," -> MediaStreamerReceiver.onReceive(): Cmd ALARM JSON Exception: "+ e,e);

@@ -153,7 +153,7 @@ site.lifecycle.initApp = function(force) {
 			
 		default:
 			site.home.init(true);
-			site.alarms.testAlarm(); // TODO: REMOVE // COMMENT // DEBUG
+			//site.alarms.testAlarm(); // TODO: REMOVE // COMMENT // DEBUG
 			break;
 			
 	}
@@ -269,118 +269,6 @@ site.lifecycle.onNewIntent = function(result) {
 	);
 	
 	return; // <-- STOP IT HERE
-	
-	// TODO: DEPRECATED ---->
-	
-	// We need session.alarms..
-	if (!site.session.alarms) {
-		// Retry once...
-		if (result!="retry") {
-			setTimeout(function(){site.lifecycle.onNewIntent("retry");},1000);
-		}
-		return;
-	}
-	
-	// Check if alarm is scheduled that we know of..
-	loggr.log(" > Check if alarm is scheduled...");
-	var alarmOkay = false;
-	var hour = new Date().getHours();
-	var minute = new Date().getMinutes();
-	var alarms = jQuery.extend(true, [], site.session.alarms);
-	if (site.session.snoozeAlarm) { alarms.push(site.session.snoozeAlarm); }
-	var thealarm;
-	for (var i in alarms) {
-		
-		var alarm = alarms[i];
-		if (!alarm || !alarm.hour) { continue; }
-		
-		var alarmHour = parseInt(alarm.hour);
-		var alarmMinute = parseInt(alarm.minute);
-		
-		var minuteDiff = alarmMinute - minute;
-		if (minuteDiff>58) { minuteDiff = 1; }
-		
-		if (alarmHour == hour && minuteDiff >= -2 && minuteDiff < 1 || alarmHour == hour-1 && minuteDiff>58) {
-			
-			loggr.log(" > Found alarm: "+ alarmHour +":"+ alarmMinute);
-			
-			// Does it need to fire today?
-			var day = new Date().getDay(); // 0 - 6
-			var repeatCfg = alarm.repeatCfg;
-			loggr.log(" > Day: "+ day +", repeat: "+ repeatCfg[day]);
-			if (repeatCfg[day]!=1 && alarm.repeat) {
-				loggr.log(" >> Don't repeat today..");
-				continue;
-			}
-			
-			alarmOkay = true;
-			thealarm = alarm;
-			break;
-			
-		}
-		
-	}
-	
-	if (!alarmOkay) { 
-		loggr.log(" > Alarm is not scheduled? "+ alarmHour +":"+ alarmMinute);
-		return;
-	}
-	
-	
-	// Check if alarm has already fired
-	if (site.vars.thealarm) {
-		
-		loggr.log(" > An alarm has fired before: "+ site.vars.thealarm.alarm_id +", "+ site.vars.thealarm.hour+":"+ site.vars.thealarm.minute);
-		
-		if (site.vars.thealarm.alarm_id == thealarm.alarm_id) {
-			
-			loggr.log(" > Has the same id as the alarm firing right now...");
-			
-			var timenow = new Date().getTime();
-			var thealarmtime = site.vars.thealarm.time;
-			
-			if (timenow-thealarmtime < (1000*60*3)) { // if the same alarm has fired within the last 3 minutes: something is wrong!
-				loggr.warn(" > Alarm has already fired less than 3 minutes ago");
-				return;
-			}
-			
-		}
-		
-	}
-	
-	site.vars.thealarm = thealarm;
-	site.vars.thealarm.time = new Date().getTime();
-	
-	/*
-	if (site.vars.alarmHasFired) {
-		loggr.warn(" > Alarm has already fired?");
-		return;
-	}
-	/**/
-	
-	// Intents(!)
-	// Check for share intent (webintent plugin)
-	window.plugins.webintent.getExtra("station_id",
-		function (station_id) {
-			loggr.log(" > Extra: station_id: "+station_id);
-			var tmpobj = {station_id:station_id};
-			site.cast.destroy(); // make sure we're not firing an alarm over chromecast api
-			site.chlist.selectstation(tmpobj,true); // select station
-			site.home.init(); // refresh home
-			site.session.alarmActive = true; // set alarm active
-			site.helpers.storeSession(); // store session
-			site.mp.play(); // and play
-			$("#home .alarm_dialog").fadeIn(500); // And show dialog
-			site.home.alarmUpdateTime();
-			site.session.snoozeAlarm = null;
-		}, function(err) {
-			loggr.error(" > isAlarm but !station_id? "+err);
-			site.vars.thealarm = null;
-		}
-	);
-	
-	// An alarm has been scheduled..
-	return true;
 	
 }
 

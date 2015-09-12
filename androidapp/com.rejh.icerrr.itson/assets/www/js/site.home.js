@@ -69,7 +69,7 @@ site.home.init = function() {
 	// Pre-handle some image/settings related stuff
 	if (site.cookies.get("setting_showStationIcon")!=1) {
 		$("#home .main .station_image img").css("opacity",0.0);
-		$("#home .main .station_image img")[0].src = "img/icons-80/ic_station_default.png";
+		$("#home .main .station_image img")[0].src = "img/web_hi_res_512_002.jpg";
 	}
 	if (site.cookies.get("setting_showAlbumArt")!=1) {
 		$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
@@ -110,7 +110,7 @@ site.home.init = function() {
 	);
 	$("#home .main .station_image img").on("error",function(evt) {
 		loggr.error(" > Error loading image: "+evt.currentTarget.src,{dontupload:true});
-		evt.currentTarget.src = "img/icons-80/ic_station_default.png";
+		evt.currentTarget.src = "img/web_hi_res_512_002.jpg";
 	});
 	
 	// extra ui
@@ -124,7 +124,7 @@ site.home.init = function() {
 	
 	$("#home .main .station_image img").on("error",function(evt) {
 		loggr.warn(" > !onload: "+ evt.originalEvent.target.src);
-		$("#home .main .station_image img").attr("src","img/icons-80/ic_station_default.png");
+		$("#home .main .station_image img").attr("src","img/web_hi_res_512_002.jpg");
 	});
 	
 	// extra events
@@ -569,7 +569,7 @@ site.home.handleStationImage = function(src) {
 				function(error) {
 					loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
 					console.error(error);
-					$("#home .main .station_image img").attr("src","img/icons-80/ic_station_default.png");
+					$("#home .main .station_image img").attr("src","img/web_hi_res_512_002.jpg");
 				}
 			);
 		} else {
@@ -580,69 +580,73 @@ site.home.handleStationImage = function(src) {
 		site.ui.hideLoadbar();
 		return;
 		
-	}
+	} 
+	// Album art
+	else {
 	
-	// Check if image already loaded..
-	if ($("#home .main .station_image").css("background-image").indexOf(src)>=0) {
-		loggr.log(" > Image already loaded: "+ src);
-		site.ui.hideLoadbar();
-		return;
-	}
-	
-	// Clear preloader
-	if (site.home.stationImagePreloader) {
-		site.home.stationImagePreloader.onload = function() {};
-	}
-	
-	if (site.timeouts.handleStationImage) { clearTimeout(site.timeouts.handleStationImage); }
-	site.timeouts.handleStationImage = setTimeout(function(){
-														   
-		site.ui.showLoadbar();
-		
-		if (site.helpers.shouldDownloadImage(src)) {
-			
-			// Nowplaying
-			var nowplaying = site.helpers.stripIllChars(station.station_nowplaying);
-			
-			// Filename..
-			var filename = site.helpers.imageUrlToFilename(src,
-				"station_art_"+
-				nowplaying.split(" ").join("-")+"_"+
-				station.station_name.split(" ").join("-").toLowerCase(),
-				false,true);
-			
-			// Check if file already exists..
-			site.storage.getFileEntry(site.cfg.paths.images, filename,
-				function(fileEntry) { // exists
-					$("#home .main .station_image").css("background-image","url('"+ fileEntry.fullPath +"')");
-					$("#home .main .station_image img").css("opacity",0.0);
-					$("#home .main .station_image").css("background-blend-mode","normal");
-					$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
-					site.ui.hideLoadbar();
-				},
-				function(err) { // dont exist
-					site.helpers.downloadImage(null, filename, src,
-						function(fileEntry,imgobj) {
-							$("#home .main .station_image").css("background-image","url('"+ fileEntry.fullPath +"')");
-							$("#home .main .station_image img").css("opacity",0.0);
-							$("#home .main .station_image").css("background-blend-mode","normal");
-							$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
-							site.ui.hideLoadbar();
-						},
-						function(error) {
-							loggr.error(" > Error downloading '"+ src +"'",{dontupload:true});
-							console.error(error);
-							$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
-							site.ui.hideLoadbar();
-						}
-					);
-				}
-			);
-			
+		// Check if image already loaded..
+		if ($("#home .main .station_image").css("background-image").indexOf(src)>=0) {
+			loggr.log(" > Image already loaded: "+ src);
+			site.ui.hideLoadbar();
+			return;
 		}
+		
+		// Clear preloader
+		if (site.home.stationImagePreloader) {
+			site.home.stationImagePreloader.onload = function() {};
+		}
+		
+		// (re) set timeout 1 second and do stuff
+		if (site.timeouts.handleStationImage) { clearTimeout(site.timeouts.handleStationImage); }
+		site.timeouts.handleStationImage = setTimeout(function(){
+															   
+			site.ui.showLoadbar();
+			
+			if (site.helpers.shouldDownloadImage(src)) {
+				
+				// Nowplaying
+				var nowplaying = site.helpers.stripIllChars(station.station_nowplaying);
+				
+				// Filename..
+				var filename = site.helpers.imageUrlToFilename(src,
+					"station_art_"+
+					nowplaying.split(" ").join("-")+"_"+
+					station.station_name.split(" ").join("-").toLowerCase(),
+					false,true);
+				
+				// Check if file already exists..
+				site.storage.getFileEntry(site.cfg.paths.images, filename,
+					function(fileEntry) { // exists
+						$("#home .main .station_image").css("background-image","url('"+ fileEntry.fullPath +"')");
+						$("#home .main .station_image img").css("opacity",0.0);
+						$("#home .main .station_image").css("background-blend-mode","normal");
+						$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
+						site.ui.hideLoadbar();
+					},
+					function(err) { // dont exist
+						site.helpers.downloadImage(null, filename, src,
+							function(fileEntry,imgobj) {
+								$("#home .main .station_image").css("background-image","url('"+ fileEntry.fullPath +"')");
+								$("#home .main .station_image img").css("opacity",0.0);
+								$("#home .main .station_image").css("background-blend-mode","normal");
+								$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
+								site.ui.hideLoadbar();
+							},
+							function(error) {
+								loggr.error(" > Error downloading '"+ src +"'",{dontupload:true});
+								console.error(error);
+								$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+								site.ui.hideLoadbar();
+							}
+						);
+					}
+				);
+				
+			}
+		
+		},1000);
 	
-	},1000);
-	
+	}
 	
 }
 
@@ -765,7 +769,9 @@ site.home.alarmUpdateTime = function(alsoCheckIsAlarm) {
 				loggr.log(" > !site.session.alarmActive");
 				
 				site.session.alarmActive = false;
-				$("#home .alarm_dialog").fadeOut(500);
+				if ($("#home .alarm_dialog").css("display")=="block") {
+					$("#home .alarm_dialog").fadeOut(500);
+				}
 				
 			}
 			
@@ -778,10 +784,14 @@ site.home.alarmUpdateTime = function(alsoCheckIsAlarm) {
 	
 	// Calc timeout
 	var timeout_ms = 2.5*1000;
-	if (!site.session.alarmActive && site.session.alarmActiveRetries>3) {
-		timeout_ms = 10*1000;
+	if (!site.session.alarmActive) {
+		if (site.session.alarmActiveRetries<4) {
+			site.session.alarmActiveRetries++;
+			// timeout_ms = timeout_ms;
+		} else {
+			timeout_ms = 10*1000;
+		}
 	} else {
-		site.session.alarmActiveRetries++;
 	}
 	
 	// Re-set timeout
@@ -874,7 +884,7 @@ site.home.alarmSnooze = function() {
 		notif
 	);
 	
-	site.ui.showtoast("Alarm snoozed <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5);
+	site.ui.showtoast("Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute) +" <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5);
 	
 }
 
@@ -888,10 +898,10 @@ site.home.alarmSnoozeCancel = function(notByUser) {
 		site.alarms.remove(true);
 		// site.ui.showtoast("Snooze canceled");
 		if (!notByUser) {
-			site.ui.showtoast("Snooze canceled <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnooze();'>UNDO</span>",5);
+			site.ui.showtoast("Snooze canceled <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnooze();'>RE-SET</span>",5);
 		}
 	} else {
-		loggr.log(" > No alarm snoozed? => !site.vars.snoozeAlarm");
+		loggr.error(" > No alarm snoozed? => !site.vars.snoozeAlarm");
 	}
 	
 	window.notifMgr.cancel(
@@ -903,7 +913,7 @@ site.home.alarmSnoozeCancel = function(notByUser) {
 	site.session.snoozeAlarm = null;
 	site.helpers.storeSession();
 	
-	
+	site.session.alarmActiveRetries = 0;	
 	
 }
 

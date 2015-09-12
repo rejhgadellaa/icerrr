@@ -110,6 +110,7 @@ site.cast.sessionListener = function(session) {
 	
 	if (session.media.length != 0) {
 		loggr.log('Found ' + session.media.length + ' sessions.');
+		// TODO: reconnect :|||
 	} else {
 		site.cast.notifCancel(); // cancel any notifs
 	}
@@ -466,7 +467,7 @@ site.cast.notif = function() {
 			]
 		}
 	}
-	opts.actions = [action1];
+	// opts.actions = [action1]; // TODO: should be able to auto-reconnect existing session before showing this option :S
 	
 	// Large icon?
 	if (site.session.currentstation.station_icon_local) {

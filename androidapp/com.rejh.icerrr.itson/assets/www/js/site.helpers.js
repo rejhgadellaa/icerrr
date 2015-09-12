@@ -239,6 +239,7 @@ site.helpers.downloadImage = function(imgobj, filename, url, cb, cberr, cbprogre
 			cb(fileEntry,imgobj);
 		},
 		function(error) {
+			loggr.warn("site.webapi.download().Error: "+ error);
 			if (imgobj) { imgobj.src = url; } // fallback || TODO: do this?
 			cberr(error);
 		},

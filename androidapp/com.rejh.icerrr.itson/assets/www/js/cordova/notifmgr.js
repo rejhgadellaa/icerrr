@@ -36,6 +36,8 @@
 	opts.ongoing = BOOLEAN // default false
 	opts.alertOnce = BOOLEAN // default false
 	
+	// OPTIONAL: IsLollipopMediaRemote // TODO
+	opts.isLollipopMediaRemote = BOOLEAN // default false
 	
 	// OPTIONAL: Actions
 	opts.actions = [

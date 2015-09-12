@@ -60,7 +60,7 @@ loggr.log = function(str,opts) {
 	
 	str = new Date().format("H:i:s") +"    "+ str;
 	
-	if (opts.toconsole) {
+	if (opts.toconsole && site.cfg.debugging || opts.type=="error" || opts.type=="warn") {
 	
 		switch(opts.type) {
 			case "error":

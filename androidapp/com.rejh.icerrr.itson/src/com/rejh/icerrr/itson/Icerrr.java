@@ -22,16 +22,22 @@ package com.rejh.icerrr.itson;
 import org.apache.cordova.Config;
 import org.apache.cordova.DroidGap;
 
+import android.app.Activity;
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 public class Icerrr extends DroidGap
 {
@@ -39,6 +45,9 @@ public class Icerrr extends DroidGap
 	final static String APPTAG = "Icerrr";
 	
 	private boolean newIntentSent = false;
+	
+	KeyguardManager keyguardManager;
+	KeyguardLock lock;
     
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -60,8 +69,13 @@ public class Icerrr extends DroidGap
             WebView.setWebContentsDebuggingEnabled(true);
         }
         
+        // Keyguard (lockscreen)
+        keyguardManager = (KeyguardManager) getSystemService(Activity.KEYGUARD_SERVICE);
+        lock = keyguardManager.newKeyguardLock(KEYGUARD_SERVICE);
+        
+        // Kill App Receiver
         IntentFilter filter = new IntentFilter();
-        filter.addAction("com.rejh.icerrr.droidapp.actions.KILL_APP");
+        filter.addAction("com.rejh.icerrr.itson.actions.KILL_APP");
         registerReceiver(killAppReceiver, filter);
         
         // Call onNewIntent when app is not started before..
@@ -73,7 +87,6 @@ public class Icerrr extends DroidGap
     public void onStart() {
         Log.d(APPTAG,APPTAG +".onStart()");
     	super.onStart();
-    	// Intent incomingIntent = getIntent();
     }
     
     @Override
@@ -85,12 +98,32 @@ public class Icerrr extends DroidGap
     }
     
     @Override
+    public void onPause() {
+    	Log.d(APPTAG,APPTAG+".onPause()");
+    	super.onPause();
+    	//skiplock(false);
+    }
+    
+    @Override
     public void onNewIntent(Intent newIntent) {
-        Log.d(APPTAG,APPTAG +".onNewIntent()");
+        
+    	// Normal stuff..
+    	Log.d(APPTAG,APPTAG +".onNewIntent()");
     	super.onNewIntent(newIntent);
     	setIntent(newIntent);
     	newIntentSent = false;
-    	// super.sendJavascript("setTimeout(function() { site.lifecycle.onNewIntent('" + newIntent.getDataString() + "'); },1);");
+    	
+    	// Check if extra cmd==alarm, dismiss keyguard
+    	if (newIntent.hasExtra("cmd")) {
+    		if (newIntent.getStringExtra("cmd").equals("alarm")) {
+    			Log.w(APPTAG," -> onNewIntent: Extra 'cmd' == 'alarm', dismiss keyguard || turn screen on :D");
+    			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+    			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+    			skiplock(true);
+    		}
+    	} else {
+    		//skiplock(false);
+    	}
     }
     
     @Override
@@ -120,6 +153,39 @@ public class Icerrr extends DroidGap
         return true;
     }
     /**/
+    
+    // Keyguard
+    private void skiplock(boolean action) {
+    	
+    	Log.d(APPTAG,APPTAG+".skiplock(): "+ action);
+        
+        //
+        if (action == true) {
+            
+        	Log.d(APPTAG," -> Wakelock: turn on display, 30s");
+    		PowerManager powerMgr = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+    		PowerManager.WakeLock wakelock = powerMgr.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK 
+    				  | PowerManager.FULL_WAKE_LOCK 
+    				  | PowerManager.ACQUIRE_CAUSES_WAKEUP), APPTAG);
+    		wakelock.acquire(30000);
+        	
+        	lock.disableKeyguard();
+            
+            //Toast.makeText(getApplicationContext(), "Lockscreen Disabled", Toast.LENGTH_SHORT).show(); // DEBUG // TODO
+            
+            Handler handler = new Handler(); 
+            handler.postDelayed(new Runnable() { 
+                 public void run() { 
+                	 skiplock(false);
+                 } 
+            }, 15000);
+        }
+        //
+        else if (action==false) {
+            lock.reenableKeyguard();
+            //Toast.makeText(getApplicationContext(), "Lockscreen Enabled", Toast.LENGTH_SHORT).show(); // DEBUG // TODO
+        }
+    }
     
     // --------------------------------------
     // Others

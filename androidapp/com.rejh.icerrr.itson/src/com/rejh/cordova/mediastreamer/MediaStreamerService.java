@@ -178,6 +178,7 @@ public class MediaStreamerService extends Service {
 		if(intent!=null) { incomingIntent = intent; }
 		
 		// Cmds..
+		boolean cmd_alarm = false;
 		boolean cmd_pause_resume = false;
 		boolean cmd_pause = false;
 		boolean cmd_next = false;
@@ -185,6 +186,9 @@ public class MediaStreamerService extends Service {
 		boolean cmd_next_restart_intent = false;
 		if(intent!=null) {
 			
+			if (intent.hasExtra("alarm")) {
+				cmd_alarm = intent.getBooleanExtra("alarm", false); 
+			}
 			if (intent.hasExtra("pause_resume")) { 
 				cmd_pause_resume = intent.getBooleanExtra("pause_resume", false); 
 			}
@@ -266,6 +270,18 @@ public class MediaStreamerService extends Service {
 		// Go
 		boolean shouldEnableWifi = true;
 		if (mpMgr!=null && !cmd_next_restart_intent) {
+			if (cmd_alarm) { // handle alarm when other stream is already active..
+				try {
+					Log.d(APPTAG," > cmd_alarm && mpMgr!=null!");
+					String starredStationsJsons = sett.getString("starredStations", "[]");
+					JSONArray starredStations = new JSONArray(starredStationsJsons);
+					JSONObject starredStation = starredStations.getJSONObject(sett.getInt("starredStationsIndex", 0));
+					isAlarm = true;
+					restartServiceWithStation(starredStation);
+				} catch(JSONException e) {
+					Log.e(APPTAG,"MediaStreamerService.onStartCommand().JSONException handling cmd_alarm: "+e,e);
+				}
+			}
 			if (cmd_pause_resume && !sett.getBoolean("is_paused", false) || cmd_pause) { // pause
 				Log.d(APPTAG," > cmd_pause_resume PAUSE!");
 				settEditor.putBoolean("is_paused", true);
@@ -278,7 +294,7 @@ public class MediaStreamerService extends Service {
 				} catch(Exception e) {}
 				shouldEnableWifi = false;
 				// audioMgr.abandonAudioFocus(afChangeListener);
-			} else if (sett.getBoolean("is_paused", false)) { // resume
+			} else if (cmd_pause_resume && sett.getBoolean("is_paused", false)) { // resume
 				Log.d(APPTAG," > cmd_pause_resume RESUME!");
 				settEditor.putBoolean("is_paused", false);
 				settEditor.commit();
@@ -1230,14 +1246,31 @@ public class MediaStreamerService extends Service {
 	
     // Get Station data
     private JSONObject getStationData() {
+    	String starredStationsJsons = "[]";
     	try {
 			
 			// Get stations
-			String starredStationsJsons = sett.getString("starredStations", "[]");
+    		starredStationsJsons = sett.getString("starredStations", "[]");
 			JSONArray starredStations = new JSONArray(starredStationsJsons);
 			
 			// Get index
 			int index = sett.getInt("starredStationsIndex", -1);
+			
+			// Index -1?
+			if (index<0) {
+				Log.w(APPTAG,"MediaStreamerService.getStationData(): index -1, lookup: "+station_id);
+				for (int i=0; i<starredStations.length(); i++){
+					JSONObject station = starredStations.getJSONObject(i);
+					Log.d(APPTAG," --> "+ station.getString("station_id"));
+					if (station_id.equals(station.getString("station_id"))) {
+						index = i;
+						settEditor.putInt("starredStationsIndex",index);
+						settEditor.commit();
+						break;
+					}
+				}
+				Log.d(APPTAG," -> Index found: "+ index);
+			}
 			
 			// Get station
 			JSONObject station = starredStations.getJSONObject(index);
@@ -1247,6 +1280,7 @@ public class MediaStreamerService extends Service {
 			
 		} catch (JSONException e) {
 			Log.e(APPTAG," > Error handling 'getStationData()', JSONException",e);
+			//Log.w(APPTAG," > "+ starredStationsJsons);
 		}
     	
     	return null;
