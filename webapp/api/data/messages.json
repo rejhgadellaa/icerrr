@@ -1,9 +1,9 @@
 [
     
     {
-        "id":"app233",
+        "id":"app239",
         "crit":"version",
-        "critvalue":0.232,
+        "critvalue":0.238,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Placeholder",

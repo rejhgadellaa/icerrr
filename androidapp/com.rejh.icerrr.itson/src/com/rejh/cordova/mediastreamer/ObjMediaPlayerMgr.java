@@ -324,13 +324,12 @@ public class ObjMediaPlayerMgr {
 			// Start & store
 			
 			mp.setVolume(0, 0);
+			mp.start();
 			if (isAlarm) {
 				fadeIn(mp,5000);
 			} else {
 				fadeIn(mp,1000);
 			}
-			
-			mp.start();
 			
 			settEditor.putInt("mediaplayerState",MEDIA_RUNNING);
 			settEditor.putInt("mediastreamer_state",MEDIA_RUNNING);

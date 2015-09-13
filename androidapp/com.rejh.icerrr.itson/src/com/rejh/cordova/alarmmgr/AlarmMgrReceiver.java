@@ -61,9 +61,11 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
 	        }
 	        int id = intent.getIntExtra("alarm_id", 0);
 	        
+	        Log.d(APPTAG," > Alarm received with ID: 'alarm_"+ id +"'");
+	        
 	        // Opts
 	        String optsStr = sett.getString("alarm_"+id, "{}");
-	        Log.d(APPTAG, " > "+ optsStr);
+	        // Log.d(APPTAG, " > "+ optsStr); // DEBUG
         	JSONObject opts = new JSONObject(optsStr);
     		
         	// Get args
@@ -77,14 +79,10 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		JSONObject intentOpts = opts.has("intent") ? opts.getJSONObject("intent") : null;
     		boolean isExact = opts.has("isExact") ? opts.getBoolean("isExact") : true;
     		
-    		// Handle date
-    		Calendar cal = Calendar.getInstance();
-    		cal.setTimeInMillis(System.currentTimeMillis());
-    		
     		// Handle repeat: off
     		// -> Remove alarm from settings to prevent it from firing again..
     		if (repeat.equals("off") || !repeat.equals("daily")) {
-    			Log.d(APPTAG, " > !repeat, fire alarm and forget..");
+    			Log.d(APPTAG, " -> !repeat, fire alarm and forget..");
 	    		settEditor.putString("alarm_"+id, null);
 	    		settEditor.commit();
     		}
@@ -105,11 +103,13 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		// Handle exact + repeat (re-set alarm..)
     		if (isExact && doRepeat && Build.VERSION.SDK_INT >= 19) {
     			
+    			Log.d(APPTAG," -> Alarm isExact && doRepeat, re-set for next day..");
+    			
     			// Create alarmMgr
     			AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     			
     			// Handle date
-    			//Calendar cal = Calendar.getInstance();
+    			Calendar cal = Calendar.getInstance();
     			cal.setTimeInMillis(System.currentTimeMillis());
     			//int hour = cal.get(Calendar.HOUR_OF_DAY);
     			//int min = cal.get(Calendar.MINUTE);
@@ -126,7 +126,7 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     			int minnow = calnow.get(Calendar.MINUTE);
     			
     			if (day == daynow && hour < hournow || day == daynow && hour <= hournow && minute <= minnow) {
-    				Log.d(APPTAG," > Set alarm one day in future");
+    				Log.d(APPTAG," --> Set alarm one day in future");
     				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+1);
     			}
     			timeMillis = cal.getTimeInMillis();
@@ -140,7 +140,7 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     			alarmMgr.cancel(pintent);
     			
     			// Create alarm...
-    			Log.d(APPTAG," > Once, exact: "+ calToString(cal));
+    			Log.d(APPTAG," --> Once, exact: "+ calToString(cal));
 				alarmMgr.setExact(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
     			
     			
@@ -149,15 +149,17 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		// Handle repeat: daily --> Do we need to fire today?
 			boolean fireToday = true;
     		if (repeat.equals("daily")) {
-    			Log.d(APPTAG," > Daily repeat..");
-				int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
+    			Log.d(APPTAG," -> Daily repeat..");
+    			Calendar caltoday = Calendar.getInstance();
+    			caltoday.setTimeInMillis(System.currentTimeMillis());
+				int dayOfWeek = caltoday.get(Calendar.DAY_OF_WEEK)-1;
 				if (repeatDaily.length()<dayOfWeek) { fireToday = false; }
 				else if (repeatDaily.getInt(dayOfWeek)>0) { fireToday = true; }
 				else { fireToday = false; }
-				Log.d(APPTAG," > Day: "+ dayOfWeek +", "+ repeatDaily.getInt(dayOfWeek));
+				Log.d(APPTAG," -> Day: "+ dayOfWeek +", "+ repeatDaily.getInt(dayOfWeek));
     		}
     		if (!fireToday) { 
-    			Log.d(APPTAG," > Do not need to fire today");
+    			Log.d(APPTAG," -> Do not need to fire today");
     			return; // <-- important stuff
     		}
     		
@@ -168,13 +170,13 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		runIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		
     		if (intentType.equals("activity")) {
-    			Log.d(APPTAG," > StartActivity()");
+    			Log.d(APPTAG," -> StartActivity()");
     			context.startActivity(runIntent);
     		} else if (intentType.equals("service")) {
-    			Log.d(APPTAG," > StartService()");
+    			Log.d(APPTAG," -> StartService()");
     			context.startService(runIntent);
     		} else if (intentType.equals("receiver")) {
-    			Log.d(APPTAG," > SendBroadcast()");
+    			Log.d(APPTAG," -> SendBroadcast()");
     			context.sendBroadcast(runIntent);
     		}
         

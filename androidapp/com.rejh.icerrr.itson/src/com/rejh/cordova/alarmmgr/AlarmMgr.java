@@ -154,6 +154,8 @@ public class AlarmMgr extends CordovaPlugin {
 			return;
 		}
 		
+		Log.d(APPTAG," > Set alarm with ID: 'alarm_"+ id +"'");
+		
 		// Handle date
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(System.currentTimeMillis());
@@ -172,12 +174,12 @@ public class AlarmMgr extends CordovaPlugin {
 		int minnow = calnow.get(Calendar.MINUTE);
 		
 		if (day == daynow && hour < hournow || day == daynow && hour <= hournow && minute <= minnow) {
-			Log.d(APPTAG," > Set alarm one day in future");
+			Log.d(APPTAG," -> Set alarm one day in future");
 			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+1);
 		}
 		timeMillis = cal.getTimeInMillis();
 		
-		Log.d(APPTAG," > "+calToString(cal));
+		Log.d(APPTAG," -> "+calToString(cal));
 		
 		// Handle repeat
 		if (repeat.equals("minutely")) {
@@ -197,24 +199,24 @@ public class AlarmMgr extends CordovaPlugin {
 		
 		// Handle no repeat
 		if (!doRepeat && Build.VERSION.SDK_INT >= 19) {
-			Log.w(APPTAG," > No repeat and SDK >= 19, use isExact");
+			Log.w(APPTAG," -> No repeat and SDK >= 19, use isExact");
 			isExact = true;
 		}
 		
 		// Handle exact: repeat && sdk
 		if (isExact && doRepeat) {
-			Log.w(APPTAG," > Using exact alarm (SDK>=19), using workaround for repeat..");
+			Log.w(APPTAG," -> Using exact alarm (SDK>=19), using workaround for repeat..");
 			//isExact = false;
 		}
 		if(isExact && Build.VERSION.SDK_INT < 19) {
-			Log.w(APPTAG," > Exact alarm only needed when SDK < 19");
+			Log.w(APPTAG," -> Exact alarm only needed when SDK < 19");
 			isExact = false;
 		}
 		
 		// Store some stuff
 		String alarm_key = "alarm_"+ id;
 		String alarm_jsons = opts.toString();
-		Log.d(APPTAG," > "+alarm_jsons);
+		//Log.d(APPTAG," -> "+alarm_jsons); // DEBUG
 		settEditor.putString(alarm_key,alarm_jsons);
 		settEditor.commit();
 		
@@ -228,13 +230,13 @@ public class AlarmMgr extends CordovaPlugin {
 		
 		// Create alarm...
 		if (doRepeat && !isExact) {
-			Log.d(APPTAG," > Repeat "+ repeatMillis);
+			Log.d(APPTAG," -> Repeat "+ repeatMillis);
 			alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, timeMillis, repeatMillis, pintent);
 		} else if (isExact && Build.VERSION.SDK_INT >= 19) {
-			Log.d(APPTAG," > Once, exact: "+ calToString(cal));
+			Log.d(APPTAG," -> Once, exact: "+ calToString(cal));
 			alarmMgr.setExact(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
 		} else {
-			Log.d(APPTAG," > Once");
+			Log.d(APPTAG," -> Once");
 			alarmMgr.set(AlarmManager.RTC_WAKEUP, timeMillis, pintent);
 		}
 		

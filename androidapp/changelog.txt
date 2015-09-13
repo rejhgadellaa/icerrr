@@ -1,3 +1,6 @@
+0.239
+  * Hotfix: Alarms would always fire, regardless of repeat configuration
+
 0.238
   * Major overhaul of how alarms work, new 'snoozed' notification, and more!
   * Alarms are now using exact method on SDK>=19 (Android 4.4+)
