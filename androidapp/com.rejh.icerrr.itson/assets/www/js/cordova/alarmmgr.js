@@ -30,6 +30,7 @@
 			{type:"boolean", name:"string", value:true}
 		]
 	}
+	opts.isExact = boolean // default: true(!) Uses setExactAlarm on SDK >= 19 // Note: only works for non-recuring alarms!
 	
 	// More opts // TODO: Implement
 	opts.moreOpts = {

@@ -1,7 +1,11 @@
-0.237
+0.238
   * Major overhaul of how alarms work, new 'snoozed' notification, and more!
+  * Alarms are now using exact method on SDK>=19 (Android 4.4+)
+  * Streams now fade in (1s by default, 5s for alarms)
   * New icons for (Chrome)cast and improvements for notification
   * Fix: Volume control for (Chrome)cast now ranges up to 100%
+  * When searching for a station, use icon from Dirble results if available
+  * Reworked design of settings screen
   * More bugfixes and improvements
 
 0.233

@@ -13,6 +13,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 
 public class AlarmMgrOnBoot extends BroadcastReceiver {
@@ -102,6 +103,7 @@ public class AlarmMgrOnBoot extends BroadcastReceiver {
 						String repeat = opts.has("repeat") ? opts.getString("repeat") : "no";
 						long repeatMillis = opts.has("repeatMillis") ? opts.getLong("repeatMillis") : -1;
 						JSONObject intentOpts = opts.has("intent") ? opts.getJSONObject("intent") : null;
+						boolean isExact = opts.has("isExact") ? opts.getBoolean("isExact") : true;
 						
 						// Check
 						if (id<0) {
@@ -158,6 +160,22 @@ public class AlarmMgrOnBoot extends BroadcastReceiver {
 							// repeatMillis already set...
 						}
 						
+						// Handle no repeat
+						if (!doRepeat && Build.VERSION.SDK_INT >= 19) {
+							Log.w(APPTAG," > No repeat and SDK >= 19, use isExact");
+							isExact = true;
+						}
+						
+						// Handle exact: repeat && sdk
+						if (isExact && doRepeat) {
+							Log.w(APPTAG," > Using exact alarm (SDK>=19), using workaround for repeat..");
+							//isExact = false;
+						}
+						if(isExact && Build.VERSION.SDK_INT < 19) {
+							Log.w(APPTAG," > Exact alarm only needed when SDK < 19");
+							isExact = false;
+						}
+						
 						// Handle intent
 						Intent intent = new Intent(context, AlarmMgrReceiver.class);
 						intent.putExtra("alarm_id", id);
@@ -167,9 +185,12 @@ public class AlarmMgrOnBoot extends BroadcastReceiver {
 						alarmMgr.cancel(pintent);
 						
 						// Create alarm...
-						if (doRepeat) {
+						if (doRepeat && !isExact) {
 							Log.d(APPTAG," > Repeat "+ repeatMillis);
 							alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, timeMillis, repeatMillis, pintent);
+						} else if (isExact && Build.VERSION.SDK_INT >= 19) {
+							Log.d(APPTAG," > Once, exact: "+ calToString(cal));
+							alarmMgr.setExact(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
 						} else {
 							Log.d(APPTAG," > Once");
 							alarmMgr.set(AlarmManager.RTC_WAKEUP, timeMillis, pintent);

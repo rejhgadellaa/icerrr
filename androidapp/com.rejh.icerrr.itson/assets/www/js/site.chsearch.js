@@ -161,20 +161,27 @@ site.chsearch.resultsToStationData = function(results) {
 		
 		var hostPortAndPath = site.chsearch.getHostPortAndPathFromUrl(bestStreamUrl);
 		
+		//loggr.error(" Ic: "+ result.image.image.thumb.url,{dontupload:true});
+		//loggr.error(" Im: "+ result.image.image.url,{dontupload:true});
+		
 		var station = {
 			station_id:site.helpers.genUniqueStationId(result.name).split(" ").join("_"),
 			dirble_id:result.id,
 			station_edited:{},
 			station_name:result.name,
 			station_url:bestStreamUrl,
-			station_icon:"null",
-			station_image:"null",
+			station_icon: (result.image.image.thumb.url)?result.image.image.thumb.url:null,
+			station_image: (result.image.image.url)?result.image.image.url:null,
 			station_host:hostPortAndPath[0],
 			station_port:hostPortAndPath[1],
 			station_path:hostPortAndPath[2],
 			station_country:result.country,
 			station_bitrate: bitrate,
 			station_data:result
+		}
+		
+		if (result.image.image.thumb.url) {
+			loggr.error(" > Ic: "+ station.station_icon,{dontupload:true});
 		}
 		
 		site.chsearch.stations.push(station);
@@ -252,9 +259,12 @@ site.chsearch.drawResults = function(pagenum, forceRedraw) {
 		resultitem.id = "chlist_resultitem_"+ station.station_id;
 		resultitem.station_id = station.station_id;
 		
+		//loggr.error(" Ic: "+ resultitem.station_icon,{dontupload:true});
+		//loggr.error(" Ic: "+ resultitem.station_image,{dontupload:true});
+		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
-		resulticon.src = "img/icons-80/ic_station_default.png";
+		resulticon.src = (station.station_icon)?station.station_icon:"img/icons-80/ic_station_default.png";
 		
 		var resultname = document.createElement("div");
 		resultname.className = "resultname";
@@ -452,7 +462,28 @@ site.chsearch.testStation = function(station, stationIndex) {
 							site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
 							site.chedit.changesHaveBeenMade = true;
 							site.ui.showtoast("Saved!");
-							site.chicon.init(site.chsearch.station_id);
+							
+							// Search for icon or use dirble's entry?
+							var hasIconAndImage = (station.station_icon && station.station_image);
+							if (hasIconAndImage) {
+								
+								var buttonLabels = "Replace,Keep default";
+								navigator.notification.confirm("The station you selected already has an icon set. Do you want to search and replace it?", function(buttonIndex){
+									if (buttonIndex==1) {
+										site.chicon.init(site.chsearch.station_id);
+									} else {
+										site.chedit.changesHaveBeenMade = true;
+										site.chedit.changesHaveBeenMadeGotoStarred = true;
+										site.chlist.init(true);
+									}
+								}, "Replace default icon?", buttonLabels);
+				
+							} else {
+								site.chedit.changesHaveBeenMade = true;
+								site.chedit.changesHaveBeenMadeGotoStarred = true;
+								site.chlist.init(true);
+							}
+							
 						},
 						function(e){ 
 							alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 

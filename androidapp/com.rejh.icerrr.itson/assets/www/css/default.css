@@ -768,10 +768,10 @@ section {
 	}
 
 		#settings .block.header {
-			padding:8px 16px 8px 16px;
-			background:#D0D102;
+			padding:16px;
 			font-size:18pt;
 			font-weight:300;
+			background:#ddd;
 		}
 	
 	/* Item defaults */
@@ -779,6 +779,9 @@ section {
 	#settings .block .itemWrap {
 		position:relative;
 		left:0px; right:0px;
+	}
+	#settings .block .itemWrap.disabled {
+		color:rgba(0,0,0,0.54);
 	}
 	
 	#settings .block .item {
@@ -790,6 +793,10 @@ section {
 		height:1px;
 		margin:16px 0 16px 0;
 		background:#ddd;
+	}
+	#settings .block .item.spacer.invis {
+		height:0;
+		background:none;
 	}
 	
 	#settings .block .item.endspacer {
@@ -809,9 +816,10 @@ section {
 	
 	#settings .block .item.subtitle {
 		position:relative;
-		margin-top:4px;
+		margin-top:0px;
 		margin-right:32px;
-		font-size:10pt;
+		font-size:12pt;
+		font-weight:300;
 	}
 	
 		#settings .checkboxWrap {

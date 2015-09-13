@@ -655,23 +655,16 @@
 		</div>
 		-->
 		
-		<!-- Main settings -->
+		<div class="block header">
+			Station icon and artwork
+		</div>
+		
 		<div class="block def">
-			
-			<div class="itemWrap useFlickrImages">
-				<div class="item title">Always turn on WiFi</div>
-				<div class="item subtitle">Turn on wifi when streaming <a href="javascript:void(0);" onClick="site.settings.helpUseWifi();">(?)</a></div>
-				<div class="checkboxWrap"><input name="useWifi" type="checkbox" class="checkbox" checked="checked" /></div>
-			</div>
-			
-			<div class="itemWrap">
-				<div class="item spacer"></div>
-			</div>
 				
-			<div class="itemWrap useSpeakerForAlarms">
-				<div class="item title">Force alarms through speaker</div>
-				<div class="item subtitle">Always use built-in speaker for alarms <a href="javascript:void(0);" onClick="site.settings.helpUseSpeakerForAlarms();">(?)</a></div>
-				<div class="checkboxWrap"><input name="useSpeakerForAlarms" type="checkbox" class="checkbox" /></div>
+			<div class="itemWrap showStationIcon">
+				<div class="item title">Show station icon</div>
+				<div class="item subtitle">Show station icon in app and lockscreen <!--<a href="javascript:void(0);" onClick="site.settings.helpShowStationIcon();">(?)</a>--></div>
+				<div class="checkboxWrap"><input name="showStationIcon" type="checkbox" class="checkbox" /></div>
 			</div>
 			
 			<div class="itemWrap">
@@ -680,27 +673,63 @@
 				
 			<div class="itemWrap showAlbumArt">
 				<div class="item title">Show album art</div>
-				<div class="item subtitle">Search and show album art on your behalf <a href="javascript:void(0);" onClick="site.settings.helpShowAlbumArt();">(?)</a></div>
+				<div class="item subtitle">Search and show album art on your behalf<br><a href="javascript:void(0);" onClick="site.settings.helpShowAlbumArt();">Learn more</a></div>
 				<div class="checkboxWrap"><input name="showAlbumArt" type="checkbox" class="checkbox" /></div>
+			</div>
+			
+			<div class="itemWrap">
+				<div class="item spacer invis"></div>
+			</div>
+			
+		</div>
+		
+		<div class="block header">
+			Alarms
+		</div>
+		
+		<div class="block def">
+				
+			<div class="itemWrap useSpeakerForAlarms">
+				<div class="item title">Force alarms through speaker</div>
+				<div class="item subtitle">Always use built-in speaker for alarms <a href="javascript:void(0);" onClick="site.settings.helpUseSpeakerForAlarms();">[?]</a></div>
+				<div class="checkboxWrap"><input name="useSpeakerForAlarms" type="checkbox" class="checkbox" /></div>
 			</div>
 			
 			<div class="itemWrap">
 				<div class="item spacer"></div>
 			</div>
 				
-			<div class="itemWrap showStationIcon">
-				<div class="item title">Show station icon</div>
-				<div class="item subtitle">Show station icon in app and lockscreen <!--<a href="javascript:void(0);" onClick="site.settings.helpShowStationIcon();">(?)</a>--></div>
-				<div class="checkboxWrap"><input name="showStationIcon" type="checkbox" class="checkbox" /></div>
+			<div class="itemWrap turnOnScreenForAlarms disabled">
+				<div class="item title">Unlock device for alarms</div>
+				<div class="item subtitle">Turn on screen and unlock device for a short while when an alarm fires</div>
+				<div class="checkboxWrap"><input name="turnOnScreenForAlarms" type="checkbox" class="checkbox" disabled /></div>
 			</div>
-				
+			
+			<div class="itemWrap">
+				<div class="item spacer invis"></div>
+			</div>
+			
+		</div>
+		
+		<div class="block header">
+			Advanced
+		</div>
+		
+		<div class="block def">
+			
+			<div class="itemWrap alwaysTurnOnWifi">
+				<div class="item title">Always turn on WiFi</div>
+				<div class="item subtitle">Turn on wifi when streaming <a href="javascript:void(0);" onClick="site.settings.helpUseWifi();">[?]</a></div>
+				<div class="checkboxWrap"><input name="useWifi" type="checkbox" class="checkbox" checked="checked" /></div>
+			</div>
+			
 			<div class="itemWrap">
 				<div class="item spacer"></div>
 			</div>
 				
 			<div class="itemWrap useSAA">
 				<div class="item title">Sleep As Android integration</div>
-				<div class="item subtitle">Respond to alarms fired by SAA <a href="javascript:void(0);" onClick="site.settings.helpSaa();">(?)</a></div>
+				<div class="item subtitle">Respond to alarms fired by SAA <a href="javascript:void(0);" onClick="site.settings.helpSaa();">[?]</a></div>
 				<div class="checkboxWrap"><input name="useSAA" type="checkbox" class="checkbox" /></div>
 			</div>
 				
@@ -710,9 +739,18 @@
 				
 			<div class="itemWrap sendLogs">
 				<div class="item title">Send error logs</div>
-				<div class="item subtitle">Automatically upload logs to help improve Icerrr <a href="javascript:void(0);" onClick="site.settings.helpSendLogs();">(?)</a></div>
+				<div class="item subtitle">Automatically upload logs to help improve Icerrr <a href="javascript:void(0);" onClick="site.settings.helpSendLogs();">[?]</a></div>
 				<div class="checkboxWrap"><input name="sendLogs" type="checkbox" class="checkbox" checked="checked" /></div>
 			</div>
+			
+			<div class="itemWrap">
+				<div class="item spacer invis"></div>
+			</div>
+			
+			<div class="itemWrap">
+				<div class="item spacer invis"></div>
+			</div>
+			
 	  </div>
 		
     </div>

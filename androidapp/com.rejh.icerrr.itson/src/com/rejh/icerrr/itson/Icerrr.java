@@ -33,13 +33,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.WindowManager;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 public class Icerrr extends DroidGap
 {
@@ -70,6 +66,10 @@ public class Icerrr extends DroidGap
         if(Build.VERSION.SDK_INT >= 19) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+        
+        JavaScriptInterface jsInterface = new JavaScriptInterface(this);
+        // super.appView.getSettings().setJavaScriptEnabled(true);
+        super.appView.addJavascriptInterface(jsInterface, "JSInterface");
         
         // Keyguard (lockscreen)
         keyguardManager = (KeyguardManager) getSystemService(Activity.KEYGUARD_SERVICE);

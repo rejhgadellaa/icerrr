@@ -75,7 +75,7 @@ site.home.init = function() {
 		$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
 	}
 	
-	// average color
+	// Onload/error events for .station_image
 	$("#home .main .station_image img").off("load");
 	$("#home .main .station_image img").off("error");
 	$("#home .main .station_image img").on("load",
@@ -113,25 +113,20 @@ site.home.init = function() {
 		evt.currentTarget.src = "img/web_hi_res_512_002.jpg";
 	});
 	
-	// extra ui
+	// UI: load .station_image
 	if (site.home.lastStationId!=site.session.currentstation.station_id) {
 		site.home.handleStationImage(site.session.currentstation.station_icon);
 	}
+	// UI: Set text and such
 	site.home.lastStationId = site.session.currentstation.station_id;
 	$("#home .main .station_name").html(site.session.currentstation.station_name);
 	$("#home .main .station_nowplaying").html("Now playing: ...");
 	$("#home .main").css("background","rgba(0,0,0,0)");
 	
-	$("#home .main .station_image img").on("error",function(evt) {
-		loggr.warn(" > !onload: "+ evt.originalEvent.target.src);
-		$("#home .main .station_image img").attr("src","img/web_hi_res_512_002.jpg");
-	});
-	
 	// extra events
 	$("#home .main .station_nowplaying")[0].onclick = function(ev) {
 		site.home.run_station_updates();
 	}
-	
 	
 	// hacks..
 	site.ui.hackActiveCssRule();
@@ -556,9 +551,15 @@ site.home.handleStationImage = function(src) {
 		
 		var station = site.session.currentstation;
 		
-		if (site.helpers.shouldDownloadImage(station.station_image_local,station.station_icon)) {
-			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
-			site.helpers.downloadImage($("#home .main .station_image img")[0], filename, station.station_icon,
+		// check if _image is available
+		var station_imagery_url = station.station_icon;
+		if (station.station_image) {
+			station_imagery_url = station.station_image;
+		}
+		
+		if (site.helpers.shouldDownloadImage(station.station_image_local,station_imagery_url)) {
+			var filename = site.helpers.imageUrlToFilename(station_imagery_url,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
+			site.helpers.downloadImage($("#home .main .station_image img")[0], filename, station_imagery_url,
 				function(fileEntry,imgobj) {
 					var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
 					loggr.log(" > DL "+ stationIndex +", "+ fileEntry.fullPath);
@@ -567,7 +568,7 @@ site.home.handleStationImage = function(src) {
 					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
 				},
 				function(error) {
-					loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
+					loggr.error(" > Error downloading '"+ station_imagery_url +"'",{dontupload:true});
 					console.error(error);
 					$("#home .main .station_image img").attr("src","img/web_hi_res_512_002.jpg");
 				}

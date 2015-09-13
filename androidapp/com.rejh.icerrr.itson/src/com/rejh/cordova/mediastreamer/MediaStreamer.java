@@ -472,6 +472,14 @@ public class MediaStreamer extends CordovaPlugin {
 		
 	}
 	
+	private void broadcast(JSONArray args, CallbackContext callbackContext) throws JSONException {
+		
+		JSONObject argsobj = args.getJSONObject(0);
+		
+		// TODO..
+		
+	}
+	
     /*
 	
 	// --- Methods

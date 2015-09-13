@@ -33,10 +33,12 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaMetadataRetriever;
+import android.media.MediaPlayer;
 import android.media.RemoteControlClient;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
@@ -1000,6 +1002,13 @@ public class MediaStreamerService extends Service {
 		try {
 			station_id = station.getString("station_id");
 			src = station.getString("station_icon");
+			if (station.has("station_image")) {
+				String newsrc = station.getString("station_image");
+				Log.d(APPTAG," > Replace _icon with _image: '"+ newsrc +"' ?");
+				if (newsrc!=null) {
+					src = (!newsrc.equals("0"))?station.getString("station_image"):src;					
+				}
+			}
 		} catch(JSONException e) {
 			Log.e(APPTAG,"MediaStreamerService.getStationImage().JSONException: "+e,e);
 			//e.printStackTrace();
@@ -1218,7 +1227,6 @@ public class MediaStreamerService extends Service {
     }
     
     // > Airplane mode
-    
     private static boolean isAirplaneModeOn(Context context) {
 	    return Settings.System.getInt(context.getContentResolver(),
 	            Settings.System.AIRPLANE_MODE_ON, 0) != 0;

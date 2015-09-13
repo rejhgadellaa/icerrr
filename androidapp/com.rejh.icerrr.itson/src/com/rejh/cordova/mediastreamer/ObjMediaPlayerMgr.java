@@ -26,6 +26,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -322,6 +323,13 @@ public class ObjMediaPlayerMgr {
 			
 			// Start & store
 			
+			mp.setVolume(0, 0);
+			if (isAlarm) {
+				fadeIn(mp,5000);
+			} else {
+				fadeIn(mp,1000);
+			}
+			
 			mp.start();
 			
 			settEditor.putInt("mediaplayerState",MEDIA_RUNNING);
@@ -609,6 +617,30 @@ public class ObjMediaPlayerMgr {
 			return theStreamUrl;
 			
 		}
+	    
+	    // > Fade In
+	    
+	    public static void fadeIn(final MediaPlayer _player, final int duration) {
+	        final float deviceVolume = 0.95f; // getDeviceVolume();
+	        final Handler h = new Handler();
+	        h.postDelayed(new Runnable() {
+	            private float time = 0.0f;
+	            private float volume = 0.0f;
+
+	            @Override
+	            public void run() {
+	                if (!_player.isPlaying())
+	                    _player.start();
+	                // can call h again after work!
+	                time += 100;
+	                volume = (deviceVolume * time) / duration;
+	                _player.setVolume(volume, volume);
+	                if (time < duration)
+	                    h.postDelayed(this, 100);
+	            }
+	        }, 100); // 1 second delay (takes millis)
+
+	    }
 		
 		
 		

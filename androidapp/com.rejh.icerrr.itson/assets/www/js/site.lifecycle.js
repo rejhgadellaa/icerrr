@@ -396,7 +396,9 @@ site.lifecycle.onBackButton = function() {
 				site.home.dismissOverflowMenu();
 				site.lifecycle.add_section_history("#home");
 			} else {
-				site.lifecycle.exit();
+				//site.lifecycle.exit();
+				site.lifecycle.add_section_history("#home");
+				window.JSInterface.moveTaskToBack();
 			}
 			break;
 		
