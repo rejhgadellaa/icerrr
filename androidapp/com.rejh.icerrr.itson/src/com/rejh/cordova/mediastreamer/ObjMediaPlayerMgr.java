@@ -326,7 +326,7 @@ public class ObjMediaPlayerMgr {
 			mp.setVolume(0, 0);
 			mp.start();
 			if (isAlarm) {
-				fadeIn(mp,5000);
+				fadeIn(mp,7500);
 			} else {
 				fadeIn(mp,1000);
 			}

@@ -33,7 +33,7 @@ loggr.warn = function(str,opts) {
 	if (!opts) { opts = {}; }
 	opts.type = "warn";
 	loggr.log(str,opts);
-	loggr.save();
+	if (!opts.dontsave) { loggr.save(); }
 }
 
 loggr.debug = function(str,opts) {

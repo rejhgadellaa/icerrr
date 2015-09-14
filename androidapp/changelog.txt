@@ -1,3 +1,8 @@
+0.240
+  * Allow app update when not on wifi if user has initiated the check
+  * Fix: Issues with loading album art (#185)
+  * Fix: Webview switched to landscape layout when keyboard is visible
+
 0.239
   * Hotfix: Alarms would always fire, regardless of repeat configuration
 

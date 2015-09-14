@@ -259,7 +259,7 @@ site.lifecycle.onNewIntent = function(result,intentTime) {
 						
 					},
 					function(err) {
-						loggr.warn("site.lifecycle.onNewIntent.getExtra 'station_id' failed: "+ err);
+						loggr.warn("site.lifecycle.onNewIntent.getExtra 'station_id' failed: "+ err,{dontsave:true});
 					}
 				);
 			}
@@ -514,6 +514,7 @@ site.lifecycle.checkMsgs = function(startedByUser) {
 	
 	loggr.debug("site.lifecycle.checkMsgs()");
 	
+	/*
 	if (startedByUser) {
 		
 		// Check conntype
@@ -526,6 +527,13 @@ site.lifecycle.checkMsgs = function(startedByUser) {
 		// Set flag..
 		site.lifecycle.checkingForUpdates = true;
 		
+	}
+	/**/
+	
+	site.lifecycle.checkingForUpdatesByUser = false;
+	if (startedByUser) {
+		site.lifecycle.checkingForUpdates = true;
+		site.lifecycle.checkingForUpdatesByUser = true;
 	}
 	
 	var action = "get";
@@ -589,7 +597,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		}
 		
 		// Check wifiOnly && conntype (msg will wait until wifi || ethernet)
-		if (ditem.onlyOnWifi) {
+		if (ditem.onlyOnWifi && !site.lifecycle.checkingForUpdatesByUser) {
 			var conntype = site.helpers.getConnType();
 			if (conntype!="WIFI" && conntype!="ETHERNET" && conntype!="UNKNOWN") {
 				loggr.log(" >> no wifi! wait until we have it");

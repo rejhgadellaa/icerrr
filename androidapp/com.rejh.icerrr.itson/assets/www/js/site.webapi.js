@@ -14,6 +14,7 @@ site.webapi = {};
 // ---> Variables
 
 site.webapi.ajaxRequests = {};
+site.webapi.downloadingFiles = {};
 
 // TODO: implement timeout!
 
@@ -44,7 +45,16 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 	site.storage.getFolderEntry(targetPath,
 		function(folderEntry) {
 			
+			// Check if already downloading..
+			if (site.webapi.downloadingFiles[targetPath]) {
+				loggr.error(" > Already downloading file to "+ targetPath);
+				return;
+			}
+			
+			// Go ahead, download it..
 			loggr.log(" > Init download...");
+			
+			site.webapi.downloadingFiles[targetPath] = true;
 			
 			var fileTransfer = new FileTransfer();
 			var uri = encodeURI(url);
@@ -63,6 +73,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 				dest,
 				function(entry) {
 					// console.log("download complete: " + entry.fullPath);
+					delete site.webapi.downloadingFiles[targetPath];
 					cb(entry);
 				},
 				function(error) {
@@ -70,6 +81,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 					loggr.error("download error target " + error.target, {dontupload:true});
 					loggr.error("download error code " + error.code, {dontupload:true});
 					loggr.error(" > "+ site.storage.getErrorType(error));
+					delete site.webapi.downloadingFiles[targetPath];
 					if (errcb) { errcb(error); }
 				},
 				true

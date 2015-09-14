@@ -72,7 +72,7 @@ site.home.init = function() {
 		$("#home .main .station_image img")[0].src = "img/web_hi_res_512_002.jpg";
 	}
 	if (site.cookies.get("setting_showAlbumArt")!=1) {
-		$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+		site.home.loadAlbumArt('img/bg_home_default.jpg');
 	}
 	
 	// Onload/error events for .station_image
@@ -94,7 +94,7 @@ site.home.init = function() {
 			// $("#home .main .station_image").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
 			// $("#home .main .station_image").css("-webkit-background-blend-mode","multiply");
 			// $("#home .main .station_image").css("background-blend-mode","multiply");
-			$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+			site.home.loadAlbumArt('img/bg_home_default.jpg');
 			if (colorIcon) { 
 				if (!$("#home .main .station_image img").hasClass("shadow_z2")) { $("#home .main .station_image img").addClass("shadow_z2"); }
 				$("#home .main .station_image img").css("background-color","rgba("+colorIcon[0]+","+colorIcon[1]+","+colorIcon[2]+","+colorIcon[3]+")");
@@ -341,6 +341,8 @@ site.home.run_station_updates = function() {
 	
 	loggr.debug("site.home.run_station_updates()");
 	
+	loggr.warn(" > Current album art image: "+ $("#home .main .station_image").css("background-image"),{dontsave:true});
+	
 	site.ui.showLoadbar();
 	
 	var apiqueryobj = {
@@ -434,7 +436,7 @@ site.home.getAlbumArt = function() {
 		if (site.cookies.get("setting_showStationIcon")!=0) {
 			$("#home .main .station_image img").css("opacity",1.0);
 		}
-		$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+		site.home.loadAlbumArt('img/bg_home_default.jpg');
 		site.home.handleStationImage(site.session.currentstation.station_icon);
 		return;
 	}
@@ -544,7 +546,7 @@ site.home.handleStationImage = function(src) {
 		if (site.cookies.get("setting_showStationIcon")!=1) {
 			loggr.log(" > !setting_showStationIcon: "+ site.cookies.get("setting_showStationIcon"));
 			$("#home .main .station_image img").css("opacity",0.0);
-			$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+			site.home.loadAlbumArt('img/bg_home_default.jpg');
 			site.ui.hideLoadbar();
 			return;
 		}
@@ -618,25 +620,19 @@ site.home.handleStationImage = function(src) {
 				// Check if file already exists..
 				site.storage.getFileEntry(site.cfg.paths.images, filename,
 					function(fileEntry) { // exists
-						$("#home .main .station_image").css("background-image","url('"+ fileEntry.fullPath +"')");
-						$("#home .main .station_image img").css("opacity",0.0);
-						$("#home .main .station_image").css("background-blend-mode","normal");
-						$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
+						site.home.loadAlbumArt(fileEntry.fullPath);
 						site.ui.hideLoadbar();
 					},
 					function(err) { // dont exist
 						site.helpers.downloadImage(null, filename, src,
 							function(fileEntry,imgobj) {
-								$("#home .main .station_image").css("background-image","url('"+ fileEntry.fullPath +"')");
-								$("#home .main .station_image img").css("opacity",0.0);
-								$("#home .main .station_image").css("background-blend-mode","normal");
-								$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
+								site.home.loadAlbumArt(fileEntry.fullPath);
 								site.ui.hideLoadbar();
 							},
 							function(error) {
 								loggr.error(" > Error downloading '"+ src +"'",{dontupload:true});
 								console.error(error);
-								$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+								site.home.loadAlbumArt('img/bg_home_default.jpg');
 								site.ui.hideLoadbar();
 							}
 						);
@@ -648,6 +644,39 @@ site.home.handleStationImage = function(src) {
 		},1000);
 	
 	}
+	
+}
+
+site.home.loadAlbumArt = function(localpath) {
+	
+	// Note: should only load files that have been downloaded to local storage!
+	
+	loggr.debug("site.home.loadAlbumArt()");
+	loggr.log(" > "+ localpath);
+	
+	// Check
+	if (!localpath) { 
+		loggr.log(" > 'localpath' is undefined or false?!");
+	}
+	if (localpath.indexOf("http")==0) {
+		loggr.error(" > 'localpath' is an url! -> "+ localpath);
+	}
+	
+	var img = new Image();
+	img.onerror = function(e){
+		loggr.warn("site.home.loadAlbumArt().OnError: "+ this.src +", "+ e,{dontsave:true});
+		$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+	}
+	img.onload = function(){
+		loggr.log("site.home.loadAlbumArt().OnLoad: "+ this.src);
+		$("#home .main .station_image").css("background-image","url('"+ this.src +"')");
+		if (this.src.indexOf('img/bg_home_default.jpg')<0) {
+			$("#home .main .station_image img").css("opacity",0.0);
+			$("#home .main .station_image").css("background-blend-mode","normal");
+			$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
+		}
+	}
+	img.src = localpath;
 	
 }
 
