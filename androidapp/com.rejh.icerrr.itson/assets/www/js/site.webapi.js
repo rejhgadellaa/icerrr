@@ -73,7 +73,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 				dest,
 				function(entry) {
 					// console.log("download complete: " + entry.fullPath);
-					delete site.webapi.downloadingFiles[targetPath];
+					site.webapi.downloadingFiles[targetPath] = false;
 					cb(entry);
 				},
 				function(error) {
@@ -81,7 +81,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 					loggr.error("download error target " + error.target, {dontupload:true});
 					loggr.error("download error code " + error.code, {dontupload:true});
 					loggr.error(" > "+ site.storage.getErrorType(error));
-					delete site.webapi.downloadingFiles[targetPath];
+					site.webapi.downloadingFiles[targetPath] = false;
 					if (errcb) { errcb(error); }
 				},
 				true

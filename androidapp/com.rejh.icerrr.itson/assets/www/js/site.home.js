@@ -341,7 +341,7 @@ site.home.run_station_updates = function() {
 	
 	loggr.debug("site.home.run_station_updates()");
 	
-	loggr.warn(" > Current album art image: "+ $("#home .main .station_image").css("background-image"),{dontsave:true});
+	//loggr.warn(" > Current album art image: "+ $("#home .main .station_image").css("background-image"),{dontsave:true});
 	
 	site.ui.showLoadbar();
 	
