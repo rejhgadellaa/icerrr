@@ -628,8 +628,7 @@ public class ObjMediaPlayerMgr {
 
 	            @Override
 	            public void run() {
-	                if (!_player.isPlaying())
-	                    _player.start();
+	                // if (_player != null && !_player.isPlaying()) { _player.start(); } // Causes IllegalStateException :(
 	                // can call h again after work!
 	                time += 100;
 	                volume = (deviceVolume * time) / duration;

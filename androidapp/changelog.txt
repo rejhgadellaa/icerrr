@@ -1,3 +1,6 @@
+0.241
+  * UI Fix: Update dialog now uses Yes/no as button labels instead of Ok/cancel
+
 0.240
   * Allow app update when not on wifi if user has initiated the check
   * Fix: Issues with loading album art (#185)
