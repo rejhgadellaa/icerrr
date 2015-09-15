@@ -1,7 +1,7 @@
 [
     
     {
-        "id":"app240",
+        "id":"app242",
         "crit":"version",
         "critvalue":0.241,
         "action":"install-update-app",

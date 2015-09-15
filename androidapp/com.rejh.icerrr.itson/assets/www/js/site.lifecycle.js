@@ -74,6 +74,7 @@ site.lifecycle.init = function() {
 	// Attach more event listeners (cordova)
 	document.addEventListener('resume', site.lifecycle.onResume, false);
 	document.addEventListener('pause', site.lifecycle.onPause, false);
+	document.addEventListener("menubutton", site.lifecycle.onMenuButton, false);
 	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
 	document.addEventListener("volumeupbutton", site.lifecycle.onVolumeUp, true);
 	document.addEventListener("volumedownbutton", site.lifecycle.onVolumeDown, true);
@@ -367,6 +368,18 @@ site.lifecycle.onDestroy = function() {
 	
 }
 
+// Menu button
+
+site.lifecycle.onMenuButton = function() {
+	
+	loggr.debug("site.lifecycle.onMenuButton()");
+	
+	if (site.vars.currentSection == "#home") {
+		site.home.toggleOverflowMenu();
+	}
+	
+}
+
 // Back button (android)
 
 site.lifecycle.onBackButton = function() {
@@ -592,8 +605,13 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		
 		// Check install-update
 		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
-			loggr.log(" >> Skip", {toconsole:site.cfg.debugging});
-			continue;
+			loggr.log(" >> Skip");
+			if (critvalue<=ditem.critvalue && startedByUser && ditem.action=="install-update-app") {
+				loggr.log(" >>> Don't skip :D started by user dude && it's a new version!");
+				loggr.log(" --> "+ critvalue +" <= "+ ditem.critvalue);
+			} else {
+				continue;
+			}
 		}
 		
 		// Check wifiOnly && conntype (msg will wait until wifi || ethernet)
