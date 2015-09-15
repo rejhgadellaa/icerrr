@@ -1,5 +1,10 @@
-0.241
+0.243
+  * Optimization for touch highlights
+
+0.242
+  * Hotfix: Loading of resources was messed up :S
   * UI Fix: Update dialog now uses Yes/no as button labels instead of Ok/cancel
+  * Bugfixes and improvements
 
 0.240
   * Allow app update when not on wifi if user has initiated the check

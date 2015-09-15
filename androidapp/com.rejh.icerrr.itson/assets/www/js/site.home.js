@@ -88,12 +88,12 @@ site.home.init = function() {
 				color = [51,51,51,1.0];
 				colorIcon = [255,255,255,1]
 			} else {
-				//var colorThief = new ColorThief();
+				//var colorThief = new ColorThief(); // TODO: DEPRECATED
 				//var color = colorThief.getColor(img);
 			}
-			// $("#home .main .station_image").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")");
-			// $("#home .main .station_image").css("-webkit-background-blend-mode","multiply");
-			// $("#home .main .station_image").css("background-blend-mode","multiply");
+			//$("#home .main .station_image").css("background-color","rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")"); // TODO: DEPRECATED
+			//$("#home .main .station_image").css("-webkit-background-blend-mode","multiply");
+			//$("#home .main .station_image").css("background-blend-mode","multiply");
 			site.home.loadAlbumArt('img/bg_home_default.jpg');
 			if (colorIcon) { 
 				if (!$("#home .main .station_image img").hasClass("shadow_z2")) { $("#home .main .station_image img").addClass("shadow_z2"); }
@@ -158,13 +158,6 @@ site.home.init = function() {
 		loggr.log(" > Cancel snoozed alarm(s)");
 		//site.home.alarmSnoozeCancel(); // TODO: DEPRECATED
 	}
-	
-	// Some events..
-	$(".overflow_menu_button_close").off("click");
-	$(".overflow_menu_button_close").on("click",function(evt) {
-		site.home.dismissOverflowMenu();
-		evt.preventDefault();
-	});
 	
 }
 
@@ -651,6 +644,10 @@ site.home.loadAlbumArt = function(localpath) {
 	
 	// Note: should only load files that have been downloaded to local storage!
 	
+	if (!site.vars.currentAlbumArtPath) {
+		site.vars.currentAlbumArtPath = "";
+	}
+	
 	loggr.debug("site.home.loadAlbumArt()");
 	loggr.log(" > "+ localpath);
 	
@@ -662,19 +659,34 @@ site.home.loadAlbumArt = function(localpath) {
 		loggr.error(" > 'localpath' is an url! -> "+ localpath);
 	}
 	
+	// Check if already loaded..
+	//loggr.log(" > "+ site.vars.currentAlbumArtPath); // TODO: Remove
+	//loggr.log(" > "+ localpath); // TODO: Remove
+	if (site.vars.currentAlbumArtPath == localpath) {
+		loggr.log(" -> Image already loaded. Return.");
+		return; // <- :)
+	}
+	site.vars.currentAlbumArtPath = localpath;
+	
+	// Load it :D
 	var img = new Image();
 	img.onerror = function(e){
 		loggr.warn("site.home.loadAlbumArt().OnError: "+ this.src +", "+ e,{dontsave:true});
 		$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+		$("#home .main .station_image img").css("opacity",1.0);
+		site.vars.currentAlbumArtPath = 'img/bg_home_default.jpg'; // onerror: re-set currentAlbumArtPath to reflect backup
 	}
 	img.onload = function(){
 		loggr.log("site.home.loadAlbumArt().OnLoad: "+ this.src);
 		$("#home .main .station_image").css("background-image","url('"+ this.src +"')");
 		if (this.src.indexOf('img/bg_home_default.jpg')<0) {
 			$("#home .main .station_image img").css("opacity",0.0);
-			$("#home .main .station_image").css("background-blend-mode","normal");
-			$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
+			//$("#home .main .station_image").css("background-blend-mode","normal"); // TODO: DEPRECATED
+			//$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
+		} else {
+			$("#home .main .station_image img").css("opacity",1.0);
 		}
+		
 	}
 	img.src = localpath;
 	
@@ -690,11 +702,13 @@ site.home.toggleOverflowMenu = function() {
 	
 	if (!visible) {
 		site.home.overflowMenuIsVisible = true;
-		$(".overflow_menu").fadeIn(125);
+		$(".overflow_menu").css("display","block");
+		//$(".overflow_menu").fadeIn(125);
 		$(".overflow_menu").addClass("active");
 	} else {
 		site.home.overflowMenuIsVisible = false;
-		$(".overflow_menu").fadeOut(125);
+		$(".overflow_menu").css("display","none");
+		//$(".overflow_menu").fadeOut(125);
 		$(".overflow_menu").removeClass("active");
 	}
 	
@@ -702,7 +716,8 @@ site.home.toggleOverflowMenu = function() {
 
 site.home.dismissOverflowMenu = function() {
 	site.home.overflowMenuIsVisible = false;
-	$(".overflow_menu").fadeOut(125);
+	$(".overflow_menu").css("display","none");
+	//$(".overflow_menu").fadeOut(125);
 	$(".overflow_menu").removeClass("active");
 }
 

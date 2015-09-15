@@ -181,12 +181,12 @@
 		<div class="station_image_overlay_bottom"></div>
 		
 		<div class="footer">
-			<div class="button left activatablel" onClick="site.alarms.init();">
+			<div class="button left" onClick="site.alarms.init();">
 				<div class="button_inner">
 					<div class="center_table"><div class="center_td"><img title="Go to alarms" src="img/icons-96/ic_alarms.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
 				</div>
 			</div>
-			<div class="button center activatablel" id="home_play" onClick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
+			<div class="button center" id="home_play" onClick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
 				<div class="button_inner">
 					<div class="button_play_wrap">
 						<img title="Play/Stop" src="img/icons-96/ic_play_w.png" />
@@ -194,7 +194,7 @@
 					</div>
 			  </div>
 			</div>
-			<div class="button right activatablel" onClick="site.chlist.init();">
+			<div class="button right" onClick="site.chlist.init();">
 				<div class="button_inner">
 					<div class="center_table"><div class="center_td"><img title="Go to stations" src="img/icons-96/ic_list.png" style="margin-top:-4px; width:32px; height:32px;" /></div></div>
 				</div>
@@ -768,10 +768,6 @@
 
 <!-- Overflow_Menu -->
 <div id="overflow_menu" class="overflow_menu shadow_z2 round2">
-
-	<!--
-	<div class="overflow_menu_button_close"><img src="img/icons-48/ic_action_overflow_dark.png" /></div>
-	-->
     
     <div class="menu_item_space"></div>
 	

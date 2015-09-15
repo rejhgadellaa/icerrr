@@ -207,15 +207,53 @@ site.ui.setLongclickHelp = function() {
 
 site.ui.hackActiveCssRule = function() {
 	
-	// Reset transitions
+	loggr.log("site.ui.hackActiveCssRule()");
 	
-	$(".activatablel,activatabled").css("transition","none");
+	// When android version >= 5.0: use normal :active method, else do stuff..
+	// loggr.log("'"+ device.version +"'"+ typeof(device.version));
+	try {
+		
+		var versionStr = device.version;
+		loggr.log(" -> Android: "+ versionStr);
+		
+		// Parse float..
+		if (versionStr.split(".").length>2) {
+			// It's something like 5.1.1 so we can't directly parse it to a float, do magic first
+			versionStr = versionStr.substr(0,versionStr.lastIndexOf("."));
+			loggr.log(" --> Parsed: "+ versionStr);
+		}
+		versionStr = parseFloat(versionStr);
+		
+		// Okay check android version now
+		if (versionStr>=5.0) {
+			loggr.log(" > Android 5.0 or higher, no hackCss required");
+			return; // <- leave things as they are
+		}
+	
+	} catch(e) {
+		loggr.error(" > site.ui.hackActiveCssRule().err parsing android version: "+ e);
+	}
+	
+	// Change classnames..
+	var actls = $(".activatablel");
+	for (var i=0; i<actls.length; i++) {
+		$(actls[i]).removeClass("activatablel");
+		$(actls[i]).addClass("activatablelh");
+	}
+	var actds = $(".activatabled");
+	for (var i=0; i<actds.length; i++) {
+		$(actds[i]).removeClass("activatabled");
+		$(actds[i]).addClass("activatabledh");
+	}
+	
+	// Reset transitions
+	$(".activatablelh,activatabledh").css("transition","none");
 	
 	// Work..
 	
 	var elems = [];
 	
-	elems = $(".activatablel");
+	elems = $(".activatablelh");
 	
 	for (var i in elems) {
 		var elem = elems[i];
@@ -241,8 +279,8 @@ site.ui.hackActiveCssRule = function() {
 			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
 			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
 			site.timeouts.activatablel_ontouchstart = setTimeout(function(){
-				if ($(thetarget).hasClass("activatablel_active")) { return; }
-				$(thetarget).addClass("activatablel_active");
+				if ($(thetarget).hasClass("activatablelh_active")) { return; }
+				$(thetarget).addClass("activatablelh_active");
 				//setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
 			},25);
 		};
@@ -251,8 +289,8 @@ site.ui.hackActiveCssRule = function() {
 			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
 			if (site.timeouts.activatablel_ontouchend) { clearTimeout(site.timeouts.activatablel_ontouchend); }
 			site.timeouts.activatablel_ontouchend = setTimeout(function() { 
-				$("*").removeClass("activatablel_active");
-				$("*").removeClass("activatabled_active");
+				$("*").removeClass("activatablelh_active");
+				$("*").removeClass("activatabledh_active");
 				//$(".activatablel,activatabled").css("transition","background-color 500ms");
 			},250);
 				
@@ -260,7 +298,7 @@ site.ui.hackActiveCssRule = function() {
 		elem.ontouchcancel = elem.ontouchend;
 	}
 	
-	elems = $(".activatabled");
+	elems = $(".activatabledh");
 	
 	for (var i in elems) {
 		var elem = elems[i];
@@ -286,8 +324,8 @@ site.ui.hackActiveCssRule = function() {
 			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
 			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
 			site.timeouts.activatabled_ontouchstart = setTimeout(function(){
-				if ($(thetarget).hasClass("activatabled_active")) { return; }
-				$(thetarget).addClass("activatabled_active");
+				if ($(thetarget).hasClass("activatabledh_active")) { return; }
+				$(thetarget).addClass("activatabledh_active");
 				//setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
 			},25);
 		};
@@ -296,8 +334,8 @@ site.ui.hackActiveCssRule = function() {
 			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
 			if (site.timeouts.activatabled_ontouchend) { clearTimeout(site.timeouts.activatabled_ontouchend); }
 			site.timeouts.activatabled_ontouchend = setTimeout(function() { 
-				$("*").removeClass("activatablel_active");
-				$("*").removeClass("activatabled_active");
+				$("*").removeClass("activatablelh_active");
+				$("*").removeClass("activatabledh_active");
 				//$(".activatablel,activatabled").css("transition","background-color 500ms");
 			},250);
 		};
