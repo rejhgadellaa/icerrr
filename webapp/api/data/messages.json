@@ -19,6 +19,24 @@
     },
     
     {
+        "id":"app243",
+        "crit":"version",
+        "critvalue":0.242,
+        "action":"install-update-app",
+        "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
+        "title":"Update available",
+        "message-no":[],
+        "message":[
+            "An update for Icerrr is availabe. Do you want to install it now?\n",
+            "Included:",
+            "*  Minor improvements\n "
+            ],
+        "buttonLabels":"Yes,No",
+        "repeat":0,
+        "onlyOnWifi":1
+    },
+    
+    {
         "id":"stations_database",
         "crit":"install-update",
         "critvalue":1441437565603,
