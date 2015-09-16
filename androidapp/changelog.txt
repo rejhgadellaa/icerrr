@@ -1,3 +1,6 @@
+0.245
+  * Fix: onPause wasn't called when app was closed (causing timers to keep running)
+
 0.244
   * Minor improvements
 
