@@ -1,3 +1,6 @@
+0.244
+  * Minor improvements
+
 0.243
   * Support for android menu button because they still exist
   * Improvements for app update alerts
