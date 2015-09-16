@@ -140,6 +140,9 @@ site.lifecycle.initApp = function(force) {
 	// Restore user session
 	site.helpers.readSession();
 	
+	// Reset blacklist
+	// site.session.blacklistedAlbumArt = {};
+	
 	// UI Init
 	site.ui.init();
 	

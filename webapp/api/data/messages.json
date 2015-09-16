@@ -19,16 +19,16 @@
     },
     
     {
-        "id":"app243",
+        "id":"app244",
         "crit":"version",
-        "critvalue":0.242,
+        "critvalue":0.243,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.243 includes:",
+            "v0.244 includes:",
             "*  Minor improvements\n "
             ],
         "buttonLabels":"Yes,No",

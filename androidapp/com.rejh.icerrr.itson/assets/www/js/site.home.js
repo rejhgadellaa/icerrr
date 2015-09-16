@@ -491,7 +491,7 @@ site.home.getAlbumArt = function() {
 	searchstring = searchstring.split("-").join("");
 	
 	var opts = {
-		maxresults:4
+		maxresults:8
 	}
 	
 	if (google) { if (google.search) { if (google.search.ImageSearch) {
@@ -510,7 +510,21 @@ site.home.getAlbumArt = function() {
 	site.helpers.googleImageSearch(searchstring,
 		function(results) {
 			// pick an image
-			var result = results[0];
+			loggr.log(" > site.helpers.googleImageSearch.results: "+ results.length);
+			if (!site.session.blacklistedAlbumArt) { site.session.blacklistedAlbumArt = {}; }
+			var resi = 0;
+			var result;
+			while (results[resi]) {
+				result = results[resi];
+				if (site.session.blacklistedAlbumArt[result.url]>=2) {
+					// image blacklisted, find more..
+					loggr.log(" -> Blacklisted image: "+ decodeURIComponent(result.url));
+					resi++;
+				} else {
+					// keep result
+					break;
+				}
+			}
 			site.home.handleStationImage(decodeURIComponent(result.url));
 		},
 		function() {
@@ -600,6 +614,16 @@ site.home.handleStationImage = function(src) {
 			
 			if (site.helpers.shouldDownloadImage(src)) {
 				
+				// Check blacklist..
+				// Note: using site.session so this will be stored.. // TODO: is this smart?
+				if (!site.session.blacklistedAlbumArt) { site.session.blacklistedAlbumArt = {}; }
+				if (site.session.blacklistedAlbumArt[src]>=2) {
+					loggr.error(" -> Src blacklisted: "+ src);
+					site.home.loadAlbumArt('img/bg_home_default.jpg');
+					site.ui.hideLoadbar();
+					return;
+				}
+				
 				// Nowplaying
 				var nowplaying = site.helpers.stripIllChars(station.station_nowplaying);
 				
@@ -627,6 +651,9 @@ site.home.handleStationImage = function(src) {
 								console.error(error);
 								site.home.loadAlbumArt('img/bg_home_default.jpg');
 								site.ui.hideLoadbar();
+								if (!site.session.blacklistedAlbumArt) { site.session.blacklistedAlbumArt = {}; }
+								if (!site.session.blacklistedAlbumArt[src]) { site.session.blacklistedAlbumArt[src] = 1; }
+								else { site.session.blacklistedAlbumArt[src] += 1; }
 							}
 						);
 					}
