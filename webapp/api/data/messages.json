@@ -1,17 +1,17 @@
 [
     
     {
-        "id":"app242",
+        "id":"app245",
         "crit":"version",
-        "critvalue":0.241,
+        "critvalue":0.244,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "Included:",
-            "*  HOTFIX :D\n "
+            "v0.245 includes:",
+            "*  Important fix: onPause wasn't called when app was closed (causing timers to keep running)\n "
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
@@ -19,9 +19,9 @@
     },
     
     {
-        "id":"app244",
+        "id":"app245",
         "crit":"version",
-        "critvalue":0.243,
+        "critvalue":0.244,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
