@@ -587,7 +587,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		if (!ditem) { continue; }
 		if (!ditem.crit) { continue; }
 		
-		loggr.log(" > "+ ditem.id, {toconsole:site.cfg.debugging});
+		loggr.log(" > "+ ditem.id);
 		
 		var critvalue;
 		switch(ditem.crit) {
@@ -609,9 +609,9 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		}
 		
 		// Check install-update
-		if (critvalue>ditem.critvalue && critvalue<ditem.critminvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
+		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
 			loggr.log(" >> Skip");
-			if (critvalue<=ditem.critvalue && critvalue<ditem.critminvalue && startedByUser && ditem.action=="install-update-app") {
+			if (critvalue<=ditem.critvalue && startedByUser && ditem.action=="install-update-app") {
 				loggr.log(" >>> Don't skip :D started by user dude && it's a new version!");
 				loggr.log(" --> "+ critvalue +" <= "+ ditem.critvalue);
 			} else {

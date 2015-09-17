@@ -1,7 +1,7 @@
 [
 	
 	{
-		"id":"app247-critical",
+		"id":"app248-critical",
 		"crit":"version",
 		"critvalue":0.246,
 		"action":"url",
@@ -17,17 +17,17 @@
 	},
     
     {
-        "id":"app247",
+        "id":"app248",
         "crit":"version",
-        "critvalue":0.246,
+        "critvalue":0.247,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.247 includes:",
-            "*  Critical update for v0.246"
+            "v0.248 includes:",
+            "*  Critical fix for 0.246 and minor improvements"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,

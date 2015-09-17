@@ -1,4 +1,8 @@
+0.248
+  * Minor improvement for update mechanism
+
 0.247
+  * Critical update for 0.246
   * Move FAB up when toast message is visible
   * Upgraded jquery from 1.11.2 to 1.11.3
 
