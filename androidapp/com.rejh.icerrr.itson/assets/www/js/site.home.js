@@ -958,7 +958,8 @@ site.home.alarmSnooze = function() {
 		notif
 	);
 	
-	site.ui.showtoast("Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute) +" <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5,true);
+	var topmode = (site.vars.currentSection=="#home") ? true : false;
+	site.ui.showtoast("Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute) +" <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5,topmode);
 	
 }
 
@@ -972,7 +973,8 @@ site.home.alarmSnoozeCancel = function(notByUser) {
 		site.alarms.remove(true);
 		// site.ui.showtoast("Snooze canceled");
 		if (!notByUser) {
-			site.ui.showtoast("Snooze canceled <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnooze();'>RE-SET</span>",5,true);
+			var topmode = (site.vars.currentSection=="#home") ? true : false;
+			site.ui.showtoast("Snooze canceled <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnooze();'>RE-SET</span>",5,topmode);
 		}
 	} else {
 		loggr.error(" > No alarm snoozed? => !site.vars.snoozeAlarm");
