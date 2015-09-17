@@ -148,7 +148,8 @@ site.ui.showtoast = function(msg, timeInSec, topMode) {
 	var timeInMsec = timeInSec * 1000;
 	if (topMode && !$("#overlay_toast").hasClass("top")) {
 		$("#overlay_toast").addClass("top");
-	} else {
+	} 
+	if (!topmode) {
 		$(".fab").css("bottom",$("#overlay_toast").outerHeight()+16);
 	}
 	$("#overlay_toast").html(msg);
