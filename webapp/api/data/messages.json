@@ -1,17 +1,33 @@
 [
+	
+	{
+		"id":"app247-critical",
+		"crit":"version",
+		"critvalue":0.246,
+		"action":"url",
+		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
+		"title":"Critical update",
+		"message":[
+			"Oops. I broke the updating mechanism so I need to guide you through the manual updating process. This means you have to download the file yourself and run the installer.\n\n",
+            "Update now?"
+			],
+		"buttonLabels":"Yes,No",
+		"repeat":1,
+		"onlyOnWifi":1
+	},
     
     {
-        "id":"app246",
+        "id":"app247",
         "crit":"version",
-        "critvalue":0.245,
+        "critvalue":0.246,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.246 includes:",
-            "*  Bugfixes and UX improvements"
+            "v0.247 includes:",
+            "*  Critical update for v0.246"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,

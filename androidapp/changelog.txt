@@ -1,5 +1,6 @@
 0.247
   * Move FAB up when toast message is visible
+  * Upgraded jquery from 1.11.2 to 1.11.3
 
 0.246
   * Fix: Force close when alarm was stopped or snoozed before fade in was finished

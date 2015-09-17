@@ -609,9 +609,9 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		}
 		
 		// Check install-update
-		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
+		if (critvalue>ditem.critvalue && critvalue<ditem.critminvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
 			loggr.log(" >> Skip");
-			if (critvalue<=ditem.critvalue && startedByUser && ditem.action=="install-update-app") {
+			if (critvalue<=ditem.critvalue && critvalue<ditem.critminvalue && startedByUser && ditem.action=="install-update-app") {
 				loggr.log(" >>> Don't skip :D started by user dude && it's a new version!");
 				loggr.log(" --> "+ critvalue +" <= "+ ditem.critvalue);
 			} else {
@@ -716,6 +716,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 		}
 		
 		// Show one message, then stop
+		site.lifecycle.checkingForUpdates = false;
 		break;
 		
 	}
@@ -769,6 +770,9 @@ site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
 		}
 		
 	}
+		
+	// Store ditem
+	site.vars.ditem = ditem;
 	
 	if (critical || startedByUser) {
 			
@@ -782,7 +786,6 @@ site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
 		
 	} else {
 		
-		site.vars.ditem = ditem;
 		site.ui.showtoast(title +" <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.lifecycle.installUpdateApp(site.vars.ditem,true);'>LEARN MORE</span>",10,true);
 		
 	}
@@ -790,8 +793,24 @@ site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
 }
 
 site.lifecycle.downloadUpdateApp = function(buttonIndex){
+	
+	var ditem = site.vars.ditem;
+	
+	// Prep some stuff
+	var targetPath = site.cfg.paths.other;
+	var targetFile = "Icerrr.apk";
+	
+	// Prep values from ditem
+	var url = ditem.url;
+	if (!url) { loggr.error(" > ditem.url is not defined: "+ url); }
+	var title = (ditem.title) ? ditem.title : "Update available";
+	var message = (ditem.message) ? ditem.message.join("\n") : "An update for Icerrr is availabe. Do you want to install it now?";
+	var buttonLabels = (ditem.buttonLabels) ? ditem.buttonLabels : "Yes,No";
+	var critical = (ditem.critical) ? ditem.critical : 0;
+	
 	if (buttonIndex==1) {
 
+		site.ui.hidetoast();
 		site.ui.showloading(false,"Downloading update...");
 
 		// We'll just assume we need to download the file, we're not going to check if it exists whatever...

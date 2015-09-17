@@ -831,7 +831,7 @@ section {
 
 .overflow_menu {
 	display:none;
-	z-index:80;
+	z-index:90;
 	overflow:hidden;
 	position:absolute;
 	top:4px; right:4px;
@@ -883,7 +883,7 @@ section {
 /* Common */
 
 .overlay_wrap {
-	z-index:90; /* high zindex */
+	z-index:80; /* high zindex */
 	display:none;
 	position:absolute;
 	top:0; left:0; right:0; bottom:0;
@@ -921,7 +921,7 @@ section {
 /* Other */
 
 #overlay_toast {
-	z-index:99;
+	z-index:85;
 	display:none;
 	position:absolute;
 	/* left:24px; right:24px; bottom:24px; /**/
