@@ -151,6 +151,7 @@ site.ui.showtoast = function(msg, timeInSec, topMode) {
 	} 
 	if (!topMode) {
 		$(".fab").css("bottom",$("#overlay_toast").outerHeight()+16);
+		$("#overlay_toast").removeClass("top");
 	}
 	$("#overlay_toast").html(msg);
 	$("#overlay_toast").fadeIn(250);
