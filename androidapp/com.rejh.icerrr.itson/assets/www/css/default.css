@@ -933,6 +933,10 @@ section {
 	background-color:rgba(0,0,0,0.67);
 	pointer-events:auto;
 }
+#overlay_toast.top {
+	bottom:auto;
+	top:56px;
+}
 
 /* -- COMMON */
 

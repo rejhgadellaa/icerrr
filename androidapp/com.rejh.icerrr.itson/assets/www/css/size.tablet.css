@@ -129,6 +129,13 @@ section { }
 		font-size:16pt;
 	}
 
+/* Other */
+
+#overlay_toast.top {
+	bottom:auto;
+	top:48px;
+}
+
 
 /* -- LOADER BAR */
 

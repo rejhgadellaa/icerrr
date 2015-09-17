@@ -208,6 +208,7 @@ site.lifecycle.initApp = function(force) {
 		site.vars.app_has_updated_home = true;
 		loggr.log(" > App_has_updated: "+site.cookies.get("app_has_updated"));
 		site.cookies.put("app_has_updated",0);
+		site.ui.showtoast("Icerrr was updated :D <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='window.open('https://github.com/rejhgadellaa/icerrr/wiki/Changelog','_system');'>LEARN MORE</span>",10,true);
 		site.helpers.uploadStations();
 	}
 	
@@ -747,6 +748,7 @@ site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
 	var title = (ditem.title) ? ditem.title : "Update available";
 	var message = (ditem.message) ? ditem.message.join("\n") : "An update for Icerrr is availabe. Do you want to install it now?";
 	var buttonLabels = (ditem.buttonLabels) ? ditem.buttonLabels : "Yes,No";
+	var critical = (ditem.critical) ? ditem.critical : 0;
 	
 	loggr.log(" > "+ buttonLabels +", "+ ditem.buttonLabels);
 	
@@ -767,56 +769,67 @@ site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
 		}
 		
 	}
+	
+	if (critical || startedByUser) {
 			
-	// success -> Prompt user
-	navigator.notification.confirm(
-		message, 
-		function(buttonIndex){
-			if (buttonIndex==1) {
+		// success -> Prompt user
+		navigator.notification.confirm(
+			message, 
+			site.lifecycle.downloadUpdateApp, 
+			title, 
+			buttonLabels
+		);
 		
-				site.ui.showloading(false,"Downloading update...");
+	} else {
 		
-				// We'll just assume we need to download the file, we're not going to check if it exists whatever...
-				site.webapi.download(url,targetPath,targetFile,
-					function(fileEntry){
+		site.vars.ditem = ditem;
+		site.ui.showtoast(title +" <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.lifecycle.installUpdateApp(site.vars.ditem,true);'>LEARN MORE</span>",10,true);
+		
+	}
+	
+}
+
+site.lifecycle.downloadUpdateApp = function(buttonIndex){
+	if (buttonIndex==1) {
+
+		site.ui.showloading(false,"Downloading update...");
+
+		// We'll just assume we need to download the file, we're not going to check if it exists whatever...
+		site.webapi.download(url,targetPath,targetFile,
+			function(fileEntry){
+				
+				loggr.log(" > Downloaded: "+ fileEntry.fullPath);
 						
-						loggr.log(" > Downloaded: "+ fileEntry.fullPath);
-								
-						site.ui.hideloading();
-						
-						// A-go-go
-						window.mediaStreamer.installUpdateApp(
-							fileEntry.fullPath,
-							function(res) {
-								loggr.log(" > mediaStreamer.installUpdateApp success :D -> "+res);
-							},
-							function(err) {
-								loggr.error(" > mediaStreamer.installUpdateApp failed?! -> "+ err);
-								alert("Sorry, the installation failed :(");
-								site.ui.hideloading();
-							}
-						);
-						
+				site.ui.hideloading();
+				
+				// A-go-go
+				window.mediaStreamer.installUpdateApp(
+					fileEntry.fullPath,
+					function(res) {
+						loggr.log(" > mediaStreamer.installUpdateApp success :D -> "+res);
 					},
-					function(fileError) {
-						// Error -> Log
-						loggr.error("Error downloading icerrr.apk, fileTransferError "+ err.code);
-						// Just to be sure: remove the file if it somehow already exists..
-						site.storage.deletefile(targetPath,targetFile,function(){},function(){});
-						site.ui.showtoast("Download failed :(");
+					function(err) {
+						loggr.error(" > mediaStreamer.installUpdateApp failed?! -> "+ err);
+						alert("Sorry, the installation failed :(");
 						site.ui.hideloading();
 					}
 				);
-						
-			} else {
-				// nothin..
+				
+			},
+			function(fileError) {
+				// Error -> Log
+				loggr.error("Error downloading icerrr.apk, fileTransferError "+ err.code);
+				// Just to be sure: remove the file if it somehow already exists..
+				site.storage.deletefile(targetPath,targetFile,function(){},function(){});
+				site.ui.showtoast("Download failed :(");
+				site.ui.hideloading();
 			}
-		}, 
-		title, 
-		buttonLabels
-	);
-	
-}
+		);
+				
+	} else {
+		// nothin..
+	}
+};
 
 // ---> Others
 

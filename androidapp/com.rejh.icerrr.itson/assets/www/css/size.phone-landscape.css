@@ -95,6 +95,13 @@ section { }
 			width:24px; height:24px;
 		}
 
+/* Other */
+
+#overlay_toast.top {
+	bottom:auto;
+	top:48px;
+}
+
 
 /* -- LOADER BAR */
 

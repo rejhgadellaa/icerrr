@@ -39,6 +39,12 @@ site.alarms.init = function() {
 		site.lifecycle.onBackButton();
 	}
 	
+	// Hide toasts if any..
+	if ($("#overlay_toast").hasClass("top")) {
+		site.ui.hidetoast();
+	}
+	
+	
 	// Draw
 	site.alarms.drawResults();
 	

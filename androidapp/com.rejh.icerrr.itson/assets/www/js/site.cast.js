@@ -188,6 +188,8 @@ site.cast.requestSession = function() {
 	
 	site.cast.session = "STARTING";
 	
+	site.ui.showloading(null,"Cast: connecting...");
+	
 	loggr.log(" > Request session...");
 	chrome.cast.requestSession(
 		function(session) {
@@ -198,7 +200,10 @@ site.cast.requestSession = function() {
 				site.cast.loadMedia();
 			},500);
 		},
-		site.cast.onerror
+		function(errorCode, errorDescription, errorData) {
+			site.ui.hideloading();
+			site.cast.onerror(errorCode, errorDescription, errorData);
+		}
 	);
 	
 }
@@ -209,7 +214,7 @@ site.cast.loadMedia = function() {
 	
 	loggr.debug("site.cast.loadMedia()");
 	
-	site.ui.showtoast("Cast: Loading media...");
+	site.ui.showloading(null,"Cast: Loading media...");
 	
 	// Get currentstation
 	var station = site.session.currentstation;
@@ -255,11 +260,13 @@ site.cast.loadMedia = function() {
 		} catch(e) {
 			// ..
 		}
+		site.ui.hideloading();
 		return;
 	}
 	site.cast.session.loadMedia(request,
 		function(media) {
 			
+			site.ui.hideloading();
 			site.cast.media = media;
 			site.cast.media.addUpdateListener(site.cast.mediaUpdateListener);
 			site.cast.updateicon(2);
@@ -267,7 +274,10 @@ site.cast.loadMedia = function() {
 			site.cast.updateCurrentstation();
 			
 		},
-		site.cast.onerror
+		function(errorCode, errorDescription, errorData) {
+			site.ui.hideloading();
+			site.cast.onerror(errorCode, errorDescription, errorData);
+		}
 	);
 	
 }
@@ -457,7 +467,7 @@ site.cast.notif = function() {
 	// Actions..
 	var action1 = {
 		icon:"ic_stat_av_quit",
-		title:"Quit",
+		title:"Stop casting",
 		intent:{
 			type:"activity",
 			package:"com.rejh.icerrr.itson",
@@ -467,7 +477,7 @@ site.cast.notif = function() {
 			]
 		}
 	}
-	// opts.actions = [action1]; // TODO: should be able to auto-reconnect existing session before showing this option :S
+	opts.actions = [action1]; // TODO: should be able to auto-reconnect existing session before showing this option :S
 	
 	// Large icon?
 	if (site.session.currentstation.station_icon_local) {

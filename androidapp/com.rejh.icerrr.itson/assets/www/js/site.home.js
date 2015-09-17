@@ -518,7 +518,7 @@ site.home.getAlbumArt = function() {
 				result = results[resi];
 				if (site.session.blacklistedAlbumArt[result.url]>=2) {
 					// image blacklisted, find more..
-					loggr.log(" -> Blacklisted image: "+ decodeURIComponent(result.url));
+					loggr.log(" -> Blacklisted image ("+ site.session.blacklistedAlbumArt[result.url] +"): "+ decodeURIComponent(result.url));
 					resi++;
 				} else {
 					// keep result
@@ -618,7 +618,7 @@ site.home.handleStationImage = function(src) {
 				// Note: using site.session so this will be stored.. // TODO: is this smart?
 				if (!site.session.blacklistedAlbumArt) { site.session.blacklistedAlbumArt = {}; }
 				if (site.session.blacklistedAlbumArt[src]>=2) {
-					loggr.error(" -> Src blacklisted: "+ src);
+					loggr.error(" -> Src blacklisted ("+ site.session.blacklistedAlbumArt[result.url] +"): "+ src);
 					site.home.loadAlbumArt('img/bg_home_default.jpg');
 					site.ui.hideLoadbar();
 					return;
@@ -831,7 +831,8 @@ site.home.alarmUpdateTime = function(alsoCheckIsAlarm) {
 				$("#home .alarm_dialog .time").html(hour +":"+ minute);
 				
 				if ($("#home .alarm_dialog").css("display")!="block") {
-					$("#home .alarm_dialog").fadeIn(500);
+					$("#home .alarm_dialog").css("display","block");
+					//$("#home .alarm_dialog").fadeIn(500);
 				}
 			
 				
@@ -842,7 +843,8 @@ site.home.alarmUpdateTime = function(alsoCheckIsAlarm) {
 				
 				site.session.alarmActive = false;
 				if ($("#home .alarm_dialog").css("display")=="block") {
-					$("#home .alarm_dialog").fadeOut(500);
+					$("#home .alarm_dialog").css("display","none");
+					//$("#home .alarm_dialog").fadeOut(500);
 				}
 				
 			}
@@ -956,7 +958,7 @@ site.home.alarmSnooze = function() {
 		notif
 	);
 	
-	site.ui.showtoast("Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute) +" <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5);
+	site.ui.showtoast("Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute) +" <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5,true);
 	
 }
 
@@ -970,7 +972,7 @@ site.home.alarmSnoozeCancel = function(notByUser) {
 		site.alarms.remove(true);
 		// site.ui.showtoast("Snooze canceled");
 		if (!notByUser) {
-			site.ui.showtoast("Snooze canceled <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnooze();'>RE-SET</span>",5);
+			site.ui.showtoast("Snooze canceled <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnooze();'>RE-SET</span>",5,true);
 		}
 	} else {
 		loggr.error(" > No alarm snoozed? => !site.vars.snoozeAlarm");

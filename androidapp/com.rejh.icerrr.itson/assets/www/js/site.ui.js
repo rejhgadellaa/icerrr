@@ -141,22 +141,30 @@ site.ui.hideLoadbar = function() {
 
 // ---> Hoverbox (toasts!)
 
-site.ui.showtoast = function(msg, timeInSec) {
+site.ui.showtoast = function(msg, timeInSec, topMode) {
 	loggr.log("site.ui.showtoast()");
 	if (site.ui.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
 	if (!timeInSec) { timeInSec = 1.5; }
 	var timeInMsec = timeInSec * 1000;
+	if (topMode && !$("#overlay_toast").hasClass("top")) {
+		$("#overlay_toast").addClass("top");
+		$(".fab").css("bottom",$("#overlay_toast").outerHeight()+16);
+	}
 	$("#overlay_toast").html(msg);
 	$("#overlay_toast").fadeIn(250);
-	$(".fab").css("bottom",$("#overlay_toast").outerHeight()+16);
 	site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec);
 }
 
 site.ui.hidetoast = function() {
 	loggr.log("site.ui.hidetoast()");
 	if (site.timeouts.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
-	$("#overlay_toast").fadeOut(250);
+	$("#overlay_toast").fadeOut(250, function(){
+		if ($("#overlay_toast").hasClass("top")) {
+			$("#overlay_toast").removeClass("top");
+	}
+	});
 	$(".fab").css("bottom",16);
+	
 }
 
 site.ui.createtoast = function() {

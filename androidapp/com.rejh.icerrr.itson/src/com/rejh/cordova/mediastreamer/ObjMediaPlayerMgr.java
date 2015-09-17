@@ -38,7 +38,7 @@ public class ObjMediaPlayerMgr {
 	// --------------------------------------------------
 	// Members
 	
-	private final String LOGTAG = "MediaStreamer";
+	private final static String LOGTAG = "MediaStreamer";
 	private final String SETTAG = "MediaStreamer";
 	
 	private Context context;
@@ -628,13 +628,19 @@ public class ObjMediaPlayerMgr {
 
 	            @Override
 	            public void run() {
-	                // if (_player != null && !_player.isPlaying()) { _player.start(); } // Causes IllegalStateException :(
-	                // can call h again after work!
-	                time += 100;
-	                volume = (deviceVolume * time) / duration;
-	                _player.setVolume(volume, volume);
-	                if (time < duration)
-	                    h.postDelayed(this, 100);
+	            	try {
+		            	if (_player==null) { return; }
+		                // if (_player != null && !_player.isPlaying()) { _player.start(); } // Causes IllegalStateException :(
+		                // can call h again after work!
+		                time += 100;
+		                volume = (deviceVolume * time) / duration;
+		                _player.setVolume(volume, volume);
+		                if (time < duration) {
+		                    h.postDelayed(this, 100);
+		                }
+	            	} catch(IllegalStateException e) {
+	            		Log.w(LOGTAG," > IllegalStateException: "+e,e);
+	            	}
 	            }
 	        }, 100); // 1 second delay (takes millis)
 

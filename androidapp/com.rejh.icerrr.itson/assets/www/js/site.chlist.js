@@ -76,6 +76,12 @@ site.chlist.init = function(forceRedraw) {
 	site.lifecycle.addOnPauseCb(site.chlist.onpause);
 	site.lifecycle.addOnResumeCb(site.chlist.onresume);
 	
+	// Hide toasts if any..
+	if ($("#overlay_toast").hasClass("top")) {
+		site.ui.hidetoast();
+	}
+	
+	// Hide loading..
 	site.ui.hideloading();
 	
 }
