@@ -208,7 +208,7 @@ site.lifecycle.initApp = function(force) {
 		site.vars.app_has_updated_home = true;
 		loggr.log(" > App_has_updated: "+site.cookies.get("app_has_updated"));
 		site.cookies.put("app_has_updated",0);
-		site.ui.showtoast("Icerrr was updated :D <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='window.open('https://github.com/rejhgadellaa/icerrr/wiki/Changelog','_system');'>LEARN MORE</span>",10,true);
+		site.ui.showtoast("Icerrr was updated :D <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='window.open(\"https://github.com/rejhgadellaa/icerrr/wiki/Changelog\",\"_system\");'>LEARN MORE</span>",10,true);
 		site.helpers.uploadStations();
 	}
 	
