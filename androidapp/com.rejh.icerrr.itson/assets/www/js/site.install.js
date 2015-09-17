@@ -589,7 +589,7 @@ site.installer.finishup = function() {
 			/**/
 			site.cookies.put("app_version",site.cfg.app_version);
 			site.cookies.put("app_is_installed",1);
-			site.cookies.put("app_has_updated",1);
+			site.cookies.put("app_has_updated",(site.installer.isUpdate)?1:0);
 			
 			window.location.reload();
 			/**/

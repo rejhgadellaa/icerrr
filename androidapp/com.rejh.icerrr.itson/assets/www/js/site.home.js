@@ -148,7 +148,7 @@ site.home.init = function() {
 	loggr.log(" > site.session.alarmActive: "+ site.session.alarmActive,{dontupload:true});
 	if (site.session.alarmActive) {
 		loggr.log(" > Alarm detected, show dialog + alarmUpdateTime()");
-		$("#home .alarm_dialog").fadeIn(500);
+		//$("#home .alarm_dialog").fadeIn(500);
 		// site.home.alarmUpdateTime();
 	}
 	site.home.alarmUpdateTime();
@@ -230,7 +230,8 @@ site.home.mpPlayToggle = function() {
 		site.mp.playToggle();
 	}
 	
-	$(".button_play_bufferAnim").fadeIn(500);
+	//$(".button_play_bufferAnim").fadeIn(500);
+	$(".button_play_bufferAnim").css("display","block");
 	return true;
 	
 }
@@ -282,7 +283,8 @@ site.home.run_ui_updates = function() {
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy");
 			$(".button.center").addClass("busy");
-			$(".button_play_bufferAnim").fadeIn(500);
+			//$(".button_play_bufferAnim").fadeIn(500);
+			$(".button_play_bufferAnim").css("display","block");
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {
 			//loggr.log(" > Media.MEDIA_PAUSED > .busy");
@@ -312,7 +314,8 @@ site.home.run_ui_updates = function() {
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy");
 			$(".button.center").addClass("busy");
-			$(".button_play_bufferAnim").fadeIn(500);
+			//$(".button_play_bufferAnim").fadeIn(500);
+			$(".button_play_bufferAnim").css("display","block");
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else {
 			$(".button.center").removeClass("busy"); 
@@ -652,8 +655,11 @@ site.home.handleStationImage = function(src) {
 								site.home.loadAlbumArt('img/bg_home_default.jpg');
 								site.ui.hideLoadbar();
 								if (!site.session.blacklistedAlbumArt) { site.session.blacklistedAlbumArt = {}; }
-								if (!site.session.blacklistedAlbumArt[src]) { site.session.blacklistedAlbumArt[src] = 1; }
-								else { site.session.blacklistedAlbumArt[src] += 1; }
+								if (site.helpers.isConnected()) {
+									// we're connected but can't download an image.. I guess it should go on the blacklist..
+									if (!site.session.blacklistedAlbumArt[src]) { site.session.blacklistedAlbumArt[src] = 1; }
+									else { site.session.blacklistedAlbumArt[src] += 1; }
+								}
 							}
 						);
 					}
