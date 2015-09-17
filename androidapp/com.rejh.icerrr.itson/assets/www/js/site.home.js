@@ -148,7 +148,7 @@ site.home.init = function() {
 	loggr.log(" > site.session.alarmActive: "+ site.session.alarmActive,{dontupload:true});
 	if (site.session.alarmActive) {
 		loggr.log(" > Alarm detected, show dialog + alarmUpdateTime()");
-		//$("#home .alarm_dialog").fadeIn(500);
+		//$("#home .alarm_dialog").(500);
 		// site.home.alarmUpdateTime();
 	}
 	site.home.alarmUpdateTime();
@@ -230,7 +230,7 @@ site.home.mpPlayToggle = function() {
 		site.mp.playToggle();
 	}
 	
-	//$(".button_play_bufferAnim").fadeIn(500);
+	//$(".button_play_bufferAnim").(500);
 	$(".button_play_bufferAnim").css("display","block");
 	return true;
 	
@@ -283,7 +283,7 @@ site.home.run_ui_updates = function() {
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy");
 			$(".button.center").addClass("busy");
-			//$(".button_play_bufferAnim").fadeIn(500);
+			//$(".button_play_bufferAnim").(500);
 			$(".button_play_bufferAnim").css("display","block");
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {
@@ -314,7 +314,7 @@ site.home.run_ui_updates = function() {
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy");
 			$(".button.center").addClass("busy");
-			//$(".button_play_bufferAnim").fadeIn(500);
+			//$(".button_play_bufferAnim").(500);
 			$(".button_play_bufferAnim").css("display","block");
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else {
@@ -736,7 +736,7 @@ site.home.toggleOverflowMenu = function() {
 	if (!visible) {
 		site.home.overflowMenuIsVisible = true;
 		$(".overflow_menu").css("display","block");
-		//$(".overflow_menu").fadeIn(125);
+		//$(".overflow_menu").(125);
 		$(".overflow_menu").addClass("active");
 	} else {
 		site.home.overflowMenuIsVisible = false;
