@@ -1,8 +1,11 @@
+0.247
+  * Move FAB up when toast message is visible
+
 0.246
   * Fix: Force close when alarm was stopped or snoozed before fade in was finished
-  * Update alert is presented in toast if it's not critical
+  * Update alert is presented in toast message if it's not critical
   * Clearer UI when connecting to Chromecast
-  * New: "Quit" action for Chromecast notification (experimantal)
+  * New: "Quit" action for Chromecast notification (experimental)
 
 0.245
   * Fix: onPause wasn't called when app was closed (causing timers to keep running)
