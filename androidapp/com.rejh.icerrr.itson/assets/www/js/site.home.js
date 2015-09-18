@@ -627,7 +627,7 @@ site.home.handleStationImage = function(src) {
 				// Note: using site.session so this will be stored.. // TODO: is this smart?
 				if (!site.session.blacklistedAlbumArt) { site.session.blacklistedAlbumArt = {}; }
 				if (site.session.blacklistedAlbumArt[src]>=2) {
-					loggr.error(" -> Src blacklisted ("+ site.session.blacklistedAlbumArt[result.url] +"): "+ src);
+					loggr.error(" -> Src blacklisted ("+ site.session.blacklistedAlbumArt[src] +"): "+ src);
 					site.home.loadAlbumArt('img/bg_home_default.jpg');
 					site.ui.hideLoadbar();
 					return;

@@ -36,82 +36,81 @@
 
 <head>
 	
-    <meta charset="utf-8">
+	<meta charset="utf-8">
 	
 	<!-- Style now -->
 	<style>
 	html, body { background:#2D6073; width:100%; height:100%;  }
 	</style>
 	
-    <!-- Title + Info -->
-    <title>ICERRR</title>
-    
-    <meta name="title" content="ICERRR" />
-    <meta name="description" content="The html5(ish) icecast streaming app">
+	<!-- Title + Info -->
+	<title>ICERRR</title>
+	
+	<meta name="title" content="ICERRR" />
+	<meta name="description" content="The html5(ish) icecast streaming app">
 	<meta name="author" content="REJH Gadellaa">
-    
-    <!-- Meta -->
-    <meta content="True" name="HandheldFriendly" />
+	
+	<!-- Meta -->
+	<meta content="True" name="HandheldFriendly" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 	
 	<!-- Javascript: jQuery -->
-    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min.js"></script>
+	<script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" language="javascript" src="js/jquery/jquery.longclick-simple.js"></script>
-	<!-- <script type="text/javascript" language="javascript" src="js/jquery/jquery.bounceback.js"></script> -->
 	
 	<!-- Javascript: Other -->
-    <script type="text/javascript" language="javascript" src="js/plugs/dateformat.js"></script>
-    <script type="text/javascript" language="javascript" src="js/plugs/smoothie.js"></script> <!-- req for chrome.cast -->
-    <script type="text/javascript" language="javascript" src="js/plugs/md5.js"></script>
-    
-    <!-- Javascript : Cordova -->
-    <script language="javascript" type="text/javascript" src="js/cordova/cordova-2.7.0.js"></script>
-    <script language="javascript" type="text/javascript" src="js/cordova/chrome.cast.js"></script>
-    <script language="javascript" type="text/javascript" src="js/cordova/webintent.js"></script>
-    <script language="javascript" type="text/javascript" src="js/cordova/mediastreamer.js"></script>
-    <script language="javascript" type="text/javascript" src="js/cordova/notifmgr.js"></script>
-    <script language="javascript" type="text/javascript" src="js/cordova/alarmmgr.js"></script>
-    <script language="javascript" type="text/javascript" src="js/cordova/datepicker.js"></script>
-    
-    <!-- Javascript: Externals || TODO: would rather not rely on online files... -->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" language="javascript" src="js/plugs/dateformat.js"></script>
+	<script type="text/javascript" language="javascript" src="js/plugs/smoothie.js"></script> <!-- req for chrome.cast -->
+	<script type="text/javascript" language="javascript" src="js/plugs/md5.js"></script>
+	
+	<!-- Javascript : Cordova -->
+	<script language="javascript" type="text/javascript" src="js/cordova/cordova-2.7.0.js"></script>
+	<script language="javascript" type="text/javascript" src="js/cordova/chrome.cast.js"></script>
+	<script language="javascript" type="text/javascript" src="js/cordova/webintent.js"></script>
+	<script language="javascript" type="text/javascript" src="js/cordova/mediastreamer.js"></script>
+	<script language="javascript" type="text/javascript" src="js/cordova/notifmgr.js"></script>
+	<script language="javascript" type="text/javascript" src="js/cordova/alarmmgr.js"></script>
+	<script language="javascript" type="text/javascript" src="js/cordova/datepicker.js"></script>
+	
+	<!-- Javascript: Externals || TODO: would rather not rely on online files... -->
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	
 	<!-- Javascript: icerrr -->
-    <script language="javascript" type="text/javascript" src="js/site.base.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.alarms.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.chedit.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.chicon.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.chlist.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.cast.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.chsearch.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.config.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.helpers.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.home.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.install.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.lifecycle.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.logger.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.mediaplayer3.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.settings.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.storage.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.base.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.alarms.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.chedit.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.chicon.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.chlist.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.cast.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.chsearch.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.config.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.helpers.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.home.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.install.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.lifecycle.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.logger.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.mediaplayer3.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.settings.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.storage.js"></script>
 	<script language="javascript" type="text/javascript" src="js/site.ui.js"></script>
-    <script language="javascript" type="text/javascript" src="js/site.webapi.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.webapi.js"></script>
 
 	<!-- Script: init! -->
 	<script>
 	document.addEventListener('deviceready', site.lifecycle.onDeviceReady, false);
 	</script>
-        
-    <!-- Style / base -->
-    <link rel="stylesheet" type="text/css" href="css/default.css" />
-    <link rel="stylesheet" type="text/css" href="css/add.cast.css" />
-    
-    <!-- Style / responsive -->
+		
+	<!-- Style / base -->
+	<link rel="stylesheet" type="text/css" href="css/default.css" />
+	<link rel="stylesheet" type="text/css" href="css/add.cast.css" />
+	
+	<!-- Style / responsive -->
 	<link rel="stylesheet" type="text/css" href="css/size.tablet.css" media="screen and (min-width: 599px) and (max-aspect-ratio: 13/9)" />
 	<link rel="stylesheet" type="text/css" href="css/default.css" media="screen and (min-width: 959px) and (min-aspect-ratio: 13/9)" />
 	<link rel="stylesheet" type="text/css" href="css/size.phone-landscape.css" media="screen and (max-width: 599px) and (min-aspect-ratio: 13/9)" />
-    
-    <!-- Webfonts -->
-    <link href='css/fonts.css' rel='stylesheet' type='text/css'>
+	
+	<!-- Webfonts -->
+	<link href='css/fonts.css' rel='stylesheet' type='text/css'>
 	
 </head>
 
@@ -128,24 +127,24 @@
 <!-- Install -->
 <section id="install">
 	
-    <div class="actionbar shadow_z2">
-    	
-        <div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
-        <div class="title">ICERRR</div>
-        
+	<div class="actionbar shadow_z2">
+		
+		<div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
+		<div class="title">ICERRR</div>
+		
 		<div class="actions"></div>
 		
-        <div class="loadbar">
-        	<div class="loadbar_inner_base loadbar_inner_1"></div>
-            <div class="loadbar_inner_base loadbar_inner_2"></div>
-            <div class="loadbar_inner_base loadbar_inner_3"></div>
-        </div>
+		<div class="loadbar">
+			<div class="loadbar_inner_base loadbar_inner_1"></div>
+			<div class="loadbar_inner_base loadbar_inner_2"></div>
+			<div class="loadbar_inner_base loadbar_inner_3"></div>
+		</div>
 		
-    </div>
-    
-    <div class="main">
-    	<div class="log"><h1>Just a sec..</h1></div>
-    </div>
+	</div>
+	
+	<div class="main">
+		<div class="log"><h1>Just a sec..</h1></div>
+	</div>
 </section>
 
 <!-- Section -->
@@ -154,25 +153,25 @@
 <!-- Section: Home -->
 <section id="home">
 	
-    <div class="actionbar shadow_z2" onClick="//site.home.dismissOverflowMenu();">
-    	
-        <div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
-        <div class="title">ICERRR</div>
-        
+	<div class="actionbar shadow_z2" onClick="//site.home.dismissOverflowMenu();">
+		
+		<div class="icon_app"><img src="img/icons-48/ic_launcher.png" /></div>
+		<div class="title">ICERRR</div>
+		
 		<div class="actions">
-        	<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_overflow_green.png" title="Tap for more options" /></div>
-            <div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" title="Chromecast" /></div>
-        </div>
+			<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_overflow_green.png" title="Tap for more options" /></div>
+			<div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/D0D102.jpg" title="Chromecast" /></div>
+		</div>
 		
-        <div class="loadbar">
-        	<div class="loadbar_inner_base loadbar_inner_1"></div>
-            <div class="loadbar_inner_base loadbar_inner_2"></div>
-            <div class="loadbar_inner_base loadbar_inner_3"></div>
-        </div>
+		<div class="loadbar">
+			<div class="loadbar_inner_base loadbar_inner_1"></div>
+			<div class="loadbar_inner_base loadbar_inner_2"></div>
+			<div class="loadbar_inner_base loadbar_inner_3"></div>
+		</div>
 		
-    </div>
-    
-    <div class="main">
+	</div>
+	
+	<div class="main">
 		
 		<div class="station_image" onClick="site.home.dismissOverflowMenu();"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div></div>
 		<div class="station_image_overlay"></div>
@@ -201,12 +200,12 @@
 			</div>
 		</div>
 		
-        <div class="alarm_dialog" onClick="site.home.dismissOverflowMenu();">
-            <div class="alarm_dialog_inner shadow_z5 round4">
-                <div class="time">00<blink>:</blink>00</div>
-                <div class="button snooze activatablel" onClick="site.home.alarmSnooze();">SNOOZE</div>
-                <div class="button stop activatablel" onClick="site.home.alarmStop();">STOP</div>
-            </div>
+		<div class="alarm_dialog" onClick="site.home.dismissOverflowMenu();">
+			<div class="alarm_dialog_inner shadow_z5 round4">
+				<div class="time">00<blink>:</blink>00</div>
+				<div class="button snooze activatablel" onClick="site.home.alarmSnooze();">SNOOZE</div>
+				<div class="button stop activatablel" onClick="site.home.alarmStop();">STOP</div>
+			</div>
 		</div>
 		
 	</div>
@@ -216,32 +215,32 @@
 <!-- Section -->
 <section id="channellist">
 	
-    <div class="actionbar">
-    	
-        <div class="icon_app  activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Stations</div>
-        
+	<div class="actionbar">
+		
+		<div class="icon_app  activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Stations</div>
+		
 		<div class="actions">
 			<!--
-            <div class="action activatablel" onclick="site.chsearch.init();">
+			<div class="action activatablel" onclick="site.chsearch.init();">
 				<img src="img/icons-48/ic_add_green.png" title="Add station" />
 			</div>
 			-->
-        </div>
-    </div>
-    
-    <div class="tabbar shadow_z2">
-    	<div class="tab activatablel stations active" onClick="site.chlist.ontabclick(this)">
-        	<div class="center_table"><div class="center_td">All</div></div>
-        </div>
-    	<div class="tab activatablel starred" onClick="site.chlist.ontabclick(this);">
-        	<div class="center_table"><div class="center_td">Starred</div></div>
-        </div>
-    </div>
-    
-    <div class="main">
+		</div>
+	</div>
+	
+	<div class="tabbar shadow_z2">
+		<div class="tab activatablel stations active" onClick="site.chlist.ontabclick(this)">
+			<div class="center_table"><div class="center_td">All</div></div>
+		</div>
+		<div class="tab activatablel starred" onClick="site.chlist.ontabclick(this);">
+			<div class="center_table"><div class="center_td">Starred</div></div>
+		</div>
+	</div>
+	
+	<div class="main">
 		
-    </div>
+	</div>
 	
 	<div class="fab shadow_z5" onClick="site.chsearch.init();"><img src="img/icons-48/ic_add_green.png" /></div>
 
@@ -250,22 +249,22 @@
 <!-- Section -->
 <section id="editstation">
 	
-    <div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Stations</div>
-        
+	<div class="actionbar shadow_z2">
+		
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Stations</div>
+		
 		<div class="actions">
 			<div class="action save activatablel" onClick="site.chedit.check();">
 				<img src="img/icons-48/ic_save_green.png" title="Save station" />
 			</div>
-            <div class="action trash activatablel" onClick="site.chedit.remove();">
+			<div class="action trash activatablel" onClick="site.chedit.remove();">
 				<img src="img/icons-48/ic_trash_green.png" title="Remove station" />
 			</div>
-        </div>
-    </div>
-    
-    <div class="main">
+		</div>
+	</div>
+	
+	<div class="main">
 	
 		<div class="block header">
 			Add/Edit station
@@ -307,28 +306,28 @@
 		
 		</form>
 		
-    </div>
+	</div>
 	
 </section>
 
 <!-- Section -->
 <section id="searchstation">
 	
-    <div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Stations</div>
-        
+	<div class="actionbar shadow_z2">
+		
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Stations</div>
+		
 		<div class="actions">
 			<!--
 			<div class="action save activatablel" onclick="site.chsearch.searchstation();">
 				<img src="img/icons-48/ic_search_green.png" title="Search" />
 			</div>
 			-->
-        </div>
-    </div>
-    
-    <div class="main">
+		</div>
+	</div>
+	
+	<div class="main">
 	
 		<div class="block header">
 			Search station
@@ -341,12 +340,12 @@
 			<p><label>Station name: <span style="color:#f00;">*</span></label>
 				<input class="round2" type="text" name="station_search" placeholder="Ex: BBC Radio 1" />
 			</p>
-            
-            <p>&nbsp;</p>
+			
+			<p>&nbsp;</p>
 			
 			<p>Can't find your station but you know how to get hold of the stream url? Consider <a href='javascript:void(0);' onClick="window.open('http://dirble.com/','_system');">signing up for a Dirble account</a> and add it to the database!</p>
-            
-            <p>Or add a station <a href="javascript:void(0);" onClick="loggr.log(site.lifecycle.remove_section_history_item('#searchstation'));site.chedit.init(false);">manually</a></p>
+			
+			<p>Or add a station <a href="javascript:void(0);" onClick="loggr.log(site.lifecycle.remove_section_history_item('#searchstation'));site.chedit.init(false);">manually</a></p>
 			
 		</div>
 		
@@ -358,45 +357,45 @@
 		
 		<div class="fab shadow_z5" onClick="site.chsearch.searchstation();;"><img src="img/icons-48/ic_search_green.png" /></div>
 	
-    </div>
+	</div>
 
 </section>
 
 <!-- Section -->
 <section id="searchstation_results">
 	
-    <div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Stations</div>
-        
+	<div class="actionbar shadow_z2">
+		
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Stations</div>
+		
 		<div class="actions">
 			
-        </div>
-    </div>
-    
-    <div class="main">
+		</div>
+	</div>
 	
-    </div>
+	<div class="main">
+	
+	</div>
 
 </section>
 
 <!-- Section -->
 <section id="searchicon">
 	
-    <div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Stations</div>
-        
+	<div class="actionbar shadow_z2">
+		
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Stations</div>
+		
 		<div class="actions">
 			
-        </div>
-    </div>
-    
-    <div class="main">
+		</div>
+	</div>
 	
-    </div>
+	<div class="main">
+	
+	</div>
 
 </section>
 
@@ -404,70 +403,70 @@
 <section id="alarms">
 
 	<div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Alarms</div>
-        
+		
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Alarms</div>
+		
 		<div class="actions">
 			<!--
-            <div class="action activatablel" onclick="site.alarms.add();">
+			<div class="action activatablel" onclick="site.alarms.add();">
 				<img src="img/icons-48/ic_add_green.png" title="Add alarm" />
 			</div>
 			-->
-        </div>
-    </div>
-    
-    <div class="main">
+		</div>
+	</div>
 	
-    </div>
+	<div class="main">
+	
+	</div>
 	
 	<div class="fab shadow_z5" onClick="site.alarms.add();"><img src="img/icons-48/ic_add_green.png" /></div>
-    
+	
 </section>
 
 <!-- Section -->
 <section id="alarms_add">
 
 	<div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Alarms</div>
-        
+		
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Alarms</div>
+		
 		<div class="actions">
 			<div class="action save activatablel" onClick="site.alarms.save();">
 				<img src="img/icons-48/ic_save_green.png" title="Save alarm" />
 			</div>
-            <div class="action trash activatablel" onClick="site.alarms.remove();">
+			<div class="action trash activatablel" onClick="site.alarms.remove();">
 				<img src="img/icons-48/ic_trash_green.png" title="Remove alarm" />
 			</div>
-        </div>
-    </div>
-    
-    <div class="main">
+		</div>
+	</div>
+	
+	<div class="main">
 		
-        <div class="block header">
+		<div class="block header">
 			Set alarm
 		</div>
-        
-        <form onSubmit="return false;">
+		
+		<form onSubmit="return false;">
 		
 		<div class="block data1">
 			
 			<p><label>Station:</label><br>
 				<select name="alarm_station_name"></select>
 			</p>
-            
-            <p><label>Time:</label><br>
-            	<input type="time" name="alarm_time" />
-            </p>
-            
-            <p><label>Volume:</label><br>
-            	<input type="range" name="alarm_volume" min="1" max="10" />
-            </p>
-            
-            <div id="alarms_add_repeatCfg">
-            <p><label>Repeat:</label></p>
-            	<div class="item weekschedule">
+			
+			<p><label>Time:</label><br>
+				<input type="time" name="alarm_time" />
+			</p>
+			
+			<p><label>Volume:</label><br>
+				<input type="range" name="alarm_volume" min="1" max="10" />
+			</p>
+			
+			<div id="alarms_add_repeatCfg">
+			<p><label>Repeat:</label></p>
+				<div class="item weekschedule">
 					<div class="weekboxWrap activatablel sun">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Sun</div>
 					</div>
@@ -490,18 +489,18 @@
 						<div class="weekboxIndicator"></div><div class="weekboxText">Sat</div>
 					</div>
 			  </div>
-            </div>
-            
-            
-            
-            <p>&nbsp;</p>
+			</div>
+			
+			
+			
+			<p>&nbsp;</p>
 			
 			</form>
 			
 		</div>
-        
-    </div>
-    
+		
+	</div>
+	
 </section>
 
 <!-- Section -->
@@ -511,17 +510,17 @@
 <section id="about">
 
 	<div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">About</div>
-        
-		<div class="actions">
-        </div>
-    </div>
-    
-    <div class="main">
 		
-        <div class="block header">
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">About</div>
+		
+		<div class="actions">
+		</div>
+	</div>
+	
+	<div class="main">
+		
+		<div class="block header">
 			About Icerrr
 		</div>
 		
@@ -541,7 +540,7 @@
 			
 		</div>
 		
-        <div class="block header">
+		<div class="block header">
 			Acknowledgements
 		</div>
 		
@@ -569,10 +568,7 @@
 					<a href="javascript:void(0);" onClick="window.open('https://github.com/Initsogar/cordova-webintent','_system');">https://github.com/Inits(..)</a></li>
 					
 				<li>JS JQuery</li>
-				<li>JS Dateformat</li>	
-				<li>JS Hsvtorgb</li>
-				<li>JS HTML5 Shiv</li>	
-				<li>JS Json2</li>
+				<li>JS Dateformat</li>
 				<li>JS CryptoJS</li>	
 				<li>JS Smoothie</li>
 			</ul>
@@ -584,7 +580,7 @@
 			
 		</div>
 		
-        <div class="block header">
+		<div class="block header">
 			About the developer
 		</div>
 		
@@ -611,18 +607,18 @@
 <section id="viewlog">
 
 	<div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Log</div>
-        
+		
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Log</div>
+		
 		<div class="actions">
 			<div class="action activatablel" onClick="site.home.viewlog();"><img src="img/icons-48/ic_reload_green.png" title="Refresh log" /></div>
-        </div>
-    </div>
-    
-    <div class="main">
+		</div>
+	</div>
+	
+	<div class="main">
 		
-        <div class="block header">
+		<div class="block header">
 			Log        </div>
 		
 		<div class="block content selectable">
@@ -637,16 +633,16 @@
 <section id="settings">
 
 	<div class="actionbar shadow_z2">
-    	
-        <div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
-        <div class="title">Settings</div>
-        
+		
+		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="title">Settings</div>
+		
 		<div class="actions">
-            
-        </div>
-    </div>
-    
-    <div class="main">
+			
+		</div>
+	</div>
+	
+	<div class="main">
 	
 		<!-- Header -->
 		<!--
@@ -763,8 +759,8 @@
 			
 	  </div>
 		
-    </div>
-    
+	</div>
+	
 </section>
 
 <!-- Overlay: Loading -->
@@ -778,8 +774,8 @@
 
 <!-- Overflow_Menu -->
 <div id="overflow_menu" class="overflow_menu shadow_z2 round2">
-    
-    <div class="menu_item_space"></div>
+	
+	<div class="menu_item_space"></div>
 	
 	<div class="menu_item activatablel" onClick="site.settings.init();site.home.dismissOverflowMenu();">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;<strong>Settings</strong></div></div>
@@ -804,8 +800,8 @@
 	<div class="menu_item activatablel" onClick="site.ui.gotosection('#about');site.home.dismissOverflowMenu();" style="border:none;">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;About</div></div>
 	</div>
-    
-    <div class="menu_item_space"></div>
+	
+	<div class="menu_item_space"></div>
 	
 </div>
 
