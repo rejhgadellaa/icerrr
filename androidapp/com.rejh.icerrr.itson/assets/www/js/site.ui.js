@@ -286,6 +286,9 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 			}
 			/**/
 			
+			jqobj.css("transition","none"); // TODO: restore..
+			jqobj.css("opacity",1.0); // TODO: restore..
+			
 			site.vars.fadeOuts[selector].isBusy = false;
 			loggr.log("site.ui.fadeOut() > FadeOuts: "+ selector +" "+ site.vars.fadeOuts[selector],{dontupload:true});
 			if (cb) { cb(); }
