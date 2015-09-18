@@ -110,13 +110,19 @@ site.alarms.drawResults = function() {
 			// Get station
 			var station = site.helpers.session.getStationById(alarm.station.station_id);
 			if (!station) { 
-				resulticon.src = "img/icons-80/ic_station_default.png";
+				this.src = "img/icons-80/ic_station_default.png";
 				return; 
 			}
 			
 			// Check this.src already set to station.station_icon_local
 			if (this.src.indexOf(station.station_icon_local)>=0) {
-				resulticon.src = "img/icons-80/ic_station_default.png";
+				this.src = "img/icons-80/ic_station_default.png";
+				return; 
+			}
+			
+			// Check this.src already set to station.station_icon
+			if (this.src.indexOf(station.station_icon)>=0) {
+				this.src = "img/icons-80/ic_station_default.png";
 				return; 
 			}
 			
@@ -126,8 +132,12 @@ site.alarms.drawResults = function() {
 				site.session.alarms[i] = alarm;
 				site.helpers.storeSession();
 				this.src = station.station_icon_local;
+				return;
+			} else if (station.station_icon && station.station_icon.indexOf(".base64")<0) {
+				this.src = site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ station.station_icon;
+				return;
 			} else {
-				resulticon.src = "img/icons-80/ic_station_default.png";
+				this.src = "img/icons-80/ic_station_default.png";
 				return; 
 			}
 			
