@@ -82,12 +82,16 @@ site.ui.gotosection = function(selector) {
 		// Show..
 		$(selector).css("display","block");
 		// Translate splash
+		$("#splash").on("transitionend webkitTransitionEnd",function(evt){
+			$("#splash").off("transitionend webkitTransitionEnd");
+			site.ui.fadeOut("#splash",250);
+		});
 		var translate = "translate3d(0px,"+ (-($(window).height()-$(".actionbar").height())) +"px,0px)";
 		$("#splash").css({"transform":translate,"-webkit-transform":translate});
-		setTimeout(function(){
+		//setTimeout(function(){
 			//$("#splash").fadeOut(250);
-			site.ui.fadeOut("#splash",250);
-		},750);
+			//site.ui.fadeOut("#splash",250);
+		//},750);
 	} else {
 		$("section").css("display","none");
 		$(selector).css("display","block");
@@ -114,7 +118,7 @@ site.ui.initFabScroll = function(selector) {
 	}
 	
 	// Reset all..
-	if (site.timeouts.ui_showtoast_hide) {
+	if ($("#overlay_toast").css("display")!="none" && site.vars.currentSection!="#home") {
 		$(".fab").css("bottom",$("#overlay_toast").outerHeight()+16);
 	} else {
 		$(".fab").css("bottom",16);
@@ -147,6 +151,19 @@ site.ui.initFabScroll = function(selector) {
 
 // ---> Fades
 
+site.ui.display = function(selector,value) { // TODO: Not used? Stupid method?
+	
+	var jqobj = $(selector);
+	if (!jqobj) { loggr.warn(" > !jqobj"); return; }
+	if (jqobj.length<1) { loggr.warn(" > jqobj < 1"); return; }
+	
+	if (value=="block") {
+		jqobj.css("opacity",1.0);
+	}
+	jqobj.css("display",value);
+	
+}
+
 site.ui.fadeIn = function(selector,timems,cb,opts) {
 	
 	loggr.log("site.ui.fadeIn(): "+ selector); // : "+ selector +", "+ timems +", cb:"+(cb)?"true":"none");
@@ -160,18 +177,31 @@ site.ui.fadeIn = function(selector,timems,cb,opts) {
 	
 	// FadeOut running?
 	if (!site.vars.fadeOuts) { site.vars.fadeOuts = {}; }
-	if (site.vars.fadeOuts[selector]) {
+	if (site.vars.fadeOuts[selector] && site.vars.fadeOuts[selector].isBusy) {
 		loggr.warn(" > FadeOut already running on selector: "+ selector +", cancel it",{dontsave:true});
-		site.vars.fadeOuts[selector] = false;
+		site.vars.fadeOuts[selector].isBusy = false;
 	}
 	
 	// Already running?
 	if (!site.vars.fadeIns) { site.vars.fadeIns = {}; }
-	if (site.vars.fadeIns[selector]) {
-		loggr.warn(" > FadeIn already active: "+ selector +" "+ site.vars.fadeIns[selector],{dontsave:true});
-		return;
+	if (site.vars.fadeIns[selector] && site.vars.fadeIns[selector].isBusy) {
+		loggr.warn(" > FadeIn already active: "+ selector,{dontsave:true});
+		// -> check time
+		if (new Date().getTime() > site.vars.fadeIns[selector].timeEnd) {
+			loggr.warn(" -> Should have ended.. fadeIn anyway",{dontsave:true});
+			site.vars.fadeIns[selector].isBusy = false;
+		} else {
+			return;
+		}
 	}
-	site.vars.fadeIns[selector] = true;
+	site.vars.fadeIns[selector] = {
+		timeBgn:new Date().getTime(),
+		timeEnd:new Date().getTime()+timems,
+		timeDuration:timems,
+		isBusy:true,
+		originalTransition:(jqobj.css("transition"))?jqobj.css("transition"):"none", // TODO: for restoring later..
+		originalOpacity:(jqobj.css("opacity"))?jqobj.css("opacity"):1.0 // TODO: for restoring later..
+	};
 	
 	// Opac props first..
 	jqobj.css("opacity",0.0);
@@ -186,7 +216,7 @@ site.ui.fadeIn = function(selector,timems,cb,opts) {
 			jqobj.css("opacity", (opts.opacity)?opts.opacity:1.0 );
 			jqobj.on("transitionend webkitTransitionEnd",function(){
 				jqobj.off("transitionend webkitTransitionEnd");
-				site.vars.fadeIns[selector] = false;
+				site.vars.fadeIns[selector].isBusy = false;
 				loggr.log("site.ui.fadeIn() > FadeIns: "+ selector +" "+ site.vars.fadeIns[selector],{dontupload:true});
 				if (cb) { cb(); }
 			});
@@ -206,20 +236,30 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 	if (!timems) { timems = 500; }
 	if (!opts) { opts = {}; }
 	
+	// Is it visible to begin with?
+	if ($(selector).css("display")=="none") {
+		return; // silent..
+	}
+	
 	// FadeIn running?
 	if (!site.vars.fadeIns) { site.vars.fadeIns = {}; }
-	if (site.vars.fadeIns[selector]) {
+	if (site.vars.fadeIns[selector] && site.vars.fadeIns[selector].isBusy) {
 		loggr.warn(" > FadeIn already running on selector: "+ selector +", cancel it",{dontsave:true});
-		site.vars.fadeIns[selector] = false;
+		 site.vars.fadeIns[selector].isBusy = false;
 	}
 	
 	// Already running?
 	if (!site.vars.fadeOuts) { site.vars.fadeOuts = {}; }
-	if (site.vars.fadeOuts[selector]) {
+	if (site.vars.fadeOuts[selector] && site.vars.fadeOuts[selector].isBusy) {
 		loggr.warn(" > FadeOut already active: "+ selector,{dontsave:true});
 		//return;
 	}
-	site.vars.fadeOuts[selector] = true;
+	site.vars.fadeOuts[selector] = {
+		timeBgn:new Date().getTime(),
+		timeEnd:new Date().getTime()+timems,
+		timeDuration:timems,
+		isBusy:true,
+	};
 	
 	// Opac props first..
 	jqobj.css("transition","opacity "+ timems +"ms");
@@ -229,11 +269,24 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 	setTimeout(function(){
 		jqobj.css("opacity", (opts.opacity)?opts.opacity:0.0 );
 		jqobj.on("transitionend webkitTransitionEnd",function(){
+															  
 			jqobj.off("transitionend webkitTransitionEnd");
 			jqobj.css("display","none");
-			site.vars.fadeOuts[selector] = false;
+			
+			if (site.vars.fadeIns[selector]) {
+				//loggr.warn("site.ui.fadeOut() FINISHED: "+selector,{dontsave:true});
+				jqobj.css("transition",site.vars.fadeIns[selector].originalTransition);
+				jqobj.css("opacity",site.vars.fadeIns[selector].originalOpacity);
+			} else {
+				loggr.warn("site.ui.fadeOut() Cannot restore transition + opacity: "+ selector +", "+site.vars.fadeIns[selector],{dontsave:true});
+				//jqobj.css("transition","none"); // TODO: restore..
+				//jqobj.css("opacity",1.0); // TODO: restore..
+			}
+			
+			site.vars.fadeOuts[selector].isBusy = false;
 			loggr.log("site.ui.fadeOut() > FadeOuts: "+ selector +" "+ site.vars.fadeOuts[selector],{dontupload:true});
 			if (cb) { cb(); }
+			
 		});
 	},1);
 	
@@ -268,7 +321,21 @@ site.ui.showLoadbar = function() {
 	loggr.log("site.ui.showLoadbar()");
 	
 	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
+	
+	if (!site.vars.fadeIns) { site.vars.fadeIns = {}; }
+	if (!site.vars.fadeIns[".loadbar"]) {
+		site.vars.fadeIns[".loadbar"] = {
+			timeBgn:new Date().getTime(),
+			timeEnd:new Date().getTime(),
+			timeDuration:0,
+			isBusy:false,
+			originalTransition:"none", // TODO: for restoring later..
+			originalOpacity:1.0 // TODO: for restoring later..
+		};
+	}
+	
 	$(".loadbar").css("display","block");
+	//site.ui.fadeIn(".loadbar",250);
 	
 }
 
