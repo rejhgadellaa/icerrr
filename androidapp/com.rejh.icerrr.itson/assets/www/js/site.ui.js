@@ -273,6 +273,8 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 			jqobj.off("transitionend webkitTransitionEnd");
 			jqobj.css("display","none");
 			
+			/*
+			// TODO: Restore... causing issues :S
 			if (site.vars.fadeIns[selector]) {
 				//loggr.warn("site.ui.fadeOut() FINISHED: "+selector,{dontsave:true});
 				jqobj.css("transition",site.vars.fadeIns[selector].originalTransition);
@@ -282,6 +284,7 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 				//jqobj.css("transition","none"); // TODO: restore..
 				//jqobj.css("opacity",1.0); // TODO: restore..
 			}
+			/**/
 			
 			site.vars.fadeOuts[selector].isBusy = false;
 			loggr.log("site.ui.fadeOut() > FadeOuts: "+ selector +" "+ site.vars.fadeOuts[selector],{dontupload:true});
@@ -322,18 +325,7 @@ site.ui.showLoadbar = function() {
 	
 	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
 	
-	if (!site.vars.fadeIns) { site.vars.fadeIns = {}; }
-	if (!site.vars.fadeIns[".loadbar"]) {
-		site.vars.fadeIns[".loadbar"] = {
-			timeBgn:new Date().getTime(),
-			timeEnd:new Date().getTime(),
-			timeDuration:0,
-			isBusy:false,
-			originalTransition:"none", // TODO: for restoring later..
-			originalOpacity:1.0 // TODO: for restoring later..
-		};
-	}
-	
+	$(".loadbar").css("opacity",1);
 	$(".loadbar").css("display","block");
 	//site.ui.fadeIn(".loadbar",250);
 	
