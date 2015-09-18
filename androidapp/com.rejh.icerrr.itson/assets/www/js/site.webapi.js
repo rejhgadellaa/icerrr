@@ -55,18 +55,27 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 			// Go ahead, download it..
 			loggr.log(" > Init download...");
 			
+			// Prep ..
 			var fileTransfer = new FileTransfer();
-			var uri = encodeURI(url);
 			var dest = encodeURI(folderEntry.fullPath +"/"+ targetFile)
 			
+			// Test encoding.. (url)
+			var uri = url;
+			var url_decoded = decodeURI(url);
+			if (url == url_decoded) {
+				loggr.log(" -> Url needs encoding..");
+				uri = encodeURI(url);
+			}
 			loggr.log(" >> "+ uri);
 			
+			// Progress?
 			if (progressCb) {
 				fileTransfer.onprogress = function(progressEvent) {
 					progressCb(progressEvent);
 				}
 			}
 		
+			// A-go-go
 			fileTransfer.download(
 				uri,
 				dest,
@@ -79,7 +88,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 					loggr.error("download error source " + error.source, {dontupload:true});
 					loggr.error("download error target " + error.target, {dontupload:true});
 					loggr.error("download error code " + error.code, {dontupload:true});
-					loggr.error(" > "+ site.storage.getErrorType(error));
+					loggr.error(" > "+ site.storage.getFileTransferErrorType(error));
 					site.vars.downloadsInProgress[url] = false;
 					if (errcb) { errcb(error); }
 				},
@@ -89,6 +98,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 		},
 		function(error) {
 			loggr.error("Error: getFolderEntry?");
+			loggr.error(" > "+ site.storage.getErrorType(error));
 			console.error(error);
 			errcb(error);
 		}

@@ -807,6 +807,37 @@ site.storage.getErrorType = function(error) {
 	return res;
 }
 
+site.storage.getFileTransferErrorType = function(error) {
+	
+	/*
+	FileTransferError.FILE_NOT_FOUND_ERR
+	FileTransferError.INVALID_URL_ERR
+	FileTransferError.CONNECTION_ERR
+	FileTransferError.ABORT_ERR
+	/**/
+	
+	var res = "FileError.UNKNOWN";
+	switch(error.code) {
+		case FileTransferError.NOT_FOUND_ERR:
+			res = "FileTransferError.NOT_FOUND_ERR";
+			break;
+		case FileTransferError.INVALID_URL_ERR:
+			res = "FileTransferError.INVALID_URL_ERR";
+			break;
+		case FileTransferError.CONNECTION_ERR:
+			res = "FileTransferError.CONNECTION_ERR";
+			break;
+		case FileTransferError.ABORT_ERR:
+			res = "FileTransferError.ABORT_ERR";
+			break;
+		case -1: // TODO: check if this code is not in use!
+			if (error.message) { res = error.message; }
+			break;
+			
+	}
+	return res;
+}
+
 // ---------------------------------------------
 // COOKIES
 

@@ -1,4 +1,6 @@
-0.249
+0.250
+  * Fix: check if urls are already URL encoded before downloading
+  * Fix: alarm station icons not updating when editing station
   * Hide FAB when scrolling down, show when going up
   * GPU powered fades when possible
   * Minor fixes and improvements

@@ -99,6 +99,39 @@ site.alarms.drawResults = function() {
 		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
+		resulticon.alarm_i = i;
+		resulticon.onerror = function() {
+			// try upgrade image from site.data.stations
+			
+			// Get alarm
+			var i = this.alarm_i
+			var alarm = site.session.alarms[i];
+			
+			// Get station
+			var station = site.helpers.session.getStationById(alarm.station.station_id);
+			if (!station) { 
+				resulticon.src = "img/icons-80/ic_station_default.png";
+				return; 
+			}
+			
+			// Check this.src already set to station.station_icon_local
+			if (this.src.indexOf(station.station_icon_local)>=0) {
+				resulticon.src = "img/icons-80/ic_station_default.png";
+				return; 
+			}
+			
+			// Update alarm with station data..
+			if (station.station_icon_local && station.station_icon_local.indexOf(".base64")<0) {
+				alarm.station = station;
+				site.session.alarms[i] = alarm;
+				site.helpers.storeSession();
+				this.src = station.station_icon_local;
+			} else {
+				resulticon.src = "img/icons-80/ic_station_default.png";
+				return; 
+			}
+			
+		};
 		if (alarm.station.station_icon_local && alarm.station.station_icon_local.indexOf(".base64")<0) { 
 			resulticon.src = alarm.station.station_icon_local; // : site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ alarm.station.station_icon;
 		} else {

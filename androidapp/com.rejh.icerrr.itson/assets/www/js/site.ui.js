@@ -223,6 +223,11 @@ site.ui.fadeIn = function(selector,timems,cb,opts) {
 
 site.ui.fadeOut = function(selector,timems,cb,opts) {
 	
+	// Is it visible to begin with?
+	if ($(selector).css("display")=="none") {
+		return; // silent..
+	}
+	
 	loggr.log("site.ui.fadeOut(): "+selector); // : "+ selector +", "+ timems +", cb:"+(cb)?"true":"none");
 	
 	var jqobj = $(selector);
@@ -231,11 +236,6 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 	
 	if (!timems) { timems = 500; }
 	if (!opts) { opts = {}; }
-	
-	// Is it visible to begin with?
-	if ($(selector).css("display")=="none") {
-		return; // silent..
-	}
 	
 	// FadeIn running?
 	if (!site.vars.fadeIns) { site.vars.fadeIns = {}; }
