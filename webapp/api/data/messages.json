@@ -30,7 +30,7 @@
             "*  Critical fix for 0.246 and minor improvements"
             ],
         "buttonLabels":"Yes,No",
-        "repeat":1,
+        "repeat":0,
         "critical":0,
         "onlyOnWifi":1
     },

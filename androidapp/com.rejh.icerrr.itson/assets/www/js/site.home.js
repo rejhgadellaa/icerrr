@@ -276,7 +276,8 @@ site.home.run_ui_updates = function() {
 			//loggr.log(" > Media.MEDIA_RUNNING > .active");
 			$(".button.center").removeClass("busy"); 
 			$(".button.center").addClass("active"); 
-			$(".button_play_bufferAnim").fadeOut(250);
+			// $(".button_play_bufferAnim").fadeOut(250);
+			site.ui.fadeOut(".button_play_bufferAnim",250);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_STARTING) {
 			//loggr.log(" > Media.MEDIA_STARTING > .busy");
@@ -284,25 +285,29 @@ site.home.run_ui_updates = function() {
 			$(".button.center").removeClass("busy");
 			$(".button.center").addClass("busy");
 			//$(".button_play_bufferAnim").(500);
-			$(".button_play_bufferAnim").css("display","block");
+			//$(".button_play_bufferAnim").css("display","block");
+			site.ui.fadeIn(".button_play_bufferAnim",500);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {
 			//loggr.log(" > Media.MEDIA_PAUSED > .busy");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").addClass("busy");
-			$(".button_play_bufferAnim").fadeOut(250);
+			//$(".button_play_bufferAnim").fadeOut(250);
+			site.ui.fadeOut(".button_play_bufferAnim",250);
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		} else if (site.mp.mpstatus!=Media.MEDIA_RUNNING && $(".button.center").hasClass("active")) {
 			//loggr.log(" > Media.MEDIA_RUNNING > .active");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy"); 
-			$(".button_play_bufferAnim").fadeOut(250);
+			//$(".button_play_bufferAnim").fadeOut(250);
+			site.ui.fadeOut(".button_play_bufferAnim",250);
 			$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
 		} else if (site.mp.mpstatus==Media.MEDIA_NONE) {
 			//loggr.log(" > Media.MEDIA_NONE > ...");
 			$(".button.center").removeClass("active"); 
 			$(".button.center").removeClass("busy"); 
-			$(".button_play_bufferAnim").fadeOut(250);
+			//$(".button_play_bufferAnim").fadeOut(250);
+			site.ui.fadeOut(".button_play_bufferAnim",250);
 			$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
 		}
 		
@@ -320,7 +325,8 @@ site.home.run_ui_updates = function() {
 		} else {
 			$(".button.center").removeClass("busy"); 
 			$(".button.center").addClass("active"); 
-			$(".button_play_bufferAnim").fadeOut(250);
+			//$(".button_play_bufferAnim").fadeOut(250);
+			$(".button_play_bufferAnim").css("display","none");
 			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
 		}
 		
@@ -735,13 +741,15 @@ site.home.toggleOverflowMenu = function() {
 	
 	if (!visible) {
 		site.home.overflowMenuIsVisible = true;
-		$(".overflow_menu").css("display","block");
+		//$(".overflow_menu").css("display","block");
 		//$(".overflow_menu").(125);
+		site.ui.fadeIn(".overflow_menu",125);
 		$(".overflow_menu").addClass("active");
 	} else {
 		site.home.overflowMenuIsVisible = false;
-		$(".overflow_menu").css("display","none");
+		//$(".overflow_menu").css("display","none");
 		//$(".overflow_menu").fadeOut(125);
+		site.ui.fadeOut(".overflow_menu",125);
 		$(".overflow_menu").removeClass("active");
 	}
 	

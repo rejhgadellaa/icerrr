@@ -107,6 +107,12 @@ site.helpers.mergeStations = function(stations1,stations2) {
 			else if (!station1[key] || !edit1) {
 				loggr.log(" >> New key: "+ station2.station_id +": "+ key +", "+ station1[key] +", "+ edit1, {toconsole:site.cfg.debugging});
 				loggr.log(" >>> Value: "+ station2[key], {toconsole:site.cfg.debugging});
+				if (key=="station_icon") {
+					station1["station_icon_local"] = null;
+				}
+				if (key=="station_image") {
+					station1["station_image_local"] = null;
+				}
 				station1[key] = station2[key];
 			}
 			// Keep local data when conflicted
@@ -121,6 +127,12 @@ site.helpers.mergeStations = function(stations1,stations2) {
 				loggr.log(" >> Conflict: "+ station2.station_id +": "+ key +", overwrite value1");
 				loggr.log(" >>> Value1: "+ station1[key]);
 				loggr.log(" >>> Value2: "+ station2[key]);
+				if (key=="station_icon" && station1[key] != station2[key]) {
+					station1["station_icon_local"] = null;
+				}
+				if (key=="station_image" && station1[key] != station2[key]) {
+					station1["station_image_local"] = null;
+				}
 				station1[key] = station2[key];
 				continue;
 			}

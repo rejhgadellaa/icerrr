@@ -85,7 +85,8 @@ site.ui.gotosection = function(selector) {
 		var translate = "translate3d(0px,"+ (-($(window).height()-$(".actionbar").height())) +"px,0px)";
 		$("#splash").css({"transform":translate,"-webkit-transform":translate});
 		setTimeout(function(){
-			$("#splash").fadeOut(250);
+			//$("#splash").fadeOut(250);
+			site.ui.fadeOut("#splash",250);
 		},750);
 	} else {
 		$("section").css("display","none");
@@ -99,6 +100,145 @@ site.ui.gotosection = function(selector) {
 	
 }
 
+// ---> FabScroll
+
+site.ui.initFabScroll = function(selector) {
+	
+	loggr.log("site.ui.initFabScroll()");
+	
+	if (!site.vars.fabscrolls) {
+		site.vars.fabscrolls = {};
+	}
+	if (!site.vars.fabscrolls[selector]) {
+		site.vars.fabscrolls[selector] = 0;
+	}
+	
+	// Reset all..
+	if (site.timeouts.ui_showtoast_hide) {
+		$(".fab").css("bottom",$("#overlay_toast").outerHeight()+16);
+	} else {
+		$(".fab").css("bottom",16);
+	}
+	
+	// Scroll listener -> Hide fab :D
+	$(selector+" .main").off( 'scroll');
+	$(selector+" .main").on( 'scroll', function(e) {
+		
+		delta = site.vars.fabscrolls[selector] - $(selector+" .main").scrollTop();
+	
+		if(delta > 0) {
+			//scroll up
+			if (site.timeouts.ui_showtoast_hide) {
+				$(selector+" .fab").css("bottom",$("#overlay_toast").outerHeight()+16);
+			} else {
+				$(selector+" .fab").css("bottom",16);
+			}
+		}
+		else{
+			//scroll down
+			$(selector+" .fab").css("bottom",-64);
+		}
+		
+		site.vars.fabscrolls[selector] = $(selector+" .main").scrollTop();
+		
+	});
+	
+}
+
+// ---> Fades
+
+site.ui.fadeIn = function(selector,timems,cb,opts) {
+	
+	loggr.log("site.ui.fadeIn(): "+ selector); // : "+ selector +", "+ timems +", cb:"+(cb)?"true":"none");
+	
+	var jqobj = $(selector);
+	if (!jqobj) { loggr.warn(" > !jqobj"); return; }
+	if (jqobj.length<1) { loggr.warn(" > jqobj < 1"); return; }
+	
+	if (!timems) { timems = 500; }
+	if (!opts) { opts = {}; }
+	
+	// FadeOut running?
+	if (!site.vars.fadeOuts) { site.vars.fadeOuts = {}; }
+	if (site.vars.fadeOuts[selector]) {
+		loggr.warn(" > FadeOut already running on selector: "+ selector +", cancel it",{dontsave:true});
+		site.vars.fadeOuts[selector] = false;
+	}
+	
+	// Already running?
+	if (!site.vars.fadeIns) { site.vars.fadeIns = {}; }
+	if (site.vars.fadeIns[selector]) {
+		loggr.warn(" > FadeIn already active: "+ selector +" "+ site.vars.fadeIns[selector],{dontsave:true});
+		return;
+	}
+	site.vars.fadeIns[selector] = true;
+	
+	// Opac props first..
+	jqobj.css("opacity",0.0);
+	jqobj.off("transitionend webkitTransitionEnd");
+	
+	// Post delayed so opacity == 0
+	setTimeout(function(){
+		jqobj.css("transition","opacity "+ timems +"ms");
+		jqobj.css("display","block");
+		loggr.error(jqobj.css("transition") +", "+ jqobj.css("opacity"),{dontupload:true});
+		setTimeout(function(){
+			jqobj.css("opacity", (opts.opacity)?opts.opacity:1.0 );
+			jqobj.on("transitionend webkitTransitionEnd",function(){
+				jqobj.off("transitionend webkitTransitionEnd");
+				site.vars.fadeIns[selector] = false;
+				loggr.log("site.ui.fadeIn() > FadeIns: "+ selector +" "+ site.vars.fadeIns[selector],{dontupload:true});
+				if (cb) { cb(); }
+			});
+		},1);
+	},1);
+	
+}
+
+site.ui.fadeOut = function(selector,timems,cb,opts) {
+	
+	loggr.log("site.ui.fadeOut(): "+selector); // : "+ selector +", "+ timems +", cb:"+(cb)?"true":"none");
+	
+	var jqobj = $(selector);
+	if (!jqobj) { loggr.warn(" > !jqobj"); return; }
+	if (jqobj.length<1) { loggr.warn(" > jqobj < 1"); return; }
+	
+	if (!timems) { timems = 500; }
+	if (!opts) { opts = {}; }
+	
+	// FadeIn running?
+	if (!site.vars.fadeIns) { site.vars.fadeIns = {}; }
+	if (site.vars.fadeIns[selector]) {
+		loggr.warn(" > FadeIn already running on selector: "+ selector +", cancel it",{dontsave:true});
+		site.vars.fadeIns[selector] = false;
+	}
+	
+	// Already running?
+	if (!site.vars.fadeOuts) { site.vars.fadeOuts = {}; }
+	if (site.vars.fadeOuts[selector]) {
+		loggr.warn(" > FadeOut already active: "+ selector,{dontsave:true});
+		//return;
+	}
+	site.vars.fadeOuts[selector] = true;
+	
+	// Opac props first..
+	jqobj.css("transition","opacity "+ timems +"ms");
+	jqobj.off("transitionend webkitTransitionEnd");
+	
+	// Post delayed so opacity == 0
+	setTimeout(function(){
+		jqobj.css("opacity", (opts.opacity)?opts.opacity:0.0 );
+		jqobj.on("transitionend webkitTransitionEnd",function(){
+			jqobj.off("transitionend webkitTransitionEnd");
+			jqobj.css("display","none");
+			site.vars.fadeOuts[selector] = false;
+			loggr.log("site.ui.fadeOut() > FadeOuts: "+ selector +" "+ site.vars.fadeOuts[selector],{dontupload:true});
+			if (cb) { cb(); }
+		});
+	},1);
+	
+}
+
 // ---> Loading
 
 site.ui.showloading = function(message,submsg) {
@@ -107,8 +247,8 @@ site.ui.showloading = function(message,submsg) {
 	if (submsg) { message += "<br><span class='overlay_submsg'>"+submsg+"</span>"; }
 	site.vars.isLoading = true;
 	$("#loading.overlay_wrap .message").html(message);
-	$("#loading.overlay_wrap").fadeIn(500); // TODO: animation gpu powered..
-	
+	//$("#loading.overlay_wrap").fadeIn(500); // TODO: animation gpu powered..
+	site.ui.fadeIn("#loading.overlay_wrap",500);
 }
 
 
@@ -116,7 +256,9 @@ site.ui.hideloading = function() {
 	loggr.log("site.ui.hideloading()");
 	site.vars.isLoading = false;
 	$("#loading.overlay_wrap .message").html("");
-	$("#loading.overlay_wrap").fadeOut(500); // TODO: animation gpu powered..
+	//$("#loading.overlay_wrap").fadeOut(500); // TODO: animation gpu powered..
+	site.ui.fadeOut("#loading.overlay_wrap",500);
+	
 }
 
 // ---> Loadbar
@@ -135,7 +277,10 @@ site.ui.hideLoadbar = function() {
 	loggr.log("site.ui.hideLoadbar()");
 	
 	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
-	site.timeouts.fadeOutLoadbar = setTimeout(function(){$(".loadbar").fadeOut(250,function(){$(".loadbar").css("display","none");})},1000);
+	site.timeouts.fadeOutLoadbar = setTimeout(function(){
+			site.ui.fadeOut(".loadbar",250);
+		}
+	,1000);
 	
 }
 
@@ -154,18 +299,20 @@ site.ui.showtoast = function(msg, timeInSec, topMode) {
 		$("#overlay_toast").removeClass("top");
 	}
 	$("#overlay_toast").html(msg);
-	$("#overlay_toast").fadeIn(250);
+	site.ui.fadeIn("#overlay_toast",250);
 	site.ui.ui_showtoast_hide = setTimeout(function(){site.ui.hidetoast();},timeInMsec);
 }
 
 site.ui.hidetoast = function() {
 	loggr.log("site.ui.hidetoast()");
 	if (site.timeouts.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
-	$("#overlay_toast").fadeOut(250, function(){
-		if ($("#overlay_toast").hasClass("top")) {
-			$("#overlay_toast").removeClass("top");
-	}
-	});
+	site.ui.fadeOut("#overlay_toast",250,
+		function(){
+			if ($("#overlay_toast").hasClass("top")) {
+				$("#overlay_toast").removeClass("top");
+			}
+		}
+	);
 	$(".fab").css("bottom",16);
 	
 }

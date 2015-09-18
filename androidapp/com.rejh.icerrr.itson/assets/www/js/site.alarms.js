@@ -39,11 +39,13 @@ site.alarms.init = function() {
 		site.lifecycle.onBackButton();
 	}
 	
+	// Scroll listener -> Hide fab :D
+	site.ui.initFabScroll("#alarms");
+	
 	// Hide toasts if any..
 	if ($("#overlay_toast").hasClass("top")) {
 		site.ui.hidetoast();
 	}
-	
 	
 	// Draw
 	site.alarms.drawResults();
