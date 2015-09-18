@@ -98,6 +98,11 @@ site.settings.registerListeners = function() {
 		}
 	);
 	
+	// Enable LogCat Debugging
+	var enableLogCatDebugging = site.cookies.get("setting_enableLogCatDebugging")
+	if (enableLogCatDebugging==1) { $("#settings input[name='enableLogCatDebugging']").attr("checked",true); }
+	else { $("#settings input[name='enableLogCatDebugging']").attr("checked",false); }
+	
 	// Send Logs
 	var sendLogs = site.cookies.get("setting_sendLogs");
 	loggr.log(" > sendLogs: "+ sendLogs);
@@ -148,6 +153,14 @@ site.settings.registerListeners = function() {
 		if ((targ.checked)) {
 			alert("Don't forget to set SAA's ringtone to 'silent'!");
 		}
+	});
+	
+	// Enable LogCat Debugging
+	$("#settings input[name='enableLogCatDebugging']").off("change");
+	$("#settings input[name='enableLogCatDebugging']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: enableLogCatDebugging: "+ (targ.checked)?1:0,{toconsole:true});
+		site.cookies.put("setting_enableLogCatDebugging",(targ.checked)?1:0);
 	});
 	
 	// Send Logs

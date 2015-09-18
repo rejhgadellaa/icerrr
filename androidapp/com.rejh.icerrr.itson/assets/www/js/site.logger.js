@@ -60,7 +60,7 @@ loggr.log = function(str,opts) {
 	
 	str = new Date().format("H:i:s") +"    "+ str;
 	
-	if (opts.toconsole && site.cfg.debugging || opts.type=="error" || opts.type=="warn") {
+	if (opts.toconsole && site.cookies.get("setting_enableLogCatDebugging")==1 || opts.type=="error" || opts.type=="warn") {
 	
 		switch(opts.type) {
 			case "error":
