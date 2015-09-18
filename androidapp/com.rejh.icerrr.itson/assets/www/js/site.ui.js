@@ -118,11 +118,7 @@ site.ui.initFabScroll = function(selector) {
 	}
 	
 	// Reset all..
-	if ($("#overlay_toast").css("display")!="none" && site.vars.currentSection!="#home") {
-		$(".fab").css("bottom",$("#overlay_toast").outerHeight()+16);
-	} else {
-		$(".fab").css("bottom",16);
-	}
+	$(".fab").not(selector +" .fab").css("bottom",16);
 	
 	// Scroll listener -> Hide fab :D
 	$(selector+" .main").off( 'scroll');
