@@ -479,9 +479,7 @@ site.chsearch.testStation = function(station, stationIndex) {
 								}, "Replace default icon?", buttonLabels);
 				
 							} else {
-								site.chedit.changesHaveBeenMade = true;
-								site.chedit.changesHaveBeenMadeGotoStarred = true;
-								site.chlist.init(true);
+								site.chicon.init(site.chsearch.station_id);
 							}
 							
 						},

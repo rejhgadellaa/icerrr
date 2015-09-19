@@ -178,6 +178,26 @@ site.chedit.save = function() {
 		loggr.warn(" > !originalStationIfAny, are we sure?");
 	}
 	
+	// Find changes for alarms?
+	try {
+		var alarmsChanged = false;
+		for (var i=0; i<site.session.alarms.length; i++) {
+			var alarm = site.session.alarms[i];
+			if (alarm.station.station_id == site.chedit.newentry.station_id) {
+				loggr.warn(" -> Update alarm.station: "+ alarm.station.station_id +" for alarm: "+ i,{dontsave:true});
+				site.session.alarms[i].station = site.chedit.newentry;
+				alarmsChanged = true;
+			} else {
+				continue;
+			}
+		}
+		if (alarmsChanged) {
+			site.helpers.storeSession();
+		}
+	} catch(e) {
+		loggr.warn(" > Could not check alarms: "+e);
+	}
+	
 	loggr.log(" > Changes:");
 	loggr.log(site.helpers.arrToString(site.chedit.newentry.station_edited,1,"\n"));
 	
@@ -804,7 +824,29 @@ site.chedit.testStationPlayable = function(station_url,cb,cberr) {
 	
 }
 
+// Station Info
 
+site.chedit.info = function() {
+	
+	loggr.debug("site.chedit.info()");
+	
+	// Gather data..
+	var station_id = $("#editstation input[name='station_id']")[0].value.trim();
+	var station = site.helpers.session.getStationById(station_id);
+	
+	// Create text
+	var text = "Station: \n"+ station.station_name
+	
+	var text_station_url = "\n\nStation url: \n"+ station.station_url;
+	if (station.station_url_highquality) {
+		text_station_url += "\nStation url (HQ): \n"+ station.station_url_highquality;
+	}
+	
+	text = text + text_station_url;
+	
+	navigator.notification.alert(text, function(){}, "Station Info", "OK");
+	
+}
 
 
 

@@ -193,6 +193,26 @@ site.chicon.save = function(target) {
 		site.session.currentstation = station_data;
 	}
 	
+	// Find changes for alarms?
+	try {
+		var alarmsChanged = false;
+		for (var i=0; i<site.session.alarms.length; i++) {
+			var alarm = site.session.alarms[i];
+			if (alarm.station.station_id == station_data.station_id) {
+				loggr.warn(" -> Update alarm.station: "+ alarm.station.station_id +" for alarm: "+ i,{dontsave:true});
+				site.session.alarms[i].station = station_data;
+				alarmsChanged = true;
+			} else {
+				continue;
+			}
+		}
+		if (alarmsChanged) {
+			site.helpers.storeSession();
+		}
+	} catch(e) {
+		loggr.warn(" > Could not check alarms: "+e);
+	}
+	
 	// Write file
 	// TODO: problem with site.storage.isBusy: what do we do when it's busy? retry?
 	site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
@@ -206,6 +226,7 @@ site.chicon.save = function(target) {
 			if (lastsection=="#editstation") {
 				site.chedit.init(site.chicon.station.station_id);
 			} else {
+				site.chedit.changesHaveBeenMadeGotoStarred = true;
 				site.chlist.init(); // pretty much every other scenario..
 			}
 		},

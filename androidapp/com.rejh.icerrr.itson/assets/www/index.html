@@ -308,6 +308,10 @@
 		
 	</div>
 	
+	<!--
+	<div class="fab shadow_z5" onClick="site.chedit.check();"><img src="img/icons-48/ic_save_green.png" /></div>
+	-->
+	
 </section>
 
 <!-- Section -->
@@ -612,6 +616,7 @@
 		<div class="title">Log</div>
 		
 		<div class="actions">
+			<div class="action activatablel" onClick="site.home.sendfeedback();"><img src="img/icons-48/ic_message_green.png" title="Send feedback" /></div>
 			<div class="action activatablel" onClick="site.home.viewlog();"><img src="img/icons-48/ic_reload_green.png" title="Refresh log" /></div>
 		</div>
 	</div>
@@ -619,7 +624,8 @@
 	<div class="main">
 		
 		<div class="block header">
-			Log        </div>
+			Log
+		</div>
 		
 		<div class="block content selectable">
 		<!-- ... -->
@@ -784,17 +790,9 @@
 	<div class="menu_item activatablel" onClick="site.lifecycle.checkMsgs(true);site.home.dismissOverflowMenu();">
 		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;Check for updates</div></div>
 	</div>
-
-	<div class="menu_item activatablel" onClick="site.home.sendfeedback();site.home.dismissOverflowMenu();">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;Send feedback</div></div>
-	</div>
 	
 	<div class="menu_item activatablel" onClick="site.home.viewlog();site.home.dismissOverflowMenu();">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;View log</div></div>
-	</div>
-	
-	<div class="menu_item activatablel" onClick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S6BCCM9LESNBU&lc=US&item_name=REJH%20Gadellaa&item_number=icerrr_droidapp&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted','_system');site.home.dismissOverflowMenu();">
-		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;Donate</div></div>
+		<div class="center_table"><div class="center_td">&nbsp;&nbsp;&nbsp;&nbsp;Log &amp; Feedback</div></div>
 	</div>
 	
 	<div class="menu_item activatablel" onClick="site.ui.gotosection('#about');site.home.dismissOverflowMenu();" style="border:none;">

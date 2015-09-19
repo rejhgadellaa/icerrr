@@ -272,43 +272,102 @@ site.home.run_ui_updates = function() {
 		
 		// -> MediaPlayer
 		
-		if (site.mp.mpstatus==Media.MEDIA_RUNNING && !$(".button.center").hasClass("active")) {
-			//loggr.log(" > Media.MEDIA_RUNNING > .active");
-			$(".button.center").removeClass("busy"); 
-			$(".button.center").addClass("active"); 
-			// $(".button_play_bufferAnim").fadeOut(250);
-			site.ui.fadeOut(".button_play_bufferAnim",250);
-			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
-		} else if (site.mp.mpstatus==Media.MEDIA_STARTING) {
-			//loggr.log(" > Media.MEDIA_STARTING > .busy");
-			$(".button.center").removeClass("active"); 
-			$(".button.center").removeClass("busy");
-			$(".button.center").addClass("busy");
-			//$(".button_play_bufferAnim").(500);
-			//$(".button_play_bufferAnim").css("display","block");
-			site.ui.fadeIn(".button_play_bufferAnim",500);
-			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
-		} else if (site.mp.mpstatus==Media.MEDIA_PAUSED && !$(".button.center").hasClass("busy")) {
-			//loggr.log(" > Media.MEDIA_PAUSED > .busy");
-			$(".button.center").removeClass("active"); 
-			$(".button.center").addClass("busy");
-			//$(".button_play_bufferAnim").fadeOut(250);
-			site.ui.fadeOut(".button_play_bufferAnim",250);
-			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
-		} else if (site.mp.mpstatus!=Media.MEDIA_RUNNING && $(".button.center").hasClass("active")) {
-			//loggr.log(" > Media.MEDIA_RUNNING > .active");
-			$(".button.center").removeClass("active"); 
-			$(".button.center").removeClass("busy"); 
-			//$(".button_play_bufferAnim").fadeOut(250);
-			site.ui.fadeOut(".button_play_bufferAnim",250);
-			$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
-		} else if (site.mp.mpstatus==Media.MEDIA_NONE) {
-			//loggr.log(" > Media.MEDIA_NONE > ...");
-			$(".button.center").removeClass("active"); 
-			$(".button.center").removeClass("busy"); 
-			//$(".button_play_bufferAnim").fadeOut(250);
-			site.ui.fadeOut(".button_play_bufferAnim",250);
-			$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
+		/**/
+			
+		//loggr.log(" > site.vars.lastMpStatusRetries: "+ site.vars.lastMpStatusRetries);
+		
+		//if (!site.vars.lastMpStatusRetries) { site.vars.lastMpStatusRetries = -1; }
+		if (site.mp.mpstatus != site.vars.lastMpStatus || site.vars.lastMpStatusRetries<3) {
+			
+			if(site.mp.mpstatus != site.vars.lastMpStatus) { site.vars.lastMpStatusRetries = -1; }
+			site.vars.lastMpStatusRetries++;
+			
+			site.vars.lastMpStatus = site.mp.mpstatus;
+		
+			switch(site.mp.mpstatus) {
+				
+				case Media.MEDIA_RUNNING:
+				
+					loggr.log("site.home.run_ui_updates() > MEDIA_RUNNING "+site.vars.lastMpStatusRetries,{dontsave:true});
+					
+					// Handle class
+					// -> Remove
+					if ($(".button.center").hasClass("busy")) { $(".button.center").removeClass("busy"); }
+					// -> Add
+					if (!$(".button.center").hasClass("active")) { $(".button.center").addClass("active"); }
+					
+					// Handle anim opac
+					$(".button_play_bufferAnim").css("display","none");
+					//site.ui.fadeOut(".button_play_bufferAnim",250);
+					
+					// Handle img
+					$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
+					
+					break;
+				
+				case Media.MEDIA_STARTING:
+				
+					loggr.log("site.home.run_ui_updates() > MEDIA_STARTING "+site.vars.lastMpStatusRetries,{dontsave:true});
+					
+					// Handle class
+					// -> Remove
+					if ($(".button.center").hasClass("active")) { $(".button.center").removeClass("active"); }
+					// -> Add
+					if (!$(".button.center").hasClass("busy")) { $(".button.center").addClass("busy"); }
+					
+					// Handle anim opac
+					$(".button_play_bufferAnim").css("display","block");
+					//site.ui.fadeIn(".button_play_bufferAnim",250);
+					
+					// Handle img
+					$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
+					
+					break;
+				
+				case Media.MEDIA_PAUSED:
+				
+					loggr.log("site.home.run_ui_updates() > MEDIA_PAUSED "+site.vars.lastMpStatusRetries,{dontsave:true});
+					
+					// Handle class
+					// -> Remove
+					if ($(".button.center").hasClass("active")) { $(".button.center").removeClass("active"); }
+					// -> Add
+					if (!$(".button.center").hasClass("busy")) { $(".button.center").addClass("busy"); }
+					
+					// Handle anim opac
+					$(".button_play_bufferAnim").css("display","none");
+					//site.ui.fadeOut(".button_play_bufferAnim",250);
+					
+					// Handle img
+					$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
+					
+					break;
+				
+				case Media.MEDIA_NONE:
+				
+					loggr.log("site.home.run_ui_updates() > MEDIA_NONE "+site.vars.lastMpStatusRetries,{dontsave:true});
+					
+					// Handle class
+					// -> Remove
+					$(".button.center").removeClass("active");
+					$(".button.center").removeClass("busy");
+					// -> Add
+					// ..
+					
+					// Handle anim opac
+					$(".button_play_bufferAnim").css("display","none");
+					//site.ui.fadeOut(".button_play_bufferAnim",250);
+					
+					// Handle img
+					$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
+					
+					break;
+					
+				default:
+					loggr.error("HUH HUH HUH?? site.home.run_ui_updates() -> site.mp.mpstatus = '"+ site.mp.mpstatus+"'");
+				
+			}
+			
 		}
 		
 	} else {
@@ -334,7 +393,7 @@ site.home.run_ui_updates = function() {
 	
 	// When paused, stop updates...
 	if (site.session.isPaused) {
-		site.home.stop_ui_updates();
+		//site.home.stop_ui_updates();
 	}
 	
 }
@@ -391,13 +450,15 @@ site.home.run_station_updates = function() {
 		function(error) {
 			if (error.message) { site.ui.showtoast(error.message); loggr.warn(error.message); }
 			else { loggr.log(error); }
+			site.session.currentstation.station_nowplaying = "Now playing: Unknown";
+			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
 			site.ui.hideLoadbar();
 		}
 	);
 	
 	// When paused, stop updates...
 	if (site.session.isPaused) {
-		site.home.stop_ui_updates();
+		//site.home.stop_ui_updates();
 		site.ui.hideLoadbar();
 	}
 	
@@ -810,6 +871,7 @@ site.home.viewlog = function() {
 	setTimeout(function(){
 	
 		$("#viewlog .main .block.content").html(loghtml);
+		//$("#viewlog .main").scrollTop($("#viewlog .main").outerHeight());
 		
 	},500);
 	

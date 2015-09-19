@@ -171,7 +171,7 @@ site.installer.update = function() {
 	}
 	
 	// Specific updates: 0.207
-	if (site.cookies.get("app_version")<=0.249) {
+	if (site.cookies.get("app_version")<=0.249 && site.installer.isUpdate) {
 		
 		loggr.error(" > Update to 0.250..",{dontupload:true});
 		
@@ -567,7 +567,7 @@ site.installer.finishup = function() {
 					if (imagelist.indexOf(fileEntry.fullPath)<0) {
 						var path = site.cfg.paths.images;
 						var name = fileEntry.name;
-						site.storage.deletefile(path,name,function(){},function(err){
+						site.storage.deletefile(path,name,function(){},function(error){
 							loggr.error(" > Could not delete '"+ fileEntry.fullPath +"'",{dontupload:true});
 							loggr.error(" > "+ site.storage.getErrorType(error));
 						});

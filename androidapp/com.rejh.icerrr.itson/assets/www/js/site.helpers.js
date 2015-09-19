@@ -83,7 +83,7 @@ site.helpers.mergeStations = function(stations1,stations2) {
 		station1 = stations1[station1index];
 		
 		// Compare values..
-		loggr.log(" > Upd: "+ station2.station_id);
+		loggr.debug(" > Upd: "+ station2.station_id);
 		for (var key in station2) {
 			
 			if (!station1.station_edited) { station1.station_edited = {}; }
@@ -97,6 +97,7 @@ site.helpers.mergeStations = function(stations1,stations2) {
 			
 			// Special case: station_icon_local + .._image_local
 			if (skipkeys.indexOf(key)>=0) {
+				loggr.warn(" >> Skipkey: "+ key +", "+ station1[key] +" != "+ station2[key],{dontsave:true});
 				if (!station1[key] || !station2[key]) {
 					station1[key] = null;
 				} else {
@@ -107,10 +108,12 @@ site.helpers.mergeStations = function(stations1,stations2) {
 			else if (!station1[key] || !edit1) {
 				loggr.log(" >> New key: "+ station2.station_id +": "+ key +", "+ station1[key] +", "+ edit1, {toconsole:site.cfg.debugging});
 				loggr.log(" >>> Value: "+ station2[key], {toconsole:site.cfg.debugging});
-				if (key=="station_icon") {
+				if (key=="station_icon" && station1[key] != station2[key]) {
+					loggr.warn(" >>> Set null: station_icon_local, "+ station1.station_icon_local,{dontsave:true});
 					station1["station_icon_local"] = null;
 				}
-				if (key=="station_image") {
+				if (key=="station_image" && station1[key] != station2[key]) {
+					loggr.warn(" >>> Set null: station_image_local, "+ station1.station_image_local,{dontsave:true});
 					station1["station_image_local"] = null;
 				}
 				station1[key] = station2[key];
@@ -128,9 +131,11 @@ site.helpers.mergeStations = function(stations1,stations2) {
 				loggr.log(" >>> Value1: "+ station1[key]);
 				loggr.log(" >>> Value2: "+ station2[key]);
 				if (key=="station_icon" && station1[key] != station2[key]) {
+					loggr.warn(" ---> station_icon: "+ station1[key] +" != "+ station2[key],{dontsave:true});
 					station1["station_icon_local"] = null;
 				}
 				if (key=="station_image" && station1[key] != station2[key]) {
+					loggr.warn(" ---> station_image: "+ station1[key] +" != "+ station2[key],{dontsave:true});
 					station1["station_image_local"] = null;
 				}
 				station1[key] = station2[key];

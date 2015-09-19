@@ -114,7 +114,9 @@ site.ui.initFabScroll = function(selector) {
 		site.vars.fabscrolls = {};
 	}
 	if (!site.vars.fabscrolls[selector]) {
-		site.vars.fabscrolls[selector] = 0;
+		site.vars.fabscrolls[selector] = {};
+		site.vars.fabscrolls[selector].scrolltop = 0;
+		site.vars.fabscrolls[selector].time = 0;
 	}
 	
 	// Reset all..
@@ -124,7 +126,7 @@ site.ui.initFabScroll = function(selector) {
 	$(selector+" .main").off( 'scroll');
 	$(selector+" .main").on( 'scroll', function(e) {
 		
-		delta = site.vars.fabscrolls[selector] - $(selector+" .main").scrollTop();
+		delta = site.vars.fabscrolls[selector].scrolltop - $(selector+" .main").scrollTop();
 	
 		if(delta > 0) {
 			//scroll up
@@ -134,12 +136,14 @@ site.ui.initFabScroll = function(selector) {
 				$(selector+" .fab").css("bottom",16);
 			}
 		}
-		else{
+		//else if(delta < 0){
+		else {
 			//scroll down
 			$(selector+" .fab").css("bottom",-64);
 		}
 		
-		site.vars.fabscrolls[selector] = $(selector+" .main").scrollTop();
+		site.vars.fabscrolls[selector].scrolltop = $(selector+" .main").scrollTop();
+		site.vars.fabscrolls[selector].time = new Date().getTime();
 		
 	});
 	
@@ -175,6 +179,7 @@ site.ui.fadeIn = function(selector,timems,cb,opts) {
 	if (!site.vars.fadeOuts) { site.vars.fadeOuts = {}; }
 	if (site.vars.fadeOuts[selector] && site.vars.fadeOuts[selector].isBusy) {
 		loggr.warn(" > FadeOut already running on selector: "+ selector +", cancel it",{dontsave:true});
+		clearTimeout(site.vars.fadeOuts[selector].timeout);
 		site.vars.fadeOuts[selector].isBusy = false;
 	}
 	
@@ -185,6 +190,7 @@ site.ui.fadeIn = function(selector,timems,cb,opts) {
 		// -> check time
 		if (new Date().getTime() > site.vars.fadeIns[selector].timeEnd) {
 			loggr.warn(" -> Should have ended.. fadeIn anyway",{dontsave:true});
+			clearTimeout(site.vars.fadeIns[selector].timeout);
 			site.vars.fadeIns[selector].isBusy = false;
 		} else {
 			return;
@@ -195,27 +201,43 @@ site.ui.fadeIn = function(selector,timems,cb,opts) {
 		timeEnd:new Date().getTime()+timems,
 		timeDuration:timems,
 		isBusy:true,
+		timeout:null,
 		originalTransition:(jqobj.css("transition"))?jqobj.css("transition"):"none", // TODO: for restoring later..
 		originalOpacity:(jqobj.css("opacity"))?jqobj.css("opacity"):1.0 // TODO: for restoring later..
 	};
 	
 	// Opac props first..
 	jqobj.css("opacity",0.0);
-	jqobj.off("transitionend webkitTransitionEnd");
 	
 	// Post delayed so opacity == 0
-	setTimeout(function(){
+	if (site.vars.fadeOuts[selector] && site.vars.fadeOuts[selector].timeout) { clearTimeout(site.vars.fadeOuts[selector].timeout); }
+	if (site.vars.fadeIns[selector].timeout) { clearTimeout(site.vars.fadeIns[selector].timeout); }
+	site.vars.fadeIns[selector].timeout = setTimeout(function(){
+															  
 		jqobj.css("transition","opacity "+ timems +"ms");
 		jqobj.css("display","block");
-		loggr.error(jqobj.css("transition") +", "+ jqobj.css("opacity"),{dontupload:true});
-		setTimeout(function(){
-			jqobj.css("opacity", (opts.opacity)?opts.opacity:1.0 );
-			jqobj.on("transitionend webkitTransitionEnd",function(){
-				jqobj.off("transitionend webkitTransitionEnd");
+		
+		//loggr.error(jqobj.css("transition") +", "+ jqobj.css("opacity"),{dontupload:true}); // DEBUG
+		
+		if (site.vars.fadeIns[selector].timeout) { clearTimeout(site.vars.fadeIns[selector].timeout); }
+		site.vars.fadeIns[selector].timeout = setTimeout(function(){
+			
+			site.vars.fadeIns[selector].timeout = setTimeout(function(){
+																	  
+				loggr.warn(" -> fadeIn "+ selector +" transitionend",{dontsave:true});
+				if (jqobj.css("opacity")<=0.9) { 
+					loggr.warn(" -> opacity<=0.9?! "+ selector +" transitionend",{dontsave:true});
+					//return;
+				}
+				
 				site.vars.fadeIns[selector].isBusy = false;
 				loggr.log("site.ui.fadeIn() > FadeIns: "+ selector +" "+ site.vars.fadeIns[selector],{dontupload:true});
 				if (cb) { cb(); }
-			});
+				
+			},timems+50);
+			
+			jqobj.css("opacity", (opts.opacity)?opts.opacity:1.0 );
+			
 		},1);
 	},1);
 	
@@ -225,6 +247,7 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 	
 	// Is it visible to begin with?
 	if ($(selector).css("display")=="none") {
+		// loggr.warn("OIOIOI",{dontsave:true}); // DEBUG
 		return; // silent..
 	}
 	
@@ -241,13 +264,15 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 	if (!site.vars.fadeIns) { site.vars.fadeIns = {}; }
 	if (site.vars.fadeIns[selector] && site.vars.fadeIns[selector].isBusy) {
 		loggr.warn(" > FadeIn already running on selector: "+ selector +", cancel it",{dontsave:true});
-		 site.vars.fadeIns[selector].isBusy = false;
+		clearTimeout(site.vars.fadeIns[selector].timeout)
+		site.vars.fadeIns[selector].isBusy = false;
 	}
 	
 	// Already running?
 	if (!site.vars.fadeOuts) { site.vars.fadeOuts = {}; }
 	if (site.vars.fadeOuts[selector] && site.vars.fadeOuts[selector].isBusy) {
 		loggr.warn(" > FadeOut already active: "+ selector,{dontsave:true});
+		clearTimeout(site.vars.fadeOuts[selector].timeout)
 		//return;
 	}
 	site.vars.fadeOuts[selector] = {
@@ -255,42 +280,56 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 		timeEnd:new Date().getTime()+timems,
 		timeDuration:timems,
 		isBusy:true,
+		timeout:null
 	};
 	
 	// Opac props first..
 	jqobj.css("transition","opacity "+ timems +"ms");
-	jqobj.off("transitionend webkitTransitionEnd");
 	
 	// Post delayed so opacity == 0
-	setTimeout(function(){
-		jqobj.css("opacity", (opts.opacity)?opts.opacity:0.0 );
-		jqobj.on("transitionend webkitTransitionEnd",function(){
-															  
-			jqobj.off("transitionend webkitTransitionEnd");
-			jqobj.css("display","none");
+	if (site.vars.fadeIns[selector] && site.vars.fadeIns[selector].timeout) { clearTimeout(site.vars.fadeIns[selector].timeout); }
+	if (site.vars.fadeOuts[selector].timeout) { clearTimeout(site.vars.fadeOuts[selector].timeout); }
+	site.vars.fadeOuts[selector].timeout = setTimeout(function(){
+		
+		site.vars.fadeOuts[selector].timeout = setTimeout(function(){
 			
-			/*
-			// TODO: Restore... causing issues :S
-			if (site.vars.fadeIns[selector]) {
-				//loggr.warn("site.ui.fadeOut() FINISHED: "+selector,{dontsave:true});
-				jqobj.css("transition",site.vars.fadeIns[selector].originalTransition);
-				jqobj.css("opacity",site.vars.fadeIns[selector].originalOpacity);
-			} else {
-				loggr.warn("site.ui.fadeOut() Cannot restore transition + opacity: "+ selector +", "+site.vars.fadeIns[selector],{dontsave:true});
-				//jqobj.css("transition","none"); // TODO: restore..
-				//jqobj.css("opacity",1.0); // TODO: restore..
+			loggr.warn(" -> fadeOut "+ selector +" transitionend",{dontsave:true});
+			if (jqobj.css("opacity")>=0.1) { 
+				loggr.warn(" -> opacity<=0.9?! "+ selector +" transitionend",{dontsave:true});
+				//return;
 			}
-			/**/
+			
+			jqobj.css("display","none");
 			
 			jqobj.css("transition","none"); // TODO: restore..
 			jqobj.css("opacity",1.0); // TODO: restore..
 			
 			site.vars.fadeOuts[selector].isBusy = false;
 			loggr.log("site.ui.fadeOut() > FadeOuts: "+ selector +" "+ site.vars.fadeOuts[selector],{dontupload:true});
-			if (cb) { cb(); }
+			if (cb) { cb(); }	
 			
-		});
+		},timems+50);
+		
+		jqobj.css("opacity", (opts.opacity)?opts.opacity:0.0 );
+		
 	},1);
+	
+}
+
+site.ui.fadeTransitionEnd = function(evt) {
+	
+	loggr.log("site.ui.fadeTransitionEnd()");
+	
+	var opac = jqobj.css("opacity");
+	if (opac<0.1) {
+		// fade out complete
+		loggr.warn(" -> FadeOut complete!");
+		$(evt.originalTarget).css("display","none");
+		$(evt.originalTarget).css("transition","none"); // TODO: restore..
+		$(evt.originalTarget).css("opacity",1.0); // TODO: restore..
+	} else {
+		// fade in complete
+	}
 	
 }
 

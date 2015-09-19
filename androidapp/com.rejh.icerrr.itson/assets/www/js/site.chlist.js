@@ -333,8 +333,8 @@ site.chlist.selectstation = function(resultitem,dontgohome,dontStopPlaying) {
 			if (site.mp.isPlaying && !dontStopPlaying) {
 				site.mp.stop(function(){
 					//$(".button_play_bufferAnim").fadeIn(500);
-					//$(".button_play_bufferAnim").css("display","block");
-					site.ui.fadeIn(".button_play_bufferAnim",500);
+					$(".button_play_bufferAnim").css("display","block");
+					//site.ui.fadeIn(".button_play_bufferAnim",500);
 					site.mp.play();
 				});
 			}

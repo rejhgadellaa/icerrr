@@ -103,6 +103,9 @@ site.alarms.drawResults = function() {
 		resulticon.onerror = function() {
 			// try upgrade image from site.data.stations
 			
+			loggr.warn(" > resulticon.onerror()",{dontsave:true});
+			loggr.warn(" -> Could not load: "+ this.src,{dontsave:true});
+			
 			// Get alarm
 			var i = this.alarm_i
 			var alarm = site.session.alarms[i];
@@ -116,27 +119,32 @@ site.alarms.drawResults = function() {
 			
 			// Check this.src already set to station.station_icon_local
 			if (this.src.indexOf(station.station_icon_local)>=0) {
+				loggr.warn(" -> Local icon not loading, use default..",{dontsave:true});
 				this.src = "img/icons-80/ic_station_default.png";
 				return; 
 			}
 			
 			// Check this.src already set to station.station_icon
 			if (this.src.indexOf(station.station_icon)>=0) {
+				loggr.warn(" -> Not even the online icon will load, so use default..",{dontsave:true});
 				this.src = "img/icons-80/ic_station_default.png";
 				return; 
 			}
 			
 			// Update alarm with station data..
 			if (station.station_icon_local && station.station_icon_local.indexOf(".base64")<0) {
+				loggr.warn(" -> Update icon_local from stations data..",{dontsave:true});
 				alarm.station = station;
 				site.session.alarms[i] = alarm;
 				site.helpers.storeSession();
 				this.src = station.station_icon_local;
 				return;
 			} else if (station.station_icon && station.station_icon.indexOf(".base64")<0) {
+				loggr.warn(" -> No station_icon_local, use the interwebz..",{dontsave:true});
 				this.src = site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ station.station_icon;
 				return;
 			} else {
+				loggr.warn(" -> Pff I dunno.. use default icon..",{dontsave:true});
 				this.src = "img/icons-80/ic_station_default.png";
 				return; 
 			}
