@@ -871,7 +871,7 @@ site.home.viewlog = function() {
 	setTimeout(function(){
 	
 		$("#viewlog .main .block.content").html(loghtml);
-		//$("#viewlog .main").scrollTop($("#viewlog .main").outerHeight());
+		$("#viewlog .main").scrollTop($("#viewlog .main")[0].scrollHeight);
 		
 	},500);
 	

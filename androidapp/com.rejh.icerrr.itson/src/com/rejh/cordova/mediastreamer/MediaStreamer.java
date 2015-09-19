@@ -225,8 +225,11 @@ public class MediaStreamer extends CordovaPlugin {
         Log.d(APPTAG," > "+ station_host +", "+ station_port +", "+ station_path);
         
         // Start
+        // Prep some stuff..
         settEditor.putString("mediastreamer_streamUrl", stream_url);
         settEditor.commit();
+        
+        // Set up intent
         serviceIntent.putExtra("stream_url", stream_url);
         serviceIntent.putExtra("isAlarm", isAlarm);
         serviceIntent.putExtra("volume", volume);
@@ -235,6 +238,13 @@ public class MediaStreamer extends CordovaPlugin {
         serviceIntent.putExtra("station_host",station_host);
         serviceIntent.putExtra("station_port",station_port);
         serviceIntent.putExtra("station_path",station_path);
+        
+        // Resume?
+        if (sett.getBoolean("is_paused", false)) {
+        	serviceIntent.putExtra("pause_resume",true);
+        }
+        
+        // Start service..
         context.startService(serviceIntent);
         
         Log.d(APPTAG," > isAlarm: "+ isAlarm);

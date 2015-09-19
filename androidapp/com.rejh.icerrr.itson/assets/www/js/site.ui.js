@@ -117,6 +117,7 @@ site.ui.initFabScroll = function(selector) {
 		site.vars.fabscrolls[selector] = {};
 		site.vars.fabscrolls[selector].scrolltop = 0;
 		site.vars.fabscrolls[selector].time = 0;
+		site.vars.fabscrolls[selector].lastDelata = 0;
 	}
 	
 	// Reset all..
@@ -127,8 +128,9 @@ site.ui.initFabScroll = function(selector) {
 	$(selector+" .main").on( 'scroll', function(e) {
 		
 		delta = site.vars.fabscrolls[selector].scrolltop - $(selector+" .main").scrollTop();
+		if (!site.vars.fabscrolls[selector].lastDelata) { site.vars.fabscrolls[selector].lastDelata = -(delta); }
 	
-		if(delta > 0) {
+		if(delta > 0 && site.vars.fabscrolls[selector].lastDelata<0) {
 			//scroll up
 			if (site.timeouts.ui_showtoast_hide) {
 				$(selector+" .fab").css("bottom",$("#overlay_toast").outerHeight()+16);
@@ -136,13 +138,13 @@ site.ui.initFabScroll = function(selector) {
 				$(selector+" .fab").css("bottom",16);
 			}
 		}
-		//else if(delta < 0){
-		else {
+		else if (delta<0 && site.vars.fabscrolls[selector].lastDelata>0) {
 			//scroll down
 			$(selector+" .fab").css("bottom",-64);
 		}
 		
 		site.vars.fabscrolls[selector].scrolltop = $(selector+" .main").scrollTop();
+		site.vars.fabscrolls[selector].lastDelata = delta;
 		site.vars.fabscrolls[selector].time = new Date().getTime();
 		
 	});
@@ -150,19 +152,6 @@ site.ui.initFabScroll = function(selector) {
 }
 
 // ---> Fades
-
-site.ui.display = function(selector,value) { // TODO: Not used? Stupid method?
-	
-	var jqobj = $(selector);
-	if (!jqobj) { loggr.warn(" > !jqobj"); return; }
-	if (jqobj.length<1) { loggr.warn(" > jqobj < 1"); return; }
-	
-	if (value=="block") {
-		jqobj.css("opacity",1.0);
-	}
-	jqobj.css("display",value);
-	
-}
 
 site.ui.fadeIn = function(selector,timems,cb,opts) {
 	

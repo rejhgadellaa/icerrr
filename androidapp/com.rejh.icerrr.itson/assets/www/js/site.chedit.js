@@ -834,6 +834,15 @@ site.chedit.info = function() {
 	var station_id = $("#editstation input[name='station_id']")[0].value.trim();
 	var station = site.helpers.session.getStationById(station_id);
 	
+	// Station?i
+	if (!station) {
+		navigator.notification.alert("Sorry, something went wrong..", function(){}, "Station Info", "OK");
+		return; // <- :D
+	}
+	
+	// Get stream data via nowplaying poll :D
+	//.. TODO TODO TODO
+	
 	// Create text
 	var text = "Station: \n"+ station.station_name
 	

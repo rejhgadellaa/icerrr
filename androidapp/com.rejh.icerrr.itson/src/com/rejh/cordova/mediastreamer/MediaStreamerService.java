@@ -374,8 +374,8 @@ public class MediaStreamerService extends Service {
 				
 			} else {
 				Log.d(APPTAG," > cmd(_pause_resume) unhandled?!");
-				settEditor.putInt("starredStationsIndex",-1); // reset some values..
-				settEditor.commit();
+				//settEditor.putInt("starredStationsIndex",-1); // reset some values..
+				//settEditor.commit();
 			}
 		} else {
 			boolean setupOkay = setup();
