@@ -816,7 +816,7 @@ site.storage.getFileTransferErrorType = function(error) {
 	FileTransferError.ABORT_ERR
 	/**/
 	
-	var res = "FileError.UNKNOWN";
+	var res = "FileTransferError.UNKNOWN";
 	switch(error.code) {
 		case FileTransferError.NOT_FOUND_ERR:
 			res = "FileTransferError.NOT_FOUND_ERR";

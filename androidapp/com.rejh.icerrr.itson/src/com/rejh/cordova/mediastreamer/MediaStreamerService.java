@@ -999,14 +999,16 @@ public class MediaStreamerService extends Service {
 		// Prep: Get json variables
 		String station_id = null;
 		String src = null;
+		boolean isImageInsteadOfIcon = false;
 		try {
 			station_id = station.getString("station_id");
 			src = station.getString("station_icon");
 			if (station.has("station_image")) {
 				String newsrc = station.getString("station_image");
 				Log.d(APPTAG," > Replace _icon with _image: '"+ newsrc +"' ?");
-				if (newsrc!=null) {
-					src = (!newsrc.equals("0"))?station.getString("station_image"):src;					
+				if (newsrc!=null && !newsrc.equals("0")) {
+					isImageInsteadOfIcon = true;
+					src = station.getString("station_image");
 				}
 			}
 		} catch(JSONException e) {
@@ -1025,7 +1027,12 @@ public class MediaStreamerService extends Service {
         File path = new File(root + "/Icerrr/images");
         path.mkdirs(); // should not be needed but lets do it anyway
         // -> Filename
-        String filename = "tmp_lockscreen_station_image_"+ station_id +".png";
+        String filename = "";
+        if (isImageInsteadOfIcon) {
+        	filename = "tmp_lockscreen_station_image_"+ station_id +".png";
+        } else {
+        	filename = "tmp_lockscreen_station_icon_"+ station_id +".png";
+        }
         
         // ---> GO GO GO
         

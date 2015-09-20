@@ -1,3 +1,6 @@
+0.251
+  * Fix: Adjusted notification's large icon size for high density displays
+
 0.250
   * Fix: check if urls are already URL encoded before downloading
   * Fix: alarm station icons not updating after editing station

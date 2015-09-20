@@ -34,7 +34,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.support.v4.app.NotificationCompat;
@@ -215,7 +214,10 @@ public class NotifMgr extends CordovaPlugin {
 	        if (largeicon!=null) { 
 	        	Bitmap largeIconBmp = getIcon(largeicon);
 	        	if (largeIconBmp!=null) {
-	        		builder.setLargeIcon(getCircleBitmap(largeIconBmp));
+	        		int scaleToSize = (int) context.getResources().getDimension(android.R.dimen.notification_large_icon_height);
+	        		Bitmap scaledLargeIconBmp = Bitmap.createScaledBitmap(largeIconBmp, scaleToSize, scaleToSize, true);
+	        		builder.setLargeIcon(getCircleBitmap(scaledLargeIconBmp));
+	        		largeIconBmp.recycle();
 	        	}
 	        } // TODO: create bitmap
 	        
@@ -513,26 +515,27 @@ public class NotifMgr extends CordovaPlugin {
     }
     
     private Bitmap getCircleBitmap(Bitmap bitmap) {
-    	 final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-    	  bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-    	 final Canvas canvas = new Canvas(output);
+    	Log.d(APPTAG," -> Create CircleBitmap "+ bitmap.getWidth() +", "+ bitmap.getHeight());
+    	final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+    	bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+    	final Canvas canvas = new Canvas(output);
 
-    	 final int color = Color.RED;
-    	 final Paint paint = new Paint();
-    	 final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-    	 final RectF rectF = new RectF(rect);
+    	final int color = Color.RED;
+    	final Paint paint = new Paint();
+    	final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+    	final RectF rectF = new RectF(rect);
+    	
+    	paint.setAntiAlias(true);
+    	canvas.drawARGB(0, 0, 0, 0);
+    	paint.setColor(color);
+    	canvas.drawOval(rectF, paint);
 
-    	 paint.setAntiAlias(true);
-    	 canvas.drawARGB(0, 0, 0, 0);
-    	 paint.setColor(color);
-    	 canvas.drawOval(rectF, paint);
+    	paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+    	canvas.drawBitmap(bitmap, rect, rect, paint);
 
-    	 paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-    	 canvas.drawBitmap(bitmap, rect, rect, paint);
+    	bitmap.recycle();
 
-    	 bitmap.recycle();
-
-    	 return output;
+    	return output;
     }
     
     
