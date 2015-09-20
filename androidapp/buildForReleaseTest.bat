@@ -81,6 +81,7 @@ if not errorlevel 0 goto error
 if errorlevel 1 goto error
 
 REM copy %cd%\..\_apks\%name_prj%.apk D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_prj%.apk
+copy %cd%\..\_apks\%name_prj%.apk D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_prj%-signed-test.apk
 
 title Install?
 echo.

@@ -213,6 +213,8 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp)
 	
 	var filename = "__noname__"+ new Date().getTime();
 	
+	if (!url) { url = "__noname__"+ new Date().getTime(); }
+	
 	if (url.indexOf("/")>=0) {
 		filename = url.substr(url.lastIndexOf("/")+1);
 	} else {

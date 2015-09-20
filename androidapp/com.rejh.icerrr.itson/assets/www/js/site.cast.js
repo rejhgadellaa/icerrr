@@ -436,6 +436,9 @@ site.cast.destroy = function(silent) {
 	
 	site.cookies.put("cast_session",0);
 	
+	site.mp.mpstatus = Media.MEDIA_STARTING;
+	site.vars.lastMpStatus = -1;
+	
 }
 
 // ---> Notifications
