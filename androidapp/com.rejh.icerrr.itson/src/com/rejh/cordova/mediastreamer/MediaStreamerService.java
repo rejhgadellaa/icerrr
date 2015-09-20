@@ -388,6 +388,14 @@ public class MediaStreamerService extends Service {
 		
 		// Now playing + notification
 		//String nowplaying_tmp = (nowplaying!=null)?nowplaying:"Now playing: ...";
+		// -> alarm
+		if (isAlarm) {
+			try {
+			overrideOpts.put("actionPlayPauseIsSnooze",true);
+			} catch(JSONException e) {
+				Log.e(APPTAG,"JSONException: "+e, e);
+			}
+		}
 		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
 		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", "Now playing: ...", msNotifMgr.NOTIFICATION_ID,true,overrideOpts);
 		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
@@ -623,8 +631,16 @@ public class MediaStreamerService extends Service {
 					
 	        	}
 				
-				// Update notif
-				msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying, msNotifMgr.NOTIFICATION_ID,true);
+				// Update notifif (isAlarm) {
+	        	JSONObject overrideOpts = new JSONObject();
+	        	if (isAlarm) {
+	        		try {
+					overrideOpts.put("actionPlayPauseIsSnooze",true);
+					} catch(JSONException e) {
+						Log.e(APPTAG,"JSONException: "+e, e);
+					}
+				}
+				msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", nowplaying, msNotifMgr.NOTIFICATION_ID,true,overrideOpts);
 				startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 	        	
 	        // LOSS_TRANSIENT && LOSS (in case of loss we still want to hold on to the notification)
@@ -787,12 +803,17 @@ public class MediaStreamerService extends Service {
 						JSONObject overrideOpts = new JSONObject();
 						
 						// Change notif icons/action?
+						// -> paused
 						if (sett.getBoolean("is_paused", false)) { // paused
 							try {
 								overrideOpts.put("actionPlayPauseIcon","ic_stat_av_play");
 								overrideOpts.put("actionPlayPauseTitle","Play");
 							} catch(Exception e) {}
 							
+						}
+						// -> alarm
+						if (isAlarm) {
+							overrideOpts.put("actionPlayPauseIsSnooze",true);
 						}
 						
 						// Update notif

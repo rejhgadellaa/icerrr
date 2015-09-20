@@ -270,6 +270,11 @@ site.lifecycle.onNewIntent = function(result,intentTime) {
 			}
 			
 			// Cancel_snooze
+			if (cmd == "snooze") {
+				setTimeout(function(){site.home.alarmSnooze();},1000);
+			}
+			
+			// Cancel_snooze
 			if (cmd == "cancel_snooze") {
 				setTimeout(function(){site.home.alarmSnoozeCancel();},1000);
 			}

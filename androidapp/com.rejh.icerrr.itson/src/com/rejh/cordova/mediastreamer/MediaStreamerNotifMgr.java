@@ -100,6 +100,8 @@ public class MediaStreamerNotifMgr {
 			String actionPlayPauseIcon = overrideOpts.has("actionPlayPauseIcon") ? overrideOpts.getString("actionPlayPauseIcon") : "ic_stat_av_pause";
 			String actionPlayPauseTitle = overrideOpts.has("actionPlayPauseTitle") ? overrideOpts.getString("actionPlayPauseTitle") : "Pause";
 			
+			boolean actionPlayPauseIsSnooze = overrideOpts.has("actionPlayPauseIsSnooze") ? overrideOpts.getBoolean("actionPlayPauseIsSnooze") : false;
+			
 			// Create args
 			JSONArray args = new JSONArray();
 		
@@ -160,14 +162,25 @@ public class MediaStreamerNotifMgr {
 			JSONObject optsAction2Intent = new JSONObject();
 			JSONArray optsAction2IntentExtras = new JSONArray();
 			JSONObject optsAction2IntentExtra1 = new JSONObject();
-			optsAction2.put("icon",actionPlayPauseIcon);
-			optsAction2.put("title",actionPlayPauseTitle);
-			optsAction2Intent.put("type","receiver");
-			optsAction2Intent.put("package","com.rejh.icerrr.itson");
-			optsAction2Intent.put("classname","com.rejh.cordova.mediastreamer.MediaStreamerReceiver");
-			optsAction2IntentExtra1.put("type","string");
-			optsAction2IntentExtra1.put("name","cmd");
-			optsAction2IntentExtra1.put("value","pause_resume");
+			if (!actionPlayPauseIsSnooze) {
+				optsAction2.put("icon",actionPlayPauseIcon);
+				optsAction2.put("title",actionPlayPauseTitle);
+				optsAction2Intent.put("type","receiver");
+				optsAction2Intent.put("package","com.rejh.icerrr.itson");
+				optsAction2Intent.put("classname","com.rejh.cordova.mediastreamer.MediaStreamerReceiver");
+				optsAction2IntentExtra1.put("type","string");
+				optsAction2IntentExtra1.put("name","cmd");
+				optsAction2IntentExtra1.put("value","pause_resume");
+			} else {
+				optsAction2.put("icon","ic_stat_av_snooze");
+				optsAction2.put("title","Snooze");
+				optsAction2Intent.put("type","activity");
+				optsAction2Intent.put("package","com.rejh.icerrr.itson");
+				optsAction2Intent.put("classname","com.rejh.icerrr.itson.Icerrr");
+				optsAction2IntentExtra1.put("type","string");
+				optsAction2IntentExtra1.put("name","cmd");
+				optsAction2IntentExtra1.put("value","snooze");
+			}
 			optsAction2IntentExtras.put(optsAction2IntentExtra1);
 			optsAction2Intent.put("extras", optsAction2IntentExtras);
 			optsAction2.put("intent", optsAction2Intent);
