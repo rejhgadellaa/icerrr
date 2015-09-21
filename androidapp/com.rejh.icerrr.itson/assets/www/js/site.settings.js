@@ -183,6 +183,188 @@ site.settings.store = function() {
 	
 }
 
+// ---> Export, import
+
+site.settings.exportStationsData = function() {
+	
+	loggr.debug("site.settings.exportStationsData()");
+	
+	// Write file to storage..
+	site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+		function(evt) {
+			
+			// Get fileEntry
+			site.storage.getFileEntry(site.cfg.paths.json,"stations.json",
+				function(fileEntry) {
+					
+					// Prep intent extras
+					var extras = {};
+					extras[window.plugins.webintent.EXTRA_STREAM] = fileEntry.fullPath;
+					
+					// Prep params
+					var params = {
+						action: window.plugins.webintent.ACTION_SEND,
+						type: 'text/text',
+						extras: extras
+					}
+					
+					// A-go-go
+					window.plugins.webintent.startActivity(params,function(){},function(){ alert("An error occured");});
+					
+				},
+				function(fileError) {
+					alert("Could not read stations file: "+ site.storage.getErrorType(fileError));
+				}
+			);
+		},
+		function(fileError) {
+			alert("Could not write stations file: "+ site.storage.getErrorType(fileError));
+		}
+	);
+	
+}
+
+site.settings.importStationsData = function() {
+	
+	site.settings.importStationsDataDelayed();
+	
+}
+
+site.settings.importStationsDataDelayed = function() {
+	
+	loggr.debug("site.settings.importStationsDataDelayed()");
+	
+	window.fileChooser.filePicker(
+		function(uri) {
+			
+			// site.ui.showloading(null,"Reading file...");
+			
+			// Filename..
+			var filename = uri.substr(uri.lastIndexOf("/")+1);
+			
+			// Filepath..
+			// -> Relative :S
+			var filepath = uri.substr(0,uri.lastIndexOf("/"));
+			if (filepath.indexOf("file://")==0) {
+				filepath = filepath.substr(7);
+			}
+			
+			// Log
+			loggr.log(" > "+ filepath);
+			loggr.log(" > "+ filename);
+			
+			// Get file entry..
+			site.storage.getFileEntry(filepath,filename,
+				function(fileEntry) {
+							
+					// Read file entry okay!
+					loggr.log("site.settings.importStationsData().gotFileEntry :D");
+					
+					site.storage.readfile(filepath,filename,
+						function(jsonb) {
+							
+							// Read file okay!
+							loggr.log("site.settings.importStationsData().gotFile :D");
+							
+							// Parse binary..?
+							var jsons = jsonb.toString(2);
+							if (!jsons) { 
+								alert("That didn't work :("); 
+								return; 
+							}
+							
+							// Parse json
+							var json = JSON.parse(jsons);
+							
+							// Check file == json
+							if (!json || !json[0]) {
+								alert("File contents cannot be parsed to json data :(");
+								site.ui.hideloading();
+								return;
+							}
+							if (!json[0]) {
+								alert("File contents cannot be parsed to json data of type array :(");
+								site.ui.hideloading();
+								return;
+							}
+							if (!json[0].station_id) {
+								alert("File contents cannot be parsed to valid station data :(");
+								loggr.log(jsons);
+								site.ui.hideloading();
+								return;
+							}
+							
+							// Copy current stations.jsoon so we can restore it.. (yea.. I know)
+							site.vars.stationsBackupFilename = "stations.bck."+ new Date().format("Y-m-d.H-i-s") +".json";
+							site.storage.writefile(site.cfg.paths.json,site.vars.stationsBackupFilename,JSON.stringify(site.data.stations),
+								function(evt) { 
+								
+								// Backup okay!
+								loggr.log("site.settings.importStationsData().gotBackup :D");
+									
+									// Overwrite stations data...?!
+									var conf = confirm("Are you sure you want to continue restoring "+ json.length +" stations? (You currently have "+ site.data.stations.length +")");
+									
+									// Okay
+									if (conf) {
+										
+										site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+											function(evt) { 
+												alert("Your stations have been restored! Tap OK to restart.");
+												window.location.reload();
+												return;
+											},
+											function(fileError) {
+												alert("Could not write backup of stations data: "+ site.storage.getErrorType(fileError));
+												site.ui.hideloading();
+												return;
+											}
+										);
+										
+									}
+									// Nope
+									else {
+										site.ui.hideloading();
+										return;
+									}
+									
+								},
+								function(err) {
+									alert("Could not write backup of stations data: "+ site.storage.getErrorType(fileError));
+									site.ui.hideloading();
+									return;
+								}
+							);
+							
+						},
+						function(fileError) {
+							alert("Could not read file: "+ fileError.code +", "+ site.storage.getErrorType(fileError) +"\n"+ uri);
+							site.ui.hideloading();
+							return;
+						},
+						{readOutsideRoot:true,file:{readAsBinaryString:false}} // TODO: Remove readAsBinary
+					);
+					
+				},
+				function(fileError) {
+					alert("Could not read file entry: "+ fileError.code +", "+ site.storage.getErrorType(fileError) +"\n"+ uri);
+					site.ui.hideloading();
+					return;
+				},
+				{readOutsideRoot:true,path:{create:false},file:{create:false}}
+				
+			);
+			
+		},
+		function(err) {
+			alert("An error occured: "+err);
+			site.ui.hideloading();
+			console.error(err);
+		}
+	);
+	
+}
+
 // ---> Help
 
 site.settings.helpSimple = function() {

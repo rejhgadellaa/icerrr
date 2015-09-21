@@ -480,7 +480,7 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	loggr.debug("site.storage.readfile(): "+path+", "+filename);
 	
 	// Check path, should contain site.cfg.paths.root
-	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
+	if (path.indexOf(site.cfg.paths.root)<0 && opts && opts.readOutsideRoot!==true) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.readfile().Error: Will not read outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
@@ -535,6 +535,8 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 									// fileReader.onabort = function(error) { site.storage.preCbErr(errcb,error,timeoutID); }; // TODO: onabort != error..?
 									fileReader.onerror = function(error) { site.storage.preCbErr(errcb,error,timeoutID); };
 									if (opts.file.readAsDataUrl) { fileReader.readAsDataURL(file); }
+									if (opts.file.readAsBinaryString) { fileReader.readAsBinaryString(file); }
+									if (opts.file.readAsBinaryString) { fileReader.readAsArrayBuffer(file); }
 									else { fileReader.readAsText(file); }
 								},
 								function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
@@ -558,7 +560,7 @@ site.storage.getFileEntry = function(path,filename,cb,errcb,opts) {
 	loggr.log("site.storage.getFileEntry(): "+ path +", "+ filename);
 	
 	// Check path, should contain site.cfg.paths.root
-	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
+	if (path.indexOf(site.cfg.paths.root)<0 && opts && opts.readOutsideRoot!==true) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.getFileEntry().Error: Will not read outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}

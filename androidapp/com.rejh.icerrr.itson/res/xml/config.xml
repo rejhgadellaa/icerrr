@@ -63,6 +63,7 @@
     <plugin name="NotifMgr" value="com.rejh.cordova.notifmgr.NotifMgr"/>
     <plugin name="AlarmMgr" value="com.rejh.cordova.alarmmgr.AlarmMgr"/>
     <plugin name="DatePickerPlugin" value="com.plugin.datepicker.DatePickerPlugin"/>
+    <plugin name="FileChooser" value="com.megster.cordova.FileChooser"/>
 </plugins>
 </cordova>
 

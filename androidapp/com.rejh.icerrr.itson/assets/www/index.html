@@ -71,6 +71,7 @@
 	<script language="javascript" type="text/javascript" src="js/cordova/notifmgr.js"></script>
 	<script language="javascript" type="text/javascript" src="js/cordova/alarmmgr.js"></script>
 	<script language="javascript" type="text/javascript" src="js/cordova/datepicker.js"></script>
+	<script language="javascript" type="text/javascript" src="js/cordova/fileChooser.js"></script>
 	
 	<!-- Javascript: Externals || TODO: would rather not rely on online files... -->
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -135,9 +136,9 @@
 		<div class="actions"></div>
 		
 		<div class="loadbar">
-			<div class="loadbar_inner_base loadbar_inner_1"></div>
-			<div class="loadbar_inner_base loadbar_inner_2"></div>
-			<div class="loadbar_inner_base loadbar_inner_3"></div>
+			<div class="loadbar_inner_base loadbar_inner_1"><div class="loadbar_inner_color"></div></div>
+			<div class="loadbar_inner_base loadbar_inner_2"><div class="loadbar_inner_color"></div></div>
+			<div class="loadbar_inner_base loadbar_inner_3"><div class="loadbar_inner_color"></div></div>
 		</div>
 		
 	</div>
@@ -705,6 +706,34 @@
 				<div class="item title">Unlock device for alarms</div>
 				<div class="item subtitle">Turn on screen and unlock device for a short while when an alarm fires</div>
 				<div class="checkboxWrap"><input name="turnOnScreenForAlarms" type="checkbox" class="checkbox" disabled /></div>
+			</div>
+			
+			<div class="itemWrap">
+				<div class="item spacer invis"></div>
+			</div>
+			
+		</div>
+		
+		<div class="block header">
+			Backup/restore
+		</div>
+		
+		<div class="block def">
+				
+			<div class="itemWrap exportStationsData" onclick="site.settings.exportStationsData();">
+				<div class="item title">Export stations data</div>
+				<div class="item subtitle">Backup your current list of stations</div>
+				<div class="checkboxWrap"></div>
+			</div>
+			
+			<div class="itemWrap">
+				<div class="item spacer"></div>
+			</div>
+				
+			<div class="itemWrap importStationsData disabled" onclick="site.settings.importStationsData()">
+				<div class="item title">Import stations data</div>
+				<div class="item subtitle">Restore a backed up list of stations</div>
+				<div class="checkboxWrap"></div>
 			</div>
 			
 			<div class="itemWrap">
