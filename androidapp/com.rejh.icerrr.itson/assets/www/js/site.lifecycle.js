@@ -801,6 +801,12 @@ site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
 
 site.lifecycle.downloadUpdateApp = function(buttonIndex){
 	
+	if (site.cast.session) {
+		site.cast.destroy();
+	} else {
+		site.mp.stop();
+	}
+	
 	var ditem = site.vars.ditem;
 	
 	// Prep some stuff

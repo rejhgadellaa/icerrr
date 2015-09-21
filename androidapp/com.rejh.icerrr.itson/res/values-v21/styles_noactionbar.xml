@@ -2,21 +2,73 @@
 <resources>
 
   <style name="Theme.AppCompat.Light.NoActionBar" parent="@style/Theme.AppCompat.Light">
+  
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item> <!-- For 2.x version  -->
+        
 		<item name="android:colorPrimary">#ff2d6073</item>
 		<item name="android:colorPrimaryDark">#ff2D6073</item>
 		<item name="android:colorAccent">#ff2d6073</item>
+        
         <!-- <item name="android:navigationBarColor">#ff2D6073</item> -->
-        <item name="android:dialogTheme">@style/TimePickerTheme</item> <!-- TimePicker dialog -->
-        <item name="android:alertDialogTheme">@style/TimePickerTheme</item> <!-- Alert dialog -->
+        
+        <item name="android:dialogTheme">@style/DialogStyle</item> <!-- All dialogs ..? -->
+        <item name="android:alertDialogTheme">@style/DialogStyle</item> <!-- Alert dialog -->
+        <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item> <!-- TimePicker dialog theme -->
+        
   </style>
   
-<style name="TimePickerTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+<style name="DialogStyle" parent="@style/Theme.AppCompat.Light.Dialog">
+
     <item name="colorPrimary">#ff2d6073</item>
     <item name="colorPrimaryDark">#ff2d6073</item>
     <item name="colorAccent">#ff2d6073</item>
+    
     <!--<item name="android:textColorPrimary">#ffD0D102</item>-->
+</style>
+
+<style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+
+    <item name="colorPrimary">#ff2d6073</item>
+    <item name="colorPrimaryDark">#ff2d6073</item>
+    <item name="colorAccent">#ff2d6073</item>
+    
+    <item name="android:timePickerMode">clock</item>
+    <item name="android:headerBackground">#ff2d6073</item>
+    <item name="android:numbersTextColor">#ff000000</item>
+    <item name="android:numbersSelectorColor">#ff2d6073</item>
+    <item name="android:numbersBackgroundColor">#ffdddddd</item>
+    <item name="android:amPmTextColor">#ffD0D102</item>
+    
+    <item name="android:timePickerStyle">@style/TimePickerDialogStyle</item> <!-- TimePicker dialog style -->
+    
+</style>
+
+<style name="TimePickerDialogStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+
+    <item name="colorPrimary">#ff2d6073</item>
+    <item name="colorPrimaryDark">#ff2d6073</item>
+    <item name="colorAccent">#ff2d6073</item>
+    
+    <item name="android:timePickerMode">clock</item>
+    <item name="android:headerBackground">#ff2d6073</item>
+    <item name="android:headerTimeTextAppearance">@style/TextAppearance.TimePickerDialogStyle.TimeLabel</item> <!-- TimePicker Time TextAppearance -->
+    <item name="android:numbersTextColor">#ff000000</item>
+    <item name="android:numbersSelectorColor">#ff2d6073</item>
+    <item name="android:numbersBackgroundColor">#ffdddddd</item>
+    <item name="android:amPmTextColor">#ffD0D102</item>
+
+</style>
+
+<style name="TextAppearance.TimePickerDialogStyle.TimeLabel" parent="@android:style/TextAppearance.Material">
+    
+    <item name="android:textSize">60sp</item>
+    <item name="android:textColor">#ffD0D102</item>
+
+    <item name="colorPrimary">#ff2d6073</item>
+    <item name="colorPrimaryDark">#ff2d6073</item>
+    <item name="colorAccent">#ff2d6073</item>
+    
 </style>
  
 </resources>

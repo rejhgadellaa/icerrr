@@ -841,7 +841,7 @@ section {
 	max-height:600px;
 	
 	margin:0;
-	background:rgba(255,255,255,1);
+	background:#fff; /* rgba(255,255,255,1); */
 }
 
 .overflow_menu.active {

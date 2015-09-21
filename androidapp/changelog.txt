@@ -1,3 +1,7 @@
+0.253
+  * More styling for timepicker
+  * Stop media playback when downloading update
+
 0.252
   * Dialogs (including timepicker) are now themed!
   * Fix: nullpointers :S

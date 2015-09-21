@@ -17,17 +17,18 @@
 	},
     
     {
-        "id":"app252",
+        "id":"app253",
         "crit":"version",
-        "critvalue":0.251,
+        "critvalue":0.252,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.252 includes:",
-            "*  Bug fixes, tweaks and improvements"
+            "v0.253 includes:",
+            "*  Bug fixes, tweaks and improvements",
+            "* Timepicker style improvements"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
