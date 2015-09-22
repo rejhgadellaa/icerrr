@@ -1035,9 +1035,7 @@ section {
 
 .loadbar_inner_base {
 	position:absolute;
-	top:0; left:-48px; bottom:0;
-	width:48px;
-	background:#000;
+	top:0; left:-48px; bottom:0; right:-48px;
 }
 
 .loadbar_inner_color {
@@ -1059,10 +1057,10 @@ section {
 
 @-webkit-keyframes loadbar_inner {
 	
-	/*
-	0% { -webkit-transform: translateX(-48px); }
-	100% { -webkit-transform: translateX(100%); }
 	/**/
+	0% { -webkit-transform: translateX(0px); }
+	100% { -webkit-transform: translateX(100%); }
+	/*
 	
 	0% {left:-48px;}
 	100% {left:100%;}

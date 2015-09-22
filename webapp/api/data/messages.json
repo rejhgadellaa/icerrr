@@ -17,18 +17,17 @@
 	},
     
     {
-        "id":"app253",
+        "id":"app254",
         "crit":"version",
-        "critvalue":0.252,
+        "critvalue":0.253,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.253 includes:",
-            "*  Bug fixes, tweaks and improvements",
-            "* Timepicker style improvements"
+            "v0.254 includes:",
+            "*  New: backup and restore station data (see Settings)"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,

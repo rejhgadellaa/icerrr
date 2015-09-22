@@ -219,8 +219,32 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		
 		var resulticon = document.createElement("img");
 		resulticon.className = "resulticon";
+		resulticon.station_id = station.station_id;
 		resulticon.addEventListener("error",function(ev){ 
-			ev.target.src = "img/icons-80/ic_station_default.png";
+			
+			var sid = this.station_id;
+			var station = site.helpers.session.getStationById(sid)
+			
+			var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
+			var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_icon_"+station.station_name.split(" ").join("-").toLowerCase(),false);
+			site.data.stations[stationIndex].station_icon_orig = station.station_icon // store original
+			site.helpers.downloadImage(this, filename, site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ station.station_icon,
+				function(fileEntry,imgobj) {
+					var stationIndex = site.helpers.session.getStationIndexById(imgobj.parentNode.station_id);
+					if (stationIndex<0) { return; }
+					loggr.log(" > DL "+ stationIndex +", "+ fileEntry.fullPath);
+					site.data.stations[stationIndex].station_icon_local = fileEntry.fullPath;
+					site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
+					site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
+					site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),function(){},function(){});
+				},
+				function(error) {
+					loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
+					console.error(error);
+					resulticon.src = "img/icons-80/ic_station_default.png";
+				}
+			);
+			
 		});
 		if (site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
 			var stationIndex = site.helpers.session.getStationIndexById(station.station_id);

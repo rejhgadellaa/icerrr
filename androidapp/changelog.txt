@@ -1,3 +1,6 @@
+0.254
+  * New: backup and restore station data (in Settings)
+
 0.253
   * More styling for timepicker
   * Stop media playback when downloading update

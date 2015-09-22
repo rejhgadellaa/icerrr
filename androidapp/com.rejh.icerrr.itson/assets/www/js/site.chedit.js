@@ -255,6 +255,20 @@ site.chedit.remove = function() {
 		site.chlist.unsetStarred(station_id);
 	}
 	
+	// Check alarms..
+	if (site.session.alarms) {
+		
+		for (var i=0; i<site.session.alarms.length; i++) {
+			
+			var alarm = site.session.alarms[i];
+			if (alarm.station_id == station_id) {
+				
+			}
+			
+		}
+		
+	}
+	
 	// Build newstations
 	loggr.log(" > Build new stations list...");
 	var newstations = [];

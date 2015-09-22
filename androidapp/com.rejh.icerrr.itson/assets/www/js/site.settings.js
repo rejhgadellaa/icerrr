@@ -189,12 +189,14 @@ site.settings.exportStationsData = function() {
 	
 	loggr.debug("site.settings.exportStationsData()");
 	
+	var filename = "icerrr.stations.exp."+ new Date().format("Y-m-d.H-i-s") +".json";
+	
 	// Write file to storage..
-	site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+	site.storage.writefile(site.cfg.paths.json,filename,JSON.stringify(site.data.stations),
 		function(evt) {
 			
 			// Get fileEntry
-			site.storage.getFileEntry(site.cfg.paths.json,"stations.json",
+			site.storage.getFileEntry(site.cfg.paths.json,filename,
 				function(fileEntry) {
 					
 					// Prep intent extras
@@ -226,13 +228,7 @@ site.settings.exportStationsData = function() {
 
 site.settings.importStationsData = function() {
 	
-	site.settings.importStationsDataDelayed();
-	
-}
-
-site.settings.importStationsDataDelayed = function() {
-	
-	loggr.debug("site.settings.importStationsDataDelayed()");
+	loggr.debug("site.settings.importStationsData()");
 	
 	window.fileChooser.filePicker(
 		function(uri) {
@@ -261,17 +257,10 @@ site.settings.importStationsDataDelayed = function() {
 					loggr.log("site.settings.importStationsData().gotFileEntry :D");
 					
 					site.storage.readfile(filepath,filename,
-						function(jsonb) {
+						function(jsons) {
 							
 							// Read file okay!
 							loggr.log("site.settings.importStationsData().gotFile :D");
-							
-							// Parse binary..?
-							var jsons = jsonb.toString(2);
-							if (!jsons) { 
-								alert("That didn't work :("); 
-								return; 
-							}
 							
 							// Parse json
 							var json = JSON.parse(jsons);
@@ -303,12 +292,14 @@ site.settings.importStationsDataDelayed = function() {
 								loggr.log("site.settings.importStationsData().gotBackup :D");
 									
 									// Overwrite stations data...?!
-									var conf = confirm("Are you sure you want to continue restoring "+ json.length +" stations? (You currently have "+ site.data.stations.length +")");
+									var conf = confirm("Are you sure you want to continue restoring "+ json.length +" stations?");
+									
+									var newstations = site.helpers.mergeStations(site.data.stations,json);
 									
 									// Okay
 									if (conf) {
 										
-										site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
+										site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(newstations),
 											function(evt) { 
 												alert("Your stations have been restored! Tap OK to restart.");
 												window.location.reload();
