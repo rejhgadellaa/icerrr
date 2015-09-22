@@ -240,6 +240,53 @@ site.chedit.remove = function() {
 	// Gather data..
 	var station_id = $("#editstation input[name='station_id']")[0].value.trim();
 	
+	// Check alarms..
+	if (site.session.alarms) {
+		
+		var alarmsToBeRemoved = [];
+		
+		loggr.log(" > Lookup station_id: '"+ station_id +"'");
+		
+		// Look for alarms..
+		for (var i=0; i<site.session.alarms.length; i++) {
+			
+			var alarm = site.session.alarms[i];
+			loggr.log(" >> "+ alarm.station.station_id);
+			if (alarm.station.station_id == station_id) {
+				alarmsToBeRemoved.push(alarm);
+			}
+			
+		}
+		
+		loggr.log(" > Found "+ alarmsToBeRemoved.length +" alarm(s)");
+		
+		// Any alarms need removin?
+		if (alarmsToBeRemoved.length>0) {
+			
+			// Ask..
+			var yesRemoveAlarms = confirm("You have "+ alarmsToBeRemoved.length +" alarm(s) set for this station. These will be removed if you continue. Are you sure?");
+			if (!yesRemoveAlarms) { return; } // <- return! :D
+		
+			// Do..
+			for (var i=0; i<alarmsToBeRemoved.length; i++) {
+				
+				var alarm = alarmsToBeRemoved[i];
+				
+				if (!alarm || !alarm.station) {
+					continue;
+				}
+				
+				// TODO: this is kind of a hack...
+				loggr.log(" > Remove alarm: "+ alarm.station.station_id);
+				site.alarms.newAlarmCfg = alarm;
+				site.alarms.remove(true);
+			
+			}
+			
+		}
+		
+	}
+	
 	// Clear currentstation if needed
 	if (site.session.currentstation_id == station_id) {
 		site.session.currentstation_id = null;
@@ -253,20 +300,6 @@ site.chedit.remove = function() {
 	// Check if starred (and unstar if so)
 	if (site.chlist.isStarred(station_id)) {
 		site.chlist.unsetStarred(station_id);
-	}
-	
-	// Check alarms..
-	if (site.session.alarms) {
-		
-		for (var i=0; i<site.session.alarms.length; i++) {
-			
-			var alarm = site.session.alarms[i];
-			if (alarm.station_id == station_id) {
-				
-			}
-			
-		}
-		
 	}
 	
 	// Build newstations

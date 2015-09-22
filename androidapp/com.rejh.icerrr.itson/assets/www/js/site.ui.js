@@ -227,8 +227,8 @@ site.ui.fadeIn = function(selector,timems,cb,opts) {
 			
 			jqobj.css("opacity", (opts.opacity)?opts.opacity:1.0 );
 			
-		},1);
-	},1);
+		},50);
+	},50);
 	
 }
 
@@ -301,7 +301,7 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 		
 		jqobj.css("opacity", (opts.opacity)?opts.opacity:0.0 );
 		
-	},1);
+	},50);
 	
 }
 
