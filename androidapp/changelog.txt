@@ -1,3 +1,6 @@
+0.255 (wip)
+  * Fix: removing a station checks alarms and can remove them, too
+
 0.254
   * New: backup and restore station data (in Settings)
 
