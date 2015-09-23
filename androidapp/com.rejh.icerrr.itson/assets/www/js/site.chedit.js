@@ -243,19 +243,15 @@ site.chedit.remove = function() {
 	// Check alarms..
 	if (site.session.alarms) {
 		
-		var alarmsToBeRemoved = [];
-		
 		loggr.log(" > Lookup station_id: '"+ station_id +"'");
-		
 		// Look for alarms..
+		var alarmsToBeRemoved = [];
 		for (var i=0; i<site.session.alarms.length; i++) {
-			
 			var alarm = site.session.alarms[i];
 			loggr.log(" >> "+ alarm.station.station_id);
 			if (alarm.station.station_id == station_id) {
 				alarmsToBeRemoved.push(alarm);
 			}
-			
 		}
 		
 		loggr.log(" > Found "+ alarmsToBeRemoved.length +" alarm(s)");
@@ -269,18 +265,14 @@ site.chedit.remove = function() {
 		
 			// Do..
 			for (var i=0; i<alarmsToBeRemoved.length; i++) {
-				
 				var alarm = alarmsToBeRemoved[i];
-				
 				if (!alarm || !alarm.station) {
 					continue;
 				}
-				
 				// TODO: this is kind of a hack...
 				loggr.log(" > Remove alarm: "+ alarm.station.station_id);
 				site.alarms.newAlarmCfg = alarm;
 				site.alarms.remove(true);
-			
 			}
 			
 		}

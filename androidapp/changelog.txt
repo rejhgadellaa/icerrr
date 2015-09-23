@@ -1,4 +1,8 @@
-0.255 (wip)
+0.256 (wip)
+  * More fixes for play button showing wrong status..
+
+0.255
+  * Fix: Play button kept spinning after stopping a chromecast session
   * Fix: removing a station checks alarms and can remove them, too
 
 0.254
