@@ -1061,13 +1061,13 @@ public class MediaStreamerService extends Service {
         }
 		
 		// Lookup nowplaying-station-name on storage..
-		String nowplaying_filename = ""
+		String nowplaying_filename = stripIllChars(""
 				+ "station_art_"
-				+ stripIllChars(nowplaying.replaceAll(" ", "-"))
+				+ nowplaying.replaceAll(" ", "-")
 				+ "_"
-				+ stripIllChars(station_name.replaceAll(" ", "-").toLowerCase())
+				+ station_name.replaceAll(" ", "-").toLowerCase()
 				+ "_"
-				;
+				);
 		nowplaying_filename = nowplaying_filename.toLowerCase();
 		String nowplaying_filename_png = nowplaying_filename+".png";
 		String nowplaying_filename_jpg = nowplaying_filename+".jpg";

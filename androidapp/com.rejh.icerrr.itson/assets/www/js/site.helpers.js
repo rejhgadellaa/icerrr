@@ -1064,6 +1064,14 @@ site.helpers.urlAddCachebust = function(url) {
 	return url;
 }
 
+site.helpers.replaceAll = function(look, repl, str) {
+	return str.replace(new RegExp(site.helpers.escapeRegExp(look), 'g'), repl);
+}
+
+site.helpers.escapeRegExp = function(string) {
+    return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+}
+
 // ---> Debugging
 
 site.helpers.arrToString = function(arr,depth,newline) {

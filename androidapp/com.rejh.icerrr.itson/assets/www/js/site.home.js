@@ -701,11 +701,23 @@ site.home.handleStationImage = function(src) {
 				var nowplaying = site.helpers.stripIllChars(station.station_nowplaying);
 				
 				// Filename..
+				/*
 				var filename = site.helpers.imageUrlToFilename(src,
 					"station_art_"+
 					nowplaying.split(" ").join("-")+"_"+
 					station.station_name.split(" ").join("-").toLowerCase(),
 					false,true,true);
+				/**/
+				var filename = site.helpers.imageUrlToFilename(
+					src,
+					"station_art_"
+						+ site.helpers.replaceAll(" ","-",nowplaying) 
+						+ "_"
+						+ site.helpers.replaceAll(" ","-",station.station_name.toLowerCase())
+						,
+					false,true,true
+					);
+				
 				
 				// Check if file already exists..
 				site.storage.getFileEntry(site.cfg.paths.images, filename,
