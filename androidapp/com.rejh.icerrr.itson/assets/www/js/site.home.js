@@ -807,8 +807,8 @@ site.home.loadAlbumArt = function(localpath) {
 		// Set color
 		if (site.timeouts.vibrantColor) { clearTimeout(site.timeouts.vibrantColor); }
 		site.timeouts.vibrantColor = setTimeout(function(){
-			if (this.src.indexOf('img/bg_home_default.jpg')<0) {
-				var vibrant = new Vibrant(this,32,10);
+			if (img.src.indexOf('img/bg_home_default.jpg')<0) {
+				var vibrant = new Vibrant(img,32,10);
 				var swatches = vibrant.swatches();
 				if (swatches["Vibrant"]) {
 					$("#home .station_image_color").css("background",swatches["Vibrant"].getHex());
@@ -818,7 +818,7 @@ site.home.loadAlbumArt = function(localpath) {
 			} else {
 				$("#home .station_image_color").css("background","none");
 			}
-		},1000);
+		},1500);
 		
 	}
 	img.src = localpath;
