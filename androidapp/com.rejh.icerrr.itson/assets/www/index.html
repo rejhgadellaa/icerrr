@@ -62,6 +62,7 @@
 	<script type="text/javascript" language="javascript" src="js/plugs/dateformat.js"></script>
 	<script type="text/javascript" language="javascript" src="js/plugs/smoothie.js"></script> <!-- req for chrome.cast -->
 	<script type="text/javascript" language="javascript" src="js/plugs/md5.js"></script>
+	<script type="text/javascript" language="javascript" src="js/plugs/min/vibrant.min.js"></script>
 	
 	<!-- Javascript : Cordova -->
 	<script language="javascript" type="text/javascript" src="js/cordova/cordova-2.7.0.js"></script>
@@ -174,7 +175,10 @@
 	
 	<div class="main">
 		
-		<div class="station_image" onClick="site.home.dismissOverflowMenu();"><div class="station_image_wrap"><img class="shadow_z2 round4" /></div></div>
+		<div class="station_image" onClick="site.home.dismissOverflowMenu();">
+			<div class="station_image_color"></div>
+			<div class="station_image_wrap"><img class="shadow_z2 round4" /></div>
+		</div>
 		<div class="station_image_overlay"></div>
 		<div class="station_name textshadow25">...</div>
 		<div class="station_nowplaying textshadow25">...</div>
@@ -720,7 +724,7 @@
 		
 		<div class="block def">
 				
-			<div class="itemWrap exportStationsData" onclick="site.settings.exportStationsData();">
+			<div class="itemWrap exportStationsData" onClick="site.settings.exportStationsData();">
 				<div class="item title">Export stations data</div>
 				<div class="item subtitle">Backup your current list of stations</div>
 				<div class="checkboxWrap"></div>
@@ -730,7 +734,7 @@
 				<div class="item spacer"></div>
 			</div>
 				
-			<div class="itemWrap importStationsData" onclick="site.settings.importStationsData()">
+			<div class="itemWrap importStationsData" onClick="site.settings.importStationsData()">
 				<div class="item title">Import stations data</div>
 				<div class="item subtitle">Restore a backed up list of stations</div>
 				<div class="checkboxWrap"></div>

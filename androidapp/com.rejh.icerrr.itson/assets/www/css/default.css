@@ -365,6 +365,14 @@ section {
 		border-radius: 136px;
 	}
 	
+	#home .main .station_image_color {
+		position:absolute;
+		top:0; left:0; right:0; bottom:0;
+		background:none;
+		transition: background 1s;
+		opacity:0.5;
+	}
+	
 	#home .main .station_image_overlay {
 		position:absolute;
 		top:0; left:0; right:0;

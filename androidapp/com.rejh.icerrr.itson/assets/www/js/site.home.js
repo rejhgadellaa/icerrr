@@ -804,6 +804,22 @@ site.home.loadAlbumArt = function(localpath) {
 			$("#home .main .station_image img").css("opacity",1.0);
 		}
 		
+		// Set color
+		if (site.timeouts.vibrantColor) { clearTimeout(site.timeouts.vibrantColor); }
+		site.timeouts.vibrantColor = setTimeout(function(){
+			if (this.src.indexOf('img/bg_home_default.jpg')<0) {
+				var vibrant = new Vibrant(this,32,10);
+				var swatches = vibrant.swatches();
+				if (swatches["Vibrant"]) {
+					$("#home .station_image_color").css("background",swatches["Vibrant"].getHex());
+				} else {
+					$("#home .station_image_color").css("background","none");
+				}
+			} else {
+				$("#home .station_image_color").css("background","none");
+			}
+		},1000);
+		
 	}
 	img.src = localpath;
 	
