@@ -617,11 +617,6 @@ site.home.handleStationImage = function(src) {
 		
 	var station = site.session.currentstation;
 	
-	// store to service so it may use it for lockscreen?
-	loggr.log(" > Reset station_art_uri for service..");
-	//window.mediaStreamer.setting("string","station_art_uri",null,function(res){loggr.log(" > Okay: "+ res);},function(error){loggr.error(error);});
-	window.mediaStreamer.setting("bool","station_art_available",false,function(res){loggr.log(" > Okay: "+ res);},function(error){loggr.error(error);});
-	
 	// Icon or album art..
 	if (src == site.session.currentstation.station_icon) {
 		// icon
@@ -675,7 +670,6 @@ site.home.handleStationImage = function(src) {
 		// Check if image already loaded..
 		if ($("#home .main .station_image").css("background-image").indexOf(src)>=0) {
 			loggr.log(" > Image already loaded: "+ src);
-			window.mediaStreamer.setting("bool","station_art_available",true,function(res){loggr.log(" > Okay: "+ res);},function(error){loggr.error(error);});
 			site.ui.hideLoadbar();
 			return;
 		}
@@ -773,7 +767,6 @@ site.home.loadAlbumArt = function(localpath) {
 	//loggr.log(" > "+ localpath); // TODO: Remove
 	if (site.vars.currentAlbumArtPath == localpath) {
 		loggr.log(" -> Image already loaded. Return.");
-		window.mediaStreamer.setting("bool","station_art_available",true,function(res){loggr.log(" > Okay: "+ res);},function(error){loggr.error(error);});
 		return; // <- :)
 	}
 	site.vars.currentAlbumArtPath = localpath;
@@ -798,13 +791,6 @@ site.home.loadAlbumArt = function(localpath) {
 		} else {
 			$("#home .main .station_image img").css("opacity",1.0);
 		}
-		
-		// store to service so it may use it for lockscreen?
-		loggr.log(" > Set station_art_uri for service..");
-		window.mediaStreamer.setting("string","station_art_uri",this.src,function(res){loggr.log(" > Okay: "+ res);},function(error){loggr.error(error);});
-		window.mediaStreamer.setting("string","station_art_id",site.session.currentstation_id,function(res){loggr.log(" > Okay: "+ res);},function(error){loggr.error(error);});
-		window.mediaStreamer.setting("string","station_art_nowplaying",site.session.currentstation.station_nowplaying,function(res){loggr.log(" > Okay: "+ res);},function(error){loggr.error(error);});
-		window.mediaStreamer.setting("bool","station_art_available",true,function(res){loggr.log(" > Okay: "+ res);},function(error){loggr.error(error);});
 		
 	}
 	img.src = localpath;
