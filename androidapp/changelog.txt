@@ -1,5 +1,5 @@
 0.256 (wip)
-  * More fixes for play button showing wrong status..
+  * Show album art on lockscreen if already cached locally
 
 0.255
   * Fix: Play button kept spinning after stopping a chromecast session

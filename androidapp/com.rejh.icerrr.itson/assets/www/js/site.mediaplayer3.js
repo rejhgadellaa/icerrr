@@ -197,7 +197,7 @@ site.mp.setStopped = function() {
 site.mp.initStatusPoll = function() {
 	loggr.debug("site.mp.initStatusPoll()");
 	site.mp.stopStatusPoll();
-	site.mp.lastmpstatus = -1;
+	// site.mp.lastmpstatus = -1;
 	site.mp.getStatus(site.mp.handleStatus);
 	if (site.loops.mpGetStatus) { clearInterval(site.loops.mpGetStatus); }
 	site.loops.mpGetStatus = setInterval(function(){

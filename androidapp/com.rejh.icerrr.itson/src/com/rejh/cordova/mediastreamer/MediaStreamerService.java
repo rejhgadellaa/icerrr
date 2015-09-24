@@ -33,12 +33,10 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaMetadataRetriever;
-import android.media.MediaPlayer;
 import android.media.RemoteControlClient;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
@@ -112,6 +110,8 @@ public class MediaStreamerService extends Service {
     private int volumeBeforeDuck = -1;
     
     private int mediaType = -1;
+    
+    private String[] illchars = {"!","@","#","$","%","^","&","*","+","=","[","]","{","}","'","\"","<",">",",","?","|"}; 
 	
 	// --------------------------------------------------
 	// Lifecycle
@@ -841,6 +841,7 @@ public class MediaStreamerService extends Service {
 						// Metadata > Get station icon
 				        if (sett.getBoolean("showStationIcon", true)) {
 							try {
+								nowplaying = nowplaying_new; // do it here..
 								Log.d(APPTAG," > MetadataEditor -> Lockscreen artwork..?");
 								String starredStationsJsons = sett.getString("starredStations", "[]");
 								JSONArray starredStations = new JSONArray(starredStationsJsons);
@@ -1013,6 +1014,10 @@ public class MediaStreamerService extends Service {
 		
 		// ---> PREP PREP PREP
 		
+		// Check station_art_uri // DEPRECATED // TODO: do
+		String station_art_uri = null;
+		boolean isArtInsteadOfIcon = false;
+		
 		// Prep: Stuff
 		Bitmap bmp = null;
 		ThreadPolicy origMode = StrictMode.getThreadPolicy();
@@ -1054,6 +1059,34 @@ public class MediaStreamerService extends Service {
         } else {
         	filename = "tmp_lockscreen_station_icon_"+ station_id +".png";
         }
+		
+		// Lookup nowplaying-station-name on storage..
+		String nowplaying_filename = ""
+				+ "station_art_"
+				+ stripIllChars(nowplaying.replaceAll(" ", "-"))
+				+ "_"
+				+ stripIllChars(station_name.replaceAll(" ", "-").toLowerCase())
+				+ "_"
+				;
+		nowplaying_filename = nowplaying_filename.toLowerCase();
+		String nowplaying_filename_png = nowplaying_filename+".png";
+		String nowplaying_filename_jpg = nowplaying_filename+".jpg";
+		String nowplaying_filename_jpeg = nowplaying_filename+".jpeg";
+		Log.e(APPTAG," > Find nowplaying artwork: "+ nowplaying_filename);
+		File[] files = path.listFiles();
+		for (int i=0; i<files.length; i++){
+			//Log.d(APPTAG,files[i].getName());
+			String fileLower = files[i].getName().toLowerCase();
+			if (nowplaying_filename_png.equals(fileLower)
+				|| nowplaying_filename_jpg.equals(fileLower)
+				|| nowplaying_filename_jpeg.equals(fileLower)
+				) {
+				isArtInsteadOfIcon = true;
+				filename = files[i].getName();
+				Log.e(APPTAG," > Found: "+ files[i].getName());
+				break;
+			}
+		}
         
         // ---> GO GO GO
         
@@ -1067,12 +1100,13 @@ public class MediaStreamerService extends Service {
         	String tmpStationImageDataStr = sett.getString("temp_station_image_data","{}");
         	tmpStationImageData = new JSONObject(tmpStationImageDataStr);
         	
-        	if (tmpStationImageData.has(station_id)) {
+        	if (tmpStationImageData.has(station_id) || isArtInsteadOfIcon && filename!=null && !filename.equals("")) {
         		Log.d(APPTAG," -> Load station_image from storage :D");
-        		String filepath = path.getAbsolutePath() +"/"+ tmpStationImageData.getString(station_id);
+        		String filepath = path.getAbsolutePath() +"/"+ filename;
         		Log.d(APPTAG," -> Filepath: "+ filepath);
         		Bitmap couldThisBeTheBitmapWeReLookingFor = getIconFromURI(filepath);
         		if (couldThisBeTheBitmapWeReLookingFor!=null) { return couldThisBeTheBitmapWeReLookingFor; }
+        		else { Log.w(APPTAG," -> Failed loading from storage :("); }
         	}
         	
         } catch(JSONException e) {
@@ -1323,5 +1357,17 @@ public class MediaStreamerService extends Service {
     	
     }
 	
+    private String stripIllChars(String str) {
+    	
+    	for (int i=0; i<illchars.length; i++) {
+    		String illchar = illchars[i];
+    		if (str.indexOf(illchar)>=0) {
+    			str = str.replaceAll(illchar, "");
+    		}
+    	}
+    	
+    	return str;
+    	
+    }
 
 }

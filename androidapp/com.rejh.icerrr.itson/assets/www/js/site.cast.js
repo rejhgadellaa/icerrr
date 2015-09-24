@@ -186,6 +186,8 @@ site.cast.requestSession = function() {
 		return; // <- important :)
 	}
 	
+	site.mp.stop();
+	
 	site.cast.session = "STARTING";
 	
 	site.ui.showloading(null,"Cast: connecting...");

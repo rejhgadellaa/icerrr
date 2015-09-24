@@ -207,7 +207,7 @@ site.helpers.calcAverageColor = function(pixelArray) {
 
 // Image convert url to filename
 
-site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp) {
+site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp,onlyExtension) {
 	
 	loggr.debug("site.helpers.imageUrlToFilename()");
 	
@@ -231,6 +231,11 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp)
 	
 	filename = site.helpers.stripIllChars(filename);
 	prefix = site.helpers.stripIllChars(prefix);
+	
+	if (onlyExtension && prefix) {
+		var ext = filename.substr(filename.lastIndexOf("."));
+		filename = ext;
+	}
 	
 	if (!dontUseTimestamp) { // default
 		filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
