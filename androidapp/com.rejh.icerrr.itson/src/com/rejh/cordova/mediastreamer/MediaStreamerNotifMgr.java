@@ -117,7 +117,7 @@ public class MediaStreamerNotifMgr {
 			opts.put("priority", "HIGH");
 			opts.put("ongoing",true);
 			opts.put("alertOnce",true);
-			opts.put("color", "#2D6073");
+			opts.put("color", "#455A64");
 			
 			// Add large icon?
 			// station_icon_local

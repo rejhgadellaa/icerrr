@@ -1072,7 +1072,7 @@ site.home.alarmSnooze = function() {
 	notif.smallicon = "ic_stat_av_snooze";
 	notif.priority = "MAX"; // HIGH
 	notif.ongoing = false;
-	notif.color = "#2D6073";
+	notif.color = "#455A64";
 	notif.intent = {
 		type:"activity",
 		package:"com.rejh.icerrr.itson",
@@ -1106,7 +1106,7 @@ site.home.alarmSnooze = function() {
 	);
 	
 	var topmode = (site.vars.currentSection=="#home") ? true : false;
-	site.ui.showtoast("Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute) +" <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5,topmode);
+	site.ui.showtoast("Alarm snoozed until: "+ site.helpers.formatNum(hour) +":"+ site.helpers.formatNum(minute) +" <span style='float:right; color:#FF5722; pointer-events:auto;' onclick='site.home.alarmSnoozeCancel();'>CANCEL</span>",5,topmode);
 	
 }
 
@@ -1121,7 +1121,7 @@ site.home.alarmSnoozeCancel = function(notByUser) {
 		// site.ui.showtoast("Snooze canceled");
 		if (!notByUser) {
 			var topmode = (site.vars.currentSection=="#home") ? true : false;
-			site.ui.showtoast("Snooze canceled <span style='float:right; color:#D0D102; pointer-events:auto;' onclick='site.home.alarmSnooze();'>RE-SET</span>",5,topmode);
+			site.ui.showtoast("Snooze canceled <span style='float:right; color:#FF5722; pointer-events:auto;' onclick='site.home.alarmSnooze();'>RE-SET</span>",5,topmode);
 		}
 	} else {
 		loggr.error(" > No alarm snoozed? => !site.vars.snoozeAlarm");

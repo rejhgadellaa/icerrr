@@ -457,7 +457,7 @@ site.cast.notif = function() {
 	opts.title = "Icerrr: "+ site.session.currentstation.station_name;
 	opts.message = "Casting to '"+ site.cast.session.receiver.friendlyName +"'";
 	opts.smallicon = "ic_stat_hardware_cast_connected";
-	opts.color = "#2D6073";
+	opts.color = "#455A64";
 	opts.intent = {
 		type: "activity",
 		package: "com.rejh.icerrr.itson",

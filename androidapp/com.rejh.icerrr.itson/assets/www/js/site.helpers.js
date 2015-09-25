@@ -264,8 +264,8 @@ site.helpers.downloadImage = function(imgobj, filename, url, cb, cberr, cbprogre
 		},
 		function(error) {
 			loggr.warn("site.webapi.download().Error: "+ error);
-			if (imgobj) { imgobj.src = url; } // fallback || TODO: do this?
-			cberr(error);
+			// if (imgobj) { imgobj.src = url; } // fallback || TODO: do this?
+			cberr(error, imgobj);
 		},
 		function(pEvent) {
 			if (cbprogress) { cbprogress(pEvent); }

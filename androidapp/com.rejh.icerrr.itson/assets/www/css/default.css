@@ -13,7 +13,7 @@
 body, table, input, select {
 	font-family: 'Roboto', sans-serif;
 	font-size:12pt;
-	color:rgba(0,0,0,0.87);
+	color:#212121; /* rgba(0,0,0,0.87); */
 }
 
 /* -- ELEMENTS */
@@ -34,11 +34,11 @@ body {
 	height:100%; 
 	margin:0;
 	padding:0;
-	background-color:#2D6073;
+	background-color:#607D8B;
 }
 
 a {
-	color:#2D6073;
+	color:#FF5722;
 	text-decoration:none;
 }
 
@@ -99,7 +99,7 @@ section {
 	top:0; left:0; right:0; bottom:0;
 	width:100%;
 	height:100%;
-	background:#eee;
+	background:#ECEFF1;
 }
 
 	.actionbar {
@@ -108,7 +108,7 @@ section {
 		top:0; left:0; right:0;
 		width:100%;
 		height:56px;
-		background-color:#2D6073; /* #61AE24; */
+		background-color:#607D8B /* #2D6073; */ /* #61AE24; */
 	}
 	
 		.actionbar .icon_app {
@@ -128,7 +128,7 @@ section {
 			bottom:14px; left:56px;
 			font-size:16pt;
 			xfont-weight:300;
-			color:#D0D102;
+			color:#FFF; /* #D0D102; */
 		}
 		
 		.actionbar .actions {
@@ -155,7 +155,7 @@ section {
 		top:56px; left:0; right:0;
 		width:100%;
 		height:48px;
-		background-color:#2D6073;
+		background-color:#607D8B;
 		color:rgba(255,255,255,0.87);
 		text-transform:uppercase;
 	}
@@ -194,7 +194,8 @@ section {
 			.main .block.header {
 				font-size:18pt;
 				font-weight:300;
-				background:#ddd;
+				background:#455A64;
+				color:#fff;
 			}
 	
 	.footer {
@@ -217,7 +218,7 @@ section {
 		
 		.footer .button.active {
 			background-color: rgba(0,0,0,0.25);
-			background: -webkit-radial-gradient(ellipse, rgba(208, 209, 2, 1) 5%, rgba(208, 209, 2, 0.0) 75%);
+			background: -webkit-radial-gradient(ellipse, rgba(255, 87, 34, 1) 5%, rgba(255, 87, 34, 0.0) 75%);
 			background-size:64px 64px;
 			background-position:center;
 			background-repeat:no-repeat;
@@ -266,7 +267,7 @@ section {
 			width:56px; 
 			height:56px;
 			border-radius:50%;
-			background:#2D6073;
+			background:#FF5722;
 			transition:bottom 250ms;
 		}
 		
@@ -281,7 +282,7 @@ section {
 #splash {
 	z-index:90;
 	display:block;
-	background:#2D6073;
+	background:#607D8B;
 	-webkit-transition: -webkit-transform 500ms ease-in-out;
 	transition: transform 500ms ease-in-out;
 }
@@ -449,7 +450,7 @@ section {
 			width:280px; height:280px;
 			margin:-140px 0 0 -140px;
 			background:rgba(255,255,255,0.87);
-			color:rgba(0,0,0,0.87);
+			color:#212121; /*rgba(0,0,0,0.87);*/
 		}
 		
 		#home .alarm_dialog .time {
@@ -458,7 +459,7 @@ section {
 			text-align:center;
 			font-size:56pt;
 			font-weight:300;
-			color:rgba(0,0,0,0.54);
+			color:#727272; /* rgba(0,0,0,0.54); */
 		}
 		
 		#home .alarm_dialog .button {
@@ -468,7 +469,7 @@ section {
 			padding:16px;
 			text-align:center;
 			font-size:14pt;
-			color:#2D6073;
+			color:#FF5722;
 		}
 		
 			#home .alarm_dialog .button.snooze {
@@ -531,11 +532,12 @@ section {
 	
 	.resultitem .resultname {
 		position:absolute;
-		bottom:22px; left:72px; right:72px;
+		bottom:24px; left:72px; right:72px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
-		font-size:16pt;
+		font-size:14pt;
+		color:#212121;
 	}
 	
 	.resultitem .resultstar {
@@ -553,7 +555,7 @@ section {
 	.resultitem_spacer {
 		/* for bottom, space for fab */
 		height:64px;
-		background:#eee;
+		background:#ECEFF1;
 		border:none;
 	}
 	
@@ -562,7 +564,7 @@ section {
 		position:fixed;
 		right:0; left:0; bottom:0;
 		padding:16px;
-		background:#eee;
+		background:#ECEFF1;
 		text-align:center;
 		font-size:10pt;
 	}
@@ -607,6 +609,7 @@ section {
 		white-space: nowrap;
 		text-overflow:ellipsis;
 		font-size:12pt;
+		color:#212121;
 	}
 	
 	#searchstation_results .resultitem .resultsub, 
@@ -617,6 +620,7 @@ section {
 		white-space: nowrap;
 		text-overflow:ellipsis;
 		font-size:10pt;
+		color:#727272;
 	}
 	
 #searchicon {
@@ -650,7 +654,7 @@ section {
 		position:fixed;
 		right:0; left:0; bottom:0;
 		padding:16px;
-		background:#eee;
+		background:#ECEFF1;
 		text-align:center;
 		font-size:10pt;
 	}
@@ -693,7 +697,7 @@ section {
 	
 		#alarms_add input[type="range"]::-webkit-slider-thumb {
 			-webkit-appearance: none;
-			background-color: #2D6073;
+			background-color: #455A64;
 			opacity: 1.0;
 			width: 16px;
 			height: 16px;
@@ -718,7 +722,7 @@ section {
 		}
 		
 			#alarms_add .weekboxWrap.active .weekboxIndicator {
-				background:#2D6073;
+				background:#455A64;
 			}
 	
 		#alarms_add .weekboxText {
@@ -781,7 +785,8 @@ section {
 			padding:16px;
 			font-size:18pt;
 			font-weight:300;
-			background:#ddd;
+			background:#455A64;
+			color:#fff;
 		}
 	
 	/* Item defaults */
@@ -822,6 +827,7 @@ section {
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
+		color:#212121;
 	}
 	
 	#settings .block .item.subtitle {
@@ -830,6 +836,7 @@ section {
 		margin-right:32px;
 		font-size:12pt;
 		font-weight:300;
+		color:#727272;
 	}
 	
 		#settings .checkboxWrap {
@@ -1052,7 +1059,7 @@ section {
 	position:absolute;
 	top:0; left:0; bottom:0;
 	width:48px; height:2px;
-	background:#D0D102;
+	background:#fff; /* #D0D102; */
 }
 
 .loadbar_inner_1 {
@@ -1107,17 +1114,17 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 */
 
 .activatablel:active {
-background-color:rgba(208,209,2,0.25);
+	background-color:rgba(69,90,100,0.25);
 }
 .activatabled:active {
-	background-color:rgba(50,116,44,0.25);
+	background-color:rgba(69,90,100,0.25);
 }
 
 .activatablelh_active {
-	background-color:rgba(208,209,2,0.25);
+	background-color:rgba(69,90,100,0.25);
 }
 .activatabledh_active {
-	background-color:rgba(50,116,44,0.25);
+	background-color:rgba(69,90,100,0.25);
 }
 
 /* Hoverable */
