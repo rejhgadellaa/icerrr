@@ -270,6 +270,22 @@ site.home.run_ui_updates = function() {
 	
 	//loggr.log("site.home.run_ui_updates()");
 	
+	// Check currentstation_id in service..
+	if (site.mp.mpstatus == Media.MEDIA_RUNNING) {
+		window.mediaStreamer.getSetting("string","currentstation_id",
+			function(currentstation_id) {
+				if (!currentstation_id) { return; }
+				if (currentstation_id != site.session.currentstation_id) {
+					var tmpobj = {station_id:currentstation_id};
+					site.chlist.selectstation(tmpobj,false,true); // select station
+				}
+			},
+			function(err) {}
+		);
+		
+	}
+	
+	
 	// Home >> Footer >> Play button
 	if (!site.cast.session) {
 		
@@ -549,12 +565,25 @@ site.home.getAlbumArt = function() {
 			site.home.handleStationImage(imgurl);
 			return;
 		
+		case "npo 3fm - frank ? - bnn":
+			var imgurl = "http://static0.persgroep.net/volkskrant/image/450e44fa-3dce-449e-a335-35cab8294def?width=664&height=374";
+			// imgurl = site.session.currentstation.station_icon;
+			site.home.handleStationImage(imgurl);
+			return;
+		
 		case "":
 			var imgurl = "";
 			imgurl = site.session.currentstation.station_icon;
 			site.home.handleStationImage();
 			return;
 		
+	}
+	
+	if(station.station_nowplaying.toLowerCase().trim().indexOf("npo 3fm - ")>=0) {
+		var imgurl = "http://www-assets.npo.nl/uploads/media_item/media_item/108/94/3FM_widescreen-1441271742.jpg";
+		//imgurl = site.session.currentstation.station_icon;
+		site.home.handleStationImage(imgurl);
+		return;
 	}
 	
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
@@ -768,10 +797,12 @@ site.home.loadAlbumArt = function(localpath) {
 	
 	// Check
 	if (!localpath) { 
-		loggr.log(" > 'localpath' is undefined or false?!");
+		loggr.error(" > 'localpath' is undefined or false?!");
+		return;
 	}
 	if (localpath.indexOf("http")==0) {
 		loggr.error(" > 'localpath' is an url! -> "+ localpath);
+		return;
 	}
 	
 	// Check if already loaded..
@@ -782,6 +813,9 @@ site.home.loadAlbumArt = function(localpath) {
 		return; // <- :)
 	}
 	site.vars.currentAlbumArtPath = localpath;
+	
+	// Reset color..
+	// $("#home .station_image_color").css("background","none");
 	
 	// Load it :D
 	var img = new Image();
@@ -805,20 +839,24 @@ site.home.loadAlbumArt = function(localpath) {
 		}
 		
 		// Set color
-		if (site.timeouts.vibrantColor) { clearTimeout(site.timeouts.vibrantColor); }
-		site.timeouts.vibrantColor = setTimeout(function(){
+		if (site.cookies.get("setting_colorizeAlbumArt")==1) {
 			if (img.src.indexOf('img/bg_home_default.jpg')<0) {
 				var vibrant = new Vibrant(img,32,10);
 				var swatches = vibrant.swatches();
 				if (swatches["Vibrant"]) {
 					$("#home .station_image_color").css("background",swatches["Vibrant"].getHex());
+					/*
+					if (swatches["DarkVibrant"]) { $("#home .footer").css("background",swatches["DarkVibrant"].getHex()); } 
+					else { $("#home .footer").css("background","#2D6073"); }
+					/**/
 				} else {
 					$("#home .station_image_color").css("background","none");
 				}
 			} else {
 				$("#home .station_image_color").css("background","none");
 			}
-		},1500);
+		}
+		//},1500);
 		
 	}
 	img.src = localpath;

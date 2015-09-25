@@ -218,7 +218,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		resultitem.station_id = station.station_id;
 		
 		var resulticon = document.createElement("img");
-		resulticon.className = "resulticon";
+		resulticon.className = "resulticon shadow_z1";
 		resulticon.station_id = station.station_id;
 		resulticon.addEventListener("error",function(ev){ 
 			

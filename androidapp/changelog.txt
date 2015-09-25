@@ -1,5 +1,8 @@
-0.256 (wip)
+0.256
   * Show album art on lockscreen if already cached locally
+  * Slightly but vibrantly colorize in-app artwork
+  * Fix: Update selected station in app when using next/previous from notification
+  * Minor fixes and improvements
 
 0.255
   * Fix: Play button kept spinning after stopping a chromecast session

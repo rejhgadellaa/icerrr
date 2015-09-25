@@ -48,22 +48,11 @@ site.settings.registerListeners = function() {
 	
 	// ---> Update
 	
-	// Use Wifi
-	window.mediaStreamer.getSetting("bool","useWifi",
+	// Show Station Icon
+	window.mediaStreamer.getSetting("bool","showStationIcon",
 		function(res) {
-			if (res) { $("#settings input[name='useWifi']").attr("checked",true); }
-			else { $("#settings input[name='useWifi']").attr("checked",false); }
-		},
-		function(err) {
-			loggr.error(err);
-		}
-	);
-	
-	// Use Speaker Phone For Alarms
-	window.mediaStreamer.getSetting("bool","useSpeakerForAlarms",
-		function(res) {
-			if (res) { $("#settings input[name='useSpeakerForAlarms']").attr("checked",true); }
-			else { $("#settings input[name='useSpeakerForAlarms']").attr("checked",false); }
+			if (res) { $("#settings input[name='showStationIcon']").attr("checked",true); }
+			else { $("#settings input[name='showStationIcon']").attr("checked",false); }
 		},
 		function(err) {
 			loggr.error(err);
@@ -76,11 +65,28 @@ site.settings.registerListeners = function() {
 	if (showAlbumArt==1) { $("#settings input[name='showAlbumArt']").attr("checked",true); }
 	else { $("#settings input[name='showAlbumArt']").attr("checked",false); }
 	
-	// Show Station Icon
-	window.mediaStreamer.getSetting("bool","showStationIcon",
+	// Colorize Album Art
+	var colorizeAlbumArt = site.cookies.get("setting_colorizeAlbumArt");
+	loggr.log(" > colorizeAlbumArt: "+ colorizeAlbumArt);
+	if (colorizeAlbumArt==1) { $("#settings input[name='colorizeAlbumArt']").attr("checked",true); }
+	else { $("#settings input[name='colorizeAlbumArt']").attr("checked",false); }
+	
+	// Use Speaker Phone For Alarms
+	window.mediaStreamer.getSetting("bool","useSpeakerForAlarms",
 		function(res) {
-			if (res) { $("#settings input[name='showStationIcon']").attr("checked",true); }
-			else { $("#settings input[name='showStationIcon']").attr("checked",false); }
+			if (res) { $("#settings input[name='useSpeakerForAlarms']").attr("checked",true); }
+			else { $("#settings input[name='useSpeakerForAlarms']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
+	// Use Wifi
+	window.mediaStreamer.getSetting("bool","useWifi",
+		function(res) {
+			if (res) { $("#settings input[name='useWifi']").attr("checked",true); }
+			else { $("#settings input[name='useWifi']").attr("checked",false); }
 		},
 		function(err) {
 			loggr.error(err);
@@ -111,20 +117,13 @@ site.settings.registerListeners = function() {
 	
 	// ---> Listener
 	
-	// Use Wifi
-	$("#settings input[name='useWifi']").off("change");
-	$("#settings input[name='useWifi']").on("change",function(evt) {
+	// Shot Station Icon
+	$("#settings input[name='showStationIcon']").off("change");
+	$("#settings input[name='showStationIcon']").on("change",function(evt) {
 		var targ = evt.currentTarget;
-		loggr.log(" > Setting: useWifi: "+ (targ.checked));
-		window.mediaStreamer.setting("bool","useWifi",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
-	});
-	
-	// Use Speaker Phone For Alarms
-	$("#settings input[name='useSpeakerForAlarms']").off("change");
-	$("#settings input[name='useSpeakerForAlarms']").on("change",function(evt) {
-		var targ = evt.currentTarget;
-		loggr.log(" > Setting: useSpeakerForAlarms: "+ (targ.checked));
-		window.mediaStreamer.setting("bool","useSpeakerForAlarms",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+		loggr.log(" > Setting: showStationIcon: "+ (targ.checked)?1:0);
+		site.cookies.put("setting_showStationIcon",(targ.checked)?1:0);
+		window.mediaStreamer.setting("bool","showStationIcon",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
 	
 	// Shot Album Art
@@ -135,13 +134,32 @@ site.settings.registerListeners = function() {
 		site.cookies.put("setting_showAlbumArt",(targ.checked)?1:0);
 	});
 	
-	// Shot Station Icon
-	$("#settings input[name='showStationIcon']").off("change");
-	$("#settings input[name='showStationIcon']").on("change",function(evt) {
+	// Colorize Album Art
+	$("#settings input[name='colorizeAlbumArt']").off("change");
+	$("#settings input[name='colorizeAlbumArt']").on("change",function(evt) {
 		var targ = evt.currentTarget;
-		loggr.log(" > Setting: showStationIcon: "+ (targ.checked)?1:0);
-		site.cookies.put("setting_showStationIcon",(targ.checked)?1:0);
-		window.mediaStreamer.setting("bool","showStationIcon",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+		loggr.log(" > Setting: colorizeAlbumArt: "+ (targ.checked)?1:0);
+		site.cookies.put("setting_colorizeAlbumArt",(targ.checked)?1:0);
+		$("#home .station_image_color").css("background","none");
+		$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");
+		$("#home .main .station_image img").css("opacity",1.0);
+		site.vars.currentAlbumArtPath = null;
+	});
+	
+	// Use Speaker Phone For Alarms
+	$("#settings input[name='useSpeakerForAlarms']").off("change");
+	$("#settings input[name='useSpeakerForAlarms']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: useSpeakerForAlarms: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","useSpeakerForAlarms",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	});
+	
+	// Use Wifi
+	$("#settings input[name='useWifi']").off("change");
+	$("#settings input[name='useWifi']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: useWifi: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","useWifi",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
 	
 	// Use SAA

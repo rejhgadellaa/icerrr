@@ -369,8 +369,8 @@ section {
 		position:absolute;
 		top:0; left:0; right:0; bottom:0;
 		background:none;
-		transition: background 1s;
-		opacity:0.5;
+		/* transition: background 500ms; */
+		opacity:0.33;
 	}
 	
 	#home .main .station_image_overlay {
@@ -523,8 +523,10 @@ section {
 		top:0; left:0;
 		width:40px; 
 		height:40px;
-		padding:16px;
+		margin:16px;
 		border-radius:40px;
+		background-color:#f9f9f9;
+		
 	}
 	
 	.resultitem .resultname {
@@ -985,7 +987,7 @@ section {
 	}
 	
 .shadow_z1 {
-	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .shadow_z2 {
@@ -1066,8 +1068,8 @@ section {
 @-webkit-keyframes loadbar_inner {
 	
 	/**/
-	0% { -webkit-transform: translateX(0px); }
-	100% { -webkit-transform: translateX(100%); }
+	0% { -webkit-transform: translate3d(0px,0px,0px); }
+	100% { -webkit-transform: translate3d(100%,0px,0px); }
 	/*
 	
 	0% {left:-48px;}

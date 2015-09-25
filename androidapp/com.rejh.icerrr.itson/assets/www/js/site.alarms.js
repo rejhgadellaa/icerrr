@@ -98,7 +98,7 @@ site.alarms.drawResults = function() {
 		resultitem.station_id = alarm.station.station_id;
 		
 		var resulticon = document.createElement("img");
-		resulticon.className = "resulticon";
+		resulticon.className = "resulticon shadow_z1";
 		resulticon.alarm_i = i;
 		resulticon.onerror = function() {
 			// try upgrade image from site.data.stations

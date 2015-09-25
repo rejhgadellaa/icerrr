@@ -226,9 +226,12 @@ public class MediaStreamerService extends Service {
 					station.put("station_path", station_path);
 					String stations = station.toString();
 					settEditor.putString("station_datas",stations);
+					settEditor.putString("currentstation_id", station_id);
 					settEditor.commit();
 				} catch(JSONException e) {
 					Log.e(APPTAG," > Could not create station jsonobject: "+e);
+					settEditor.putString("currentstation_id", null);
+					settEditor.commit();
 				}
 				
 			}
@@ -263,6 +266,8 @@ public class MediaStreamerService extends Service {
 				stopSelf();
 				return 0;
 			}
+			settEditor.putString("currentstation_id", station_id);
+			settEditor.commit();
 			
 		}
 		
@@ -451,6 +456,7 @@ public class MediaStreamerService extends Service {
 		context.sendBroadcast(notifIntent);
 		
 		// Store some values
+		settEditor.putString("currentstation_id", null);
 		settEditor.putBoolean("mediastreamer_serviceRunning", false);
 		settEditor.commit();
         
@@ -1023,11 +1029,9 @@ public class MediaStreamerService extends Service {
 		ThreadPolicy origMode = StrictMode.getThreadPolicy();
 		
 		// Prep: Get json variables
-		String station_id = null;
 		String src = null;
 		boolean isImageInsteadOfIcon = false;
 		try {
-			station_id = station.getString("station_id");
 			src = station.getString("station_icon");
 			if (station.has("station_image")) {
 				String newsrc = station.getString("station_image");
@@ -1072,7 +1076,7 @@ public class MediaStreamerService extends Service {
 		String nowplaying_filename_png = nowplaying_filename+".png";
 		String nowplaying_filename_jpg = nowplaying_filename+".jpg";
 		String nowplaying_filename_jpeg = nowplaying_filename+".jpeg";
-		Log.e(APPTAG," > Find nowplaying artwork: "+ nowplaying_filename);
+		Log.d(APPTAG," > Try and find nowplaying artwork: "+ nowplaying_filename);
 		File[] files = path.listFiles();
 		for (int i=0; i<files.length; i++){
 			//Log.d(APPTAG,files[i].getName());
@@ -1083,7 +1087,7 @@ public class MediaStreamerService extends Service {
 				) {
 				isArtInsteadOfIcon = true;
 				filename = files[i].getName();
-				Log.e(APPTAG," > Found: "+ files[i].getName());
+				Log.d(APPTAG," > Found: "+ files[i].getName());
 				break;
 			}
 		}

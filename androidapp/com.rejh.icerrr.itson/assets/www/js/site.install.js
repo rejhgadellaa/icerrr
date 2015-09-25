@@ -170,7 +170,7 @@ site.installer.update = function() {
 		
 	}
 	
-	// Specific updates: 0.207
+	// Specific updates: 0.249
 	if (site.cookies.get("app_version")<=0.249 && site.installer.isUpdate) {
 		
 		loggr.error(" > Update to 0.250..",{dontupload:true});
@@ -178,6 +178,16 @@ site.installer.update = function() {
 		loggr.log(" >> Reset session.blacklistedAlbumArt");
 		site.session.blacklistedAlbumArt = {};
 		site.helpers.storeSession();
+		
+	}
+	
+	// Specific updates: 0.256
+	if (site.cookies.get("app_version")<=0.255) {
+		
+		loggr.error(" > Update to 0.256..",{dontupload:true});
+		
+		loggr.log(" >> Enable setting_colorizeAlbumArt");
+		site.cookies.put("setting_colorizeAlbumArt",1)
 		
 	}
 	

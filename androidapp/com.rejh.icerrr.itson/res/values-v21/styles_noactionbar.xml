@@ -12,6 +12,8 @@
         <item name="android:colorPrimaryDark">#ff2D6073</item>
         <item name="android:colorAccent">#ff2d6073</item>
         
+        <!-- <item name="android:navigationBarColor">#ff2d6073</item> -->
+        
         <item name="android:dialogTheme">@style/DialogStyle</item> <!-- All dialogs ..? -->
         <item name="android:alertDialogTheme">@style/DialogStyle</item> <!-- Alert dialog -->
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item> <!-- TimePicker dialog *theme* -->
