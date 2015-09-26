@@ -131,7 +131,7 @@ switch($action) {
 				echo $jsons;
 				break;
 				
-			// station_nowplaying
+			// station_nowplaying // TODO: deprecated?
 			case "station_nowplaying":
 				if (!$queryobj["station_id"]) { error("Error: 'station_id' not defined for get:station_info"); }
 				$filename = "../json/station_nowplaying.".$queryobj["station_id"].".json";
@@ -200,7 +200,7 @@ switch($action) {
 				
 			// -- EXTERNAL: Dirble api
 			
-			// search
+			// search // TODO: deprecated?
 			case "search_dirble":
 				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
 				$dirble_url = "http://api.dirble.com/v1/search/apikey/{$cfg['dirble_apikey']}/search/";
@@ -215,7 +215,7 @@ switch($action) {
 				echo $jsons;
 				break;
 			
-			// search v2
+			// search v2 // TODO: deprecated?
 			case "search_dirble_v2_o":
 				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
 				$dirble_url = "http://api.dirble.com/v2/search/";

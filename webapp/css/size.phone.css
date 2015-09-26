@@ -60,10 +60,10 @@ section {
 			}
 		
 	#home .social {
-		z-index:auto;
 		position:absolute;
 		top:8px; left:8px;
 		width:280px;
+		max-height:80px;
 	}
 	
 	#home .social .item_wrap {

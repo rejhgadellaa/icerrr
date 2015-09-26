@@ -38,7 +38,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 
 	<!-- Icon -->
-    <link rel="icon" href="img/icons-48/ic_launcher.png" type="image/x-icon">
+    <link rel="icon" href="img/ic_launcher.png" type="image/x-icon">
 	
 	<!-- Javascript: jQuery -->
     <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min"></script>
@@ -55,7 +55,7 @@
     <link rel="stylesheet" type="text/css" href="css/default.css" />
     
     <!-- Style / responsive -->
-	<link rel="stylesheet" type="text/css" href="css/size.phone.css" media="screen and (max-width: 960px)" />
+	<link rel="stylesheet" type="text/css" href="css/size.phone.css?c=<?=time();?>" media="screen and (max-width: 960px)" />
     
     <!-- Webfonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
@@ -86,7 +86,7 @@
     <!-- Main -->
     <div class="main shadow_z2u">
     	
-        <div class="download round5" onclick="window.location.href='https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1';">
+        <div class="download round5" onClick="window.open('https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1');">
         	<div class="text">DOWNLOAD</div>
         </div>
         
@@ -94,12 +94,11 @@
         	<div class="line">Find the project on <a href="https://github.com/rejhgadellaa/icerrr/" target="_blank">GitHub</a></div>
             <div class="line">Copyright &copy; 2015 <a href="http://www.rejh.nl/" target="_blank">REJH Gadellaa</a></div>
         </div>
-        
     </div>
     
     <!-- Social -->
     <div class="social">
-        <div class="item_wrap"><div class="g-plusone" data-size="medium" data-annotation="inline" data-width="200"></div></div>
+        <div class="item_wrap"><div class="g-plusone" data-href="http://www.rejh.nl/icerrr/" data-size="medium" data-annotation="inline" data-width="200"></div></div>
         <div class="item_wrap"><a href="https://twitter.com/share" class="twitter-share-button" data-via="RGadellaa" data-count="none">Tweet</a></div>
     </div>
     
@@ -113,7 +112,6 @@
 	<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
 	</form>
 	</div>
-	
 </section>
 
 <script>

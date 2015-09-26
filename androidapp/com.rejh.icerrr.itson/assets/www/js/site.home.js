@@ -438,10 +438,14 @@ site.home.run_station_updates = function() {
 	
 	site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
+			
 			if (data["error"]) {
 				loggr.warn(" > "+data["errormsg"]);
 				return;
 			}
+			
+			window.mediaStreamer.updateMetaData();
+			
 			if (!data["data"]["nowplaying"]) { 
 				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
@@ -458,13 +462,6 @@ site.home.run_station_updates = function() {
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
 			
-			// Cast
-			if (site.cast.session && site.cast.media) {
-				// TODO: DEPRECATED
-				// urn:x-cast:com.google.cast.media.
-				// site.cast.session.sendMessage("","urn:x-cast:com.google.cast.media.Image
-				// site.cast.updateMetadata();
-			}
 		},
 		function(error) {
 			if (error.message) { site.ui.showtoast(error.message); loggr.warn(error.message); }
@@ -834,6 +831,7 @@ site.home.loadAlbumArt = function(localpath) {
 			$("#home .main .station_image img").css("opacity",0.0);
 			//$("#home .main .station_image").css("background-blend-mode","normal"); // TODO: DEPRECATED
 			//$("#home .main .station_image").css("-webkit-background-blend-mode","normal");
+			window.mediaStreamer.updateMetaData();
 		} else {
 			$("#home .main .station_image img").css("opacity",1.0);
 		}

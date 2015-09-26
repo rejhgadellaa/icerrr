@@ -186,6 +186,7 @@ public class MediaStreamerService extends Service {
 		boolean cmd_next = false;
 		boolean cmd_prev = false;
 		boolean cmd_next_restart_intent = false;
+		boolean cmd_update_metadata = false;
 		if(intent!=null) {
 			
 			if (intent.hasExtra("alarm")) {
@@ -205,6 +206,10 @@ public class MediaStreamerService extends Service {
 			}
 			if (intent.hasExtra("next_restart_intent")) {
 				cmd_next_restart_intent = true;
+			}
+			if (intent.hasExtra("update_metadata")) {
+				cmd_update_metadata = true;
+				nowplaying = "...";
 			}
 			
 			if (intent.hasExtra("station_id")) {
@@ -393,37 +398,37 @@ public class MediaStreamerService extends Service {
 		
 		// Now playing + notification
 		//String nowplaying_tmp = (nowplaying!=null)?nowplaying:"Now playing: ...";
-		// -> alarm
-		if (isAlarm) {
-			try {
-			overrideOpts.put("actionPlayPauseIsSnooze",true);
-			} catch(JSONException e) {
-				Log.e(APPTAG,"JSONException: "+e, e);
+
+		if (!cmd_update_metadata) { //-> Actually does more than update metadata, it updates notif too ;)
+			
+			if (isAlarm) {
+				try {
+				overrideOpts.put("actionPlayPauseIsSnooze",true);
+				} catch(JSONException e) {
+					Log.e(APPTAG,"JSONException: "+e, e);
+				}
 			}
+			if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
+			msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", "Now playing: ...", msNotifMgr.NOTIFICATION_ID,true,overrideOpts);
+			startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
+        
+        // Metadata
+	        metadataEditor = remoteControlClient.editMetadata(true);
+	        metadataEditor.clear();
+	        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
+	        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, "Now playing: ...");
+	        Bitmap bmp = getStationImage(getStationData()); // -> Bitmap
+	        if (bmp!=null) {
+	        	metadataEditor.putBitmap(100, bmp);
+	        } else {
+	        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+			}
+	        metadataEditor.apply();
+	        
 		}
-		if (msNotifMgr==null) { msNotifMgr = new MediaStreamerNotifMgr(context); }
-		msNotifMgr.notif((station_name!=null)?station_name:"Unknown station", "Now playing: ...", msNotifMgr.NOTIFICATION_ID,true,overrideOpts);
-		startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 		
 		// Now playing poll
 		startNowPlayingPoll();
-        
-        // Metadata
-        metadataEditor = remoteControlClient.editMetadata(true);
-        metadataEditor.clear();
-        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
-        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, "Now playing: ...");
-        
-        // -> Bitmap
-        Bitmap bmp = getStationImage(getStationData());
-        if (bmp!=null) {
-        	metadataEditor.putBitmap(100, bmp);
-        } else {
-        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
-		}
-        
-        // -> Apply
-        metadataEditor.apply();
         
         // Handle Wifi
         if (shouldEnableWifi) {
@@ -805,6 +810,10 @@ public class MediaStreamerService extends Service {
 					// Update notif only when nowplaying changed
 					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
 						
+						// Update MetaData
+						nowplaying = nowplaying_new; // do it here so getStationImage can find recent artwork!
+						updateMetaData(station_name, nowplaying);
+						
 						// Override opts for notif
 						JSONObject overrideOpts = new JSONObject();
 						
@@ -833,48 +842,6 @@ public class MediaStreamerService extends Service {
 						msNotifMgr.notif(station_name,nowplaying_new,msNotifMgr.NOTIFICATION_ID,true,overrideOpts);
 						startForeground(msNotifMgr.NOTIFICATION_ID,msNotifMgr.notifObj);
 						
-					}
-					
-					// Update metadata only when nowplaying changed
-					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
-					
-						// Update metadata always
-						metadataEditor = remoteControlClient.editMetadata(true);
-				        metadataEditor.clear();
-				        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
-				        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, nowplaying_new);
-	
-						// Metadata > Get station icon
-				        if (sett.getBoolean("showStationIcon", true)) {
-							try {
-								nowplaying = nowplaying_new; // do it here..
-								Log.d(APPTAG," > MetadataEditor -> Lockscreen artwork..?");
-								String starredStationsJsons = sett.getString("starredStations", "[]");
-								JSONArray starredStations = new JSONArray(starredStationsJsons);
-								int index = sett.getInt("starredStationsIndex", 0);
-								if (index<0) { index = 0; }
-								JSONObject station = starredStations.getJSONObject(index);
-								Log.d(APPTAG," -> Get artwork for: "+ station.getString("station_name"));
-								Bitmap bmp = getStationImage(station);
-								if (bmp!=null) {
-									Log.d(APPTAG," --> getStationImage() ok, putBitmap()");
-									metadataEditor.putBitmap(100, bmp);
-						        } else {
-						        	Log.w(APPTAG," --> getStationImage() failed??? Using default..");
-						        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
-						        }
-							} catch(JSONException e) {
-								Log.w(APPTAG," > JSONException!",e);
-								Log.w(APPTAG," > Okay okay, use default icon");
-								metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
-							}
-				        } else {
-				        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
-				        }
-						
-						// Apply metadata
-				        metadataEditor.apply();
-				        
 					}
 					
 					// Save nowplaying_new
@@ -1316,6 +1283,46 @@ public class MediaStreamerService extends Service {
 		restartIntent.putExtra("station_path",station.getString("station_path"));
         context.startService(restartIntent);
         
+    }
+    
+    // Update Metadata
+    private void updateMetaData(String station_name, String station_nowplaying) {
+		
+		// Update metadata always
+		metadataEditor = remoteControlClient.editMetadata(true);
+        metadataEditor.clear();
+        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, station_name);
+        metadataEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, station_nowplaying);
+
+		// Metadata > Get station icon
+        if (sett.getBoolean("showStationIcon", true)) {
+			try {
+				Log.d(APPTAG," > MetadataEditor -> Lockscreen artwork..?");
+				String starredStationsJsons = sett.getString("starredStations", "[]");
+				JSONArray starredStations = new JSONArray(starredStationsJsons);
+				int index = sett.getInt("starredStationsIndex", 0);
+				if (index<0) { index = 0; }
+				JSONObject station = starredStations.getJSONObject(index);
+				Log.d(APPTAG," -> Get artwork for: "+ station.getString("station_name"));
+				Bitmap bmp = getStationImage(station);
+				if (bmp!=null) {
+					Log.d(APPTAG," --> getStationImage() ok, putBitmap()");
+					metadataEditor.putBitmap(100, bmp);
+		        } else {
+		        	Log.w(APPTAG," --> getStationImage() failed??? Using default..");
+		        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+		        }
+			} catch(JSONException e) {
+				Log.w(APPTAG," > JSONException!",e);
+				Log.w(APPTAG," > Okay okay, use default icon");
+				metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+			}
+        } else {
+        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+        }
+		
+		// Apply metadata
+        metadataEditor.apply();
     }
 	
     // Get Station data

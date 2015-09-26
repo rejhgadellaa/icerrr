@@ -132,6 +132,14 @@
 	}
 	
 	/**
+	* UpdateMetaData
+	*/
+	MediaStreamer.prototype.updateMetaData = function(win,fail) {
+		console.log("MediaStreamer.prototype.updateMetaData()");
+        cordova.exec(win, fail, "MediaStreamer", "updateMetaData", []);
+	}
+	
+	/**
 	* Register the plugin
 	*/
 	try {
