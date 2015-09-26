@@ -1,10 +1,10 @@
 Introduction
 ===========
 
-![Screenshot](http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-12.png)
-![Screenshot](http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-26.png)
-![Screenshot](http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-19.png)
-![Screenshot](http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-51.png)
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-12.png" width="256" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-26.png" width="256" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-19.png" width="256" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-51.png" width="256" />
 
 Looking for a clean and simple radio streaming app that lets you set alarms, cast your stream to Chromecast and supports Android Wear?
 
