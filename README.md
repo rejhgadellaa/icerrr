@@ -1,11 +1,6 @@
 Introduction
 ===========
 
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-12.png" width="256" />
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-26.png" width="256" />
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-19.png" width="256" />
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-51.png" width="256" />
-
 Looking for a clean and simple radio streaming app that lets you set alarms, cast your stream to Chromecast and supports Android Wear?
 
 Well, I think Icerrr may be just the thing for you!
@@ -14,6 +9,14 @@ And it gets better: Icerrr is free! [2]
 
 [1] Chromecast support is prototype-ish.
 [2] Icerrr can be downloaded for free for at least a limited period of time.
+
+Screenshots
+-------------
+
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-12.png" width="192" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-26.png" width="192" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-19.png" width="192" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-51.png" width="192" />
 
 Features
 -------------
