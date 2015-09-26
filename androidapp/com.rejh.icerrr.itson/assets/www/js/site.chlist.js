@@ -300,7 +300,8 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		
 		// TODO: events.. anyone?
 		resultitem.onclick = function(){
-			site.chlist.selectstation(this); // well, here's one..
+			// site.chlist.selectstation(this); // well, here's one..
+			site.detailstation.init(this);
 		};
 		$(resultitem).longClick(function(obj){
 			if (!obj.station_id) { obj = obj.parentNode; }

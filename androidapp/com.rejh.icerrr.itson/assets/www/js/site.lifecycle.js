@@ -428,6 +428,10 @@ site.lifecycle.onBackButton = function() {
 		case "#channellist":
 			site.home.init();
 			break;
+			
+		case "#detailstation":
+			site.chlist.init(true);
+			break;
 		
 		case "#searchstation":
 			if (site.vars.isLoading) { 
