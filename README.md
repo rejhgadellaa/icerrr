@@ -61,7 +61,8 @@ Style + design
 --------------
 
   * Palettes: 
-    * New: [Material Blue-grey/Deep-Orange](https://www.materialpalette.com/blue-grey/deep-orange)
+    * New: 
+      * [Material Blue-grey/Deep-Orange](https://www.materialpalette.com/blue-grey/deep-orange)
     * Old: 
       * [colourlovers: Papeterie_Haute-Ville_Logo](http://www.colourlovers.com/business/trends/branding/7880/Papeterie_Haute-Ville_Logo Papeterie_Haute-Ville_Logo)
       * [colourlovers: Save_the_Arctic Save_the_Arctic](http://www.colourlovers.com/palette/3074952/Save_the_Arctic Save_the_Arctic)
