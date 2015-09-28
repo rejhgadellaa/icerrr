@@ -460,6 +460,15 @@ public class MediaStreamerService extends Service {
 		notifIntent.putExtra("notif_id",1); // TODO: what ID should we use?
 		context.sendBroadcast(notifIntent);
 		
+		// Scrob?
+		if (sett.getBoolean("useSLS", false)) {
+			try {
+				sendBroadcastSLS(nowplaying,3);
+			} catch(Exception e) {
+				Log.e(APPTAG," > Error SLS integration: "+ e,e);
+			}
+		}
+		
 		// Store some values
 		settEditor.putString("currentstation_id", null);
 		settEditor.putBoolean("mediastreamer_serviceRunning", false);
@@ -811,28 +820,13 @@ public class MediaStreamerService extends Service {
 					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
 						
 						// Scrob?
-						if (sett.getBoolean("useSLS", false) && !nowplaying_new.equals("Now playing: Unknown")) {
+						if (sett.getBoolean("useSLS", false)) {
 							
-							Log.d(APPTAG," > Send SLS intent..");
-							// -> Docs: https://github.com/tgwizard/sls/blob/master/Developer's%20API.md
-							
-							// Parse nowplaying for artist + trackname
-							String[] npparts = nowplaying_new.split("-", 2);
-							String npartist = npparts[0];
-							String nptrack = npparts[1];
-							
-							Log.d(APPTAG," -> "+ npartist +", "+ nptrack);
-							
-							Intent slsIntent = new Intent();
-							slsIntent.setAction("com.adam.aslfms.notify.playstatechanged");
-							slsIntent.putExtra("state", 0); // State
-							slsIntent.putExtra("app-name","Icerrr");
-							slsIntent.putExtra("app-package", "com.rejh.icerrr.itson");
-							slsIntent.putExtra("artist", npartist);
-							slsIntent.putExtra("track", nptrack);
-							slsIntent.putExtra("source", "R");
-							
-							context.sendBroadcast(slsIntent);
+							try {
+								sendBroadcastSLS(nowplaying_new);
+							} catch(Exception e) {
+								Log.e(APPTAG," > Error SLS integration: "+ e,e);
+							}
 							
 						}
 						
@@ -1393,13 +1387,50 @@ public class MediaStreamerService extends Service {
     	return null;
     	
     }
-	
+    
+    // SLS Integration
+    private void sendBroadcastSLS(String nowplaying_str) {
+    	sendBroadcastSLS(nowplaying_str,0);
+    }
+    private void sendBroadcastSLS(String nowplaying_str, int state) {
+		
+		Log.d(APPTAG," > Send SLS intent..");
+		// -> Docs: https://github.com/tgwizard/sls/blob/master/Developer's%20API.md
+		
+		// Check
+		if (nowplaying_str.equals("Now playing: Unknown") || nowplaying_str.equals("Now playing: ...") || nowplaying_str.equals("...")) {
+			Log.d(APPTAG," -> Now playing: Unknown or ..., skip");
+			return;
+		}
+		
+		// Parse nowplaying for artist + trackname
+		String[] npparts = nowplaying_str.split("-", 2);
+		String npartist = npparts[0];
+		String nptrack = npparts[1];
+		
+		Log.d(APPTAG," -> "+ npartist +", "+ nptrack);
+		
+		Intent slsIntent = new Intent();
+		slsIntent.setAction("com.adam.aslfms.notify.playstatechanged");
+		slsIntent.putExtra("state", state); // State
+		slsIntent.putExtra("app-name","Icerrr");
+		slsIntent.putExtra("app-package", "com.rejh.icerrr.itson");
+		slsIntent.putExtra("artist", npartist);
+		slsIntent.putExtra("track", nptrack);
+		slsIntent.putExtra("duration", 60);
+		slsIntent.putExtra("source", "R");
+		
+		context.sendBroadcast(slsIntent);
+		
+    }
+    
+    // Strip Ill Chars
     private String stripIllChars(String str) {
     	
     	for (int i=0; i<illchars.length; i++) {
     		String illchar = illchars[i];
     		if (str.indexOf(illchar)>=0) {
-    			str = str.replaceAll(illchar, "");
+    			str = str.replace(illchar, "");
     		}
     	}
     	
