@@ -346,27 +346,42 @@ site.ui.hideloading = function() {
 
 // ---> Loadbar
 
-site.ui.showLoadbar = function() {
+site.ui.showLoadbar = function(optSelector) {
 	
 	loggr.log("site.ui.showLoadbar()");
 	
-	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
+	if (optSelector) {
+		if (site.timeouts["fadeOutLoadbar_"+optSelector]) { clearTimeout(site.timeouts["fadeOutLoadbar_"+optSelector]); }
+		$(optSelector +" .loadbar").css("opacity",1);
+		$(optSelector +" .loadbar").css("display","block");
+		//site.ui.fadeIn(".loadbar",250);
+	} else {
+		if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
+		$(".loadbar").css("opacity",1);
+		$(".loadbar").css("display","block");
+		//site.ui.fadeIn(".loadbar",250);
+	}
 	
-	$(".loadbar").css("opacity",1);
-	$(".loadbar").css("display","block");
-	//site.ui.fadeIn(".loadbar",250);
 	
 }
 
-site.ui.hideLoadbar = function() {
+site.ui.hideLoadbar = function(optSelector) {
 	
 	loggr.log("site.ui.hideLoadbar()");
 	
-	if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
-	site.timeouts.fadeOutLoadbar = setTimeout(function(){
-			site.ui.fadeOut(".loadbar",250);
-		}
-	,1000);
+	if (optSelector) {
+		if (site.timeouts["fadeOutLoadbar_"+optSelector]) { clearTimeout(site.timeouts["fadeOutLoadbar_"+optSelector]); }
+		site.timeouts["fadeOutLoadbar_"+optSelector] = setTimeout(function(){
+				site.ui.fadeOut(optSelector +" .loadbar",250);
+			}
+		,1000);
+	} else {
+		if (site.timeouts.fadeOutLoadbar) { clearTimeout(site.timeouts.fadeOutLoadbar); }
+		site.timeouts.fadeOutLoadbar = setTimeout(function(){
+				site.ui.fadeOut(".loadbar",250);
+			}
+		,1000);
+	}
 	
 }
 
@@ -429,11 +444,20 @@ site.ui.setLongclickHelp = function() {
 	
 		$(selector).longClick(function(obj){
 			
+			// Checks
 			if (!obj) { loggr.warn("Event: '"+ selector +"' taphold error: !ev"); return; }
 			if (!obj.title) { return; }
 			
-			navigator.notification.vibrate(100);
+			// Vib!
+			if (!site.vars.vibrateBusy) { 
+				site.vars.vibrateBusy = true;
+				navigator.notification.vibrate(100);
+				setTimeout(function(){
+					site.vars.vibrateBusy = false;
+				},100);
+			}
 			
+			// Info!
 			try {
 			site.ui.showtoast("Info: "+ obj.title);
 			} catch(e) { loggr.warn(" > Attribute missing: 'title' on "+obj); }

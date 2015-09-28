@@ -430,7 +430,11 @@ site.lifecycle.onBackButton = function() {
 			break;
 			
 		case "#detailstation":
-			site.chlist.init(true);
+			if (site.lifecycle.get_section_history_item(true)=="#home") {
+				site.home.init();
+			} else {
+				site.chlist.init(true);
+			}
 			break;
 		
 		case "#searchstation":
@@ -456,7 +460,11 @@ site.lifecycle.onBackButton = function() {
 			break;
 		
 		case "#editstation":
-			site.chlist.init();
+			if (site.lifecycle.get_section_history_item(true)=="#detailstation") {
+				site.detailstation.init(null,false,true);
+			} else {
+				site.chlist.init(true);
+			}
 			break;
 			
 		case "#alarms":

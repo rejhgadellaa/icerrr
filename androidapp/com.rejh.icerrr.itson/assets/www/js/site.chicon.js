@@ -213,26 +213,42 @@ site.chicon.save = function(target) {
 		loggr.warn(" > Could not check alarms: "+e);
 	}
 	
+	// Loading
+	site.ui.showloading();
+	
 	// Write file
 	// TODO: problem with site.storage.isBusy: what do we do when it's busy? retry?
 	site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
 		function(evt) { 
+			
 			site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json"); // TODO: do something with flagged files..
-			// Goto ...
-			site.lifecycle.get_section_history_item(); // remove self from list
-			var lastsection = site.lifecycle.get_section_history_item();
-			//site.chedit.changesHaveBeenMadeGotoStarred = true;
-			site.chedit.changesHaveBeenMade = true;
-			if (lastsection=="#editstation") {
-				site.chedit.init(site.chicon.station.station_id);
-			} else {
-				site.chedit.changesHaveBeenMadeGotoStarred = true;
-				site.chlist.init(); // pretty much every other scenario..
-			}
+			
+			// Get imagery
+			site.chicon.downloadImagery(station_data,
+				function(station) {
+					
+					// Goto ...
+					site.lifecycle.get_section_history_item(); // remove self from list
+					var lastsection = site.lifecycle.get_section_history_item();
+					//site.chedit.changesHaveBeenMadeGotoStarred = true;
+					site.chedit.changesHaveBeenMade = true;
+					if (lastsection=="#editstation") {
+						site.chedit.init(site.chicon.station.station_id);
+					} else {
+						site.chedit.changesHaveBeenMadeGotoStarred = true;
+						site.chlist.init(); // pretty much every other scenario..
+					}
+					
+				},
+				null
+			);
+			
+			
 		},
 		function(e){ 
 			alert("Error writing to filesystem: "+site.storage.getErrorType(e)); 
 			loggr.log(site.storage.getErrorType(e)); 
+			site.ui.hideloading();
 		}
 	);
 	
@@ -286,7 +302,89 @@ site.chicon.updateLockscreenArtworkData = function(station_data) {
 	
 }
 
+// Download imagery
 
+site.chicon.downloadImagery = function(station, cb, cberr) {
+	
+	loggr.log("site.chicon.downloadImagery(): "+ station.station_id);
+	
+	// Reset..
+	station.station_icon_local = null;
+	station.station_image_local = null;
+	
+	// Bla
+	site.chicon.downloadedIcon = false;
+	site.chicon.downloadedImage = false;
+	
+	// Icon..
+	if (site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
+		var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
+		var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_icon_"+station.station_name.split(" ").join("-").toLowerCase(),false);
+		site.data.stations[stationIndex].station_icon_orig = station.station_icon // store original
+		site.helpers.downloadImage(null, filename, site.cfg.urls.webapp +"rgt/rgt.php?w=80&h=80&src="+ station.station_icon,
+			function(fileEntry,imgobj) {
+				var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
+				if (stationIndex<0) { return; }
+				loggr.log(" > DL "+ stationIndex +", "+ fileEntry.fullPath);
+				site.data.stations[stationIndex].station_icon_local = fileEntry.fullPath;
+				site.data.stations[stationIndex].station_edited["station_icon_local"] = new Date().getTime();
+				site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
+				site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),function(){},function(){});
+				site.chicon.downloadedIcon = true;
+				site.chicon.downloadedImagery(cb,cberr);
+			},
+			function(error,imgobj) {
+				loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
+				console.error(error);
+				if (imgobj) { imgobj.src = "img/icons-80/ic_station_default.png"; }
+				site.chicon.downloadedIcon = true; // TODO: not true
+				site.chicon.downloadedImagery(cb,cberr);
+			}
+		);
+	} else {
+		site.chicon.downloadedIcon = true; // TODO: not true
+		site.chicon.downloadedImagery(cb,cberr);
+	}
+	
+	// Image..
+	if (site.helpers.shouldDownloadImage(station.station_image_local,station.station_image)) {
+		var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
+		var filename = site.helpers.imageUrlToFilename(station.station_image,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
+		site.data.stations[stationIndex].station_image_orig = station.station_image // store original
+		site.helpers.downloadImage(null, filename, station.station_image,
+			function(fileEntry,imgobj) {
+				var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
+				if (stationIndex<0) { return; }
+				loggr.log(" > DL "+ stationIndex +", "+ fileEntry.fullPath);
+				site.data.stations[stationIndex].station_image_local = fileEntry.fullPath;
+				site.data.stations[stationIndex].station_edited["station_image_local"] = new Date().getTime();
+				site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
+				site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),function(){},function(){});
+				site.chicon.downloadedImage = true;
+				site.chicon.downloadedImagery(cb,cberr);
+			},
+			function(error,imgobj) {
+				loggr.error(" > Error downloading '"+ station.station_image +"'",{dontupload:true});
+				console.error(error);
+				if (imgobj) { imgobj.src = "img/icons-80/ic_station_default.png"; }
+				site.chicon.downloadedImage = true; // TODO: not true
+				site.chicon.downloadedImagery(cb,cberr);
+			}
+		);
+	} else {
+		site.chicon.downloadedImage = true; // TODO: not true
+		site.chicon.downloadedImagery(cb,cberr);
+	}
+	
+}
+
+site.chicon.downloadedImagery = function(cb,cberr) {
+	
+	if (site.chicon.downloadedIcon && site.chicon.downloadedImage) {
+		setTimeout(function(){ if (cb) { cb(); } },500);
+	}
+	
+}
 
 
 

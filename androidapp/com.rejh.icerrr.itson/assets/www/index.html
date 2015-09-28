@@ -163,6 +163,7 @@
 		
 		<div class="actions">
 			<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_overflow_white.png" title="Tap for more options" /></div>
+			<div class="action activatablel" onClick="site.detailstation.init({station_id:site.session.currentstation.station_id});"><img src="img/icons-48/ic_info_white.png" title="Station details" /></div>
 			<div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/FFF.jpg" title="Chromecast" /></div>
 		</div>
 		
@@ -263,6 +264,13 @@
 		<div class="actions">
 			<!-- nothing? -->
 		</div>
+		
+		<div class="loadbar">
+			<div class="loadbar_inner_base loadbar_inner_1"><div class="loadbar_inner_color"></div></div>
+			<div class="loadbar_inner_base loadbar_inner_2"><div class="loadbar_inner_color"></div></div>
+			<div class="loadbar_inner_base loadbar_inner_3"><div class="loadbar_inner_color"></div></div>
+		</div>
+		
 	</div>
 	
 	<div class="main">
@@ -272,19 +280,35 @@
 			
 			<div class="overlay"></div>
 			<div class="station_icon"><img src="img/icons-80/ic_station_default.png" /></div>
+			<div class="station_image"><img src="img/web_hi_res_512_002.png" onload="site.detailstation.handleColorize(this);" /></div>
 			<div class="station_name textshadow25">NPO Radio 3FM</div>
 			<div class="station_nowplaying textshadow25">Now playing: Unknown</div>
 			<div class="station_starred"><img src="img/icons-48/ic_starred_orange.png" /></div>
-			
 		</div>
 		
 		<!-- content:loading -->
-		<div class="content_loading">
-			Gimme a sec...
+		<div class="content_loading shadow_z1u">
+		
+			<div class="content_header">
+				
+				<div class="station_name textshadow25">[Station name]</div>
+				<div class="station_nowplaying textshadow25">Now playing: Unknown</div>
+			</div>
+			
+			<div class="content_loading_message">
+				Loading...			</div>
+			
+			<!-- psssh -->
 		</div>
 		
 		<!-- content -->
-		<div class="content">
+		<div class="content shadow_z1u">
+		
+			<div class="content_header">
+				
+				<div class="station_name textshadow25">[Station name]</div>
+				<div class="station_nowplaying textshadow25">Now playing: Unknown</div>
+			</div>
 			
 			<div class="content_item recentlyplayed">
 				<div class="icon"><img src="img/icons-48/ic_recentlyplayed_black.png" /></div>
@@ -311,11 +335,10 @@
 					<div class="subtitle">Configure stream, imagery, titels, etc</div>
 				</div>
 			</div>
-			
 		</div>
 	
 		<!-- fab_header -->
-		<div class="fab_header shadow_z5"><img src="img/icons-48/ic_play_white.png" /></div>
+		<div class="fab_header shadow_z5"><img src="img/icons-48/ic_check_white.png" /></div>
 	
 	</div>
 
@@ -499,7 +522,7 @@
 	
 	</div>
 	
-	<div class="fab shadow_z5" onClick="site.alarms.add();"><img src="img/icons-48/ic_add_white.png" /></div>
+	<div class="fab shadow_z5" onClick="site.alarms.add();"><img src="img/icons-48/ic_add_alarm_white.png" /></div>
 	
 </section>
 
@@ -733,8 +756,7 @@
 		-->
 		
 		<div class="block header">
-			Station icon and artwork
-		</div>
+			Station icon and artwork		</div>
 		
 		<div class="block def">
 				
@@ -767,12 +789,10 @@
 			<div class="itemWrap">
 				<div class="item spacer invis"></div>
 			</div>
-			
 		</div>
 		
 		<div class="block header">
-			Alarms
-		</div>
+			Alarms		</div>
 		
 		<div class="block def">
 				
@@ -795,12 +815,10 @@
 			<div class="itemWrap">
 				<div class="item spacer invis"></div>
 			</div>
-			
 		</div>
 		
 		<div class="block header">
-			Backup/restore
-		</div>
+			Backup/restore		</div>
 		
 		<div class="block def">
 				
@@ -823,12 +841,10 @@
 			<div class="itemWrap">
 				<div class="item spacer invis"></div>
 			</div>
-			
 		</div>
 		
 		<div class="block header">
-			Advanced
-		</div>
+			Advanced		</div>
 		
 		<div class="block def">
 			
@@ -875,7 +891,6 @@
 			<div class="itemWrap">
 				<div class="item spacer invis"></div>
 			</div>
-			
 	  </div>
 		
 	</div>

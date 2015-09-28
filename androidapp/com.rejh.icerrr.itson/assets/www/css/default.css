@@ -125,7 +125,10 @@ section {
 		
 		.actionbar .title {
 			position:absolute;
-			bottom:14px; left:56px;
+			bottom:14px; left:56px;			
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow:ellipsis;
 			font-size:16pt;
 			xfont-weight:300;
 			color:#FFF; /* #D0D102; */
@@ -576,19 +579,21 @@ section {
 	#detailstation .main .header {
 		position:absolute;
 		top:0; left:0; right:0;
-		height:200px;
+		height:192px;
 		background-color:#455A64;
 		background-image:url(../img/bg_home_default.jpg);
 		background-size:cover;
+		background-position:center center;
 	}
 	
 		#detailstation .main .header .overlay {
 			position:absolute;
-			top:0; left:0; right:0; height:100px;
-			background: -webkit-linear-gradient(rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.0) 100%);
+			top:0; left:0; right:0; height:192px;;
+			background: -webkit-linear-gradient(rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.50) 50%, rgba(0,0,0,0.25) 100%);
 		}
 	
 		#detailstation .main .header .station_icon {
+			display:none;
 			position:absolute;
 			top:0; left:0;
 		}
@@ -599,10 +604,25 @@ section {
 				margin:16px;
 				border-radius:40px;
 			}
+	
+		#detailstation .main .header .station_image {
+			position:absolute;
+			top:50%; left:50%;
+			margin-left:-64px; margin-top:-64px;
+			
+		}
+		
+			#detailstation .main .header .station_image img {
+				width:128px;
+				height:128px;
+				border-radius:128px;
+			}
 		
 		#detailstation .main .header .station_name {
+			display:none;
 			position:absolute;
-			top:13px; left:71px; right:72px;
+			top:12px; left:71px; right:72px;
+			overflow:hidden;
 			white-space: nowrap;
 			text-overflow:ellipsis;
 			font-size:20pt;
@@ -611,12 +631,14 @@ section {
 		}
 		
 		#detailstation .main .header .station_nowplaying {
+			display:none;
 			position:absolute;
-			top:40px; left:72px; right:72px;
+			top:41px; left:72px; right:72px;
+			overflow:hidden;
 			white-space: nowrap;
 			text-overflow:ellipsis;
 			font-size:12pt;
-			font-weight:300;
+			/* font-weight:300; */
 			color:rgba(255,255,255,0.87);
 		}
 		
@@ -630,19 +652,61 @@ section {
 				padding:24px;
 			}
 	
+	#detailstation .main .content,
+	#detailstation .main .content_loading {
+		position:absolute;
+		top:192px; left:0; right:0; bottom:0;
+	}
+	
 	#detailstation .main .content_loading {
 		display:none;
 	}
 	
-	#detailstation .main .content {
-		position:absolute;
-		top:200px; left:0; right:0; bottom:0;
-	}
+		#detailstation .main .content_loading .content_loading_message {
+			position:absolute;
+			top:50%; left:50%;
+			width:200px;
+			margin-top:28px; margin-left:-100px;
+			text-align:center;
+			font-size:16pt;
+			font-weight:300;
+		}
+	
+		#detailstation .main .content .content_header,
+		#detailstation .main .content_loading .content_header {
+			position:relative;
+			top:0; left:0; right:0; height:72px;
+			background-color:#455A64;
+		}
+		
+			#detailstation .main .content_header .station_name {
+				position:absolute;
+				top:9px; left:24px; right:72px;
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
+				font-size:20pt;
+				font-weight:300;
+				color:rgba(255,255,255,0.87);
+			}
+			
+			#detailstation .main .content_header .station_nowplaying {
+				position:absolute;
+				top:39px; left:24px; right:24px;
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
+				font-size:12pt;
+				/* font-weight:300; */
+				color:rgba(255,255,255,0.87);
+			}
 	
 		#detailstation .main .content .content_item {
+			overflow:hidden;
 			position:relative;
 			top:0; left:0; right:0;
 			height:72px;
+			transition: height 500ms;
 		}
 		
 			#detailstation .main .content .content_item .icon {
@@ -683,10 +747,73 @@ section {
 					text-overflow:ellipsis;
 					color:#727272;
 				}
+				
+			#detailstation .main .content .content_item .inline_list {
+				position:relative;
+				top:0; left:0; right:0; 
+				height:0;
+				margin-top:72px;
+				border-bottom:1px solid #ddd;
+			}
+			
+				#detailstation .main .content .content_item .inline_list .ic_collapsed {
+					position:absolute;
+					top:72px; left:0; right:0;
+					height:72px;
+				}
+			
+					#detailstation .main .content .content_item .inline_list .ic_collapsed img {
+						width:24px; height:24px;
+						margin:24px;
+						opacity:0.54;
+					}
+			
+				#detailstation .main .content .content_item .inline_list .playlist_item {
+					position:relative;
+					top:0; left:0; right:0;
+					height:72px;
+					margin-left:72px;
+				}
+			
+					#detailstation .main .content .content_item .inline_list .playlist_item_name {
+						position:absolute;
+						top:16px; left:0; right:112px;
+						font-size:14pt;
+						font-weight:normal;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow:ellipsis;
+						color:#212121;
+					}
+					
+					#detailstation .main .content .content_item .inline_list .playlist_item_title {
+						position:absolute;
+						top:36px; left:0; right:112px;
+						font-size:12pt;
+						font-weight:300;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow:ellipsis;
+						color:#727272;
+					}
+					
+					#detailstation .main .content .content_item .inline_list .playlist_item_spotify,
+					#detailstation .main .content .content_item .inline_list .playlist_item_gpmusic {
+						position:absolute;
+						top:24px; right:24px;
+						width:24px; height:24px;
+						opacity:0.54;
+					}
+					#detailstation .main .content .content_item .inline_list .playlist_item_spotify {
+						right:72px;
+					}
+					#detailstation .main .content .content_item .inline_list .playlist_item_gpmusic {
+					
+					}
 	
 	#detailstation .fab_header {
 		position:absolute;
-		top:172px; right:16px;
+		top:164px; right:16px;
 		width:56px; 
 		height:56px;
 		border-radius:50%;
