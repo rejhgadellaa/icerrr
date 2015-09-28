@@ -810,6 +810,32 @@ public class MediaStreamerService extends Service {
 					// Update notif only when nowplaying changed
 					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
 						
+						// Scrob?
+						if (sett.getBoolean("useSLS", false) && !nowplaying_new.equals("Now playing: Unknown")) {
+							
+							Log.d(APPTAG," > Send SLS intent..");
+							// -> Docs: https://github.com/tgwizard/sls/blob/master/Developer's%20API.md
+							
+							// Parse nowplaying for artist + trackname
+							String[] npparts = nowplaying_new.split("-", 2);
+							String npartist = npparts[0];
+							String nptrack = npparts[1];
+							
+							Log.d(APPTAG," -> "+ npartist +", "+ nptrack);
+							
+							Intent slsIntent = new Intent();
+							slsIntent.setAction("com.adam.aslfms.notify.playstatechanged");
+							slsIntent.putExtra("state", 0); // State
+							slsIntent.putExtra("app-name","Icerrr");
+							slsIntent.putExtra("app-package", "com.rejh.icerrr.itson");
+							slsIntent.putExtra("artist", npartist);
+							slsIntent.putExtra("track", nptrack);
+							slsIntent.putExtra("source", "R");
+							
+							context.sendBroadcast(slsIntent);
+							
+						}
+						
 						// Update MetaData
 						nowplaying = nowplaying_new; // do it here so getStationImage can find recent artwork!
 						updateMetaData(station_name, nowplaying);
