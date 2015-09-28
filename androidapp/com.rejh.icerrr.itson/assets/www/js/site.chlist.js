@@ -93,7 +93,7 @@ site.chlist.onpause = function() {
 }
 
 site.chlist.onresume = function() {
-	loggr.log("site.chedit.site.home.()");
+	loggr.log("site.chedit.onresume()");
 	loggr.log(" > Nothing..");
 }
 
@@ -225,7 +225,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 			var sid = ev.target.station_id;
 			var station = site.helpers.session.getStationById(sid)
 			
-			if (site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
+			if (station && site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
 				var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
 				var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_icon_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 				site.data.stations[stationIndex].station_icon_orig = station.station_icon // store original
@@ -245,8 +245,10 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 						imgobj.src = "img/icons-80/ic_station_default.png";
 					}
 				);
-			} else {
+			} else if (station && ev.target.src != station.station_icon_local) {
 				ev.target.src = station.station_icon_local;
+			} else {
+				ev.target.src = "img/icons-80/ic_station_default.png";
 			}
 			
 		});
@@ -300,7 +302,8 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		
 		// TODO: events.. anyone?
 		resultitem.onclick = function(){
-			site.chlist.selectstation(this); // well, here's one..
+			// site.chlist.selectstation(this); // well, here's one..
+			site.detailstation.init(this);
 		};
 		$(resultitem).longClick(function(obj){
 			if (!obj.station_id) { obj = obj.parentNode; }

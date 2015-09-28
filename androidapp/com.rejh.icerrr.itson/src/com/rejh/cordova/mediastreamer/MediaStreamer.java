@@ -153,6 +153,11 @@ public class MediaStreamer extends CordovaPlugin {
         		
         		callbackContext.success("OK");
         		
+        	} else if (action.equals("updateMetaData")) {
+        		
+        		serviceIntent.putExtra("update_metadata",true);
+        		context.startService(serviceIntent);
+        		
         	} else {
         		// Nothin?
         		callbackContext.error("MediaStreamer: Action contains invalid value: "+ action);

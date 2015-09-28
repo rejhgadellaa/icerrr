@@ -56,6 +56,7 @@
   },
   {
     "station_id": "radio4",
+    "dirble_id":13623,
     "station_edited":{},
     "station_name": "NPO Radio 4",
     "station_url": "http://icecast.omroep.nl/radio4-sb-mp3",
@@ -73,6 +74,7 @@
   },
   {
     "station_id": "radio5",
+    "dirble_id":13624,
     "station_edited":{},
     "station_name": "NPO Radio 5",
     "station_url": "http://icecast.omroep.nl/radio5-sb-mp3",
@@ -90,6 +92,7 @@
   },
   {
     "station_id": "radio6",
+    "dirble_id":13625,
     "station_edited":{},
     "station_name": "NPO Radio 6",
     "station_url": "http://icecast.omroep.nl/radio6-bb-mp3",
@@ -107,6 +110,7 @@
   },
   {
     "station_id": "radio538",
+    "dirble_id":11951,
     "station_edited":{},
     "station_name": "Radio 538",
     "station_url": "http://vip-icecast.538.lw.triple-it.nl/RADIO538_MP3",
@@ -123,6 +127,7 @@
   },
   {
     "station_id": "qmusic",
+    "dirble_id":0,
     "station_edited":{},
     "station_name": "Q Music",
     "station_url": "http://icecast-qmusic.cdp.triple-it.nl/Qmusic_nl_live_96.mp3",
@@ -377,6 +382,7 @@
   },
   {
     "station_id": "radio_10",
+    "dirble_id":12871,
     "station_edited":{},
     "station_name": "Radio 10",
     "station_url": "http://stream.radio10.nl/radio10",

@@ -428,6 +428,14 @@ site.lifecycle.onBackButton = function() {
 		case "#channellist":
 			site.home.init();
 			break;
+			
+		case "#detailstation":
+			if (site.lifecycle.get_section_history_item(true)=="#home") {
+				site.home.init();
+			} else {
+				site.chlist.init(true);
+			}
+			break;
 		
 		case "#searchstation":
 			if (site.vars.isLoading) { 
@@ -452,7 +460,11 @@ site.lifecycle.onBackButton = function() {
 			break;
 		
 		case "#editstation":
-			site.chlist.init();
+			if (site.lifecycle.get_section_history_item(true)=="#detailstation") {
+				site.detailstation.init(null,false,true);
+			} else {
+				site.chlist.init(true);
+			}
 			break;
 			
 		case "#alarms":

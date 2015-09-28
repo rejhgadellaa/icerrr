@@ -76,6 +76,9 @@ site.helpers.mergeStations = function(stations1,stations2) {
 		if (station1index<0 || !station1index) {
 			// doesn't exist, just insert
 			loggr.log(" > New: "+ station2.station_id);
+			// clear station_icon_local + station_image_local because they probably don't exist on storage
+			station2.station_icon_local = null;
+			station2.station_image_local = null;
 			stations1.push(station2);
 			continue; // <- important
 		}
@@ -171,8 +174,8 @@ site.helpers.getImgAvgColor = function(image,x1,y1,x2,y2) {
 
 	// Draw img on canvas..
 	var canvas = document.createElement("canvas");
-	canvas.width = image.width;
-	canvas.height = image.height;
+	canvas.width = x2-x1; // image.width;
+	canvas.height = y2-y1; // image.height;
 	var ctx = canvas.getContext("2d");
 	ctx.drawImage(image, 0, 0);
 	

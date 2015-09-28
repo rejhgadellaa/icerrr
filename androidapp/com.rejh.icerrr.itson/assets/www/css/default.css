@@ -125,7 +125,10 @@ section {
 		
 		.actionbar .title {
 			position:absolute;
-			bottom:14px; left:56px;
+			bottom:14px; left:56px;			
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow:ellipsis;
 			font-size:16pt;
 			xfont-weight:300;
 			color:#FFF; /* #D0D102; */
@@ -156,7 +159,7 @@ section {
 		width:100%;
 		height:48px;
 		background-color:#607D8B;
-		color:rgba(255,255,255,0.87);
+		color:#fff; /* rgba(255,255,255,0.87); */
 		text-transform:uppercase;
 	}
 	
@@ -168,7 +171,7 @@ section {
 		}
 		.tab.active {
 			background:rgba(0,0,0,0.0);
-			color:rgba(255,255,255,0.87);
+			color:#fff; /* rgba(255,255,255,0.87); */
 		}
 		
 		.tab_sep {
@@ -203,14 +206,14 @@ section {
 		position:absolute;
 		bottom:0; left:0; right:0;
 		width:100%;
-		height:64px;
+		height:88px;
 	}
 	
 		.footer .button {
 			width:33.3%;
-			height:64px;
+			height:88px;
 			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 5%, rgba(0, 0, 0, 0.0) 75%);
-			background-size:64px 64px;
+			background-size:88px 88px;
 			background-position:center;
 			background-repeat:no-repeat;
 			color:rgba(255,255,255,0.87);
@@ -219,7 +222,7 @@ section {
 		.footer .button.active {
 			background-color: rgba(0,0,0,0.25);
 			background: -webkit-radial-gradient(ellipse, rgba(255, 87, 34, 1) 5%, rgba(255, 87, 34, 0.0) 75%);
-			background-size:64px 64px;
+			background-size:88px 88px;
 			background-position:center;
 			background-repeat:no-repeat;
 		}
@@ -246,7 +249,7 @@ section {
 		.footer .button_inner {
 			position:absolute;
 			width:100%; height:24px;
-			padding:20px 0 20px 0;
+			padding:32px 0 32px 0;
 		}
 		
 		.footer .button_inner img {
@@ -299,7 +302,7 @@ section {
 		padding:16px;
 		font-size:16pt;
 		font-weight:300;
-		color:rgba(0,0,0,0.54);
+		color:#727272; /* rgba(0,0,0,0.54); */
 	}
 	
 	#install .main .log h1 {
@@ -412,6 +415,7 @@ section {
 	}
 	
 	#home .button_play_wrap {
+		display:none;
 		position:relative;
 		left:50%;
 		width:48px; 
@@ -435,6 +439,63 @@ section {
 		-webkit-animation-fill-mode: forwards;
 		-webkit-animation-timing-function:ease-in-out;
 	}
+	
+	#home .fab_play_shadow {
+		position:absolute;
+		left:50%; bottom:0px;
+		width:88px; height:88px;
+		margin-left:-44px;
+		background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 5%, rgba(0, 0, 0, 0.0) 75%);
+		background-size:88px 88px;
+		background-position:center;
+		background-repeat:no-repeat;
+		color:rgba(255,255,255,0.87);
+	}
+	
+	#home .fab_play_wrap {
+		z-index:50;
+		position:absolute;
+		left:50%; bottom:16px;
+		width:56px; 
+		height:56px;
+		margin-left:-28px;
+	}
+	
+		#home .fab_play {
+			position:absolute;
+			top:0; left:0;
+			width:56px; 
+			height:56px;
+			border-radius:50%;
+			background:#FF5722;
+			/* transition: background 500ms; */
+		}
+			
+			#home .fab_play img {
+				position:absolute;
+				top:16px; left:16px;
+				width:24px; height:24px;
+			}
+			#home .fab_play_wrap.busy .fab_play img {
+				opacity:0.5;
+			}
+	
+		#home .fab_play_bufferAnim {
+			display:block;
+			position:absolute;
+			top:-4px; left:-4px;
+			width: 60px;
+			height: 60px;
+			border: 2px solid #fff;
+			border-radius: 100%;
+			position: absolute;
+			clip: rect(0px, 32px, 64px, 0px);
+			-webkit-animation-duration: 1s;
+			-webkit-animation-name: keyframes_button_play_buffer;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-fill-mode: forwards;
+			-webkit-animation-timing-function:ease-in-out;
+		}
 	
 	#home .alarm_dialog {
 		z-index:3;
@@ -569,6 +630,267 @@ section {
 		font-size:10pt;
 	}
 	
+#detailstation {
+
+}
+
+	#detailstation .main .header {
+		position:absolute;
+		top:0; left:0; right:0;
+		height:192px;
+		background-color:#455A64;
+		background-image:url(../img/bg_home_default.jpg);
+		background-size:cover;
+		background-position:center center;
+	}
+	
+		#detailstation .main .header .overlay {
+			position:absolute;
+			top:0; left:0; right:0; height:192px;;
+			background: -webkit-linear-gradient(rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.50) 50%, rgba(0,0,0,0.25) 100%);
+		}
+	
+		#detailstation .main .header .station_icon {
+			display:none;
+			position:absolute;
+			top:0; left:0;
+		}
+		
+			#detailstation .main .header .station_icon img {
+				width:40px;
+				height:40px;
+				margin:16px;
+				border-radius:40px;
+			}
+	
+		#detailstation .main .header .station_image {
+			position:absolute;
+			top:50%; left:50%;
+			margin-left:-64px; margin-top:-64px;
+			
+		}
+		
+			#detailstation .main .header .station_image img {
+				width:128px;
+				height:128px;
+				border-radius:128px;
+			}
+		
+		#detailstation .main .header .station_name {
+			display:none;
+			position:absolute;
+			top:12px; left:71px; right:72px;
+			overflow:hidden;
+			white-space: nowrap;
+			text-overflow:ellipsis;
+			font-size:20pt;
+			font-weight:300;
+			color:rgba(255,255,255,0.87);
+		}
+		
+		#detailstation .main .header .station_nowplaying {
+			display:none;
+			position:absolute;
+			top:41px; left:72px; right:72px;
+			overflow:hidden;
+			white-space: nowrap;
+			text-overflow:ellipsis;
+			font-size:12pt;
+			/* font-weight:300; */
+			color:rgba(255,255,255,0.87);
+		}
+		
+		#detailstation .main .header .station_starred {
+			position:absolute;
+			top:0; right:0;
+		}
+		
+			#detailstation .main .header .station_starred img {
+				width:24px; height:24px;
+				padding:24px;
+			}
+	
+	#detailstation .main .content,
+	#detailstation .main .content_loading {
+		position:absolute;
+		top:192px; left:0; right:0; bottom:0;
+	}
+	
+	#detailstation .main .content_loading {
+		display:none;
+	}
+	
+		#detailstation .main .content_loading .content_loading_message {
+			position:absolute;
+			top:50%; left:50%;
+			width:200px;
+			margin-top:16px; margin-left:-100px;
+			text-align:center;
+			font-size:16pt;
+			font-weight:300;
+		}
+	
+		#detailstation .main .content .content_header,
+		#detailstation .main .content_loading .content_header {
+			position:relative;
+			top:0; left:0; right:0; height:72px;
+			background-color:#455A64;
+		}
+		
+			#detailstation .main .content_header .station_name {
+				position:absolute;
+				top:9px; left:24px; right:72px;
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
+				font-size:20pt;
+				font-weight:300;
+				color:rgba(255,255,255,0.87);
+			}
+			
+			#detailstation .main .content_header .station_nowplaying {
+				position:absolute;
+				top:39px; left:24px; right:24px;
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
+				font-size:12pt;
+				/* font-weight:300; */
+				color:rgba(255,255,255,0.87);
+			}
+	
+		#detailstation .main .content .content_item {
+			overflow:hidden;
+			position:relative;
+			top:0; left:0; right:0;
+			height:72px;
+			transition: height 500ms;
+		}
+		
+			#detailstation .main .content .content_item .icon {
+				position:absolute;
+				top:24px; left:24px;
+			}
+			
+				#detailstation .main .content .content_item .icon img {
+					width:24px; height:24px;
+					opacity:0.54;
+				}
+		
+			#detailstation .main .content .content_item .text {
+				position:absolute;
+				top:0; left:72px; right:0;
+				height:71px;
+				border-bottom:1px solid #ddd;
+			}
+			
+				#detailstation .main .content .content_item .text .title {
+					position:absolute;
+					top:16px; left:0; right:16px;
+					font-size:14pt;
+					font-weight:normal;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow:ellipsis;
+					color:#212121;
+				}
+				
+				#detailstation .main .content .content_item .text .subtitle {
+					position:absolute;
+					top:36px; left:0; right:16px;
+					font-size:12pt;
+					font-weight:300;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow:ellipsis;
+					color:#727272;
+				}
+				
+			#detailstation .main .content .content_item .inline_list {
+				position:relative;
+				top:0; left:0; right:0; 
+				height:0;
+				margin-top:72px;
+			}
+			
+				#detailstation .main .content .content_item .inline_list .divider {
+					position:relative;
+					top:0; left:72px; right:0;
+					height:1px;
+					background:#ddd;
+				}
+			
+				#detailstation .main .content .content_item .inline_list .ic_collapsed {
+					position:absolute;
+					top:72px; left:0; right:0;
+					height:72px;
+				}
+			
+					#detailstation .main .content .content_item .inline_list .ic_collapsed img {
+						width:24px; height:24px;
+						margin:24px;
+						opacity:0.54;
+					}
+			
+				#detailstation .main .content .content_item .inline_list .playlist_item {
+					position:relative;
+					top:0; left:0; right:0;
+					height:72px;
+					margin-left:72px;
+				}
+			
+					#detailstation .main .content .content_item .inline_list .playlist_item_name {
+						position:absolute;
+						top:16px; left:0; right:112px;
+						font-size:14pt;
+						font-weight:normal;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow:ellipsis;
+						color:#212121;
+					}
+					
+					#detailstation .main .content .content_item .inline_list .playlist_item_title {
+						position:absolute;
+						top:36px; left:0; right:112px;
+						font-size:12pt;
+						font-weight:300;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow:ellipsis;
+						color:#727272;
+					}
+					
+					#detailstation .main .content .content_item .inline_list .playlist_item_spotify,
+					#detailstation .main .content .content_item .inline_list .playlist_item_gpmusic {
+						position:absolute;
+						top:24px; right:24px;
+						width:24px; height:24px;
+						opacity:0.54;
+					}
+					#detailstation .main .content .content_item .inline_list .playlist_item_spotify {
+						right:72px;
+					}
+					#detailstation .main .content .content_item .inline_list .playlist_item_gpmusic {
+					
+					}
+	
+	#detailstation .fab_header {
+		position:absolute;
+		top:164px; right:16px;
+		width:56px; 
+		height:56px;
+		border-radius:50%;
+		background:#FF5722;
+		transition:bottom 250ms;
+	}
+		
+		#detailstation .fab_header img {
+			width:24px;
+			height:24px;
+			margin:16px;
+		}
+	
 #editstation, #searchstation, #searchstation_results {
 	
 }
@@ -603,6 +925,7 @@ section {
 	
 	#searchstation_results  .resultitem .resultname, 
 	#alarms .resultitem .resultname {
+		/*
 		position:absolute;
 		top:16px; left:72px; right:16px;
 		overflow: hidden;
@@ -610,16 +933,35 @@ section {
 		text-overflow:ellipsis;
 		font-size:12pt;
 		color:#212121;
+		/**/
+		position:absolute;
+		top:16px; left:72px; right:16px;
+		font-size:14pt;
+		font-weight:normal;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+		color:#212121;
 	}
 	
 	#searchstation_results .resultitem .resultsub, 
 	#alarms .resultitem .resultsub {
+		/*
 		position:absolute;
 		bottom:16px; left:72px; right:16px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
 		font-size:10pt;
+		color:#727272;
+		/**/
+		position:absolute;
+		top:36px; left:72px; right:16px;
+		font-size:12pt;
+		font-weight:300;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
 		color:#727272;
 	}
 	
