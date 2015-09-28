@@ -104,6 +104,17 @@ site.settings.registerListeners = function() {
 		}
 	);
 	
+	// Use SLS
+	window.mediaStreamer.getSetting("bool","useSLS",
+		function(res) {
+			if (res) { $("#settings input[name='useSLS']").attr("checked",true); }
+			else { $("#settings input[name='useSLS']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
 	// Enable LogCat Debugging
 	var enableLogCatDebugging = site.cookies.get("setting_enableLogCatDebugging")
 	if (enableLogCatDebugging==1) { $("#settings input[name='enableLogCatDebugging']").attr("checked",true); }
@@ -171,6 +182,14 @@ site.settings.registerListeners = function() {
 		if ((targ.checked)) {
 			alert("Don't forget to set SAA's ringtone to 'silent'!");
 		}
+	});
+	
+	// Use SLS
+	$("#settings input[name='useSLS']").off("change");
+	$("#settings input[name='useSLS']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: useSLS: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","useSLS",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
 	
 	// Enable LogCat Debugging
