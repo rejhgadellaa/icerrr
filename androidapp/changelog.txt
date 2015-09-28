@@ -1,8 +1,9 @@
 0.257
   * New color palette is official!
   * New 'details' screen for managing a station, checking recently played, etc
+  * New: Simple Last.fm Scrobbler integration (Settings, issue #207)
   * Better sync between in-app, notification and lockscreen "now playing" info
-  * Fixes, improvements
+  * Lots of fixes, improvements
 
 0.256
   * Show album art on lockscreen if already cached locally
