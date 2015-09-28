@@ -355,16 +355,20 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 		var plspotify = new Image();
 		plspotify.className = "playlist_item_spotify activatablel";
 		plspotify.src = "img/icons-48/ic_spotify_black.png";
-		plspotify.onclick = function() {
+		plsgpmusic.title = "Search track on Spotify";
+		plspotify.addEventListener("click",function() {
+			console.error("CLICK!");
 			window.open("http://open.spotify.com/search/"+ encodeURI(playlistItemData["name"] +" "+ playlistItemData["title"]),"_system");
-		}
+		});
 		
 		var plsgpmusic = new Image();
 		plsgpmusic.className = "playlist_item_gpmusic activatablel";
 		plsgpmusic.src = "img/icons-48/ic_googleplaymusic_black.png";
-		plsgpmusic.onclick = function() {
+		plsgpmusic.title = "Search track on Google Play Music";
+		plsgpmusic.addEventListener("click",function() {
+			console.error("CLICK!");
 			window.open("https://play.google.com/store/search?c=music&q="+ encodeURI(playlistItemData["name"] +" "+ playlistItemData["title"]),"_system");
-		}
+		});
 		
 		plitem.appendChild(plname);
 		plitem.appendChild(pltitle);
@@ -375,9 +379,14 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 		
 	}
 	
+	var divider = document.createElement("div");
+	divider.className = "divider";
+	inline_list.appendChild(divider);
+	// inline_list.innerHTML += "<div class='divider'></div>";
+	
 	$("#detailstation .recentlyplayed").append(inline_list);
 	
-	$("#detailstation .recentlyplayed").css("height", 72 + (site.detailstation.stationPlaylist.length*72) );
+	$("#detailstation .recentlyplayed").css("height", 73 + (site.detailstation.stationPlaylist.length*72) );
 	$(inline_list).css("height", site.detailstation.stationPlaylist.length*72);
 	
 }

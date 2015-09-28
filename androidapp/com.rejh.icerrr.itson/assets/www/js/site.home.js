@@ -234,7 +234,8 @@ site.home.mpPlayToggle = function() {
 	}
 	
 	//$(".button_play_bufferAnim").(500);
-	$(".button_play_bufferAnim").css("display","block");
+	//$(".button_play_bufferAnim").css("display","block");
+	$(".fab_play_bufferAnim").css("display","block");
 	return true;
 	
 }
@@ -311,16 +312,17 @@ site.home.run_ui_updates = function() {
 					
 					// Handle class
 					// -> Remove
-					if ($(".button.center").hasClass("busy")) { $(".button.center").removeClass("busy"); }
+					if ($(".fab_play_wrap").hasClass("busy")) { $(".fab_play_wrap").removeClass("busy"); }
 					// -> Add
-					if (!$(".button.center").hasClass("active")) { $(".button.center").addClass("active"); }
+					if (!$(".fab_play_wrap").hasClass("active")) { $(".fab_play_wrap").addClass("active"); }
 					
 					// Handle anim opac
-					$(".button_play_bufferAnim").css("display","none");
+					//$(".button_play_bufferAnim").css("display","none");
+					$(".fab_play_bufferAnim").css("display","none");
 					//site.ui.fadeOut(".button_play_bufferAnim",250);
 					
 					// Handle img
-					$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
+					$(".fab_play_wrap img").attr("src","img/icons-48/ic_pause_white.png");
 					
 					break;
 				
@@ -330,16 +332,17 @@ site.home.run_ui_updates = function() {
 					
 					// Handle class
 					// -> Remove
-					if ($(".button.center").hasClass("active")) { $(".button.center").removeClass("active"); }
+					if ($(".fab_play_wrap").hasClass("active")) { $(".fab_play_wrap").removeClass("active"); }
 					// -> Add
-					if (!$(".button.center").hasClass("busy")) { $(".button.center").addClass("busy"); }
+					if (!$(".fab_play_wrap").hasClass("busy")) { $(".fab_play_wrap").addClass("busy"); }
 					
 					// Handle anim opac
-					$(".button_play_bufferAnim").css("display","block");
+					//$(".button_play_bufferAnim").css("display","block");
+					$(".fab_play_bufferAnim").css("display","block");
 					//site.ui.fadeIn(".button_play_bufferAnim",250);
 					
 					// Handle img
-					$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
+					$(".fab_play_wrap img").attr("src","img/icons-48/ic_pause_white.png");
 					
 					break;
 				
@@ -349,16 +352,17 @@ site.home.run_ui_updates = function() {
 					
 					// Handle class
 					// -> Remove
-					if ($(".button.center").hasClass("active")) { $(".button.center").removeClass("active"); }
+					if ($(".fab_play_wrap").hasClass("active")) { $(".fab_play_wrap").removeClass("active"); }
 					// -> Add
-					if (!$(".button.center").hasClass("busy")) { $(".button.center").addClass("busy"); }
+					if (!$(".fab_play_wrap").hasClass("busy")) { $(".fab_play_wrap").addClass("busy"); }
 					
 					// Handle anim opac
-					$(".button_play_bufferAnim").css("display","none");
+					//$(".button_play_bufferAnim").css("display","none");
+					$(".fab_play_bufferAnim").css("display","none");
 					//site.ui.fadeOut(".button_play_bufferAnim",250);
 					
 					// Handle img
-					$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
+					$(".fab_play_wrap img").attr("src","img/icons-48/ic_play_white.png");
 					
 					break;
 				
@@ -368,17 +372,18 @@ site.home.run_ui_updates = function() {
 					
 					// Handle class
 					// -> Remove
-					$(".button.center").removeClass("active");
-					$(".button.center").removeClass("busy");
+					$(".fab_play_wrap").removeClass("active");
+					$(".fab_play_wrap").removeClass("busy");
 					// -> Add
 					// ..
 					
 					// Handle anim opac
-					$(".button_play_bufferAnim").css("display","none");
+					//$(".button_play_bufferAnim").css("display","none");
+					$(".fab_play_bufferAnim").css("display","none");
 					//site.ui.fadeOut(".button_play_bufferAnim",250);
 					
 					// Handle img
-					$(".button.center img").attr("src","img/icons-96/ic_play_w.png");
+					$(".fab_play_wrap img").attr("src","img/icons-48/ic_play_white.png");
 					
 					break;
 					
@@ -394,18 +399,20 @@ site.home.run_ui_updates = function() {
 		// -> ChromeCast
 		
 		if (!site.cast.media) {
-			$(".button.center").removeClass("active"); 
-			$(".button.center").removeClass("busy");
-			$(".button.center").addClass("busy");
+			$(".fab_play_wrap").removeClass("active"); 
+			$(".fab_play_wrap").removeClass("busy");
+			$(".fab_play_wrap").addClass("busy");
 			//$(".button_play_bufferAnim").(500);
-			$(".button_play_bufferAnim").css("display","block");
-			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
+			//$(".button_play_bufferAnim").css("display","block");
+			$(".fab_play_bufferAnim").css("display","block");
+			$(".fab_play_wrap img").attr("src","img/icons-48/ic_pause_white.png");
 		} else {
-			$(".button.center").removeClass("busy"); 
-			$(".button.center").addClass("active"); 
+			$(".fab_play_wrap").removeClass("busy"); 
+			$(".fab_play_wrap").addClass("active"); 
 			//$(".button_play_bufferAnim").fadeOut(250);
-			$(".button_play_bufferAnim").css("display","none");
-			$(".button.center img").attr("src","img/icons-96/ic_stop_w.png");
+			//$(".button_play_bufferAnim").css("display","none");
+			$(".fab_play_bufferAnim").css("display","none");
+			$(".fab_play_wrap img").attr("src","img/icons-48/ic_pause_white.png");
 		}
 		
 	}

@@ -207,6 +207,11 @@
 			</div>
 		</div>
 		
+		<div class="fab_play_wrap" onClick="if (site.home.mpPlayToggle()){$(this).toggleClass('busy');}">
+			<div class="fab_play"><img src="img/icons-48/ic_play_white.png" /></div>
+			<div class="fab_play_bufferAnim"></div>
+		</div>
+		
 		<div class="alarm_dialog" onClick="site.home.dismissOverflowMenu();">
 			<div class="alarm_dialog_inner shadow_z5 round4">
 				<div class="time">00<blink>:</blink>00</div>
@@ -262,7 +267,7 @@
 		<div class="title">Details</div>
 		
 		<div class="actions">
-			<!-- nothing? -->
+			<div class="action activatablel" onClick="site.detailstation.init(null,true,true);"><img src="img/icons-48/ic_reload_white.png" title="Refresh info" /></div>
 		</div>
 		
 		<div class="loadbar">
@@ -287,7 +292,7 @@
 		</div>
 		
 		<!-- content:loading -->
-		<div class="content_loading shadow_z1u">
+		<div class="content_loading">
 		
 			<div class="content_header">
 				
@@ -302,7 +307,7 @@
 		</div>
 		
 		<!-- content -->
-		<div class="content shadow_z1u">
+		<div class="content">
 		
 			<div class="content_header">
 				
