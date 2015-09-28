@@ -440,13 +440,25 @@ section {
 		-webkit-animation-timing-function:ease-in-out;
 	}
 	
+	#home .fab_play_shadow {
+		position:absolute;
+		left:50%; bottom:0px;
+		width:88px; height:88px;
+		margin-left:-44px;
+		background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 5%, rgba(0, 0, 0, 0.0) 75%);
+		background-size:88px 88px;
+		background-position:center;
+		background-repeat:no-repeat;
+		color:rgba(255,255,255,0.87);
+	}
+	
 	#home .fab_play_wrap {
-			z-index:50;
-			position:absolute;
-			left:50%; bottom:16px;
-			width:56px; 
-			height:56px;
-			margin-left:-28px;
+		z-index:50;
+		position:absolute;
+		left:50%; bottom:16px;
+		width:56px; 
+		height:56px;
+		margin-left:-28px;
 	}
 	
 		#home .fab_play {
@@ -456,6 +468,7 @@ section {
 			height:56px;
 			border-radius:50%;
 			background:#FF5722;
+			/* transition: background 500ms; */
 		}
 			
 			#home .fab_play img {

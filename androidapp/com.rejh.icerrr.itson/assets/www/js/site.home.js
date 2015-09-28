@@ -850,15 +850,18 @@ site.home.loadAlbumArt = function(localpath) {
 				var swatches = vibrant.swatches();
 				if (swatches["Vibrant"]) {
 					$("#home .station_image_color").css("background",swatches["Vibrant"].getHex());
+					//$("#home .fab_play").css("background",swatches["Vibrant"].getHex());
 					/*
 					if (swatches["DarkVibrant"]) { $("#home .footer").css("background",swatches["DarkVibrant"].getHex()); } 
 					else { $("#home .footer").css("background","#2D6073"); }
 					/**/
 				} else {
 					$("#home .station_image_color").css("background","none");
+					$("#home .fab_play").css("background","#FF5722");
 				}
 			} else {
 				$("#home .station_image_color").css("background","none");
+					$("#home .fab_play").css("background","#FF5722");
 			}
 		}
 		//},1500);

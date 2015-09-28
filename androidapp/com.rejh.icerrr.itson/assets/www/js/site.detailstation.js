@@ -355,9 +355,9 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 		var plspotify = new Image();
 		plspotify.className = "playlist_item_spotify activatablel";
 		plspotify.src = "img/icons-48/ic_spotify_black.png";
-		plsgpmusic.title = "Search track on Spotify";
+		plspotify.title = "Search track on Spotify";
 		plspotify.addEventListener("click",function() {
-			console.error("CLICK!");
+			//console.error("CLICK!");
 			window.open("http://open.spotify.com/search/"+ encodeURI(playlistItemData["name"] +" "+ playlistItemData["title"]),"_system");
 		});
 		
@@ -366,7 +366,7 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 		plsgpmusic.src = "img/icons-48/ic_googleplaymusic_black.png";
 		plsgpmusic.title = "Search track on Google Play Music";
 		plsgpmusic.addEventListener("click",function() {
-			console.error("CLICK!");
+			//console.error("CLICK!");
 			window.open("https://play.google.com/store/search?c=music&q="+ encodeURI(playlistItemData["name"] +" "+ playlistItemData["title"]),"_system");
 		});
 		

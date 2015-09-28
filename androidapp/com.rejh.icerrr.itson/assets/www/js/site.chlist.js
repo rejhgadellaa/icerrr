@@ -225,19 +225,6 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 			var sid = ev.target.station_id;
 			var station = site.helpers.session.getStationById(sid)
 			
-			loggr.warn(" -> "+ sid,{dontsave:true});
-			
-			for (var i=0; i<site.data.stations.length; i++) {
-				if (sid==site.data.stations[i].station_id) {
-					loggr.warn(" --> "+ site.data.stations[i].station_id,{dontsave:true});
-				} else {
-					loggr.log(" --> "+ site.data.stations[i].station_id);
-				}
-			}
-			
-			console.error(station);
-			console.log(station.station_icon_local);
-			
 			if (station && site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
 				var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
 				var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_icon_"+station.station_name.split(" ").join("-").toLowerCase(),false);
