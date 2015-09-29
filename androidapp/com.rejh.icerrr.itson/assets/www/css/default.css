@@ -212,7 +212,7 @@ section {
 		.footer .button {
 			width:33.3%;
 			height:88px;
-			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 5%, rgba(0, 0, 0, 0.0) 75%);
+			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 10%, rgba(0, 0, 0, 0.0) 40%);
 			background-size:88px 88px;
 			background-position:center;
 			background-repeat:no-repeat;
@@ -221,7 +221,7 @@ section {
 		
 		.footer .button.active {
 			background-color: rgba(0,0,0,0.25);
-			background: -webkit-radial-gradient(ellipse, rgba(255, 87, 34, 1) 5%, rgba(255, 87, 34, 0.0) 75%);
+			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 10%, rgba(0, 0, 0, 0.0) 40%);
 			background-size:88px 88px;
 			background-position:center;
 			background-repeat:no-repeat;
@@ -354,6 +354,7 @@ section {
 	}
 	
 	#home .main .station_image_wrap {
+		display:none;
 		position:absolute;
 		top:50%; left:50%;
 		width:268px; height:268px;
@@ -374,7 +375,7 @@ section {
 		top:0; left:0; right:0; bottom:0;
 		background:none;
 		/* transition: background 500ms; */
-		opacity:0.33;
+		opacity:0.5;
 	}
 	
 	#home .main .station_image_overlay {
@@ -390,6 +391,42 @@ section {
 		height:16%;
 		background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.50) 100%);
 	}
+	
+	#home .main .station_icon {
+		position:absolute;
+		top:0; left:0;
+	}
+	
+		#home .main .station_icon img {
+			width:40px;
+			height:40px;
+			margin:12px;
+			padding:2px;
+			border-radius:40px;
+		}
+	
+	#home .main .station_name {
+		position:absolute;
+		top:12px; left:71px; right:24px;
+		overflow:hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+		font-size:20pt;
+		font-weight:300;
+		color:rgba(255,255,255,0.87);
+	}
+	
+	#home .main .station_nowplaying {
+		position:absolute;
+		top:41px; left:72px; right:24px;
+		overflow:hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+		font-size:12pt;
+		color:rgba(255,255,255,0.87);
+	}
+	
+	/*
 	
 	#home .main .station_name {
 		position:absolute;
@@ -413,6 +450,8 @@ section {
 		white-space: nowrap;
 		text-overflow:ellipsis;
 	}
+	
+	/**/
 	
 	#home .button_play_wrap {
 		display:none;
@@ -445,7 +484,7 @@ section {
 		left:50%; bottom:0px;
 		width:88px; height:88px;
 		margin-left:-44px;
-		background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 5%, rgba(0, 0, 0, 0.0) 75%);
+		background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 17%, rgba(0, 0, 0, 0.0) 66%);
 		background-size:88px 88px;
 		background-position:center;
 		background-repeat:no-repeat;

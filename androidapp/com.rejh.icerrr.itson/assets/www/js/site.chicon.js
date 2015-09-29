@@ -331,23 +331,24 @@ site.chicon.downloadImagery = function(station, cb, cberr) {
 				site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
 				site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),function(){},function(){});
 				site.chicon.downloadedIcon = true;
-				site.chicon.downloadedImagery(cb,cberr);
+				site.chicon.downloadedImagery(site.data.stations[stationIndex],cb,cberr);
 			},
 			function(error,imgobj) {
 				loggr.error(" > Error downloading '"+ station.station_icon +"'",{dontupload:true});
 				console.error(error);
 				if (imgobj) { imgobj.src = "img/icons-80/ic_station_default.png"; }
 				site.chicon.downloadedIcon = true; // TODO: not true
-				site.chicon.downloadedImagery(cb,cberr);
+				site.chicon.downloadedImagery(station,cb,cberr);
 			}
 		);
 	} else {
 		site.chicon.downloadedIcon = true; // TODO: not true
-		site.chicon.downloadedImagery(cb,cberr);
+		site.chicon.downloadedImagery(station,cb,cberr);
 	}
 	
 	// Image..
 	if (site.helpers.shouldDownloadImage(station.station_image_local,station.station_image)) {
+		if (!station.station_image) { station.station_image = station.station_icon; }
 		var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
 		var filename = site.helpers.imageUrlToFilename(station.station_image,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 		site.data.stations[stationIndex].station_image_orig = station.station_image // store original
@@ -361,27 +362,41 @@ site.chicon.downloadImagery = function(station, cb, cberr) {
 				site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");
 				site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),function(){},function(){});
 				site.chicon.downloadedImage = true;
-				site.chicon.downloadedImagery(cb,cberr);
+				site.chicon.downloadedImagery(site.data.stations[stationIndex],cb,cberr);
 			},
 			function(error,imgobj) {
 				loggr.error(" > Error downloading '"+ station.station_image +"'",{dontupload:true});
 				console.error(error);
 				if (imgobj) { imgobj.src = "img/icons-80/ic_station_default.png"; }
 				site.chicon.downloadedImage = true; // TODO: not true
-				site.chicon.downloadedImagery(cb,cberr);
+				site.chicon.downloadedImagery(station,cb,cberr);
 			}
 		);
 	} else {
 		site.chicon.downloadedImage = true; // TODO: not true
-		site.chicon.downloadedImagery(cb,cberr);
+		site.chicon.downloadedImagery(station,cb,cberr);
 	}
 	
 }
 
-site.chicon.downloadedImagery = function(cb,cberr) {
+site.chicon.downloadedImagery = function(station,cb,cberr) {
 	
 	if (site.chicon.downloadedIcon && site.chicon.downloadedImage) {
-		setTimeout(function(){ if (cb) { cb(); } },500);
+		setTimeout(function(){ 
+							
+			loggr.debug("site.chicon.downloadedImagery()");
+							
+			if (site.session.currentstation.station_id == station.station_id) {
+				site.session.currentstation.station_id = station.station_id;
+			}
+			
+			if (station.station_icon_local && station.station_image_local) {
+				if (cb) { cb(); } 
+			} else {
+				if (cberr) { cberr(); } 
+			}
+			
+		},500);
 	}
 	
 }

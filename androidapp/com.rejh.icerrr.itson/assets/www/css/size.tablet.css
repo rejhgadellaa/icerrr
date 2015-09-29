@@ -51,6 +51,7 @@ section { }
 		padding:20px;
 	}
 
+	/*
 	#home .main .station_name {
 		top: 44px; left:18px; right:20px;
 		font-size:32pt;
@@ -58,11 +59,9 @@ section { }
 	
 	#home .main .station_nowplaying {
 		top:20px; left:20px; right:20px;
-	}
-	
-	#home .main .station_nowplaying {
 		font-size:16pt;
 	}
+	/**/
 	
 	#home .alarm_dialog {
 		display:none;
