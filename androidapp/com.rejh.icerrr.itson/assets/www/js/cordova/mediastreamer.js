@@ -140,6 +140,14 @@
 	}
 	
 	/**
+	* SetAppIcon
+	*/
+	MediaStreamer.prototype.setAppIcon = function(inticon,win,fail) {
+		console.log("MediaStreamer.prototype.setAppIcon()");
+        cordova.exec(win, fail, "MediaStreamer", "setAppIcon", [inticon]);
+	}
+	
+	/**
 	* Register the plugin
 	*/
 	try {

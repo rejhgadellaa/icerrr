@@ -394,20 +394,20 @@ section {
 	
 	#home .main .station_icon {
 		position:absolute;
-		top:0; right:0;
+		top:0; left:0;
 	}
 	
 		#home .main .station_icon img {
 			width:40px;
 			height:40px;
-			margin:12px;
+			margin:14px;
 			padding:2px;
 			border-radius:40px;
 		}
 	
 	#home .main .station_name {
 		position:absolute;
-		top:12px; left:15px; right:72px;
+		top:10px; left:71px; right:72px;
 		overflow:hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
@@ -418,7 +418,7 @@ section {
 	
 	#home .main .station_nowplaying {
 		position:absolute;
-		top:41px; left:16px; right:72px;
+		top:40px; left:72px; right:72px;
 		overflow:hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;

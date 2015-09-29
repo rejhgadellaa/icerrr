@@ -115,6 +115,17 @@ site.settings.registerListeners = function() {
 		}
 	);
 	
+	// Use Flat Icon
+	window.mediaStreamer.getSetting("bool","useFlatIcon",
+		function(res) {
+			if (res) { $("#settings input[name='useFlatIcon']").attr("checked",true); }
+			else { $("#settings input[name='useFlatIcon']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
 	// Enable LogCat Debugging
 	var enableLogCatDebugging = site.cookies.get("setting_enableLogCatDebugging")
 	if (enableLogCatDebugging==1) { $("#settings input[name='enableLogCatDebugging']").attr("checked",true); }
@@ -190,6 +201,22 @@ site.settings.registerListeners = function() {
 		var targ = evt.currentTarget;
 		loggr.log(" > Setting: useSLS: "+ (targ.checked));
 		window.mediaStreamer.setting("bool","useSLS",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	});
+	
+	// Use Flat Icon
+	$("#settings input[name='useFlatIcon']").off("change");
+	$("#settings input[name='useFlatIcon']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: useFlatIcon: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","useFlatIcon",(targ.checked),
+			function(res){
+				loggr.log(" > Stored: "+ res);
+				var inticon = (targ.checked)?1:0;
+				window.mediaStreamer.setAppIcon(inticon,function(){},function(){});
+			},function(error){
+				loggr.error(error);
+			}
+		);
 	});
 	
 	// Enable LogCat Debugging

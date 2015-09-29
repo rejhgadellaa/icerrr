@@ -58,17 +58,41 @@
        android:name="com.google.android.gms.version"
        android:value="@integer/google_play_services_version" />
         
-        <activity android:name="Icerrr" android:label="@string/app_name"
+        <activity 
+                android:name=".Icerrr" 
+                android:label="@string/app_name"
             	android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
                 android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
-        <!-- android:process=":mediastreamer" -->
+        <activity-alias
+                android:enabled="true"
+                android:name=".Icerrr-Default"
+                android:label="@string/app_name"
+                android:icon="@drawable/ic_launcher"
+                android:targetActivity=".Icerrr">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        
+        <activity-alias
+                android:enabled="false"
+                android:name=".Icerrr-Flat"
+                android:label="@string/app_name"
+                android:icon="@drawable/ic_launcher_flat"
+                android:targetActivity=".Icerrr">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        
         <service android:name="com.rejh.cordova.mediastreamer.MediaStreamerService" android:launchMode="singleTask" />
     	
         <receiver android:name="com.rejh.cordova.mediastreamer.RemoteControlReceiver" android:enabled="true">

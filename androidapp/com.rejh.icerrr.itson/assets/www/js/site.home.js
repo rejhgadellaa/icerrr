@@ -626,7 +626,7 @@ site.home.getAlbumArt = function() {
 
 }
 
-site.home.handleStationImage = function(src) {
+site.home.handleStationImage = function(src,isBigIcon) {
 	
 	loggr.log("site.home.handleStationImage()");
 	loggr.log(" > "+ src);
@@ -636,7 +636,7 @@ site.home.handleStationImage = function(src) {
 	var station = site.session.currentstation;
 	
 	// Icon or album art..
-	if (src == site.session.currentstation.station_icon) {
+	if (src == site.session.currentstation.station_icon && !isBigIcon) {
 		// icon
 		
 		loggr.log(" > It's an icon!");
@@ -644,8 +644,6 @@ site.home.handleStationImage = function(src) {
 		if (site.cookies.get("setting_showStationIcon")!=1) {
 			loggr.log(" > !setting_showStationIcon: "+ site.cookies.get("setting_showStationIcon"));
 			site.home.loadAlbumArt('img/bg_home_default.jpg');
-			site.ui.hideLoadbar();
-			return;
 		}
 		
 		var station = site.session.currentstation;

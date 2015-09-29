@@ -11,6 +11,7 @@ package com.rejh.cordova.mediastreamer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
@@ -18,13 +19,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.provider.SyncStateContract.Constants;
 import android.util.Log;
 
 public class MediaStreamer extends CordovaPlugin {
@@ -157,6 +163,11 @@ public class MediaStreamer extends CordovaPlugin {
         		
         		serviceIntent.putExtra("update_metadata",true);
         		context.startService(serviceIntent);
+        		
+        	} else if (action.equals("setAppIcon")) {
+        		
+        		int arg = args.getInt(0);
+        		setAppIcon(arg);
         		
         	} else {
         		// Nothin?
@@ -494,6 +505,42 @@ public class MediaStreamer extends CordovaPlugin {
 		// TODO..
 		
 	}
+	
+	private void setAppIcon(int icon) {
+	    Context ctx = context;
+	    PackageManager pm = (PackageManager) context.getPackageManager();
+	    ActivityManager am = (ActivityManager) context.getSystemService(Activity.ACTIVITY_SERVICE);
+	    
+	    // Enable/disable activity-aliases
+	    
+	    pm.setComponentEnabledSetting(
+	            new ComponentName(ctx, "com.rejh.icerrr.itson.Icerrr-Default"), 
+	            icon == 0 ? // 0 = default
+	                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED : 
+	                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 
+	            PackageManager.DONT_KILL_APP
+	    );
+	 
+	    pm.setComponentEnabledSetting(
+	            new ComponentName(ctx, "com.rejh.icerrr.itson.Icerrr-Flat"), 
+	            icon == 1 ? // 1 = flat
+	                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED : 
+	                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 
+	            PackageManager.DONT_KILL_APP
+	    );
+	 
+	    // Find launcher and kill it
+	    
+	    Intent i = new Intent(Intent.ACTION_MAIN);
+	    i.addCategory(Intent.CATEGORY_HOME);
+	    i.addCategory(Intent.CATEGORY_DEFAULT);
+	    List<ResolveInfo> resolves = pm.queryIntentActivities(i, 0);
+	    for (ResolveInfo res : resolves) {
+	        if (res.activityInfo != null) {
+	            am.killBackgroundProcesses(res.activityInfo.packageName);
+	        }
+	    }        
+	}  
 	
     /*
 	
