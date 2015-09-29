@@ -50,6 +50,14 @@ section { }
 		width:32px; height:32px;
 		padding:20px;
 	}
+	
+	#home .main .station_name {
+		left:19px;
+	}
+	
+	#home .main .station_nowplaying {
+		left:20px;
+	}
 
 	/*
 	#home .main .station_name {
