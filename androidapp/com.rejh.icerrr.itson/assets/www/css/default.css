@@ -407,7 +407,7 @@ section {
 	
 	#home .main .station_name {
 		position:absolute;
-		top:10px; left:71px; right:72px;
+		top:11px; left:71px; right:72px;
 		overflow:hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
