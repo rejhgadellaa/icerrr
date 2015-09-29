@@ -421,7 +421,7 @@ public class MediaStreamerService extends Service {
 	        if (bmp!=null) {
 	        	metadataEditor.putBitmap(100, bmp);
 	        } else {
-	        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+	        	metadataEditor.putBitmap(100, getIcon("bg_home_default"));
 			}
 	        metadataEditor.apply();
 	        
@@ -1330,15 +1330,15 @@ public class MediaStreamerService extends Service {
 					metadataEditor.putBitmap(100, bmp);
 		        } else {
 		        	Log.w(APPTAG," --> getStationImage() failed??? Using default..");
-		        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+		        	metadataEditor.putBitmap(100, getIcon("bg_home_default"));
 		        }
 			} catch(JSONException e) {
 				Log.w(APPTAG," > JSONException!",e);
 				Log.w(APPTAG," > Okay okay, use default icon");
-				metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+				metadataEditor.putBitmap(100, getIcon("bg_home_default"));
 			}
         } else {
-        	metadataEditor.putBitmap(100, getIcon("web_hi_res_512_002"));
+        	metadataEditor.putBitmap(100, getIcon("bg_home_default"));
         }
 		
 		// Apply metadata
