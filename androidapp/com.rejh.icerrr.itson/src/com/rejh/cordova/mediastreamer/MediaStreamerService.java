@@ -811,6 +811,12 @@ public class MediaStreamerService extends Service {
 						}
 					}
 					
+					// Get echonest np
+					boolean npEchoNestVerified = false;
+					if (json.getJSONObject("data").has("npechores") && json.getJSONObject("data").getBoolean("npechores")) {
+						npEchoNestVerified = true;
+					}
+					
 					// Do some for "Now playing: ..."
 					if (nowplaying.equals("Now playing: ...")) {
 						nowplaying = "Now playing: ?";
@@ -823,7 +829,7 @@ public class MediaStreamerService extends Service {
 						if (sett.getBoolean("useSLS", false)) {
 							
 							try {
-								sendBroadcastSLS(nowplaying_new);
+								sendBroadcastSLS(nowplaying_new,npEchoNestVerified);
 							} catch(Exception e) {
 								Log.e(APPTAG," > Error SLS integration: "+ e,e);
 							}
@@ -1388,11 +1394,18 @@ public class MediaStreamerService extends Service {
     	
     }
     
+    private String lastnpartist = null;
+    private String lastnptitle = null;
+    private boolean lastnpverified = false;
+    
     // SLS Integration
-    private void sendBroadcastSLS(String nowplaying_str) {
-    	sendBroadcastSLS(nowplaying_str,0);
-    }
     private void sendBroadcastSLS(String nowplaying_str, int state) {
+    	sendBroadcastSLS(nowplaying_str,false,state);
+    }
+    private void sendBroadcastSLS(String nowplaying_str, boolean verified) {
+    	sendBroadcastSLS(nowplaying_str,verified,0);
+    }
+    private void sendBroadcastSLS(String nowplaying_str, boolean verified, int state) {
 		
 		Log.d(APPTAG," > Send SLS intent..");
 		// -> Docs: https://github.com/tgwizard/sls/blob/master/Developer's%20API.md
@@ -1405,10 +1418,33 @@ public class MediaStreamerService extends Service {
 		
 		// Parse nowplaying for artist + trackname
 		String[] npparts = nowplaying_str.split("-", 2);
-		String npartist = npparts[0];
-		String nptrack = npparts[1];
+		if (npparts.length<2) { 
+			Log.d(APPTAG," -> Now playing: split() resulted in less than 2 values, skip");
+		}
+		String npartist = npparts[0].trim();
+		String nptrack = npparts[1].trim();
 		
+		// Check | -> intergalactic :(((
+		if (nptrack.indexOf("|")>0) {
+			nptrack = nptrack.substring(0, nptrack.indexOf("|")-1).trim();
+		}
+
 		Log.d(APPTAG," -> "+ npartist +", "+ nptrack);
+		
+		// Verify?
+		if (sett.getBoolean("useSLSVerify", false)) {
+			if (!verified && state==0 || !lastnpverified && state==3) {
+				Log.d(APPTAG," -> Not verified, don't scrobble...");
+				return;
+			}
+		}
+		
+		// Store npartist - title - verified
+		lastnpartist = npartist;
+		lastnptitle = nptrack;
+		lastnpverified = verified;
+		
+		// Go!
 		
 		Intent slsIntent = new Intent();
 		slsIntent.setAction("com.adam.aslfms.notify.playstatechanged");

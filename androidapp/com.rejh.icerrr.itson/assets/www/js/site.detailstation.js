@@ -356,19 +356,23 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 		plspotify.className = "playlist_item_spotify activatablel";
 		plspotify.src = "img/icons-48/ic_spotify_black.png";
 		plspotify.title = "Search track on Spotify";
-		plspotify.addEventListener("click",function() {
+		plspotify.sartist = encodeURI(playlistItemData["name"]);
+		plspotify.stitle = encodeURI(playlistItemData["title"]);
+		plspotify.onclick = function() {
 			//console.error("CLICK!");
-			window.open("http://open.spotify.com/search/"+ encodeURI(playlistItemData["name"] +" "+ playlistItemData["title"]),"_system");
-		});
+			window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
+		};
 		
 		var plsgpmusic = new Image();
 		plsgpmusic.className = "playlist_item_gpmusic activatablel";
 		plsgpmusic.src = "img/icons-48/ic_googleplaymusic_black.png";
 		plsgpmusic.title = "Search track on Google Play Music";
-		plsgpmusic.addEventListener("click",function() {
+		plsgpmusic.sartist = encodeURI(playlistItemData["name"]);
+		plsgpmusic.stitle = encodeURI(playlistItemData["title"]);
+		plsgpmusic.onclick = function() {
 			//console.error("CLICK!");
-			window.open("https://play.google.com/store/search?c=music&q="+ encodeURI(playlistItemData["name"] +" "+ playlistItemData["title"]),"_system");
-		});
+			window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
+		};
 		
 		plitem.appendChild(plname);
 		plitem.appendChild(pltitle);

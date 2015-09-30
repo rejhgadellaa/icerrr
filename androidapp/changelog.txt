@@ -1,3 +1,8 @@
+0.258
+  * New scrobble option: verify now playing with Echonest database
+  * Option for alternative flat launcher icon (for use with Nova, Apex)
+  * Fix: Spotify and Play Music search in Details searching for wrong track
+
 0.257
   * New color palette is official!
   * New 'details' screen for managing a station, checking recently played, etc

@@ -121,6 +121,82 @@ switch($action) {
 				$json["data"] = json_decode($fr,true);
 				if (!$json["data"]) { logg(" >> ".$fr); error("Error: could not parse json: '$filename'"); }
 				//$json["data"] = json_decode($json["data"],true);
+				
+				if ($json["data"]["nowplaying"]) {
+				
+					$npexpl = explode("-",$json["data"]["nowplaying"],2);
+					$npartist = urlencode(strtolower(trim($npexpl[0])));
+					$nptitle = urlencode(strtolower(trim($npexpl[1])));
+				
+					$echonest_requrl = $cfg["echonest_apiurl"] ."song/search?"
+						."api_key=". $cfg["echonest_apikey"]
+						."&format=json&results=5"
+						."&artist={$npartist}&title={$nptitle}"
+						."&bucket=id:spotify&bucket=tracks"
+						;
+						
+					$enjsons = fg($echonest_requrl);
+					if ($enjsons && $npartist && $nptitle) {
+						
+						// Song search..
+						$enjson = json_decode($enjsons,true);
+						if ($enjson && $enjson["response"]["status"]["message"] == "Success") {
+							
+							// Artist, title
+							if (count($enjson["response"]["songs"])>0) {
+								$artist = $enjson["response"]["songs"][0]["artist_name"];
+								$title = $enjson["response"]["songs"][0]["title"];
+								$json["data"]["npartist"] = $artist;
+								$json["data"]["nptitle"] = $title;
+							}
+							
+							// Track id?
+							for ($i=0; $i<count($enjson["response"]["songs"]); $i++) {
+								if (count($enjson["response"]["songs"][$i]["tracks"])>0) {
+									// release_image
+									$trackid = $enjson["response"]["songs"][$i]["tracks"][0]["id"];
+									break;
+								}
+							}
+							
+						}
+						$json["data"]["npechores"] = ($enjson["response"]["status"]["message"] == "Success" && $json["data"]["npartist"] && $json["data"]["nptitle"]);
+						
+						// Track lookup..
+						// TODO: needed?
+						/*
+						if ($trackid) {
+							$echonest_requrl = $cfg["echonest_apiurl"] ."track/profile?"
+								."api_key=". $cfg["echonest_apikey"]
+								."&format=json"
+								."&id={$trackid}"
+								."&bucket=audio_summary"
+								;
+							$json["data"]["npechoreq_trackprofile"] = $echonest_requrl;
+							
+							$enjsons = fg($echonest_requrl);
+							if ($enjsons) {
+								
+								$enjson = json_decode($enjsons,true);
+								if ($enjson && $enjson["response"]["status"]["message"] == "Success") {
+									
+									
+									
+								}
+								
+							}
+						}
+						/**/
+						
+					}
+					
+					// Debug
+					$json["data"]["npechoreq_songsearch"] = $echonest_requrl;
+				
+					
+						
+				}
+				
 				$json["info"]["last_update_time_ms"] = filemtime($filename)*1000; // TODO: More info?
 				$json["info"]["last_update_timeago_sec"] = time() - filemtime($filename);
 				$json["info"]["last_update_date"] = date("Y-m-d H:i:s",filemtime($filename));

@@ -82,6 +82,28 @@ site.settings.registerListeners = function() {
 		}
 	);
 	
+	// Use SLS
+	window.mediaStreamer.getSetting("bool","useSLS",
+		function(res) {
+			if (res) { $("#settings input[name='useSLS']").attr("checked",true); }
+			else { $("#settings input[name='useSLS']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
+	// Use SLS Verify
+	window.mediaStreamer.getSetting("bool","useSLSVerify",
+		function(res) {
+			if (res) { $("#settings input[name='useSLSVerify']").attr("checked",true); }
+			else { $("#settings input[name='useSLSVerify']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+	
 	// Use Wifi
 	window.mediaStreamer.getSetting("bool","useWifi",
 		function(res) {
@@ -98,17 +120,6 @@ site.settings.registerListeners = function() {
 		function(res) {
 			if (res) { $("#settings input[name='useSAA']").attr("checked",true); }
 			else { $("#settings input[name='useSAA']").attr("checked",false); }
-		},
-		function(err) {
-			loggr.error(err);
-		}
-	);
-	
-	// Use SLS
-	window.mediaStreamer.getSetting("bool","useSLS",
-		function(res) {
-			if (res) { $("#settings input[name='useSLS']").attr("checked",true); }
-			else { $("#settings input[name='useSLS']").attr("checked",false); }
 		},
 		function(err) {
 			loggr.error(err);
@@ -176,6 +187,22 @@ site.settings.registerListeners = function() {
 		window.mediaStreamer.setting("bool","useSpeakerForAlarms",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
 	
+	// Use SLS
+	$("#settings input[name='useSLS']").off("change");
+	$("#settings input[name='useSLS']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: useSLS: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","useSLS",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	});
+	
+	// Use SLS Verify
+	$("#settings input[name='useSLSVerify']").off("change");
+	$("#settings input[name='useSLSVerify']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: useSLSVerify: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","useSLSVerify",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	});
+	
 	// Use Wifi
 	$("#settings input[name='useWifi']").off("change");
 	$("#settings input[name='useWifi']").on("change",function(evt) {
@@ -193,14 +220,6 @@ site.settings.registerListeners = function() {
 		if ((targ.checked)) {
 			alert("Don't forget to set SAA's ringtone to 'silent'!");
 		}
-	});
-	
-	// Use SLS
-	$("#settings input[name='useSLS']").off("change");
-	$("#settings input[name='useSLS']").on("change",function(evt) {
-		var targ = evt.currentTarget;
-		loggr.log(" > Setting: useSLS: "+ (targ.checked));
-		window.mediaStreamer.setting("bool","useSLS",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
 	
 	// Use Flat Icon

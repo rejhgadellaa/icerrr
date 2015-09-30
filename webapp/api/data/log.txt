@@ -1,3 +1,186 @@
+2015-09-30 07:29:25     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:29:25    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
+2015-09-30 07:29:25    Cleanup json
+2015-09-30 07:28:07     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:28:07    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
+2015-09-30 07:28:07    Cleanup json
+2015-09-30 07:25:33     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:25:33    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
+2015-09-30 07:25:33    Cleanup json
+2015-09-30 07:24:58    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
+2015-09-30 07:24:58    Cleanup json
+2015-09-30 07:24:45     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:24:45    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
+2015-09-30 07:24:45    Cleanup json
+2015-09-30 07:23:53    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:23:53    Cleanup json
+2015-09-30 07:23:47     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:23:47    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:23:47    Cleanup json
+2015-09-30 07:22:45     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:22:45    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:22:45    Cleanup json
+2015-09-30 07:22:13     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:22:13    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:22:13    Cleanup json
+2015-09-30 07:21:56    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:21:56    Cleanup json
+2015-09-30 07:21:48     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:21:48    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:21:48    Cleanup json
+2015-09-30 07:21:29     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:21:29    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:21:29    Cleanup json
+2015-09-30 07:20:05     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:20:05    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:20:05    Cleanup json
+2015-09-30 07:18:51     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:18:51    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:18:51    Cleanup json
+2015-09-30 07:18:30    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:18:30    Cleanup json
+2015-09-30 07:18:16     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:18:16    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:18:16    Cleanup json
+2015-09-30 07:16:49    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:16:49    Cleanup json
+2015-09-30 07:16:37     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:16:37    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:16:37    Cleanup json
+2015-09-30 07:15:25    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:15:25    Cleanup json
+2015-09-30 07:15:24     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:15:24    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:15:24    Cleanup json
+2015-09-30 07:14:50     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:14:50    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:14:50    Cleanup json
+2015-09-30 07:13:48     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:13:48    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:13:48    Cleanup json
+2015-09-30 07:13:23     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:13:23    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:13:23    Cleanup json
+2015-09-30 07:13:05     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:13:05    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:13:05    Cleanup json
+2015-09-30 07:12:42     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:12:42    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:12:42    Cleanup json
+2015-09-30 07:12:22     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:12:22    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:12:22    Cleanup json
+2015-09-30 07:11:47     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:11:47    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:11:47    Cleanup json
+2015-09-30 07:11:31     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:11:31    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:11:31    Cleanup json
+2015-09-30 07:11:09     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:11:09    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:11:09    Cleanup json
+2015-09-30 07:10:48     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:10:48    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:10:48    Cleanup json
+2015-09-30 07:10:25     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:10:25    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:10:25    Cleanup json
+2015-09-30 07:08:02     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:08:02    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:08:02    Cleanup json
+2015-09-30 07:06:47     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:06:47    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:06:47    Cleanup json
+2015-09-30 07:06:17     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:06:17    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":80,"station_path":"/radio10"}
+2015-09-30 07:06:17    Cleanup json
+2015-09-30 07:05:17     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:05:17    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
+2015-09-30 07:05:17    Cleanup json
+2015-09-30 07:01:04     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:01:04    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
+2015-09-30 07:01:04    Cleanup json
+2015-09-30 07:00:04     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 07:00:04    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 07:00:04    Cleanup json
+2015-09-30 06:59:42     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:59:42    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:59:42    Cleanup json
+2015-09-30 06:59:37    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:59:37    Cleanup json
+2015-09-30 06:59:21     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:59:21    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:59:21    Cleanup json
+2015-09-30 06:54:19     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:54:19    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:54:19    Cleanup json
+2015-09-30 06:53:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:53:55    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:53:55    Cleanup json
+2015-09-30 06:53:36    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:53:36    Cleanup json
+2015-09-30 06:53:23     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:53:23    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:53:23    Cleanup json
+2015-09-30 06:52:44     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:52:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:52:44    Cleanup json
+2015-09-30 06:52:22     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:52:22    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:52:22    Cleanup json
+2015-09-30 06:51:05     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:51:05    GET > {"get":"station_info","station_id":"intergalactic_murdercapital","station_host":"radio.intergalacticfm.com","station_port":80,"station_path":"/1"}
+2015-09-30 06:51:05    Cleanup json
+2015-09-30 06:40:28     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:40:28    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2015-09-30 06:40:28    Cleanup json
+2015-09-30 06:32:12     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:32:12    GET > {"get":"station_info","station_id":"intergalactic_murdercapital","station_host":"radio.intergalacticfm.com","station_port":80,"station_path":"/1"}
+2015-09-30 06:32:12    Cleanup json
+2015-09-30 06:28:49     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:28:49    GET > {"get":"station_info","station_id":"intergalactic_murdercapital","station_host":"radio.intergalacticfm.com","station_port":80,"station_path":"/1"}
+2015-09-30 06:28:49    Cleanup json
+2015-09-30 06:22:18     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:22:18    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:22:18    Cleanup json
+2015-09-30 06:22:01     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:22:01    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2015-09-30 06:22:01    Cleanup json
+2015-09-30 06:21:09     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:21:09    GET > {"get":"station_info","station_id":"radio2","station_host":"icecast.omroep.nl","station_port":80,"station_path":"/radio2-bb-mp3"}
+2015-09-30 06:21:09    Cleanup json
+2015-09-30 06:16:10     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:16:10    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:16:10    Cleanup json
+2015-09-30 06:15:16     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-09-30 06:15:16    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-09-30 06:15:16     - TMP: ../json/station_info.TMP.Arrow_Classic Rock_81d214392d0388a2e033a4af04345b46_15001097d55_c847c.json
+2015-09-30 06:15:16     - TMP: ../json/station_info.TMP.Arrow_Classic Rock_65d63dcaccc49644b55c225f6efb2e40_14fc5abd4ee_cb20c.json
+2015-09-30 06:15:16     - TMP: ../json/station_info.TMP.Arrow_Classic Rock_65d63dcaccc49644b55c225f6efb2e40_14fc5abc435_f1686.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Sky_Radio_d7f76b768f63b011bfbdaf3ba16c6866_14903fde5e3_45498.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Radio_Zaanstad_2979a6d6dc3ce0806735c0de77224da8_14fe9f60282_4442e.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.radio3fm.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.radio1.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Groot_Nieuws Radio_2cc20d7172740483da6835cdaf90faec_14c1ea0a259_fd0b3.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.CUSTOM.Rmf_fm_f52a9729358b9b693fce9eb69e3f42b6_14c8d9279ed_fe9b1.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.CUSTOM.Arrow_classic rock pls_583557cd4d2421ddd92625cf6cbf152d_14b7e4d9431_78b81.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Capital_Fm_Romania_200043fe8f0a8cc7ef325624b48c572e_14cd6d9efb7_ff1e4.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_b94d16a4e22d7b4499228dae0e4e67b7_14fc6b31d00_9f8d4.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_b94d16a4e22d7b4499228dae0e4e67b7_14fa2dba252_f78ee.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_81d214392d0388a2e033a4af04345b46_1500109cc59_f6d36.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_81d214392d0388a2e033a4af04345b46_15000fcd650_2f174.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_81d214392d0388a2e033a4af04345b46_14fc27105a3_2d05f.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_67451e3fe7d83402efe23d917556288e_150035f05f4_6613f.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_67451e3fe7d83402efe23d917556288e_14fc8138c35_ca6e4.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_65d63dcaccc49644b55c225f6efb2e40_14fc5b47d82_98c04.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_65d63dcaccc49644b55c225f6efb2e40_14fc59e6e83_bc01b.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_4b340490e62fdad97f29a0ff1597d7d5_1500108a3da_4ce33.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_4b340490e62fdad97f29a0ff1597d7d5_15000c25177_f5305.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic_Rock_2f5689d6a4a19a8298057079d9d38da9_14fe195c267_555d8.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic Rock_b8f32c62c5353f31_148e602acf2_cd8e1.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic Rock_5ee97196827f67c8_148e2208d79_490cd.json
+2015-09-30 06:15:16     - OLD: ../json/station_info.Arrow_Classic Rock_4adcb79a71914178_148e64856a2_2f1d5.json
+2015-09-30 06:15:16    Cleanup json
 2015-04-23 07:12:58    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
 2015-04-23 07:12:58    Cleanup json
 2015-04-23 07:12:58    GET > {"get":"nowplaying_dirble","dirble_id":9954}
@@ -716,13 +899,4 @@
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 – 80’s Hits_000cc1462348e28cab453ac05117553a_149c9d0e4be_7b201.json
 2015-04-22 06:01:25     - OLD: 01.json
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 60s  70's Hits_daaf6cbfaa4f8bd7198c64bb406ad9a4_14b21def365_4b088.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 60s  70's Hits_d38beb63f43c5034368d3228d76e8e9f_14aa5b06fd7_f077b.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 60s  70's Hits_d063f7e914752b0b22a50cc0d90c543b_14bb2a8b4db_9df16.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 60s  70's Hits_d063f7e914752b0b22a50cc0d90c543b_14b657ebff7_f2fcb.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 60s  70's Hits_771980d1a90103368ba146cd4d159e3c_14a835c737e_643f8.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 60s  70's Hits_771980d1a90103368ba146cd4d159e3c_14a008c290f_20a3e.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 60s  70's Hits_771980d1a90103368ba146cd4d159e3c_149ff7dbb47_c9d7e.json
-bb47_c9d7e.json
-b47_c9d7e.json
-n
-b47_
+2015-
