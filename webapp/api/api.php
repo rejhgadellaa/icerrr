@@ -125,8 +125,15 @@ switch($action) {
 				if ($json["data"]["nowplaying"]) {
 				
 					$npexpl = explode("-",$json["data"]["nowplaying"],2);
-					$npartist = urlencode(strtolower(trim($npexpl[0])));
-					$nptitle = urlencode(strtolower(trim($npexpl[1])));
+					$npartist = trim($npexpl[0]);
+					$nptitle = trim($npexpl[1]);
+					
+					if (strpos($nptitle,"|")>0) {
+						$nptitle = trim(substr($nptitle,0,strpos($nptitle,"|")-1));
+					}
+					
+					$npartist = urlencode(strtolower(trim($npartist)));
+					$nptitle = urlencode(strtolower(trim($nptitle)));
 				
 					$echonest_requrl = $cfg["echonest_apiurl"] ."song/search?"
 						."api_key=". $cfg["echonest_apikey"]
