@@ -636,7 +636,7 @@ public class MediaStreamerService extends Service {
 	        		// LastFocusState was LOSS_TRANSIENT so resume playback :D
 	        		if (lastFocusState==AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
 		        		Log.d(APPTAG," >> Resume playback (from paused)");
-		        		sendBroadcastSLS(nowplaying,1);
+		        		sendBroadcastSLS(nowplaying,lastnpverified,1);
 						mpMgr.resume();
 	        		} else {
 	        			Log.d(APPTAG," >> Do not resume playback, keep notification");
@@ -669,7 +669,7 @@ public class MediaStreamerService extends Service {
 	        	Log.d(APPTAG," > Pause the stream!");
 	        	settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
-				sendBroadcastSLS(nowplaying,2);
+				sendBroadcastSLS(nowplaying,lastnpverified,2);
 				mpMgr.pause();
 				
 				// Update notif
@@ -827,7 +827,7 @@ public class MediaStreamerService extends Service {
 					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
 						
 						// Scrob?
-						sendBroadcastSLS(nowplaying_new,npEchoNestVerified);
+						sendBroadcastSLS(nowplaying_new,npEchoNestVerified,0);
 						
 						// Update MetaData
 						nowplaying = nowplaying_new; // do it here so getStationImage can find recent artwork!
@@ -1399,19 +1399,26 @@ public class MediaStreamerService extends Service {
     	sendBroadcastSLS(nowplaying_str,verified,0);
     }
     private void sendBroadcastSLS(String nowplaying_str, boolean verified, int state) {
-    	
-    	if (!sett.getBoolean("useSLS", false)) {
-    		return;
-    	}
 		
     	try {
 		
 			Log.d(APPTAG," > Send SLS intent..");
 			// -> Docs: https://github.com/tgwizard/sls/blob/master/Developer's%20API.md
+	    	
+	    	if (!sett.getBoolean("useSLS", false)) {
+	    		Log.d(APPTAG," -> SLS disabled, return");
+				lastnpartist = null;
+				lastnptitle = null;
+				lastnpverified = false;
+	    		return;
+	    	}
 			
 			// Check
 			if (nowplaying_str.equals("Now playing: Unknown") || nowplaying_str.equals("Now playing: ...") || nowplaying_str.equals("...")) {
 				Log.d(APPTAG," -> Now playing: Unknown or ..., skip");
+				lastnpartist = null;
+				lastnptitle = null;
+				lastnpverified = false;
 				return;
 			}
 			
