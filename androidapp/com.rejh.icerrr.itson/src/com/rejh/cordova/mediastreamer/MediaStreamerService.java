@@ -298,6 +298,7 @@ public class MediaStreamerService extends Service {
 				Log.d(APPTAG," > cmd_pause_resume PAUSE!");
 				settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
+				sendBroadcastSLS(nowplaying,3);
 				mpMgr.pause();
 				nowplaying = "...";
 				try {
@@ -310,6 +311,7 @@ public class MediaStreamerService extends Service {
 				Log.d(APPTAG," > cmd_pause_resume RESUME!");
 				settEditor.putBoolean("is_paused", false);
 				settEditor.commit();
+				sendBroadcastSLS(nowplaying,0);
 				mpMgr.resume();
 				nowplaying = "...";
 				// int result = audioMgr.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
@@ -461,13 +463,7 @@ public class MediaStreamerService extends Service {
 		context.sendBroadcast(notifIntent);
 		
 		// Scrob?
-		if (sett.getBoolean("useSLS", false)) {
-			try {
-				sendBroadcastSLS(nowplaying,3);
-			} catch(Exception e) {
-				Log.e(APPTAG," > Error SLS integration: "+ e,e);
-			}
-		}
+		sendBroadcastSLS(nowplaying,3);
 		
 		// Store some values
 		settEditor.putString("currentstation_id", null);
@@ -640,6 +636,7 @@ public class MediaStreamerService extends Service {
 	        		// LastFocusState was LOSS_TRANSIENT so resume playback :D
 	        		if (lastFocusState==AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
 		        		Log.d(APPTAG," >> Resume playback (from paused)");
+		        		sendBroadcastSLS(nowplaying,1);
 						mpMgr.resume();
 	        		} else {
 	        			Log.d(APPTAG," >> Do not resume playback, keep notification");
@@ -672,6 +669,7 @@ public class MediaStreamerService extends Service {
 	        	Log.d(APPTAG," > Pause the stream!");
 	        	settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
+				sendBroadcastSLS(nowplaying,2);
 				mpMgr.pause();
 				
 				// Update notif
@@ -829,15 +827,7 @@ public class MediaStreamerService extends Service {
 					if (!nowplaying_new.equals(nowplaying) && serviceIsRunning) {
 						
 						// Scrob?
-						if (sett.getBoolean("useSLS", false)) {
-							
-							try {
-								sendBroadcastSLS(nowplaying_new,npEchoNestVerified);
-							} catch(Exception e) {
-								Log.e(APPTAG," > Error SLS integration: "+ e,e);
-							}
-							
-						}
+						sendBroadcastSLS(nowplaying_new,npEchoNestVerified);
 						
 						// Update MetaData
 						nowplaying = nowplaying_new; // do it here so getStationImage can find recent artwork!
@@ -1409,57 +1399,74 @@ public class MediaStreamerService extends Service {
     	sendBroadcastSLS(nowplaying_str,verified,0);
     }
     private void sendBroadcastSLS(String nowplaying_str, boolean verified, int state) {
+    	
+    	if (!sett.getBoolean("useSLS", false)) {
+    		return;
+    	}
 		
-		Log.d(APPTAG," > Send SLS intent..");
-		// -> Docs: https://github.com/tgwizard/sls/blob/master/Developer's%20API.md
+    	try {
 		
-		// Check
-		if (nowplaying_str.equals("Now playing: Unknown") || nowplaying_str.equals("Now playing: ...") || nowplaying_str.equals("...")) {
-			Log.d(APPTAG," -> Now playing: Unknown or ..., skip");
-			return;
-		}
-		
-		// Parse nowplaying for artist + trackname
-		String[] npparts = nowplaying_str.split("-", 2);
-		if (npparts.length<2) { 
-			Log.d(APPTAG," -> Now playing: split() resulted in less than 2 values, skip");
-		}
-		String npartist = npparts[0].trim();
-		String nptrack = npparts[1].trim();
-		
-		// Check | -> intergalactic :(((
-		if (nptrack.indexOf("|")>0) {
-			nptrack = nptrack.substring(0, nptrack.indexOf("|")-1).trim();
-		}
-
-		Log.d(APPTAG," -> "+ npartist +", "+ nptrack);
-		
-		// Verify?
-		if (sett.getBoolean("useSLSVerify", false)) {
-			if (!verified && state==0 || !lastnpverified && state==3) {
-				Log.d(APPTAG," -> Not verified, don't scrobble...");
+			Log.d(APPTAG," > Send SLS intent..");
+			// -> Docs: https://github.com/tgwizard/sls/blob/master/Developer's%20API.md
+			
+			// Check
+			if (nowplaying_str.equals("Now playing: Unknown") || nowplaying_str.equals("Now playing: ...") || nowplaying_str.equals("...")) {
+				Log.d(APPTAG," -> Now playing: Unknown or ..., skip");
 				return;
 			}
+			
+			// Parse nowplaying for artist + trackname
+			String[] npparts = nowplaying_str.split("-", 2);
+			if (npparts.length<2) { 
+				Log.d(APPTAG," -> Now playing: split() resulted in less than 2 values, skip");
+			}
+			String npartist = npparts[0].trim();
+			String nptrack = npparts[1].trim();
+			
+			if (state==1 && !npartist.equals(lastnpartist) && !nptrack.equals(lastnptitle)) {
+				state = 0; // don't resume, start new
+			}
+			if (state==2 && !npartist.equals(lastnpartist) && !nptrack.equals(lastnptitle)) {
+				state = 3; // don't pause, stop
+			}
+			
+			// Check | -> intergalactic :(((
+			if (nptrack.indexOf("|")>0) {
+				nptrack = nptrack.substring(0, nptrack.indexOf("|")-1).trim();
+			}
+	
+			Log.d(APPTAG," -> "+ npartist +", "+ nptrack +", "+ state);
+			
+			// Verify?
+			if (sett.getBoolean("useSLSVerify", false)) {
+				if (!verified && state==0 || !lastnpverified && state!=0) {
+					Log.d(APPTAG," -> Not verified, don't scrobble...");
+					return;
+				}
+			}
+			
+			// Store npartist - title - verified
+			lastnpartist = npartist;
+			lastnptitle = nptrack;
+			lastnpverified = verified;
+			
+			// Go!
+			
+			Intent slsIntent = new Intent();
+			slsIntent.setAction("com.adam.aslfms.notify.playstatechanged");
+			slsIntent.putExtra("state", state); // State
+			slsIntent.putExtra("app-name","Icerrr");
+			slsIntent.putExtra("app-package", "com.rejh.icerrr.itson");
+			slsIntent.putExtra("artist", npartist);
+			slsIntent.putExtra("track", nptrack);
+			slsIntent.putExtra("duration", 60);
+			slsIntent.putExtra("source", "R");
+			
+			context.sendBroadcast(slsIntent);
+			
+		} catch(Exception e) {
+			Log.e(APPTAG," > Error SLS integration: "+ e,e);
 		}
-		
-		// Store npartist - title - verified
-		lastnpartist = npartist;
-		lastnptitle = nptrack;
-		lastnpverified = verified;
-		
-		// Go!
-		
-		Intent slsIntent = new Intent();
-		slsIntent.setAction("com.adam.aslfms.notify.playstatechanged");
-		slsIntent.putExtra("state", state); // State
-		slsIntent.putExtra("app-name","Icerrr");
-		slsIntent.putExtra("app-package", "com.rejh.icerrr.itson");
-		slsIntent.putExtra("artist", npartist);
-		slsIntent.putExtra("track", nptrack);
-		slsIntent.putExtra("duration", 60);
-		slsIntent.putExtra("source", "R");
-		
-		context.sendBroadcast(slsIntent);
 		
     }
     
