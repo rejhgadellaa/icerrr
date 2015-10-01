@@ -19,11 +19,11 @@ section { }
 	}
 	
 		.actionbar .icon_app {
-			padding:12px;
+			padding:12px 16px 12px 16px;
 		}
 		
 		.actionbar .title {
-			bottom:10px; left:48px;
+			bottom:10px; left:72px;
 		}
 		
 		.actionbar .actions {
@@ -31,7 +31,7 @@ section { }
 		}
 		
 			.actionbar .actions .action {
-				padding:12px;
+				padding:12px 16px 12px 16px;
 			}
 			
 	.tabbar {
@@ -45,10 +45,9 @@ section { }
 /* Specific */
 
 #home {}
-
-	#home .actionbar .icon_app {
-		width:24px; height:24px;
-		padding:12px;
+	
+	#home .main .station_info_wrap {
+		/* top:0px; left:-4px; right:-4px; */
 	}
 	
 #channellist {}

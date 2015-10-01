@@ -422,6 +422,7 @@ site.lifecycle.onBackButton = function() {
 				site.lifecycle.add_section_history("#home");
 				window.JSInterface.moveTaskToBack();
 				site.lifecycle.onPause();
+				site.helpers.checkImageCache();
 			}
 			break;
 		

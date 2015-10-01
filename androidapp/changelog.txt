@@ -1,7 +1,13 @@
+0.259
+  * Pushing pixels
+  * Bugfixes, improvements
+
 0.258
+  * Moved Scrobbling in settings to have its own category
   * New scrobble option: verify now playing with Echonest database
   * Option for alternative flat launcher icon (for use with Nova, Apex)
   * Fix: Spotify and Play Music search in Details searching for wrong track
+  * Bugfixes, tweaks, improvements and an easter egg that should pop up any day now :)
 
 0.257
   * New color palette is official!

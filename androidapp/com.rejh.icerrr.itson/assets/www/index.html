@@ -184,9 +184,11 @@
 		<div class="station_image_overlay"></div>
 		<div class="station_image_overlay_bottom"></div>
 		
-		<div class="station_icon"><img class="shadow_z2" src="img/icons-80/ic_station_default.png" /></div>
-		<div class="station_name textshadow25">NPO Radio 3FM</div>
-		<div class="station_nowplaying textshadow25">Now playing: Unknown</div>
+		<div class="station_info_wrap">
+			<div class="station_icon"><img class="shadow_z2" src="img/icons-80/ic_station_default.png" /></div>
+			<div class="station_name textshadow25">NPO Radio 3FM</div>
+			<div class="station_nowplaying textshadow25">Now playing: Unknown</div>
+		</div>
 		
 		<div class="footer">
 			<div class="button left" onClick="site.alarms.init();">
@@ -372,7 +374,7 @@
 	<div class="main">
 	
 		<div class="block header">
-			Add/Edit station
+			<div class="text">Add/Edit station</div>
 		</div>
 		
 		<form onSubmit="site.chedit.check(); return false;">
@@ -439,7 +441,7 @@
 	<div class="main">
 	
 		<div class="block header">
-			Search station
+			<div class="text">Search station</div>
 		</div>
 		
 		<form onSubmit="site.chsearch.searchstation(); return false;">
@@ -554,7 +556,7 @@
 	<div class="main">
 		
 		<div class="block header">
-			Set alarm
+			<div class="text">Set alarm</div>
 		</div>
 		
 		<form onSubmit="return false;">
@@ -630,7 +632,7 @@
 	<div class="main">
 		
 		<div class="block header">
-			About Icerrr
+			<div class="text">About Icerrr</div>
 		</div>
 		
 		<div class="block">
@@ -650,7 +652,7 @@
 		</div>
 		
 		<div class="block header">
-			Acknowledgements
+			<div class="text">Acknowledgements</div>
 		</div>
 		
 		<div class="block">
@@ -690,7 +692,7 @@
 		</div>
 		
 		<div class="block header">
-			About the developer
+			<div class="text">About the developer</div>
 		</div>
 		
 		<div class="block">
@@ -729,7 +731,7 @@
 	<div class="main">
 		
 		<div class="block header">
-			Log
+			<div class="text">Log</div>
 		</div>
 		
 		<div class="block content selectable">
@@ -763,19 +765,10 @@
 		-->
 		
 		<div class="block header">
-			Station icon and artwork		</div>
+			<div class="text">Station icon and artwork</div>
+		</div>
 		
 		<div class="block def">
-				
-			<div class="itemWrap showStationIcon">
-				<div class="item title">Show station icon</div>
-				<div class="item subtitle">Show station icon in app and lockscreen <!--<a href="javascript:void(0);" onClick="site.settings.helpShowStationIcon();">(?)</a>--></div>
-				<div class="checkboxWrap"><input name="showStationIcon" type="checkbox" class="checkbox" /></div>
-			</div>
-			
-			<div class="itemWrap">
-				<div class="item spacer"></div>
-			</div>
 				
 			<div class="itemWrap showAlbumArt">
 				<div class="item title">Show album art</div>
@@ -794,12 +787,23 @@
 			</div>
 			
 			<div class="itemWrap">
+				<div class="item spacer"></div>
+			</div>
+				
+			<div class="itemWrap showStationIcon">
+				<div class="item title">Show station icon</div>
+				<div class="item subtitle">Show station icon in app and lockscreen <!--<a href="javascript:void(0);" onClick="site.settings.helpShowStationIcon();">(?)</a>--></div>
+				<div class="checkboxWrap"><input name="showStationIcon" type="checkbox" class="checkbox" /></div>
+			</div>
+			
+			<div class="itemWrap">
 				<div class="item spacer invis"></div>
 			</div>
 		</div>
 		
 		<div class="block header">
-			Alarms		</div>
+			<div class="text">Alarms</div>
+		</div>
 		
 		<div class="block def">
 				
@@ -825,7 +829,8 @@
 		</div>
 		
 		<div class="block header">
-			Backup/restore		</div>
+			<div class="text">Backup/restore</div>
+		</div>
 		
 		<div class="block def">
 				
@@ -852,7 +857,7 @@
 		</div>
 		
 		<div class="block header">
-			Scrobbling
+			<div class="text">Scrobbling</div>
 		</div>
 		
 		<div class="block def">
@@ -880,7 +885,7 @@
 		</div>
 		
 		<div class="block header">
-			Advanced
+			<div class="text">Advanced</div>
 		</div>
 		
 		<div class="block def">

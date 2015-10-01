@@ -125,7 +125,7 @@ section {
 		
 		.actionbar .title {
 			position:absolute;
-			bottom:14px; left:56px;			
+			bottom:14px; left:72px;			
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow:ellipsis;
@@ -195,10 +195,18 @@ section {
 		}
 
 			.main .block.header {
-				font-size:18pt;
+				position:relative;
+				top:0; left:0; right:0;
+				height:48px;
+				padding:0;
+				font-size:16pt;
 				font-weight:300;
 				background:#455A64;
 				color:#fff;
+			}
+			.main .block.header .text {
+				position:absolute;
+				left:16px; bottom:10px;
 			}
 	
 	.footer {
@@ -326,15 +334,6 @@ section {
 	display:block;
 }
 
-	#home .actionbar .icon_app {
-		width:24px; height:24px;
-		padding:16px;
-	}
-	
-		#home .actionbar .icon_app img {
-			width:24px; height:24px;
-		}
-
 	#home .main {
 		overflow:hidden;
 		width:100%; height:100%;
@@ -392,6 +391,11 @@ section {
 		background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.50) 100%);
 	}
 	
+	#home .main .station_info_wrap {
+		position:absolute;
+		top:0; left:0; right:0; height:72px;
+	}
+	
 	#home .main .station_icon {
 		position:absolute;
 		top:0; left:0;
@@ -400,25 +404,25 @@ section {
 		#home .main .station_icon img {
 			width:40px;
 			height:40px;
-			margin:14px;
-			padding:2px;
+			margin:15px;
+			padding:1px;
 			border-radius:40px;
 		}
 	
 	#home .main .station_name {
 		position:absolute;
-		top:11px; left:71px; right:16px;
+		top:14px; left:71px; right:16px;
 		overflow:hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
-		font-size:20pt;
+		font-size:18pt;
 		font-weight:300;
 		color:rgba(255,255,255,0.87);
 	}
 	
 	#home .main .station_nowplaying {
 		position:absolute;
-		top:41px; left:72px; right:16px;
+		top:39px; left:72px; right:16px;
 		overflow:hidden;
 		white-space: nowrap;
 		text-overflow:ellipsis;
@@ -778,18 +782,18 @@ section {
 		
 			#detailstation .main .content_header .station_name {
 				position:absolute;
-				top:9px; left:16px; right:72px;
+				top:13px; left:16px; right:72px;
 				overflow:hidden;
 				white-space: nowrap;
 				text-overflow:ellipsis;
-				font-size:20pt;
+				font-size:18pt;
 				font-weight:300;
 				color:rgba(255,255,255,0.87);
 			}
 			
 			#detailstation .main .content_header .station_nowplaying {
 				position:absolute;
-				top:40px; left:16px; right:24px;
+				top:39px; left:16px; right:24px;
 				overflow:hidden;
 				white-space: nowrap;
 				text-overflow:ellipsis;
@@ -939,7 +943,8 @@ section {
 	}
 
 	#editstation .block.header, #searchstation .block.header, #alarms_add .block.header, #about .block.header, #viewlog .block.header {
-		padding:16px;
+		/* padding:16px; */
+		padding:0;
 	}
 	
 	#editstation .block label a, #searchstation .block label a, #alarms_add .block label a {
@@ -1054,7 +1059,8 @@ section {
 		padding:0 16px 16px 16px;
 	}
 	#alarms_add .block.header {
-		padding:16px;
+		/* padding:16px; */
+		padding:0;
 	}
 	#alarms_add .block.borderTop {
 		border:1px solid #ddd;
@@ -1163,11 +1169,14 @@ section {
 	}
 
 		#settings .block.header {
+			padding:0;
+			/*
 			padding:16px;
 			font-size:18pt;
 			font-weight:300;
 			background:#455A64;
 			color:#fff;
+			/**/
 		}
 	
 	/* Item defaults */

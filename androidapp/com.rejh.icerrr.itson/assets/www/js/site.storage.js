@@ -633,7 +633,7 @@ site.storage.getFolderEntry = function(path,cb,errcb,opts) {
 	if (!opts) { opts = {}; }
 	if (!opts.path) { opts.path = {}; }
 	if (opts.path.create!==true) { opts.path.create = false; } // Note: defaults to FALSE - most other storage methods don't!
-	if (opts.path.exclusive) { opts.path.exclusive = false; }
+	if (opts.path.exclusive!==true) { opts.path.exclusive = false; }
 	
 	// Prep timeout
 	var timeoutID = site.storage.addTimeout("getFolderEntry",null,{path:path,cb:cb,errcb:errcb,opts:opts});

@@ -17,16 +17,16 @@
 	},
     
     {
-        "id":"app257",
+        "id":"app259",
         "crit":"version",
-        "critvalue":0.256,
+        "critvalue":0.258,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.257 includes:",
+            "v0.259 includes:",
             "* New color palette for app",
             "* New 'Details' screen",
             "* New scrobbing integration",
@@ -34,7 +34,7 @@
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
-        "critical":0,
+        "critical":1,
         "onlyOnWifi":1
     },
     

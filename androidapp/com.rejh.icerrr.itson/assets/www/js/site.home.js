@@ -30,6 +30,7 @@ site.home.init = function() {
 	}
 	
 	// Get station
+	site.session.currentstation = site.helpers.session.getStationById(site.session.currentstation_id);
 	var station = site.session.currentstation;
 	
 	// Update currentstation...
@@ -110,7 +111,7 @@ site.home.init = function() {
 	if (site.home.lastStationId!=site.session.currentstation.station_id) {
 		site.home.handleStationImage(site.session.currentstation.station_icon);
 	} else {
-		site.home.handleStationImage(site.session.currentstation.station_icon); // TODO: really?
+		// site.home.handleStationImage(site.session.currentstation.station_icon); // TODO: really? // nope
 	}
 	// UI: Set text and such
 	site.home.lastStationId = site.session.currentstation.station_id;
@@ -446,6 +447,8 @@ site.home.run_station_updates = function() {
 				return;
 			}
 			
+			data["data"]["nowplaying"] = site.home.formatNowPlaying(data["data"]["nowplaying"]);
+			
 			window.mediaStreamer.updateMetaData();
 			
 			if (!data["data"]["nowplaying"]) { 
@@ -486,6 +489,27 @@ site.home.run_station_updates = function() {
 	
 }
 
+site.home.formatNowPlaying = function(nowplaying) {
+	
+	if (!nowplaying || nowplaying.trim()=="-" || nowplaying==" - ") {
+		nowplaying = "Now playing: Unknown";
+	}
+	
+	if (!nowplaying || !nowplaying.trim()) {
+		nowplaying = "Now playing: Unknown";
+	} else {
+		
+		if (nowplaying.indexOf("&")>0) {
+			nowplaying = site.helpers.replaceAll("&"," & ",nowplaying);
+			nowplaying = site.helpers.replaceAll("  "," ",nowplaying);
+		}
+		
+	}
+	
+	return nowplaying.trim();
+	
+}
+
 // ---> Dirble nowplaying
 
 site.home.useDirbleNowPlaying = function() {
@@ -509,6 +533,18 @@ site.home.getAlbumArt = function() {
 		loggr.log(" > Disabled. Return.");
 		site.home.loadAlbumArt('img/bg_home_default.jpg');
 		site.home.handleStationImage(site.session.currentstation.station_icon);
+		return;
+	}
+	
+	// Oct 3rd :D
+	var date = new Date();
+	var day = date.getDate();
+	var month = date.getMonth();
+	loggr.log(" > dailyoct3: "+ day +" "+ month);
+	if (day==3 && month==9) { // 9 == 10 == oct
+		var imgurl = "http://www.rejh.nl/icerrr/img/icons-static/dailyoct3.jpg?c=12"+day+month;
+		//imgurl = site.session.currentstation.station_icon;
+		site.home.handleStationImage(imgurl);
 		return;
 	}
 	
@@ -720,13 +756,16 @@ site.home.handleStationImage = function(src,isBigIcon) {
 					station.station_name.split(" ").join("-").toLowerCase(),
 					false,true,true);
 				/**/
+				var filenameprefix = 
+					"station_art_"
+					+ site.helpers.replaceAll(" ","-",nowplaying) 
+					+ "_"
+					+ site.helpers.replaceAll(" ","-",station.station_name.toLowerCase())
+					;
+				if (src && src.indexOf("dailyoct3")>0) { filenameprefix = "dailyoct3"; } // dailyoct3
 				var filename = site.helpers.imageUrlToFilename(
 					src,
-					"station_art_"
-						+ site.helpers.replaceAll(" ","-",nowplaying) 
-						+ "_"
-						+ site.helpers.replaceAll(" ","-",station.station_name.toLowerCase())
-						,
+					filenameprefix,
 					false,true,true
 					);
 				
@@ -1136,6 +1175,7 @@ site.home.alarmStop = function() {
 	
 }
 
+// ---> Helpers
 
 
 

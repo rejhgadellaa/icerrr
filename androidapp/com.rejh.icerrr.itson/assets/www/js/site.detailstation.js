@@ -268,9 +268,7 @@ site.detailstation.updateDataNowPlaying = function() {
 	site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
 			
-			if (!data["data"]["nowplaying"]) { data["data"]["nowplaying"] = "Now playing: Unknown"; }
-			
-			$("#detailstation .station_nowplaying").html(data["data"]["nowplaying"]);
+			$("#detailstation .station_nowplaying").html(site.home.formatNowPlaying(data["data"]["nowplaying"]));
 			site.detailstation.updatedDataNowPlaying();
 			
 		},
@@ -336,51 +334,17 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 	var inline_list = document.createElement("div");
 	inline_list.className = "inline_list";
 	
+	// Current nowplaying..
+	var npparts = $("#detailstation .station_nowplaying").html().split(" - ");
+	var npartist = npparts[0];
+	var nptitle = npparts[1];
+	var nowItemData = {name:npartist,title:nptitle};
+	site.detailstation.buildRecentlyPlayedItem(inline_list,nowItemData);
+	
 	// Build..
 	for (var i=0; i<site.detailstation.stationPlaylist.length; i++) {
-		
 		var playlistItemData = site.detailstation.stationPlaylist[i];
-		
-		var plitem = document.createElement("div");
-		plitem.className = "playlist_item";
-		
-		var plname = document.createElement("div");
-		plname.className = "playlist_item_name";
-		plname.innerHTML = playlistItemData["name"];
-		
-		var pltitle = document.createElement("div");
-		pltitle.className = "playlist_item_title";
-		pltitle.innerHTML = playlistItemData["title"];
-		
-		var plspotify = new Image();
-		plspotify.className = "playlist_item_spotify activatablel";
-		plspotify.src = "img/icons-48/ic_spotify_black.png";
-		plspotify.title = "Search track on Spotify";
-		plspotify.sartist = encodeURI(playlistItemData["name"]);
-		plspotify.stitle = encodeURI(playlistItemData["title"]);
-		plspotify.onclick = function() {
-			//console.error("CLICK!");
-			window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
-		};
-		
-		var plsgpmusic = new Image();
-		plsgpmusic.className = "playlist_item_gpmusic activatablel";
-		plsgpmusic.src = "img/icons-48/ic_googleplaymusic_black.png";
-		plsgpmusic.title = "Search track on Google Play Music";
-		plsgpmusic.sartist = encodeURI(playlistItemData["name"]);
-		plsgpmusic.stitle = encodeURI(playlistItemData["title"]);
-		plsgpmusic.onclick = function() {
-			//console.error("CLICK!");
-			window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
-		};
-		
-		plitem.appendChild(plname);
-		plitem.appendChild(pltitle);
-		plitem.appendChild(plspotify);
-		plitem.appendChild(plsgpmusic);
-		
-		inline_list.appendChild(plitem);
-		
+		site.detailstation.buildRecentlyPlayedItem(inline_list,playlistItemData);
 	}
 	
 	var divider = document.createElement("div");
@@ -390,8 +354,57 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 	
 	$("#detailstation .recentlyplayed").append(inline_list);
 	
-	$("#detailstation .recentlyplayed").css("height", 73 + (site.detailstation.stationPlaylist.length*72) );
-	$(inline_list).css("height", site.detailstation.stationPlaylist.length*72);
+	$("#detailstation .recentlyplayed").css("height", 73 + ((site.detailstation.stationPlaylist.length+1)*72) );
+	$(inline_list).css("height", (site.detailstation.stationPlaylist.length+1)*72);
+	
+}
+
+site.detailstation.buildRecentlyPlayedItem = function(inline_list,playlistItemData) {
+	
+	if (!playlistItemData) {
+		loggr.warn("site.detailstation.buildRecentlyPlayedItem() > !playlistItemData",{dontsave:true});
+		return;
+	}
+	
+	var plitem = document.createElement("div");
+	plitem.className = "playlist_item";
+	
+	var plname = document.createElement("div");
+	plname.className = "playlist_item_name";
+	plname.innerHTML = site.helpers.capAll(playlistItemData["name"]);
+	
+	var pltitle = document.createElement("div");
+	pltitle.className = "playlist_item_title";
+	pltitle.innerHTML = site.helpers.capAll(playlistItemData["title"]);
+	
+	var plspotify = new Image();
+	plspotify.className = "playlist_item_spotify activatablel";
+	plspotify.src = "img/icons-48/ic_spotify_black.png";
+	plspotify.title = "Search track on Spotify";
+	plspotify.sartist = encodeURI(playlistItemData["name"]);
+	plspotify.stitle = encodeURI(playlistItemData["title"]);
+	plspotify.onclick = function() {
+		//console.error("CLICK!");
+		window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
+	};
+	
+	var plsgpmusic = new Image();
+	plsgpmusic.className = "playlist_item_gpmusic activatablel";
+	plsgpmusic.src = "img/icons-48/ic_googleplaymusic_black.png";
+	plsgpmusic.title = "Search track on Google Play Music";
+	plsgpmusic.sartist = encodeURI(playlistItemData["name"]);
+	plsgpmusic.stitle = encodeURI(playlistItemData["title"]);
+	plsgpmusic.onclick = function() {
+		//console.error("CLICK!");
+		window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
+	};
+	
+	plitem.appendChild(plname);
+	plitem.appendChild(pltitle);
+	plitem.appendChild(plspotify);
+	plitem.appendChild(plsgpmusic);
+	
+	inline_list.appendChild(plitem);
 	
 }
 

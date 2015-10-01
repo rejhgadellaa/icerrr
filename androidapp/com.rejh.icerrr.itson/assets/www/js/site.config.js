@@ -14,7 +14,7 @@ site.cfg = {};
 // ---> Important stuff
 
 // App
-site.cfg.app_version = 0.257; // Note: change causes install/update to run at launch
+site.cfg.app_version = 0.259; // Note: change causes install/update to run at launch
 site.cfg.debugging = true; // TODO: Deprecated, see option in settings
 
 // Urls
@@ -35,6 +35,8 @@ site.cfg.paths.other = "Icerrr/other";
 
 // Files
 site.cfg.files = {};
+
+site.cfg.files.maxImagesCached = 64;
 
 // Notifs
 

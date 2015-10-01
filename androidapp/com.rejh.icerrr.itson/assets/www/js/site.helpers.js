@@ -277,136 +277,109 @@ site.helpers.downloadImage = function(imgobj, filename, url, cb, cberr, cbprogre
 	
 }
 
-// Store image
-// - create canvas, draw image on canvas, get base64, write to disk
+// Trim image cache
 
-site.helpers.storeImageLocally = function(imgobj,filename,cb,opts) {
+site.helpers.checkImageCache = function() {
 	
-	loggr.debug("site.helpers.storeImageLocally()");
+	loggr.log("site.helpers.checkImageCache()");
 	
-	// Get base64
-	//loggr.log(" > Encode base64...");
-	var timebgn = new Date().getTime();
-	site.helpers.imageToBase64(imgobj,function(base64) {
-		
-		var time_encoded = new Date().getTime() - timebgn;
-		
-		if (!base64) { return false; }
-		
-		loggr.log(base64);
-		
-		// Write
-		//loggr.log(" > Write: "+filename);
-		site.storage.writefile(site.cfg.paths.images,filename,base64,
-			function(evt) { cb(evt); },
-			function(err) {
-				loggr.warn(" > Error writing file "+ filename);
-			}
-		);
-		
-	});
+	// Prep
+	var imagelist = [];
+	for (var i=0; i<site.data.stations.length; i++) {
+		var station = site.data.stations[i];
+		if (station.station_image_local) { imagelist.push(station.station_image_local); }
+		if (station.station_icon_local) { imagelist.push(station.station_icon_local); }
+	}
 	
-}
-
-// imageToBase64
-// - Returns FALSE if something has gone wrong...
-
-site.helpers.imageToBase64 = function(imgobj,cb,opts) {
-	
-	// Handle opts
-	if (!opts) { opts = {}; }
-	//if (!opts.maxwidth) { opts.maxwidth = imgobj.naturalWidth; } // Note: dev is responsible for handling aspect!
-	//if (!opts.maxheight) { opts.maxheight = imgobj.naturalWidth; } // TODO: not working atm
-	if (!opts.zoomcrop) { opts.zoomcrop = false; } // TODO: implement
-	
-	// Create new image
-	var tmpImage = new Image();
-	tmpImage.onload = function() {
-	
-		// Create canvas
-		var canvas = document.createElement("canvas");
-		ctx = canvas.getContext("2d");
-	
-		// Set width/height to match imageObj
-		canvas.width = tmpImage.width;
-		canvas.height = tmpImage.height;
-	
-		// Draw image
-		ctx.drawImage(tmpImage, 0, 0, tmpImage.width, tmpImage.height, 0, 0, tmpImage.width, tmpImage.height);
-		
-		// Now get the base64...
-		var base64 = canvas.toDataURL("image/png");
-		
-		if (base64.indexOf("image/png") == -1) {
-			loggr.log("site.helpers.imageToBase64.Error: Unexpected base64 string for "+tmpImage.src);
-			loggr.log(base64);
-			try {
-				var imgData = ctx.getImageData(0,0,canvas.width,canvas.height)
-				pngFile = generatePng(canvas.width, canvas.height, imgData.data);
-				base64 = 'data:image/png;base64,' + btoa(pngFile);
-			} catch(e) { 
-				// I've really tried everyting, didn't I?
-				loggr.log(e);
-				base64 = false;
+	// Lookup files that may be removed..
+	var nrOfFilesThatMayBeRemoved = 0;
+	site.storage.listfiles(site.cfg.paths.images,
+		function(fileEntries) {
+			
+			// nrOfFilesThatMayBeRemoved?
+			for (var i=0; i<fileEntries.length; i++) {
+				if (imagelist.indexOf(fileEntries[i].fullPath)<0) {
+					nrOfFilesThatMayBeRemoved++;
+				}
 			}
 			
+			loggr.log(" > "+ nrOfFilesThatMayBeRemoved +" of "+ fileEntries.length +" file(s) may be removed..");
+			
+			// Lalala
+			if (nrOfFilesThatMayBeRemoved>site.cfg.files.maxImagesCached) {
+			
+				loggr.log(" > NrOfFiles >= "+ site.cfg.files.maxImagesCached +", start removing files");
+				
+				site.vars.fileNamesByDate = {};
+				for (var i=0; i<fileEntries.length; i++) {
+					
+					var fileEntry = fileEntries[i];
+					
+					if (imagelist.indexOf(fileEntry.fullPath)>=0) {
+						continue;
+					}
+					
+					fileEntry.getMetadata(function(metadata){
+						var date = metadata.modificationTime;
+						site.vars.fileNamesByDate[date.format("YmdHis")] = fileEntry.name;
+					},null);
+				}
+				
+				setTimeout(function(){
+					site.helpers.trimImageCache();
+				},1000);
+			
+			} else {
+				loggr.log(" > NrOfFiles < "+ site.cfg.files.maxImagesCached +", nothing to do");
+			}
+			
+		},
+		function(error) {
+			loggr.error(" > Could not get directory list",{dontupload:true});
+			loggr.error(" > "+ site.storage.getErrorType(error));
 		}
+	);
+	
+}
+
+site.helpers.trimImageCache = function() {
+	
+	loggr.log("site.helpers.trimImageCache()");
+	
+	var fileNamesByDate = site.vars.fileNamesByDate;
+	
+	// Sort keys
+	var keys = Object.keys(fileNamesByDate);
+	keys.sort(); // sort
+	keys.reverse(); // reverse order
+	
+	// Build array..
+	var fileNamesSorted = [];
+	for (var i=0; i<keys.length; i++) {
+		fileNamesSorted.push(fileNamesByDate[keys[i]]);
+	}
+			
+	var removed = 0;
+	for (var i=site.cfg.files.maxImagesCached; i<fileNamesSorted.length; i++) {
 		
-		// Callback!
-		if (cb) { cb(base64); }
-		else { return base64; }
+		var name = fileNamesSorted[i];
+		var path = site.cfg.paths.images;
+		
+		loggr.log(" > Remove: "+ name);
+		
+		/**/
+		site.storage.deletefile(path,name,function(){},function(error){
+			loggr.error(" > Could not delete '"+ name +"'",{dontupload:true});
+			loggr.error(" > "+ site.storage.getErrorType(error));
+		});
+		/**/
+		removed++;
 		
 	}
-	tmpImage.src = imgobj.src;
+	
+	loggr.log(" > Removed "+ removed +" file(s)");
 	
 }
-
-// Get image
-
-site.helpers.getImageLocally = function(imgobj,filepath,filename,fallback,cb,cberr) {
-	
-	loggr.debug("site.helpers.getImageLocally()");
-	
-	setTimeout(function() {
-	
-		// Get filename
-		if (filename.indexOf("/")>=0) {
-			filename = filename.substr(filename.lastIndexOf("/")+1);
-		}
-		
-		loggr.log(" > "+ filename);
-		
-		// Read file
-		site.storage.readfile(filepath,filename,
-			function(data) {
-				imgobj.src = data;
-				if (cb) { cb(); }
-			},
-			function(error) {
-				loggr.warn(" > site.helpers.getImageLocally.Error: "+ filename);
-				loggr.warn(error);
-				imgobj.src = fallback;
-				if (cberr) { cberr(); }
-			},
-			null
-		);
-		
-		imgobj.addEventListener("error",
-			function(ev){ 
-				loggr.warn(" > site.helpers.getImageLocally.Error");
-				loggr.warn(" > Could not load "+ ev.target.src);
-				loggr.warn(" > Filename: "+ filename);
-				$(ev.target).attr("src",fallback);
-			}
-		);
-		
-	},1);
-	
-}
-
-// Create thumb/icon
-
-// TODO: todo
 
 // AspectCalc
 
@@ -698,7 +671,7 @@ site.helpers.capitalize = function(str,everyword) {
 	if (everyword) { 
 		return site.helpers.capAll(str);
 	}
-	str = str.substr(0,1).toUpperCase() + str.substr(1);
+	str = str.substr(0,1).toUpperCase() + str.substr(1).toLowerCase();
 	return str;
 }
 

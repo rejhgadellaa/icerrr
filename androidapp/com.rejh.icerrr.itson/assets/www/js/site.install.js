@@ -555,6 +555,8 @@ site.installer.finishup = function() {
 	}
 	/**/
 	
+	/*
+	// TODO: deprecated, see helpers.checkImageCache
 	// Clean up image folder
 	// Walk stations
 	if (site.data.stations) {
@@ -592,6 +594,7 @@ site.installer.finishup = function() {
 			}
 		);
 	}
+	/**/
 	
 	// Create unique device ID
 	if (site.cookies.get("app_is_installed")!=1 || site.cookies.get("app_version")<0.081) {

@@ -161,6 +161,11 @@ public class MediaStreamer extends CordovaPlugin {
         		
         	} else if (action.equals("updateMetaData")) {
         		
+        		// Check args..
+        		if (args.length()==1) {
+        			serviceIntent.putExtra("nowplaying", args.getString(0));
+        		}
+        		
         		serviceIntent.putExtra("update_metadata",true);
         		context.startService(serviceIntent);
         		
