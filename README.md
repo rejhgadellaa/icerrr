@@ -14,26 +14,27 @@ Screenshots
 -------------
 
 <center>
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-12.png" width="128" />
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-26.png" width="128" />
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-19.png" width="128" />
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-09-25-08-33-51.png" width="128" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-01-09-14-02.png" width="128" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-01-09-14-14.png" width="128" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-01-09-06-28.png" width="128" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-01-09-14-08.png" width="128" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-01-09-16-24.png" width="128" />
 </center>
 
 Features
 -------------
 
-+ Play music streams; Supported: mp3 (audio/mpeg), pls, m3u. Unsupported: aac
-
-+ Search or add stations manually; Search Dirble.com radio directory or add them manually
-
-+ Edit stations; Long press a station to edit
-
-+ Alarms; Set multiple alarms, choose station and repeat mode 
-
-+ Chromecast support (Rough around the edges)
-
-+ Integration for Sleep As Android, get it here: https://play.google.com/store/apps/details?id=com.urbandroid.sleep
+* audio stream playback: play, pause, stop, next
+* audio stream as alarm: add, repeat, edit, remove
+* audio stream management: add via [Dirble](https://dirble.com), edit, favorite
+* audio stream formats: [MP3](https://en.wikipedia.org/wiki/MP3), [WMA](https://en.wikipedia.org/wiki/Windows_Media_Audio), [PLS](https://en.wikipedia.org/wiki/PLS_%28file_format%29), [M3U](https://en.wikipedia.org/wiki/M3U)
+* audio streaming: [Chromecast](https://chromecast.com)
+* audio scrobbling: [Last.fm](https://last.fm), [Libre.fm](https://libre.fm)
+* look and feel: [Material Design](https://developer.android.com/design/material)
+* custom enable: WiFi, speaker, screen unlock
+* artwork: now playing album art, stream icon, locked screen
+* integration: [Android Wear](https://android.com/wear), [Sleep as Android](https://play.google.com/store/apps/details?id=com.urbandroid.sleep) (hence [Phillips Hue](http://meethue.com))
+* settings management: auto upgrade, JSON export, JSON import
 
 Get the app!
 -------------
