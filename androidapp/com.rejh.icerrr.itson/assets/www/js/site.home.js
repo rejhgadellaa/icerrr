@@ -451,11 +451,8 @@ site.home.run_station_updates = function() {
 			
 			window.mediaStreamer.updateMetaData();
 			
-			if (!data["data"]["nowplaying"]) { 
+			if (data["data"]["nowplaying"]=="Now playing: Unknown") { 
 				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
-				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
-				site.home.handleStationImage(site.session.currentstation.station_icon);
-			} else if (data["data"]["nowplaying"].trim()=="-" || data["data"]["nowplaying"]==" - ") {
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
 				site.home.handleStationImage(site.session.currentstation.station_icon);
 			} else {
