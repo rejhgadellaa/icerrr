@@ -1033,6 +1033,13 @@ site.helpers.formatNum = function(num,len) {
 	return num;
 }
 
+site.helpers.formatFloat = function(num,len) {
+	if (!len) { len = 2; }
+	num = ""+num;
+	while(num.length<(len+2)) { num = num+"0"; }
+	return num;
+}
+
 site.helpers.urlAddCachebust = function(url) {
 	if (url.indexOf("?")>=0) { url += "&c="; }
 	else { url += "?c="; }

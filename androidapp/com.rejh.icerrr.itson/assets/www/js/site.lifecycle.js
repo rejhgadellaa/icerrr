@@ -742,7 +742,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 	}
 	
 	if (site.lifecycle.checkingForUpdates) {
-		message = "Icerrr is up to date (version "+ site.cfg.app_version +")";
+		message = "Icerrr is up to date (version "+ site.helpers.formatFloat(site.cfg.app_version,3) +")";
 		navigator.notification.alert(message, function(){ }, "Up to date!", "OK");
 	}
 	site.lifecycle.checkingForUpdates = false;
