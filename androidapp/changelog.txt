@@ -1,3 +1,7 @@
+0.310
+  * Fix: Service acquires wifi lock to prevent wifi from sleeping while streaming
+  * Birthday edition version code
+
 0.259
   * Pushing pixels
   * Bugfixes, improvements

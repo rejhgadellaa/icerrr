@@ -75,7 +75,7 @@ public class MediaStreamerService extends Service {
 	private RemoteControlClientCompat.MetadataEditorCompat metadataEditor;
 	
 	private WifiManager wifiMgr;
-	private WifiManager.WifiLock wifiLock;
+	public WifiManager.WifiLock wifiLock;
 	
 	private ConnectivityManager connMgr;
 
@@ -137,6 +137,12 @@ public class MediaStreamerService extends Service {
 		wifiMgr = (WifiManager) context.getSystemService(WIFI_SERVICE);
         connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         audioMgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        
+        // Wifilock (because mediaplayer only does wakelock)
+        wifiLock = wifiMgr.createWifiLock(WifiManager.WIFI_MODE_FULL , "IcerrrWifiLock");
+        if(!wifiLock.isHeld()){
+            wifiLock.acquire();
+        }
         
         // Remote Control Receiver
         remoteControlReceiver = new RemoteControlReceiver();
@@ -493,6 +499,11 @@ public class MediaStreamerService extends Service {
         
         // Deprecated:
         audioMgr.unregisterMediaButtonEventReceiver(remoteControlReceiverComponent);
+        
+        // Release wifi lock
+        if(wifiLock.isHeld()){
+            wifiLock.release();
+        }
         
         // Handle Wifi
         disableWifi();

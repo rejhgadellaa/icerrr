@@ -25,6 +25,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiManager.WifiLock;
 import android.os.Build;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -58,6 +59,8 @@ public class ObjMediaPlayerMgr {
 	private WifiManager wifiMgr;
 	
 	// Variables
+	
+	private WifiLock wifiLock;
 	
 	private final String streamUrlDefault = "http://icecast.omroep.nl/3fm-sb-mp3";
 	private String streamUrl;
@@ -287,10 +290,16 @@ public class ObjMediaPlayerMgr {
 		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PAUSED); }
 		if (mp!=null) { mp.release(); mp = null; }
 		if (proxy!=null) { proxy.stop(); proxy = null; }
+		if (service.wifiLock.isHeld()) {
+			service.wifiLock.release();
+		}
 	}
 	
 	// RESUME
 	public void resume() {
+		if (!service.wifiLock.isHeld()) {
+			service.wifiLock.acquire();
+		}
 		settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 		settEditor.commit();
 		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_BUFFERING); }
