@@ -447,7 +447,7 @@ site.chsearch.testStation = function(station, stationIndex) {
 					
 					// Use MergeStations :D || but in reverse :D
 					var addstations = [station];
-					var newstations = site.helpers.mergeStations(addstations, site.data.stations);
+					var newstations = site.helpers.mergeStations(site.data.stations,addstations);
 					
 					// -> put back into data.stations
 					site.data.stations = newstations;

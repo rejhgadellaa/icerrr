@@ -203,7 +203,7 @@ site.chedit.save = function() {
 	
 	// Use MergeStations :D || but in reverse :D
 	var addstations = [site.chedit.newentry];
-	var newstations = site.helpers.mergeStations(addstations, site.data.stations);
+	var newstations = site.helpers.mergeStations(site.data.stations,addstations);
 	
 	// Store!
 	site.data.stations = newstations;
