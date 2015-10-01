@@ -102,7 +102,7 @@ site.helpers.mergeStations = function(stations1,stations2) {
 			if (skipkeys.indexOf(key)>=0) {
 				loggr.warn(" >> Skipkey: "+ key +", "+ station1[key] +" != "+ station2[key],{dontsave:true});
 				if (!station1[key] || !station2[key]) {
-					//station1[key] = null; // don't do this :|
+					station1[key] = null; // don't do this ? :|
 				} else {
 					station1[key] == station2[key];
 				}
