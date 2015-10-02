@@ -313,6 +313,7 @@ site.helpers.checkImageCache = function() {
 				site.vars.fileNamesByDate = {};
 				for (var i=0; i<fileEntries.length; i++) {
 					
+					// Get metadata
 					var fileEntry = fileEntries[i];
 					
 					if (imagelist.indexOf(fileEntry.fullPath)>=0) {
@@ -351,13 +352,15 @@ site.helpers.trimImageCache = function() {
 	// Sort keys
 	var keys = Object.keys(fileNamesByDate);
 	keys.sort(); // sort
-	keys.reverse(); // reverse order
+	keys.reverse(); // reverse order, newest files first..
 	
 	// Build array..
 	var fileNamesSorted = [];
 	for (var i=0; i<keys.length; i++) {
 		fileNamesSorted.push(fileNamesByDate[keys[i]]);
 	}
+	
+	loggr.log(" > Nr of files: "+ fileNamesSorted.length);
 			
 	var removed = 0;
 	for (var i=site.cfg.files.maxImagesCached; i<fileNamesSorted.length; i++) {
