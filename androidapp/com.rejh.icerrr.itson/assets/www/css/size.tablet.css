@@ -24,10 +24,10 @@ section { }
 		}
 	
 			.actionbar .icon_app iron-icon {
-				margin:4px 8px 4px 8px;
+				margin:4px;
 			}
 			.actionbar .icon_app paper-icon-button {
-				margin:4px 8px 4px 8px;
+				margin:4px;
 			}
 		
 		.actionbar .title {
@@ -39,7 +39,7 @@ section { }
 		}
 			
 			.actionbar .actions paper-icon-button {
-				margin:4px 8px 4px 8px;
+				margin:12px 16px 12px 16px;
 			}
 		
 			.actionbar .actions .action { /* TODO: deprecated */
