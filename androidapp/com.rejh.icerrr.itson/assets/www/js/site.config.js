@@ -41,7 +41,7 @@ site.cfg.nomediapaths = [
 // Files
 site.cfg.files = {};
 
-site.cfg.files.maxImagesCached = 64;
+site.cfg.files.maxImagesCached = 96;
 site.cfg.files.ignoreFilenames = [
 	".nomedia"
 ]

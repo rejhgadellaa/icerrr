@@ -365,7 +365,8 @@ site.helpers.trimImageCache = function() {
 		var name = fileNamesSorted[i];
 		var path = site.cfg.paths.images;
 		
-		if (site.cfg.files.ignoreFilenames.indexOf(name)) {
+		if (site.cfg.files.ignoreFilenames.indexOf(name)>=0) {
+			loggr.log(" > Skip: "+ name);
 			continue;
 		}
 		
