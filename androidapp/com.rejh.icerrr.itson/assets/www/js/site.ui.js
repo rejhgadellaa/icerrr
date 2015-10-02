@@ -476,6 +476,8 @@ site.ui.setLongclickHelp = function() {
 site.ui.hackActiveCssRule = function() {
 	
 	loggr.log("site.ui.hackActiveCssRule()");
+	//loggr.log(" > Don't.. we got polymer now");
+	//return;
 	
 	// When android version >= 5.0: use normal :active method, else do stuff..
 	// loggr.log("'"+ device.version +"'"+ typeof(device.version));

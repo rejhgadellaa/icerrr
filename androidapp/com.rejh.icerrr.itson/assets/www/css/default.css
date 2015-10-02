@@ -152,8 +152,8 @@ section {
 			
 			.actionbar .actions paper-icon-button {
 				float:right;
+				margin: 8px 16px 0 0;
 				padding:8px;
-				margin-right:8px;
 			}
 		
 			.actionbar .actions .action { /* TODO: deprecated polymer */
