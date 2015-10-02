@@ -19,8 +19,16 @@ section { }
 	}
 	
 		.actionbar .icon_app {
-			padding:20px 24px 20px 24px;
+			width:72px; height:64px;
+			padding:0;
 		}
+	
+			.actionbar .icon_app iron-icon {
+				margin:4px 8px 4px 8px;
+			}
+			.actionbar .icon_app paper-icon-button {
+				margin:4px 8px 4px 8px;
+			}
 		
 		.actionbar .title {
 			bottom:18px;
@@ -29,8 +37,12 @@ section { }
 		.actionbar .actions {
 			height:64px;
 		}
+			
+			.actionbar .actions paper-icon-button {
+				margin:4px 8px 4px 8px;
+			}
 		
-			.actionbar .actions .action {
+			.actionbar .actions .action { /* TODO: deprecated */
 				padding:20px 24px 20px 24px;
 			}
 			

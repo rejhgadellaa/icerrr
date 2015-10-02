@@ -114,12 +114,20 @@ section {
 		.actionbar .icon_app {
 			position:absolute;
 			top:0; left:0;
-			width:24px; /* note: icon should include 4px padding on all sides! */
-			height:24px;
-			padding:16px;
 		}
+	
+			.actionbar .icon_app iron-icon {
+				margin:0;
+				padding:16px;
+				color:#fff;
+			}
+			.actionbar .icon_app paper-icon-button {
+				margin:0;
+				padding:-8px;
+				color:#fff;
+			}
 		
-			.actionbar .icon_app img {
+			.actionbar .icon_app img { /* TODO: deprecated polymer */
 				width:24px; height:24px;
 			}
 		
@@ -139,8 +147,14 @@ section {
 			top:0; right:0;
 			height:56px;
 		}
+			
+			.actionbar .actions paper-icon-button {
+				float:right;
+				padding:8px;
+				margin:8px;
+			}
 		
-			.actionbar .actions .action {
+			.actionbar .actions .action { /* TODO: deprecated polymer */
 				float:right;
 				width:24px;
 				height:24px;
@@ -148,7 +162,7 @@ section {
 				padding:16px;
 			}
 			
-				.actionbar .actions .action img {
+				.actionbar .actions .action img { /* TODO: deprecated polymer */
 					width:24px; height:24px;
 				}
 				
@@ -1503,6 +1517,9 @@ section {
 http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when-elem-is-hidden-while-it-is-active
 */
 
+/* TODO: deprecated polymer */
+
+/*
 .activatablel:active {
 	background-color:rgba(69,90,100,0.25);
 }
@@ -1516,6 +1533,7 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 .activatabledh_active {
 	background-color:rgba(69,90,100,0.25);
 }
+/**/
 
 /* Hoverable */
 

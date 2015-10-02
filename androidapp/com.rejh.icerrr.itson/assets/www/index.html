@@ -112,6 +112,13 @@
 	<link rel="stylesheet" type="text/css" href="css/default.css" media="screen and (min-width: 959px) and (min-aspect-ratio: 13/9)" />
 	<link rel="stylesheet" type="text/css" href="css/size.phone-landscape.css" media="screen and (max-width: 599px) and (min-aspect-ratio: 13/9)" />
 	
+	<!-- Polymer -->
+	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+	<link href="bower_components/polymer/polymer.html" rel="import">
+	<link rel="import" href="bower_components/iron-icons/iron-icons.html">
+	<link rel="import" href="bower_components/iron-icon/iron-icon.html">
+	<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+	
 	<!-- Webfonts -->
 	<link href='css/fonts.css' rel='stylesheet' type='text/css'>
 	
@@ -158,12 +165,15 @@
 	
 	<div class="actionbar shadow_z2" onClick="//site.home.dismissOverflowMenu();">
 		
-		<div class="icon_app"><img src="img/icons-48/ic_launcher_w.png" /></div>
+		<div class="icon_app  activatablel"><iron-icon src="img/icons-48/ic_launcher_w.png"></iron-icon></div>
 		<div class="title">ICERRR</div>
 		
 		<div class="actions">
+			<paper-icon-button src="img/icons-48/ic_action_overflow_white.png" onClick="site.home.toggleOverflowMenu();"></paper-icon-button>
+			<paper-icon-button src="img/icons-48/ic_info_white.png" onClick="site.detailstation.init({station_id:site.session.currentstation.station_id});"></paper-icon-button>
+			<!--
 			<div class="action activatablel" onClick="site.home.toggleOverflowMenu();"><img src="img/icons-48/ic_action_overflow_white.png" title="Tap for more options" /></div>
-			<div class="action activatablel" onClick="site.detailstation.init({station_id:site.session.currentstation.station_id});"><img src="img/icons-48/ic_info_white.png" title="Station details" /></div>
+			<div class="action activatablel" onClick="site.detailstation.init({station_id:site.session.currentstation.station_id});"><img src="img/icons-48/ic_info_white.png" title="Station details" /></div> -->
 			<div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/FFF.jpg" title="Chromecast" /></div>
 		</div>
 		
@@ -234,7 +244,7 @@
 	
 	<div class="actionbar">
 		
-		<div class="icon_app  activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Stations</div>
 		
 		<div class="actions">
@@ -268,7 +278,7 @@
 	
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Details</div>
 		
 		<div class="actions">
@@ -358,7 +368,7 @@
 	
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Details</div>
 		
 		<div class="actions">
@@ -426,7 +436,7 @@
 	
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Stations</div>
 		
 		<div class="actions">
@@ -477,7 +487,7 @@
 	
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Stations</div>
 		
 		<div class="actions">
@@ -496,7 +506,7 @@
 	
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Search: icons</div>
 		
 		<div class="actions">
@@ -515,7 +525,7 @@
 
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Alarms</div>
 		
 		<div class="actions">
@@ -540,7 +550,7 @@
 
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Alarms</div>
 		
 		<div class="actions">
@@ -622,7 +632,7 @@
 
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">About</div>
 		
 		<div class="actions">
@@ -719,7 +729,7 @@
 
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Log</div>
 		
 		<div class="actions">
@@ -747,7 +757,7 @@
 
 	<div class="actionbar shadow_z2">
 		
-		<div class="icon_app activatablel"><img src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();" /></div>
+		<div class="icon_app  activatablel"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
 		<div class="title">Settings</div>
 		
 		<div class="actions">
