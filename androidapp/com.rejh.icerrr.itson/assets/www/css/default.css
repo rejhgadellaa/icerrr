@@ -271,22 +271,22 @@ section {
 				height:48px;
 			}
 			
-		.fab {
-			z-index:50;
-			position:fixed;
-			bottom:16px; right:16px;
-			width:56px; 
-			height:56px;
-			border-radius:50%;
-			background:#FF5722;
-			transition:bottom 250ms;
+	.fab {
+		z-index:50;
+		position:fixed;
+		bottom:16px; right:16px;
+		width:56px; 
+		height:56px;
+		border-radius:50%;
+		background:#FF5722;
+		transition:bottom 250ms;
+	}
+	
+		.fab img {
+			width:24px;
+			height:24px;
+			margin:16px;
 		}
-		
-			.fab img {
-				width:24px;
-				height:24px;
-				margin:16px;
-			}
 
 /* Specific */
 

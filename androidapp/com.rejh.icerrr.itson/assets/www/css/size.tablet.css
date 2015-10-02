@@ -19,11 +19,11 @@ section { }
 	}
 	
 		.actionbar .icon_app {
-			padding:20px 16px 20px 16px;
+			padding:20px 24px 20px 24px;
 		}
 		
 		.actionbar .title {
-			bottom:18px; left:72px;
+			bottom:18px;
 		}
 		
 		.actionbar .actions {
@@ -31,7 +31,7 @@ section { }
 		}
 		
 			.actionbar .actions .action {
-				padding:20px 16px 20px 16px;
+				padding:20px 24px 20px 24px;
 			}
 			
 	.tabbar {
@@ -41,6 +41,15 @@ section { }
 	.main {
 		top:64px;
 	}
+		
+		.main .block {}
+
+			.main .block.header {
+				height:64px;
+			}
+			.main .block.header .text {
+				left:16px; bottom:18px;
+			}
 
 /* Specific */
 
@@ -49,18 +58,6 @@ section { }
 	#home .main .station_info_wrap {
 		/* top:4px; left:4px; right:4px; */
 	}
-
-	/*
-	#home .main .station_name {
-		top: 44px; left:18px; right:20px;
-		font-size:32pt;
-	}
-	
-	#home .main .station_nowplaying {
-		top:20px; left:20px; right:20px;
-		font-size:16pt;
-	}
-	/**/
 	
 	#home .alarm_dialog {
 		display:none;
@@ -96,6 +93,10 @@ section { }
 	#channellist .main {
 		top:112px;
 	}
+	
+#detailstation {
+
+}
 	
 /* -- OVERFLOW_MENU */
 
