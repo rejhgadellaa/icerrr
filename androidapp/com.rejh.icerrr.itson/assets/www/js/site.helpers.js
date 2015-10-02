@@ -365,6 +365,10 @@ site.helpers.trimImageCache = function() {
 		var name = fileNamesSorted[i];
 		var path = site.cfg.paths.images;
 		
+		if (site.cfg.files.ignoreFilenames.indexOf(name)) {
+			continue;
+		}
+		
 		loggr.log(" > Remove: "+ name);
 		
 		/**/

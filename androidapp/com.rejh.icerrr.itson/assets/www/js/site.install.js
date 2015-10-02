@@ -286,7 +286,30 @@ site.installer.createfolders_next = function() {
 	//site.installer.logger("&nbsp;&gt; "+ currentpath);
 	
 	// Do it!
-	site.storage.createfolder(currentpath,site.installer.createfolders_cb,site.installer.createfolders_errcb);
+	site.storage.createfolder(currentpath,
+		function(dirEntry) {
+			
+			// Nomedia?
+			if (site.cfg.nomediapaths.indexOf(currentpath)>=0) {
+				// write .nomedia file..
+				site.storage.writefile(currentpath,".nomedia","/* this directory should not be scanned by android media scanner */",
+					function(fileEntry) {
+						loggr.log(" -> Created .nomedia file");
+						site.installer.createfolders_cb(dirEntry);
+					},
+					function(error) {
+						loggr.error(" -> Failed creating .nomedia file in "+ currentpath);
+						site.installer.createfolders_errcb(error);
+					}
+				);
+			} else {
+				// continue..
+				site.installer.createfolders_cb(dirEntry);
+			}
+		},
+		site.installer.createfolders_errcb
+	);
+	//site.installer.createfolders_cb,site.installer.createfolders_errcb);
 	
 	
 }
