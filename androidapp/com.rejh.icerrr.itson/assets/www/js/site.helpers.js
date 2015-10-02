@@ -360,7 +360,7 @@ site.helpers.trimImageCache = function() {
 		fileNamesSorted.push(fileNamesByDate[keys[i]]);
 	}
 	
-	loggr.log(" > Nr of files: "+ fileNamesSorted.length);
+	loggr.log(" > Nr of files: "+ fileNamesSorted.length +", max: "+ site.cfg.files.maxImagesCached);
 			
 	var removed = 0;
 	for (var i=site.cfg.files.maxImagesCached; i<fileNamesSorted.length; i++) {
