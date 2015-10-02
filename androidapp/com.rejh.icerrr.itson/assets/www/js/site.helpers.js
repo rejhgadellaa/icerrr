@@ -684,6 +684,7 @@ site.helpers.capitalize = function(str,everyword) {
 }
 
 site.helpers.capAll = function(str) {
+	if (!str) { str = ""; }
 	var strs = str.split(" ");
 	for (var i in strs) {
 		if (strs[i].length<2 && strs[i].toLowerCase()!="i") { continue; }

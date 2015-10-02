@@ -317,6 +317,9 @@ site.lifecycle.onResume = function() {
 		try { func(); } catch(e) { loggr.warn(" > Error on ui_resume_callbacks"); loggr.log(e); }
 	}
 	
+	// Fabscroll..
+	site.ui.initFabScroll(site.vars.currentSection);
+	
 	// Stop! Resize!
 	site.lifecycle.onResize();
 	

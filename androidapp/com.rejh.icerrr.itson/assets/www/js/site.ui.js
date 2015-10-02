@@ -121,10 +121,10 @@ site.ui.initFabScroll = function(selector) {
 	}
 	
 	// Reset all..
-	$(".fab").not(selector +" .fab").css("bottom",16);
+	$(".fab").css("bottom",16);
 	
 	// Scroll listener -> Hide fab :D
-	$(selector+" .main").off( 'scroll');
+	$(".main").off( 'scroll');
 	$(selector+" .main").on( 'scroll', function(e) {
 		
 		delta = site.vars.fabscrolls[selector].scrolltop - $(selector+" .main").scrollTop();

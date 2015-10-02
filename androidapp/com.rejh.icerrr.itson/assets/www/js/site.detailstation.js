@@ -337,7 +337,7 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 	// Current nowplaying..
 	var npparts = $("#detailstation .station_nowplaying").html().split(" - ");
 	var npartist = npparts[0];
-	var nptitle = npparts[1];
+	var nptitle = (npparts[1]) ? npparts[1] : "Not available";
 	var nowItemData = {name:npartist,title:nptitle};
 	site.detailstation.buildRecentlyPlayedItem(inline_list,nowItemData);
 	

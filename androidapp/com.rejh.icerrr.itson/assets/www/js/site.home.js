@@ -68,7 +68,8 @@ site.home.init = function() {
 	site.home.init_ui_updates();
 	
 	// Pre-handle some image/settings related stuff
-	if (site.cookies.get("setting_showAlbumArt")!=1) {
+	if (site.cookies.get("setting_showAlbumArt")!=1 || site.home.lastStationId!=site.session.currentstation.station_id) {
+		$("#home .station_image_color").css("background","none");
 		site.home.loadAlbumArt('img/bg_home_default.jpg');
 	}
 	
@@ -77,7 +78,7 @@ site.home.init = function() {
 	$("#home .station_icon img").off("error");
 	$("#home .station_icon img").on("load",function(evt) {
 													
-		site.home.loadAlbumArt('img/bg_home_default.jpg');
+		// site.home.loadAlbumArt('img/bg_home_default.jpg'); // TODO: yes? remove?
 		
 		var img = $("#home .main .station_icon img")[0];
 		var color = site.helpers.getImgAvgColor(img,0,0,2,2);
@@ -110,8 +111,6 @@ site.home.init = function() {
 	// UI: load .station_image
 	if (site.home.lastStationId!=site.session.currentstation.station_id) {
 		site.home.handleStationImage(site.session.currentstation.station_icon);
-	} else {
-		// site.home.handleStationImage(site.session.currentstation.station_icon); // TODO: really? // nope
 	}
 	// UI: Set text and such
 	site.home.lastStationId = site.session.currentstation.station_id;
@@ -844,6 +843,11 @@ site.home.loadAlbumArt = function(localpath) {
 		site.vars.currentAlbumArtPath = 'img/bg_home_default.jpg'; // onerror: re-set currentAlbumArtPath to reflect backup
 	}
 	img.onload = function(){
+		
+		// No colorize..
+		if (this.src.indexOf('img/bg_home_default.jpg')>=0) {
+			$("#home .station_image_color").css("background","none");
+		}
 		
 		// Image loaded, set as background
 		loggr.log("site.home.loadAlbumArt().OnLoad: "+ this.src);

@@ -104,6 +104,7 @@ section {
 
 	.actionbar {
 		z-index:3;
+		overflow:hidden;
 		position:absolute;
 		top:0; left:0; right:0;
 		width:100%;
@@ -123,7 +124,6 @@ section {
 				color:#fff;
 			}
 			.actionbar .icon_app paper-icon-button {
-				margin:0;
 				padding:0;
 				color:#fff;
 				height:56px;
@@ -216,7 +216,7 @@ section {
 			.main .block.header {
 				position:relative;
 				top:0; left:0; right:0;
-				height:48px;
+				height:64px;
 				padding:0;
 				font-size:16pt;
 				font-weight:300;
@@ -225,7 +225,7 @@ section {
 			}
 			.main .block.header .text {
 				position:absolute;
-				left:16px; bottom:10px;
+				left:16px; bottom:19px;
 			}
 	
 	.footer {
@@ -1522,9 +1522,9 @@ section {
 http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when-elem-is-hidden-while-it-is-active
 */
 
-/* TODO: deprecated polymer */
+/* TODO: deprecated polymer ? */
 
-/*
+/**/
 .activatablel:active {
 	background-color:rgba(69,90,100,0.25);
 }

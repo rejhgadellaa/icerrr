@@ -24,7 +24,9 @@ section { }
 		}
 	
 			.actionbar .icon_app iron-icon {}
-			.actionbar .icon_app paper-icon-button { }
+			.actionbar .icon_app paper-icon-button {
+				
+			}
 		
 		.actionbar .title {
 			bottom:18px;
@@ -57,7 +59,7 @@ section { }
 				height:64px;
 			}
 			.main .block.header .text {
-				left:16px; bottom:18px;
+				left:16px; bottom:19px;
 			}
 
 /* Specific */
