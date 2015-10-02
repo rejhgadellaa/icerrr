@@ -114,6 +114,7 @@ section {
 		.actionbar .icon_app {
 			position:absolute;
 			top:0; left:0;
+			height:56px;
 		}
 	
 			.actionbar .icon_app iron-icon {
@@ -125,6 +126,7 @@ section {
 				margin:0;
 				padding:0;
 				color:#fff;
+				height:56px;
 			}
 		
 			.actionbar .icon_app img { /* TODO: deprecated polymer */
@@ -151,7 +153,7 @@ section {
 			.actionbar .actions paper-icon-button {
 				float:right;
 				padding:8px;
-				margin:8px;
+				margin-right:8px;
 			}
 		
 			.actionbar .actions .action { /* TODO: deprecated polymer */
