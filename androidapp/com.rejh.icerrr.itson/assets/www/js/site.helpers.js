@@ -217,6 +217,7 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp,
 	var filename = "__noname__"+ new Date().getTime();
 	
 	if (!url) { url = "__noname__"+ new Date().getTime(); }
+	if (!prefix) { prefix = ""; }
 	
 	if (url.indexOf("/")>=0) {
 		filename = url.substr(url.lastIndexOf("/")+1);
@@ -235,14 +236,14 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp,
 	filename = site.helpers.stripIllChars(filename);
 	prefix = site.helpers.stripIllChars(prefix);
 	
-	if (onlyExtension && prefix) {
+	if (onlyExtension) {
 		var ext = filename.substr(filename.lastIndexOf("."));
 		filename = ext;
 	}
 	
-	if (!dontUseTimestamp) { // default
+	if (!dontUseTimestamp && prefix) { // default
 		filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
-	} else {
+	} else if (prefix) {
 		filename = prefix +"_"+ filename;
 	}
 	

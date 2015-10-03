@@ -92,16 +92,30 @@ site.chicon.init = function(station_id) {
 				
 			}
 			
+			var resultitem;
+			var resultspace;
+			
 			// Default icon..				
-			var resultitem = document.createElement("div");
+			resultitem = document.createElement("div");
 			resultitem.className = "resultitem_chicon shadow_z1 activatablel";
 			resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
 				+ '<img class="resulticon_chicon" src="img/icons-80/ic_station_default.png" />'
 				+ '</div></div>'
 				;
 			
+			// Append
+			wrap.appendChild(resultitem);
+			
+			// Custom icon (from storage)
+			resultitem = document.createElement("div");
+			resultitem.className = "resultitem_chicon shadow_z1 activatablel";
+			resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
+				+ '<img class="resulticon_chicon import" style="width:48px; height:48px; margin:16px;" src="img/icons-96/ic_add_orange.png" />'
+				+ '</div></div>'
+				;
+			
 			// Spacer icon..				
-			var resultspace = document.createElement("div");
+			resultspace = document.createElement("div");
 			resultspace.style.position = "relative";
 			resultspace.style.clear = "both";
 			resultspace.style.width = "48px";
@@ -119,6 +133,153 @@ site.chicon.init = function(station_id) {
 			$("#searchicon .resulticon_chicon").on("click",function(evt) {
 				var target = evt.originalEvent.target;
 				site.chicon.save(target);
+			});
+			
+			// Onclick for custom icon
+			$("#searchicon .resulticon_chicon.import").off("click");
+			$("#searchicon .resulticon_chicon.import").on("click",function(evt) {
+																		   
+				loggr.log("site.chicon > import icon...");
+				
+				if (site.cookies.get("warnedImportIconGooglePhotosAndDrive")!=1) {
+					site.cookies.put("warnedImportIconGooglePhotosAndDrive",1);
+					if (!confirm("A fair warning: at this moment Icerrr cannot import images from Google Photos or Drive. Dropbox works.\n\nContinue?")) {
+						return;
+					} 
+				}
+				
+				var imageOptions = { 
+					quality : 75,
+					correctOrientation: true, // < FIXME does this work?? // NOPE it doesn't work IF the images are too big, it runs out of memory..
+					destinationType : Camera.DestinationType.FILE_URI,
+					sourceType : Camera.PictureSourceType.PHOTOLIBRARY ,
+					encodingType: Camera.EncodingType.PNG
+				};
+				
+				navigator.camera.getPicture(
+					function(imagePath) { // okidokie
+	
+						// Check imageData (uri)
+						var isHttp = imagePath.indexOf("http")>=0;
+						var isHttps = imagePath.indexOf("https")>=0;
+						var isLocal = imagePath.indexOf("file://")>=0 || imagePath.indexOf("content://media")>=0;
+						
+						if (imagePath.indexOf("file://")<0) { imagePath = "content://media"+imagePath; }
+						
+						loggr.log(" > "+ imagePath);
+						
+						// Get file entry
+						/*
+						window.resolveLocalFileSystemURL(imagePath,
+							function(fileEntry) {
+								loggr.log(" > "+ fileEntry.fullPath);
+								alert(fileEntry.fullPath);
+							},
+							function(error) {
+								loggr.error(" > "+ fileEntry.fullPath,{dontupload:true});
+								alert("An error occured: "+ site.storage.getErrorType(error));
+							}
+						);
+						/**/
+						
+						// Get path + name
+						var path = site.storage.getpath(imagePath);
+						var name = site.storage.getfilename(imagePath,1);
+						loggr.log(" -> "+ path +", "+ name);
+						
+						// Unique name..
+						var uniqname = site.helpers.imageUrlToFilename(name,"station_icon_"+ site.helpers.getUniqueID());
+						loggr.log(" -> "+ uniqname);
+						
+						// Filetype?
+						var mimetype = "image/jpeg";
+						var ext = site.helpers.imageUrlToFilename(name,null,true,true);
+						if (ext && ext.toLowerCase()==".png") { mimetype = "image/png"; }
+						
+						// Upload...
+						
+						// -> Key
+						var key = site.helpers.getUniqueID();
+						
+						// -> Upload url
+						var apiquery = {
+							"post":"station_icon",
+							"device":site.cookies.get("device_id"),
+							"key":key
+						}
+						loggr.log(" -> Query: "+ JSON.stringify(apiquery));
+						var apiquerys = encodeURIComponent(JSON.stringify(apiquery));
+						var apiurl = site.cfg.urls.api +"a=post&q="+ apiquerys +"&apikey=REJH_ICERRR_APIKEY-"+ site.helpers.getUniqueID() +"&cache="+(new Date().getTime());
+						
+						// Params
+						var params = {
+							"key":key
+						}
+						
+						// -> Options
+						var options = new FileUploadOptions();
+						options.fileKey = "file";
+						options.fileName = uniqname;
+						options.mimeType = mimetype;
+						options.params = params;
+						
+						// -> FileTransfer
+						var ft = new FileTransfer();
+						ft.upload(imagePath,apiurl,
+							function(res) {
+								
+								loggr.log(JSON.stringify(res));
+								
+								jsonresponse = JSON.parse(res.response);
+								if (jsonresponse["error"]) {
+									loggr.error(" > Could not upload: "+ jsonresponse["errormsg"]);
+									alert("An error occured: "+ jsonresponse["errormsg"]);
+									site.ui.hideloading();
+									return;
+								}
+								
+								
+								loggr.log(" > Uploaded, responsecode: "+ res.responseCode);
+								var iconurl = site.cfg.urls.webapp +"/img/uploaded/" + jsonresponse["data"]["filename"]; // site.cfg.urls.webapp +"/img/uploaded/" + uniqname;
+								
+								loggr.log(" > "+ iconurl);
+								
+								// Fake onclick target and save
+								var target = {src:iconurl};
+								site.chicon.save(target);
+								
+								
+							},
+							function(error) {
+								loggr.error(" > Could not upload: "+ site.storage.getFileTransferErrorType(error));
+								alert("An error occured: "+ site.storage.getFileTransferErrorType(error));
+								site.ui.hideloading();
+							},
+							options
+						)
+						
+					},
+					function(message) { // error
+						
+						// Catch messages
+						switch(message) {
+							// Camera cancelled
+							case "Selection cancelled.":
+							case "Camera cancelled.":
+							case "no image selected":
+								site.ui.showtoast("Import cancelled");
+								site.ui.hideloading();
+								break;
+							// An actual error accured..?
+							default:
+								loggr.error("Error importing icon: "+message);
+								alert("An error occured: "+ message);
+								site.ui.hideloading();
+						}
+						
+					}, imageOptions
+				);
+				
 			});
 			
 			// Append branding..
@@ -317,7 +478,7 @@ site.chicon.downloadImagery = function(station, cb, cberr) {
 	site.chicon.downloadedImage = false;
 	
 	// Icon..
-	if (site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
+	if (station.station_icon && site.helpers.shouldDownloadImage(station.station_icon_local,station.station_icon)) {
 		var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
 		var filename = site.helpers.imageUrlToFilename(station.station_icon,"station_icon_"+station.station_name.split(" ").join("-").toLowerCase(),false);
 		site.data.stations[stationIndex].station_icon_orig = station.station_icon // store original
@@ -347,7 +508,7 @@ site.chicon.downloadImagery = function(station, cb, cberr) {
 	}
 	
 	// Image..
-	if (site.helpers.shouldDownloadImage(station.station_image_local,station.station_image)) {
+	if (station.station_image && site.helpers.shouldDownloadImage(station.station_image_local,station.station_image)) {
 		if (!station.station_image) { station.station_image = station.station_icon; }
 		var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
 		var filename = site.helpers.imageUrlToFilename(station.station_image,"station_image_"+station.station_name.split(" ").join("-").toLowerCase(),false);

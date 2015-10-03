@@ -840,6 +840,49 @@ site.storage.getFileTransferErrorType = function(error) {
 	return res;
 }
 
+// ---> Filenames and paths
+
+site.storage.getfilename = function(path) {
+	if (!path) { path = ""; }
+	if (path.indexOf("/")>0) {
+		return path.substr(path.lastIndexOf("/")+1);
+	} else {
+		return path;
+	}
+}
+
+site.storage.getpath = function(path,mode) {
+	if (!path) { path = ""; }
+	if (path.indexOf("/")>0) {
+		
+		// Remove trailing '/'
+		if (path.lastIndexOf("/")==path.length-1) {
+			path = path.substr(0,path.length-1);
+		}
+		
+		// Get path
+		path = path.substr(0,path.lastIndexOf("/"));
+		
+		// Mode: 
+		// - 0/false/null == do nothing
+		// - 1 == strip file://
+		// - 2 == add file://
+		if (mode==1) {
+			path = site.helpers.replaceAll("file://","",path);
+		} else if (mode==2) {
+			if (path.indexOf("file://")!=0) {
+				path = "file://"+path;
+			}
+		}
+		
+		
+		return path;
+		
+	} else {
+		return path;
+	}
+}
+
 // ---------------------------------------------
 // COOKIES
 

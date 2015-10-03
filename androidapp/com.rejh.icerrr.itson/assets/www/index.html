@@ -54,6 +54,15 @@
 	<meta content="True" name="HandheldFriendly" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 	
+	<!-- Quickstyle -->
+	<style>
+		html, body {
+			width:100%; height:100%;
+			margin:0; padding:0;
+			background-color:#607D8B;
+		}
+	</style>
+	
 	<!-- Javascript: jQuery -->
 	<script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" language="javascript" src="js/jquery/jquery.longclick-simple.js"></script>
@@ -114,10 +123,6 @@
 	
 	<!-- Polymer -->
 	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-	<link href="bower_components/polymer/polymer.html" rel="import">
-	<link rel="import" href="bower_components/iron-icons/iron-icons.html">
-	<link rel="import" href="bower_components/iron-icon/iron-icon.html">
-	<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
 	
 	<!-- Webfonts -->
 	<link href='css/fonts.css' rel='stylesheet' type='text/css'>
@@ -363,7 +368,7 @@
 </section>
 
 <!-- Section -->
-<section id="editstation0">
+<section id="editstationn">
 	
 	<div class="actionbar shadow_z2">
 		
@@ -377,7 +382,15 @@
 		
 	</div>
 	
+	<div class="main">
 	
+		<div class="block header">
+			<div class="text">Add/Edit station</div>
+		</div>
+		
+		
+		
+	</div>
 	
 </section>
 
@@ -437,9 +450,9 @@
 				<input class="round2" type="text" name="station_icon" placeholder="http://www.host.com/path-to-icon.png" />
 			</p>
 			
-			<p><img class="station_icon" src="img/icons-80/ic_station_default.png" /></p>
+			<p><img class="station_icon shadow_z1" src="img/icons-80/ic_station_default.png" /></p>
 			
-			<p class="info_tap_icon" style="color:#999;"><em>Note: tap the icon to search for more</em></p>
+			<p class="info_tap_icon" style="color:#727272;"><em>Note: tap the icon to search for more</em></p>
 		</div>
 		
 		<div class="block data2"></div>
@@ -618,27 +631,27 @@
 			</p>
 			
 			<div id="alarms_add_repeatCfg">
-			<p><label>Repeat:</label></p>
+				<label>Repeat:</label>
 				<div class="item weekschedule">
 					<div class="weekboxWrap activatablel sun">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Sun</div>
 					</div>
-			  <div class="weekboxWrap activatablel mon">
+					<div class="weekboxWrap activatablel mon">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Mon</div>
 					</div>
-			  <div class="weekboxWrap activatablel tue">
+					<div class="weekboxWrap activatablel tue">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Tue</div>
 					</div>
-			  <div class="weekboxWrap activatablel wed">
+					<div class="weekboxWrap activatablel wed">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Wed</div>
 					</div>
-			  <div class="weekboxWrap activatablel thu">
+					<div class="weekboxWrap activatablel thu">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Thu</div>
 					</div>
-			  <div class="weekboxWrap activatablel fri">
+					<div class="weekboxWrap activatablel fri">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Fri</div>
 					</div>
-			  <div class="weekboxWrap activatablel sat">
+					<div class="weekboxWrap activatablel sat">
 						<div class="weekboxIndicator"></div><div class="weekboxText">Sat</div>
 					</div>
 			  </div>
@@ -1039,6 +1052,12 @@
 
 <!-- Overlay: Toast -->
 <div id="overlay_toast" class="textshadow25">Toast!</div>
+
+<!-- Load polymer elements -->
+<link href="bower_components/polymer/polymer.html" rel="import">
+<!-- <link rel="import" href="bower_components/iron-icons/iron-icons.html"> -->
+<link rel="import" href="bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
 
 </body>
 

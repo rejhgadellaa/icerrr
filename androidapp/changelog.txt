@@ -1,5 +1,7 @@
 0.311
   * Replace most (actionbar) icons with polymer versions! Ripples!
+  * Visual tweaks for add/edit alarms and stations
+  * New: import a station icon from storage, dropbox, etc
   * Prevent android media scanner from scanning Icerrr cache
   * Bugfixes and improvements
 

@@ -140,8 +140,25 @@ site.lifecycle.initApp = function(force) {
 	// Restore user session
 	site.helpers.readSession();
 	
-	// Reset blacklist
-	// site.session.blacklistedAlbumArt = {};
+	// Register device..
+	loggr.log(" > Register device..");
+	var apiquery = {
+		"get":"register_device",
+		"id":site.cookies.get("device_id")
+	};
+	var apiquerystr = JSON.stringify(apiquery);
+	site.webapi.exec("get",apiquerystr,
+		function(res) {
+			if (res["error"]) {
+				loggr.error(res["errormsg"]);
+				return;
+			}
+			loggr.log(" -> Registered device: "+ res["data"]["saved"]);
+		},
+		function(err) {
+			//...
+		}
+	);
 	
 	// UI Init
 	site.ui.init();

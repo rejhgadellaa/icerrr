@@ -1,3 +1,37 @@
+2015-10-03 11:26:14    Error: Access denied'
+2015-10-03 11:26:14    POST > {"post":"station_icon"}
+2015-10-03 11:26:14    Cleanup json
+2015-10-03 11:22:21    Error: Access denied'
+2015-10-03 11:22:21    POST > {"post":"station_icon"}
+2015-10-03 11:22:21    Cleanup json
+2015-10-03 10:48:51    Error: Could not move file to '../img/uploaded/'
+2015-10-03 10:48:51    POST > {"post":"station_icon"}
+2015-10-03 10:48:51    Cleanup json
+2015-10-03 10:46:53    POST > {"post":"station_icon"}
+2015-10-03 10:46:53    Cleanup json
+2015-10-03 10:46:41    Error: Could not move file to '../img/uploaded/'
+2015-10-03 10:46:41    POST > {"post":"station_icon"}
+2015-10-03 10:46:41    Cleanup json
+2015-10-03 10:45:13    Error: Could not move file to '../img/uploaded/'
+2015-10-03 10:45:13    POST > {"post":"station_icon"}
+2015-10-03 10:45:13    Cleanup json
+2015-10-03 10:44:45    POST > {"post":"station_icon"}
+2015-10-03 10:44:45    Cleanup json
+2015-10-03 10:44:26    Error: API key is invalid
+2015-10-03 10:44:26    POST > {"post":"station_icon"}
+2015-10-03 10:44:26    Cleanup json
+2015-10-03 10:43:44    Error: API key is not provided
+2015-10-03 10:43:44    POST > {"post":"station_icon"}
+2015-10-03 10:43:44     - OLD: ../json/station_info.radio_10.json
+2015-10-03 10:43:44     - OLD: ../json/station_info.radio538.json
+2015-10-03 10:43:44     - OLD: ../json/station_info.radio3fm.json
+2015-10-03 10:43:44     - OLD: ../json/station_info.radio2.json
+2015-10-03 10:43:44     - OLD: ../json/station_info.intergalactic_murdercapital.json
+2015-10-03 10:43:44     - OLD: ../json/station_info.Arrow_Classic_Rock_65d63dcaccc49644b55c225f6efb2e40_15024a9e35f_7adef.json
+2015-10-03 10:43:44     - OLD: ../json/station_info.Arrow_Classic_Rock_65d63dcaccc49644b55c225f6efb2e40_15024a40a3b_2ed2e.json
+2015-10-03 10:43:44     - OLD: ../json/station_info.Arrow_Classic_Rock_65d63dcaccc49644b55c225f6efb2e40_15017f52404_7853c.json
+2015-10-03 10:43:44     - OLD: ../json/station_info.Arrow_Classic_Rock_4b340490e62fdad97f29a0ff1597d7d5_150249d518d_8c538.json
+2015-10-03 10:43:43    Cleanup json
 2015-09-30 07:29:25     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
 2015-09-30 07:29:25    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
 2015-09-30 07:29:25    Cleanup json
@@ -895,8 +929,4 @@
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_000cc1462348e28cab453ac05117553a_14a26767015_e6c6d.json
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_000cc1462348e28cab453ac05117553a_14a1e5e668f_90092.json
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_000cc1462348e28cab453ac05117553a_149a0a30429_5923d.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 – 80’s Hits_67451e3fe7d83402efe23d917556288e_149f7e948ce_a49c9.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 – 80’s Hits_000cc1462348e28cab453ac05117553a_149c9d0e4be_7b201.json
-2015-04-22 06:01:25     - OLD: 01.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 60s  70's Hits_daaf6cbfaa4f8bd7198c64bb406ad9a4_14b21def365_4b088.json
-2015-
+2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 –

@@ -215,6 +215,8 @@ site.alarms.add = function() {
 	// Update form
 	site.alarms.updateForm();
 	
+	console.error($("#alarms_add select").innerHeight());
+	
 }
 
 // ---> Edit

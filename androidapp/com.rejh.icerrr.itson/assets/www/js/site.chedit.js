@@ -31,6 +31,7 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 		site.chedit.askedAboutNowplaying = false;
 		site.chedit.checkedPlayability = false;
 		site.chedit.isPlayable = false;
+		site.chedit.stationUrlChanged = true;
 		if (!$("#editstation input[name='station_name']")[0].value) {
 			site.ui.showtoast("Checking stream...");
 			$("#editstation .action.save").css("display","block");
@@ -42,6 +43,9 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 			$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());
 		}
 	}
+	
+	// No changes yet, right?
+	site.chedit.stationUrlChanged = false;
 	
 	// Set station_id hidden field
 	if (station_id_to_edit) {
@@ -417,6 +421,12 @@ site.chedit.check = function(findStationName,silent) {
 site.chedit.check_station_url = function(station_name, station_url, silent, playlistChecked, isPlaylist) {
 	
 	loggr.log("site.chedit.check_station_url()");
+	
+	if (!site.chedit.stationUrlChanged) {
+		loggr.warn(" > !site.chedit.stationUrlChanged, skip check_station_url");
+		site.chedit.check_station_icon(silent);
+		return; // <- :D
+	}
 	
 	site.ui.showloading("Wait");
 	
