@@ -19,8 +19,14 @@ section { }
 	}
 	
 		.actionbar .icon_app {
-			padding:20px 24px 20px 24px;
+			top:4px; left:8px;
+			height:64px;
 		}
+	
+			.actionbar .icon_app iron-icon {}
+			.actionbar .icon_app paper-icon-button {
+				
+			}
 		
 		.actionbar .title {
 			bottom:18px;
@@ -29,9 +35,15 @@ section { }
 		.actionbar .actions {
 			height:64px;
 		}
+			
+			.actionbar .actions paper-icon-button {
+				margin:8px 12px 8px 4px;
+				padding:12px;
+			}
 		
-			.actionbar .actions .action {
-				padding:20px 24px 20px 24px;
+			.actionbar .actions .action { /* TODO: deprecated polymer */
+				margin-right:0;
+				padding:20px 16px 20px 16px;
 			}
 			
 	.tabbar {
@@ -48,7 +60,7 @@ section { }
 				height:64px;
 			}
 			.main .block.header .text {
-				left:16px; bottom:18px;
+				left:16px; bottom:19px;
 			}
 
 /* Specific */

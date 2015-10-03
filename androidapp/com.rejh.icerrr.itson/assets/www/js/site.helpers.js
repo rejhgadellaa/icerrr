@@ -217,6 +217,7 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp,
 	var filename = "__noname__"+ new Date().getTime();
 	
 	if (!url) { url = "__noname__"+ new Date().getTime(); }
+	if (!prefix) { prefix = ""; }
 	
 	if (url.indexOf("/")>=0) {
 		filename = url.substr(url.lastIndexOf("/")+1);
@@ -235,14 +236,14 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp,
 	filename = site.helpers.stripIllChars(filename);
 	prefix = site.helpers.stripIllChars(prefix);
 	
-	if (onlyExtension && prefix) {
+	if (onlyExtension) {
 		var ext = filename.substr(filename.lastIndexOf("."));
 		filename = ext;
 	}
 	
-	if (!dontUseTimestamp) { // default
+	if (!dontUseTimestamp && prefix) { // default
 		filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
-	} else {
+	} else if (prefix) {
 		filename = prefix +"_"+ filename;
 	}
 	
@@ -313,6 +314,7 @@ site.helpers.checkImageCache = function() {
 				site.vars.fileNamesByDate = {};
 				for (var i=0; i<fileEntries.length; i++) {
 					
+					// Get metadata
 					var fileEntry = fileEntries[i];
 					
 					if (imagelist.indexOf(fileEntry.fullPath)>=0) {
@@ -351,19 +353,26 @@ site.helpers.trimImageCache = function() {
 	// Sort keys
 	var keys = Object.keys(fileNamesByDate);
 	keys.sort(); // sort
-	keys.reverse(); // reverse order
+	keys.reverse(); // reverse order, newest files first..
 	
 	// Build array..
 	var fileNamesSorted = [];
 	for (var i=0; i<keys.length; i++) {
 		fileNamesSorted.push(fileNamesByDate[keys[i]]);
 	}
+	
+	loggr.log(" > Nr of files: "+ fileNamesSorted.length +", max: "+ site.cfg.files.maxImagesCached);
 			
 	var removed = 0;
 	for (var i=site.cfg.files.maxImagesCached; i<fileNamesSorted.length; i++) {
 		
 		var name = fileNamesSorted[i];
 		var path = site.cfg.paths.images;
+		
+		if (site.cfg.files.ignoreFilenames.indexOf(name)>=0) {
+			loggr.log(" > Skip: "+ name);
+			continue;
+		}
 		
 		loggr.log(" > Remove: "+ name);
 		
@@ -676,6 +685,7 @@ site.helpers.capitalize = function(str,everyword) {
 }
 
 site.helpers.capAll = function(str) {
+	if (!str) { str = ""; }
 	var strs = str.split(" ");
 	for (var i in strs) {
 		if (strs[i].length<2 && strs[i].toLowerCase()!="i") { continue; }

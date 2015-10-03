@@ -140,8 +140,25 @@ site.lifecycle.initApp = function(force) {
 	// Restore user session
 	site.helpers.readSession();
 	
-	// Reset blacklist
-	// site.session.blacklistedAlbumArt = {};
+	// Register device..
+	loggr.log(" > Register device..");
+	var apiquery = {
+		"get":"register_device",
+		"id":site.cookies.get("device_id")
+	};
+	var apiquerystr = JSON.stringify(apiquery);
+	site.webapi.exec("get",apiquerystr,
+		function(res) {
+			if (res["error"]) {
+				loggr.error(res["errormsg"]);
+				return;
+			}
+			loggr.log(" -> Registered device: "+ res["data"]["saved"]);
+		},
+		function(err) {
+			//...
+		}
+	);
 	
 	// UI Init
 	site.ui.init();
@@ -316,6 +333,9 @@ site.lifecycle.onResume = function() {
 		var func = site.session.ui_resume_callbacks[i]; // same order as incoming..
 		try { func(); } catch(e) { loggr.warn(" > Error on ui_resume_callbacks"); loggr.log(e); }
 	}
+	
+	// Fabscroll..
+	site.ui.initFabScroll(site.vars.currentSection);
 	
 	// Stop! Resize!
 	site.lifecycle.onResize();

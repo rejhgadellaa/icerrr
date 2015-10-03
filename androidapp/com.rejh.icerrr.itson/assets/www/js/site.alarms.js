@@ -210,10 +210,12 @@ site.alarms.add = function() {
 	site.lifecycle.add_section_history("#alarms_add");
 	site.ui.gotosection("#alarms_add");
 	
-	$("#alarms_add .action.trash").css("display","none");
+	$("#alarms_add .actions .trash").css("display","none");
 	
 	// Update form
 	site.alarms.updateForm();
+	
+	console.error($("#alarms_add select").innerHeight());
 	
 }
 
@@ -230,7 +232,7 @@ site.alarms.edit = function(obj) {
 	site.lifecycle.add_section_history("#alarms_add");
 	site.ui.gotosection("#alarms_add");
 	
-	$("#alarms_add .action.trash").css("display","block");
+	$("#alarms_add .actions .trash").css("display","block");
 	
 	// Find alarm
 	var alarmCfg = null;
@@ -285,7 +287,7 @@ site.alarms.save = function(silenced) {
 		site.ui.showtoast("Saved it!",0.5);
 	}
 	
-	$("#alarms_add .action.trash").css("display","block");
+	$("#alarms_add .actions .trash").css("display","block");
 	
 }
 

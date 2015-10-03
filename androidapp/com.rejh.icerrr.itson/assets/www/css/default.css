@@ -26,7 +26,8 @@ html {
 	overflow:hidden;
 	width:100%; 
 	height:100%; 
-	}
+	background-color:#607D8B;
+}
 
 body {
 	overflow:hidden; 
@@ -53,18 +54,31 @@ h1 {
 	
 label {
 	margin-left:8px;
+	color:#727272;
 }
 
 input,select {
 	width:98%;
-	margin:-1px;
+	margin:0;
 	padding:1%;
 	font-size:16pt;
-	background:#fff;
-	border:1px solid rgba(0,0,0,0.16);
-	-webkit-border-radius: 2px;
-	border:1px solid rgba(0,0,0,0.16);
+	background:none;
+	border:none;
+	border-bottom:1px solid rgba(0,0,0,0.16); 
+	outline: none;
 }
+input:focus,select:focus {
+	border-bottom:1px solid #FF5722;
+}
+input:active,select:active {
+	border-bottom:1px solid #FF5722;
+}
+
+input::selection {
+	background-color:#FF5722;
+	color:#fff;
+}
+
 
 select {
 	width:100%;
@@ -104,6 +118,7 @@ section {
 
 	.actionbar {
 		z-index:3;
+		overflow:hidden;
 		position:absolute;
 		top:0; left:0; right:0;
 		width:100%;
@@ -114,12 +129,21 @@ section {
 		.actionbar .icon_app {
 			position:absolute;
 			top:0; left:0;
-			width:24px; /* note: icon should include 4px padding on all sides! */
-			height:24px;
-			padding:16px;
+			height:56px;
 		}
+	
+			.actionbar .icon_app iron-icon {
+				margin:0;
+				padding:16px;
+				color:#fff;
+			}
+			.actionbar .icon_app paper-icon-button {
+				height:56px;
+				padding:0;
+				color:#fff;
+			}
 		
-			.actionbar .icon_app img {
+			.actionbar .icon_app img { /* TODO: deprecated polymer */
 				width:24px; height:24px;
 			}
 		
@@ -139,16 +163,25 @@ section {
 			top:0; right:0;
 			height:56px;
 		}
+			
+			.actionbar .actions paper-icon-button {
+				float:right;
+				margin: 8px 16px 0 0;
+				padding:8px;
+			}
+			.actionbar .actions paper-icon-button.more-vert {
+				margin:8px 8px 0 -8px;
+			}
 		
-			.actionbar .actions .action {
+			.actionbar .actions .action { /* TODO: deprecated polymer */
 				float:right;
 				width:24px;
 				height:24px;
-				margin-left:4px;
+				margin-right:8px;
 				padding:16px;
 			}
 			
-				.actionbar .actions .action img {
+				.actionbar .actions .action img { /* TODO: deprecated polymer */
 					width:24px; height:24px;
 				}
 				
@@ -197,7 +230,7 @@ section {
 			.main .block.header {
 				position:relative;
 				top:0; left:0; right:0;
-				height:48px;
+				height:64px;
 				padding:0;
 				font-size:16pt;
 				font-weight:300;
@@ -206,7 +239,7 @@ section {
 			}
 			.main .block.header .text {
 				position:absolute;
-				left:16px; bottom:10px;
+				left:16px; bottom:19px;
 			}
 	
 	.footer {
@@ -952,7 +985,9 @@ section {
 	}
 	
 	#editstation img.station_icon, #searchstation img.station_icon {
-		width:48px; height:48px;
+		width:40px; height:40px;
+		margin:0 0 0 8px;
+		border-radius: 20px;
 	}
 	
 	#editstation .block .button, #searchstation .block .button {
@@ -1048,11 +1083,11 @@ section {
 /* Alarms */
 	
 #alarms {
-
+	
 }
 
 #alarms_add {
-
+	
 }
 
 	#alarms_add .block {
@@ -1065,29 +1100,37 @@ section {
 	#alarms_add .block.borderTop {
 		border:1px solid #ddd;
 	}
-
-	#alarms_add label {
-		padding-bottom:16px; 
+	
+	#alarms_add .range_wrap {
+		margin-top:0px;
+		background:#f00;
 	}
 	
 	#alarms_add input[type="range"] {
 		position:relative;
-		top:-1px; left:-1px;
+		top:8px; left:0px; /* top: -1 + 4 */
 		-webkit-appearance: none;
-		background-color: #ddd;
-		border:1px solid #ccc;
 		width:100%;
-		height:16px;
-		margin:1% 0 1% 0;
+		height:1px;
+		margin-bottom:22px;
 		padding:0;
+		background-color: rgba(0,0,0,0.16);
+		border:none;
 	}
 	
 		#alarms_add input[type="range"]::-webkit-slider-thumb {
 			-webkit-appearance: none;
+			position:relative;
+			top:0px;
 			background-color: #455A64;
 			opacity: 1.0;
-			width: 16px;
-			height: 16px;
+			width: 32px;
+			height: 32px;
+			border-radius: 16px;
+			transition:background-color 250ms;
+		}
+		#alarms_add input[type="range"]::-webkit-slider-thumb:active {
+			background-color:#FF5722;
 		}
 	
 	#alarms_add .weekschedule {
@@ -1106,6 +1149,7 @@ section {
 			left:4px; right:4px; bottom:4px;
 			height:4px;
 			background:#ccc;
+			transition:background 250ms;
 		}
 		
 			#alarms_add .weekboxWrap.active .weekboxIndicator {
@@ -1503,6 +1547,13 @@ section {
 http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when-elem-is-hidden-while-it-is-active
 */
 
+/* TODO: deprecated polymer ? */
+
+/**/
+.activatablel,.activatabled {
+	transition:background-color 250ms;
+}
+
 .activatablel:active {
 	background-color:rgba(69,90,100,0.25);
 }
@@ -1516,6 +1567,7 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 .activatabledh_active {
 	background-color:rgba(69,90,100,0.25);
 }
+/**/
 
 /* Hoverable */
 

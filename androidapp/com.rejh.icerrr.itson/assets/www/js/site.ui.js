@@ -121,10 +121,10 @@ site.ui.initFabScroll = function(selector) {
 	}
 	
 	// Reset all..
-	$(".fab").not(selector +" .fab").css("bottom",16);
+	$(".fab").css("bottom",16);
 	
 	// Scroll listener -> Hide fab :D
-	$(selector+" .main").off( 'scroll');
+	$(".main").off( 'scroll');
 	$(selector+" .main").on( 'scroll', function(e) {
 		
 		delta = site.vars.fabscrolls[selector].scrolltop - $(selector+" .main").scrollTop();
@@ -476,6 +476,8 @@ site.ui.setLongclickHelp = function() {
 site.ui.hackActiveCssRule = function() {
 	
 	loggr.log("site.ui.hackActiveCssRule()");
+	//loggr.log(" > Don't.. we got polymer now");
+	//return;
 	
 	// When android version >= 5.0: use normal :active method, else do stuff..
 	// loggr.log("'"+ device.version +"'"+ typeof(device.version));

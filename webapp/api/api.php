@@ -452,6 +452,26 @@ switch($action) {
 				header('Content-Encoding: gzip');
 				echo $jsons;
 				break;
+				
+			case "register_device":
+				if (!$queryobj["id"]) { error("Error: !queryobj[id]"); }
+				$id = $queryobj["id"];
+				$jsons = fr("data/deviceids.json");
+				$json = json_decode($jsons,true);
+				if (!$json) { $json = array(); }
+				if (!in_array($id,$json)) { 
+					$json[] = $id;
+					$jsons = json_encode($json);
+					$fw = fw("data/deviceids.json",$jsons);
+					if (!$fw) { error("Error: could not write json file"); }
+				} 
+				$json = array(); // purge json for response
+				$json["data"] = array("saved"=>$id);
+				$json["info"] = array();
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
 			
 			// default	
 			default:
@@ -475,7 +495,6 @@ switch($action) {
 		$queryobj = json_decode($query,true);
 		switch($queryobj["post"]) {
 			
-			// answers
 			case "log":
 				$id = $_POST["log_id"];
 				$html = $_POST["log_html"];
@@ -522,6 +541,36 @@ switch($action) {
 				$jsons = json_encode($json);
 				logg($jsons);
 				echo $jsons;
+				break;
+				
+			case "station_icon": // NOTE: does not return json, it returns http responses! // TODO: yes?
+			
+				$filename = $_FILES['file']['name'];
+				$filepath = "../img/uploaded/{$filename}";
+				$filetmp = $_FILES['file']['tmp_name'];
+				
+				$postkey = $_POST["key"];
+				$getkey = $queryobj["key"];
+				if ($postkey!=$getkey) {
+					http_response_code(403);
+					error("Access denied'");
+				}
+				
+				$devicess = fr("data/deviceids.json");
+				$devices = json_decode($devicess,true);
+				if (!in_array($queryobj["device"],$devices)) {
+					http_response_code(403);
+					error("Access denied'");
+				}
+				
+				$moved = move_uploaded_file($filetmp, $filepath);
+				if (!$moved) {
+					http_response_code(500);
+					error("Could not move file to '{$filepath}'");
+				} else {
+					http_response_code(200);
+					echo json_encode(array("info"=>array(), "data"=>array("post"=>"ok", "filename"=>$filename)));
+				}
 				break;
 			
 			// default

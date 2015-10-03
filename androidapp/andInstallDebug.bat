@@ -22,7 +22,7 @@ echo Installing app...
 echo.
 
 %androidsdk%platform-tools\adb devices
-%androidsdk%platform-tools\adb -d install -r _apks\%name_prj%-debug.apk
+%androidsdk%platform-tools\adb -d install -r D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_prj%-debug.apk
 if not errorlevel 0 goto error
 
 %androidsdk%platform-tools\adb -d shell am start %path_prj%/.%name_prj%

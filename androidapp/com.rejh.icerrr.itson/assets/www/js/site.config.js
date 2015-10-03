@@ -33,10 +33,18 @@ site.cfg.paths.images = "Icerrr/images";
 site.cfg.paths.logs = "Icerrr/logs";
 site.cfg.paths.other = "Icerrr/other";
 
+site.cfg.nomediapaths = [
+	site.cfg.paths.images,
+	site.cfg.paths.other
+]
+
 // Files
 site.cfg.files = {};
 
-site.cfg.files.maxImagesCached = 64;
+site.cfg.files.maxImagesCached = 96;
+site.cfg.files.ignoreFilenames = [
+	".nomedia"
+]
 
 // Notifs
 

@@ -19,8 +19,15 @@ section { }
 	}
 	
 		.actionbar .icon_app {
-			padding:12px 16px 12px 16px;
+			height:48px;
 		}
+	
+			.actionbar .icon_app iron-icon {
+				padding:12px 16px 12px 16px;
+			}
+			.actionbar .icon_app paper-icon-button {
+				height:48px;
+			}
 		
 		.actionbar .title {
 			bottom:10px; left:72px;
@@ -29,8 +36,17 @@ section { }
 		.actionbar .actions {
 			height:48px;
 		}
+			
+			.actionbar .actions paper-icon-button {
+				margin:0 12px 0 4px;
+				padding:12px;
+			}
+			.actionbar .actions paper-icon-button.more-vert {
+				margin:0 8px 0 -8px;
+			}
 		
-			.actionbar .actions .action {
+			.actionbar .actions .action { /* TODO: deprecated polymer */
+				margin-right:0;
 				padding:12px 16px 12px 16px;
 			}
 			
