@@ -124,9 +124,9 @@ section {
 				color:#fff;
 			}
 			.actionbar .icon_app paper-icon-button {
+				height:56px;
 				padding:0;
 				color:#fff;
-				height:56px;
 			}
 		
 			.actionbar .icon_app img { /* TODO: deprecated polymer */
@@ -311,7 +311,7 @@ section {
 
 #splash {
 	z-index:90;
-	display:block;
+	display:none;
 	background:#607D8B;
 	-webkit-transition: -webkit-transform 500ms ease-in-out;
 	transition: transform 500ms ease-in-out;

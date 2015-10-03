@@ -41,8 +41,9 @@ section { }
 				padding:12px;
 			}
 		
-			.actionbar .actions .action { /* TODO: deprecated */
-				padding:20px 24px 20px 24px;
+			.actionbar .actions .action { /* TODO: deprecated polymer */
+				margin-right:0;
+				padding:20px 16px 20px 16px;
 			}
 			
 	.tabbar {
