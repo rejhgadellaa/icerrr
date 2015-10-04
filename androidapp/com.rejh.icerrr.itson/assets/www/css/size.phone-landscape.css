@@ -85,11 +85,11 @@ section { }
 }
 
 	#editstation .block, #searchstation .block, #alarms_add .block, #about .block, #viewlog .block {
-		padding:0 12px 12px 12px;
+		padding:0 16px 12px 16px;
 	}
 
 	#editstation .block.header, #searchstation .block.header, #alarms_add .block.header, #about .block.header, #viewlog .block.header {
-		padding:12px;
+		padding:0;
 	}
 	
 /* -- OVERFLOW_MENU */
