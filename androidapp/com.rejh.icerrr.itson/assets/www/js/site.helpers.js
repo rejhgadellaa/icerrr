@@ -50,7 +50,7 @@ site.helpers.shouldDownloadImage = function(localVal,iconVal) {
 // - Stations1: local copy, station2: remote copy (new)
 // - Adds results of stations2 to stations1 without overwriting stations1 || UPDATE: respects 'station_edited' flag
 
-site.helpers.mergeStations = function(stations1,stations2) {
+site.helpers.mergeStations = function(stations1,stations2,forceOverwrite) {
 	
 	loggr.debug("site.helpers.mergeStations()");
 	
@@ -97,6 +97,10 @@ site.helpers.mergeStations = function(stations1,stations2) {
 			
 			if (!edit1) { edit1 = 0; }
 			if (!edit2) { edit2 = 1; }
+			
+			if (forceOverwrite) {
+				edit1 = 0; edit2 = 1;
+			}
 			
 			// Special case: station_icon_local + .._image_local
 			if (skipkeys.indexOf(key)>=0) {

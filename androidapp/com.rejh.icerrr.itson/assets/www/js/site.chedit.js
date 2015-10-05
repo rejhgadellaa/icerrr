@@ -207,7 +207,7 @@ site.chedit.save = function() {
 	
 	// Use MergeStations :D || but in reverse :D
 	var addstations = [site.chedit.newentry];
-	var newstations = site.helpers.mergeStations(site.data.stations,addstations);
+	var newstations = site.helpers.mergeStations(site.data.stations,addstations,true);
 	
 	// Store!
 	site.data.stations = newstations;
@@ -428,7 +428,7 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 		return; // <- :D
 	}
 	
-	site.ui.showloading("Wait");
+	site.ui.showloading("Wait","Validating station...");
 	
 	// --> Auto-gen host, port and other stuff
 	
@@ -492,6 +492,8 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 							}
 							
 							if (conf) {
+								
+								site.chedit.stationUrlChanged = false;
 								
 								// Save host, port, path (i knew this data was going to be useful :D
 								site.chedit.newentry.station_url = $("#editstation input[name='station_url']")[0].value.trim();
@@ -819,7 +821,7 @@ site.chedit.testStationPlayable = function(station_url,cb,cberr) {
 	
 	// -> Check if station actually works...
 	
-	site.ui.showloading();
+	// site.ui.showloading();
 	loggr.log(" > "+ station_url);
 	
 	var mediaPlayer = new Media(station_url,

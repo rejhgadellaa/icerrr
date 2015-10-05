@@ -425,8 +425,23 @@ site.home.run_station_updates = function() {
 	
 	//loggr.warn(" > Current album art image: "+ $("#home .main .station_image").css("background-image"),{dontsave:true});
 	
+	// Handle multiple requests..
+	if (site.vars.station_update_running == site.session.currentstation.station_id) {
+		loggr.warn(" > Don't run, site.vars.station_update_running = "+site.vars.station_update_running);
+		return;
+	} else if (site.vars.station_update_running != site.session.currentstation.station_id && site.webapi.ajaxRequests[site.vars.station_update_xhrid]) {
+		try {
+			loggr.warn(" > Cancel previous request: "+ site.vars.station_update_xhrid);
+			site.webapi.ajaxRequests[site.vars.station_update_xhrid].abort();
+		} catch(e) {
+			console.error(e);
+		}
+	}
+	site.vars.station_update_running = site.session.currentstation.station_id;
+	
 	site.ui.showLoadbar();
 	
+	// Build and exec request
 	var apiqueryobj = {
 		"get":"station_info",
 		"station_id":site.session.currentstation.station_id,
@@ -438,8 +453,10 @@ site.home.run_station_updates = function() {
 	var apiaction = "get";
 	var apiquerystr = JSON.stringify(apiqueryobj);
 	
-	site.webapi.exec(apiaction,apiquerystr,
+	site.vars.station_update_xhrid = site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
+			
+			site.vars.station_update_running = false;
 			
 			if (data["error"]) {
 				loggr.warn(" > "+data["errormsg"]);
@@ -465,6 +482,7 @@ site.home.run_station_updates = function() {
 			
 		},
 		function(error) {
+			site.vars.station_update_running = false;
 			if (error.message) { site.ui.showtoast(error.message); loggr.warn(error.message); }
 			else { loggr.log(error); }
 			site.session.currentstation.station_nowplaying = "Now playing: Unknown";
