@@ -50,7 +50,7 @@
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
             "v0.311 includes:",
-            "* Fix: Import station icon from G Drive, Photos, etc",
+            "* Fix: Import station icon from more sources",
             "* Visual tweaks, bugfixes, improvements"
             ],
         "buttonLabels":"Yes,No",
