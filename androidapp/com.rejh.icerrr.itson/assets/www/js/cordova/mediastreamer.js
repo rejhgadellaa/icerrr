@@ -1,20 +1,20 @@
 /*
-* 
+*
 * by REJH Gadellaa
 *  MIT license
 *
 */
 
 (function() {
-		  
+
 	console.log("Load plugin: MediaStreamer");
-		  
+
     /* This increases plugin compatibility */
     // var cordovaRef = window.PhoneGap || window.Cordova || window.cordova; // old to new fallbacks
 	cordovaRef = window.cordova;
 
     /**
-    * The Java to JavaScript Gateway 'magic' class 
+    * The Java to JavaScript Gateway 'magic' class
     */
     function MediaStreamer() { }
 
@@ -34,7 +34,7 @@
 		console.log("MediaStreamer.prototype.stop()");
         cordova.exec(win, fail, "MediaStreamer", "stop", []);
     };
-	
+
     /**
     * Set Volume
 	* Args: level (int) between 0 and 10
@@ -43,7 +43,7 @@
 		console.log("MediaStreamer.prototype.setVolume(): "+level);
         cordova.exec(win, fail, "MediaStreamer", "setVolume", [level]);
     };
-	
+
     /**
     * Incr Volume
 	* Increase volume by 1 (from 0 to 10)
@@ -52,7 +52,7 @@
 		console.log("MediaStreamer.prototype.incrVolume()");
         cordova.exec(win, fail, "MediaStreamer", "incrVolume", []);
     };
-	
+
     /**
     * Decrease Volume
 	* Decrease volume by 1 (from 0 to 10)
@@ -74,7 +74,7 @@
 		// console.log("MediaStreamer.prototype.getStatus()");
         cordova.exec(win, fail, "MediaStreamer", "getStatus", []);
     };
-	
+
     /**
     * Is Service Running
     */
@@ -82,7 +82,7 @@
 		console.log("MediaStreamer.prototype.isServiceRunning()");
         cordova.exec(win, fail, "MediaStreamer", "isServiceRunning", []);
     };
-	
+
 	/**
 	* Store starred stations
 	*/
@@ -101,7 +101,7 @@
 		if (currentStation) { index = site.helpers.session.getStationIndexById(currentStation.station_id,newlist); }
         cordova.exec(win, fail, "MediaStreamer", "storeStarredStations", [newlist,index]);
 	}
-	
+
 	/**
 	* Setting
 	*/
@@ -113,7 +113,7 @@
 		console.log("MediaStreamer.prototype.getSetting()");
         cordova.exec(win, fail, "MediaStreamer", "getSetting", [{"type":type,"key":key}]);
 	}
-	
+
 	/**
 	* Getlog
 	*/
@@ -121,7 +121,7 @@
 		console.log("MediaStreamer.prototype.getlog()");
         cordova.exec(win, fail, "MediaStreamer", "getlog", []);
 	}
-	
+
 	/**
 	* Install-update-app
 	* TODO: Total hack, this doesn't belong in MediaStreamer plugin...
@@ -130,7 +130,7 @@
 		console.log("MediaStreamer.prototype.installUpdateApp()");
         cordova.exec(win, fail, "MediaStreamer", "install-update-app", [filePath]);
 	}
-	
+
 	/**
 	* UpdateMetaData
 	*/
@@ -138,7 +138,7 @@
 		console.log("MediaStreamer.prototype.updateMetaData()");
         cordova.exec(win, fail, "MediaStreamer", "updateMetaData", []);
 	}
-	
+
 	/**
 	* SetAppIcon
 	*/
@@ -146,7 +146,15 @@
 		console.log("MediaStreamer.prototype.setAppIcon()");
         cordova.exec(win, fail, "MediaStreamer", "setAppIcon", [inticon]);
 	}
-	
+
+	/**
+	* Copy Media Bitmap
+	*/
+	MediaStreamer.prototype.copyMediaBitmap = function(contentMediaUri,destpath,destname,win,fail) {
+		console.log("MediaStreamer.prototype.copyMediaBitmap()");
+        cordova.exec(win, fail, "MediaStreamer", "copyMediaBitmap", [contentMediaUri,destpath,destname]);
+	}
+
 	/**
 	* Register the plugin
 	*/
@@ -154,4 +162,4 @@
 		window.mediaStreamer = new MediaStreamer();
 	} catch(e) { console.error("MediaStreamer could not be loaded"); console.error(e); }
 
-})(); 
+})();

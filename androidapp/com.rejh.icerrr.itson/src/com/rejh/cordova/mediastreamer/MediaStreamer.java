@@ -9,6 +9,8 @@ package com.rejh.cordova.mediastreamer;
 */
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -28,9 +30,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.provider.SyncStateContract.Constants;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 public class MediaStreamer extends CordovaPlugin {
@@ -173,6 +177,30 @@ public class MediaStreamer extends CordovaPlugin {
         		
         		int arg = args.getInt(0);
         		setAppIcon(arg);
+        		
+        	} else if (action.equals("copyMediaBitmap")) {
+        		
+        		// Prep
+        		String filePath = null;
+        		
+        		// Get args, parse to uri
+        		String imageStr = args.getString(0);
+        		String destPath = args.getString(1);
+        		String destName = args.getString(2) +".png";
+        		Uri imageUri = Uri.parse(imageStr);
+        		
+        		// Create bitmap
+        		Bitmap bitmap = MediaStore.Images.Media.getBitmap(cordova.getActivity().getContentResolver(), imageUri);
+        		
+        		// Write..
+        		String root = Environment.getExternalStorageDirectory().toString();
+                File path = new File(root +"/"+ destPath);
+        		File file = new File(path, destName);
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                fileOutputStream.close();
+        		
+        		callbackContext.success(destName);
         		
         	} else {
         		// Nothin?
