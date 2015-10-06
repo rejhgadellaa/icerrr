@@ -1,3 +1,6 @@
+0.312
+  * Fixed #222: Import icons from Google Drive, Google Photos, etc
+
 0.311
   * Replaced most (actionbar) icons with polymer versions! Ripples!
   * Visual tweaks for add/edit alarms and stations
