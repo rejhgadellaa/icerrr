@@ -81,6 +81,28 @@ $queryj = json_decode($querys,true);
 		$queryj["path"] = str_replace("-sb-","-bb-",$queryj["path"]);
 	}
 
+// Prep blacklist..
+$blacklist_filename = "blacklist_". str_replace(".","",$queryj["host"]) ."-". $queryj["port"] .".txt";
+if (fr($blacklist_filename)) {
+	
+	//error("Stream has been blacklisted");
+	$array["nowplaying"] = "";
+	$array["station_id"] = $queryj["station_id"];
+	$array["time_ms"] = time()*1000;
+	$array["queryj"] = $queryj;
+	$array["time_read"] = time()-$timebgn;
+	$jsons = json_encode($array);
+	$filename2 = "../../json/station_info.". $queryj["station_id"].".json";
+	$fw = fw($filename2,$jsons);
+	
+	// Output
+	header("Content-Type: application/json");
+	// header("Access-Control-Allow-Origin: *"); // TODO: enable this? Not needed because api.php is on same server (and ignores it anyway)
+	echo $jsons;
+	die();
+	
+}
+
 // Check for redirects
 $url = $queryj["host"] .":". $queryj["port"] . $queryj["path"];
 $rurl = unshorten_url($url);
@@ -111,28 +133,6 @@ if ($url!=$rurl) {
 	$queryj["host"] = trim($host);
 	$queryj["port"] = intval(trim($port));
 	$queryj["path"] = trim($path);
-}
-
-// Prep blacklist..
-$blacklist_filename = "blacklist_". str_replace(".","",$queryj["host"]) ."-". $queryj["port"] .".txt";
-if (fr($blacklist_filename)) {
-	
-	//error("Stream has been blacklisted");
-	$array["nowplaying"] = "";
-	$array["station_id"] = $queryj["station_id"];
-	$array["time_ms"] = time()*1000;
-	$array["queryj"] = $queryj;
-	$array["time_read"] = time()-$timebgn;
-	$jsons = json_encode($array);
-	$filename2 = "../../json/station_info.". $queryj["station_id"].".json";
-	$fw = fw($filename2,$jsons);
-	
-	// Output
-	header("Content-Type: application/json");
-	// header("Access-Control-Allow-Origin: *"); // TODO: enable this? Not needed because api.php is on same server (and ignores it anyway)
-	echo $jsons;
-	die();
-	
 }
 	
 // Begin..

@@ -158,6 +158,8 @@ site.chicon.init = function(station_id) {
 				
 				navigator.camera.getPicture(
 					function(imagePath) { // okidokie
+						
+						loggr.log(" > "+ imagePath);
 	
 						// Check imageData (uri)
 						var isHttp = imagePath.indexOf("http")>=0;
@@ -166,7 +168,15 @@ site.chicon.init = function(station_id) {
 						
 						if (imagePath.indexOf("file://")<0) { imagePath = "content://media"+imagePath; }
 						
-						loggr.log(" > "+ imagePath);
+						if (imagePath.indexOf("content://mediacontent://")>=0) {
+							imagePath = imagePath.substr(imagePath.indexOf("/-1/1/")+6);
+							imagePath = unescape(imagePath);
+						}
+						
+						if (imagePath.substring(0,21)=="content://com.android") {
+							photo_split=imagePath.split("%3A");
+							imagePath="content://media/external/images/media/"+photo_split[1];
+						}
 						
 						// Get path + name
 						var path = site.storage.getpath(imagePath);
