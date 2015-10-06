@@ -41,6 +41,31 @@ function error($message) {
 	die();
 }
 
+// Unshorten url (get redirect url)
+function unshorten_url($url){
+
+	//global $queryj;
+	
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_HEADER, 1);
+    curl_setopt($ch, CURLOPT_NOBODY, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    $out = curl_exec($ch);
+
+    $real_url = $url;//default.. (if no redirect)
+
+    if (preg_match("/location: (.*)/i", $out, $redirect))
+        $real_url = $redirect[1];
+
+    if (strstr($real_url, "bit.ly"))//the redirect is another shortened url
+        $real_url = unshorten_url($real_url);
+
+    return $real_url;
+    /**/
+}
+
 // Handle query
 $querys = urldecode($_GET["q"]);
 $queryj = json_decode($querys,true);
@@ -55,6 +80,38 @@ $queryj = json_decode($querys,true);
 	if ($queryj["host"]=="icecast.omroep.nl") {
 		$queryj["path"] = str_replace("-sb-","-bb-",$queryj["path"]);
 	}
+
+// Check for redirects
+$url = $queryj["host"] .":". $queryj["port"] . $queryj["path"];
+$rurl = unshorten_url($url);
+if ($url!=$rurl) {
+	// host..
+	$rurl = substr($rurl,7);
+	$host = $rurl;
+	if (strpos($host,":")>0) {
+		$host = substr($host,0,strpos($host,":"));
+	} elseif (strpos($host,"/")>0) {
+		$host = substr($host,0,strpos($host,"/"));
+	}
+	// port
+	$port = 80;
+	if (strpos($rurl,":")>0) {
+		$port = substr($rurl,strpos($rurl,":")+1);
+		if (strpos($port,"/")>0) {
+			$port = substr($port,0,strpos($port,"/"));
+		} elseif (strpos($port,"?")>0) {
+			$port = substr($port,0,strpos($port,"?"));
+		}
+	}
+	// path
+	$path = "/";
+	if (strpos($rurl,"/")>0) {
+		$path = substr($rurl,strpos($rurl,"/"));
+	}
+	$queryj["host"] = trim($host);
+	$queryj["port"] = intval(trim($port));
+	$queryj["path"] = trim($path);
+}
 
 // Prep blacklist..
 $blacklist_filename = "blacklist_". str_replace(".","",$queryj["host"]) ."-". $queryj["port"] .".txt";
@@ -204,7 +261,6 @@ $array["nowplaying"] = $title;
 // Add station_id, timestamp
 $array["station_id"] = $queryj["station_id"];
 $array["time_ms"] = time()*1000;
-// $array["querys"] = $querys;
 $array["queryj"] = $queryj;
 $array["time_read"] = time()-$timebgn;
 // $array["read-id3-host"] = $_SESSION["HOST"];

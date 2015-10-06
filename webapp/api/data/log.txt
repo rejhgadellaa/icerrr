@@ -1,3 +1,54 @@
+2015-10-06 08:09:26     >> Read stream... 0 http://84.105.53.209/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 08:09:26    GET > {"get":"station_info","station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","station_host":"192.168.0.151","station_port":"8000","station_path":"/radio"}
+2015-10-06 08:09:26    Cleanup json
+2015-10-06 07:17:44     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 07:17:44    GET > {"get":"station_info","station_id":"radio3fm","station_host":"icecast.omroep.nl","station_port":"80","station_path":"/3fm-bb-mp3"}
+2015-10-06 07:17:44    Cleanup json
+2015-10-06 07:17:26    Error: Error: could not parse json: '../json/station_info.CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048.json'
+2015-10-06 07:17:26     >> {"url":"{$url}"}{"{\"station_id\"":"\"custom.rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048\",\"host\":\"192.168.0.151\",\"port\":8000,\"path\":\"\/radio\"}\n\nhttp\/1.0 200 ok","content-type":"audio\/mpeg","icy-br":"128","icy-description":"de hele dag mijn muziek","icy-genre":"my own","icy-name":"radio gadellaa","icy-url":"http:\/\/localhost","server":"icecast 2.3.2","cache-control":"no-cache","icy-metaint":"16000","nowplaying":"Unknown","station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","time_ms":1444108646000,"queryj":{"station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","host":"192.168.0.151","port":8000,"path":"\/radio"},"time_read":1}
+2015-10-06 07:17:26     >> Read stream... 1 http://84.105.53.209/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 07:17:25     >> Read stream... 0 http://84.105.53.209/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 07:17:25    GET > {"get":"station_info","station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","station_host":"192.168.0.151","station_port":"8000","station_path":"/radio"}
+2015-10-06 07:17:25    Cleanup json
+2015-10-06 07:16:52    Error: Error: could not parse json: '../json/station_info.CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048.json'
+2015-10-06 07:16:52     >> http://192.168.0.151:8000/radio{"{\"station_id\"":"\"custom.rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048\",\"host\":\"192.168.0.151\",\"port\":8000,\"path\":\"\/radio\"}\n\nhttp\/1.0 200 ok","content-type":"audio\/mpeg","icy-br":"128","icy-description":"de hele dag mijn muziek","icy-genre":"my own","icy-name":"radio gadellaa","icy-url":"http:\/\/localhost","server":"icecast 2.3.2","cache-control":"no-cache","icy-metaint":"16000","nowplaying":"Unknown","station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","time_ms":1444108612000,"queryj":{"station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","host":"192.168.0.151","port":8000,"path":"\/radio"},"time_read":0}
+2015-10-06 07:16:52     >> Read stream... 1 http://84.105.53.209/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 07:16:51     >> Read stream... 0 http://84.105.53.209/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 07:16:51    GET > {"get":"station_info","station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","station_host":"192.168.0.151","station_port":"8000","station_path":"/radio"}
+2015-10-06 07:16:51    Cleanup json
+2015-10-06 07:15:39    GET > {"get":"station_info","station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","station_host":"192.168.0.151","station_port":"8000","station_path":"/radio"}
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Station_4b340490e62fdad97f29a0ff1597d7d5_15034967496_e0b17.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Station_4b340490e62fdad97f29a0ff1597d7d5_1503495ef42_81f69.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Station_4b340490e62fdad97f29a0ff1597d7d5_1503141ace1_55499.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Station_4b340490e62fdad97f29a0ff1597d7d5_15031419497_92382.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Rpi_4b340490e62fdad97f29a0ff1597d7d5_150349a2323_469b.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Rpi1_b94d16a4e22d7b4499228dae0e4e67b7_150315fb520_a03ef.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Rpi1_b94d16a4e22d7b4499228dae0e4e67b7_150315fa62c_6f954.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Rpi1_b94d16a4e22d7b4499228dae0e4e67b7_1503126c941_837c5.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_1503707d2ee_3abf9.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b1e_c0be4.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Radio_gadellaa_81d214392d0388a2e033a4af04345b46_15036efbaf5_311f6.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Radio_gadellaa_81d214392d0388a2e033a4af04345b46_15036efab39_6fba6.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Radio_Gadellaa_81d214392d0388a2e033a4af04345b46_15036ec7614_673b9.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Radio_Gadellaa_81d214392d0388a2e033a4af04345b46_15036e6fc55_122a6.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Radio_Gadellaa_81d214392d0388a2e033a4af04345b46_15036e59597_54cb1.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Radio_Gadellaa_81d214392d0388a2e033a4af04345b46_15036d721a9_e75c8.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.Radio_Gadellaa_81d214392d0388a2e033a4af04345b46_15036d6eded_a8d8f.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.b94d16a4e22d7b4499228dae0e4e67b7_150315f81b6_89f29_b94d16a4e22d7b4499228dae0e4e67b7_150315f81ca_5b61f.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.b94d16a4e22d7b4499228dae0e4e67b7_15031269184_cc597_b94d16a4e22d7b4499228dae0e4e67b7_15031269191_7af6e.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.b94d16a4e22d7b4499228dae0e4e67b7_1503125cf43_f0ee7_b94d16a4e22d7b4499228dae0e4e67b7_1503125cf5a_ad00b.json
+2015-10-06 07:15:39     - TMP: ../json/station_info.TMP.4b340490e62fdad97f29a0ff1597d7d5_15031414a0f_275d4_4b340490e62fdad97f29a0ff1597d7d5_15031414a1f_e92c2.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.Radio_Sky_Fm_624140c64c05af6a69d1c75223553420_14ec9f93c43_e262c.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.Groot_Nieuws Radio_f7ece469dd285080fc945db685d517d0_14c1e96215a_eee53.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.Groot_Nieuws Radio_2cc20d7172740483da6835cdaf90faec_14c1ea0a259_fd0b3.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.CUSTOM.Station_4b340490e62fdad97f29a0ff1597d7d5_1503141acd7_926b3.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.CUSTOM.Rpi1_b94d16a4e22d7b4499228dae0e4e67b7_150315fb513_3edd5.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.CUSTOM.Rpi1_b94d16a4e22d7b4499228dae0e4e67b7_1503126c936_85e9c.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.B92_81d214392d0388a2e033a4af04345b46_1502a181da5_59fe8.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.Arrow_Classic_Rock_81d214392d0388a2e033a4af04345b46_1500109cc59_f6d36.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.Arrow_Classic_Rock_65d63dcaccc49644b55c225f6efb2e40_15024ab14a0_c4728.json
+2015-10-06 07:15:39     - OLD: ../json/station_info.Arrow_Classic_Rock_4b340490e62fdad97f29a0ff1597d7d5_15027f12511_daeb5.json
+2015-10-06 07:15:38    Cleanup json
 2015-10-03 11:26:14    Error: Access denied'
 2015-10-03 11:26:14    POST > {"post":"station_icon"}
 2015-10-03 11:26:14    Cleanup json
@@ -913,20 +964,4 @@
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_61e1d9b71d74585ede1529b09f5fd16f_149de9470f0_979f1.json
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_61ab9c7dc796172ddadfa2b2d0d2b417_149c8c6b522_b1e71.json
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_5fe9667d70047ad0cb6a82f7a462a1a0_14c831719e8_22d05.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_5fe9667d70047ad0cb6a82f7a462a1a0_14c831719e8_22d05.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_5b84fe67008a46809c0ac3f6068502fb_1498ea2db18_7c3b6.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_55f2f37511b81e7e_148e9a23dc9_61240.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_5539f8dccd3b475b4434347328fcffee_1497a1054bf_80493.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_3f7ff64057d707291dc78ad78917ee58_14a4a2371e6_38663.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_3ca9c047479a7008_148f14bef81_34f0d.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_3bf8a42562136e26a7b914dcca194030_14b3b7d2a90_c654f.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_2e97c5e1460f890d1b8b3e3c2d7735b2_14ab72b1e8e_3f172.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_2809c3657883f0811a5295ecbc0c9094_148fc0ad5ef_7bc9d.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_0cc7205dd0b3aca4e6ff76182454ae2c_14a25b88ed0_10f6c.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_09a5c9489b197bf2c590c000bfcecf86_14995d790e2_923a5.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_0866fe3e6680c3ba8862f7f2ada61471_149afaa1483_2b0d7.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_03598c7c0a1c6c817cc170ae4602ee09_14bbcf1e22c_e10b1.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_000cc1462348e28cab453ac05117553a_14a26767015_e6c6d.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_000cc1462348e28cab453ac05117553a_14a1e5e668f_90092.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_000cc1462348e28cab453ac05117553a_149a0a30429_5923d.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10 –
+2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_5fe966

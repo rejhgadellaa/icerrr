@@ -168,20 +168,6 @@ site.chicon.init = function(station_id) {
 						
 						loggr.log(" > "+ imagePath);
 						
-						// Get file entry
-						/*
-						window.resolveLocalFileSystemURL(imagePath,
-							function(fileEntry) {
-								loggr.log(" > "+ fileEntry.fullPath);
-								alert(fileEntry.fullPath);
-							},
-							function(error) {
-								loggr.error(" > "+ fileEntry.fullPath,{dontupload:true});
-								alert("An error occured: "+ site.storage.getErrorType(error));
-							}
-						);
-						/**/
-						
 						// Get path + name
 						var path = site.storage.getpath(imagePath);
 						var name = site.storage.getfilename(imagePath,1);
