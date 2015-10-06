@@ -7,6 +7,8 @@
 
 error_reporting(E_ERROR | E_PARSE);
 
+$localserver = "http://84.105.53.209/icerrr/php/tests/test-readid3.php?q=";
+
 // Function: fw
 function fw($path,$content,$append=false) {
 	if ($append) {
@@ -27,6 +29,18 @@ function fr($path) {
 	$fr = @fread($fo,@filesize($path));
 	@fclose($fo);
 	return $fr;
+}
+
+function fg($f) {
+	
+	$fo = @fopen($f, "r");
+	if (!$fo) { @fclose($fo); return false; }
+	while($fg = @fgets($fo)) { $buffer .= $fg; }
+	@fclose($fo);
+	if ($buffer) { return $buffer; }
+	return false;
+	/**/
+	//return @file_get_contents($f);
 }
 
 // Function: error
@@ -134,6 +148,16 @@ if ($url!=$rurl) {
 	$queryj["port"] = intval(trim($port));
 	$queryj["path"] = trim($path);
 }
+
+// Port?
+if ($queryj["port"]!=80 && strpos($localserver,$_SERVER['HTTP_HOST'])===FALSE) {
+	
+	$query = $localserver . urlencode('{"station_id":"'. $queryj["station_id"] .'","host":"'. $queryj["host"] .'","port":"'. $queryj["port"] .'","path":"'. $queryj["path"] .'"}');
+	$fg = fg($query);
+	header("Content-Type: application/json");
+	die($fg);
+	
+}
 	
 // Begin..
 $timebgn = time();
@@ -178,7 +202,7 @@ if (!$fsock) {
 	}
 	
 	if (!$fsock) { 
-		error("Could not open socket: '".$queryj["host"]."' (dns lookup: '{$diddnslookup}', '{$host}'), '".$queryj["port"] ."', $errno $errstr"); 
+		error("Could not open socket: '".$queryj["host"]."' (dns lookup: '{$diddnslookup}', '{$host}'), '".$queryj["port"] .", ". $queryj["path"] ."', $errno $errstr"); 
 		die();
 	}
 	

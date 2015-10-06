@@ -1,3 +1,60 @@
+2015-10-06 09:51:31     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:51:31    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:51:31     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:51:31    Cleanup json
+2015-10-06 09:46:25    Error: Error talking to id3 reader: 'http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=%7B%22station_id%22%3A%22TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c%22%2C%22host%22%3A%22pdaddy.rejh.nl%22%2C%22port%22%3A80%2C%22path%22%3A%22%2F%3Fr%3Dradio%22%7D', '', {"type":8,"message":"Undefined variable: buffer","file":"D:\\Working\\GitHub\\icerrr\\webapp\\api\\s.functions.php","line":192}
+2015-10-06 09:46:25     >> Read stream... 1 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:46:05     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:46:05    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:46:05     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:46:05    Cleanup json
+2015-10-06 09:45:56    Error: Error: could not parse json: '../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json'
+2015-10-06 09:45:56     >> OIOI
+2015-10-06 09:45:56     >> Read stream... 1 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:45:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:45:55    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:45:55     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:45:55    Cleanup json
+2015-10-06 09:45:35    Error: Error: could not parse json: '../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json'
+2015-10-06 09:45:35     >> OIOI
+2015-10-06 09:45:35     >> Read stream... 1 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:45:35     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:45:35    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:45:35     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:45:35    Cleanup json
+2015-10-06 09:45:33    Error: Error: could not parse json: '../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json'
+2015-10-06 09:45:33     >> OIOI
+2015-10-06 09:45:33     >> Read stream... 1 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:45:33     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:45:33    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:45:33     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:45:33    Cleanup json
+2015-10-06 09:45:22    Error: Error: could not parse json: '../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json'
+2015-10-06 09:45:22     >> OIOI
+2015-10-06 09:45:22     >> Read stream... 1 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:45:21     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:45:21    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:45:21     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:45:21    Cleanup json
+2015-10-06 09:44:41     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:44:41    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:44:41     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:44:41    Cleanup json
+2015-10-06 09:44:27     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:44:27    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:44:27     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:44:27    Cleanup json
+2015-10-06 09:40:07     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:40:07    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:40:07     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:40:07    Cleanup json
+2015-10-06 09:39:25     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:39:25    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:39:25     - TMP: ../json/station_info.TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c.json
+2015-10-06 09:39:25    Cleanup json
+2015-10-06 09:37:34     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
+2015-10-06 09:37:34    GET > {"get":"station_info","station_id":"TMP.Radio_65d63dcaccc49644b55c225f6efb2e40_1503c14dca5_2e68c","station_host":"pdaddy.rejh.nl","station_port":80,"station_path":"/?r=radio"}
+2015-10-06 09:37:34    Cleanup json
 2015-10-06 08:09:26     >> Read stream... 0 http://84.105.53.209/icerrr/php/tests/test-readid3.php?q=
 2015-10-06 08:09:26    GET > {"get":"station_info","station_id":"CUSTOM.Rpi1_4b340490e62fdad97f29a0ff1597d7d5_150349a3b14_f3048","station_host":"192.168.0.151","station_port":"8000","station_path":"/radio"}
 2015-10-06 08:09:26    Cleanup json
@@ -939,29 +996,3 @@
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_d38beb63f43c5034368d3228d76e8e9f_14aa5b0c0f1_cb10a.json
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_d063f7e914752b0b22a50cc0d90c543b_14be9ecaf92_5b805.json
 2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_d063f7e914752b0b22a50cc0d90c543b_14b657d31f2_5dafd.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_bdcbd50ab613eb43f5829ad808305d99_149592fb92f_339e0.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_bdcbd50ab613eb43f5829ad808305d99_149592fb92f_339e0.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_bca04442dfcca9b91ddf57053b73f9fe_149d6892421_e236e.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_a9f59c6938ab7a66ba94e3cbd7c12290_14a1fbfd726_86422.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_9fe496ea0ef3e279_148ef929910_6ec01.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_9f1bfc499e4f31e_148eea92126_8da01.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_9868b01e5f853175952ea7d5b2372425_14952b6ede5_adaf6.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_97b837a95e0516cf8ef533ac06febdb5_14ccde09293_53e97.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_97b837a95e0516cf8ef533ac06febdb5_14ccb58a269_1c42c.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_8a279ea4238f01079abd1261fe1c71c4_14b352ec00f_61aff.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_7c9e3466b4fe8c82a531e80a7e9f3b21_14b27a3906e_541a5.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_771980d1a90103368ba146cd4d159e3c_14a32ea5b22_e78a3.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_771980d1a90103368ba146cd4d159e3c_149a0a6f786_7479c.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_6e9879b63ef0a94a28a3ef27068cf422_14ae4211fff_ce76b.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_67451e3fe7d83402efe23d917556288e_14bbd012fec_ece7.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_67451e3fe7d83402efe23d917556288e_14bbb344b67_cb415.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_67451e3fe7d83402efe23d917556288e_14b6318d1dc_fe55.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_67451e3fe7d83402efe23d917556288e_14b5884d118_9e078.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_67451e3fe7d83402efe23d917556288e_14acb1ed5fc_74a7f.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_67451e3fe7d83402efe23d917556288e_149f7e876fe_9621.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_67451e3fe7d83402efe23d917556288e_149c16aa4f5_2c842.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_61e1d9b71d74585ede1529b09f5fd16f_149de9470f0_979f1.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_61e1d9b71d74585ede1529b09f5fd16f_149de9470f0_979f1.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_61ab9c7dc796172ddadfa2b2d0d2b417_149c8c6b522_b1e71.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_5fe9667d70047ad0cb6a82f7a462a1a0_14c831719e8_22d05.json
-2015-04-22 06:01:25     - OLD: ../json/station_info.Radio_10_5fe966
