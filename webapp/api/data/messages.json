@@ -40,9 +40,9 @@
     },
     
     {
-        "id":"app312",
+        "id":"app313",
         "crit":"version",
-        "critvalue":0.311,
+        "critvalue":0.312,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
@@ -50,6 +50,7 @@
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
             "v0.311 includes:",
+            "* New UI for changing station icons when editing stations",
             "* Fix: Import station icon from more sources",
             "* Visual tweaks, bugfixes, improvements"
             ],

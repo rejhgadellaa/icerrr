@@ -5,7 +5,7 @@
 
 	ICERRR - default css
 	This css is targeted at phones (~320 x ~480)
-	
+
 */
 
 /* -- FONTS */
@@ -22,17 +22,17 @@ body, table, input, select {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-html { 
+html {
 	overflow:hidden;
-	width:100%; 
-	height:100%; 
+	width:100%;
+	height:100%;
 	background-color:#607D8B;
 }
 
 body {
-	overflow:hidden; 
-	width:100%; 
-	height:100%; 
+	overflow:hidden;
+	width:100%;
+	height:100%;
 	margin:0;
 	padding:0;
 	background-color:#607D8B;
@@ -46,12 +46,12 @@ a {
 	a:hover {
 		/* text-decoration:underline; */
 	}
-	
+
 h1 {
 	font-size:32pt;
 	font-weight:200;
 }
-	
+
 label {
 	margin-left:8px;
 	color:#727272;
@@ -64,7 +64,7 @@ input,select {
 	font-size:16pt;
 	background:none;
 	border:none;
-	border-bottom:1px solid rgba(0,0,0,0.16); 
+	border-bottom:1px solid rgba(0,0,0,0.16);
 	outline: none;
 }
 input:focus,select:focus {
@@ -96,7 +96,7 @@ input[type="checkbox"] {
 
 /*
 select {
-	margin:0; 
+	margin:0;
 	padding:5px;
 	background:#fff;
 }
@@ -125,13 +125,13 @@ section {
 		height:56px;
 		background-color:#607D8B /* #2D6073; */ /* #61AE24; */
 	}
-	
+
 		.actionbar .icon_app {
 			position:absolute;
 			top:0; left:0;
 			height:56px;
 		}
-	
+
 			.actionbar .icon_app iron-icon {
 				margin:0;
 				padding:16px;
@@ -142,14 +142,14 @@ section {
 				padding:0;
 				color:#fff;
 			}
-		
+
 			.actionbar .icon_app img { /* TODO: deprecated polymer */
 				width:24px; height:24px;
 			}
-		
+
 		.actionbar .title {
 			position:absolute;
-			bottom:14px; left:72px;			
+			bottom:14px; left:72px;
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow:ellipsis;
@@ -157,13 +157,13 @@ section {
 			xfont-weight:300;
 			color:#FFF; /* #D0D102; */
 		}
-		
+
 		.actionbar .actions {
 			position:absolute;
 			top:0; right:0;
 			height:56px;
 		}
-			
+
 			.actionbar .actions paper-icon-button {
 				float:right;
 				margin: 8px 16px 0 0;
@@ -172,7 +172,7 @@ section {
 			.actionbar .actions paper-icon-button.more-vert {
 				margin:8px 8px 0 -8px;
 			}
-		
+
 			.actionbar .actions .action { /* TODO: deprecated polymer */
 				float:right;
 				width:24px;
@@ -180,11 +180,11 @@ section {
 				margin-right:8px;
 				padding:16px;
 			}
-			
+
 				.actionbar .actions .action img { /* TODO: deprecated polymer */
 					width:24px; height:24px;
 				}
-				
+
 	.tabbar {
 		z-index:2;
 		position:absolute;
@@ -195,7 +195,7 @@ section {
 		color:#fff; /* rgba(255,255,255,0.87); */
 		text-transform:uppercase;
 	}
-	
+
 		.tab {
 			float:left;
 			width:50%;
@@ -206,14 +206,14 @@ section {
 			background:rgba(0,0,0,0.0);
 			color:#fff; /* rgba(255,255,255,0.87); */
 		}
-		
+
 		.tab_sep {
 			float:left;
 			width:2%;
 			height:48px;
 			background:rgba(0,0,0,0.25);
 		}
-	
+
 	.main {
 		z-index:1;
 		overflow:auto;
@@ -222,9 +222,9 @@ section {
 		width:100%;
 		xheight:*; /* TODO: smart way to set height dynamically so it uses all available space? */
 	}
-		
+
 		.main .block {
-			
+
 		}
 
 			.main .block.header {
@@ -241,7 +241,7 @@ section {
 				position:absolute;
 				left:16px; bottom:19px;
 			}
-	
+
 	.footer {
 		z-index:2;
 		position:absolute;
@@ -249,7 +249,7 @@ section {
 		width:100%;
 		height:88px;
 	}
-	
+
 		.footer .button {
 			width:33.3%;
 			height:88px;
@@ -259,7 +259,7 @@ section {
 			background-repeat:no-repeat;
 			color:rgba(255,255,255,0.87);
 		}
-		
+
 		.footer .button.active {
 			background-color: rgba(0,0,0,0.25);
 			background: -webkit-radial-gradient(ellipse, rgba(0, 0, 0, 0.33) 10%, rgba(0, 0, 0, 0.0) 40%);
@@ -267,54 +267,54 @@ section {
 			background-position:center;
 			background-repeat:no-repeat;
 		}
-		
+
 		.footer .button.busy img {
 			opacity:0.5;
 		}
-		
+
 		.footer .button.left {
 			position:absolute;
 			left:0; top:0;
 		}
-		
+
 		.footer .button.center {
 			position:absolute;
 			left:33.34%; top:0;
 		}
-		
+
 		.footer .button.right {
 			position:absolute;
 			right:0; top:0;
 		}
-		
+
 		.footer .button_inner {
 			position:absolute;
 			width:100%; height:24px;
 			padding:32px 0 32px 0;
 		}
-		
+
 		.footer .button_inner img {
 			width:40px;
 			height:40px;
 			margin:-8px 0 0 0;
 		}
-		
+
 			.footer .button.center .button_inner img {
 				width:48px;
 				height:48px;
 			}
-			
+
 	.fab {
 		z-index:50;
 		position:fixed;
 		bottom:16px; right:16px;
-		width:56px; 
+		width:56px;
 		height:56px;
 		border-radius:50%;
 		background:#FF5722;
 		transition:bottom 250ms;
 	}
-	
+
 		.fab img {
 			width:24px;
 			height:24px;
@@ -336,7 +336,7 @@ section {
 	}
 
 #install {
-	
+
 }
 
 	#install .main .log {
@@ -345,16 +345,16 @@ section {
 		font-weight:300;
 		color:#727272; /* rgba(0,0,0,0.54); */
 	}
-	
+
 	#install .main .log h1 {
 		margin:0 0 0 0;
 	}
-	
+
 	#install .main .log li {
 		margin-left:1em;
 		font-size:14pt;
 	}
-	
+
 	#install .main .log span.e {
 		color:#f00;
 	}
@@ -371,7 +371,7 @@ section {
 		overflow:hidden;
 		width:100%; height:100%;
 	}
-	
+
 	#home .main .station_image {
 		position:absolute;
 		top:-5%; left:-5%;
@@ -384,7 +384,7 @@ section {
 		background-size:cover;
 		background-image:url(../img/bg_home_default.jpg);
 	}
-	
+
 	#home .main .station_image_wrap {
 		display:none;
 		position:absolute;
@@ -392,7 +392,7 @@ section {
 		width:268px; height:268px;
 		margin:-136px 0 0 -136px;
 	}
-	
+
 	#home .main .station_image_wrap img {
 		width:256px;
 		height:256px;
@@ -401,7 +401,7 @@ section {
 		opacity:0.0;
 		border-radius: 136px;
 	}
-	
+
 	#home .main .station_image_color {
 		position:absolute;
 		top:0; left:0; right:0; bottom:0;
@@ -409,31 +409,31 @@ section {
 		/* transition: background 500ms; */
 		opacity:0.5;
 	}
-	
+
 	#home .main .station_image_overlay {
 		position:absolute;
 		top:0; left:0; right:0;
 		height:33%;
 		background: -webkit-linear-gradient(rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.0) 100%);
 	}
-	
+
 	#home .main .station_image_overlay_bottom {
 		position:absolute;
 		bottom:0; left:0; right:0;
 		height:16%;
 		background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.50) 100%);
 	}
-	
+
 	#home .main .station_info_wrap {
 		position:absolute;
 		top:0; left:0; right:0; height:72px;
 	}
-	
+
 	#home .main .station_icon {
 		position:absolute;
 		top:0; left:0;
 	}
-	
+
 		#home .main .station_icon img {
 			width:40px;
 			height:40px;
@@ -441,7 +441,7 @@ section {
 			padding:1px;
 			border-radius:40px;
 		}
-	
+
 	#home .main .station_name {
 		position:absolute;
 		top:14px; left:71px; right:16px;
@@ -452,7 +452,7 @@ section {
 		font-weight:300;
 		color:rgba(255,255,255,0.87);
 	}
-	
+
 	#home .main .station_nowplaying {
 		position:absolute;
 		top:39px; left:72px; right:16px;
@@ -462,14 +462,14 @@ section {
 		font-size:12pt;
 		color:rgba(255,255,255,0.87);
 	}
-	
+
 	/*
-	
+
 	#home .main .station_name {
 		position:absolute;
 		top:40px; left:15px; right:16px;
 		margin:0;
-		font-size:24pt; 
+		font-size:24pt;
 		font-weight:300;
 		text-transform:capitalize;
 		color:rgba(255,255,255,0.87);
@@ -477,7 +477,7 @@ section {
 		white-space: nowrap;
 		text-overflow:ellipsis;
 	}
-	
+
 	#home .main .station_nowplaying {
 		position:absolute;
 		top:16px; left:16px; right:16px;
@@ -487,18 +487,18 @@ section {
 		white-space: nowrap;
 		text-overflow:ellipsis;
 	}
-	
+
 	/**/
-	
+
 	#home .button_play_wrap {
 		display:none;
 		position:relative;
 		left:50%;
-		width:48px; 
+		width:48px;
 		height:48px;
 		margin:-4px 0 0 -24px;
 	}
-	
+
 	#home .button_play_bufferAnim {
 		display:none;
 		position:absolute;
@@ -515,7 +515,7 @@ section {
 		-webkit-animation-fill-mode: forwards;
 		-webkit-animation-timing-function:ease-in-out;
 	}
-	
+
 	#home .fab_play_shadow {
 		position:absolute;
 		left:50%; bottom:0px;
@@ -527,26 +527,26 @@ section {
 		background-repeat:no-repeat;
 		color:rgba(255,255,255,0.87);
 	}
-	
+
 	#home .fab_play_wrap {
 		z-index:50;
 		position:absolute;
 		left:50%; bottom:16px;
-		width:56px; 
+		width:56px;
 		height:56px;
 		margin-left:-28px;
 	}
-	
+
 		#home .fab_play {
 			position:absolute;
 			top:0; left:0;
-			width:56px; 
+			width:56px;
 			height:56px;
 			border-radius:50%;
 			background:#FF5722;
 			/* transition: background 500ms; */
 		}
-			
+
 			#home .fab_play img {
 				position:absolute;
 				top:16px; left:16px;
@@ -555,7 +555,7 @@ section {
 			#home .fab_play_wrap.busy .fab_play img {
 				opacity:0.5;
 			}
-	
+
 		#home .fab_play_bufferAnim {
 			display:block;
 			position:absolute;
@@ -572,7 +572,7 @@ section {
 			-webkit-animation-fill-mode: forwards;
 			-webkit-animation-timing-function:ease-in-out;
 		}
-	
+
 	#home .alarm_dialog {
 		z-index:3;
 		display:none;
@@ -580,8 +580,8 @@ section {
 		top:0; left:0; right:0; bottom:0;
 		background:rgba(0,0,0,0.67);
 	}
-	
-		#home .alarm_dialog_inner {	
+
+		#home .alarm_dialog_inner {
 			position:absolute;
 			top:50%; left:50%;
 			width:280px; height:280px;
@@ -589,7 +589,7 @@ section {
 			background:rgba(255,255,255,0.87);
 			color:#212121; /*rgba(0,0,0,0.87);*/
 		}
-		
+
 		#home .alarm_dialog .time {
 			position:absolute;
 			top:88px; left:0; right:0;
@@ -598,7 +598,7 @@ section {
 			font-weight:300;
 			color:#727272; /* rgba(0,0,0,0.54); */
 		}
-		
+
 		#home .alarm_dialog .button {
 			position:absolute;
 			bottom:0;
@@ -608,23 +608,23 @@ section {
 			font-size:14pt;
 			color:#FF5722;
 		}
-		
+
 			#home .alarm_dialog .button.snooze {
 				left:0;
 			}
-			
+
 			#home .alarm_dialog .button.stop {
 				right:0;
 			}
 
 #channellist {
-	
+
 }
 
 	#channellist .actionbar {
 		height:58px;
 	}
-	
+
 	#channellist .actionbar .title {
 		bottom:16px;
 	}
@@ -632,9 +632,9 @@ section {
 	#channellist .main {
 		top:104px;
 	}
-	
+
 	/* TODO: Fow now let's keep this universal? */
-	
+
 	.resultheader {
 		position:relative;
 		top:0; left:0; right:0;
@@ -646,7 +646,7 @@ section {
 		border-bottom:1px solid #ccc;
 		text-transform:uppercase;
 	}
-	
+
 	.resultitem {
 		float:left;
 		position:relative;
@@ -655,18 +655,18 @@ section {
 		background:#fff;
 		border-bottom:1px solid #ddd;
 	}
-	
+
 	.resultitem .resulticon {
 		position:absolute;
 		top:0; left:0;
-		width:40px; 
+		width:40px;
 		height:40px;
 		margin:16px;
 		border-radius:40px;
 		background-color:#f9f9f9;
-		
+
 	}
-	
+
 	.resultitem .resultname {
 		position:absolute;
 		bottom:24px; left:72px; right:72px;
@@ -676,7 +676,7 @@ section {
 		font-size:14pt;
 		color:#212121;
 	}
-	
+
 	.resultitem .resultstar {
 		position:absolute;
 		top:0; right:0;
@@ -684,18 +684,18 @@ section {
 		height:24px;
 		padding:24px;
 	}
-	
+
 	.resultitem .resultstarred {
-		
+
 	}
-	
+
 	.resultitem_spacer {
 		/* for bottom, space for fab */
 		height:64px;
 		background:#ECEFF1;
 		border:none;
 	}
-	
+
 	.resultfooter {
 		/* for credits, powered by ... */
 		position:fixed;
@@ -705,7 +705,7 @@ section {
 		text-align:center;
 		font-size:10pt;
 	}
-	
+
 #detailstation {
 
 }
@@ -719,39 +719,39 @@ section {
 		background-size:cover;
 		background-position:center center;
 	}
-	
+
 		#detailstation .main .header .overlay {
 			position:absolute;
 			top:0; left:0; right:0; height:192px;;
 			background: -webkit-linear-gradient(rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.50) 50%, rgba(0,0,0,0.25) 100%);
 		}
-	
+
 		#detailstation .main .header .station_icon {
 			display:none;
 			position:absolute;
 			top:0; left:0;
 		}
-		
+
 			#detailstation .main .header .station_icon img {
 				width:40px;
 				height:40px;
 				margin:16px;
 				border-radius:40px;
 			}
-	
+
 		#detailstation .main .header .station_image {
 			position:absolute;
 			top:50%; left:50%;
 			margin-left:-64px; margin-top:-64px;
-			
+
 		}
-		
+
 			#detailstation .main .header .station_image img {
 				width:128px;
 				height:128px;
 				border-radius:128px;
 			}
-		
+
 		#detailstation .main .header .station_name {
 			display:none;
 			position:absolute;
@@ -763,7 +763,7 @@ section {
 			font-weight:300;
 			color:rgba(255,255,255,0.87);
 		}
-		
+
 		#detailstation .main .header .station_nowplaying {
 			display:none;
 			position:absolute;
@@ -775,27 +775,27 @@ section {
 			/* font-weight:300; */
 			color:rgba(255,255,255,0.87);
 		}
-		
+
 		#detailstation .main .header .station_starred {
 			position:absolute;
 			top:0; right:0;
 		}
-		
+
 			#detailstation .main .header .station_starred img {
 				width:24px; height:24px;
 				padding:24px;
 			}
-	
+
 	#detailstation .main .content,
 	#detailstation .main .content_loading {
 		position:absolute;
 		top:192px; left:0; right:0; bottom:0;
 	}
-	
+
 	#detailstation .main .content_loading {
 		display:none;
 	}
-	
+
 		#detailstation .main .content_loading .content_loading_message {
 			position:absolute;
 			top:50%; left:50%;
@@ -805,14 +805,14 @@ section {
 			font-size:16pt;
 			font-weight:300;
 		}
-	
+
 		#detailstation .main .content .content_header,
 		#detailstation .main .content_loading .content_header {
 			position:relative;
 			top:0; left:0; right:0; height:72px;
 			background-color:#455A64;
 		}
-		
+
 			#detailstation .main .content_header .station_name {
 				position:absolute;
 				top:13px; left:16px; right:72px;
@@ -823,7 +823,7 @@ section {
 				font-weight:300;
 				color:rgba(255,255,255,0.87);
 			}
-			
+
 			#detailstation .main .content_header .station_nowplaying {
 				position:absolute;
 				top:39px; left:16px; right:24px;
@@ -834,7 +834,7 @@ section {
 				/* font-weight:300; */
 				color:rgba(255,255,255,0.87);
 			}
-	
+
 		#detailstation .main .content .content_item {
 			overflow:hidden;
 			position:relative;
@@ -842,24 +842,24 @@ section {
 			height:72px;
 			transition: height 500ms;
 		}
-		
+
 			#detailstation .main .content .content_item .icon {
 				position:absolute;
 				top:24px; left:24px;
 			}
-			
+
 				#detailstation .main .content .content_item .icon img {
 					width:24px; height:24px;
 					opacity:0.54;
 				}
-		
+
 			#detailstation .main .content .content_item .text {
 				position:absolute;
 				top:0; left:72px; right:0;
 				height:71px;
 				border-bottom:1px solid #ddd;
 			}
-			
+
 				#detailstation .main .content .content_item .text .title {
 					position:absolute;
 					top:16px; left:0; right:16px;
@@ -870,7 +870,7 @@ section {
 					text-overflow:ellipsis;
 					color:#212121;
 				}
-				
+
 				#detailstation .main .content .content_item .text .subtitle {
 					position:absolute;
 					top:36px; left:0; right:16px;
@@ -881,40 +881,40 @@ section {
 					text-overflow:ellipsis;
 					color:#727272;
 				}
-				
+
 			#detailstation .main .content .content_item .inline_list {
 				position:relative;
-				top:0; left:0; right:0; 
+				top:0; left:0; right:0;
 				height:0;
 				margin-top:72px;
 			}
-			
+
 				#detailstation .main .content .content_item .inline_list .divider {
 					position:relative;
 					top:0; left:72px; right:0;
 					height:1px;
 					background:#ddd;
 				}
-			
+
 				#detailstation .main .content .content_item .inline_list .ic_collapsed {
 					position:absolute;
 					top:72px; left:0; right:0;
 					height:72px;
 				}
-			
+
 					#detailstation .main .content .content_item .inline_list .ic_collapsed img {
 						width:24px; height:24px;
 						margin:24px;
 						opacity:0.54;
 					}
-			
+
 				#detailstation .main .content .content_item .inline_list .playlist_item {
 					position:relative;
 					top:0; left:0; right:0;
 					height:72px;
 					margin-left:72px;
 				}
-			
+
 					#detailstation .main .content .content_item .inline_list .playlist_item_name {
 						position:absolute;
 						top:16px; left:0; right:112px;
@@ -925,7 +925,7 @@ section {
 						text-overflow:ellipsis;
 						color:#212121;
 					}
-					
+
 					#detailstation .main .content .content_item .inline_list .playlist_item_title {
 						position:absolute;
 						top:36px; left:0; right:112px;
@@ -936,7 +936,7 @@ section {
 						text-overflow:ellipsis;
 						color:#727272;
 					}
-					
+
 					#detailstation .main .content .content_item .inline_list .playlist_item_spotify,
 					#detailstation .main .content .content_item .inline_list .playlist_item_gpmusic {
 						position:absolute;
@@ -948,27 +948,27 @@ section {
 						right:72px;
 					}
 					#detailstation .main .content .content_item .inline_list .playlist_item_gpmusic {
-					
+
 					}
-	
+
 	#detailstation .fab_header {
 		position:absolute;
 		top:164px; right:16px;
-		width:56px; 
+		width:56px;
 		height:56px;
 		border-radius:50%;
 		background:#FF5722;
 		transition:bottom 250ms;
 	}
-		
+
 		#detailstation .fab_header img {
 			width:24px;
 			height:24px;
 			margin:16px;
 		}
-	
+
 #editstation, #searchstation, #searchstation_results {
-	
+
 }
 
 	#editstation .block, #searchstation .block, #alarms_add .block, #about .block, #viewlog .block {
@@ -979,30 +979,42 @@ section {
 		/* padding:16px; */
 		padding:0;
 	}
-	
+
 	#editstation .block label a, #searchstation .block label a, #alarms_add .block label a {
 		float:right;
 	}
-	
-	#editstation img.station_icon, #searchstation img.station_icon {
-		width:40px; height:40px;
-		margin:0 0 0 8px;
-		border-radius: 20px;
+
+	#editstation .station_icon_wrap {
+		width:100%;
 	}
-	
-	#editstation .block .button, #searchstation .block .button {
-		
-	}
-	
+
+		#editstation .station_icon_wrap .station_icon {
+			float:left;
+			width:40px; height:40px;
+			margin:0 24px 0 8px;
+			border-radius: 20px;
+		}
+
+		#editstation .station_icon_wrap .station_icon_button {
+			display:table-cell;;
+			width:112px; height:40px;
+			text-align: center;
+			vertical-align: middle;
+			color:#FF5722;
+			font-weight: normal;
+		}
+
+	#editstation .block .button, #searchstation .block .button {}
+
 	#editstation #chedit_station_url_hq {
 		display:none;
 	}
-	
+
 #searchstation_results {
 
 }
-	
-	#searchstation_results  .resultitem .resultname, 
+
+	#searchstation_results  .resultitem .resultname,
 	#alarms .resultitem .resultname {
 		/*
 		position:absolute;
@@ -1022,8 +1034,8 @@ section {
 		text-overflow:ellipsis;
 		color:#212121;
 	}
-	
-	#searchstation_results .resultitem .resultsub, 
+
+	#searchstation_results .resultitem .resultsub,
 	#alarms .resultitem .resultsub {
 		/*
 		position:absolute;
@@ -1043,7 +1055,7 @@ section {
 		text-overflow:ellipsis;
 		color:#727272;
 	}
-	
+
 #searchicon {
 
 }
@@ -1051,12 +1063,12 @@ section {
 	#searchicon .main {
 		padding-bottom:48px;
 	}
-	
+
 		.resultwrap_chicon {
 			margin:auto;
 			padding:10px;
 		}
-	
+
 		.resultitem_chicon {
 			float:left;
 			width:80px;
@@ -1066,11 +1078,11 @@ section {
 			background:#fff;
 			overflow:hidden;
 		}
-	
+
 			.resulticon_chicon {
 				width:100%;
 			}
-			
+
 	#searchicon .main .gsc-branding {
 		position:fixed;
 		right:0; left:0; bottom:0;
@@ -1081,13 +1093,13 @@ section {
 	}
 
 /* Alarms */
-	
+
 #alarms {
-	
+
 }
 
 #alarms_add {
-	
+
 }
 
 	#alarms_add .block {
@@ -1100,12 +1112,12 @@ section {
 	#alarms_add .block.borderTop {
 		border:1px solid #ddd;
 	}
-	
+
 	#alarms_add .range_wrap {
 		margin-top:0px;
 		background:#f00;
 	}
-	
+
 	#alarms_add input[type="range"] {
 		position:relative;
 		top:8px; left:0px; /* top: -1 + 4 */
@@ -1117,22 +1129,26 @@ section {
 		background-color: rgba(0,0,0,0.16);
 		border:none;
 	}
-	
+
 		#alarms_add input[type="range"]::-webkit-slider-thumb {
 			-webkit-appearance: none;
 			position:relative;
-			top:0px;
+			top:0;
 			background-color: #455A64;
 			opacity: 1.0;
+			width: 24px;
+			height: 24px;
+			border-radius: 16px;
+			transition:background-color 250ms, width 250ms, height 250ms, top 250ms;
+		}
+		#alarms_add input[type="range"]:active::-webkit-slider-thumb,
+		#alarms_add input[type="range"]:focus::-webkit-slider-thumb {
+			background-color:#FF5722;
+			top:0px;
 			width: 32px;
 			height: 32px;
-			border-radius: 16px;
-			transition:background-color 250ms;
 		}
-		#alarms_add input[type="range"]::-webkit-slider-thumb:active {
-			background-color:#FF5722;
-		}
-	
+
 	#alarms_add .weekschedule {
 		height:48px;
 	}
@@ -1140,10 +1156,10 @@ section {
 	#alarms_add .weekboxWrap {
 		float:left;
 		position:relative;
-		width:14.28571%; 
+		width:14.28571%;
 		height:48px;
 	}
-	
+
 		#alarms_add .weekboxIndicator {
 			position:absolute;
 			left:4px; right:4px; bottom:4px;
@@ -1151,21 +1167,21 @@ section {
 			background:#ccc;
 			transition:background 250ms;
 		}
-		
+
 			#alarms_add .weekboxWrap.active .weekboxIndicator {
 				background:#455A64;
 			}
-	
+
 		#alarms_add .weekboxText {
 			position:absolute;
 			left:4px; right:4px; top:12px;
 			text-align:center;
 		}
-	
+
 /* Viewlog */
 
 #viewlog {
-	
+
 }
 
 	#viewlog .main {
@@ -1183,29 +1199,29 @@ section {
 		user-select: text;
 		cursor:text;
 	}
-	
+
 /* About */
-	
+
 #about {
 	display:none;
 }
-	
+
 	#about input.paypal {
 		width:147px;
 		cursor:pointer;
 	}
-	
+
 	#about .spacer {
 		width:16px;
 		height:16px;
 	}
-	
+
 /* Settings */
 
 #settings {
 
 }
-	
+
 	#settings .block {
 		position:relative;
 		left:0px; right:0px;
@@ -1222,9 +1238,9 @@ section {
 			color:#fff;
 			/**/
 		}
-	
+
 	/* Item defaults */
-	
+
 	#settings .block .itemWrap {
 		position:relative;
 		left:0px; right:0px;
@@ -1232,11 +1248,11 @@ section {
 	#settings .block .itemWrap.disabled {
 		color:rgba(0,0,0,0.54);
 	}
-	
+
 	#settings .block .item {
-		
+
 	}
-	
+
 	#settings .block .item.spacer {
 		width:100%;
 		height:1px;
@@ -1247,12 +1263,12 @@ section {
 		height:0;
 		background:none;
 	}
-	
+
 	#settings .block .item.endspacer {
 		width:100%;
 		height:16px;
 	}
-	
+
 	#settings .block .item.title {
 		position:relative;
 		margin-right:32px;
@@ -1263,7 +1279,7 @@ section {
 		text-overflow:ellipsis;
 		color:#212121;
 	}
-	
+
 	#settings .block .item.subtitle {
 		position:relative;
 		margin-top:0px;
@@ -1272,12 +1288,12 @@ section {
 		font-weight:300;
 		color:#727272;
 	}
-	
+
 		#settings .checkboxWrap {
 			position:absolute;
 			top:0px; right:0px;
 		}
-	
+
 /* -- OVERFLOW_MENU */
 
 .overflow_menu {
@@ -1287,10 +1303,10 @@ section {
 	position:absolute;
 	top:4px; right:4px;
 	width:0px; max-height:0px;
-	
+
 	width:240px;
 	max-height:600px;
-	
+
 	margin:0;
 	background:#fff; /* rgba(255,255,255,1); */
 }
@@ -1313,18 +1329,18 @@ section {
 		padding-top:1px;
 		border-bottom:1px solid #eee;
 	}
-	
+
 	.overflow_menu .menu_item .center_td {
 		text-align:left;
 	}
-	
+
 	.overflow_menu_button_close {
 		z-index:2;
 		position:absolute;
 		top:0; right:0;
 		padding:12px;
 	}
-	
+
 		.overflow_menu_button_close img {
 			width:24px; height:24px;
 		}
@@ -1349,15 +1365,15 @@ section {
 	.overlay_submsg {
 		font-size:12pt;
 	}
-	
+
 /* Specific */
 
 #loading.overlay_wrap {
-	
+
 }
 
 #dialog.overlay_wrap {
-	
+
 }
 
 	#dialog_inner {
@@ -1392,7 +1408,7 @@ section {
 /* -- COMMON */
 
 /* Center tools */
-	
+
 .center_table {
 	display:table;
 	width:100%;
@@ -1426,7 +1442,7 @@ section {
 .textshadow25 {
 	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 	}
-	
+
 .shadow_z1 {
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
 }
@@ -1446,7 +1462,7 @@ section {
 .shadow_z5 {
 	box-shadow: 1px 5px 10px rgba(0, 0, 0, .25);
 }
-	
+
 .shadow_z1u {
 	box-shadow: 0px -1px 2px rgba(0, 0, 0, 0.25);
 }
@@ -1466,7 +1482,7 @@ section {
 .shadow_z5u {
 	box-shadow: 0px -5px 10px rgba(0, 0, 0, .5);
 }
-	
+
 .shadowInset {
 	-moz-box-shadow:    inset 0 0 10px rgba(0,0,0,0.5);
 	-webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
@@ -1507,17 +1523,17 @@ section {
 }
 
 @-webkit-keyframes loadbar_inner {
-	
+
 	/**/
 	0% { -webkit-transform: translate3d(0px,0px,0px); }
 	100% { -webkit-transform: translate3d(100%,0px,0px); }
 	/*
-	
+
 	0% {left:-48px;}
 	100% {left:100%;}
-	
+
 	/**/
-} 
+}
 
 /* Selectable */
 
@@ -1595,22 +1611,3 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 		-webkit-transform: rotate(360deg);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

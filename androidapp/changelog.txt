@@ -1,3 +1,6 @@
+0.313
+  * New UI for changing station icons when editing stations
+
 0.312
   * Fixed #222: Import icons from Google Drive, Google Photos, etc
 

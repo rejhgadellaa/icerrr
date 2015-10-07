@@ -137,56 +137,7 @@ site.chicon.init = function(station_id) {
 
 			// Onclick for custom icon
 			$("#searchicon .resulticon_chicon.import").off("click");
-			$("#searchicon .resulticon_chicon.import").on("click",function(evt) {
-
-				loggr.log("site.chicon > import icon...");
-
-				if (site.cookies.get("warnedImportIconGooglePhotosAndDrive")!=1) {
-					site.cookies.put("warnedImportIconGooglePhotosAndDrive",1);
-					if (!confirm("A fair warning: at this moment Icerrr cannot import images from Google Photos or Drive. Dropbox works.\n\nContinue?")) {
-						return;
-					}
-				}
-
-				var imageOptions = {
-					quality : 75,
-					correctOrientation: true, // < FIXME does this work?? // NOPE it doesn't work IF the images are too big, it runs out of memory..
-					destinationType : Camera.DestinationType.FILE_URI,
-					sourceType : Camera.PictureSourceType.PHOTOLIBRARY ,
-					encodingType: Camera.EncodingType.PNG
-				};
-
-				navigator.camera.getPicture(
-					function(imagePath) { // okidokie
-
-						site.ui.showloading(null,"Processing image...");
-						setTimeout(function(){
-							site.chicon.uploadImagery(imagePath);
-						},500);
-
-					},
-					function(message) { // error
-
-						// Catch messages
-						switch(message) {
-							// Camera cancelled
-							case "Selection cancelled.":
-							case "Camera cancelled.":
-							case "no image selected":
-								site.ui.showtoast("Import cancelled");
-								site.ui.hideloading();
-								break;
-							// An actual error accured..?
-							default:
-								loggr.error("Error importing icon: "+message);
-								alert("An error occured: "+ message);
-								site.ui.hideloading();
-						}
-
-					}, imageOptions
-				);
-
-			});
+			$("#searchicon .resulticon_chicon.import").on("click",site.chicon.import);
 
 			// Append branding..
 			// results.getBranding(opt_element?, opt_orientation?)
@@ -281,7 +232,7 @@ site.chicon.save = function(target) {
 	}
 
 	// Loading
-	site.ui.showloading();
+	site.ui.showloading(null,"Just. One. More. Second...");
 
 	// Write file
 	// TODO: problem with site.storage.isBusy: what do we do when it's busy? retry?
@@ -295,12 +246,15 @@ site.chicon.save = function(target) {
 				function(station) {
 
 					// Goto ...
-					site.lifecycle.get_section_history_item(); // remove self from list
+					var thissection = site.lifecycle.get_section_history_item(); // remove self from list
 					var lastsection = site.lifecycle.get_section_history_item();
 					//site.chedit.changesHaveBeenMadeGotoStarred = true;
 					site.chedit.changesHaveBeenMade = true;
 					if (lastsection=="#editstation") {
 						site.chedit.init(site.chicon.station.station_id);
+					} else if (thissection=="#editstation") {
+						//site.detailstation.init({station_id:site.chicon.station.station_id},true);
+						site.chedit.init(site.chicon.station.station_id, site.chedit.askedAboutStationName, site.chedit.askedAboutNowplaying, site.chedit.checkedPlayability, site.chedit.isPlayable);
 					} else {
 						site.chedit.changesHaveBeenMadeGotoStarred = true;
 						site.chlist.init(); // pretty much every other scenario..
@@ -465,6 +419,65 @@ site.chicon.downloadedImagery = function(station,cb,cberr) {
 
 		},500);
 	}
+
+}
+
+// ---> Import
+
+site.chicon.importQuick = function(station_id) {
+	if (!site.chicon.station) { site.chicon.station = {}; }
+	site.chicon.station.station_id = station_id;
+	site.chicon.import();
+}
+
+site.chicon.import = function(evt) {
+
+	loggr.log("site.chicon > import icon...");
+
+	if (site.cookies.get("warnedImportIconGooglePhotosAndDrive")!=1) {
+		site.cookies.put("warnedImportIconGooglePhotosAndDrive",1);
+		if (!confirm("A fair warning: This feature is experimantal.\n\nContinue?")) {
+			return;
+		}
+	}
+
+	var imageOptions = {
+		quality : 75,
+		correctOrientation: true, // < FIXME does this work?? // NOPE it doesn't work IF the images are too big, it runs out of memory..
+		destinationType : Camera.DestinationType.FILE_URI,
+		sourceType : Camera.PictureSourceType.PHOTOLIBRARY ,
+		encodingType: Camera.EncodingType.PNG
+	};
+
+	navigator.camera.getPicture(
+		function(imagePath) { // okidokie
+
+			site.ui.showloading(null,"Processing image...");
+			setTimeout(function(){
+				site.chicon.uploadImagery(imagePath);
+			},500);
+
+		},
+		function(message) { // error
+
+			// Catch messages
+			switch(message) {
+				// Camera cancelled
+				case "Selection cancelled.":
+				case "Camera cancelled.":
+				case "no image selected":
+					site.ui.showtoast("Import cancelled");
+					site.ui.hideloading();
+					break;
+				// An actual error accured..?
+				default:
+					loggr.error("Error importing icon: "+message);
+					alert("An error occured: "+ message);
+					site.ui.hideloading();
+			}
+
+		}, imageOptions
+	);
 
 }
 
