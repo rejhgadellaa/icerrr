@@ -1,3 +1,6 @@
+0.314
+  * Fix: station icon got lost when editing a station
+
 0.313
   * New UI for changing station icons when editing stations
 
