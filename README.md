@@ -18,7 +18,7 @@ Screenshots
 <img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-01-09-14-14.png" width="128" />
 <img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-01-09-06-28.png" width="128" />
 <img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-07-08-02-43.png" width="128" />
-<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-01-09-16-24.png" width="128" />
+<img src="http://storage.rejh.nl/_stored/res/icerrr/screenshots/Screenshot_2015-10-07-08-04-50.png" width="128" />
 </center>
 
 Features
