@@ -412,9 +412,9 @@ site.chicon.downloadedImagery = function(station,cb,cberr) {
 			}
 
 			if (station.station_icon_local && station.station_image_local) {
-				if (cb) { cb(); }
+				if (cb) { cb(station); }
 			} else {
-				if (cberr) { cberr(); }
+				if (cberr) { cberr(station); }
 			}
 
 		},500);

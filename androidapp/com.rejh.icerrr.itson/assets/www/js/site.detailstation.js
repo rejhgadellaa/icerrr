@@ -109,12 +109,19 @@ site.detailstation.updatedata = function() {
 			function(station_data){
 				if (station_data) {
 					site.detailstation.station = station_data;
+					// Icon
 					if (site.detailstation.station.station_image_local) {
 						$("#detailstation .station_image img").attr("src",site.detailstation.station.station_image_local);
 					} else if (site.detailstation.station.station_icon_local) {
 						$("#detailstation .station_image img").attr("src",site.detailstation.station.station_icon_local);
 					} else {
 						$("#detailstation .station_image img").attr("src","img/web_hi_res_512_002.jpg");
+					}
+					// Background image..
+					if (site.detailstation.station.station_image_local) {
+						$("#detailstation .main .header").css("background-image","url('"+ site.detailstation.station.station_image_local +"')");
+					} else {
+						$("#detailstation .main .header").css("background-image","url('img/bg_home_default.jpg')");
 					}
 				}
 			},
