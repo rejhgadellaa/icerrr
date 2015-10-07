@@ -104,7 +104,6 @@ site.detailstation.updatedata = function() {
 		$("#detailstation .station_image img").attr("src",site.detailstation.station.station_icon_local);
 	} else {
 
-		$("#detailstation .station_image img").attr("src","img/web_hi_res_512_002.jpg");
 		site.chicon.downloadImagery(site.detailstation.station,
 			function(station_data){
 				if (station_data) {
