@@ -54,7 +54,7 @@ foreach($json as $jsonk => $jsonv) {
         $data["byplatform"][$platform]["ids"][] = $id;
         $data["byplatform"][$platform]["entries"] = 1;
     } else if (!in_array($id,$data["byplatform"][$platform]["ids"])) {
-        $data["byversion"][$platform]["entries"] ++;
+        $data["byplatform"][$platform]["entries"] ++;
     }
 
 }
