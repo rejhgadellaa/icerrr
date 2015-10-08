@@ -15,16 +15,16 @@ body, table, input, select {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-html { 
+html {
 	overflow:hidden;
-	width:100%; 
-	height:100%; 
+	width:100%;
+	height:100%;
 	}
 
 body {
-	overflow:hidden; 
-	width:100%; 
-	height:100%; 
+	overflow:hidden;
+	width:100%;
+	height:100%;
 	margin:0;
 	padding:0;
 	background-color:#ECEFF1;
@@ -54,100 +54,108 @@ section {
 }
 
 	#home .header {
+        overflow:hidden;
 		position:absolute;
-		top:0; left:0; right:0; bottom:144px;
+		top:0; left:0; right:0;
+        height:192px;
 		background:#607D8B;
+        transition: height 500ms;
 	}
 
 		#home .logo {
-			z-index:0;
-			position:absolute;
-			top:0; left:0; right:0; bottom:0;
+            position: relative;
+            min-width:320px;
+            max-width:920px;
+            height:100%;
+            margin:auto;
+            transition: top 500ms;
 		}
-		
-			#home .logo img {
+
+            #home .logo_sml img,
+            #home .logo img {
 				z-index:0;
 				position:absolute;
-				top:50%; left:50%;
-				width:256px;
-				margin:-168px 0 0 -128px;
+				top:24px; left:24px;
+				width:144px;
 			}
-			
+
+            #home .logo_sml .title,
 			#home .logo .title {
-				display:block;
-				position:absolute;
-				top:50%; left:50%;
-				width:256px;
-				margin:48px 0 0 -128px;
-				text-align:center;
+                position:absolute;
+                bottom:84px; left:168px;
 				font-size:32pt;
 				font-weight:300;
 				color:#fff;
 			}
-			
+
+            #home .logo_sml .subtitle,
 			#home .logo .subtitle {
-				display:block;
-				position:absolute;
-				top:50%; left:50%;
-				width:512px;
-				margin:112px 0 0 -256px;
-				text-align:center;
+                position:absolute;
+                bottom:60px; left:168px;
 				font-size:16pt;
 				font-weight:300;
 				color:#fff;
 			}
-	
-	#home .main {
-		position:absolute;
-		bottom:0; left:0; right:0;
-		height:144px;
-	}
-	
-		#home .main .download {
-			position:absolute;
-			top:50%; left:50%;
-			width:192px; height:64px;
-			margin-top:-32px; margin-left:-96px;
-			background:#FF5722;
-			font-size:18pt;
-			font-weight:300;
-			color:#fff;
-			cursor:pointer;
-		}
-		
-			#home .main .download .text {
-				margin-top:18px;
-				text-align:center;
-				cursor:pointer;
-			}
-			
-		#home .main .info {
-			position:absolute;
-			top:8px;
-			right:8px;
-			text-align:right;
-			font-size:10pt;
-		}
-		
-			#home .main .info .line {
-				margin-bottom:8px;
-			}
-		
-	#home .social {
-		z-index:1;
-		position:absolute;
-		bottom:80px; left:8px;
-		margin:0 0 0 0;
-	}
-	
-	#home .social .item_wrap {
-		margin-bottom:4px;
-	}
-		
-	#home .donate {
-		position:absolute;
-		top:32px; right:32px;
-	}
+
+        #home .logo_sml {
+            position: absolute;
+            top:-56px;
+            min-width:320px;
+            max-width:960px;
+            height:100%;
+            margin:auto;
+            transition: top 500ms;
+        }
+
+            #home .logo_sml img {
+                width:24px;
+                top:16px; left:16px;
+            }
+
+            #home .logo_sml .title {
+                font-size:18pt;
+                top:12px; left:56px;
+            }
+
+            #home .logo_sml .subtitle {
+                display:none;
+            }
+
+    #home .main {
+        overflow: auto;
+        position: absolute;
+        top:192px; left:0; right:0; bottom:0;
+        transition: top 500ms;
+    }
+
+        #home .main_inner {
+            position: relative;
+            top:0;
+            min-width:280px;
+            max-width:800px;
+            margin:auto;
+            padding:24px 24px 48px 25px;
+        }
+
+#home .guideline {
+    display: none;
+}
+
+#home .guideline.one {
+    xdisplay: none;
+    position: absolute;;
+    top:64px; left:0; right:0;
+    height:1px;
+    background-color: #fff;
+}
+
+#home .guideline.two {
+    xdisplay: none;
+    position: absolute;
+    top:128px; left:0; right:0;
+    height:1px;
+    background-color: #fff;
+}
 
 
 
@@ -165,4 +173,4 @@ section {
 
 
 
-
+/* EOF */
