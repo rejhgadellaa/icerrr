@@ -18,58 +18,40 @@ section {
 #home { }
 
 	#home .header {
-		position:absolute;
-		top:0; left:0; right:0; bottom:auto;
-		height:66%;
 	}
 
-		#home .logo { }
-		
+		#home .logo {
+
+		}
+
 			#home .logo img {
+
 			}
-			
-			#home .logo .title {}
-			
+
+			#home .logo .title {
+
+			}
+
 			#home .logo .subtitle {
-				font-size:12pt;
+
 			}
-	
+
+				#home .logo .subtitle .theapp {
+					display:none;
+				}
+
+				#home .logo .subtitle .forandroid {
+					display:block;
+				}
+
+		#home .logo_sml {
+
+		}
+
+			#home .logo_sml .title {
+				top:14px;
+			}
+
 	#home .main {
-		position:absolute;
-		top:66%; left:0; right:0;
-		height:300px;
-	}
-	
-		#home .main .download {
-			position:inherit;
-			top:0px; left:50%;
-			margin-top:24px; margin-left:-96px;
-		}
-		
-			#home .main .download .text {}
-			
-		#home .main .info {
-			position:inherit;
-			top:112px; left:0; right:0; bottom:auto;
-			text-align:center;
-			font-size:12pt;
-		}
-		
-			#home .main .info .line {
-				margin-bottom:16px;
-			}
-		
-	#home .social {
-		position:absolute;
-		top:8px; left:8px;
-		width:280px;
-		max-height:80px;
-	}
-	
-	#home .social .item_wrap {
-		margin-bottom:8px;
-	}
-		
-	#home .donate {
-		display:none;
+
 	}
