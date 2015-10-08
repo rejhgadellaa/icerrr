@@ -41,19 +41,19 @@
     <link rel="icon" href="img/ic_launcher.png" type="image/x-icon">
 
 	<!-- Javascript: jQuery -->
-    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min?c=<?=time();?>"></script>
 
     <!-- Javascript: Things :D -->
     <script>
 	if (window.location.hostname.indexOf("www.rejh.nl")<0 && window.location.hostname.indexOf("localhost")<0) {
-		// window.location.href = "http://www.rejh.nl/icerrr/"; // for prod
+		window.location.href = "http://www.rejh.nl/icerrr/"; // for prod
 	}
 	</script>
 	</script>
 
     <!-- Style / base -->
-    <link rel="stylesheet" type="text/css" href="css/common.css" />
-    <link rel="stylesheet" type="text/css" href="css/default.css" />
+    <link rel="stylesheet" type="text/css" href="css/common.css?c=<?=time();?>" />
+    <link rel="stylesheet" type="text/css" href="css/default.css?c=<?=time();?>" />
 
     <!-- Style / responsive -->
 	<link rel="stylesheet" type="text/css" href="css/size.phone.css?c=<?=time();?>" media="screen and (max-width: 960px)" />
