@@ -38,10 +38,10 @@ site.lifecycle.onDeviceReady = function() {
 // Init
 
 site.lifecycle.init = function() {
-	
+
 	loggr.debug("==================================================================================");
 	loggr.debug("site.lifecycle.init()");
-	
+
 	// Detect android/ios
 	if( /Android/i.test(navigator.userAgent) ) {
 		site.vars.isAndroid = true;
@@ -52,11 +52,11 @@ site.lifecycle.init = function() {
 	} else {
 		site.vars.deviceDesc = "Other";
 	}
-	
+
 	// Debug
 	loggr.log(" > Device: "+ site.vars.deviceDesc);
 	loggr.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
-	
+
 	// Device info
 	loggr.log(" > Device Info: "
 		+"model: "+ device.model
@@ -64,13 +64,13 @@ site.lifecycle.init = function() {
 		+" "+ device.version
 		+", cordova: "+ device.cordova
 	);
-	
+
 	// Defaults..
 	site.data.strings = jQuery.extend(true, {}, site.cfg.defaults.strings);
-	
+
 	// Vars..
 	site.lifecycle.add_section_history("#home");
-	
+
 	// Attach more event listeners (cordova)
 	document.addEventListener('resume', site.lifecycle.onResume, false);
 	document.addEventListener('pause', site.lifecycle.onPause, false);
@@ -78,48 +78,48 @@ site.lifecycle.init = function() {
 	document.addEventListener("backbutton", site.lifecycle.onBackButton, false);
 	document.addEventListener("volumeupbutton", site.lifecycle.onVolumeUp, true);
 	document.addEventListener("volumedownbutton", site.lifecycle.onVolumeDown, true);
-	
+
 	/**/// Google Loader
 	try {
 		google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google.load(search,1)");} });
 	} catch(e) {
 		loggr.warn(" > google.load() has failed");
 	}
-	
+
 	// Init app
 	site.lifecycle.initApp();
-	
+
 }
 
 // InitApp
 
 site.lifecycle.initApp = function(force) {
-	
+
 	loggr.debug("site.lifecycle.initApp();");
-		
+
 	// some stuff
 	site.vars.currentSection = "#splash";
 	site.session.isPaused = false;
-	
+
 	// Firstlaunch...
 	if (!site.cookies.get("app_is_installed")) {
-		if (site.vars.currentSection!="#install") { 
+		if (site.vars.currentSection!="#install") {
 			setTimeout(function() { site.installer.init(); },2500);
 			return; // <- important stuff yes
 		}
 	} else if (site.cookies.get("app_version")!=site.cfg.app_version) {
-		if (site.vars.currentSection!="#install") { 
+		if (site.vars.currentSection!="#install") {
 			setTimeout(function() { site.installer.init(true); },1250);
 			return; // <- important stuff yes
 		}
 	}
-	
+
 	// Update...
 	if (site.cookies.get("app_update_time") < new Date().getTime()) {
 		site.installer.init(true);
 		return; // <- important. forgot it yet again.
 	}
-	
+
 	// Important things first.. do we have stations?!
 	if (!site.data.stations) {
 		loggr.log(" > Read stations first...");
@@ -136,10 +136,10 @@ site.lifecycle.initApp = function(force) {
 		);
 		return; // <- important stuff yes
 	}
-	
+
 	// Restore user session
 	site.helpers.readSession();
-	
+
 	// Register device..
 	loggr.log(" > Register device..");
 	var apiquery = {
@@ -159,26 +159,48 @@ site.lifecycle.initApp = function(force) {
 			//...
 		}
 	);
-	
+
+	// Analytics
+	var analquery = {
+		"get":"analytics",
+		"id":site.cookies.get("device_id"),
+		"device_model":device.model,
+		"device_platform":device.platform +" "+ device.version,
+		"app_version":site.cookies.get("app_version")
+	}
+	var analquerystr = JSON.stringify(analquery);
+	site.webapi.exec("get",analquerystr,
+		function(res) {
+			if (res["error"]) {
+				loggr.error(res["errormsg"]);
+				return;
+			}
+			loggr.log(" -> Sent analytics data: "+ res["data"]["saved"]);
+		},
+		function(err) {
+			//...
+		}
+	);
+
 	// UI Init
 	site.ui.init();
-	
+
 	// Home.. or?
 	var onstart_gotosection = site.cookies.get("onstart_gotosection");
 	site.cookies.put("onstart_gotosection",0)
 	switch(onstart_gotosection) {
-		
+
 		case "#channellist":
 			setTimeout(function(){site.chlist.init();},500);
 			break;
-			
+
 		default:
 			site.home.init(true);
 			//site.alarms.testAlarm(); // TODO: REMOVE // COMMENT // DEBUG
 			break;
-			
+
 	}
-	
+
 	// Check intents, if no alarm check connection
 	if (!site.lifecycle.onNewIntent()) {
 		// Internet connection..
@@ -197,7 +219,7 @@ site.lifecycle.initApp = function(force) {
 			return;
 		}
 	}
-	
+
 	// Album art.. the big question
 	if (site.cookies.get("app_has_asked_about_albumart")!=1) {
 		site.cookies.put("app_has_asked_about_albumart",1);
@@ -209,17 +231,17 @@ site.lifecycle.initApp = function(force) {
 				} else {
 					site.cookies.put("setting_showAlbumArt",0);
 				}
-				if (site.session.currentstation_id) { site.home.getAlbumArt(); } 
+				if (site.session.currentstation_id) { site.home.getAlbumArt(); }
 			},
 			"Show album art?",
 			"Yes,No"
 		);
-	} 
+	}
 	// Check for messages
 	else {
 		site.lifecycle.checkMsgs();
 	}
-	
+
 	// On update..
 	if (site.cookies.get("app_has_updated")!=0) {
 		site.vars.app_has_updated_home = true;
@@ -228,25 +250,25 @@ site.lifecycle.initApp = function(force) {
 		site.ui.showtoast("Icerrr was updated :D <span style='float:right; color:#FF5722; pointer-events:auto;' onclick='window.open(\"https://github.com/rejhgadellaa/icerrr/wiki/Changelog\",\"_system\");'>LEARN MORE</span>",10,true);
 		site.helpers.uploadStations();
 	}
-	
+
 	// Re-set alarms
 	site.alarms.setAlarms();
-	
+
 	// Hacks..
 	site.ui.hackActiveCssRule();
-	
+
 }
 
 // New Intent
 
 site.lifecycle.onNewIntent = function(result,intentTime) {
-	
+
 	loggr.debug("site.lifecycle.onNewIntent()");
-	
+
 	loggr.log(" -> site.vars.onNewIntentTime: "+ site.vars.onNewIntentTime);
 	loggr.log(" -> intentTime: "+ intentTime);
 	loggr.log(" -> Same: "+ (site.vars.onNewIntentTime==intentTime));
-	
+
 	// Check intentTime..
 	if (!site.vars.onNewIntentTime) { site.vars.onNewIntentTime = -2; }
 	if (site.vars.onNewIntentTime==intentTime) {
@@ -255,14 +277,14 @@ site.lifecycle.onNewIntent = function(result,intentTime) {
 		return;
 	}
 	site.vars.onNewIntentTime=intentTime;
-	
+
 	// Handle intents other than alarms (like snooze_cancel cmd)
 	// Check for cmd intent..
 	window.plugins.webintent.getExtra("cmd",
 		function(cmd) {
-			
+
 			loggr.log(" > GetExtra 'cmd': "+ cmd);
-			
+
 			// Alarm
 			if (cmd == "alarm") {
 				window.plugins.webintent.getExtra("station_id",
@@ -278,79 +300,79 @@ site.lifecycle.onNewIntent = function(result,intentTime) {
 						if (site.session.snoozeAlarm) {
 							site.home.alarmSnoozeCancel(true);
 						}
-						
+
 					},
 					function(err) {
 						loggr.warn("site.lifecycle.onNewIntent.getExtra 'station_id' failed: "+ err,{dontsave:true});
 					}
 				);
 			}
-			
+
 			// Cancel_snooze
 			if (cmd == "snooze") {
 				setTimeout(function(){site.home.alarmSnooze();},1000);
 			}
-			
+
 			// Cancel_snooze
 			if (cmd == "cancel_snooze") {
 				setTimeout(function(){site.home.alarmSnoozeCancel();},1000);
 			}
-			
+
 			// Cast: quit
 			if (cmd == "cast_quit") {
 				setTimeout(function(){site.cast.destroy();},1000);
 			}
-			
+
 		},
 		function(err) {
 			loggr.warn("site.lifecycle.onNewIntent.getExtra 'cmd' failed: "+ err);
 		}
 	);
-	
+
 	return; // <-- STOP IT HERE
-	
+
 }
 
 // Resume
 
 site.lifecycle.onResume = function() {
-	
+
 	loggr.debug("site.lifecycle.onResume()");
-		
+
 	// some stuff
 	site.session.isPaused = false;
-	
+
 	// set timeout now so we have little delay for async shit to rain down upon us
 	if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
 	site.timeouts.storage_queue = setTimeout(function(){
 		site.storage.runqueue();
 	},1000); // TODO: determine update freq
-	
-	// Re-init ui updates.. || TODO: we really need a better way to do this..	
+
+	// Re-init ui updates.. || TODO: we really need a better way to do this..
 	// Call UI close function
 	if (!site.session.ui_resume_callbacks) { site.session.ui_resume_callbacks = []; }
 	for (var i=0; i<site.session.ui_resume_callbacks.length; i++) {
 		var func = site.session.ui_resume_callbacks[i]; // same order as incoming..
 		try { func(); } catch(e) { loggr.warn(" > Error on ui_resume_callbacks"); loggr.log(e); }
 	}
-	
+
 	// Fabscroll..
 	site.ui.initFabScroll(site.vars.currentSection);
-	
+
 	// Stop! Resize!
 	site.lifecycle.onResize();
-	
+
 }
 
 // Pause
 
 site.lifecycle.onPause = function() {
-	
+
 	loggr.debug("site.lifecycle.onPause()");
-	
+
 	// Store some stuff
 	site.helpers.storeSession();
-	
+
 	// Write stations
 	if (site.data.stations) {
 		site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
@@ -362,75 +384,75 @@ site.lifecycle.onPause = function() {
 			}
 		);
 	}
-	
+
 	// Call UI close function
 	if (!site.session.ui_pause_callbacks) { site.session.ui_pause_callbacks = []; }
 	for (var i=0; i<site.session.ui_pause_callbacks.length; i++) {
 		var func = site.session.ui_pause_callbacks[i]; // same order as incoming..
 		try { func(); } catch(e) { }
 	}
-	
+
 	// Cancel timeouts
 	loggr.log(" > "+ site.helpers.countObj(site.timeouts) +" timeout(s), "+ site.helpers.countObj(site.loops) +" loop(s)");
 	for (var i in site.timeouts) { if (site.timeouts[i]) { loggr.log(" >> Cancel timeout "+ i); clearTimeout(site.timeouts[i]); } }
 	for (var i in site.loops) { if (site.loops[i]) { loggr.log(" >> Cancel loop "+ i); clearInterval(site.loops[i]); } }
 	site.timeouts = [];
 	site.loops = [];
-		
+
 	// some stuff
 	site.session.isPaused = true;
-	
+
 }
 
 // Destroy
 // - Note: simulated
 
 site.lifecycle.onDestroy = function() {
-	
+
 	loggr.debug("site.lifecycle.onDestroy()");
-	
+
 	// Call pause..
 	site.lifecycle.onPause();
-	
+
 	// Release some stuff
 	// site.mp.destroy();
-	
+
 }
 
 // Menu button
 
 site.lifecycle.onMenuButton = function() {
-	
+
 	loggr.debug("site.lifecycle.onMenuButton()");
-	
+
 	if (site.vars.currentSection == "#home") {
 		site.home.toggleOverflowMenu();
 	}
-	
+
 }
 
 // Back button (android)
 
 site.lifecycle.onBackButton = function() {
-	
+
 	loggr.debug("site.lifecycle.onBackButton()");
-	
+
 	// List of selectors that when display==block, then ignore back!
 	var thedonts = {
 		"section#install" 			: ($("section#install").css("display")=="block"),
 		""							: false // stop it
 	}
-	
+
 	// TODO: needs some building in so we don't hit back in the middle of an operation..
 	if (thedonts[site.vars.currentSection]) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
 	if (site.vars.isLoading) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
-	
+
 	var currentBackKey = site.lifecycle.get_section_history_item();
 	loggr.log(" > currentBackKey: "+ currentBackKey);
-	
+
 	// Okay, that out of the way...
 	switch(currentBackKey) {
-		
+
 		case "":
 		case "#exit":
 		case "#home":
@@ -445,11 +467,11 @@ site.lifecycle.onBackButton = function() {
 				site.helpers.checkImageCache();
 			}
 			break;
-		
+
 		case "#channellist":
 			site.home.init();
 			break;
-			
+
 		case "#detailstation":
 			if (site.lifecycle.get_section_history_item(true)=="#home") {
 				site.home.init();
@@ -457,19 +479,19 @@ site.lifecycle.onBackButton = function() {
 				site.chlist.init(true);
 			}
 			break;
-		
+
 		case "#searchstation":
-			if (site.vars.isLoading) { 
+			if (site.vars.isLoading) {
 				site.webapi.abort(site.chsearch.searchAjaxRequestId);
 				site.chsearch.init();
 			}
 			else { site.chlist.init(); }
 			break;
-		
+
 		case "#searchstation_results":
 			site.chsearch.init();
 			break;
-			
+
 		case "#searchicon": // TODO: Check this
 			var lastsection = site.lifecycle.get_section_history_item(true);
 			if (lastsection=="#editstation") {
@@ -479,7 +501,7 @@ site.lifecycle.onBackButton = function() {
 				site.ui.showtoast("Please choose an icon");
 			}
 			break;
-		
+
 		case "#editstation":
 			if (site.lifecycle.get_section_history_item(true)=="#detailstation") {
 				site.detailstation.init(null,false,true);
@@ -487,45 +509,45 @@ site.lifecycle.onBackButton = function() {
 				site.chlist.init(true);
 			}
 			break;
-			
+
 		case "#alarms":
 			site.home.init();
 			break;
-			
+
 		case "#alarms_add":
 			site.alarms.init();
 			break;
-			
+
 		case "#about":
 			site.home.init();
 			break;
-			
+
 		case "#viewlog":
 			site.home.init();
 			break;
-			
+
 		case "#settings":
 			site.home.init();
 			break;
-			
+
 		default:
 			loggr.log(" > '<' button on unhandled section: "+ currentBackKey);
 			site.lifecycle.add_section_history(currentBackKey);
 			break;
-		
+
 	}
-	
+
 }
 
 // ---> Events
 
-// Resize 
+// Resize
 // TODO: this should go in site.ui?
 
 site.lifecycle.onResize = function() {
-	
+
 	loggr.debug("site.lifecycle.onResize()");
-	
+
 	if (site.timeouts.onresize) { clearTimeout(site.timeouts.onresize); }
 	site.timeouts.onresize = setTimeout(function(){
 		try {
@@ -535,9 +557,9 @@ site.lifecycle.onResize = function() {
 			);
 		} catch(e) {}
 	},10);
-	
+
 	site.ui.hackActiveCssRule();
-	
+
 }
 
 site.lifecycle.onVolumeUp = function() {
@@ -569,36 +591,36 @@ site.lifecycle.exit = function() {
 // ---> Messages
 
 site.lifecycle.checkMsgs = function(startedByUser) {
-	
+
 	loggr.debug("site.lifecycle.checkMsgs()");
-	
+
 	/*
 	if (startedByUser) {
-		
+
 		// Check conntype
 		var conntype = site.helpers.getConnType();
 		if (conntype!="WIFI" && conntype!="ETHERNET" && conntype!="UNKNOWN") {
 			alert("Please enable wifi and try again");
 			return;
 		}
-		
+
 		// Set flag..
 		site.lifecycle.checkingForUpdates = true;
-		
+
 	}
 	/**/
-	
+
 	site.lifecycle.checkingForUpdatesByUser = false;
 	if (startedByUser) {
 		site.lifecycle.checkingForUpdates = true;
 		site.lifecycle.checkingForUpdatesByUser = true;
 	}
-	
+
 	var action = "get";
 	var queryobj = {
 		"get":"messages"
 	};
-	
+
 	site.webapi.exec(action, JSON.stringify(queryobj),
 		function(res) {
 			site.lifecycle.handleMsgs(res["data"],startedByUser);
@@ -608,27 +630,27 @@ site.lifecycle.checkMsgs = function(startedByUser) {
 			loggr.error(" > lifecycle.checkMsgs().Error: "+ err.message);
 		}
 	);
-	
+
 }
 
 site.lifecycle.handleMsgs = function(data,startedByUser) {
-	
+
 	loggr.debug("site.lifecycle.handleMsgs()");
-	
+
 	// Get local data thingie
 	var lidsStr = site.cookies.get("message_ids");
 	loggr.log(" > Stored message ids: "+ lidsStr, {toconsole:site.cfg.debugging});
 	if (!lidsStr) { lidsStr = "[]"; }
 	var lids = JSON.parse(lidsStr);
-	
+
 	for (var i=0; i<data.length; i++) {
-		
+
 		var ditem = data[i];
 		if (!ditem) { continue; }
 		if (!ditem.crit) { continue; }
-		
+
 		loggr.log(" > "+ ditem.id);
-		
+
 		var critvalue;
 		switch(ditem.crit) {
 			case "version":
@@ -647,7 +669,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 				loggr.error(" > ditem.crit as invalid value: '"+ ditem.crit +"'");
 				continue;
 		}
-		
+
 		// Check install-update
 		if (critvalue>ditem.critvalue || !ditem.repeat && lids.indexOf(ditem.id)>=0 && ditem.action!="install-update") {
 			loggr.log(" >> Skip");
@@ -658,7 +680,7 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 				continue;
 			}
 		}
-		
+
 		// Check wifiOnly && conntype (msg will wait until wifi || ethernet)
 		if (ditem.onlyOnWifi && !site.lifecycle.checkingForUpdatesByUser) {
 			var conntype = site.helpers.getConnType();
@@ -668,20 +690,20 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 				// continue;
 			}
 		}
-		
+
 		// Check message
-		if (!ditem.message && ditem.action!="install-update-app") { 
+		if (!ditem.message && ditem.action!="install-update-app") {
 			loggr.log(" >> No message! next!", {toconsole:site.cfg.debugging});
-			continue; 
+			continue;
 		}
-		
+
 		// Build message
 		var message = "";
 		if (!ditem.message) { ditem.message = ""; }
 		for (var i=0; i<ditem.message.length; i++) {
 			message += ditem.message[i];
 		}
-		
+
 		// Made it so far, show message
 		if (ditem.action=="url" && !ditem.url) { loggr.error(" > ditem.action = url but ditem.url is false"); ditem.action = "none"; }
 		switch(ditem.action) {
@@ -709,9 +731,9 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 				site.lifecycle.storeMsgId(ditem.id,lids);
 				break;
 			case "remove_station":
-				if (!ditem.station_ids) { 
+				if (!ditem.station_ids) {
 					loggr.error(" >> remove_station message: !station_ids");
-					continue; 
+					continue;
 				}
 				for (var j=0; j<ditem.station_ids.length; j++) {
 					var station_id = ditem.station_ids[j];
@@ -730,12 +752,12 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 				}
 				site.data.stations = newstations;
 				site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),
-					function(evt) { 
+					function(evt) {
 						loggr.log(" >> stations.json saved");
 					},
-					function(e){ 
+					function(e){
 						loggr.error(" >> Could not save station.json!",{dontupload:true});
-						loggr.error(site.storage.getErrorType(e)); 
+						loggr.error(site.storage.getErrorType(e));
 					}
 				);
 				if (ditem.station_ids.indexOf(site.session.currentstation_id)>=0) {
@@ -754,19 +776,19 @@ site.lifecycle.handleMsgs = function(data,startedByUser) {
 				site.lifecycle.storeMsgId(ditem.id,lids);
 				break;
 		}
-		
+
 		// Show one message, then stop
 		site.lifecycle.checkingForUpdates = false;
 		break;
-		
+
 	}
-	
+
 	if (site.lifecycle.checkingForUpdates) {
 		message = "Icerrr is up to date (version "+ site.helpers.formatFloat(site.cfg.app_version,3) +")";
 		navigator.notification.alert(message, function(){ }, "Up to date!", "OK");
 	}
 	site.lifecycle.checkingForUpdates = false;
-	
+
 }
 
 site.lifecycle.storeMsgId = function(id,lids) {
@@ -780,9 +802,9 @@ site.lifecycle.storeMsgId = function(id,lids) {
 // Download apk
 
 site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
-	
+
 	loggr.debug("site.lifecycle.installUpdateApp_init()");
-	
+
 	// Prep values from ditem
 	var url = ditem.url;
 	if (!url) { loggr.error(" > ditem.url is not defined: "+ url); }
@@ -790,16 +812,16 @@ site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
 	var message = (ditem.message) ? ditem.message.join("\n") : "An update for Icerrr is availabe. Do you want to install it now?";
 	var buttonLabels = (ditem.buttonLabels) ? ditem.buttonLabels : "Yes,No";
 	var critical = (ditem.critical) ? ditem.critical : 0;
-	
+
 	loggr.log(" > "+ buttonLabels +", "+ ditem.buttonLabels);
-	
+
 	// Prep some stuff
 	var targetPath = site.cfg.paths.other;
 	var targetFile = "Icerrr.apk";
-	
+
 	// Check chrome runtime
 	if (device.model.indexOf("App Runtime for Chrome")>=0) {
-		
+
 		if (startedByUser) {
 			alert("App Runtime for Chrome does not yet support Icerrr's automatic update mechanism. Press OK to download the apk manually and use ARC Welder to install it.");
 			window.open(url.split("dl=1").join("dl=0"),'_system');
@@ -808,44 +830,44 @@ site.lifecycle.installUpdateApp = function(ditem,startedByUser) {
 			loggr.warn(" > Don't prompt for update because we're in App Runtime for Chrome");
 			return;
 		}
-		
+
 	}
-		
+
 	// Store ditem
 	site.vars.ditem = ditem;
-	
+
 	if (critical || startedByUser) {
-			
+
 		// success -> Prompt user
 		navigator.notification.confirm(
-			message, 
-			site.lifecycle.downloadUpdateApp, 
-			title, 
+			message,
+			site.lifecycle.downloadUpdateApp,
+			title,
 			buttonLabels
 		);
-		
+
 	} else {
-		
+
 		site.ui.showtoast(title +" <span style='float:right; color:#FF5722; pointer-events:auto;' onclick='site.lifecycle.installUpdateApp(site.vars.ditem,true);'>LEARN MORE</span>",10,true);
-		
+
 	}
-	
+
 }
 
 site.lifecycle.downloadUpdateApp = function(buttonIndex){
-	
+
 	if (site.cast.session) {
 		site.cast.destroy();
 	} else {
 		site.mp.stop();
 	}
-	
+
 	var ditem = site.vars.ditem;
-	
+
 	// Prep some stuff
 	var targetPath = site.cfg.paths.other;
 	var targetFile = "Icerrr.apk";
-	
+
 	// Prep values from ditem
 	var url = ditem.url;
 	if (!url) { loggr.error(" > ditem.url is not defined: "+ url); }
@@ -853,7 +875,7 @@ site.lifecycle.downloadUpdateApp = function(buttonIndex){
 	var message = (ditem.message) ? ditem.message.join("\n") : "An update for Icerrr is availabe. Do you want to install it now?";
 	var buttonLabels = (ditem.buttonLabels) ? ditem.buttonLabels : "Yes,No";
 	var critical = (ditem.critical) ? ditem.critical : 0;
-	
+
 	if (buttonIndex==1) {
 
 		site.ui.hidetoast();
@@ -862,11 +884,11 @@ site.lifecycle.downloadUpdateApp = function(buttonIndex){
 		// We'll just assume we need to download the file, we're not going to check if it exists whatever...
 		site.webapi.download(url,targetPath,targetFile,
 			function(fileEntry){
-				
+
 				loggr.log(" > Downloaded: "+ fileEntry.fullPath);
-						
+
 				site.ui.hideloading();
-				
+
 				// A-go-go
 				window.mediaStreamer.installUpdateApp(
 					fileEntry.fullPath,
@@ -879,7 +901,7 @@ site.lifecycle.downloadUpdateApp = function(buttonIndex){
 						site.ui.hideloading();
 					}
 				);
-				
+
 			},
 			function(fileError) {
 				// Error -> Log
@@ -890,7 +912,7 @@ site.lifecycle.downloadUpdateApp = function(buttonIndex){
 				site.ui.hideloading();
 			}
 		);
-				
+
 	} else {
 		// nothin..
 	}
@@ -938,7 +960,7 @@ site.lifecycle.remove_section_history_item = function(selector) {
 	loggr.debug("site.lifecycle.remove_last_section_history_item()");
 	if (!site.session.lifecycle) { site.session.lifecycle = {}; }
 	if (!site.session.lifecycle.section_history) { site.session.lifecycle.section_history = []; }
-	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] == selector) { 
+	if (site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1] == selector) {
 		return site.session.lifecycle.section_history.pop();
 	}
 }
@@ -952,18 +974,3 @@ site.lifecycle.get_section_history_item = function(dontPop) {
 	if (dontPop) { return site.session.lifecycle.section_history[site.session.lifecycle.section_history.length-1]; }
 	return site.session.lifecycle.section_history.pop();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

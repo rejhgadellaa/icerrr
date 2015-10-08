@@ -1,4 +1,5 @@
 0.314
+  * New: report analytics (android version, app version, device model)
   * Fix: station icon got lost when editing a station
 
 0.313
