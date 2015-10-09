@@ -1,7 +1,7 @@
 Introduction
 ===========
 
-Looking for a clean and simple radio streaming app that lets you set alarms, cast your stream to Chromecast and supports Android Wear?
+Looking for a clean and simple radio streaming app that lets you set alarms, cast your stream to Chromecast[1] and supports Android Wear?
 
 Well, I think Icerrr may be just the thing for you!
 
