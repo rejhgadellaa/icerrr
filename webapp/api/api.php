@@ -576,7 +576,7 @@ switch($action) {
 			case "station_icon": // NOTE: does not return json, it returns http responses! // TODO: yes?
 
 				$filename = $_FILES['file']['name'];
-				$filepath = "../img/uploaded/{$filename}";
+				$filepath = "../static/uploaded/{$filename}";
 				$filetmp = $_FILES['file']['tmp_name'];
 
 				$postkey = $_POST["key"];

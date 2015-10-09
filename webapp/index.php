@@ -41,11 +41,11 @@
     <link rel="icon" href="img/ic_launcher.png" type="image/x-icon">
 
 	<!-- Javascript: jQuery -->
-    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min?c=<?=time();?>"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min.js?c=<?=time();?>"></script>
 
     <!-- Javascript: Things :D -->
     <script>
-	if (window.location.hostname.indexOf("www.rejh.nl")<0 && window.location.hostname.indexOf("localhost")<0) {
+	if (window.location.hostname.indexOf("www.rejh.nl")<0 && window.location.hostname.indexOf("localhost")<0 && window.location.hostname.indexOf("192.168.")<0) {
 		window.location.href = "http://www.rejh.nl/icerrr/"; // for prod
 	}
 	</script>
@@ -53,10 +53,13 @@
 
     <!-- Style / base -->
     <link rel="stylesheet" type="text/css" href="css/common.css?c=<?=time();?>" />
-    <link rel="stylesheet" type="text/css" href="css/default.css?c=<?=time();?>" />
+    <link rel="stylesheet/less" type="text/css" href="css/default.less?c=<?=time();?>" />
 
     <!-- Style / responsive -->
-	<link rel="stylesheet" type="text/css" href="css/size.phone.css?c=<?=time();?>" media="screen and (max-width: 960px)" />
+	<link rel="stylesheet/less" type="text/css" href="css/size.phone.less?c=<?=time();?>" media="screen and (max-width: 960px)" />
+
+    <!-- Less -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
 
     <!-- Webfonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
@@ -114,7 +117,8 @@
 
             // Load readme..
             $( "#readme" ).load( "ajax/readme.html", function() {
-              console.log( " -> Load was performed." );
+              console.log( " -> Loaded readme" );
+              $(".footer").css("display","block");
             });
         }
 
@@ -137,20 +141,46 @@
         </div>
 
         <div class="logo_sml">
-            <img src="img/web_hi_res_512_002-transparent.png" />
+            <img src="img/ic_launcher_w_48.png?c=<?=time();?>" />
             <div class="title">ICERRR</div>
             <div class="subtitle">The (clock radio) icecast streaming app</div>
         </div>
 
-        <div class="subtitle">        </div>
     </div>
 
     <!-- Main -->
     <div class="main">
         <div class="main_inner">
 
+            <!--
+            <div class="tabs">
+                <div class="tab shadow_z2 round4 active">Home</div><div class="tabspace"></div><div class="tab shadow_z2 round4">Acknoledgements</div>
+            </div>
+            -->
+
             <!-- readme -->
-            <div id="readme" class="readme">Loading...</div>
+            <div id="readme" class="readme"><p>Loading...</p></div>
+
+            <!-- footer -->
+            <div class="footer">
+
+                <!-- Ruler -->
+                <div class="ruler"></div>
+
+                <!-- Legal -->
+                <div class="legal">
+                    <div class="item_wrap">Icerrr is open source and distributed under the MIT license</div>
+                    <div class="item_wrap">Copyright &copy; 2015 <a href="http://www.rejh.nl/" target="_blank">REJH Gadellaa</a></div>
+
+                </div>
+
+                <!-- Social -->
+                <div class="social">
+                    <div class="item_wrap"><div class="g-plusone" data-href="http://www.rejh.nl/icerrr/" data-size="medium" data-annotation="inline" data-width="200"></div></div>
+                    <div class="item_wrap"><a href="https://twitter.com/share" class="twitter-share-button" data-via="RGadellaa" data-count="none">Tweet</a></div>
+                </div>
+
+            </div>
 
         </div>
     </div>
@@ -160,5 +190,16 @@
     <div class="guideline two"></div>
 
 </section>
+
+<script>
+// Google+
+	(function() {
+		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		po.src = 'https://apis.google.com/js/plusone.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	})();
+	// Twitter
+	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
 
 </html>
