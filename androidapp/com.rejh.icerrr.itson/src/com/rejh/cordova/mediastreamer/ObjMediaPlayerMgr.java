@@ -7,7 +7,6 @@ import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.npr.android.news.StreamProxy;
 
 import android.content.Context;
 import android.content.Intent;
@@ -50,7 +49,6 @@ public class ObjMediaPlayerMgr {
 	private MediaStreamerService service;
 	
 	private MediaPlayer mp;
-	private StreamProxy proxy;
 	
 	private Timer timer;
 	
@@ -141,7 +139,7 @@ public class ObjMediaPlayerMgr {
 	// INIT
 	public boolean init(String url, boolean _isAlarm) {
 		
-		if (mp!=null || proxy!=null) {
+		if (mp!=null) {
 			Log.d(LOGTAG," -> MPMGR.Init() -> Destroy()");
 			destroy(); 
 			SystemClock.sleep(1000);  
@@ -162,20 +160,6 @@ public class ObjMediaPlayerMgr {
 		
 		// Is alarm?
 		isAlarm = _isAlarm;
-		
-		// Prepare Proxy (if needed)
-		// For Android 2.1 en lower (sdk<8)
-		if (sdkVersion<8) {
-			if (proxy==null) {
-				try {
-					Log.d(LOGTAG," > Use streamproxy");
-					proxy = new StreamProxy();
-					proxy.init();
-					proxy.start();
-					streamUrl = String.format("http://127.0.0.1:%d/%s", proxy.getPort(), url);
-				} catch(IllegalStateException e) { Log.e(LOGTAG," -> IllStateException: "+e, e); }
-				}
-			}
 		
 		Log.d(LOGTAG," -> STREAM "+streamUrl);
 		
@@ -266,7 +250,6 @@ public class ObjMediaPlayerMgr {
 		stopConnTypeChecker();
 		
 		if (mp!=null) { mp.release(); mp = null; }
-		if (proxy!=null) { proxy.stop(); proxy = null; }
 		
 		settEditor.putInt("mediaplayerState",MEDIA_NONE);
 		settEditor.putInt("mediastreamer_state",MEDIA_NONE);
@@ -289,7 +272,6 @@ public class ObjMediaPlayerMgr {
 		settEditor.commit();
 		if (service.remoteControlClient!=null) { service.remoteControlClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PAUSED); }
 		if (mp!=null) { mp.release(); mp = null; }
-		if (proxy!=null) { proxy.stop(); proxy = null; }
 		if (service.wifiLock.isHeld()) {
 			service.wifiLock.release();
 		}
@@ -517,7 +499,6 @@ public class ObjMediaPlayerMgr {
 				if (isRoaming && useWifiWhenRoaming && connType==1) {
 					Log.d(LOGTAG," -> isRoaming on Celldata... waiting...");
 					if(mp!=null) { mp.release(); mp=null; }
-					if(proxy!=null) { proxy.stop(); proxy=null; }
 					connWasLost=true;
 					return;
 				}
@@ -553,7 +534,6 @@ public class ObjMediaPlayerMgr {
 			} else {
 				Log.d(LOGTAG," -> Connection lost. Stream paused");
 				if(mp!=null) { mp.release(); mp=null; }
-				if(proxy!=null) { proxy.stop(); proxy=null; }
 				service.stopNowPlayingPoll();
 				connWasLost = true;
 			}

@@ -1,3 +1,7 @@
+0.315
+  * Target SDK 23 (Android 6.0 Marshmallow)
+  * Make sure alarms fire even when device is in Doze mode
+
 0.314
   * New: report analytics (android version, app version, device model)
   * Fix: station icon got lost when editing a station

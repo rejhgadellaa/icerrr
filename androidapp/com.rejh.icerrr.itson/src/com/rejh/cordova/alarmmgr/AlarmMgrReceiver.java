@@ -140,8 +140,14 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     			alarmMgr.cancel(pintent);
     			
     			// Create alarm...
-    			Log.d(APPTAG," --> Once, exact: "+ calToString(cal));
-				alarmMgr.setExact(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
+    			if (Build.VERSION.SDK_INT >= 23) {
+					Log.d(APPTAG," -> Once, exact and while idle: "+ calToString(cal));
+					alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
+    			} else {
+    				Log.d(APPTAG," --> Once, exact: "+ calToString(cal));
+    				alarmMgr.setExact(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
+    			}
+				
     			
     			
     		}

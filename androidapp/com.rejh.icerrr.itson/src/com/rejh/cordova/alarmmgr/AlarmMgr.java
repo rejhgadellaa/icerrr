@@ -232,6 +232,9 @@ public class AlarmMgr extends CordovaPlugin {
 		if (doRepeat && !isExact) {
 			Log.d(APPTAG," -> Repeat "+ repeatMillis);
 			alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, timeMillis, repeatMillis, pintent);
+		} else if (isExact && Build.VERSION.SDK_INT >= 23) {
+			Log.d(APPTAG," -> Once, exact and while idle: "+ calToString(cal));
+			alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
 		} else if (isExact && Build.VERSION.SDK_INT >= 19) {
 			Log.d(APPTAG," -> Once, exact: "+ calToString(cal));
 			alarmMgr.setExact(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
