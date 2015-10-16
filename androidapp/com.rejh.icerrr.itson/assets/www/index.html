@@ -440,13 +440,16 @@
 			</p>
 			<!-- -->
 
-			<p><label>Station name: <span style="color:#f00;">*</span></label>
-				<input class="round2" type="text" name="station_name" placeholder="My Radio Station" />
-			</p>
+			<div class="station_name_wrap">
 
+				<p><label>Station name: <span style="color:#f00;">*</span></label>
+					<input class="round2" type="text" name="station_name" placeholder="My Radio Station" />
+				</p>
 
+			</div>
 
 			<div class="station_icon_wrap">
+
 				<p><label>Station icon:</label>
 					<input style="display:none;" class="round2" type="text" name="station_icon" placeholder="http://www.host.com/path-to-icon.png" />
 				<div>
@@ -455,6 +458,7 @@
 					<div class="station_icon_button activatablel" onclick="site.chicon.init($('#editstation input[name=\'station_id\']')[0].value.trim());">SEARCH</div>
 				</div>
 				</p>
+
 			</div>
 
 		</div>
@@ -883,37 +887,10 @@
 				<div class="item spacer"></div>
 			</div>
 
-			<div class="itemWrap turnOnScreenForAlarms disabled">
+			<div class="itemWrap turnOnScreenForAlarms">
 				<div class="item title">Unlock device for alarms</div>
 				<div class="item subtitle">Turn on screen and unlock device for a short while when an alarm fires</div>
-				<div class="checkboxWrap"><input name="turnOnScreenForAlarms" type="checkbox" class="checkbox" disabled /></div>
-			</div>
-
-			<div class="itemWrap">
-				<div class="item spacer invis"></div>
-			</div>
-		</div>
-
-		<div class="block header">
-			<div class="text">Backup/restore</div>
-		</div>
-
-		<div class="block def">
-
-			<div class="itemWrap exportStationsData" onClick="site.settings.exportStationsData();">
-				<div class="item title">Export stations data</div>
-				<div class="item subtitle">Backup your current list of stations</div>
-				<div class="checkboxWrap"></div>
-			</div>
-
-			<div class="itemWrap">
-				<div class="item spacer"></div>
-			</div>
-
-			<div class="itemWrap importStationsData" onClick="site.settings.importStationsData()">
-				<div class="item title">Import stations data</div>
-				<div class="item subtitle">Restore a backed up list of stations</div>
-				<div class="checkboxWrap"></div>
+				<div class="checkboxWrap"><input name="turnOnScreenForAlarms" type="checkbox" class="checkbox" /></div>
 			</div>
 
 			<div class="itemWrap">
@@ -941,6 +918,33 @@
 					<div class="item title">Verify now playing</div>
 					<div class="item subtitle">Only scrobble when now playing is verified with EchoNest database</div>
 					<div class="checkboxWrap"><input name="useSLSVerify" type="checkbox" class="checkbox" /></div>
+			</div>
+
+			<div class="itemWrap">
+				<div class="item spacer invis"></div>
+			</div>
+		</div>
+
+		<div class="block header">
+			<div class="text">Backup/restore</div>
+		</div>
+
+		<div class="block def">
+
+			<div class="itemWrap exportStationsData" onClick="site.settings.exportStationsData();">
+				<div class="item title">Export stations data</div>
+				<div class="item subtitle">Backup your current list of stations</div>
+				<div class="checkboxWrap"></div>
+			</div>
+
+			<div class="itemWrap">
+				<div class="item spacer"></div>
+			</div>
+
+			<div class="itemWrap importStationsData" onClick="site.settings.importStationsData()">
+				<div class="item title">Import stations data</div>
+				<div class="item subtitle">Restore a backed up list of stations</div>
+				<div class="checkboxWrap"></div>
 			</div>
 
 			<div class="itemWrap">

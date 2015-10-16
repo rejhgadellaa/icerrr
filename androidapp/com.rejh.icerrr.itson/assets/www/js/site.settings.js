@@ -14,20 +14,20 @@ site.settings = {};
 // ---> Init
 
 site.settings.init = function(initApp) {
-	
+
 	loggr.debug("site.settings.init()");
-	
+
 	// goto section
 	site.ui.gotosection("#settings");
-	
+
 	// Init + Close callback for #home
 	// Best for last :)
 	site.lifecycle.addOnPauseCb(site.settings.onpause);
 	site.lifecycle.addOnResumeCb(site.settings.onresume);
-	
+
 	// Reg listeners
 	site.settings.registerListeners();
-	
+
 }
 
 // ---> OnPause, OnResume
@@ -43,11 +43,11 @@ site.settings.onpause = function() {
 // ---> Listeners
 
 site.settings.registerListeners = function() {
-	
+
 	loggr.debug("site.settings.registerListeners()");
-	
+
 	// ---> Update
-	
+
 	// Show Station Icon
 	window.mediaStreamer.getSetting("bool","showStationIcon",
 		function(res) {
@@ -58,19 +58,19 @@ site.settings.registerListeners = function() {
 			loggr.error(err);
 		}
 	);
-	
+
 	// Show Album Art
 	var showAlbumArt = site.cookies.get("setting_showAlbumArt");
 	loggr.log(" > showAlbumArt: "+ showAlbumArt);
 	if (showAlbumArt==1) { $("#settings input[name='showAlbumArt']").attr("checked",true); }
 	else { $("#settings input[name='showAlbumArt']").attr("checked",false); }
-	
+
 	// Colorize Album Art
 	var colorizeAlbumArt = site.cookies.get("setting_colorizeAlbumArt");
 	loggr.log(" > colorizeAlbumArt: "+ colorizeAlbumArt);
 	if (colorizeAlbumArt==1) { $("#settings input[name='colorizeAlbumArt']").attr("checked",true); }
 	else { $("#settings input[name='colorizeAlbumArt']").attr("checked",false); }
-	
+
 	// Use Speaker Phone For Alarms
 	window.mediaStreamer.getSetting("bool","useSpeakerForAlarms",
 		function(res) {
@@ -81,7 +81,18 @@ site.settings.registerListeners = function() {
 			loggr.error(err);
 		}
 	);
-	
+
+	// Turn On Screen For Alarms
+	window.mediaStreamer.getSetting("bool","turnOnScreenForAlarms",
+		function(res) {
+			if (res) { $("#settings input[name='turnOnScreenForAlarms']").attr("checked",true); }
+			else { $("#settings input[name='turnOnScreenForAlarms']").attr("checked",false); }
+		},
+		function(err) {
+			loggr.error(err);
+		}
+	);
+
 	// Use SLS
 	window.mediaStreamer.getSetting("bool","useSLS",
 		function(res) {
@@ -92,7 +103,7 @@ site.settings.registerListeners = function() {
 			loggr.error(err);
 		}
 	);
-	
+
 	// Use SLS Verify
 	window.mediaStreamer.getSetting("bool","useSLSVerify",
 		function(res) {
@@ -103,7 +114,7 @@ site.settings.registerListeners = function() {
 			loggr.error(err);
 		}
 	);
-	
+
 	// Use Wifi
 	window.mediaStreamer.getSetting("bool","useWifi",
 		function(res) {
@@ -114,7 +125,7 @@ site.settings.registerListeners = function() {
 			loggr.error(err);
 		}
 	);
-	
+
 	// Use SAA
 	window.mediaStreamer.getSetting("bool","useSAA",
 		function(res) {
@@ -125,7 +136,7 @@ site.settings.registerListeners = function() {
 			loggr.error(err);
 		}
 	);
-	
+
 	// Use Flat Icon
 	window.mediaStreamer.getSetting("bool","useFlatIcon",
 		function(res) {
@@ -136,20 +147,20 @@ site.settings.registerListeners = function() {
 			loggr.error(err);
 		}
 	);
-	
+
 	// Enable LogCat Debugging
 	var enableLogCatDebugging = site.cookies.get("setting_enableLogCatDebugging")
 	if (enableLogCatDebugging==1) { $("#settings input[name='enableLogCatDebugging']").attr("checked",true); }
 	else { $("#settings input[name='enableLogCatDebugging']").attr("checked",false); }
-	
+
 	// Send Logs
 	var sendLogs = site.cookies.get("setting_sendLogs");
 	loggr.log(" > sendLogs: "+ sendLogs);
 	if (sendLogs==1) { $("#settings input[name='sendLogs']").attr("checked",true); }
 	else { $("#settings input[name='sendLogs']").attr("checked",false); }
-	
+
 	// ---> Listener
-	
+
 	// Shot Station Icon
 	$("#settings input[name='showStationIcon']").off("change");
 	$("#settings input[name='showStationIcon']").on("change",function(evt) {
@@ -158,7 +169,7 @@ site.settings.registerListeners = function() {
 		site.cookies.put("setting_showStationIcon",(targ.checked)?1:0);
 		window.mediaStreamer.setting("bool","showStationIcon",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
-	
+
 	// Shot Album Art
 	$("#settings input[name='showAlbumArt']").off("change");
 	$("#settings input[name='showAlbumArt']").on("change",function(evt) {
@@ -166,7 +177,7 @@ site.settings.registerListeners = function() {
 		loggr.log(" > Setting: showAlbumArt: "+ (targ.checked)?1:0);
 		site.cookies.put("setting_showAlbumArt",(targ.checked)?1:0);
 	});
-	
+
 	// Colorize Album Art
 	$("#settings input[name='colorizeAlbumArt']").off("change");
 	$("#settings input[name='colorizeAlbumArt']").on("change",function(evt) {
@@ -178,7 +189,7 @@ site.settings.registerListeners = function() {
 		$("#home .main .station_image img").css("opacity",1.0);
 		site.vars.currentAlbumArtPath = null;
 	});
-	
+
 	// Use Speaker Phone For Alarms
 	$("#settings input[name='useSpeakerForAlarms']").off("change");
 	$("#settings input[name='useSpeakerForAlarms']").on("change",function(evt) {
@@ -186,7 +197,15 @@ site.settings.registerListeners = function() {
 		loggr.log(" > Setting: useSpeakerForAlarms: "+ (targ.checked));
 		window.mediaStreamer.setting("bool","useSpeakerForAlarms",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
-	
+
+	// Turn On Screen For Alarms
+	$("#settings input[name='turnOnScreenForAlarms']").off("change");
+	$("#settings input[name='turnOnScreenForAlarms']").on("change",function(evt) {
+		var targ = evt.currentTarget;
+		loggr.log(" > Setting: turnOnScreenForAlarms: "+ (targ.checked));
+		window.mediaStreamer.setting("bool","turnOnScreenForAlarms",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+	});
+
 	// Use SLS
 	$("#settings input[name='useSLS']").off("change");
 	$("#settings input[name='useSLS']").on("change",function(evt) {
@@ -194,7 +213,7 @@ site.settings.registerListeners = function() {
 		loggr.log(" > Setting: useSLS: "+ (targ.checked));
 		window.mediaStreamer.setting("bool","useSLS",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
-	
+
 	// Use SLS Verify
 	$("#settings input[name='useSLSVerify']").off("change");
 	$("#settings input[name='useSLSVerify']").on("change",function(evt) {
@@ -202,7 +221,7 @@ site.settings.registerListeners = function() {
 		loggr.log(" > Setting: useSLSVerify: "+ (targ.checked));
 		window.mediaStreamer.setting("bool","useSLSVerify",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
-	
+
 	// Use Wifi
 	$("#settings input[name='useWifi']").off("change");
 	$("#settings input[name='useWifi']").on("change",function(evt) {
@@ -210,7 +229,7 @@ site.settings.registerListeners = function() {
 		loggr.log(" > Setting: useWifi: "+ (targ.checked));
 		window.mediaStreamer.setting("bool","useWifi",(targ.checked),function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
 	});
-	
+
 	// Use SAA
 	$("#settings input[name='useSAA']").off("change");
 	$("#settings input[name='useSAA']").on("change",function(evt) {
@@ -221,7 +240,7 @@ site.settings.registerListeners = function() {
 			alert("Don't forget to set SAA's ringtone to 'silent'!");
 		}
 	});
-	
+
 	// Use Flat Icon
 	$("#settings input[name='useFlatIcon']").off("change");
 	$("#settings input[name='useFlatIcon']").on("change",function(evt) {
@@ -237,7 +256,7 @@ site.settings.registerListeners = function() {
 			}
 		);
 	});
-	
+
 	// Enable LogCat Debugging
 	$("#settings input[name='enableLogCatDebugging']").off("change");
 	$("#settings input[name='enableLogCatDebugging']").on("change",function(evt) {
@@ -245,7 +264,7 @@ site.settings.registerListeners = function() {
 		loggr.log(" > Setting: enableLogCatDebugging: "+ (targ.checked)?1:0,{toconsole:true});
 		site.cookies.put("setting_enableLogCatDebugging",(targ.checked)?1:0);
 	});
-	
+
 	// Send Logs
 	$("#settings input[name='sendLogs']").off("change");
 	$("#settings input[name='sendLogs']").on("change",function(evt) {
@@ -254,48 +273,48 @@ site.settings.registerListeners = function() {
 		site.cookies.put("setting_sendLogs",(targ.checked)?1:0);
 		loggr.log(" > "+ site.cookies.get("setting_sendLogs"));
 	});
-	
+
 }
 
 // ---> Store
 
 site.settings.store = function() {
-	
+
 	loggr.log("site.settings.store()");
 	site.cookies.put("data_settings",JSON.stringify(site.data.settings));
-	
+
 }
 
 // ---> Export, import
 
 site.settings.exportStationsData = function() {
-	
+
 	loggr.debug("site.settings.exportStationsData()");
-	
+
 	var filename = "icerrr.stations.exp."+ new Date().format("Y-m-d.H-i-s") +".json";
-	
+
 	// Write file to storage..
 	site.storage.writefile(site.cfg.paths.json,filename,JSON.stringify(site.data.stations),
 		function(evt) {
-			
+
 			// Get fileEntry
 			site.storage.getFileEntry(site.cfg.paths.json,filename,
 				function(fileEntry) {
-					
+
 					// Prep intent extras
 					var extras = {};
 					extras[window.plugins.webintent.EXTRA_STREAM] = fileEntry.fullPath;
-					
+
 					// Prep params
 					var params = {
 						action: window.plugins.webintent.ACTION_SEND,
 						type: 'text/text',
 						extras: extras
 					}
-					
+
 					// A-go-go
 					window.plugins.webintent.startActivity(params,function(){},function(){ alert("An error occured");});
-					
+
 				},
 				function(fileError) {
 					alert("Could not read stations file: "+ site.storage.getErrorType(fileError));
@@ -306,48 +325,48 @@ site.settings.exportStationsData = function() {
 			alert("Could not write stations file: "+ site.storage.getErrorType(fileError));
 		}
 	);
-	
+
 }
 
 site.settings.importStationsData = function() {
-	
+
 	loggr.debug("site.settings.importStationsData()");
-	
+
 	window.fileChooser.filePicker(
 		function(uri) {
-			
+
 			// site.ui.showloading(null,"Reading file...");
-			
+
 			// Filename..
 			var filename = uri.substr(uri.lastIndexOf("/")+1);
-			
+
 			// Filepath..
 			// -> Relative :S
 			var filepath = uri.substr(0,uri.lastIndexOf("/"));
 			if (filepath.indexOf("file://")==0) {
 				filepath = filepath.substr(7);
 			}
-			
+
 			// Log
 			loggr.log(" > "+ filepath);
 			loggr.log(" > "+ filename);
-			
+
 			// Get file entry..
 			site.storage.getFileEntry(filepath,filename,
 				function(fileEntry) {
-							
+
 					// Read file entry okay!
 					loggr.log("site.settings.importStationsData().gotFileEntry :D");
-					
+
 					site.storage.readfile(filepath,filename,
 						function(jsons) {
-							
+
 							// Read file okay!
 							loggr.log("site.settings.importStationsData().gotFile :D");
-							
+
 							// Parse json
 							var json = JSON.parse(jsons);
-							
+
 							// Check file == json
 							if (!json || !json[0]) {
 								alert("File contents cannot be parsed to json data :(");
@@ -365,25 +384,25 @@ site.settings.importStationsData = function() {
 								site.ui.hideloading();
 								return;
 							}
-							
+
 							// Copy current stations.jsoon so we can restore it.. (yea.. I know)
 							site.vars.stationsBackupFilename = "stations.bck."+ new Date().format("Y-m-d.H-i-s") +".json";
 							site.storage.writefile(site.cfg.paths.json,site.vars.stationsBackupFilename,JSON.stringify(site.data.stations),
-								function(evt) { 
-								
+								function(evt) {
+
 								// Backup okay!
 								loggr.log("site.settings.importStationsData().gotBackup :D");
-									
+
 									// Overwrite stations data...?!
 									var conf = confirm("Are you sure you want to continue restoring "+ json.length +" stations?");
-									
+
 									var newstations = site.helpers.mergeStations(site.data.stations,json);
-									
+
 									// Okay
 									if (conf) {
-										
+
 										site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(newstations),
-											function(evt) { 
+											function(evt) {
 												alert("Your stations have been restored! Tap OK to restart.");
 												window.location.reload();
 												return;
@@ -394,14 +413,14 @@ site.settings.importStationsData = function() {
 												return;
 											}
 										);
-										
+
 									}
 									// Nope
 									else {
 										site.ui.hideloading();
 										return;
 									}
-									
+
 								},
 								function(err) {
 									alert("Could not write backup of stations data: "+ site.storage.getErrorType(fileError));
@@ -409,7 +428,7 @@ site.settings.importStationsData = function() {
 									return;
 								}
 							);
-							
+
 						},
 						function(fileError) {
 							alert("Could not read file: "+ fileError.code +", "+ site.storage.getErrorType(fileError) +"\n"+ uri);
@@ -418,7 +437,7 @@ site.settings.importStationsData = function() {
 						},
 						{readOutsideRoot:true,file:{readAsBinaryString:false}} // TODO: Remove readAsBinary
 					);
-					
+
 				},
 				function(fileError) {
 					alert("Could not read file entry: "+ fileError.code +", "+ site.storage.getErrorType(fileError) +"\n"+ uri);
@@ -426,9 +445,9 @@ site.settings.importStationsData = function() {
 					return;
 				},
 				{readOutsideRoot:true,path:{create:false},file:{create:false}}
-				
+
 			);
-			
+
 		},
 		function(err) {
 			alert("An error occured: "+err);
@@ -436,7 +455,7 @@ site.settings.importStationsData = function() {
 			console.error(err);
 		}
 	);
-	
+
 }
 
 // ---> Help
@@ -537,13 +556,3 @@ site.settings.helpSendLogs = function() {
 		;
 	navigator.notification.alert(message, function(){}, title, buttonName)
 }
-
-
-
-
-
-
-
-
-
-

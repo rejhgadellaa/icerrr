@@ -96,6 +96,9 @@ site.home.init = function() {
 
 		loggr.error(" > Error loading image: "+evt.currentTarget.src,{dontupload:true});
 
+		// First set default..
+		$("#home .station_icon img").attr("src",)
+
 		// Download..
 		site.chicon.downloadImagery(site.session.currentstation,
 			function(ok) {
@@ -683,7 +686,7 @@ site.home.handleStationImage = function(src,isBigIcon) {
 	var station = site.session.currentstation;
 
 	// Icon or album art..
-	if (src == site.session.currentstation.station_icon && !isBigIcon) {
+	if (src == site.session.currentstation.station_icon && !isBigIcon || src=="img/icons-80/ic_station_default.png") {
 		// icon
 
 		loggr.log(" > It's an icon!");
@@ -749,8 +752,8 @@ site.home.handleStationImage = function(src,isBigIcon) {
 				// Check blacklist..
 				// Note: using site.session so this will be stored.. // TODO: is this smart?
 				if (!site.session.blacklistedAlbumArt) { site.session.blacklistedAlbumArt = {}; }
-				if (site.session.blacklistedAlbumArt[src]>=2) {
-					loggr.error(" -> Src blacklisted ("+ site.session.blacklistedAlbumArt[src] +"): "+ src);
+				if (site.session.blacklistedAlbumArt[src]>=2 && site.session.blacklistedAlbumArt[src]!="img/icons-80/ic_station_default.png") {
+					loggr.warn(" -> Src blacklisted ("+ site.session.blacklistedAlbumArt[src] +"): "+ src,{dontsave:true});
 					site.home.loadAlbumArt('img/bg_home_default.jpg');
 					site.ui.hideLoadbar();
 					return;

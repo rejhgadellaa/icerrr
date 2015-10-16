@@ -123,7 +123,7 @@ site.ui.initFabScroll = function(selector) {
 	// Reset all..
 	$(".fab").css("bottom",16);
 	// Reset current if toast is visible
-	if (site.timeouts.ui_showtoast_hide && selector!="#home") {
+	if (site.ui.ui_showtoast_hide && selector!="#home") {
 		$(selector+" .fab").css("bottom",$("#overlay_toast").outerHeight()+16);
 	}
 
@@ -131,12 +131,27 @@ site.ui.initFabScroll = function(selector) {
 	$(".main").off( 'scroll');
 	$(selector+" .main").on( 'scroll', function(e) {
 
+		// Delta..
 		delta = site.vars.fabscrolls[selector].scrolltop - $(selector+" .main").scrollTop();
 		if (!site.vars.fabscrolls[selector].lastDelata) { site.vars.fabscrolls[selector].lastDelata = -(delta); }
 
-		if(delta > 0 && site.vars.fabscrolls[selector].lastDelata<0) {
+		// Scrolled to bottom?
+		var selScrollHeight = $(selector+" .main")[0].scrollHeight;
+		var selHeight = $(selector+" .main").height();
+		var selScrollTop = $(selector+" .main").scrollTop();
+
+		// Action!
+		if (selScrollHeight <= (selHeight+selScrollTop)) {
 			//scroll up
-			if (site.timeouts.ui_showtoast_hide) {
+			if (site.ui.ui_showtoast_hide) {
+				$(selector+" .fab").css("bottom",$("#overlay_toast").outerHeight()+16);
+			} else {
+				$(selector+" .fab").css("bottom",16);
+			}
+		}
+		else if(delta > 0 && site.vars.fabscrolls[selector].lastDelata<0) {
+			//scroll up
+			if (site.ui.ui_showtoast_hide) {
 				$(selector+" .fab").css("bottom",$("#overlay_toast").outerHeight()+16);
 			} else {
 				$(selector+" .fab").css("bottom",16);
@@ -147,6 +162,7 @@ site.ui.initFabScroll = function(selector) {
 			$(selector+" .fab").css("bottom",-64);
 		}
 
+		// Store..
 		site.vars.fabscrolls[selector].scrolltop = $(selector+" .main").scrollTop();
 		site.vars.fabscrolls[selector].lastDelata = delta;
 		site.vars.fabscrolls[selector].time = new Date().getTime();
@@ -410,7 +426,8 @@ site.ui.showtoast = function(msg, timeInSec, topMode) {
 
 site.ui.hidetoast = function() {
 	loggr.log("site.ui.hidetoast()");
-	if (site.timeouts.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
+	if (site.ui.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
+	site.ui.ui_showtoast_hide = null;
 	site.ui.fadeOut("#overlay_toast",250,
 		function(){
 			if ($("#overlay_toast").hasClass("top")) {

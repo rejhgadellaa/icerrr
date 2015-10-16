@@ -98,6 +98,11 @@ site.detailstation.updatedata = function() {
 		$("#detailstation .station_icon img").attr("src","img/ic_station_default.png");
 	}
 	// -> Image
+	$("#detailstation .station_image img").off("error");
+	$("#detailstation .station_image img").on("error",function(evt) {
+		$("#detailstation .station_image img").attr("src","img/web_hi_res_512_002.jpg");
+		$("#detailstation .main .header").css("background-image","url('img/bg_home_default.jpg')");
+	});
 	if (site.detailstation.station.station_image_local) {
 		$("#detailstation .station_image img").attr("src",site.detailstation.station.station_image_local);
 	} else if (site.detailstation.station.station_icon_local) {
@@ -295,6 +300,14 @@ site.detailstation.updateDataNowPlaying = function() {
 
 			$("#detailstation .station_nowplaying").html(site.home.formatNowPlaying(data["data"]["nowplaying"]));
 			site.detailstation.updatedDataNowPlaying();
+
+			var someinfo = ""
+				+"Server: "+ data["data"]["server"] +", "
+				+"Content-type: "+ data["data"]["content-type"] +", "
+				+"Bitrate: "+ data["data"]["icy-br"]
+				;
+
+			loggr.log(" > "+ someinfo);
 
 		},
 		function(error) {

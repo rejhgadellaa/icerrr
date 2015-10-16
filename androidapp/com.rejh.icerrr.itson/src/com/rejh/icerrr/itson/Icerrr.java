@@ -31,8 +31,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebView;
@@ -42,16 +45,24 @@ public class Icerrr extends DroidGap
     
 	final static String APPTAG = "Icerrr";
 	
+	private SharedPreferences sett;
+	
 	private long intentTime = -1;
 	
-	KeyguardManager keyguardManager;
-	KeyguardLock lock;
+	private Handler keyguardHandler; 
+	private Runnable keyguardRunnable;
+	private KeyguardManager keyguardManager;
+	private KeyguardLock lock;
+	private long timeKeyguardDisabled = 0;
     
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
     	
         super.onCreate(savedInstanceState);
+
+        // Preferences
+        sett = getSharedPreferences(APPTAG,Context.MODE_MULTI_PROCESS | 2);
         
         // Clear cache
         super.clearCache();
@@ -105,6 +116,7 @@ public class Icerrr extends DroidGap
     public void onPause() {
     	Log.d(APPTAG,APPTAG+".onPause()");
     	super.onPause();
+    	skiplock(false);
     }
     
     @Override
@@ -162,12 +174,31 @@ public class Icerrr extends DroidGap
     
     // Keyguard
     private void skiplock(boolean action) {
+    	skiplock(action,false);
+    }
+    private void skiplock(boolean action, boolean force) {
     	
     	Log.d(APPTAG,APPTAG+".skiplock(): "+ action);
     	
-    	/*
+    	if (!sett.getBoolean("turnOnScreenForAlarms",true)) {
+    		Log.d(APPTAG," -> Disabled, do nothing..");
+    		return;
+    	}
+    	
+    	if (!force && System.currentTimeMillis() < timeKeyguardDisabled+1000) {
+    		Log.d(APPTAG," -> !Force and timeKeyguardDisabled<1s ago, do nothing..");
+    		return;
+    	}
+    	
+    	if (keyguardRunnable==null) {
+    		keyguardRunnable = new Runnable() { 
+                public void run() { 
+               	 skiplock(false,true);
+                } 
+           };
+    	}
         
-        // TODO: Make this optional before rolling out..
+        // DO IT
         if (action == true) {
             
         	// Power up display
@@ -184,15 +215,16 @@ public class Icerrr extends DroidGap
             //Toast.makeText(getApplicationContext(), "Lockscreen Disabled", Toast.LENGTH_SHORT).show(); // DEBUG // TODO
             
         	// Enable keyguard after xx seconds..
-            Handler handler = new Handler(); 
-            handler.postDelayed(new Runnable() { 
-                 public void run() { 
-                	 skiplock(false);
-                 } 
-            }, 30000);
+            keyguardHandler = new Handler(); 
+            keyguardHandler.postDelayed(keyguardRunnable, 60000);
+            
+            // Time..
+            timeKeyguardDisabled = System.currentTimeMillis();
+            
         }
         //
         else if (action==false) {
+        	try { keyguardHandler.removeCallbacks(keyguardRunnable); } catch(Exception e) {}
             lock.reenableKeyguard();
             //Toast.makeText(getApplicationContext(), "Lockscreen Enabled", Toast.LENGTH_SHORT).show(); // DEBUG // TODO
         }
