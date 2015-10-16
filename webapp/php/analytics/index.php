@@ -106,6 +106,7 @@ foreach($json as $jsonk => $jsonv) {
         data.byplatforms = '<? echo json_encode($data["byplatform"]); ?>';
 
     </script>
+    <script src="../../js/jquery/jquery-1.11.3.min.js"></script>
     <script src="script.js?c=<?=time();?>"></script>
     <script src="chartjs-min.js"></script>
     <script src="dateformat.js"></script>
@@ -114,14 +115,20 @@ foreach($json as $jsonk => $jsonv) {
 
 <body onload="ch.init();">
 
+<div>
 <h2>By version:</h2>
 <canvas id="chart_byversion"></canvas>
+</div>
 
+<div>
 <h2>By model:</h2>
 <canvas id="chart_bymodel"></canvas>
+</div>
 
+<div>
 <h2>By platform:</h2>
 <canvas id="chart_byplatform"></canvas>
+</div>
 
 <?
 
