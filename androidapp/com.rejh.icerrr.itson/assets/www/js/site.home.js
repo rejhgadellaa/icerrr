@@ -97,7 +97,7 @@ site.home.init = function() {
 		loggr.error(" > Error loading image: "+evt.currentTarget.src,{dontupload:true});
 
 		// First set default..
-		$("#home .station_icon img").attr("src",)
+		site.home.handleStationImage("img/icons-80/ic_station_default.png");
 
 		// Download..
 		site.chicon.downloadImagery(site.session.currentstation,
