@@ -18,7 +18,7 @@ ch.init = function() {
 
     // chart_byversion
     console.log(" -> by_version");
-    ch.drawChart(data.byversion,"chart_byversion","bar");
+    ch.drawChart(data.byversion,"chart_byversion");
 
     // chart_bymodel
     console.log(" -> by_bymodel");
@@ -54,7 +54,7 @@ ch.drawChart = function(thedata,canvasid,type) {
     entry1.timems = (entry1.time*1000)-86400000; // -1 day
     var date1 = new Date();
     date1.setTime(entry1.timems);
-    entry2.timems = entry2.time*1000;
+    entry2.timems = (entry2.time*1000)+86400000;
     var date2 = new Date();
     //date2.setTime(entry2.timems);
 
@@ -62,6 +62,8 @@ ch.drawChart = function(thedata,canvasid,type) {
     var chdata = {};
     chdata.labels = [];
     chdata.datasets = [];
+    var datasetsByKey = {};
+    var doneids = {};
 
     // Gather..
     console.log(" -> Daterange..");
@@ -78,10 +80,13 @@ ch.drawChart = function(thedata,canvasid,type) {
         dataset.fillColor = "rgba("+ randcolor +",0.08)";
         dataset.strokeColor = "rgba("+ randcolor +",0.75)";
 
+        var tempdatasetday = -1;
         var tempdataset = {};
         var tempdataids = [];
 
         for (var t=entry1.timems; t<=entry2.timems; t+=86400000) {
+
+            tempdatasetday++;
 
             var datet = new Date();
             datet.setTime(t);
@@ -102,14 +107,46 @@ ch.drawChart = function(thedata,canvasid,type) {
                 var datestr = date.format("Y-m-d");
                 if (datetstr==datestr) {
 
+                    if (tempdataids.indexOf(entry.id)>=0) {
+                        continue;
+                    }
+                    tempdataids.push(entry.id);
+
                     founddataforday = true;
 
                     if (!tempdataset[datetstr]) {
-                        tempdataids.push(entry.id);
                         tempdataset[datetstr] = 1;
-                    } else if (tempdataids.indexOf(entry.id)<0) {
-                        tempdataids.push(entry.id);
+                    } else {
                         tempdataset[datetstr] ++;
+                    }
+
+                    // minus?
+                    var keysAndIndexes = ch.getDataIndexesById(thedata,entry.id,entry.time);
+                    for (var j=0; j<keysAndIndexes.length; j++) {
+                        var dikey = keysAndIndexes[j].key;
+                        var diindex = keysAndIndexes[j].index;
+                        var didata = thedata[dikey]["datas"][diindex];
+                        didata.timems = didata.time*1000;
+                        console.warn(" ----> "+ dikey +", "+ didata.id);
+                        var didate = new Date();
+                        didate.setTime(didata.timems);
+                        var didatestr = didate.format("Y-m-d");
+                        if (tempdataset[datetstr] && tempdataset[datetstr]>0 && parseFloat(dikey)<parseFloat(key)) {
+
+                            if (!doneids[didata.id]) { doneids[didata.id] = []; }
+                            if (doneids[didata.id].indexOf(dikey)>=0) {
+                                console.error(" -> SKIP SKIP ");
+                                continue;
+                            }
+                            doneids[didata.id].push(dikey);
+
+                            var ditempdatasetday = tempdatasetday;
+                            for (var did=tempdatasetday; did<datasetsByKey[dikey].data.length; did++) {
+                                console.warn(" -----> "+ dikey +", "+ ditempdatasetday +", "+ datasetsByKey[dikey].data[did]);
+                                datasetsByKey[dikey].data[did] -= 1;
+                            }
+
+                        }
                     }
 
                 }
@@ -131,9 +168,15 @@ ch.drawChart = function(thedata,canvasid,type) {
             total = total+tempdataset[d];
             dataset.data.push(total);
         }
-        chdata.datasets.push(dataset);
+        datasetsByKey[key] = dataset;
 
     }
+
+    // Store
+    for (var key in datasetsByKey) {
+        chdata.datasets.push(datasetsByKey[key]);
+    }
+
 
     // Chart!
     if (!type) {
@@ -205,7 +248,39 @@ ch.drawChartLegend = function(canvasid,chdata) {
 
 }
 
+// Lookups
 
+// getDataIndexesById
+ch.getDataIndexesById = function(data,id,time) {
+
+    console.log("ch.getDataIndexesById(): "+id);
+
+    var res = [];
+
+    //console.log(JSON.stringify(datas));
+
+    for (var key in data) {
+
+        var ob = null;
+        for (var i=0; i<data[key].datas.length; i++) {
+
+            if (id==data[key].datas[i].id && time!=data[key].datas[i].time) {
+                ob = {key:key,index:i};
+            }
+
+        }
+        if (ob) {
+            res.push(ob);
+        }
+
+    }
+
+    console.log(JSON.stringify(res));
+
+    console.log(" -> ch.getDataIndexesById().DONE: "+ res.length +" result(s)");
+    return res;
+
+}
 
 
 
