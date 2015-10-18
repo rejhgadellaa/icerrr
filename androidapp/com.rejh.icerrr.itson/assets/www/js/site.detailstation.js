@@ -91,7 +91,7 @@ site.detailstation.updatedata = function() {
 	// Update data that can be done right now..
 	// -> Icon, don't cache it that should be done in chlist
 	if (site.detailstation.station.station_icon_local) {
-		loggr.log(" > Local icon :D");
+		loggr.log(" > Local icon :D "+site.detailstation.station.station_icon_local);
 		$("#detailstation .station_icon img").attr("src",site.detailstation.station.station_icon_local);
 	} else {
 		loggr.warn(" > No local icon :(",{dontsave:true});
@@ -100,6 +100,7 @@ site.detailstation.updatedata = function() {
 	// -> Image
 	$("#detailstation .station_image img").off("error");
 	$("#detailstation .station_image img").on("error",function(evt) {
+		loggr.warn(" -> DAFAQUE NOT WORKING?");
 		$("#detailstation .station_image img").attr("src","img/web_hi_res_512_002.jpg");
 		$("#detailstation .main .header").css("background-image","url('img/bg_home_default.jpg')");
 	});

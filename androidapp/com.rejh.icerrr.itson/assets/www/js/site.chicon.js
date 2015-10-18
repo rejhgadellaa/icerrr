@@ -106,14 +106,6 @@ site.chicon.init = function(station_id) {
 			// Append
 			wrap.appendChild(resultitem);
 
-			// Custom icon (from storage)
-			resultitem = document.createElement("div");
-			resultitem.className = "resultitem_chicon shadow_z1 activatablel";
-			resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
-				+ '<img class="resulticon_chicon import" style="width:48px; height:48px; margin:16px;" src="img/icons-96/ic_add_orange.png" />'
-				+ '</div></div>'
-				;
-
 			// Spacer icon..
 			resultspace = document.createElement("div");
 			resultspace.style.position = "relative";
@@ -122,7 +114,6 @@ site.chicon.init = function(station_id) {
 			resultspace.style.height = "48px";
 
 			// Append
-			wrap.appendChild(resultitem);
 			wrap.appendChild(resultspace);
 
 			// Append
@@ -134,10 +125,6 @@ site.chicon.init = function(station_id) {
 				var target = evt.originalEvent.target;
 				site.chicon.save(target);
 			});
-
-			// Onclick for custom icon
-			$("#searchicon .resulticon_chicon.import").off("click");
-			$("#searchicon .resulticon_chicon.import").on("click",site.chicon.import);
 
 			// Append branding..
 			// results.getBranding(opt_element?, opt_orientation?)
@@ -328,6 +315,33 @@ site.chicon.updateLockscreenArtworkData = function(station_data) {
 site.chicon.downloadImagery = function(station, cb, cberr) {
 
 	loggr.log("site.chicon.downloadImagery(): "+ station.station_id);
+
+	// Check if local (default)
+	if (!station.station_icon || station.station_icon=="img/icons-80/ic_station_default.png" || station.station_icon.indexOf("file://")>=0) {
+
+		loggr.log(" > Local icon ("+ station.station_icon +"), what now..?");
+
+		var tmpimage = new Image();
+		tmpimage.onload = function() {
+			console.error(this.src);
+		}
+		tmpimage.src = "img/icons-80/ic_station_default.png";
+
+		var stationIndex = site.helpers.session.getStationIndexById(station.station_id);
+		if (stationIndex<0) { return; }
+		site.data.stations[stationIndex].station_icon = "file:///android_asset/www/img/icons-80/ic_station_default.png";
+		site.data.stations[stationIndex].station_image = "file:///android_asset/www/img/web_hi_res_512_002.jpg";
+		site.data.stations[stationIndex].station_icon_local = "file:///android_asset/www/img/icons-80/ic_station_default.png";
+		site.data.stations[stationIndex].station_image_local = "file:///android_asset/www/img/web_hi_res_512_002.jpg"
+		site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),function(){},function(){});
+
+		site.chicon.downloadedIcon = true; // TODO: not true
+		site.chicon.downloadedImage = true; // TODO: not true
+		site.chicon.downloadedImagery(site.data.stations[stationIndex],cb,cberr);
+
+		return;
+		
+	}
 
 	// Reset..
 	station.station_icon_local = null;
@@ -581,7 +595,7 @@ site.chicon.uploadImagery = function(imagePath) {
 			}
 
 			loggr.log(" > Uploaded, responsecode: "+ res.responseCode);
-			var iconurl = site.cfg.urls.webapp +"/img/uploaded/" + jsonresponse["data"]["filename"]; // site.cfg.urls.webapp +"/img/uploaded/" + uniqname;
+			var iconurl = site.cfg.urls.webapp +"/static/uploaded/" + jsonresponse["data"]["filename"]; // site.cfg.urls.webapp +"/img/uploaded/" + uniqname;
 
 			loggr.log(" > "+ iconurl);
 

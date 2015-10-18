@@ -1,3 +1,7 @@
+0.317
+  * Fix: choosing default icon in icon search no longer causes limbo
+  * Fix: importing an icon should no longer fail
+
 0.316
   * Enabled 'Unlock device for alarms' option (Settings)
   * Bugfixes, tweaks and improvements

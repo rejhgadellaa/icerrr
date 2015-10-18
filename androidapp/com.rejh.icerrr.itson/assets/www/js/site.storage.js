@@ -22,85 +22,85 @@ site.storage = {};
 site.storage.timeouts = {};
 
 site.storage.addTimeout = function(action, time, args) {
-	
+
 	if (!time) { time = 2000; }
-	
+
 	var timeoutID = site.helpers.getUniqueID(action);
-	
+
 	loggr.debug("site.storage.addTimeout(): "+ action +", "+ timeoutID);
-	
+
 	site.storage.timeouts[timeoutID] = {};
 	site.storage.timeouts[timeoutID].action = action
 	site.storage.timeouts[timeoutID].args = args;
 	site.storage.timeouts[timeoutID].timeout = setTimeout(function() {
-		
+
 		loggr.warn("site.storage timeout! Action: '"+action+"'",{dontupload:true});
 		loggr.warn(JSON.stringify(args),{dontupload:true});
-		
+
 		// TODO || TMP: remove this line for prod.
 		// alert("Storage timeout occured!");
-		
+
 		if (!site.storage.timeouts[timeoutID]) {
 			loggr.warn("site.storage.timeouts["+ timeoutID +"] is null?");
 			return;
 		}
-		
+
 		// try aborting and retry..
 		if (site.storage.timeouts[timeoutID].canAbort) {
-			
+
 			loggr.log(" > Can abort, will retry...");
 			site.storage.timeouts[timeoutID].abortObj.abort();
-			
+
 			switch(action) {
-				
+
 				case "readfile":
 					loggr.log(" > Retry action: "+ action);
 					site.storage.removeTimeout(timeoutID);
 					site.storage.readfile(args.path,args.filename,args.cb,args.errcb,args.opts);
 					break;
-				
+
 				default:
 					loggr.error(" > Could not retry action: '"+ action +"'");
 					// site.ui.showtoast("An error accured. You may want to restart Icerrr.");
-					
+
 			}
-			
+
 		} else {
 			loggr.warn(" > Cannot abort file operation, ask user to restart app");
 			// site.ui.showtoast("An error accured. You may want to restart Icerrr.");
 		}
-		
+
 		loggr.log(" > Endof storage.timeout");
-		
+
 		site.storage.removeTimeout(timeoutID);
-		
+
 	},time);
-	
+
 	return timeoutID;
-	
+
 }
 
 site.storage.removeTimeout = function(timeoutID) {
-	
+
 	loggr.debug("site.storage.removeTimeout(): "+ timeoutID);
-	
+
 	if (!site.storage.timeouts[timeoutID]) {
 		loggr.warn(" > site.storage.removeTimeout: "+timeoutID +" not found");
 		return;
 	}
-	
+
 	if (site.storage.timeouts[timeoutID].timeout) {
 		clearTimeout(site.storage.timeouts[timeoutID].timeout);
 	}
-	
+
 	site.storage.timeouts[timeoutID] = null;
-	
+
 	var foundActiveTimeout = false;
 	for (var id in site.storage.timeouts) {
 		if (site.storage.timeouts[id]) { foundActiveTimeout = true; break; }
 	}
 	if (!foundActiveTimeout) { site.storage.timeouts = {}; }
-	
+
 }
 
 // ---> Pre-callback
@@ -123,17 +123,17 @@ site.session.storage = {};
 site.session.storage.queue = [];
 
 // QueueStuff
-// - Args: action='createfolder', 
+// - Args: action='createfolder',
 
 
 site.storage.enqueue = function(action,args) {
-	
+
 	loggr.debug("site.storage.enqueue(): "+action);
 	loggr.log(" > "+ JSON.stringify(args));
-	
+
 	if (!site.session.storage) { site.session.storage = {}; }
 	if (!site.session.storage.queue) { site.session.storage.queue = []; }
-	
+
 	// Check for duplicates
 	for (var i=0; i<site.session.storage.queue.length; i++) {
 		var queue_item = site.session.storage.queue[i];
@@ -141,84 +141,84 @@ site.storage.enqueue = function(action,args) {
 			loggr.log(" > Duplicate exists.. what now? we dont want UNLIMITED LOOPS!");
 		}
 	}
-	
+
 	// Push
 	site.session.storage.queue.push({"action":action,"args":jQuery.extend(true, {}, args)});
-	
+
 	// Run queue if needed
 	if (!site.timeouts.storage_queue) {
 		site.timeouts.storage_queue = setTimeout(function(){
 			site.storage.runqueue();
 		},1);
 	}
-	
+
 }
 
 site.storage.runqueue = function() {
-	
+
 	loggr.debug("site.storage.runqueue()");
-	
+
 	if (!site.session.storage) { return; }
-	
+
 	// Stop when we can
 	if (site.session.storage.queue.length<1) {
 		loggr.log(" > Queue empty, stop...");
 		if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
 		return;
 	}
-	
+
 	// Get queue item
 	var queue_item = site.session.storage.queue[0];
 	var action = queue_item.action;
 	var args = queue_item.args;
-	
+
 	// set timeout now so we have little delay for async shit to rain down upon us
 	if (site.timeouts.storage_queue) { clearTimeout(site.timeouts.storage_queue); }
 	site.timeouts.storage_queue = setTimeout(function(){
 		site.storage.runqueue();
 	},1000); // TODO: determine update freq
-	
+
 	if (!site.storage.isBusy) {
-	
+
 		switch(action) {
-			
+
 				// site.session.storage.queue
 			case "createfolder":
 				site.storage.createfolder(args.path,args.cb,args.errcb);
 				break;
-				
+
 			case "readfolder":
 				site.storage.readfolder(args.path,args.cb,args.errcb,args.opts);
 				break;
-				
+
 			case "writefile":
 				site.storage.writefile(args.path,args.filename,args.data,args.cb,args.errcb,args.opts);
 				break;
-				
+
 			case "readfile":
 				site.storage.readfile(args.path,args.filename,args.cb,args.errcb,args.opts);
 				break;
-				
+
 			case "getmetadata":
 				site.storage.getmetadata(args.path,args.fileOrFolder,args.cb,args.errcb,args.opts);
 				break;
-			
+
 			default:
 				alert("site.storage.runqueue().Error: invalid value for 'action': "+ action);
 				loggr.log("site.storage.runqueue().Error: invalid value for 'action': "+ action);
 				loggr.log(action+", "+JSON.stringify(args));
 				break;
-			
+
 		}
-		
+
 		site.session.storage.queue.shift();
-		
+
 	}
-	
+
 }
 
 site.storage.runqueue_cb = function() {
-	
+
 }
 
 // ---> Folders
@@ -226,44 +226,44 @@ site.storage.runqueue_cb = function() {
 // RemoveFolder
 
 site.storage.removefolder = function(path,cb,errcb,opts) {
-	
+
 	loggr.debug("site.storage.removefolder(): "+path);
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.createfolder().Error: Will not write outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Remove last '/'
 	if (path.lastIndexOf("/")==path.length-1) {
 		path = path.substr(0,path.length-1);
 		loggr.log(" > "+ path);
 	}
-	
+
 	// Opts
 	if (!opts) { opts = {}; }
-	
+
 	// Run
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
             fileSystem.root.getDirectory(
 				path,
                 { create: false },
-                function(entry) { 
+                function(entry) {
 					if (opts.recursively) { entry.removeRecursively(cb,errcb); }
 					else { entry.remove(cb,errcb); }
-					site.storage.isBusy=false; 
+					site.storage.isBusy=false;
 				},
-                function(error) { 
-					site.storage.isBusy=false; 
-					errcb(error); 
+                function(error) {
+					site.storage.isBusy=false;
+					errcb(error);
 				}
             );
         },
         function() { site.storage.isBusy=false; errcb(); }
     );
-	
+
 }
 
 // Create folder
@@ -271,24 +271,24 @@ site.storage.removefolder = function(path,cb,errcb,opts) {
 // - Returns directoryEntry to cb: http://docs.phonegap.com/en/2.7.0/cordova_file_file.md.html#DirectoryEntry
 
 site.storage.createfolder = function(path,cb,errcb) {
-	
+
 	loggr.debug("site.storage.createfolder(): "+path);
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.createfolder().Error: Will not write outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Check busy
-	if (site.storage.isBusy) { 
-		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
 		var args = {path:path,cb:cb,errcb:errcb};
 		//site.storage.enqueue("createfolder",args);
-		//return; 
+		//return;
 	}
 	site.storage.isBusy = true;
-	
+
 	// Run
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
@@ -300,7 +300,7 @@ site.storage.createfolder = function(path,cb,errcb) {
         },
         function(error) { site.storage.isBusy=false; errcb(error); }
     );
-	
+
 }
 
 // Read folder
@@ -308,31 +308,31 @@ site.storage.createfolder = function(path,cb,errcb) {
 // - Returns an array of FileEntries and DirectoryEntries (also depends on opts.mode)
 
 site.storage.readfolder = function(path,cb,errcb,opts) {
-	
+
 	loggr.debug("site.storage.readfolder(): "+path);
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.readfolder().Error: Will not read outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Check busy
-	if (site.storage.isBusy) { 
-		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
 		var args = {path:path,cb:cb,errcb:errcb,opts:opts};
 		//site.storage.enqueue("readfolder",args);
-		//return; 
+		//return;
 	}
 	site.storage.isBusy = true;
-	
+
 	// Handle opts
 	if (!opts) { opts = {}; }
 	if (!opts.path) { opts.path = {}; }
 	if (opts.path.create!==false) { opts.path.create = true; }
 	if (opts.path.exclusive!==false) { opts.path.exclusive = false; }
 	if (!opts.mode) { opts.mode = 0; }
-	
+
 	// Run
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
@@ -359,7 +359,7 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
         },
         function(error) { site.storage.isBusy=false; errcb(error); }
     );
-	
+
 }
 
 // ---> Folders
@@ -370,24 +370,24 @@ site.storage.readfolder = function(path,cb,errcb,opts) {
 // - Returns: evt? TODO: figure out!
 
 site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
-	
+
 	loggr.debug("site.storage.writefile(): "+path+", "+filename+", ~"+site.helpers.calcStringToKbytes(data)+" kb");
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.writefile().Error: Will not write outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Check busy
-	if (site.storage.isBusy) { 
-		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
 		var args = {path:path,filename:filename,data:data,cb:cb,errcb:errcb,opts:opts};
 		//site.storage.enqueue("writefile",args);
-		//return; 
+		//return;
 	}
 	site.storage.isBusy = true;
-	
+
 	// Handle opts
 	if (!opts) { opts = {}; }
 	if (!opts.path) { opts.path = {}; }
@@ -396,7 +396,7 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
 	if (!opts.file) { opts.file = {}; }
 	if (opts.file.create!==false) { opts.file.create = true; }
 	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
-	
+
 	// Run
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
@@ -423,31 +423,31 @@ site.storage.writefile = function(path,filename,data,cb,errcb,opts) {
         },
         function(error) { site.storage.isBusy=false; errcb(error); }
     );
-	
+
 }
 
 // Remove file
 // - Returns: boolean or error
 
 site.storage.deletefile = function(path,filename,cb,errcb,opts) {
-	
+
 	loggr.debug("site.storage.deletefile(): "+path+", "+filename);
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.deletefile().Error: Will not read outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Check busy
-	if (site.storage.isBusy) { 
-		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
 		// var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
 		//site.storage.enqueue("readfile",args);
-		//return; 
+		//return;
 	}
 	site.storage.isBusy = true;
-	
+
 	// Handle opts
 	if (!opts) { opts = {}; }
 	if (!opts.path) { opts.path = {}; }
@@ -457,7 +457,7 @@ site.storage.deletefile = function(path,filename,cb,errcb,opts) {
 	if (opts.file.create!==true) { opts.file.create = false; } // Note: defaults to FALSE - most other storage methods don't!
 	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
 	if (opts.file.readAsDataUrl!==true) { opts.file.readAsDataUrl = false; }
-	
+
 	// Go
 	site.storage.getFileEntry(path,filename,
 		function(fileEntry) {
@@ -468,7 +468,7 @@ site.storage.deletefile = function(path,filename,cb,errcb,opts) {
 		},
 		{path:{create:true},file:{create:true}}
 	);
-	
+
 }
 
 // Read file (text)
@@ -476,24 +476,24 @@ site.storage.deletefile = function(path,filename,cb,errcb,opts) {
 // - Returns: string of file contents
 
 site.storage.readfile = function(path,filename,cb,errcb,opts) {
-	
+
 	loggr.debug("site.storage.readfile(): "+path+", "+filename);
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0 && opts && opts.readOutsideRoot!==true) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.readfile().Error: Will not read outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Check busy
-	if (site.storage.isBusy) { 
-		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
 		var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
 		//site.storage.enqueue("readfile",args);
-		//return; 
+		//return;
 	}
 	site.storage.isBusy = true;
-	
+
 	// Handle opts
 	if (!opts) { opts = {}; }
 	if (!opts.path) { opts.path = {}; }
@@ -503,10 +503,10 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 	if (opts.file.create!==true) { opts.file.create = false; } // Note: defaults to FALSE - most other storage methods don't!
 	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
 	if (opts.file.readAsDataUrl!==true) { opts.file.readAsDataUrl = false; }
-	
+
 	// Prep timeout
 	var timeoutID = site.storage.addTimeout("readfile",null,{path:path,filename:filename,cb:cb,errcb:errcb,opts:opts});
-	
+
 	// Run
 	//loggr.log(" > Request File System");
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
@@ -524,13 +524,13 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
 									var fileReader = new FileReader();
 									site.storage.timeouts[timeoutID].canabort = true;
 									site.storage.timeouts[timeoutID].abortObj = fileReader;
-									fileReader.onload = function(evt) { 
+									fileReader.onload = function(evt) {
 										// check if aborted..
-										if (!site.storage.timeouts[timeoutID]) { 
+										if (!site.storage.timeouts[timeoutID]) {
 											loggr.warn(" > site.storage.readfile(): canceled action suddenly got fired");
-											// return; 
+											// return;
 										}
-										site.storage.preCb(cb,evt.target.result,timeoutID); 
+										site.storage.preCb(cb,evt.target.result,timeoutID);
 										}
 									// fileReader.onabort = function(error) { site.storage.preCbErr(errcb,error,timeoutID); }; // TODO: onabort != error..?
 									fileReader.onerror = function(error) { site.storage.preCbErr(errcb,error,timeoutID); };
@@ -550,30 +550,32 @@ site.storage.readfile = function(path,filename,cb,errcb,opts) {
         },
         function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
     );
-	
+
 }
 
-// ---> Entries...
+// Copy file (text)
+// - Opts: opts.path are passed to getDirectory function, opts.file are passed to getFile function
+// - Returns: fileEntry?
 
-site.storage.getFileEntry = function(path,filename,cb,errcb,opts) {
-	
+site.storage.copyfile = function(path,filename,destpath,destfilename,cb,errcb,opts) {
+
 	loggr.log("site.storage.getFileEntry(): "+ path +", "+ filename);
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0 && opts && opts.readOutsideRoot!==true) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.getFileEntry().Error: Will not read outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Check busy
-	if (site.storage.isBusy) { 
-		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
 		var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
 		//site.storage.enqueue("readfile",args);
-		//return; 
+		//return;
 	}
 	site.storage.isBusy = true;
-	
+
 	// Handle opts
 	if (!opts) { opts = {}; }
 	if (!opts.path) { opts.path = {}; }
@@ -583,10 +585,64 @@ site.storage.getFileEntry = function(path,filename,cb,errcb,opts) {
 	if (opts.file.create!==true) { opts.file.create = false; } // Note: defaults to FALSE - most other storage methods don't!
 	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
 	if (opts.file.readAsDataUrl!==true) { opts.file.readAsDataUrl = false; }
-	
+
+	// Prep timeout
+	var timeoutID = site.storage.addTimeout("copyfile",null,{path:path,filename:filename,cb:cb,errcb:errcb,opts:opts});
+
+	site.storage.getFileEntry(path,filename,
+		function(fileEntry) {
+			fileEntry.copyTo(destpath,destfilename,
+				function(fileEntry) {
+					site.storage.preCb(cb,fileEntry,timeoutID);
+				},
+				function(error) {
+					site.storage.preCbErr(errcb,error,timeoutID);
+				}
+			);
+		},
+		function(error) {
+			site.storage.preCbErr(errcb,error,timeoutID);
+		}
+	);
+
+
+
+}
+
+// ---> Entries...
+
+site.storage.getFileEntry = function(path,filename,cb,errcb,opts) {
+
+	loggr.log("site.storage.getFileEntry(): "+ path +", "+ filename);
+
+	// Check path, should contain site.cfg.paths.root
+	if (path.indexOf(site.cfg.paths.root)<0 && opts && opts.readOutsideRoot!==true) { // TODO: Should be indexOf(..)!==0
+		errcb({code:-1,message:"site.storage.getFileEntry().Error: Will not read outside of root directory: '"+path+"'"});
+		return; // <- important...
+	}
+
+	// Check busy
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
+		var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
+		//site.storage.enqueue("readfile",args);
+		//return;
+	}
+	site.storage.isBusy = true;
+
+	// Handle opts
+	if (!opts) { opts = {}; }
+	if (!opts.path) { opts.path = {}; }
+	if (opts.path.create!==true) { opts.path.create = false; } // Note: defaults to FALSE - most other storage methods don't!
+	if (opts.path.exclusive) { opts.path.exclusive = false; }
+	if (!opts.file) { opts.file = {}; }
+	if (opts.file.create!==true) { opts.file.create = false; } // Note: defaults to FALSE - most other storage methods don't!
+	if (opts.file.exclusive!==true) { opts.file.exclusive = false; }
+	if (opts.file.readAsDataUrl!==true) { opts.file.readAsDataUrl = false; }
+
 	// Prep timeout
 	var timeoutID = site.storage.addTimeout("getFileEntry",null,{path:path,filename:filename,cb:cb,errcb:errcb,opts:opts});
-	
+
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
 			loggr.log(" > Get directory entry: "+path);
@@ -597,7 +653,7 @@ site.storage.getFileEntry = function(path,filename,cb,errcb,opts) {
 					directoryEntry.getFile(filename,opts.file,
 						function(fileEntry) {
 							loggr.log(" > Got file: "+ fileEntry.fullPath);
-							site.storage.preCb(cb,fileEntry,timeoutID); 
+							site.storage.preCb(cb,fileEntry,timeoutID);
 						},
 						function(error) { loggr.error(" > Err on getFile",{dontupload:true}); site.storage.preCbErr(errcb,error,timeoutID); }
 					);
@@ -607,51 +663,51 @@ site.storage.getFileEntry = function(path,filename,cb,errcb,opts) {
         },
         function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
     );
-	
+
 }
 
 site.storage.getFolderEntry = function(path,cb,errcb,opts) {
-	
+
 	loggr.log("site.storage.getFolderEntry(): "+ path);
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.getFolderEntry().Error: Will not read outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Check busy
-	if (site.storage.isBusy) { 
-		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
 		// var args = {path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};
 		//site.storage.enqueue("readfile",args);
-		//return; 
+		//return;
 	}
 	site.storage.isBusy = true;
-	
+
 	// Handle opts
 	if (!opts) { opts = {}; }
 	if (!opts.path) { opts.path = {}; }
 	if (opts.path.create!==true) { opts.path.create = false; } // Note: defaults to FALSE - most other storage methods don't!
 	if (opts.path.exclusive!==true) { opts.path.exclusive = false; }
-	
+
 	// Prep timeout
 	var timeoutID = site.storage.addTimeout("getFolderEntry",null,{path:path,cb:cb,errcb:errcb,opts:opts});
-	
+
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
 			//loggr.log(" > Get directory entry: "+path);
             fileSystem.root.getDirectory(path,
                 opts.path,
                 function(directoryEntry) {
-					site.storage.preCb(cb,directoryEntry,timeoutID); 
+					site.storage.preCb(cb,directoryEntry,timeoutID);
 				},
                 function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
             );
         },
         function(error) { site.storage.preCbErr(errcb,error,timeoutID); }
     );
-	
+
 }
 
 
@@ -661,33 +717,33 @@ site.storage.getFolderEntry = function(path,cb,errcb,opts) {
 // List files
 
 site.storage.listfiles = function(path,cb,errcb,opts) {
-	
+
 	loggr.debug("site.storage.getFolderSize()");
-	
+
 	var hasSubFolder = false;
 	var size = 0;
 	var entries = [];
-	
+
 	// Get folderEntry
 	site.storage.getFolderEntry(path,
 		function(folderEntry) {
-			
+
 			loggr.log(" > Got folderEntry: "+ folderEntry.fullPath);
-			
+
 			var reader = folderEntry.createReader();
 			reader.readEntries(
 				function(entries) {
-					
+
 					cb(entries);
 					return;
-					
+
 				},
 				function(error) {
 					alert(error);
 					errcb(error);
 				}
 			);
-			
+
 		},
 		function(error) {
 			alert(error);
@@ -695,7 +751,7 @@ site.storage.listfiles = function(path,cb,errcb,opts) {
 		},
 		{path:{create:true}}
 	);
-	
+
 }
 
 // Get Meta Data
@@ -703,31 +759,31 @@ site.storage.listfiles = function(path,cb,errcb,opts) {
 // - Returns: MetaData object: http://docs.phonegap.com/en/2.7.0/cordova_file_file.md.html#Metadata
 
 site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
-	
+
 	loggr.debug("site.storage.getmetadata(): "+path+", "+fileOrFolder);
-	
+
 	// Check path, should contain site.cfg.paths.root
 	if (path.indexOf(site.cfg.paths.root)<0) { // TODO: Should be indexOf(..)!==0
 		errcb({code:-1,message:"site.storage.getmetadata().Error: Will not read outside of root directory: '"+path+"'"});
 		return; // <- important...
 	}
-	
+
 	// Check busy
-	if (site.storage.isBusy) { 
-		// errcb({code:-1,message:"site.storage.error: isBusy"}); 
+	if (site.storage.isBusy) {
+		// errcb({code:-1,message:"site.storage.error: isBusy"});
 		var args = {path:path,fileOrFolder:fileOrFolder,cb:cb,errcb:errcb,opts:opts};
 		//site.storage.enqueue("getmetadata",args);
-		//return; 
+		//return;
 	}
 	site.storage.isBusy = true;
-	
+
 	// Handle opts
 	if (!opts) { opts = {}; }
 	if (!opts.path) { opts.path = {}; }
 	if (opts.path.create!==true) { opts.path.create = false; } // Note: defaults to FALSE - most other storage methods don't!
 	if (opts.path.exclusive) { opts.path.exclusive = false; }
 	if (!opts.type) { opts.type = 1; } // Note: autodetect not yet implemented, defaulting to file!
-	
+
 	// Run
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fileSystem) {
@@ -754,7 +810,7 @@ site.storage.getmetadata = function(path,fileOrFolder,cb,errcb,opts) {
         },
         function(error) { site.storage.isBusy=false; errcb(error); }
     );
-	
+
 }
 
 // ---> Helpers
@@ -810,14 +866,14 @@ site.storage.getErrorType = function(error) {
 }
 
 site.storage.getFileTransferErrorType = function(error) {
-	
+
 	/*
 	FileTransferError.FILE_NOT_FOUND_ERR
 	FileTransferError.INVALID_URL_ERR
 	FileTransferError.CONNECTION_ERR
 	FileTransferError.ABORT_ERR
 	/**/
-	
+
 	var res = "FileTransferError.UNKNOWN";
 	switch(error.code) {
 		case FileTransferError.NOT_FOUND_ERR:
@@ -835,7 +891,7 @@ site.storage.getFileTransferErrorType = function(error) {
 		case -1: // TODO: check if this code is not in use!
 			if (error.message) { res = error.message; }
 			break;
-			
+
 	}
 	return res;
 }
@@ -854,16 +910,16 @@ site.storage.getfilename = function(path) {
 site.storage.getpath = function(path,mode) {
 	if (!path) { path = ""; }
 	if (path.indexOf("/")>0) {
-		
+
 		// Remove trailing '/'
 		if (path.lastIndexOf("/")==path.length-1) {
 			path = path.substr(0,path.length-1);
 		}
-		
+
 		// Get path
 		path = path.substr(0,path.lastIndexOf("/"));
-		
-		// Mode: 
+
+		// Mode:
 		// - 0/false/null == do nothing
 		// - 1 == strip file://
 		// - 2 == add file://
@@ -874,10 +930,10 @@ site.storage.getpath = function(path,mode) {
 				path = "file://"+path;
 			}
 		}
-		
-		
+
+
 		return path;
-		
+
 	} else {
 		return path;
 	}
@@ -913,4 +969,3 @@ site.cookies.get = function(name) {
 site.cookies.clear = function() {
 	window.localStorage.clear();
 }
-
