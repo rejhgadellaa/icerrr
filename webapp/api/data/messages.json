@@ -17,21 +17,17 @@
 	},
     
     {
-        "id":"app259",
+        "id":"app318",
         "crit":"version",
-        "critvalue":0.258,
+        "critvalue":0.317,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.259 includes:",
-            "* Fix: prevent wifi from sleeping",
-            "* New color palette for app",
-            "* New 'Details' screen",
-            "* New scrobbing integration",
-            "* Bugfixes and improvements"
+            "v0.318 includes:",
+            "* Critical update for 0.317"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
@@ -40,20 +36,17 @@
     },
     
     {
-        "id":"app317",
+        "id":"app319",
         "crit":"version",
-        "critvalue":0.316,
+        "critvalue":0.318,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.317 includes:",
-            "* Enabled 'Unlock device for alarms' option (Settings)",
-            "* Target SDK 23 (Android 6.0 Marshmallow)",
-            "* Make sure alarms fire even when device is in Doze mode",
-            "* Bugfixes, improvements"
+            "v0.319 includes:",
+            "* New: swipe between all and starred stations"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
@@ -64,7 +57,7 @@
     {
         "id":"stations_database",
         "crit":"install-update",
-        "critvalue":1441437565603,
+        "critvalue":1445186392636,
         "action":"install-update",
         "message":[ ],
         "repeat":0

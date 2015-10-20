@@ -1,5 +1,22 @@
 [
   {
+    "station_id": "gadellaa",
+    "station_edited":{},
+    "station_name": "Radio Gadellaa",
+    "station_url": "http://www.rejh.nl/gido/stream/",
+    "station_icon": "http://www.rejh.nl/gido/img/ic_yellow_512_spaced_flat.jpg",
+    "station_image": "http://www.rejh.nl/gido/img/ic_yellow_512_spaced_flat.jpg",
+    "station_image": 0,
+    "station_host": "84.105.53.209",
+    "station_port": 8000,
+    "station_path": "/radio",
+    "station_country":"NL",
+    "station_bitrate":"-1 kbps",
+    "rating_custom": -1,
+    "rating_soundcloud": -1,
+    "rating_average": -1
+  },
+  {
     "station_id": "radio1",
     "dirble_id":9950,
     "station_edited":{},

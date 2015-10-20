@@ -51,12 +51,12 @@ ch.drawChart = function(thedata,canvasid,type) {
             }
         }
     }
-    entry1.timems = (entry1.time*1000)-86400000; // -1 day
+    entry1.timems = (entry1.time*1000);//-86400000; // -1 day
     var date1 = new Date();
     date1.setTime(entry1.timems);
-    entry2.timems = (entry2.time*1000)+86400000;
+    entry2.timems = (entry2.time*1000); //+86400000; // +1 day
     var date2 = new Date();
-    //date2.setTime(entry2.timems);
+    date2.setTime(entry2.timems);
 
     // -> Data..
     var chdata = {};

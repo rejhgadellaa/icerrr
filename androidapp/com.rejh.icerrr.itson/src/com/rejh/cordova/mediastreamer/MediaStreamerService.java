@@ -741,6 +741,8 @@ public class MediaStreamerService extends Service {
 	// THREAD: Get now playing info...
 	
 	public void startNowPlayingPoll() {
+		int interval = !(sett.getBoolean("is_paused",false)) ? (int)1*60*1000 : (int)3*60*1000; // interval depends on play state..
+		Log.e(APPTAG,"startNowPlayingPoll: "+ interval);
 		if (nowPlayingPollTimer!=null) { stopNowPlayingPoll(); }
 		nowPlayingPollTimer = new Timer();
 		nowPlayingPollTimer.scheduleAtFixedRate( new TimerTask() {
@@ -749,7 +751,7 @@ public class MediaStreamerService extends Service {
 				runNowPlayingPoll();
 				
 			}
-		}, 1*1000, (int)1*60*1000); // every ~minute
+		}, 1*1000, (int)interval); // every ~minute
 	}
 	
 	public void stopNowPlayingPoll() {

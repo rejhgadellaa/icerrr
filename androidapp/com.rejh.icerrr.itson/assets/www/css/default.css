@@ -214,6 +214,14 @@ section {
 			background:rgba(0,0,0,0.25);
 		}
 
+		.tabline {
+			position:absolute;
+			bottom:0; left:0;
+			width:50%; height:2px;
+			background:#fff;
+			transition: transform 200ms linear;
+		}
+
 	.main {
 		z-index:1;
 		overflow:auto;
@@ -631,6 +639,7 @@ section {
 
 	#channellist .main {
 		top:104px;
+		/* transition: transform 500ms ease-out; */
 	}
 
 	/* TODO: Fow now let's keep this universal? */

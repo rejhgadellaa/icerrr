@@ -707,7 +707,7 @@ site.home.handleStationImage = function(src,isBigIcon) {
 
 		}
 
-		if (!station.station_icon_local || !station.station_image_local) {
+		else if (!station.station_icon_local) {
 
 			// Download..
 			loggr.log(" -> Download imagery..");
