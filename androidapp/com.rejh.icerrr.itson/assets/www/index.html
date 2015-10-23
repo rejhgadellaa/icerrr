@@ -122,7 +122,10 @@
 	<link rel="stylesheet" type="text/css" href="css/size.phone-landscape.css" media="screen and (max-width: 599px) and (min-aspect-ratio: 13/9)" />
 
 	<!-- Polymer -->
-	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+	<!-- Loaded if needed, see lifecycle.js -->
+
+	<!-- Load polymer elements -->
+	<link id="polymerBundle" href="polymerBundle.html" rel="import" async>
 
 	<!-- Webfonts -->
 	<link href='css/fonts.css' rel='stylesheet' type='text/css'>
@@ -1061,12 +1064,6 @@
 
 <!-- Overlay: Toast -->
 <div id="overlay_toast" class="textshadow25">Toast!</div>
-
-<!-- Load polymer elements -->
-<link href="bower_components/polymer/polymer.html" rel="import">
-<!-- <link rel="import" href="bower_components/iron-icons/iron-icons.html"> -->
-<link rel="import" href="bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
 
 </body>
 

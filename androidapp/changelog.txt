@@ -1,3 +1,6 @@
+0.320
+  * Tweaked swipe behaviour
+
 0.319
   * New: swipe between all and starred stations
   * Improvements

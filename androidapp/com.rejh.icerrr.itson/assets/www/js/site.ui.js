@@ -88,10 +88,6 @@ site.ui.gotosection = function(selector) {
 		});
 		var translate = "translate3d(0px,"+ (-($(window).height()-$(".actionbar").height())) +"px,0px)";
 		$("#splash").css({"transform":translate,"-webkit-transform":translate});
-		//setTimeout(function(){
-			//$("#splash").fadeOut(250);
-			//site.ui.fadeOut("#splash",250);
-		//},750);
 	} else {
 		$("section").css("display","none");
 		$(selector).css("display","block");

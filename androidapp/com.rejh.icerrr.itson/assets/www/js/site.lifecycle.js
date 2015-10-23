@@ -16,13 +16,62 @@ site.session.lifecycle.section_history = [];
 
 site.lifecycle.loaded = false;
 site.lifecycle.deviceReady = false;
+site.lifecycle.loadedPolymer = false;
+
+// Polymer async stuff
+
+site.lifecycle.loadPolymer = function() {
+
+	loggr.debug("site.lifecycle.loadPolymer()");
+
+	var webComponentsSupported = ('registerElement' in document
+		&& 'import' in document.createElement('link')
+	    && 'content' in document.createElement('template'));
+
+	if (!webComponentsSupported) {
+		loggr.log("-> !webComponentsSupported -> Load it") // can't use loggr yet...
+		var script = document.createElement('script');
+		script.async = true;
+		script.onload = site.lifecycle.onloadPolymer;
+		script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+		document.head.appendChild(script);
+	} else {
+	 	site.lifecycle.onloadPolymer();
+	}
+
+}
+
+site.lifecycle.onloadPolymer = function() {
+
+	loggr.debug("site.lifecycle.onloadPolymer()");
+
+	// Check import
+	var link = document.querySelector('#polymerBundle');
+	if (link.import && link.import.readyState === 'complete') {
+		site.lifecycle.onloadedPolymer();
+	} else {
+		link.addEventListener('load', site.lifecycle.onloadedPolymer);
+	}
+
+}
+
+site.lifecycle.onloadedPolymer = function() {
+
+	loggr.debug("site.lifecycle.onloadedPolymer()");
+	site.lifecycle.loadedPolymer = true;
+	if (site.lifecycle.loaded && site.lifecycle.deviceReady && site.lifecycle.loadedPolymer) {
+		setTimeout(function(){site.lifecycle.init();},250);
+	}
+
+}
 
 // Onload + device ready
 
 site.lifecycle.onload = function() {
 	loggr.debug("site.lifecycle.onload()");
+	site.lifecycle.loadPolymer();
 	site.lifecycle.loaded = true;
-	if (site.lifecycle.loaded && site.lifecycle.deviceReady) {
+	if (site.lifecycle.loaded && site.lifecycle.deviceReady && site.lifecycle.loadedPolymer) {
 		setTimeout(function(){site.lifecycle.init();},250);
 	}
 }
@@ -30,7 +79,7 @@ site.lifecycle.onload = function() {
 site.lifecycle.onDeviceReady = function() {
 	loggr.debug("site.lifecycle.onDeviceReady()");
 	site.lifecycle.deviceReady = true;
-	if (site.lifecycle.loaded && site.lifecycle.deviceReady) {
+	if (site.lifecycle.loaded && site.lifecycle.deviceReady && site.lifecycle.loadedPolymer) {
 		setTimeout(function(){site.lifecycle.init();},250);
 	}
 }

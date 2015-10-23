@@ -14,13 +14,11 @@ body, table, input, select {
 }
 
 html {
-	overflow:hidden;
 	width:100%;
 	height:100%;
 	}
 
 body {
-	overflow:hidden;
 	width:100%;
 	height:100%;
 	margin:0;
@@ -38,7 +36,6 @@ a {
 /* Common */
 
 section {
-	overflow:hidden;
 	display:none;
 	position:absolute;
 	top:0; left:0; right:0; bottom:0;
@@ -54,11 +51,10 @@ section {
 	#home .header {
         overflow:hidden;
         z-index:20;
-		position:absolute;
+		position:relative;
 		top:0; left:0; right:0;
         height:192px;
 		background:#607D8B;
-        transition: height 500ms;
 	}
 
 		#home .logo {
@@ -96,14 +92,23 @@ section {
 				color:#fff;
 			}
 
+	#home .header_sml {
+        z-index:10;
+		position:fixed;
+		top:0; left:0; right:0;
+        height:56px;
+		background:#607D8B;
+        transition: height 500ms;
+	}
+
         #home .logo_sml {
             position: absolute;
-            top:-56px;
+            top:0;
             min-width:320px;
             max-width:960px;
             height:100%;
             margin:auto;
-            transition: top 500ms;
+            transition: opacity 500ms;
         }
 
             #home .logo_sml img {
@@ -149,9 +154,8 @@ section {
 			}
 
     #home .main {
-        overflow: auto;
-        position: absolute;
-        top:192px; left:0; right:0; bottom:0;
+        position: relative;
+        top:0; left:0; right:0; bottom:0;
         transition: top 500ms;
     }
 

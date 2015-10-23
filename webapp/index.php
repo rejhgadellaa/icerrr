@@ -41,7 +41,7 @@
     <link rel="icon" href="img/ic_launcher.png" type="image/x-icon">
 
 	<!-- Javascript: jQuery -->
-    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min.js?c=<?=time();?>"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery/jquery-1.11.3.min.js"></script>
 
     <!-- Javascript: Things :D -->
     <script>
@@ -77,41 +77,17 @@
             console.log("onload()");
 
             // Scroll listener -> Hide fab :D
-            $(".main").off( 'scroll');
-            $(".main").on( 'scroll', function(e) {
+            $(window).off( 'scroll');
+            $(window).on( 'scroll', function(e) {
 
-                delta = vars.scrolltop - $(".main").scrollTop();
-                if (!vars.lastDelata) { vars.lastDelata = -(delta); }
-
-                if (delta<0 && vars.lastDelata>0) {
-                    // scroll up
-                    // ..
-                    $(".main").css("top","56px");
-                    $(".header").css("height","56px");
-                    $(".header .logo").css("top","-192px");
-                    if (vars.scrolltimeout) { clearTimeout(vars.scrolltimeout); }
-                    vars.scrolltimeout = setTimeout(function(){
-                        console.log("scroll");
-                        $(".header .logo_sml").css("top","0");
-                    },250);
-
+                if ($(window).scrollTop()<136) {
+                    $(".header_sml .logo_sml").css("opacity",0);
+                    $(".header").css("opacity",1);
                 }
-                if(delta >= 0 && vars.lastDelata<0) {
-                    // scroll down
-                    // ..
-                    $(".main").css("top","192px");
-                    $(".header").css("height","192px");
-                    $(".header .logo_sml").css("top","-56px");
-                    $(".header .logo").css("top","0");
-                    if (vars.scrolltimeout) { clearTimeout(vars.scrolltimeout); }
-                    vars.scrolltimeout = setTimeout(function(){
-                        console.log("scroll");
-                        $(".header .logo").css("top","0");
-                    },250);
+                if ($(window).scrollTop()>136) {
+                    $(".header_sml .logo_sml").css("opacity",1);
+                    $(".header").css("opacity",0);
                 }
-
-                vars.scrolltop = $("main").scrollTop();
-                vars.lastDelata = delta;
 
             });
 
@@ -120,6 +96,7 @@
               console.log( " -> Loaded readme" );
               $(".footer").css("display","block");
             });
+
         }
 
     </script>
@@ -132,13 +109,18 @@
 <section id="home">
 
     <!-- Header -->
-	<div class="header shadow_z2">
+	<div class="header">
 
         <div class="logo">
             <img src="img/web_hi_res_512_002-transparent.png" />
             <div class="title">ICERRR</div>
             <div class="subtitle"><span class="theapp">The (clock radio) icecast streaming app</span> <span class="forandroid">for Android</span></div>
         </div>
+
+    </div>
+
+    <!-- Header_sml -->
+    <div class="header_sml shadow_z2">
 
         <div class="logo_sml">
             <img src="img/ic_launcher_w_48.png?c=<?=time();?>" />

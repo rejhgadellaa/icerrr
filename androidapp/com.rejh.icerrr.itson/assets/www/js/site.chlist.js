@@ -138,7 +138,7 @@ site.chlist.movetotab = function(posx) {
 	}
 
 	// Enable transition, wait 1 ms and go
-	$("#channellist .main").css("transition","transform 100ms linear");
+	$("#channellist .main").css("transition","transform 125ms linear");
 	site.vars.touch.busy = true;
 	setTimeout(function() {
 
@@ -169,7 +169,7 @@ site.chlist.movetotab = function(posx) {
 
 					setTimeout(function(){
 
-						$("#channellist .main").css("transition","transform 100ms ease-out");
+						$("#channellist .main").css("transition","transform 125ms ease-out");
 						site.chlist.gototab(site.vars.touch.tabObj);
 
 						setTimeout(function(){
@@ -180,15 +180,15 @@ site.chlist.movetotab = function(posx) {
 							setTimeout(function(){
 								$("#channellist .main").css("transition","none");
 								site.vars.touch.busy = false;
-							},110);
+							},150);
 
-						},1);
+						},10);
 
 					},10);
 
 				},10);
 
-			},110);
+			},150);
 		} else {
 			var translate = "translate3d(0px,0px,0px)";
 			$("#channellist .main").css({"transform":translate,"-webkit-transform":translate});
@@ -241,6 +241,9 @@ site.chlist.initSwipeCtrl = function() {
 
 		if (!site.vars.touch) { site.vars.touch = {}; }
 
+		site.vars.isScrollingV = false;
+		site.vars.isScrollingH = false;
+
 		site.vars.touch.bgnt = new Date().getTime();
 		site.vars.touch.bgnx = ev.originalEvent.changedTouches[0].clientX
 		site.vars.touch.bgny = ev.originalEvent.changedTouches[0].clientY // TODO: not needed?
@@ -259,19 +262,23 @@ site.chlist.initSwipeCtrl = function() {
 		var posy = ( (ev.originalEvent.changedTouches[0].clientY - site.vars.touch.bgny) );
 
 		// Prio: vertical scroll
-		if (posy<-48 || posy>48) {
-			posx = 0;
+		if (!site.vars.isScrollingH) {
+			if (posy<-24 || posy>24 || site.vars.isScrollingV) {
+				posx = 0;
+				site.vars.isScrollingV = true;
+			}
 		}
 		// Prevent janky stuff
 		if (posx>0 && posx<24 || posx<0 && posx>-24) {
 			posx = 0;
+		} else if (!site.vars.isScrollingV) {
+			site.vars.isScrollingH = true;
 		}
 
 		var translate = "translate3d("+ posx +"px,0px,0px)";
 		$("#channellist .main").css({"transform":translate,"-webkit-transform":translate});
 
-		var mindistancex = $(window).width()/4;
-		if (posx < -(mindistancex) || posx > mindistancex) {
+		if (site.vars.isScrollingH) {
 			ev.originalEvent.preventDefault();
 		}
 
@@ -281,14 +288,13 @@ site.chlist.initSwipeCtrl = function() {
 
 		if (!site.vars.touch) { site.vars.touch = {}; }
 
+		if (!site.vars.isScrollingH) {
+			return;
+		}
+
 		// Calc posx..
 		var posx = ( (ev.originalEvent.changedTouches[0].clientX - site.vars.touch.bgnx) );
 		var posy = ( (ev.originalEvent.changedTouches[0].clientY - site.vars.touch.bgny) );
-
-		// Prio: vertical scroll
-		if (posy<-48 || posy>48) {
-			posx = 0;
-		}
 
 		loggr.log(" > touchend(): "+ posx);
 
