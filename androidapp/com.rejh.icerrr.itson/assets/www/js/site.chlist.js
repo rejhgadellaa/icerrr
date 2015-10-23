@@ -530,8 +530,9 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 		};
 		$(resultitem).longClick(function(obj){
 			if (!obj.station_id) { obj = obj.parentNode; }
-			navigator.notification.vibrate(100);
-			site.chedit.init(obj.station_id);
+			navigator.notification.vibrate(50);
+			//site.chedit.init(obj.station_id);
+			site.chlist.selectstation(obj);
 		},200);
 
 		// add elements..

@@ -1,5 +1,7 @@
 0.320
+  * Longpressing a station now selects it
   * Tweaked swipe behaviour
+  * Load polymer async
 
 0.319
   * New: swipe between all and starred stations
