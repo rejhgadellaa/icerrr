@@ -468,10 +468,10 @@ site.ui.setLongclickHelp = function() {
 			// Vib!
 			if (!site.vars.vibrateBusy) {
 				site.vars.vibrateBusy = true;
-				navigator.notification.vibrate(100);
+				navigator.notification.vibrate(50);
 				setTimeout(function(){
 					site.vars.vibrateBusy = false;
-				},100);
+				},50);
 			}
 
 			// Info!
