@@ -36,16 +36,17 @@
     },
     
     {
-        "id":"app319",
+        "id":"app320",
         "crit":"version",
-        "critvalue":0.318,
+        "critvalue":0.319,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.319 includes:",
+            "v0.320 includes:",
+            "* Longpressing a station now selects it",
             "* New: swipe between all and starred stations"
             ],
         "buttonLabels":"Yes,No",
