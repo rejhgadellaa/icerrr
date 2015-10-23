@@ -1,14 +1,9 @@
 Introduction
 ===========
 
-Looking for a clean and simple radio streaming app that lets you set alarms, cast your stream to Chromecast[1] and supports Android Wear?
+Looking for a clean and simple radio streaming app that lets you set alarms, cast your stream to Chromecast and supports Android Wear?
 
-Well, I think Icerrr may be just the thing for you!
-
-And it gets better: Icerrr is free! [2]
-
-[1] Chromecast support is prototype-ish.
-[2] Icerrr can be downloaded for free for at least a limited period of time.
+Well, I think Icerrr may be just the thing for you. And it gets better: Icerrr is free!
 
 Screenshots
 -------------
@@ -69,7 +64,7 @@ Style + design
       * [colourlovers: Save_the_Arctic Save_the_Arctic](http://www.colourlovers.com/palette/3074952/Save_the_Arctic Save_the_Arctic)
 
   * Icon generators:
-    * Roman Nurik's Android Asset Studio: [http://romannurik.github.io/AndroidAssetStudio/index.html]
+    * [Roman Nurik's Android Asset Studio](http://romannurik.github.io/AndroidAssetStudio/index.html)
 
 Radio Directory
 ---------------
