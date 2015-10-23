@@ -182,11 +182,11 @@ site.chlist.movetotab = function(posx) {
 								site.vars.touch.busy = false;
 							},150);
 
-						},10);
+						},25);
 
-					},10);
+					},25);
 
-				},10);
+				},25);
 
 			},150);
 		} else {
