@@ -1,0 +1,37 @@
+@echo off
+cls
+
+cd ..
+cd %path_prj%
+
+echo.
+echo BUILD: DEBUG
+call gradlew.bat assembleDebug --stacktrace
+if errorlevel 1 goto error
+if not errorlevel 0 goto error
+
+echo.
+echo Copy apk to dropbox...
+copy %cd%\app\build\outputs\apk\app-debug.apk D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_prj%-debug.apk
+if errorlevel 1 goto error
+if not errorlevel 0 goto error
+
+echo.
+echo Install and run on device...
+%androidsdk%platform-tools\adb -d install -r D:\Desktop\Dropbox\__Static\icerrr\tmp_apks\%name_prj%-debug.apk
+if errorlevel 1 goto error
+if not errorlevel 0 goto error
+%androidsdk%platform-tools\adb -d shell am start %package%/.%name_act%
+if errorlevel 1 goto error
+if not errorlevel 0 goto error
+
+goto end
+
+:error
+title Error
+echo.
+echo An error occured :(
+pause
+
+:end
+title Done

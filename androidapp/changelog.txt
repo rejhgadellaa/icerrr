@@ -1,3 +1,8 @@
+0.321
+  * Request permissions at startup (Android 6.0+)
+  * Reduced apk size (minifyEnabled + shrinkResources)
+  * Migrated project to Android Studio/Gradle
+
 0.320
   * Longpressing a station now selects it
   * Tweaked swipe behaviour
