@@ -39,8 +39,8 @@ if errorlevel 1 goto builddebug
 goto end
 
 :buildrelease
-echo.
-echo Not yet
+cd _batches
+call buildRelease.bat
 goto end
 
 :buildreleasetest

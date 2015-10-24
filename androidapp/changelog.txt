@@ -1,6 +1,6 @@
 0.321
-  * Request permissions at startup (Android 6.0+)
-  * Reduced apk size (minifyEnabled + shrinkResources)
+  * Request required permissions at startup (Android 6.0+)
+  * Reduced apk size, working on slimming it down even more
   * Migrated project to Android Studio/Gradle
 
 0.320

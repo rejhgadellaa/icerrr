@@ -36,16 +36,17 @@
     },
     
     {
-        "id":"app320",
+        "id":"app321",
         "crit":"version",
-        "critvalue":0.319,
+        "critvalue":0.320,
         "action":"install-update-app",
         "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.320 includes:",
+            "v0.321 includes:",
+            "* Request required permissions at startup (Android 6.0+)",
             "* Longpressing a station now selects it",
             "* New: swipe between all and starred stations"
             ],
