@@ -161,7 +161,7 @@
 	</div>
 
 	<div class="main">
-		<div class="log"><h1>Just a sec..</h1></div>
+		<div class="log"><h1>Hold on..</h1></div>
 	</div>
 </section>
 
@@ -177,8 +177,8 @@
 		<div class="title">ICERRR</div>
 
 		<div class="actions">
-			<paper-icon-button class="more-vert" src="img/icons-48/ic_action_overflow_white.png" onClick="site.home.toggleOverflowMenu();"></paper-icon-button>
-			<paper-icon-button src="img/icons-48/ic_info_white.png" onClick="site.detailstation.init({station_id:site.session.currentstation.station_id});"></paper-icon-button>
+			<paper-icon-button title="More options" class="more-vert" src="img/icons-48/ic_action_overflow_white.png" onClick="site.home.toggleOverflowMenu();"></paper-icon-button>
+			<paper-icon-button title="View station details" src="img/icons-48/ic_info_white.png" onClick="site.detailstation.init({station_id:site.session.currentstation.station_id});"></paper-icon-button>
 			<div class="action activatablel"><img class="cast_icon cast_unavailable" onClick="site.cast.requestSession();" src="img/icons-48/FFF.jpg" title="Chromecast" /></div>
 		</div>
 
@@ -289,7 +289,7 @@
 		<div class="title">Details</div>
 
 		<div class="actions">
-			<paper-icon-button src="img/icons-48/ic_reload_white.png" onClick="site.detailstation.init(null,true,true);"></paper-icon-button>
+			<paper-icon-button title="Refresh details" src="img/icons-48/ic_reload_white.png" onClick="site.detailstation.init(null,true,true);"></paper-icon-button>
 			<!-- <div class="action activatablel" onClick="site.detailstation.init(null,true,true);"><img src="img/icons-48/ic_reload_white.png" title="Refresh info" /></div> -->
 		</div>
 
@@ -372,33 +372,6 @@
 </section>
 
 <!-- Section -->
-<section id="editstationn">
-
-	<div class="actionbar shadow_z2">
-
-		<div class="icon_app"><paper-icon-button src="img/icons-48/ic_arrow_back_white.png" onClick="site.lifecycle.onBackButton();"></paper-icon-button></div>
-		<div class="title">Details</div>
-
-		<div class="actions">
-			<paper-icon-button src="img/icons-48/ic_save_white.png" onClick="site.chedit.check();"></paper-icon-button>
-			<paper-icon-button src="img/icons-48/ic_trash_white.png" onClick="site.chedit.remove();"></paper-icon-button>
-		</div>
-
-	</div>
-
-	<div class="main">
-
-		<div class="block header">
-			<div class="text">Add/Edit station</div>
-		</div>
-
-
-
-	</div>
-
-</section>
-
-<!-- Section -->
 <section id="editstation">
 
 	<div class="actionbar shadow_z2">
@@ -407,8 +380,8 @@
 		<div class="title">Details</div>
 
 		<div class="actions">
-			<paper-icon-button class="save" src="img/icons-48/ic_save_white.png" onClick="site.chedit.check();"></paper-icon-button>
-			<paper-icon-button class="trash" src="img/icons-48/ic_trash_white.png" onClick="site.chedit.remove();"></paper-icon-button>
+			<paper-icon-button title="Save station" class="save" src="img/icons-48/ic_save_white.png" onClick="site.chedit.check();"></paper-icon-button>
+			<paper-icon-button title="Remove station" class="trash" src="img/icons-48/ic_trash_white.png" onClick="site.chedit.remove();"></paper-icon-button>
 			<!--
 			<div class="action save activatablel" onClick="site.chedit.check();">
 				<img src="img/icons-48/ic_save_white.png" title="Save station" />
@@ -605,8 +578,8 @@
 
 		<div class="actions">
 
-			<paper-icon-button class="save" src="img/icons-48/ic_save_white.png" onClick="site.alarms.save();"></paper-icon-button>
-			<paper-icon-button class="trash" src="img/icons-48/ic_trash_white.png" onClick="site.alarms.remove();"></paper-icon-button>
+			<paper-icon-button title="Save alarm" class="save" src="img/icons-48/ic_save_white.png" onClick="site.alarms.save();"></paper-icon-button>
+			<paper-icon-button title="Remove alarm"  class="trash" src="img/icons-48/ic_trash_white.png" onClick="site.alarms.remove();"></paper-icon-button>
 			<!--
 			<div class="action save activatablel" onClick="site.alarms.save();">
 				<img src="img/icons-48/ic_save_white.png" title="Save alarm" />
@@ -792,8 +765,8 @@
 
 		<div class="actions">
 
-			<paper-icon-button src="img/icons-48/ic_message_white.png" onClick="site.home.sendfeedback();"></paper-icon-button>
-			<paper-icon-button src="img/icons-48/ic_reload_white.png" onClick="site.home.viewlog();"></paper-icon-button><br>
+			<paper-icon-button title="Send feedback" src="img/icons-48/ic_message_white.png" onClick="site.home.sendfeedback();"></paper-icon-button>
+			<paper-icon-button title="Refresh log" src="img/icons-48/ic_reload_white.png" onClick="site.home.viewlog();"></paper-icon-button><br>
 			<!--
 			<div class="action activatablel" onClick="site.home.sendfeedback();"><img src="img/icons-48/ic_message_white.png" title="Send feedback" /></div>
 			<div class="action activatablel" onClick="site.home.viewlog();"><img src="img/icons-48/ic_reload_white.png" title="Refresh log" /></div>

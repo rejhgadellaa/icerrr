@@ -921,12 +921,25 @@ section {
 					position:relative;
 					top:0; left:0; right:0;
 					height:72px;
-					margin-left:72px;
+					margin-left:0px;
 				}
+
+					#detailstation .main .content .content_item .inline_list .playlist_item_timeago {
+						position:absolute;
+						top:27px; left:0;
+						width:72px; height:72px;
+						text-align: center;
+						font-size:10pt;
+						font-weight:normal;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow:ellipsis;
+						color:#727272;
+					}
 
 					#detailstation .main .content .content_item .inline_list .playlist_item_name {
 						position:absolute;
-						top:16px; left:0; right:112px;
+						top:16px; left:72px; right:112px;
 						font-size:14pt;
 						font-weight:normal;
 						overflow: hidden;
@@ -937,7 +950,7 @@ section {
 
 					#detailstation .main .content .content_item .inline_list .playlist_item_title {
 						position:absolute;
-						top:36px; left:0; right:112px;
+						top:36px; left:72px; right:112px;
 						font-size:12pt;
 						font-weight:300;
 						overflow: hidden;

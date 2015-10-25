@@ -418,6 +418,7 @@ site.chedit.check = function(findStationName,silent) {
 	site.chedit.changesHaveBeenMade = true;
 
 	// Start checking the actual urls..
+	site.ui.showtoast("One moment please...");
 	site.chedit.check_station_url(station_name, station_url, silent);
 
 }

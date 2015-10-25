@@ -452,6 +452,7 @@ site.ui.setLongclickHelp = function() {
 
 	var selectors = [
 		".actionbar .actions .action",
+		".actionbar .actions paper-icon-button",
 		".footer .button"
 	];
 
@@ -459,7 +460,11 @@ site.ui.setLongclickHelp = function() {
 
 		var selector = selectors[i];
 
+		loggr.log(" > Longclick: "+ selector +": "+ $(selector).length +" element(s)");
+
 		$(selector).longClick(function(obj){
+
+			loggr.log(" > LongClick: "+ (obj)?obj.title:"null?");
 
 			// Checks
 			if (!obj) { loggr.warn("Event: '"+ selector +"' taphold error: !ev"); return; }

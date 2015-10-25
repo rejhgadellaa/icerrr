@@ -58,6 +58,10 @@ site.detailstation.init = function(resultitem, forceRedraw, restoreLast) {
 
 site.detailstation.onpause = function() {
 	loggr.debug("site.detailstation.onpause()");
+	if (site.detailstation.nowPlayingAjaxReqIdentifier) {
+		loggr.log(" > Cancel nowplaying request..");
+		site.webapi.ajaxRequests[site.detailstation.nowPlayingAjaxReqIdentifier].abort();
+	}
 }
 
 site.detailstation.onresume = function() {
@@ -296,7 +300,7 @@ site.detailstation.updateDataNowPlaying = function() {
 	var apiaction = "get";
 	var apiquerystr = JSON.stringify(apiqueryobj);
 
-	site.webapi.exec(apiaction,apiquerystr,
+	site.detailstation.nowPlayingAjaxReqIdentifier = site.webapi.exec(apiaction,apiquerystr,
 		function(data) {
 
 			$("#detailstation .station_nowplaying").html(site.home.formatNowPlaying(data["data"]["nowplaying"]));
@@ -373,6 +377,9 @@ site.detailstation.drawRecentlyPlayed = function(closeit) {
 	var inline_list = document.createElement("div");
 	inline_list.className = "inline_list";
 
+	// Prep
+	site.detailstation.timemsOffset = -1;
+
 	// Current nowplaying..
 	var npparts = $("#detailstation .station_nowplaying").html().split(" - ");
 	var npartist = npparts[0];
@@ -405,8 +412,38 @@ site.detailstation.buildRecentlyPlayedItem = function(inline_list,playlistItemDa
 		return;
 	}
 
+	var timeago = null;
+	if (playlistItemData["date"]) {
+		var timems = Date.parse(playlistItemData["date"]);
+
+		if (site.detailstation.timemsOffset<0) {
+			site.detailstation.timemsOffset = timems - new Date().getTime();
+			if (site.detailstation.timemsOffset<0) { site.detailstation.timemsOffset = 0; }
+		}
+		timems -= site.detailstation.timemsOffset;
+
+		var date = new Date();
+		date.setTime(timems);
+		loggr.warn(" > "+ date.format("Y-m-d H:i") +", "+ Math.floor((new Date().getTime() - timems)/1000) +", "+ Math.floor(site.detailstation.timemsOffset/1000),{dontsave:true});
+
+		// Timeago..
+		timems = new Date().getTime() - timems;
+		var minutesAgo = Math.floor(timems/1000/60);
+		var hoursAgo = Math.floor(minutesAgo/60);
+		var daysAgo = Math.floor(hoursAgo/24);
+		if (minutesAgo<=0) { timeago = "Now"}
+		else if (minutesAgo<=59) { timeago = minutesAgo+"m"; }
+		else if (hoursAgo<=23) { timeago = hoursAgo+"h"; }
+		else { timeago = daysAgo+"d"; }
+
+	}
+
 	var plitem = document.createElement("div");
 	plitem.className = "playlist_item";
+
+	var pltimeago = document.createElement("div");
+	pltimeago.className = "playlist_item_timeago";
+	pltimeago.innerHTML = (timeago!=null) ? timeago : "Now";
 
 	var plname = document.createElement("div");
 	plname.className = "playlist_item_name";
@@ -438,6 +475,7 @@ site.detailstation.buildRecentlyPlayedItem = function(inline_list,playlistItemDa
 		window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
 	};
 
+	plitem.appendChild(pltimeago);
 	plitem.appendChild(plname);
 	plitem.appendChild(pltitle);
 	plitem.appendChild(plspotify);

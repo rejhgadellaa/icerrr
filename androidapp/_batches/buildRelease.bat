@@ -6,6 +6,7 @@ cd %path_prj%
 
 echo.
 echo BUILD: RELEASE
+call gradlew.bat clean
 call gradlew.bat assembleRelease --stacktrace
 if errorlevel 1 goto error
 if not errorlevel 0 goto error

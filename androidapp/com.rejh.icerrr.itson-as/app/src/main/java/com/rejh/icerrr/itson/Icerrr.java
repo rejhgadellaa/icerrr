@@ -83,7 +83,7 @@ public class Icerrr extends DroidGap
         // Set by <content src="index.html" /> in config.xml
         super.setStringProperty("url", null);
         super.setStringProperty("errorUrl", null);
-        requestIcerrrPermissions();
+        super.loadUrl(Config.getStartUrl());
         
         //super.loadUrl("file:///android_asset/www/index.html")
         if(Build.VERSION.SDK_INT >= 19) {
@@ -165,7 +165,29 @@ public class Icerrr extends DroidGap
     // --------------------------------------
     // Get permissions..
 
-    private boolean hasRequestedPermissions = false;
+    public boolean hasIcerrrPermissions() {
+
+        if (
+            ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED
+
+            &&
+
+            ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
 
     public boolean requestIcerrrPermissions() {
     
@@ -202,6 +224,7 @@ public class Icerrr extends DroidGap
         }
 
         // Here, thisActivity is the current activity
+        /*
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -216,6 +239,7 @@ public class Icerrr extends DroidGap
             return false;
 
         }
+        /**/
 
         super.loadUrl(Config.getStartUrl());
         return true;
@@ -230,7 +254,6 @@ public class Icerrr extends DroidGap
 
             // permission was granted, yay! Do the
             // contacts-related task you need to do.
-            hasRequestedPermissions = true;
             requestIcerrrPermissions();
 
         } else {

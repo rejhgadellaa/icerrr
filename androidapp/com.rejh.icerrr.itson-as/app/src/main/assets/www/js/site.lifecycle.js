@@ -163,6 +163,12 @@ site.lifecycle.initApp = function(force) {
 		}
 	}
 
+	// Check permissions..
+	if (!window.JSInterface.hasIcerrrPermissions()) {
+		setTimeout(function() { site.installer.init(true); },1250);
+		return; // <- important stuff yes
+	}
+
 	// Update...
 	if (site.cookies.get("app_update_time") < new Date().getTime()) {
 		site.installer.init(true);

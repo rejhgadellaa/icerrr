@@ -89,7 +89,7 @@ site.installer.init = function(isUpdate) {
 	// - This mainly means that when the install fails we'll just finish up
 	if (isUpdate) {
 		site.installer.isUpdate = true;
-		$("#install .log").html("<h1>Update!</h1>");
+		// $("#install .log").html("<h1>Update!</h1>");
 		site.installer.logger("Just doing some routine checks. This shouldn't take long...<br><br>",{nobullet:true});
 	} else {
 		site.installer.logger("Icerrr needs to set up some stuff before it's ready to use...<br><br>",{nobullet:true});
@@ -103,6 +103,18 @@ site.installer.init = function(isUpdate) {
 
 	// Bla
 	site.installer.cfg.overwrite_version = site.installer.cfg.overwrite_versions.pop()
+
+	// Check android permissions (6.0+)
+	if (!window.JSInterface.hasIcerrrPermissions()) {
+		site.ui.hideLoadbar();
+		var msg = "<span style='font-size:14pt'>"
+			+"<strong>Permission required: read/write external storage</strong><br><br>"
+			+"Please grant access to your external storage so Icerrr can write some files (and read them later on).<br><br>"
+			+"<a href='javascript:void(0);' onclick='window.JSInterface.requestIcerrrPermissions()'>Grant permission</a>";
+		site.installer.logger(msg,{nobullet:true,nobr:true});
+		site.lifecycle.add_section_history("#exit");
+		return;
+	}
 
 	// Initiate first step: "update"
 	setTimeout(function(){site.installer.update();},1000);
@@ -692,7 +704,7 @@ site.installer.logger = function(msg,opts) {
 	if (opts.is_e) { msg = "<span class='e'>"+msg+"</span>"; }
 	// if (opts.use_br) { msg = msg; }
 	if (!opts.nobullet) { msg = "<li>"+ msg +"</li>"; }
-	else { msg = "<br>"+msg; }
+	else if (!opts.nobr) { msg = "<br>"+msg; }
 
 	$("#install .log").append(msg);
 
