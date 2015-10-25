@@ -1,3 +1,7 @@
+0.322
+  * Improved how required permissions are requested (Android 6.0+)
+  * Tweaks for "Station details" screen
+
 0.321
   * Request required permissions at startup (Android 6.0+)
   * Reduced apk size, working on slimming it down even more
