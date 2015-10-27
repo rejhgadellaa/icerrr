@@ -2,6 +2,10 @@
 *.apk
 *.ap_
 
+# Android Studio
+.idea/workspace.xml
+.idea/libraries
+
 # files for the dex VM
 *.dex
 

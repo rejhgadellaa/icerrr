@@ -5,7 +5,7 @@
 		"crit":"version",
 		"critvalue":0.246,
 		"action":"url",
-		"url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
+		"url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
 		"title":"Critical update",
 		"message":[
 			"Oops. I broke the updating mechanism so I need to guide you through the manual updating process. This means you have to download the file yourself and run the installer.\n\n",
@@ -21,7 +21,7 @@
         "crit":"version",
         "critvalue":0.317,
         "action":"install-update-app",
-        "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
+        "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
@@ -40,7 +40,7 @@
         "crit":"version",
         "critvalue":0.322,
         "action":"install-update-app",
-        "url":"https://www.dropbox.com/s/adr7g3acrcwl1i2/Icerrr.apk?dl=1",
+        "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
