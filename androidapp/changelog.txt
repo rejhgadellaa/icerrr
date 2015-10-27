@@ -1,3 +1,6 @@
+0.323
+  * Bugfixes and improvements
+
 0.322
   * Improved how required permissions are requested (Android 6.0+)
   * Tweaks for "Station details" screen

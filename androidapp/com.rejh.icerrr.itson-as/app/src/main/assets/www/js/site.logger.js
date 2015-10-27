@@ -25,6 +25,7 @@ loggr.logtypes = [null];
 loggr.error = function(str,opts) {
 	if (!opts) { opts = {}; }
 	opts.type = "error";
+	if (str!=null) { str += "\nSTACKTRACE:\n"+ loggr.getStackTrace(); }
 	loggr.log(str,opts);
 	if (!opts.dontupload) { loggr.upload(); }
 }
@@ -51,17 +52,17 @@ loggr.info = function(str,opts) {
 
 
 loggr.log = function(str,opts) {
-	
+
 	if (!str) { str = ""; }
-	
+
 	if (!opts) { opts = {}; }
 	if (!opts.type) { opts.type = "log"; }
 	if (opts.toconsole!==false) { opts.toconsole = true; }
-	
+
 	str = new Date().format("H:i:s") +"    "+ str;
-	
+
 	if (opts.toconsole && site.cookies.get("setting_enableLogCatDebugging")==1 || opts.type=="error" || opts.type=="warn") {
-	
+
 		switch(opts.type) {
 			case "error":
 				console.error(str);
@@ -79,27 +80,27 @@ loggr.log = function(str,opts) {
 				console.log(str);
 				break;
 		}
-		
+
 	}
-	
+
 	/**/
-	
+
 	if (!str) { return; }
-	
+
 	str = new Date().format("Y-m-d") +" "+ str;
-	
+
 	loggr.loglines.push(str);
 	loggr.logtypes.push(opts.type);
-	
+
 	while(loggr.loglines.length>loggr.cfg.maxlines) {
 		loggr.loglines.shift();
 		loggr.logtypes.shift();
 	}
-	
+
 	if (opts.save) {
 		loggr.save();
 	}
-	
+
 }
 
 // ---> Makestring
@@ -111,19 +112,19 @@ loggr.gettext = function() {
 // ---> Get html
 
 loggr.gethtml = function(maxlines) {
-	
+
 	if (!maxlines || maxlines > loggr.loglines.length) { maxlines = loggr.loglines.length; }
-	
+
 	var html = "";
-	
+
 	for (var i in loggr.loglines) {
 		if (loggr.loglines.length-i > maxlines) { continue; }
 		var logline = loggr.loglines[i];
 		var logtype = loggr.logtypes[i];
 		if (typeof logline !=="string") { continue; }
-		try { 
-			logline = logline.split(" > ").join("&nbsp;&gt;&nbsp;"); 
-			logline = logline.split("  ").join("&nbsp;&nbsp;"); 
+		try {
+			logline = logline.split(" > ").join("&nbsp;&gt;&nbsp;");
+			logline = logline.split("  ").join("&nbsp;&nbsp;");
 			logline = logline.split(">").join("&gt;");
 			logline = logline.split("<").join("&lt;");
 			logline = logline.split(loggr.cfg.newline).join("<br>");
@@ -145,17 +146,17 @@ loggr.gethtml = function(maxlines) {
 				html+= "<span style='color:#333'>"+ logline +"</span><br>\n";
 		}
 	}
-	
+
 	return html;
-	
+
 }
 
 // ---> Save
 
 loggr.save = function() {
-	
+
 	var text = loggr.gettext();
-	
+
 	// Write logs
 	site.storage.writefile(site.cfg.paths.logs,"local.site_logger.txt",JSON.stringify(text),
 		function() {
@@ -171,22 +172,22 @@ loggr.save = function() {
 // ---> Upload
 
 loggr.upload = function(logcat_html, issuedByUser) {
-	
+
 	// TODO: Not ready for primetime
-	
+
 	// Check settings..
 	if (!issuedByUser && !site.cookies.get("setting_sendLogs")) {
 		loggr.error(" > Uploading logs automatically is disabled by user",{dontupload:true});
 		return;
 	}
-	
+
 	// Check if already uploading..
 	if (loggr.uploading) {
 		console.log("loggr.uploading==true");
 		return;
 	}
 	loggr.uploading = true;
-	
+
 	// Debug --> Add this to log before uploading...
 	loggr.log(" > Device: "+ site.vars.deviceDesc);
 	loggr.log(" > Screen: "+ $(window).width() +" x "+ $(window).height());
@@ -197,69 +198,69 @@ loggr.upload = function(logcat_html, issuedByUser) {
 		+", cordova: "+ device.cordova
 	);
 	loggr.log(" > App version: "+ site.cfg.app_version);
-	
+
 	setTimeout(function(){
-		
+
 		// Get more html..
 		if (window.mediaStreamer && !logcat_html) {
 			loggr.log(" > Get logcat..");
 			window.mediaStreamer.getlog(
 				function(res) {
-				
+
 					var lines = res.split("\n");
-					
+
 					var outp = "";
 					outp = "<table class='logcat'>";
-				
+
 					for (var i=0; i<lines.length; i++) {
-						
+
 						var line = lines[i];
 						var lineparts = line.split("(");
-						
+
 						// Check linepart 0..
 						if (!lineparts[0]) { continue; }
 						if (!lineparts[0].length) { continue; }
-						
+
 						// Shift linepart 0 (linetd1) from lineparts..
 						var linetd1 = lineparts.shift();
-						
+
 						// Substract datetime
 						var linetd1_parts = linetd1.split(" ");
 						var linetd1_date = linetd1_parts[0];
 						var linetd1_time = linetd1_parts[1].substr(0,linetd1_parts[1].indexOf("."));
 						linetd1 = linetd1_parts[2];
-						
+
 						// Handle rest of line (linetd2)
 						var linetd2 = lineparts.join("(");
 						if (!linetd2) {
 							continue;
 						}
-						
+
 						// Trim
 						linetd1 = linetd1.trim();
 						linetd2 = linetd2.trim();
-						
+
 						// Filter "i/chromium"
 						if (linetd1.toLowerCase().indexOf("i/chromium")>=0) {
 							continue;
 						}
-						
+
 						// More td2 stuff
 						linetd2 = linetd2.substr(linetd2.indexOf("):")+2).trim();
 						// linetd2 = linetd2.split(" ").join("&nbsp;");
-						
+
 						// Handle time already present in bla
 						var linetd2_orig = linetd2.split('"').join("'");
 						if (linetd1.toLowerCase().indexOf("d/cordovalog")>=0 && linetd2.indexOf("    ")>=0) {
 							linetd2 = linetd2.substr(11);
 						}
 						if (linetd2_orig==linetd2.split('"').join("'")) { linetd2_orig = "-"; }
-						
+
 						// Handle length..
 						if (linetd1.length>16) {
 							linetd1 = linetd1.substr(0,14)+"..";
 						}
-						
+
 						// Style linetd1
 						var linetype = linetd1.substr(0,2);
 						var rowcolor = "#000";
@@ -283,22 +284,22 @@ loggr.upload = function(logcat_html, issuedByUser) {
 								rowcolor = "#090";
 								break;
 						}
-						
+
 						outp += "<tr style='color:"+ rowcolor +";'>"
 							+"<td valign='top'>"+ linetd1_time +"&nbsp;&nbsp;</td>"
 							+"<td valign='top'>"+ linetd1 +"</td>"
 							+"<td valign='top' title=\""+ linetd2_orig +"\">"+ linetd2 +"</td>"
 						+"</tr>";
-						
+
 					}
-					
+
 					outp += "</table>";
-					
+
 					outp = "<p><hr></p>"+outp;
-					
+
 					loggr.uploading = false;
 					loggr.upload(outp,issuedByUser);
-				
+
 				},
 				function(err) {
 					loggr.uploading = false;
@@ -309,20 +310,20 @@ loggr.upload = function(logcat_html, issuedByUser) {
 			loggr.uploading = false;
 			return;
 		}
-	
+
 		// Save
 		loggr.save();
-		
+
 		// Get html
 		var html = loggr.gethtml(512); // last 512 lines
 		var text = loggr.gettext
-		
+
 		// Add logcat html..
 		if (logcat_html) {
 			loggr.log(" > Add logcat");
 			html += logcat_html;
 		}
-		
+
 		// Wrap html..
 		var html = "<html>"
 			+"<head><style>"
@@ -330,9 +331,9 @@ loggr.upload = function(logcat_html, issuedByUser) {
 			+"</style></head>"
 			+"<body>"+ html +"</body>"
 		+"</html>";
-		
+
 		loggr.log(" >> "+ html.length)
-		
+
 		// Webapi time!
 		var apiqueryobj = {
 			"post":"log"
@@ -342,10 +343,10 @@ loggr.upload = function(logcat_html, issuedByUser) {
 			"log_html":html,
 			"log_text":text
 		}
-		
+
 		var apiaction = "post";
 		var apiquerystr = JSON.stringify(apiqueryobj);
-		
+
 		site.webapi.post(apiaction,apiquerystr,data,
 			function(data) {
 				if (data["error"]) {
@@ -361,12 +362,20 @@ loggr.upload = function(logcat_html, issuedByUser) {
 				else { loggr.log(error); }
 			}
 		);
-	
+
 	},500);
-	
+
 	/**/
-	
+
 }
+
+// ---> GetStackTrace
+
+loggr.getStackTrace = function() {
+  var obj = {};
+  Error.captureStackTrace(obj, loggr.getStackTrace);
+  return obj.stack;
+};
 
 // ---------------------------------------------
 // LOGGER : MORE
@@ -375,17 +384,17 @@ loggr.upload = function(logcat_html, issuedByUser) {
 
 /*
 if (console) {
-	
+
 	// Let's assume that if console exists, we have .log also
-	
+
 	// Copy original objs
 	loggr.console = jQuery.extend(true, {}, console);
-	
+
 	// Override
 	console.log = loggr.log
 	console.warn = loggr.warn;
 	console.error = loggr.error;
-	
+
 }
 /**/
 
@@ -398,21 +407,3 @@ window.onerror = function(message, file, line, column, errorObj) {
 		loggr.error(errorObj.stack);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

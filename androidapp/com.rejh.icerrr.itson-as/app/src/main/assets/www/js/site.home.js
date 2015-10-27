@@ -432,7 +432,7 @@ site.home.run_station_updates = function() {
 	if (site.vars.station_update_running && site.webapi.ajaxRequests[site.vars.station_update_xhrid]) {
 		try {
 			loggr.warn(" > Cancel previous request: "+ site.vars.station_update_xhrid);
-			site.webapi.ajaxRequests[site.vars.station_update_xhrid].abort();
+			site.webapi.abort(site.vars.station_update_xhrid);
 		} catch(e) {
 			console.error(e);
 		}

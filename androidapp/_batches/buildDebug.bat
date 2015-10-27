@@ -6,7 +6,14 @@ cd %path_prj%
 
 echo.
 echo BUILD: DEBUG
+choice /C YN /N /T 10 /D N /M "Clean build? (Y/N)"
+if errorlevel 2 goto build
+goto clean
+
+:clean
 call gradlew.bat clean
+
+:build
 call gradlew.bat assembleDebug --stacktrace
 if errorlevel 1 goto error
 if not errorlevel 0 goto error

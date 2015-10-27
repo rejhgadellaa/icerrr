@@ -60,7 +60,7 @@ site.detailstation.onpause = function() {
 	loggr.debug("site.detailstation.onpause()");
 	if (site.detailstation.nowPlayingAjaxReqIdentifier) {
 		loggr.log(" > Cancel nowplaying request..");
-		site.webapi.ajaxRequests[site.detailstation.nowPlayingAjaxReqIdentifier].abort();
+		site.webapi.abort(site.detailstation.nowPlayingAjaxReqIdentifier);
 	}
 }
 

@@ -21,14 +21,14 @@ site.vars.downloadsInProgress = {};
 // ---> Download
 
 site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
-	
+
 	loggr.log("site.webapi.download()");
 	loggr.log(" > "+ url);
-	
+
 	if (!site.helpers.isConnected()) {
 		errcb({code:-1,message:"No connection available"});
 	}
-	
+
 	if (targetPath.indexOf("file://")>=0) {
 		targetPath = targetPath.substr(targetPath.indexOf("file://"));
 		var res = {
@@ -37,28 +37,28 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 		};
 		cb(res);
 	}
-	
+
 	targetPath = encodeURI(targetPath);
 	targetFile = targetFile;
-	
+
 	// Get file entry..
 	site.storage.getFolderEntry(targetPath,
 		function(folderEntry) {
-			
+
 			// Already downloaded?
 			if (site.vars.downloadsInProgress[url] == targetFile) {
 				loggr.error(" -> Already downloading: "+ url +" to "+ targetFile);
 				return; // fail silently without calling errcb()??
 			}
 			site.vars.downloadsInProgress[url] = targetFile;
-			
+
 			// Go ahead, download it..
 			loggr.log(" > Init download...");
-			
+
 			// Prep ..
 			var fileTransfer = new FileTransfer();
 			var dest = encodeURI(folderEntry.fullPath +"/"+ targetFile)
-			
+
 			// Test encoding.. (url)
 			var uri = url;
 			var url_decoded = decodeURI(url);
@@ -67,14 +67,14 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 				uri = encodeURI(url);
 			}
 			loggr.log(" >> "+ uri);
-			
+
 			// Progress?
 			if (progressCb) {
 				fileTransfer.onprogress = function(progressEvent) {
 					progressCb(progressEvent);
 				}
 			}
-		
+
 			// A-go-go
 			fileTransfer.download(
 				uri,
@@ -94,7 +94,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 				},
 				true
 			);
-			
+
 		},
 		function(error) {
 			loggr.error("Error: getFolderEntry?");
@@ -103,20 +103,20 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 			errcb(error);
 		}
 	);
-	
+
 }
 
 // ---> Ajax request
 
 site.webapi.getajax = function(url,dataType,cb,errcb) {
-	
+
 	// -> http://www.sitepoint.com/web-foundations/mime-types-complete-list/
-	
+
 	loggr.debug("site.webapi.getajax()");
 	loggr.log(" > "+url);
-	
+
 	if (!dataType) { dataType = "text/plain"; }
-	
+
 	var ajaxReqIdentifier = site.helpers.getUniqueID();
 	var ajaxReq = $.ajax({
 		url : url,
@@ -126,17 +126,17 @@ site.webapi.getajax = function(url,dataType,cb,errcb) {
 			cb(data,textStatus,jqXHR);
 		}
 	})
-	.error(function(jqXHR, textStatus, errorThrown) { 
+	.error(function(jqXHR, textStatus, errorThrown) {
 		// error
 		loggr.error(" > site.webapi.getajax().Error: "+ textStatus +", "+ errorThrown);
-		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
+		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]});
 		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 	});
-	
+
 	// Store apireq
 	site.webapi.ajaxRequests[ajaxReqIdentifier] = ajaxReq;
 	return ajaxReqIdentifier;
-	
+
 }
 
 // ---> Stuff
@@ -145,23 +145,23 @@ site.webapi.getajax = function(url,dataType,cb,errcb) {
 // - Returns: cb(results) || TODO: raw json or only json['data'] --> nope, it's going to be json (with data and info fields)
 
 site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
-	
+
 	loggr.log("site.webapi.exec()");
-	
+
 	if (apiaction=="post") {
 		site.webapi.post(apiaction,apiquerystr,cb,errcb);
 		return;
 	}
-	
+
 	// Parse apiquerystr || TODO: Important: how to handle urlencoding.. doing it here.. now..
 	if (!apiquerystr) { apiquerystr = "{}"; }
 	var apiqueryobj = JSON.parse(apiquerystr);
 	var apiquery = encodeURIComponent(JSON.stringify(apiqueryobj));
-	
+
 	var apiurl = site.cfg.urls.api +"a="+ apiaction +"&q="+ apiquery +"&cache="+(new Date().getTime());
 	loggr.log(" > "+apiurl);
 	loggr.log(" > "+apiquerystr);
-	
+
 	var ajaxReqIdentifier = site.helpers.getUniqueID();
 	var ajaxReq = $.getJSON(apiurl, function(results) {
 		// ok
@@ -177,35 +177,35 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 			return;
 		}
 	})
-	.error(function(jqXHR, textStatus, errorThrown) { 
+	.error(function(jqXHR, textStatus, errorThrown) {
 		// error
 		loggr.error(" > site.webapi.exec().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown);
-		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
+		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]});
 		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 	});
-	
+
 	// Store apireq
 	site.webapi.ajaxRequests[ajaxReqIdentifier] = ajaxReq;
 	return ajaxReqIdentifier;
-	
+
 }
 
 // Post
 
 site.webapi.post = function(apiaction,apiquerystr,data,cb,errcb) {
-	
+
 	loggr.log("site.webapi.post()");
-	
+
 	// Parse apiquerystr || TODO: Important: how to handle urlencoding.. doing it here.. now..
 	if (!apiquerystr) { apiquerystr = "{}"; }
 	var apikey = "REJH_ICERRR_APIKEY-"+ site.helpers.getUniqueID();
 	var apiqueryobj = JSON.parse(apiquerystr);
 	var apiquery = encodeURIComponent(JSON.stringify(apiqueryobj));
-	
+
 	var apiurl = site.cfg.urls.api +"a="+ apiaction +"&q="+ apiquery +"&apikey="+ apikey +"&cache="+(new Date().getTime());
 	loggr.log(" > "+apiurl);
 	loggr.log(" > "+apiquerystr);
-	
+
 	var ajaxReqIdentifier = site.helpers.getUniqueID();
 	var ajaxReq = $.post(apiurl, data, function(results) {
 			// ok
@@ -219,71 +219,56 @@ site.webapi.post = function(apiaction,apiquerystr,data,cb,errcb) {
 				cb(results);
 				site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 				return;
-			} 
+			}
 		}
-	).error(function(jqXHR, textStatus, errorThrown) { 
+	).error(function(jqXHR, textStatus, errorThrown) {
 		// error
 		loggr.error(" > site.webapi.post().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown,{dontupload:true});
-		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]}); 
+		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]});
 		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 	});
-	
+
 	// Store apireq
 	site.webapi.ajaxRequests[ajaxReqIdentifier] = ajaxReq;
 	return ajaxReqIdentifier;
-	
+
 }
 
 // Cancel
 
 site.webapi.abort = function(ajaxReqIdentifier) {
-	
-	loggr.debug("site.webapi.cancel(): "+ajaxReqIdentifier);
-	
+
+	loggr.debug("site.webapi.abort(): "+ajaxReqIdentifier);
+
 	loggr.log(" > Abort..");
 	var ajaxReq = site.webapi.ajaxRequests[ajaxReqIdentifier];
-	if (!ajaxReq) { loggr.warn(" > Ajax request does not exist (anymore)"); return; }
+	if (!ajaxReq) { loggr.warn(" > Ajax request does not exist (anymore)",{dontsave:true}); return; }
 	ajaxReq.abort();
-	
+
 	loggr.log(" > Cleanup..");
 	site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
-	
+
 }
 
 // Cleanup
 
 site.webapi.cleanupAjaxRequests = function(ajaxReqIdentifier) {
-	
+
 	loggr.debug("site.webapi.cleanupAjaxRequests(): "+ajaxReqIdentifier);
-	
+
 	var ajaxReq = site.webapi.ajaxRequests[ajaxReqIdentifier];
 	if (!ajaxReq) { loggr.warn(" > Ajax request does not exist (anymore)"); return; }
-	
+
 	var newAjaxRequests = {};
 	for (var id in site.webapi.ajaxRequests) {
 		if (id==ajaxReqIdentifier) { continue; }
 		if (!site.webapi.ajaxRequests[id]) { continue; }
 		newAjaxRequests[id] = site.webapi.ajaxRequests[id];
 	}
-	
+
 	loggr.log(" > Before: "+ site.helpers.countObj(site.webapi.ajaxRequests));
 	loggr.log(" > After:  "+ site.helpers.countObj(newAjaxRequests));
-	
+
 	site.webapi.ajaxRequests = newAjaxRequests;
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

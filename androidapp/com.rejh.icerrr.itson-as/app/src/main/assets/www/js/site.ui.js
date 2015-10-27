@@ -405,6 +405,11 @@ site.ui.hideLoadbar = function(optSelector) {
 
 site.ui.showtoast = function(msg, timeInSec, topMode) {
 	loggr.log("site.ui.showtoast()");
+	loggr.log(" > "+ msg);
+	if (msg && msg.trim().toLowerCase()=="abort") {
+		// loggr.error(" > showtoast: 'abort', so where did this come frome?"); // debug
+		return;
+	}
 	if (site.ui.ui_showtoast_hide) { clearTimeout(site.ui.ui_showtoast_hide); }
 	if (!timeInSec) { timeInSec = 1.5; }
 	var timeInMsec = timeInSec * 1000;
