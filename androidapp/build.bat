@@ -10,6 +10,10 @@ set name_key=icerrr
 set name_jarsigner_thingie=icerrr
 set androidsdk_target=android-23
 
+:finddrivepath
+set drivepath=d:\desktop\drive\
+if not exist %drivepath% set drivepath=c:\data\desktop\drive\
+
 :findsdk
 if exist C:\android\android-sdk1\tools\android.bat set androidsdk=C:\android\android-sdk1\
 if exist C:\android\sdk1\tools\android.bat set androidsdk=C:\android\sdk1\
