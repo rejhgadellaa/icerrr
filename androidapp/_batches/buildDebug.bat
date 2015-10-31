@@ -20,13 +20,13 @@ if not errorlevel 0 goto error
 
 echo.
 echo Copy apk to dropbox...
-copy %cd%\app\build\outputs\apk\app-debug.apk D:\Desktop\Drive\Box\__Static\icerrr\tmp_apks\%name_prj%-debug.apk
+copy %cd%\app\build\outputs\apk\app-debug.apk %drivepath%Box\__Static\icerrr\tmp_apks\%name_prj%-debug.apk
 if errorlevel 1 goto error
 if not errorlevel 0 goto error
 
 echo.
 echo Install and run on device...
-%androidsdk%platform-tools\adb -d install -r D:\Desktop\Drive\Box\__Static\icerrr\tmp_apks\%name_prj%-debug.apk
+%androidsdk%platform-tools\adb -d install -r %drivepath%Box\__Static\icerrr\tmp_apks\%name_prj%-debug.apk
 if errorlevel 1 goto error
 if not errorlevel 0 goto error
 %androidsdk%platform-tools\adb -d shell am start %package%/.%name_act%
