@@ -16,6 +16,7 @@
 
 */
 
+// TODO: should only be used for debugging
 error_reporting(E_ERROR | E_PARSE);
 
 include("s.config.php");
@@ -298,21 +299,6 @@ switch($action) {
 				echo $jsons;
 				break;
 
-			// search v2 // TODO: deprecated?
-			case "search_dirble_v2_o":
-				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
-				$dirble_url = "http://api.dirble.com/v2/search/";
-				$dirble_query = rawurlencode("{$queryobj['search']}");
-				$fg = fg($dirble_url . $dirble_query . "?token={$cfg['dirble_apikey']}");
-				if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
-				$json["data"] = json_decode($fg,true);
-				$json["info"] = array();
-				// TODO: catch errors
-				$jsons = gzencode(json_encode($json));
-				header('Content-Encoding: gzip');
-				echo $jsons;
-				break;
-
 			// search v2 -> more
 			case "search_dirble_v2":
 
@@ -389,9 +375,6 @@ switch($action) {
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
 				echo $jsons;
-				break;
-
-
 				break;
 
 			case "nowplaying_dirble":
@@ -519,6 +502,7 @@ switch($action) {
 
 		if (!$query) { error("GET['query'] is not defined for action '$action'"); }
 		if (!$apikey) { error("API key is not provided"); }
+		// TODO: this is such a bad security feat.. :()
 		if (strpos($apikey,"REJH_ICERRR_APIKEY-")===FALSE) { error("API key is invalid"); } // TODO: Haha lol I call this a api key? XD
 
 		// Query
