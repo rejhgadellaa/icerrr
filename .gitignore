@@ -57,6 +57,8 @@ cache/
 webapp/json/
 !webapp/json/stations.json
 !webapp/json/stations.example.json
+webapp/api/data/analytics.json
+webapp/api/data/deviceids.json
 
 #webapp logs
 webapp/api/logs_users/
