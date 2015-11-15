@@ -110,8 +110,6 @@ site.detailstation.updatedata = function() {
 	});
 	if (site.detailstation.station.station_image_local) {
 		$("#detailstation .station_image img").attr("src",site.detailstation.station.station_image_local);
-	} else if (site.detailstation.station.station_icon_local) {
-		$("#detailstation .station_image img").attr("src",site.detailstation.station.station_icon_local);
 	} else {
 
 		site.chicon.downloadImagery(site.detailstation.station,

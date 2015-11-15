@@ -14,7 +14,7 @@ site.cfg = {};
 // ---> Important stuff
 
 // App
-site.cfg.app_version = 0.323; // Note: change causes install/update to run at launch
+site.cfg.app_version = 0.324; // Note: change causes install/update to run at launch
 site.cfg.debugging = true; // TODO: Deprecated, see option in settings
 
 // Urls
@@ -22,7 +22,7 @@ site.cfg.debugging = true; // TODO: Deprecated, see option in settings
 site.cfg.urls = {};
 site.cfg.urls.webapp = "http://www.rejh.nl/icerrr/";
 site.cfg.urls.api = "http://www.rejh.nl/icerrr/api/?";
-// site.cfg.urls.api = "http://94.208.216.239/icerrr/api/?"; // debug
+// site.cfg.urls.api = "http://66.249.81.202/icerrr/api/?"; // debug
 
 // Paths (local storage)
 // Note: storage paths should NOT end with / || TODO: check this..

@@ -24,24 +24,24 @@ site.helpers.addCachebust = function(src) {
 // ---> Quick
 
 site.helpers.shouldDownloadImage = function(localVal,iconVal) {
-	
+
 	if (!iconVal) { iconVal = ""; }
 	if (!localVal) { localVal = ""; }
-	
+
 	// If iconVal contains file:// it's already local, no need for download
 	if (iconVal.indexOf("file://")>=0) { return false; }
-	
+
 	// Check if localVal actually is set..
 	if (!localVal) { return true; }
-	
+
 	// Check if localVal contains file (if not, do download)
 	if (localVal.indexOf("file://")<0) { return true; }
 	if (localVal.indexOf(".base64")>0) { return true; }
-	
+
 	// Default: don't download
 	return false;
-	
-	
+
+
 }
 
 // ---> Stations
@@ -51,26 +51,26 @@ site.helpers.shouldDownloadImage = function(localVal,iconVal) {
 // - Adds results of stations2 to stations1 without overwriting stations1 || UPDATE: respects 'station_edited' flag
 
 site.helpers.mergeStations = function(stations1,stations2,forceOverwrite) {
-	
+
 	loggr.debug("site.helpers.mergeStations()");
-	
+
 	// -> Skipkeys
 	var skipkeys = [
 		"station_icon_local",
 		"station_image_local"
 		]
-	
+
 	// Test..
 	if (!stations1 && !stations2) { return []; }
 	else if (!stations1) { return stations2; }
 	else if (!stations2) { return stations1; }
-	
+
 	// Walk station2
 	for (var i=0; i<stations2.length; i++) {
-		
+
 		var station1 = null; // will look up later..
 		var station2 = stations2[i];
-		
+
 		// Find in stations2
 		var station1index = site.helpers.session.getStationIndexById(station2.station_id,stations1);
 		if (station1index<0 || !station1index) {
@@ -82,26 +82,26 @@ site.helpers.mergeStations = function(stations1,stations2,forceOverwrite) {
 			stations1.push(station2);
 			continue; // <- important
 		}
-		
+
 		station1 = stations1[station1index];
-		
+
 		// Compare values..
 		loggr.debug(" > Upd: "+ station2.station_id);
 		for (var key in station2) {
-			
+
 			if (!station1.station_edited) { station1.station_edited = {}; }
 			if (!station2.station_edited) { station2.station_edited = {}; }
-			
+
 			var edit1 = station1.station_edited[key]
 			var edit2 = station2.station_edited[key]
-			
+
 			if (!edit1) { edit1 = 0; }
 			if (!edit2) { edit2 = 1; }
-			
+
 			if (forceOverwrite) {
 				edit1 = 0; edit2 = 1;
 			}
-			
+
 			// Special case: station_icon_local + .._image_local
 			if (skipkeys.indexOf(key)>=0) {
 				loggr.warn(" >> Skipkey: "+ key +", "+ station1[key] +" != "+ station2[key],{dontsave:true});
@@ -157,17 +157,17 @@ site.helpers.mergeStations = function(stations1,stations2,forceOverwrite) {
 				station1[key] = station2[key];
 				/**/
 			}
-			
-			
+
+
 		}
-		
+
 		// Store
 		stations1[station1index] = station1;
-		
+
 	}
-	
+
 	return stations1;
-	
+
 }
 
 // ---> Images
@@ -182,13 +182,13 @@ site.helpers.getImgAvgColor = function(image,x1,y1,x2,y2) {
 	canvas.height = y2-y1; // image.height;
 	var ctx = canvas.getContext("2d");
 	ctx.drawImage(image, 0, 0);
-	
+
 	// Get upper pixel data
 	var pixelDataUpper = ctx.getImageData(x1, y1, x2, y2).data;
 	var pixelDataUpperAveraged = site.helpers.calcAverageColor(pixelDataUpper);
-	
+
 	return pixelDataUpperAveraged;
-		
+
 }
 
 // Calc Average Color from array
@@ -209,62 +209,62 @@ site.helpers.calcAverageColor = function(pixelArray) {
 	a = at/len;
 	var ret = new Array(r,g,b,a);
 	return ret;
-	
+
 }
 
 // Image convert url to filename
 
 site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp,onlyExtension) {
-	
+
 	loggr.debug("site.helpers.imageUrlToFilename()");
-	
+
 	var filename = "__noname__"+ new Date().getTime();
-	
+
 	if (!url) { url = "__noname__"+ new Date().getTime(); }
 	if (!prefix) { prefix = ""; }
-	
+
 	if (url.indexOf("/")>=0) {
 		filename = url.substr(url.lastIndexOf("/")+1);
 	} else {
 		filename = url;
 	}
-	
+
 	if (filename.indexOf("?")>=0) {
 		filename = filename.substr(0,filename.lastIndexOf("?"));
 	}
-	
+
 	if (isBase64) {
 		filename += ".base64";
 	}
-	
+
 	filename = site.helpers.stripIllChars(filename);
 	prefix = site.helpers.stripIllChars(prefix);
-	
+
 	if (onlyExtension) {
 		var ext = filename.substr(filename.lastIndexOf("."));
 		filename = ext;
 	}
-	
+
 	if (!dontUseTimestamp && prefix) { // default
 		filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
 	} else if (prefix) {
 		filename = prefix +"_"+ filename;
 	}
-	
+
 	return filename;
-	
+
 }
 
 // Download image
 // - > Whoop!
 
 site.helpers.downloadImage = function(imgobj, filename, url, cb, cberr, cbprogress) {
-	
+
 	loggr.log("site.helpers.downloadImage(): "+ filename);
-	
+
 	// Prep
 	// url,targetPath,targetFile,cb,errcb,progressCb
-	
+
 	site.webapi.download(url, site.cfg.paths.images, filename,
 		function(fileEntry) {
 			if (imgobj) { imgobj.src = fileEntry.fullPath+"?c="+ new Date().getTime(); }
@@ -279,15 +279,15 @@ site.helpers.downloadImage = function(imgobj, filename, url, cb, cberr, cbprogre
 			if (cbprogress) { cbprogress(pEvent); }
 		}
 	);
-	
+
 }
 
 // Trim image cache
 
 site.helpers.checkImageCache = function() {
-	
+
 	loggr.log("site.helpers.checkImageCache()");
-	
+
 	// Prep
 	var imagelist = [];
 	for (var i=0; i<site.data.stations.length; i++) {
@@ -295,91 +295,91 @@ site.helpers.checkImageCache = function() {
 		if (station.station_image_local) { imagelist.push(station.station_image_local); }
 		if (station.station_icon_local) { imagelist.push(station.station_icon_local); }
 	}
-	
+
 	// Lookup files that may be removed..
 	var nrOfFilesThatMayBeRemoved = 0;
 	site.storage.listfiles(site.cfg.paths.images,
 		function(fileEntries) {
-			
+
 			// nrOfFilesThatMayBeRemoved?
 			for (var i=0; i<fileEntries.length; i++) {
 				if (imagelist.indexOf(fileEntries[i].fullPath)<0) {
 					nrOfFilesThatMayBeRemoved++;
 				}
 			}
-			
+
 			loggr.log(" > "+ nrOfFilesThatMayBeRemoved +" of "+ fileEntries.length +" file(s) may be removed..");
-			
+
 			// Lalala
 			if (nrOfFilesThatMayBeRemoved>site.cfg.files.maxImagesCached) {
-			
+
 				loggr.log(" > NrOfFiles >= "+ site.cfg.files.maxImagesCached +", start removing files");
-				
+
 				site.vars.fileNamesByDate = {};
 				for (var i=0; i<fileEntries.length; i++) {
-					
+
 					// Get metadata
 					var fileEntry = fileEntries[i];
-					
+
 					if (imagelist.indexOf(fileEntry.fullPath)>=0) {
 						continue;
 					}
-					
+
 					fileEntry.getMetadata(function(metadata){
 						var date = metadata.modificationTime;
 						site.vars.fileNamesByDate[date.format("YmdHis")] = fileEntry.name;
 					},null);
 				}
-				
+
 				setTimeout(function(){
 					site.helpers.trimImageCache();
 				},1000);
-			
+
 			} else {
 				loggr.log(" > NrOfFiles < "+ site.cfg.files.maxImagesCached +", nothing to do");
 			}
-			
+
 		},
 		function(error) {
 			loggr.error(" > Could not get directory list",{dontupload:true});
 			loggr.error(" > "+ site.storage.getErrorType(error));
 		}
 	);
-	
+
 }
 
 site.helpers.trimImageCache = function() {
-	
+
 	loggr.log("site.helpers.trimImageCache()");
-	
+
 	var fileNamesByDate = site.vars.fileNamesByDate;
-	
+
 	// Sort keys
 	var keys = Object.keys(fileNamesByDate);
 	keys.sort(); // sort
 	keys.reverse(); // reverse order, newest files first..
-	
+
 	// Build array..
 	var fileNamesSorted = [];
 	for (var i=0; i<keys.length; i++) {
 		fileNamesSorted.push(fileNamesByDate[keys[i]]);
 	}
-	
+
 	loggr.log(" > Nr of files: "+ fileNamesSorted.length +", max: "+ site.cfg.files.maxImagesCached);
-			
+
 	var removed = 0;
 	for (var i=site.cfg.files.maxImagesCached; i<fileNamesSorted.length; i++) {
-		
+
 		var name = fileNamesSorted[i];
 		var path = site.cfg.paths.images;
-		
+
 		if (site.cfg.files.ignoreFilenames.indexOf(name)>=0) {
 			loggr.log(" > Skip: "+ name);
 			continue;
 		}
-		
+
 		loggr.log(" > Remove: "+ name);
-		
+
 		/**/
 		site.storage.deletefile(path,name,function(){},function(error){
 			loggr.error(" > Could not delete '"+ name +"'",{dontupload:true});
@@ -387,11 +387,11 @@ site.helpers.trimImageCache = function() {
 		});
 		/**/
 		removed++;
-		
+
 	}
-	
+
 	loggr.log(" > Removed "+ removed +" file(s)");
-	
+
 }
 
 // AspectCalc
@@ -445,7 +445,7 @@ site.helpers.calcStringToBytes = function(str) {
 // ---> Illchars
 
 site.helpers.stripIllChars = function(str) {
-	
+
 	// Ill chars
 	for (var i=0; i<site.cfg.illegalchars.length; i++) {
 		var illchar = site.cfg.illegalchars[i];
@@ -453,9 +453,9 @@ site.helpers.stripIllChars = function(str) {
 			str = str.split(illchar).join("");
 		}
 	}
-	
+
 	return str;
-	
+
 }
 
 // ---> Sort stuff
@@ -535,14 +535,14 @@ site.helpers.storeSession = function(cb) {
 }
 
 site.helpers.readSession = function() {
-	
+
 	loggr.debug("site.helpers.readSession()");
-	
+
 	loggr.log(" > Restore site.session via cookie..");
 	var cookiedata = site.cookies.get("site.session")
-	
-	if (!cookiedata) { 
-		
+
+	if (!cookiedata) {
+
 		loggr.warn(" > Error getting session from cookie, trying storage...");
 		site.session = {}; // just a placeholder so the app can continue working.. // TODO: dangerous, user might do stuff that is not remembered..
 		site.storage.readfile(site.cfg.paths.json,"local.site_session.json",
@@ -556,21 +556,21 @@ site.helpers.readSession = function() {
 			},
 			function(err) {
 				loggr.warn(" > Could not read session from storage");
-				site.session = {}; 
+				site.session = {};
 				site.session_ready = true;
 			}
 		);
 		return false;
-		
+
 	} else {
-		
+
 		loggr.log(" -> OK: "+ site.helpers.calcAutoByteStr(site.helpers.calcStringToBytes(cookiedata)));
 		site.session = JSON.parse(cookiedata);
 		site.session_ready = true;
 		return true;
-		
+
 	}
-	
+
 }
 
 // TODO: I want this function for other places too, not just session data
@@ -589,7 +589,7 @@ site.helpers.session.putRecursive = function(sessionelem,data,isarray) {
 	// Walk..
 	for (var elemkey in data) {
 		// build newsessionelem
-		if (typeof data[elemkey] == "array") { 
+		if (typeof data[elemkey] == "array") {
 			newsessionelem[elemkey] = site.helpers.session.putRecursive(sessionelem[elemkey],data[elemkey],true);
 		} else if (typeof data[elemkey] == "object") {
 			newsessionelem[elemkey] = site.helpers.session.putRecursive(sessionelem[elemkey],data[elemkey]); // recursive magic
@@ -649,7 +649,7 @@ site.helpers.flagdirtyfile = function(filepathandname) {
 		}
 	}
 	if (!dirtyfiles) { dirtyfiles = []; }
-	if (dirtyfiles.indexOf(filepathandname)<0) { 
+	if (dirtyfiles.indexOf(filepathandname)<0) {
 		dirtyfiles.push(filepathandname);
 	}
 	site.helpers.session.put("dirtyfiles",dirtyfiles,true);
@@ -677,11 +677,11 @@ site.helpers.getRandomListEntry = function(list) {
 // Capitalize
 
 site.helpers.capitalize = function(str,everyword) {
-	if(!str) { 
+	if(!str) {
 		loggr.warn("site.helpers.capitalize().err: !str");
-		return "<span style='color:#f00;'>Null</span>"; 
+		return "<span style='color:#f00;'>Null</span>";
 	}
-	if (everyword) { 
+	if (everyword) {
 		return site.helpers.capAll(str);
 	}
 	str = str.substr(0,1).toUpperCase() + str.substr(1).toLowerCase();
@@ -708,7 +708,7 @@ site.helpers.short = function(str, len) {
 	return str;
 }
 
-// ---> Unique ID 
+// ---> Unique ID
 
 site.helpers.getUniqueID = function(prefix,suffix) {
 	var res = CryptoJS.MD5(device.uuid);
@@ -735,12 +735,12 @@ site.helpers.getGoogleImageSearchBranding = function() {
 }
 
 site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull) {
-	
+
 	loggr.debug("site.helpers.googleImageSearch()");
 	loggr.log(" > "+searchstring);
-	
+
 	// HELP: https://developers.google.com/image-search/v1/devguide
-	
+
 	// Check if search is loaded...
 	if (googleWasNull) {
 		loggr.warn(" > google.search.ImageSearch loaded");
@@ -762,7 +762,7 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNu
 		google.load("search", "1", {"callback" : function(){ site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true); } });
 		return;
 	}
-	
+
 	// New imagesearch, get unique id
 	var searchid = site.helpers.getUniqueID();
 	if (!site.chlist.thesearch) { site.chlist.thesearch = {}; }
@@ -771,8 +771,8 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNu
 	site.chlist.thesearch[searchid] = new google.search.ImageSearch();
 	site.chlist.thesearchresults[searchid] = [];
 	site.chlist.thesearchbusy[searchid] = true;
-	
-	
+
+
 	// Set some properties
 	// -> Restrictions
 	// ->> opts.restrictions = [ [google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM] ]
@@ -785,19 +785,19 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNu
 			);
 		}
 	}
-	
+
 	// more opts
 	if (!opts) { opts = {}; }
 	if (!opts.maxresults) { opts.maxresults = 64; }
-	
+
 	// Callback
-	site.chlist.thesearch[searchid].setSearchCompleteCallback(this, 
+	site.chlist.thesearch[searchid].setSearchCompleteCallback(this,
 		function() {
-			
+
 			var thesearch = site.chlist.thesearch[searchid];
 			var cursor = {};
 			var results = []
-			
+
 			// Store results (if any)
 			if (site.chlist.thesearch[searchid].results && site.chlist.thesearch[searchid].results.length > 0) {
 				results = site.chlist.thesearch[searchid].results;
@@ -805,7 +805,7 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNu
 					site.chlist.thesearchresults[searchid].push(results[i]);
 				}
 			}
-			
+
 			// Check for more results :D
 			if (thesearch.cursor) {
 				cursor = thesearch.cursor;
@@ -826,7 +826,7 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNu
 					return;
 				}
 			}
-			
+
 			// Errcb
 			if (!site.chlist.thesearchresults[searchid]) { site.chlist.thesearchresults[searchid] = []; }
 			if (site.chlist.thesearchresults[searchid].length<1) {
@@ -835,24 +835,27 @@ site.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNu
 				site.chlist.thesearchbusy[searchid] = false;
 				site.helpers.googleImageSearchCleanup();
 			}
-			
+
 		},
 		null
 	);
-	
+
+	// encodeURIComponent
+	searchstring = encodeURIComponent(searchstring);
+
 	// Execute
 	site.chlist.thesearch[searchid].execute(searchstring);
-	
+
 }
 
 site.helpers.googleImageSearchCleanup = function() {
-	
+
 	// Check if searches are busy..
 	var anybusy = false;
 	for (var searchid in site.chlist.thesearchbusy) {
 		if (site.chlist.thesearchbusy[searchid]) { anybusy = true; break; }
 	}
-	
+
 	// All done? destroy thesearch[]
 	if (!anybusy) {
 		loggr.log("site.helpers.googleImageSearchCleanup(): Cleanup...");
@@ -860,20 +863,20 @@ site.helpers.googleImageSearchCleanup = function() {
 		site.chlist.thesearchresults = [];
 		site.chlist.thesearchbusy = {};
 	}
-	
+
 }
 
 // ---> Upload stations
 
 site.helpers.uploadStations = function() {
-	
+
 	loggr.log("site.helpers.uploadStations()");
-	
+
 	if (!site.data.stations) {
 		loggr.warn(" > !site.data.stations, return");
 		return;
 	}
-	
+
 	// Webapi time!
 	var apiqueryobj = {
 		"post":"stations"
@@ -882,10 +885,10 @@ site.helpers.uploadStations = function() {
 		"id": site.cookies.get("device_id") +"_"+ new Date().format("Y-m-d"),
 		"stations":JSON.stringify(site.data.stations)
 	}
-	
+
 	var apiaction = "post";
 	var apiquerystr = JSON.stringify(apiqueryobj);
-	
+
 	site.webapi.post(apiaction,apiquerystr,data,
 		function(data) {
 			if (data["error"]) {
@@ -900,13 +903,13 @@ site.helpers.uploadStations = function() {
 			else { loggr.log(error); }
 		}
 	);
-	
+
 }
 
 site.helpers.uploadStation = function(station) {
-	
+
 	loggr.log("site.helpers.uploadStation()");
-	
+
 	// Webapi time!
 	var apiqueryobj = {
 		"post":"station"
@@ -915,10 +918,10 @@ site.helpers.uploadStation = function(station) {
 		"id": site.cookies.get("device_id") +"_"+ station.station_id,
 		"station":JSON.stringify(station)
 	}
-	
+
 	var apiaction = "post";
 	var apiquerystr = JSON.stringify(apiqueryobj);
-	
+
 	site.webapi.post(apiaction,apiquerystr,data,
 		function(data) {
 			if (data["error"]) {
@@ -933,15 +936,15 @@ site.helpers.uploadStation = function(station) {
 			else { loggr.log(error); }
 		}
 	);
-	
+
 }
 
 // ---> Connection
 
 site.helpers.getConnType = function() {
-	
+
 	var type = navigator.connection.type;
-	
+
 	switch(type) {
 		case Connection.UNKNOWN:
 			return "UNKNOWN";
@@ -962,30 +965,30 @@ site.helpers.getConnType = function() {
 		default:
 			return "UNKNOWN";
 	}
-	
+
 }
 
 site.helpers.isConnected = function() {
-	
+
 	var type = site.helpers.getConnType();
-	
+
 	switch(type) {
 		//case "UNKNOWN":
 		case "NONE":
 			return false;
 		default:
 			return true;
-		
+
 	}
-	
+
 }
 
 site.helpers.isConnectedWifi = function(allowEthernet) {
-	
+
 	if (allowEthernet!==false) { allowEthernet = true; }
-	
+
 	var type = site.helpers.getConnType();
-	
+
 	switch(type) {
 		case "ETHERNET":
 			if (!allowEthernet) { return false; }
@@ -994,9 +997,9 @@ site.helpers.isConnectedWifi = function(allowEthernet) {
 			return true;
 		default:
 			return false;
-		
+
 	}
-	
+
 }
 
 // ---> Masonry
@@ -1006,7 +1009,7 @@ site.helpers.masonryinit = function(selector,opts) {
 	loggr.debug("site.helpers.masonryinit(): "+selector);
 	if (!site.vars.masonries) { site.vars.masonries = []; }
 	if (site.vars.masonries.indexOf(selector)<0 && typeof selector =="string") { site.vars.masonries.push(selector); }
-	if (!opts) { 
+	if (!opts) {
 		opts = {
 			itemSelector : '.resultitem',
 			columnWidth : 1,
@@ -1031,7 +1034,7 @@ site.helpers.masonryOnResize = function() {
 	for (var i=0; i<site.vars.masonries.length; i++) {
 		var selector = site.vars.masonries[i];
 		if (!$(selector).is(":visible") || $(selector).length<1) { continue; }
-		try { site.helpers.masonryupdate(selector); } 
+		try { site.helpers.masonryupdate(selector); }
 		catch(e) {
 			loggr.warn(" > Error: "+ e);
 		}

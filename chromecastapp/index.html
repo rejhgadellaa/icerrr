@@ -2,42 +2,42 @@
 <!--
 
 	ICERRR Chromecast Receiver App
-	
+
 	https://github.com/rejhgadellaa/icerrr
-	
+
 	Open CC console (<ip>:9222) and type "$('#main .debug').css('display','block');" to show debug info
 
---> 
+-->
 
 <html>
 
 <head>
-    
+
     <title>Icerrr Chromecast Receiver App</title>
-	
+
 	<!-- Cache || TODO: For prod it should cache? -->
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
-    
+
     <script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/mediaplayer/0.7.0/media_player.js"></script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	
-    <script type="text/javascript" src="https://www.dropbox.com/s/w1bb2ud6hkaact5/jquery-1.9.1.min.js?dl=1"></script>
-	<script type="text/javascript" src="https://www.dropbox.com/s/loiazr6pftg5r7e/json2.js?dl=1"></script>
-    
+
+    <script type="text/javascript" src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://github.com/jariz/vibrant.js/releases/download/1.0/Vibrant.min.js"></script>
+
     <style>
-    
+
     	html, body {
 			overflow:hidden;
 			width:100%; height:100%;
 			margin:0; padding:0;
-			background:#2D6073;
+			background:#607D8B;
 			font-family: 'Roboto', sans-serif;
 			font-size:12pt;
 			color:rgba(255,255,255,0.87);
 		}
-		
+
 		section {
 			display:block;
 			position:absolute;
@@ -45,86 +45,92 @@
 			width:100%; height:100%;
 			background:#333;
 		}
-		
+
 		section#launch {
 			z-index:90;
 			display:block;
-			background:#2D6073;
+			background:#607D8B;
 			-webkit-transition: opacity 500ms;
 			transition: opacity 1000ms;
 		}
-		
+
 			#launch img {
 				position:absolute;
 				top:50%; left:50%;
 				width:512px; height:512px;
 				margin:-256px 0 0 -256px;
 			}
-			
+
 		section#main {
-			background-image:url(https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1);
+			background-image:url(https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg);
 			background-position:center;
 			background-repeat:no-repeat;
 			background-size:cover;
 		}
-		
+
+            #main .color {
+                position:absolute;
+                top:0; left:0; right:0; bottom:0;
+                opacity:0.5;
+            }
+
 			#main .debug {
-				display:none;
+				display:block;
 				z-index:99;
 				position:absolute;
 				top:0; left:0; right:0;
 				padding:32px;
 				text-align:right;
 				font-size:10pt;
-				background:rgba(0,0,0,0.25);
+				xbackground:rgba(0,0,0,0.25);
 			}
-		
+
 			#main .topbar {
 				position:absolute;
 				top:0; left:0; right:0;
 				width:100%; height:50%;
 				background: -webkit-linear-gradient(rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.33) 25%, rgba(0,0,0,0.0) 100%);
 			}
-			
+
 			#main .topbar .topbar_watermark {
 				position:absolute;
 				top:32px; left:32px;
 			}
-			
+
 			#main .topbar .topbar_watermark img {
 				width:32px; height:32px;
 			}
-			
+
 			#main .topbar .topbar_title {
 				position:absolute;
 				top:35px; left:88px;
 				font-size:16pt;
-				color:#D0D102;
+				color:rgba(255,255,255,0.87);
 				text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.33);
 			}
-		
+
 			#main .nowplaying {
 				position:absolute;
 				top:25%; left:0; right:0; bottom:0;
 				width:100%; height:75%;
 				background: -webkit-linear-gradient(rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.33) 75%, rgba(0,0,0,0.50) 100%);
 			}
-			
+
 			#main .nowplaying .wrap {
 				position:absolute;
 				bottom:0; left:0; right:0;
 				-webkit-transition: -webkit-transform 750ms ease-in-out;
 			}
-			
+
 			#main .nowplaying .icon {
 				position:absolute;
 				bottom:32px; left:32px;
 			}
-			
+
 			#main .nowplaying .icon img {
 				width:128px; height:128px;
 			}
-			
+
 			#main .nowplaying .title {
 				position:absolute;
 				bottom:116px; left:192px; right:0px;
@@ -135,7 +141,7 @@
 				white-space: nowrap;
 				text-overflow:ellipsis;
 			}
-			
+
 			#main .nowplaying .subtitle {
 				position:absolute;
 				bottom:34px; left:188px; right:8px;
@@ -147,31 +153,31 @@
 				white-space: nowrap;
 				text-overflow:ellipsis;
 			}
-			
+
 			#main .nowplayingsmall {
 				position:absolute;
 				top:25%; left:0; right:0; bottom:0;
 				width:100%; height:75%;
 			}
-			
+
 			#main .nowplayingsmall .wrap {
 				position:absolute;
 				bottom:0; left:0; right:0;
 				opacity:0;
 				-webkit-transition: -webkit-transform 500ms ease-in-out, opacity 500ms;
 			}
-			
+
 			#main .nowplayingsmall .icon {
 				display:none;
 				position:absolute;
 				bottom:32px; left:32px;
 			}
-			
+
 			#main .nowplayingsmall .icon img {
 				width:32px; height:32px;
 				box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.37);
 			}
-			
+
 			#main .nowplayingsmall .title {
 				position:absolute;
 				bottom:32px; left:32px; right:32px;
@@ -181,46 +187,48 @@
 				white-space: nowrap;
 				text-overflow:ellipsis;
 			}
-    
+
     </style>
 
 </head>
 
-<body onLoad="cc.init();">
+<body onLoad="cc.init(); loggr.show();">
 
 <!-- Audio element -->
 <audio id="media"></audio>
 
 <!-- Section: launch -->
 <section id="launch">
-	<img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" />
+	<img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.png" />
 </section>
 
 <!-- Section: main -->
 <section id="main">
 
-	<div class="debug"></div>
+    <div class="color"></div>
+
+	<div class="debug">---Begin log</div>
 
 	<div class="topbar">
-    	<div class="topbar_watermark"><img src="https://www.dropbox.com/s/owwambeb35eccgq/watermark.png?dl=1" /></div>
+    	<div class="topbar_watermark"><img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/watermark.png" /></div>
         <div class="topbar_title">ICERRR</div>
     </div>
-	
+
 	<div class="nowplaying">
 		<div class="wrap">
-	    	<div class="icon"><img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" /></div>
+	    	<div class="icon"><img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.png" /></div>
     		<div class="subtitle">Loading...</div>
         	<div class="title"></div>
 		</div>
     </div>
-	
+
 	<div class="nowplayingsmall">
 		<div class="wrap">
-			<div class="icon"><img src="https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1" /></div>
+			<div class="icon"><img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.jpg" /></div>
 			<div class="title"></div>
 		</div>
 	</div>
-    
+
 </section>
 
 <!-- Script -->
@@ -236,23 +244,24 @@ google.load("search", "1", {"callback" : function(){loggr.log(" > Loaded: google
 
 var loggr = {};
 loggr.lines = [];
+loggr.maxlines = 8;
 loggr.error = function(msg) {
 	loggr.lines.push("<span style='color:#fc0;'>"+ msg +"</span>");
-	while (loggr.lines.length>8) { loggr.lines.shift(); }
+	while (loggr.lines.length>loggr.maxlines) { loggr.lines.shift(); }
 	$(".debug").html(loggr.lines.join("<br>"));
 	console.error(msg);
-	//loggr.show();
+	loggr.show();
 }
 loggr.debug = function(msg) {
 	loggr.lines.push("<span style='color:#0f0;'>"+ msg +"</span>");
-	while (loggr.lines.length>8) { loggr.lines.shift(); }
+	while (loggr.lines.length>loggr.maxlines) { loggr.lines.shift(); }
 	$(".debug").html(loggr.lines.join("<br>"));
 	console.debug(msg);
 	//loggr.show();
 }
 loggr.log = function(msg) {
 	loggr.lines.push(msg);
-	while (loggr.lines.length>8) { loggr.lines.shift(); }
+	while (loggr.lines.length>loggr.maxlines) { loggr.lines.shift(); }
 	$(".debug").html(loggr.lines.join("<br>"));
 	console.log(msg);
 	//loggr.show();
@@ -261,8 +270,8 @@ loggr.show = function() {
 	$(".debug").css("display","block");
 	if (loggr.timeout_hide) { clearTimeout(loggr.timeout_hide); }
 	loggr.timeout_hide = setTimeout(function(){
-		//$(".debug").css("display","none");
-		$(".debug").fadeOut(500,function(){ loggr.lines = []; });
+		$(".debug").css("display","none");
+		//$(".debug").fadeOut(500,function(){ loggr.lines = []; });
 	},5000);
 }
 
@@ -270,17 +279,17 @@ loggr.show = function() {
 // CC, or ChromeCast :)
 
 var cc = {};
-cc.helpers = {}; 
+cc.helpers = {};
 cc.vars = {};
 
 cc.init = function() {
 
 	loggr.debug("cc.init()");
-	
+
 	// -- INIT CC
-	
+
 	try {
-	
+
 		// Prep some objects
 		// .. Media Element
 		cc.mediaElement = document.getElementById("media");
@@ -294,28 +303,28 @@ cc.init = function() {
 		cc.messageBus = cc.castReceiverManager.getCastMessageBus('urn:x-cast:com.rejh.icerrr.chromecastapp');
 		// .. MediaPlayer
 		cc.mediaPlayer = null;
-	
+
 	} catch(e) {
 		loggr.log(" > Error occured:");
 		loggr.log(e);
 	}
-	
+
 	// -- EVENTS
-	
+
 	// - ReceiverManager
-	
+
 	// On Ready
 	cc.castReceiverManager.onReady = function(event) {
 		loggr.debug("cc.castReceiverManager.onReady()");
 		loggr.log(" > "+ JSON.stringify(event));
 	}
-	
+
 	// Sender connected
 	cc.castReceiverManager.onSenderConnected = function(event) {
 		loggr.debug("cc.castReceiverManager.onSenderConnected()");
 		loggr.log(" > "+ JSON.stringify(event));
 	}
-	
+
 	// Sender disconnected
 	cc.castReceiverManager.onSenderDisconnected = function(event) {
 		loggr.debug("cc.castReceiverManager.onSenderDisconnected()");
@@ -324,39 +333,40 @@ cc.init = function() {
 			window.close();
 		}
 	}
-	
+
 	// - MessageBus
-	
+
 	// Custom Messages
 	cc.messageBus.onMessage = function(event) {
-	
+
 		loggr.debug("cc.messageBus.onMessage()");
 		loggr.log(" > "+ event.data);
-		
+
 		try {
-		
+
 			var data = JSON.parse(event.data);
-			
+
 			if (data['set_currentstation']) {
+                loggr.show();
 				cc.currentstation = data['set_currentstation'];
 				cc.run_nowplaying_poll();
 			}
-			
+
 		} catch(e) {
 			loggr.error(" > Exception while handling message: "+e);
 		}
-		
+
 	}
-	
+
 	// - MediaManager
-	
+
 	// Ended
 	cc.mediaManager['onEndedOrig'] = cc.mediaManager.onEnded;
 	cc.mediaManager.onEnded = function() {
 		loggr.debug("cc.mediaManager.onEnded()");
 		cc.mediaManager['onEndedOrig']();
 	}
-	
+
 	// Error
 	cc.mediaManager['onErrorOrig'] = cc.mediaManager.onError;
 	cc.mediaManager.onError = function(obj) {
@@ -364,7 +374,7 @@ cc.init = function() {
 		loggr.log(" > "+ JSON.stringify(obj));
 		cc.mediaManager['onErrorOrig'](obj);
 	}
-	
+
 	// MetadataLoaded
 	cc.mediaManager['onLoadMetadataOrig'] = cc.mediaManager.onLoadMetadataLoaded;
 	cc.mediaManager.onLoadMetadataLoaded = function(event) {
@@ -372,7 +382,7 @@ cc.init = function() {
 		loggr.log(" > "+ JSON.stringify(event));
 		cc.mediaManager['onLoadMetadataOrig'](event);
 	}
-	
+
 	// MetadataError
 	cc.mediaManager['onLoadMetadataErrorOrig'] = cc.mediaManager.onLoadMetadataError;
 	cc.mediaManager.onLoadMetadataError = function(event) {
@@ -380,23 +390,28 @@ cc.init = function() {
 		loggr.log(" > "+ JSON.stringify(event));
 		cc.mediaManager['onLoadMetadataErrorOrig'](event);
 	}
-	
+
 	// OnLoad
 	cc.mediaManager['onLoadOrig'] = cc.mediaManager.onLoad;
 	cc.mediaManager.onLoad = function(event) {
-	
+
 		loggr.debug("cc.mediaManager.onLoad()");
 		// loggr.log(" > "+ cc.helpers.arrToString(event.data));
-		
+
 		if(cc.mediaPlayer !== null) {
 			cc.mediaPlayer.unload(); // Ensure unload before loading again
 		}
-		
+
+        // Get capabilities
+        cc.capabilities = cc.castReceiverManager.getDeviceCapabilities(); // -> cc.capabilities.display_supported
+        if (!cc.capabilities) { cc.capabilities = {display_supported:false}; }
+        loggr.log(" > capabilities: "+ JSON.stringify(cc.capabilities));
+
 		// Metadata
 		if (event.data['media'] && event.data['media']['metadata']) {
-		
+
 			loggr.log(" > Set title, subtitle and icon..");
-			
+
 			// Title
 			if (event.data['media']['metadata']['title']) {
 				//loggr.log(" > Title: "+ event.data['media']['metadata']['title']);
@@ -404,71 +419,83 @@ cc.init = function() {
 			} else {
 				$(".nowplaying .title").html("Unknown radio station");
 			}
-			
+
 			// Subtitle
 			if (!cc.currentstation) { cc.currentstation = {}; }
 			cc.currentstation.nowplaying = "Now playing: ...";
-			
+
 			// Icon
 			if (event.data['media']['metadata']['images'] && event.data['media']['metadata']['images'][0]) {
 				//loggr.log(" > Icon: "+ event.data['media']['metadata']['images'][0].url);
 				$(".nowplaying .icon img").attr("src",event.data['media']['metadata']['images'][0].url);
 			} else {
-				$(".nowplaying .icon img").attr("src","https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1");
+				$(".nowplaying .icon img").attr("src","https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.jpg");
 			}
-			
+
 			// Image
-			$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
-			
+			$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+            $("#main .color").css("background","none");
+
 			// Update!
-			cc.updateNowplaying(true,true);
-			
+            if (cc.capabilities.display_supported) {
+                loggr.log(" > Display supported: updateNowPlaying");
+                cc.updateNowplaying(true,true);
+            }
+
 		}
-			
+
 		if (event.data['media'] && event.data['media']['contentId']) {
-		
+
 			var url = event.data['media']['contentId'];
 			cc.mediaHost = new cast.player.api.Host({
 				'mediaElement': cc.mediaElement,
 				'url': url
 			});
-			
+
 			cc.mediaHost.onError = function (errorCode) {
 				console.error('### HOST ERROR - Fatal Error: code = ' + errorCode);
 				if (cc.mediaPlayer !== null) {
 					cc.mediaPlayer.unload();
 				}
 			}
-		
+
 		}
-		
+
 		cc.mediaManager['onLoadOrig'](event);
-		
+
 	}
-	
+
 	// -- DONE
-	
+
 	// Show #main
 	$("section#launch").css("opacity",0);
 	$("section#main").css("display","block");
-	
+
 	// Start ReceiverManager
 	cc.castReceiverManager.start();
-	
+
 }
 
 // ==========================================
 // Now playing..
 
 cc.run_nowplaying_poll = function() {
-	
+
 	loggr.debug("cc.run_nowplaying_poll()");
-	
+
+    if (!cc.capabilities.display_supported) {
+        loggr.error(" > !cc.capabilities.display_supported, do nothing");
+        return;
+    }
+
+	if (cc.timeout_nowplaying_poll) { clearTimeout(cc.timeout_nowplaying_poll); }
+	cc.timeout_nowplaying_poll = setTimeout(function(){ cc.run_nowplaying_poll(); },1000*30);
+
 	var id = cc.currentstation.station_id;
 	var host = cc.currentstation.station_host;
 	var port = cc.currentstation.station_port;
 	var path = cc.currentstation.station_path;
-	
+
 	var apiqueryobj = {
 		"get":"station_info",
 		"station_id":id,
@@ -476,33 +503,33 @@ cc.run_nowplaying_poll = function() {
 		"station_port":port,
 		"station_path":path
 	}
-	
+
 	var apiaction = "get";
 	var apiquerystr = encodeURIComponent(JSON.stringify(apiqueryobj));
-	
+
 	var apiurl = "http://www.rejh.nl/icerrr/api/?a=get&q="+ apiquerystr +"&cache="+(new Date().getTime());
-	
+
 	loggr.log(" > "+ apiurl);
-	
+
 	$.getJSON(apiurl, function(results) {
 		// ok
 		if (results["error"]) {
 			loggr.error(" > "+ results["errormsg"]);
 			return;
 		} else {
-		
+
 			loggr.log(" > Nowplaying results: "+ results["data"]["nowplaying"]);
-		
+
 			// Null!
 			if (!results["data"]["nowplaying"]) { loggr.log(" > result.data.nowplaying==null"); results["data"]["nowplaying"] = ""; }
-			
+
 			// Handle some chars..
 			if (results["data"]["nowplaying"].indexOf("&")>0) { results["data"]["nowplaying"] = results["data"]["nowplaying"].split("&").join(" & "); }
-			
+
 			// Handle false results
 			if (!results["data"]["nowplaying"]) { results["data"]["nowplaying"] = "Now playing: Unknown"; }
 			if (results["data"]["nowplaying"].trim()=="-" || results["data"]["nowplaying"]==" - ") { results["data"]["nowplaying"] = "Now playing: Unknown"; }
-			
+
 			// Toggle UI style (big/small) on change
 			var showBigUI = false;
 			if (results["data"]["nowplaying"]!=cc.currentstation.nowplaying) {
@@ -512,46 +539,48 @@ cc.run_nowplaying_poll = function() {
 				else { cc.nrOfTimesPollHasRun++; }
 				if (cc.nrOfTimesPollHasRun>=10) { cc.nrOfTimesPollHasRun = 0; cc.currentstation.nowplaying = ""; showBigUI = true; }
 			}
-			
+
 			// Debug
 			loggr.log(" > New: "+ results["data"]["nowplaying"]);
 			loggr.log(" > Old: "+ cc.currentstation.nowplaying);
 			loggr.log(" > Big: "+ showBigUI +", nrOfTimesPollHasRun: "+ cc.nrOfTimesPollHasRun);
-			
+
 			// Store
 			cc.currentstation.nowplaying = results["data"]["nowplaying"];
-			
+
 			// Update now playing
 			cc.updateNowplaying(showBigUI);
-			
+
 			// Search for artwork
 			if (cc.currentstation.nowplaying) {
-				
+
 				var opts = {
 					maxresults:1,
 					restrictions:[[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_LARGE]]
 				}
-				
+
 				// opts = { maxresults:1 }
-				
+
 				var searchstr = cc.currentstation.nowplaying.toLowerCase();
 				if (searchstr.indexOf("|")>0) { searchstr = searchstr.substr(0, searchstr.indexOf("|")-1); }
 				searchstr = searchstr.split("-").join("");
-				
+
 				if (cc.currentstation.nowplaying.toLowerCase()=="now playing: unknown") {
 					searchstr = cc.currentstation.station_name;
 				}
 				//searchstr += " album art"
-			
+
 				cc.helpers.googleImageSearch(searchstr,
 					function(res) {
 						var res = res[0];
-						if (!res) { 
+						if (!res) {
 							loggr.log(" > No album art :(");
-							$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+							$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                            $("#main .color").css("background","none");
 						} else {
-							
+
 							var image = new Image;
+                            image.crossOrigin = '';
 							image.onload = function() {
 								if ($("#main").css("background-image") && $("#main").css("background-image").indexOf(this.src)>=0) {
 									loggr.log(" > Found SAME album art: "+ res.url);
@@ -559,129 +588,148 @@ cc.run_nowplaying_poll = function() {
 								}
 								loggr.log(" > Found album art: "+ res.url);
 								$("#main").css("background-image","url('"+ this.src +"')");
+                                try {
+                                    var vibrant = new Vibrant(this,32,10);
+                    				var swatches = vibrant.swatches();
+                    				if (swatches["Vibrant"]) {
+                                        $("#main .color").css("background",swatches["Vibrant"].getHex());
+                                        //loggr.error("Color: "+ swatches["Vibrant"].getHex());
+                                    } else {
+                                        $("#main .color").css("background","#FFC107");
+                                        //loggr.error("No color :(");
+                                    }
+                                } catch(e) {
+                                    if (e.stack) { loggr.error(e.stack.replace("\n","<br>")); }
+                                    else { loggr.error(e); }
+                                }
 								cc.vars.background_image = res.url;
 								cc.burnInProtector();
 							}
 							image.onerror = function() {
 								loggr.log(" > Found album art but loading failed: "+ this.src);
-								$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+								$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                                $("#main .color").css("background","none");
 							}
 							if (searchstr=="NPO Radio 3fm") {
 								image.src = "http://a1094.phobos.apple.com/us/r30/Purple5/v4/47/3a/5d/473a5dab-5ba6-9e1b-255b-dce76abdce54/mzl.lgbuvbki.png";
 							} else {
-								image.src = decodeURIComponent(res.url);
+                                var imgurl = decodeURIComponent(res.url);
+                                var url = "http://www.rejh.nl/static/phpth/phpThumb.php?w=1280&h=1280&src="+ imgurl;
+                                //loggr.error(url);
+								image.src = url;
 							}
-							
+
 						}
 					},
 					function(err) {
-						$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+						$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                        $("#main .color").css("background","none");
 					},
 					opts
 				);
-				
+
 			} else {
-				$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                $("#main .color").css("background","none");
 			}
-			
-			
+
+
 		}
 	})
-	.error(function(jqXHR, textStatus, errorThrown) { 
+	.error(function(jqXHR, textStatus, errorThrown) {
 		loggr.error(" > cc.run_nowplaying_poll().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown);
 	});
-	
-	if (cc.timeout_nowplaying_poll) { clearTimeout(cc.timeout_nowplaying_poll); }
-	cc.timeout_nowplaying_poll = setTimeout(function(){ cc.run_nowplaying_poll(); },1000*30);
-	
+
 }
 
 cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
-	
+
 	loggr.debug("cc.updateNowplaying()");
-	
+
 	if (!cc.currentstation.nowplaying) { cc.currentstation.nowplaying = "Now playing: Unknown"; }
-	
+
 	var title_bigui = cc.currentstation.nowplaying;
 	var title_smallui = "<div>ICERRR: "+cc.currentstation.station_name +" - "+ cc.currentstation.nowplaying+"</div>";
-	
+
 	$("#main .nowplaying .subtitle").html(title_bigui);
-	if (title_smallui!=$("#main .nowplayingsmall .title").html()) { 
-		$("#main .nowplayingsmall .title").html(title_smallui); 
+	if (title_smallui!=$("#main .nowplayingsmall .title").html()) {
+		$("#main .nowplayingsmall .title").html(title_smallui);
 	}
-	
+
 	if (cc.currentstation.station_icon && !dontUpdateIcon) {
 		$(".nowplaying .icon img").attr("src",cc.currentstation.station_icon);
 		$(".nowplayingsmall .icon img").attr("src",cc.currentstation.station_icon);
 	}
-	
+
 	var translateDown = "translate3d(0px,160px,0px)";
 	var translateZero = "translate3d(0px,0px,0px)";
 	var translateUp = "translate3d(0px,-192px,0px)";
-	
+
 	if (showBigUI) {
-		
+
 		$("#main .nowplayingsmall .wrap").css("opacity",0.0);
 		// $("#main .nowplaying").css("display","block");
-		
+
 		setTimeout(function(){
 			//$("#main .nowplayingsmall .wrap").css({"transform":translateUp,"-webkit-transform":translateUp});
 			// $("#main .nowplayingsmall .wrap").css("display","none");
 			$("#main .nowplaying .wrap").css({"transform":translateZero,"-webkit-transform":translateZero});
 		},750);
-		
+
 		$("#main .topbar_watermark").css("display","block");
 		$("#main .topbar_title").css("display","block");
-		
+
 		cc.burnInProtector();
-		
+
 	} else {
-		
+
 		$("#main .nowplaying .wrap").css({"transform":translateDown,"-webkit-transform":translateDown});
 		//$("#main .nowplaying").css("display","none");
-		
+
 		setTimeout(function(){
 			//$("#main .nowplayingsmall .wrap").css({"transform":translateZero,"-webkit-transform":translateZero});
 			$("#main .nowplayingsmall .wrap").css("opacity",1.0);
 			// $("#main .nowplayingsmall .wrap").css("display","block");
 		},750);
-		
+
 		$("#main .topbar_watermark").css("display","none");
 		$("#main .topbar_title").css("display","none");
-		
+
 	}
-	
+
 }
 
 cc.burnInProtector = function(force) {
-	
+
 	loggr.debug("cc.burnInProtector(): "+ force);
-	
+
 	// Check if image has changed..
 	if (cc.burnInProtectorLastImage==$("#main").css("background-image") && !force) {
-	
+
 		loggr.log(" > Image has not changed, let existing timeout run");
-		
+
 	} else {
-	
+
 		loggr.log(" > Image has changed, set timeout..");
-		
+
 		if (cc.timeoutBurnInProtector) { clearTimeout(cc.timeoutBurnInProtector); }
 		cc.timeoutBurnInProtector = setTimeout(function(){
-			
+
 			loggr.debug("cc.burnInProtector() > timed out > run");
-			
+
 			// Toggle background..
-			if ($("#main").css("background-image").indexOf("https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1")>=0) {
-				$("#main").css("background-image","url('https://www.dropbox.com/s/bjvghdmrask8tx4/splash.jpg?dl=1')");
+			if ($("#main").css("background-image").indexOf("https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg")>=0) {
+				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.jpg')");
+                $("#main .color").css("background","none");
 			} else {
-				$("#main").css("background-image","url('https://www.dropbox.com/s/dkubszaqazpcqaj/bg_home_default.jpg?dl=1')");
+				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                $("#main .color").css("background","none");
 			}
-			
+
 			cc.burnInProtector(true);
-			
+
 		},1000*60*10);
-		
+
 	}
 	cc.burnInProtectorLastImage=$("#main").css("background-image");
 
@@ -690,12 +738,12 @@ cc.burnInProtector = function(force) {
 // Google Image Search
 
 cc.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull) {
-	
+
 	loggr.debug("cc.helpers.googleImageSearch()");
 	loggr.log(" > Search: '"+searchstring+"'");
-	
+
 	// HELP: https://developers.google.com/image-search/v1/devguide
-	
+
 	// New imagesearch, get unique id
 	var searchid = (new Date().getTime()).toString(16);
 	if (!cc.thesearch) { cc.thesearch = {}; }
@@ -704,7 +752,7 @@ cc.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull
 	cc.thesearch[searchid] = new google.search.ImageSearch();
 	cc.thesearchresults[searchid] = [];
 	cc.thesearchbusy[searchid] = true;
-	
+
 	// Set some properties
 	// -> Restrictions
 	// ->> opts.restrictions = [ [google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM] ]
@@ -717,19 +765,19 @@ cc.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull
 			);
 		}
 	}
-	
+
 	// more opts
 	if (!opts) { opts = {}; }
 	if (!opts.maxresults) { opts.maxresults = 64; }
-	
+
 	// Callback
-	cc.thesearch[searchid].setSearchCompleteCallback(this, 
+	cc.thesearch[searchid].setSearchCompleteCallback(this,
 		function() {
-			
+
 			var thesearch = cc.thesearch[searchid];
 			var cursor = {};
 			var results = []
-			
+
 			// Store results (if any)
 			if (cc.thesearch[searchid].results && cc.thesearch[searchid].results.length > 0) {
 				results = cc.thesearch[searchid].results;
@@ -737,7 +785,7 @@ cc.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull
 					cc.thesearchresults[searchid].push(results[i]);
 				}
 			}
-			
+
 			// Check for more results :D
 			if (thesearch.cursor) {
 				cursor = thesearch.cursor;
@@ -758,7 +806,7 @@ cc.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull
 					return;
 				}
 			}
-			
+
 			// Errcb
 			if (!cc.thesearchresults[searchid]) { cc.thesearchresults[searchid] = []; }
 			if (cc.thesearchresults[searchid].length<1) {
@@ -767,24 +815,27 @@ cc.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull
 				cc.thesearchbusy[searchid] = false;
 				cc.helpers.googleImageSearchCleanup();
 			}
-			
+
 		},
 		null
 	);
-	
+
+	// encodeURIComponent
+	searchstring = encodeURIComponent(searchstring);
+
 	// Execute
 	cc.thesearch[searchid].execute(searchstring);
-	
+
 }
 
 cc.helpers.googleImageSearchCleanup = function() {
-	
+
 	// Check if searches are busy..
 	var anybusy = false;
 	for (var searchid in cc.thesearchbusy) {
 		if (cc.thesearchbusy[searchid]) { anybusy = true; break; }
 	}
-	
+
 	// All done? destroy thesearch[]
 	if (!anybusy) {
 		//loggr.log("cc.helpers.googleImageSearchCleanup(): Cleanup...");
@@ -792,7 +843,7 @@ cc.helpers.googleImageSearchCleanup = function() {
 		cc.thesearchresults = [];
 		cc.thesearchbusy = {};
 	}
-	
+
 }
 
 // ==========================================
@@ -838,51 +889,7 @@ cc.helpers.getIndents = function(depth,char) {
 
 </script>
 
-<link href='http://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

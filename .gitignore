@@ -41,6 +41,7 @@ Thumbs.db
 
 # Intellij IDEA (see https://intellij-support.jetbrains.com/entries/23393067)
 .idea/workspace.xml
+androidapp/com.rejh.icerrr.itson-as/.idea/workspace.xml
 .idea/tasks.xml
 .idea/datasources.xml
 .idea/dataSources.ids
@@ -57,6 +58,8 @@ cache/
 webapp/json/
 !webapp/json/stations.json
 !webapp/json/stations.example.json
+webapp/api/data/analytics.json
+webapp/api/data/deviceids.json
 
 #webapp logs
 webapp/api/logs_users/
