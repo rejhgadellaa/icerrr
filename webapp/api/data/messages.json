@@ -53,7 +53,7 @@
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
-        "critical":0,
+        "critical":1,
         "onlyOnWifi":1
     },
     
