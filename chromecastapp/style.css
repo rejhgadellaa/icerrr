@@ -1,0 +1,21 @@
+.background {
+  background: #2D6073;
+}
+
+.logo {
+  background-image:url(https://www.dropbox.com/s/xaqlifmg264hdvb/logo.jpg?dl=1);
+}
+
+.progressBar {
+  background-color: #D0D102;
+}
+
+.splash {
+  background-image:url(https://www.dropbox.com/s/xaqlifmg264hdvb/logo.jpg?dl=1);
+  /* background-size:cover; */
+}
+
+.watermark {
+  background-image:url(https://www.dropbox.com/s/owwambeb35eccgq/watermark.png?dl=1);
+  background-size: 48px 48px;
+}
