@@ -29,12 +29,20 @@ site.lifecycle.loadPolymer = function() {
 	    && 'content' in document.createElement('template'));
 
 	if (!webComponentsSupported) {
-		loggr.log("-> !webComponentsSupported -> Load it") // can't use loggr yet...
-		var script = document.createElement('script');
-		script.async = true;
-		script.onload = site.lifecycle.onloadPolymer;
-		script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
-		document.head.appendChild(script);
+		try {
+			loggr.log("-> !webComponentsSupported -> Load it") // can't use loggr yet...
+			var script = document.createElement('script');
+			script.async = true;
+			script.onload = site.lifecycle.onloadPolymer;
+			script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+			document.getElementsByTagName('head')[0].appendChild(script);
+		} catch(e) {
+			var errstr = "site.lifecycle.loadPolymer().Error: "+e
+			if (e.stack) {
+				errstr += "\n"+ e.stack;
+			}
+			loggr.error(errstr);
+		}
 	} else {
 	 	site.lifecycle.onloadPolymer();
 	}

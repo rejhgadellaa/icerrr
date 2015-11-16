@@ -1,4 +1,4 @@
-0.324
+0.325
   * Bugfixes and improvements
 
 0.323
