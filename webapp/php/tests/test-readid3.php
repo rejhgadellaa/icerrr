@@ -237,7 +237,7 @@ while (!feof($fsock)) {
 		// blacklist..
 		fw($blacklist_filename,"BLACKLISTED");
 		// err
-		error("Exceeded 24 seconds of running time..");
+		error("Exceeded 16 seconds of running time..");
 	}
 
 	$line = fgets($fsock);
