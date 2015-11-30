@@ -7,7 +7,7 @@ include("rgt.functions.php");
 include("rgt.functions.cache.php");
 
 set_exception_handler('error_exception');
-set_error_handler('error_err'); 
+set_error_handler('error_err');
 
 setBusy();
 
@@ -53,16 +53,16 @@ if ($noCache) { $cfg["cacheEnabled"] = false; }
 $force = $_GET["force"]; // ignore errors;
 
 // ----------------------------------------------------------------------------
-	
+
 // File name + extension
 $imgName = substr($imgFile, strrpos($imgFile,"/")+1);
 $imgSrcExtension = strtolower(substr($imgFile, strrpos($imgFile,".")+1));
 
 // Check Cache
-if ($cfg["cacheEnabled"]) { 
-	
+if ($cfg["cacheEnabled"]) {
+
 	// Check if image is available from cache, if so: show it
-		$imgCache = cache_load($imgFile, $thWidth, $thHeight); 
+		$imgCache = cache_load($imgFile, $thWidth, $thHeight);
 		if ($imgCache) { //header("location: $imgCache");
 			$content = fr($imgCache);
 			if (strtolower($imgSrcExtension)=="jpg") { $type = "jpeg"; }
@@ -73,19 +73,19 @@ if ($cfg["cacheEnabled"]) {
 			setIdle();
 			die();
 			}
-		
+
 	}
 
 // Handle if image is located on remote server
 if ($imgIsRemote) {
-	
+
 	// It is: attempt to download to local server
 	$srcFileExtension = substr($imgFile, strrpos($imgFile,".")+1);
 	$tmpfilepath = "rgthumb.cachedimg.{$imgName}";
 	$fg = fg(str_replace(" ","%20",$imgFile)); if (!$fg) { error("File could not be loaded.\nCheck if FREAD may access external files."); }
 	$fw = fw($tmpfilepath,$fg); if (!$fw) { error("File could not be saved to local server.\nTmpFilePath: {$tmpfilepath}"); }
 	$imgFile = $tmpfilepath;
-	
+
 	}
 
 // Catch errors
@@ -93,26 +93,26 @@ if (!file_exists($imgFile)) { error("File doesn't exist."); }
 if (!isImage($imgFile) && !$force) { error("File is not an image."); }
 
 // Create Image
-	
+
 	// Setup
 	$offset_top = 0;
 	$offset_left = 0;
-	
+
 	// Dimensions
 	list($imgoWidth, $imgoHeight) = @getimagesize("{$imgFile}");
-		
-	// Memory				
+
+	// Memory
 	$memUsageAprox = ($imgoWidth * $imgoHeight) * 4;
 	$memUsageAproxKb = round($memUsageAprox / (1024));
-				
+
 	$memLimitBytes = calculateBytes(get_cfg_var("memory_limit"));
 	$memLimitKb = round($memLimitBytes/1024);
-	
+
 	/*
-	if ($cfg["remotePreResizerEnabled"] && $memUsageAproxKb>$memLimitKb) { 
+	if ($cfg["remotePreResizerEnabled"] && $memUsageAproxKb>$memLimitKb) {
 		// Resize image using remote rgthumb (with more memory)
 			// Is image on local server?
-			if (strpos($imgFile,"http://")===FALSE) { 
+			if (strpos($imgFile,"http://")===FALSE) {
 				// figure local host address
 				$myPath = $_SERVER['PHP_SELF'];
 				$myPath = substr($myPath,0,strrpos($myPath,"/"));
@@ -129,66 +129,66 @@ if (!isImage($imgFile) && !$force) { error("File is not an image."); }
 		}
 	elseif ($memUsageAproxKb>$memLimitKb) { error("Image too large?\n[memUsageAproxKb>memLimitKb]\n .$filepath"); }
 	/**/
-	
+
 	if ($memUsageAproxKb>$memLimitKb) { error("Image too large?\n[memUsageAproxKb>memLimitKb]\n .$filepath"); }
-		
+
 	// Load source image
 	switch($imgSrcExtension) {
-		
+
 		case "jpg": case "jpeg":
 		$imgSrc = @imagecreatefromjpeg($imgFile); break;
-		
+
 		case "png":
 		$imgSrc = imagecreatefrompng($imgFile);
 		imagealphablending($imgSrc, false); 	// setting alpha blending on
 		imagesavealpha($imgSrc, true); 			// save alphablending setting (important)
 		break;
-		
+
 		case "gif":
 		$imgSrc = @imagecreatefromgif($imgFile); break;
-		
+
 		default:
 		$imgSrc = @imagecreatefromjpeg($imgFile);
 		if (!$imgSrc) { $imgSrc = @imagecreatefrompng("$imgFile"); }
 		if (!$imgSrc) { $imgSrc = @imagecreatefromgif("$imgFile"); }
 		break;
-		
+
 		}
 	if (!$imgSrc) { error("ImageCreateFrom({$imgSrcExtension}) failed!"); die(); }
-		
+
 	// Calculate new dimensions
 	if ($imgoWidth>=$imgoHeight) {
-		
+
 		$factor = $thWidth / $imgoWidth;
 		$imgnWidth = $thWidth;
 		$imgnHeight = round($imgoHeight * $factor);
-		
-		if ($imgnHeight>$thHeight) { 
+
+		if ($imgnHeight>$thHeight) {
 			$factor = $thHeight / $imgoHeight;
 			$imgnHeight = $thHeight;
-			$imgnWidth = round($imgoWidth*$factor); 
+			$imgnWidth = round($imgoWidth*$factor);
 			}
-		
+
 		}
 	else {
-		
+
 		$factor = $thHeight / $imgoHeight;
 		$imgnHeight = $thHeight;
-		$imgnWidth = round($imgoWidth*$factor); 
-		
+		$imgnWidth = round($imgoWidth*$factor);
+
 		if ($imgnWidth>$thWidth) {
 			$factor = $thWidth / $imgoWidth;
 			$imgnWidth = $thWidth;
 			$imgnHeight = round($imgoHeight * $factor);
 			}
-		
+
 		}
-		
+
 	// Handle Zoom
 	if ($thZoom) {
 		$imgnWidth = $thWidth;
 		$imgnHeight = $thHeight;
-		
+
 		// Simple (Square)
 		if ($thWidth==$thHeight) {
 			if ($imgoWidth>=$imgoHeight) {
@@ -202,13 +202,13 @@ if (!isImage($imgFile) && !$force) { error("File is not an image."); }
 				$imgoHeight = $imgoWidth;
 				}
 			}
-		
+
 		// Adv (Rect, no square)
 		if ($thWidth!=$thHeight) {
-			
+
 			$widFactor = $imgoWidth / $thWidth;
 			$heiFactor = $imgoHeight / $thHeight;
-			
+
 			if ($widFactor>=$heiFactor) {
 				$nWidth = $thWidth*$heiFactor;
 				$offset_left = ($imgoWidth/2) - ($nWidth/2);
@@ -219,76 +219,76 @@ if (!isImage($imgFile) && !$force) { error("File is not an image."); }
 				$offset_top = ($imgoHeight/2) - ($nHeight/2);
 				$imgoHeight = $nHeight;
 				}
-			
+
 			}
-		
+
 		}
-		
+
 	// Create Empty Thumbnail Image
 	$imgThumb = @imagecreatetruecolor($imgnWidth,$imgnHeight);
-	if ($imgSrcExtension=="png") { 
+	if ($imgSrcExtension=="png") {
 		imagealphablending($imgThumb, false); 	// setting alpha blending on
 		imagesavealpha($imgThumb, true); 		// save alphablending setting (important)
 		}
-		
+
 	// Copy ImageSrc to ImageThumb
 	if ($thLowquality) { $image_isCopied = imagecopyresized ( $imgThumb, $imgSrc, 0, 0, $offset_left, $offset_top, $imgnWidth, $imgnHeight, $imgoWidth, $imgoHeight ); }
 	if (!$thLowquality) { $image_isCopied = imagecopyresampled ( $imgThumb, $imgSrc, 0, 0, $offset_left, $offset_top, $imgnWidth, $imgnHeight, $imgoWidth, $imgoHeight ); }
-	
+
 	$str = "imagecopyresized ( imgThumb, imgSrc, 0, 0, $offset_left, $offset_top, $imgnWidth, $imgnHeight, $imgoWidth, $imgoHeight );";
 	//error($str);
-	
+
 	if (!$image_isCopied) { error("ImageCopy() Failed!\n$php_errormsg"); }
 
 // Save Cache
-	
-if ($cfg["cacheEnabled"]) { 
-	$imgCache = cache_save($realImgFile, $imgThumb, $thWidth, $thHeight); 
+
+if ($cfg["cacheEnabled"]) {
+	$imgCache = cache_save($realImgFile, $imgThumb, $thWidth, $thHeight);
 	}
 
 // Header
 
 header("Content-Disposition: filename=\"{$imgName}\"");
-		
+
 // Output Thumb
 switch(strtolower($imgSrcExtension)) {
-	
+
 	case "jpg": case "jpeg":
 	header("Content-type: image/jpeg");
 	imagejpeg($imgThumb, NULL, $thQuality);
 	if ($imgCache) { imagejpeg($imgThumb, $imgCache, $thQuality); }
 	break;
-	
+
 	case "png":
 	header("Content-type: image/png");
-	imagepng($imgThumb, NULL, $thCompress); 
+	imagepng($imgThumb, NULL, $thCompress);
 	if ($imgCache) { imagepng($imgThumb, $imgCache, $thCompress); }
 	break;
-	
+
 	case "gif":
-	imagegif($imgThumb, NULL); 
+	imagegif($imgThumb, NULL);
 	if ($imgCache) { imagegif($imgThumb, $imgCache); }
 	break;
-	
+
 	default:
 	header("Content-type: image/jpeg");
-	imagejpeg($imgThumb, NULL, $thQuality); 
+	imagejpeg($imgThumb, NULL, $thQuality);
 	break;
-	
+
 	}
 
 // Cleanup
 imagedestroy($imgSrc);
 imagedestroy($imgThumb);
-	
+
 if ($tmpfilepath) {
 	unlink($tmpfilepath);
 	}
-	
+
 if ($deleteTmpImage) {
 	unlink("tmp.image");
 	}
-	
+
 setIdle();
 
 
