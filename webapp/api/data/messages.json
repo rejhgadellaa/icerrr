@@ -17,17 +17,20 @@
 	},
     
     {
-        "id":"app318",
+        "id":"app324",
         "crit":"version",
-        "critvalue":0.317,
+        "critvalue":0.323,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.318 includes:",
-            "* Critical update for 0.317"
+            "v0.324 includes:",
+            "* Request required permissions at startup (Android 6.0+)",
+            "* Longpressing a station now selects it",
+            "* New: swipe between all and starred stations",
+            "* Tweaks, improvements, bugfixes"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
@@ -36,20 +39,17 @@
     },
     
     {
-        "id":"app323",
+        "id":"app325",
         "crit":"version",
-        "critvalue":0.322,
+        "critvalue":0.324,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.323 includes:",
-            "* Request required permissions at startup (Android 6.0+)",
-            "* Longpressing a station now selects it",
-            "* New: swipe between all and starred stations",
-            "* Tweaks, improvements, bugfixes"
+            "v0.325 includes:",
+            "* Bugfix for Android 4.4 and lower"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
