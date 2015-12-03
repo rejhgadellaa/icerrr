@@ -21,6 +21,10 @@ Required:
 cfg_inpath = "..\\com.rejh.icerrr.itson-wwwdev" # www dev folder
 cfg_outpath = "..\\com.rejh.icerrr.itson-as\\app\\src\\main\\assets\\www" # www prod folder
 
+cfg_ignore = [
+	"smoothie.js"
+]
+
 # ===========================
 # CODE
 
@@ -71,49 +75,48 @@ for i in range(0, len(listdirr)):
 	# Let's a go go
 	print(outfpath)
 	
-	# >> CSS
-	if fextension == ".css" and fbasename.find(".min.")<0: 
-		strunc = rgfileio.read(fpath)
-		if strunc==None:
-			continue # error reading file..
-		strcom = compress(strunc)
-		rgfileio.write(outfpath,strcom)
-		factorproc = helpers.calcOptiFactorString(strunc,strcom,True,True)
-		optimized = True
-		
-	# >> JS
-	if fextension == ".js" and fbasename.find(".min.")<0:
-		strunc = rgfileio.read(fpath)
-		if strunc==None:
-			continue # error reading file..
-		strcom = jsmin(strunc)
-		rgfileio.write(outfpath,strcom)
-		factorproc = helpers.calcOptiFactorString(strunc,strcom,True,True)
-		optimized = True
-		
-	# >> JPG, PNG
-	if fextension == ".jpg" or fextension == ".png":
-		# check data_compressed_images
-		if not helpers.needsCompress(fpath,data_compressed_images):
-			report["total_optimized"] += 1 # we're not processing it but it's optimized allright
-			continue
-		# Compress image!
-		im = Image.open(fpath)
-		if fextension == ".jpg":
-			im.save(outfpath,"JPEG",quality=50, optimize=True, progressive=True)
-		else:
-			im.save(outfpath,"PNG", compress_level=9, optimize=True)
-		# Create new data entry + write..
-		newentry = {
-			"fpath":fpath,
-			"ftime":os.path.getmtime(fpath)
-		}
-		data_compressed_images.append(newentry)
-		datas_compressed_images = json.dumps(data_compressed_images)
-		rgfileio.write("datas_compressed_images.json",datas_compressed_images)
-		factorproc = helpers.calcOptiFactorBinary(fpath,outfpath,True,True)
-		optimized = True
+	if not basename in cfg_ignore:
 	
+		# >> CSS
+		if fextension == ".css" and fbasename.find(".min.")<0: 
+			strunc = rgfileio.read(fpath)
+			if strunc!=None and strunc!="None":
+				strcom = compress(strunc)
+				rgfileio.write(outfpath,strcom)
+				factorproc = helpers.calcOptiFactorString(strunc,strcom,True,True)
+				optimized = True
+			
+		# >> JS
+		if fextension == ".js" and fbasename.find(".min.")<0:
+			strunc = rgfileio.read(fpath)
+			if strunc!=None and strunc!="None":
+				strcom = jsmin(strunc)
+				rgfileio.write(outfpath,strcom)
+				factorproc = helpers.calcOptiFactorString(strunc,strcom,True,True)
+				optimized = True
+			
+		# >> JPG, PNG
+		if fextension == ".jpg" or fextension == ".png":
+			# check data_compressed_images
+			if not helpers.needsCompress(fpath,data_compressed_images):
+				report["total_optimized"] += 1 # we're not processing it but it's optimized allright
+				continue
+			# Compress image!
+			im = Image.open(fpath)
+			if fextension == ".jpg":
+				im.save(outfpath,"JPEG",quality=50, optimize=True, progressive=True)
+			else:
+				im.save(outfpath,"PNG", compress_level=9, optimize=True)
+			# Create new data entry + write..
+			newentry = {
+				"fpath":fpath,
+				"ftime":os.path.getmtime(fpath)
+			}
+			data_compressed_images.append(newentry)
+			datas_compressed_images = json.dumps(data_compressed_images)
+			rgfileio.write("datas_compressed_images.json",datas_compressed_images)
+			factorproc = helpers.calcOptiFactorBinary(fpath,outfpath,True,True)
+			optimized = True
 	
 	if optimized:
 		report["total_optimized"] += 1
