@@ -1,3 +1,6 @@
+0.326
+  * Optimized javascript, css and images
+
 0.325
   * Bugfixes and improvements
 

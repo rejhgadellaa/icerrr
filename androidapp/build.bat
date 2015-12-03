@@ -1,6 +1,32 @@
 @echo off
 cls
 
+:optimize
+if exist c:\python33\python.exe set py3=c:\python33\python.exe
+if exist c:\python34\python.exe set py3=c:\python34\python.exe
+if exist c:\python35\python.exe set py3=c:\python35\python.exe
+if exist %py3% goto pyoptimize
+
+echo.
+echo Warning: Cannot run py-optimizer because python3 was not found:
+echo %py3%
+echo Press 'C' to continue...
+choice /C C /N /T 10 /D C
+goto setvars
+
+:pyoptimize
+cd py-optimizer
+%py3% optimizer.py
+cd ..
+goto setvars
+
+REM TODO NOT WORKING?
+if errorlevel 0 goto setvars
+echo.
+echo Warning: Py-optimizer ran into an issue?
+echo Press 'C' to continue...
+choice /C C /N /T 10 /D C
+
 :setvars
 set path_prj=com.rejh.icerrr.itson-as
 set package=com.rejh.icerrr.itson
