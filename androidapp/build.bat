@@ -15,7 +15,7 @@ choice /C C /N /T 10 /D C
 goto setvars
 
 :pyoptimize
-cd py-optimizer
+cd py-web-optimizer
 %py3% optimizer.py
 cd ..
 goto setvars
