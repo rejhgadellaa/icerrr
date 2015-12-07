@@ -253,7 +253,7 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 	// Is it visible to begin with?
 	if ($(selector).css("display")=="none") {
 		// loggr.warn("OIOIOI",{dontsave:true}); // DEBUG
-		return; // silent..
+		//return; // silent..
 	}
 
 	loggr.log("site.ui.fadeOut(): "+selector); // : "+ selector +", "+ timems +", cb:"+(cb)?"true":"none");

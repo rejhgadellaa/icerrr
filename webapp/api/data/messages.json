@@ -17,17 +17,17 @@
 	},
 
     {
-        "id":"app326",
+        "id":"app327",
         "crit":"version",
-        "critvalue":0.325,
+        "critvalue":0.326,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.326 includes:",
-            "* Improvements"
+            "v0.327 includes:",
+            "* Fixes and improvements"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,

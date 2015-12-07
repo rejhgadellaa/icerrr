@@ -34,7 +34,7 @@ site.cast.setVolume=function(level,cb,cberr){loggr.debug("site.cast.setVolume():
 site.cast.destroy=function(silent){loggr.log("site.cast.destroy()");site.ui.hideloading();try{if(site.cast.media){site.cast.media.stop();site.cast.media=null;}}catch(e){loggr.warn(" > Exception stopping site.cast.media");console.warn(e);site.cast.media=null;}
 try{if(site.cast.session){if(!silent){site.ui.showtoast("Cast: Session.stop()");}
 site.cast.updateicon(1);site.cast.session.stop();site.cast.session=null;}}catch(e){loggr.warn(" > Exception stopping site.cast.session");console.warn(e);site.cast.session=null;}
-site.cast.notifCancel();site.cookies.put("cast_session",0);site.mp.mpstatus=Media.MEDIA_NONE;site.vars.lastMpStatus=-1;site.mp.lastmpstatus=-1;}
+site.cast.notifCancel();site.cookies.put("cast_session",0);site.mp.mpstatus=Media.MEDIA_NONE;site.vars.lastMpStatus=-1;site.mp.lastmpstatus=-1;site.ui.hideloading();}
 site.cast.notif=function(){loggr.debug("site.cast.notif()");var opts={};opts.id=2;opts.title="Icerrr: "+site.session.currentstation.station_name;opts.message="Casting to '"+site.cast.session.receiver.friendlyName+"'";opts.smallicon="ic_stat_hardware_cast_connected";opts.color="#455A64";opts.intent={type:"activity",package:"com.rejh.icerrr.itson",classname:"com.rejh.icerrr.itson.Icerrr"}
 opts.priority="HIGH";opts.ongoing=true;opts.alertOnce=true;var action1={icon:"ic_stat_av_quit",title:"Stop casting",intent:{type:"activity",package:"com.rejh.icerrr.itson",classname:"com.rejh.icerrr.itson.Icerrr",extras:[{type:"string",name:"cmd",value:"cast_quit"}]}}
 opts.actions=[action1];if(site.session.currentstation.station_icon_local){opts.largeicon=site.session.currentstation.station_icon_local;}

@@ -104,7 +104,7 @@ site.detailstation.updatedata = function() {
 	// -> Image
 	$("#detailstation .station_image img").off("error");
 	$("#detailstation .station_image img").on("error",function(evt) {
-		loggr.warn(" -> DAFAQUE NOT WORKING?");
+		loggr.error(" -> DAFAQUE NOT WORKING?");
 		$("#detailstation .station_image img").attr("src","img/web_hi_res_512_002.jpg");
 		$("#detailstation .main .header").css("background-image","url('img/bg_home_default.jpg')");
 	});
@@ -130,9 +130,12 @@ site.detailstation.updatedata = function() {
 					} else {
 						$("#detailstation .main .header").css("background-image","url('img/bg_home_default.jpg')");
 					}
+				} else {
+					loggr.warn("detailstation > chicon.downloadImagery.cb no station_data");
 				}
 			},
 			function(err) {
+				loggr.warn("detailstation > chicon.downloadImagery.err: "+ err);
 				$("#detailstation .station_image img").attr("src","img/web_hi_res_512_002.jpg");
 			}
 		);

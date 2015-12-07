@@ -340,7 +340,7 @@ site.chicon.downloadImagery = function(station, cb, cberr) {
 		site.chicon.downloadedImagery(site.data.stations[stationIndex],cb,cberr);
 
 		return;
-		
+
 	}
 
 	// Reset..
@@ -382,6 +382,10 @@ site.chicon.downloadImagery = function(station, cb, cberr) {
 	}
 
 	// Image..
+	if (!station.station_image && station.station_icon) {
+		loggr.warn(" > Copy station_icon to station_image..");
+		station.station_image = station.station_icon
+	}
 	if (station.station_image && site.helpers.shouldDownloadImage(station.station_image_local,station.station_image)) {
 		if (!station.station_image) { station.station_image = station.station_icon; }
 		var stationIndex = site.helpers.session.getStationIndexById(station.station_id);

@@ -1,3 +1,7 @@
+0.327
+  * Fix for station details not always showing station icon
+  * Minor fixes for cancelling chromecast playback
+
 0.326
   * Optimized javascript, css and images
 

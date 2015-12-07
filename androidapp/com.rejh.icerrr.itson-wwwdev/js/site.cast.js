@@ -442,6 +442,8 @@ site.cast.destroy = function(silent) {
 	site.vars.lastMpStatus = -1;
 	site.mp.lastmpstatus = -1;
 
+	site.ui.hideloading();
+
 }
 
 // ---> Notifications

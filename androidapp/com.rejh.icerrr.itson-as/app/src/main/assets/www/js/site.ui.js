@@ -32,7 +32,7 @@ if(site.vars.fadeIns[selector].timeout){clearTimeout(site.vars.fadeIns[selector]
 site.vars.fadeIns[selector].timeout=setTimeout(function(){jqobj.css("transition","opacity "+timems+"ms");jqobj.css("display","block");if(site.vars.fadeIns[selector].timeout){clearTimeout(site.vars.fadeIns[selector].timeout);}
 site.vars.fadeIns[selector].timeout=setTimeout(function(){site.vars.fadeIns[selector].timeout=setTimeout(function(){loggr.warn(" -> fadeIn "+selector+" transitionend",{dontsave:true});if(jqobj.css("opacity")<=0.9){loggr.warn(" -> opacity<=0.9?! "+selector+" transitionend",{dontsave:true});}
 site.vars.fadeIns[selector].isBusy=false;loggr.log("site.ui.fadeIn() > FadeIns: "+selector+" "+site.vars.fadeIns[selector],{dontupload:true});if(cb){cb();}},timems+50);jqobj.css("opacity",(opts.opacity)?opts.opacity:1.0);},50);},50);}
-site.ui.fadeOut=function(selector,timems,cb,opts){if($(selector).css("display")=="none"){return; }
+site.ui.fadeOut=function(selector,timems,cb,opts){if($(selector).css("display")=="none"){}
 loggr.log("site.ui.fadeOut(): "+selector);var jqobj=$(selector);if(!jqobj){loggr.warn(" > !jqobj");return;}
 if(jqobj.length<1){loggr.warn(" > jqobj < 1");return;}
 if(!timems){timems=500;}

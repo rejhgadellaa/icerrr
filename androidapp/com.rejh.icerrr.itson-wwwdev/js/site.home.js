@@ -619,7 +619,7 @@ site.home.getAlbumArt = function() {
 	}
 
 	if(station.station_nowplaying.toLowerCase().trim().indexOf("npo 3fm - ")>=0) {
-		var imgurl = "http://www-assets.npo.nl/uploads/media_item/media_item/108/94/3FM_widescreen-1441271742.jpg";
+		var imgurl = "https://cdn.devality.com/station/9954/mzl.lgbuvbki.png";
 		//imgurl = site.session.currentstation.station_icon;
 		site.home.handleStationImage(imgurl);
 		return;
