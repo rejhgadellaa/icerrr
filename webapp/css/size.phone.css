@@ -1,0 +1,95 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* -- FONTS */
+
+/* -- ELEMENTS */
+
+/* -- SECTIONS */
+
+/* Common */
+
+section {
+	xoverflow-y:auto;
+}
+
+/* Specific */
+
+#home { }
+
+	#home .header {
+	}
+
+		#home .logo {
+
+		}
+
+			#home .logo img {
+
+			}
+
+			#home .logo .title {
+
+			}
+
+			#home .logo .subtitle {
+
+			}
+
+				#home .logo .subtitle .theapp {
+					display:none;
+				}
+
+				#home .logo .subtitle .forandroid {
+					display:block;
+				}
+
+	#home .header_sml {
+	}
+
+		#home .logo_sml {
+
+		}
+
+			#home .logo_sml .title {
+				top:14px;
+			}
+
+	#home .main {
+
+	}
+
+		#home .main .readme {
+		}
+
+			.screenshots {
+				width:304px;
+			}
+			.screenshots img {
+				width:96px;
+			}
+
+	#home .main .footer {
+		display:none;
+		position: relative;
+	}
+
+		#home .main .footer .ruler {
+			display: none;
+		}
+
+		#home .main .footer .legal {
+			position: relative;
+			left:0px;
+			text-align: left;
+		}
+
+		#home .main .footer .social {
+			margin-top:20px;
+			margin-left:-1px;
+		}
+
+			#home .main .footer .legal .item_wrap,
+			#home .main .footer .social .item_wrap {
+				margin-top:12px;
+			}

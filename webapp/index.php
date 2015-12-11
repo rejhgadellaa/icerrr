@@ -53,13 +53,10 @@
 
     <!-- Style / base -->
     <link rel="stylesheet" type="text/css" href="css/common.css?c=<?=time();?>" />
-    <link rel="stylesheet/less" type="text/css" href="css/default.less?c=<?=time();?>" />
+    <link rel="stylesheet" type="text/css" href="css/default.css?c=<?=time();?>" />
 
     <!-- Style / responsive -->
-	<link rel="stylesheet/less" type="text/css" href="css/size.phone.less?c=<?=time();?>" media="screen and (max-width: 960px)" />
-
-    <!-- Less -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/size.phone.css?c=<?=time();?>" media="screen and (max-width: 960px)" />
 
     <!-- Webfonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>

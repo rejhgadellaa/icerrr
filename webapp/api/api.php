@@ -271,11 +271,10 @@ switch($action) {
 			// -- MESSAGES
 
 			case "messages":
-				$msgsStr = fg("{$cfg['icerrr_local_url']}api/data/messages.json");
+				$msgsStr = fg("data/messages.json");
 				if (!msgsStr) { error("Could not load messages.json"); }
 				$msgs = json_decode($msgsStr,true);
 				if (!$msgs) { error("Could not parse messages.json: {$msgs}"); }
-
 				$json["info"] = array();
 				$json["data"] = $msgs;
 				$jsons = gzencode(json_encode($json));

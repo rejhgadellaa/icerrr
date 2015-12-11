@@ -1,0 +1,17 @@
+{
+	
+	"paths":{
+		"input_path":"..\\com.rejh.icerrr.itson-wwwdev",
+		"output_path":"..\\com.rejh.icerrr.itson-as\\app\\src\\main\\assets\\www"
+	},
+	
+	"opts":{
+		"files_only_when_changed":true,
+		"images_only_when_changed":true
+	},
+	
+	"ignore":[
+		"smoothie.js"
+	]
+	
+}

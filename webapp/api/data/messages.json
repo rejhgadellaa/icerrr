@@ -1,62 +1,40 @@
 [
-	
+
 	{
-		"id":"app248-critical",
+		"id":"app325-critical",
 		"crit":"version",
-		"critvalue":0.246,
+		"critvalue":0.320,
 		"action":"url",
 		"url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
-		"title":"Critical update",
+		"title":"Time for an update?",
 		"message":[
-			"Oops. I broke the updating mechanism so I need to guide you through the manual updating process. This means you have to download the file yourself and run the installer.\n\n",
+			"It looks like you're running a really old version of Icerrr. Please consider updating now so you can enjoy the latest and greatest!\n\n",
             "Update now?"
 			],
 		"buttonLabels":"Yes,No",
 		"repeat":1,
 		"onlyOnWifi":1
 	},
-    
+
     {
-        "id":"app324",
+        "id":"app327",
         "crit":"version",
-        "critvalue":0.323,
+        "critvalue":0.326,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.324 includes:",
-            "* Request required permissions at startup (Android 6.0+)",
-            "* Longpressing a station now selects it",
-            "* New: swipe between all and starred stations",
-            "* Tweaks, improvements, bugfixes"
-            ],
-        "buttonLabels":"Yes,No",
-        "repeat":1,
-        "critical":1,
-        "onlyOnWifi":1
-    },
-    
-    {
-        "id":"app325",
-        "crit":"version",
-        "critvalue":0.324,
-        "action":"install-update-app",
-        "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
-        "title":"Update available",
-        "message-no":[],
-        "message":[
-            "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.325 includes:",
-            "* Bugfix for Android 4.4 and lower"
+            "v0.327 includes:",
+            "* Fixes and improvements"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
         "critical":0,
         "onlyOnWifi":1
     },
-    
+
     {
         "id":"stations_database",
         "crit":"install-update",
@@ -65,7 +43,7 @@
         "message":[ ],
         "repeat":0
     },
-    
+
     {
         "id":"stations_database",
         "crit":"install-update",
@@ -74,5 +52,5 @@
         "message":[ ],
         "repeat":0
     }
-	
+
 ]
