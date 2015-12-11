@@ -634,19 +634,12 @@ site.home.getAlbumArt = function() {
 	var opts = {
 		maxresults:8
 	}
-
-	if (google) { if (google.search) { if (google.search.ImageSearch) {
-		var conntype = site.helpers.getConnType();
-		if (conntype=="WIFI" || conntype=="ETHERNET") {
-			opts.restrictions = [
-				[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_LARGE]
-			];
-		} else {
-			opts.restrictions = [
-				[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
-			];
-		}
-	}}}
+	var conntype = site.helpers.getConnType();
+	if (conntype=="WIFI" || conntype=="ETHERNET") {
+		opts.imagesize = site.gcis.IMAGESIZE_LARGE
+	} else {
+		opts.imagesize = site.gcis.IMAGESIZE_SMALL
+	}
 
 	site.helpers.googleImageSearch(searchstring,
 		function(results) {
@@ -657,16 +650,16 @@ site.home.getAlbumArt = function() {
 			var result;
 			while (results[resi]) {
 				result = results[resi];
-				if (site.session.blacklistedAlbumArt[result.url]>=2) {
+				if (site.session.blacklistedAlbumArt[result]>=2) {
 					// image blacklisted, find more..
-					loggr.log(" -> Blacklisted image ("+ site.session.blacklistedAlbumArt[result.url] +"): "+ decodeURIComponent(result.url));
+					loggr.log(" -> Blacklisted image ("+ site.session.blacklistedAlbumArt[result] +"): "+ decodeURIComponent(result));
 					resi++;
 				} else {
 					// keep result
 					break;
 				}
 			}
-			site.home.handleStationImage(decodeURIComponent(result.url));
+			site.home.handleStationImage(decodeURIComponent(result));
 		},
 		function() {
 			site.home.handleStationImage(site.session.currentstation.station_icon);

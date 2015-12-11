@@ -50,11 +50,13 @@ site.chicon.init = function(station_id) {
 		+ "logo icon";
 
 	var opts = {
-		restrictions:[
-			[google.search.ImageSearch.RESTRICT_FILETYPE, google.search.ImageSearch.FILETYPE_PNG],
-			[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
-		],
 		maxresults:32
+	}
+	var conntype = site.helpers.getConnType();
+	if (conntype=="WIFI" || conntype=="ETHERNET") {
+		opts.imagesize = site.gcis.IMAGESIZE_LARGE
+	} else {
+		opts.imagesize = site.gcis.IMAGESIZE_MEDIUM
 	}
 
 	site.ui.showloading("Hold on...","Searching Google for icons");
@@ -75,12 +77,12 @@ site.chicon.init = function(station_id) {
 				var result = results[i];
 
 				// How can result.url be undefined? Is google trolling me?
-				if (!result.url) { continue; }
+				if (!result) { continue; }
 
 				var resultitem = document.createElement("div");
 				resultitem.className = "resultitem_chicon shadow_z1 activatablel";
 				resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
-					+ '<img class="resulticon_chicon" src="'+ result.url +'" '
+					+ '<img class="resulticon_chicon" src="'+ result +'" '
 						+'onerror="$(this.parentNode.parentNode.parentNode).remove();"'
 						+'/>'
 					+ '</div></div>'

@@ -266,8 +266,8 @@ site.webapi.cleanupAjaxRequests = function(ajaxReqIdentifier) {
 		newAjaxRequests[id] = site.webapi.ajaxRequests[id];
 	}
 
-	loggr.log(" > Before: "+ site.helpers.countObj(site.webapi.ajaxRequests));
-	loggr.log(" > After:  "+ site.helpers.countObj(newAjaxRequests));
+	//loggr.log(" > Before: "+ site.helpers.countObj(site.webapi.ajaxRequests));
+	//loggr.log(" > After:  "+ site.helpers.countObj(newAjaxRequests));
 
 	site.webapi.ajaxRequests = newAjaxRequests;
 

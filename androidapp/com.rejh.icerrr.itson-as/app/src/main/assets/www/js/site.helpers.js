@@ -126,22 +126,7 @@ site.helpers.getUniqueID=function(prefix,suffix){var res=CryptoJS.MD5(device.uui
 site.helpers.genUniqueStationId=function(station_name){for(var i in site.cfg.illegalchars){var illchar=site.cfg.illegalchars[i];station_name=station_name.replace(illchar,"");}
 station_name+="_"+site.helpers.getUniqueID();return station_name;}
 site.helpers.getGoogleImageSearchBranding=function(){loggr.debug("site.helpers.getGoogleImageSearchBranding()");return google.search.Search.getBranding();}
-site.helpers.googleImageSearch=function(searchstring,cb,errcb,opts,googleWasNull){loggr.debug("site.helpers.googleImageSearch()");loggr.log(" > "+searchstring);if(googleWasNull){loggr.warn(" > google.search.ImageSearch loaded");try{var atmpsearch=new google.search.ImageSearch();}catch(e){loggr.error(" > GoogleWasNull == true, google won't load :(");errcb();return;}}
-if(!google){google.load("search","1",{"callback":function(){site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true);}});return;}else if(!google.search){google.load("search","1",{"callback":function(){site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true);}});return;}else if(!google.search.ImageSearch){google.load("search","1",{"callback":function(){site.helpers.googleImageSearch(searchstring,cb,errcb,opts,true);}});return;}
-var searchid=site.helpers.getUniqueID();if(!site.chlist.thesearch){site.chlist.thesearch={};}
-if(!site.chlist.thesearchresults){site.chlist.thesearchresults=[];}
-if(!site.chlist.thesearchbusy){site.chlist.thesearchbusy={};}
-site.chlist.thesearch[searchid]=new google.search.ImageSearch();site.chlist.thesearchresults[searchid]=[];site.chlist.thesearchbusy[searchid]=true;if(opts.restrictions){for(var i=0;i<opts.restrictions.length;i++){if(!opts.restrictions[i][0]||!opts.restrictions[i][1]){continue;}
-site.chlist.thesearch[searchid].setRestriction(opts.restrictions[i][0],opts.restrictions[i][1]);}}
-if(!opts){opts={};}
-if(!opts.maxresults){opts.maxresults=64;}
-site.chlist.thesearch[searchid].setSearchCompleteCallback(this,function(){var thesearch=site.chlist.thesearch[searchid];var cursor={};var results=[]
-if(site.chlist.thesearch[searchid].results&&site.chlist.thesearch[searchid].results.length>0){results=site.chlist.thesearch[searchid].results;for(var i in results){site.chlist.thesearchresults[searchid].push(results[i]);}}
-if(thesearch.cursor){cursor=thesearch.cursor;var currPage=cursor.currentPageIndex;var pages=cursor.pages;loggr.log(" > "+currPage+", out of "+pages.length);if(currPage<pages.length-1&&site.chlist.thesearchresults[searchid].length<opts.maxresults){loggr.log(" > Getting more results... ("+pages.length+" page(s) total)");thesearch.gotoPage(currPage+1);return;}else{loggr.log(" > Results: "+site.chlist.thesearchresults[searchid].length);cb(site.chlist.thesearchresults[searchid]);site.chlist.thesearchbusy[searchid]=false;site.helpers.googleImageSearchCleanup();return;}}
-if(!site.chlist.thesearchresults[searchid]){site.chlist.thesearchresults[searchid]=[];}
-if(site.chlist.thesearchresults[searchid].length<1){loggr.log(" > Search failed, no results");errcb();site.chlist.thesearchbusy[searchid]=false;site.helpers.googleImageSearchCleanup();}},null);searchstring=encodeURIComponent(searchstring);site.chlist.thesearch[searchid].execute(searchstring);}
-site.helpers.googleImageSearchCleanup=function(){var anybusy=false;for(var searchid in site.chlist.thesearchbusy){if(site.chlist.thesearchbusy[searchid]){anybusy=true;break;}}
-if(!anybusy){loggr.log("site.helpers.googleImageSearchCleanup(): Cleanup...");site.chlist.thesearch={};site.chlist.thesearchresults=[];site.chlist.thesearchbusy={};}}
+site.helpers.googleImageSearch=function(searchstring,cb,cberr,opts,googleWasNull){loggr.debug("site.helpers.googleImageSearch()");site.gcis.googleImageSearch(searchstring,cb,cberr,opts)}
 site.helpers.uploadStations=function(){loggr.log("site.helpers.uploadStations()");if(!site.data.stations){loggr.warn(" > !site.data.stations, return");return;}
 var apiqueryobj={"post":"stations"}
 var data={"id":site.cookies.get("device_id")+"_"+new Date().format("Y-m-d"),"stations":JSON.stringify(site.data.stations)}

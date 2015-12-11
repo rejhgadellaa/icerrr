@@ -1,3 +1,76 @@
+2015-12-11 12:35:02    GET > {"get":"gcisearch","search":"Billie Jean"}
+2015-12-11 12:35:02    Cleanup json
+2015-12-11 12:34:56    Error: Error in query: '{"get":"gisearch","search":"Billie Jean"}', gisearch, Array
+2015-12-11 12:34:56    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 12:34:56    Cleanup json
+2015-12-11 12:34:48    GET > {"get":"gcisearch","search":"billie jean"}
+2015-12-11 12:34:48    Cleanup json
+2015-12-11 12:33:53    GET > {"get":"gcisearch","search":"billie jean"}
+2015-12-11 12:33:53    Cleanup json
+2015-12-11 12:33:21    GET > {"get":"gcisearch","search":"Billie Jean"}
+2015-12-11 12:33:21    Cleanup json
+2015-12-11 12:33:08    Error: Error in query: '{"get":"gisearch","search":"Billie Jean"}', gisearch, Array
+2015-12-11 12:33:07    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 12:33:07    Cleanup json
+2015-12-11 12:32:48    GET > {"get":"gcisearch","search":"billie jean"}
+2015-12-11 12:32:48    Cleanup json
+2015-12-11 12:31:57    GET > {"get":"gcisearch","search":"npo radio 2  gijs 2.0  kro"}
+2015-12-11 12:31:57    Cleanup json
+2015-12-11 10:32:05    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:32:05    Cleanup json
+2015-12-11 10:30:26    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:30:26    Cleanup json
+2015-12-11 10:29:58    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:29:58    Cleanup json
+2015-12-11 10:27:27    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:27:27    Cleanup json
+2015-12-11 10:25:52    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:25:52    Cleanup json
+2015-12-11 10:25:43    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:25:43    Cleanup json
+2015-12-11 10:24:56    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:24:56    Cleanup json
+2015-12-11 10:24:41    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:24:41    Cleanup json
+2015-12-11 10:24:28    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:24:28    Cleanup json
+2015-12-11 10:04:22    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:04:22    Cleanup json
+2015-12-11 10:03:54    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:03:54    Cleanup json
+2015-12-11 10:03:30    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:03:30    Cleanup json
+2015-12-11 10:03:01    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:03:01    Cleanup json
+2015-12-11 10:01:14    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:01:14    Cleanup json
+2015-12-11 10:00:48    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 10:00:48    Cleanup json
+2015-12-11 09:59:44    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 09:59:44    Cleanup json
+2015-12-11 09:59:39    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 09:59:39    Cleanup json
+2015-12-11 09:59:04    Error: Not implemented yet
+2015-12-11 09:59:02    GET > {"get":"gisearch","search":"Billie Jean"}
+2015-12-11 09:59:02    Cleanup json
+2015-12-11 09:58:24    Error: Error in query: '{"search":"Billie Jean"}', , Array
+2015-12-11 09:58:24    GET > {"search":"Billie Jean"}
+2015-12-11 09:58:24    Cleanup json
+2015-12-11 09:58:09    Error: Action 'gisearch' is not supported
+2015-12-11 09:58:09     - OLD: ../json/station_info.veronicahitradio.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.SWR3_22836593809491bc0eb465048dcab57d_14c7c25cdd2_48a.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.Sublime_FM_cdd91075be01646492c48cffc644f00d_15116456a45_32dfc.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.radio_10.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.radio538.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.radio5.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.radio4.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.radio3fmx.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.radio3fm.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.radio2.json
+2015-12-11 09:58:09     - OLD: ../json/station_info.qmusic.json
+2015-12-11 09:58:08     - OLD: ../json/station_info.intergalactic_classix.json
+2015-12-11 09:58:08     - OLD: ../json/station_info.CUSTOM.Ddp_2f2a01e247e45eb00e6a170c4984b538_1506c49ffda_2fb5.json
+2015-12-11 09:58:08    Cleanup json
 2015-11-10 17:24:05     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
 2015-11-10 17:24:05    GET > {"get":"station_info","station_id":"radio538","station_host":"vip-icecast.538.lw.triple-it.nl","station_port":"","station_path":"/RADIO538_MP3"}
 2015-11-10 17:24:05    Cleanup json
@@ -8159,7 +8232,4 @@
 2015-11-08 08:22:55    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":"80","station_path":"/radio10"}
 2015-11-08 08:22:55    Cleanup json
 2015-11-08 08:21:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
-2015-11-08 08:21:55    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":"80","station_path":"/radio10"}
-2015-11-08 08:21:55    Cleanup json
-2015-11-08 08:20:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
-2015-11-08 08:20:55    
+2015-11-08 08:21:55    GET > {"get":"station_info

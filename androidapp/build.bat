@@ -5,7 +5,7 @@ cls
 if exist c:\python33\python.exe set py3=c:\python33\python.exe
 if exist c:\python34\python.exe set py3=c:\python34\python.exe
 if exist c:\python35\python.exe set py3=c:\python35\python.exe
-if exist %py3% goto pyoptimize
+if exist %py3% goto pyoptiask
 
 echo.
 echo Warning: Cannot run py-optimizer because python3 was not found:
@@ -14,7 +14,17 @@ echo Press 'C' to continue...
 choice /C C /N /T 10 /D C
 goto setvars
 
+:pyoptiask
+echo.
+echo RUN PY-OPTIMIZER?
+choice /C QYN /N /T 10 /D Y /M "Y/N, press 'Q' to quit"
+if errorlevel 3 goto unoptimize
+if errorlevel 2 goto pyoptimize
+if errorlevel 1 goto stop
+
 :pyoptimize
+rmdir com.rejh.icerrr.itson-as\app\src\main\assets\www /s /q
+mkdir com.rejh.icerrr.itson-as\app\src\main\assets\www
 cd py-web-optimizer
 %py3% optimizer.py
 cd ..
@@ -26,6 +36,13 @@ echo.
 echo Warning: Py-optimizer ran into an issue?
 echo Press 'C' to continue...
 choice /C C /N /T 10 /D C
+goto setvars
+
+:unoptimize
+rmdir com.rejh.icerrr.itson-as\app\src\main\assets\www /s /q
+mkdir com.rejh.icerrr.itson-as\app\src\main\assets\www
+xcopy /s /v /y /i com.rejh.icerrr.itson-wwwdev com.rejh.icerrr.itson-as\app\src\main\assets\www
+goto setvars
 
 :setvars
 set path_prj=com.rejh.icerrr.itson-as
@@ -54,8 +71,9 @@ if exist %androidsdk%build-tools\23.0.1\zipalign.exe set zipalign=%androidsdk%bu
 if not exist %zipalign% goto err_nozipalign
 
 :whatdoyouwantodo
+REM cls
 echo.
-echo Make a choice:
+echo CHOOSE BUILD TYPE:
 echo 1. Build debug (default)
 echo 2. Build release_test
 echo 3. Build release
