@@ -1,3 +1,6 @@
+0.329
+  * Bugfixes, improvements
+
 0.328
   * Migrated album art search to Google Custom Search API
 

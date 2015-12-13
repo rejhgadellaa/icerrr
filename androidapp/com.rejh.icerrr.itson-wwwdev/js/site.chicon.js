@@ -52,12 +52,6 @@ site.chicon.init = function(station_id) {
 	var opts = {
 		maxresults:32
 	}
-	var conntype = site.helpers.getConnType();
-	if (conntype=="WIFI" || conntype=="ETHERNET") {
-		opts.imagesize = site.gcis.IMAGESIZE_LARGE
-	} else {
-		opts.imagesize = site.gcis.IMAGESIZE_MEDIUM
-	}
 
 	site.ui.showloading("Hold on...","Searching Google for icons");
 
@@ -130,8 +124,7 @@ site.chicon.init = function(station_id) {
 
 			// Append branding..
 			// results.getBranding(opt_element?, opt_orientation?)
-			var snip = site.helpers.getGoogleImageSearchBranding();
-			snip = "<div class='gsc-branding shadow_z1u'>Powered by <b>Google Image Search</b></div>";
+			var snip = "<div class='gsc-branding shadow_z1u'>Powered by <b>Google Image Search</b></div>";
 			$("#searchicon .main").append(snip);
 
 			// Center
