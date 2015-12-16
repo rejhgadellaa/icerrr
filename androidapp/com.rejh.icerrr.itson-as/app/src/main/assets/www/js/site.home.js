@@ -53,10 +53,10 @@ if(station.station_nowplaying.toLowerCase().trim().indexOf("npo 3fm - ")>=0){var
 var searchstring=""
 +""+station.station_nowplaying.toLowerCase()
 searchstring=searchstring.split("-").join("");var opts={maxresults:8}
-if(google){if(google.search){if(google.search.ImageSearch){var conntype=site.helpers.getConnType();if(conntype=="WIFI"||conntype=="ETHERNET"){opts.restrictions=[[google.search.ImageSearch.RESTRICT_IMAGESIZE,google.search.ImageSearch.IMAGESIZE_LARGE]];}else{opts.restrictions=[[google.search.ImageSearch.RESTRICT_IMAGESIZE,google.search.ImageSearch.IMAGESIZE_MEDIUM]];}}}}
+var conntype=site.helpers.getConnType();if(conntype=="WIFI"||conntype=="ETHERNET"){opts.imagesize=site.gcis.IMAGESIZE_LARGE}else{opts.imagesize=site.gcis.IMAGESIZE_SMALL}
 site.helpers.googleImageSearch(searchstring,function(results){loggr.log(" > site.helpers.googleImageSearch.results: "+results.length);if(!site.session.blacklistedAlbumArt){site.session.blacklistedAlbumArt={};}
-var resi=0;var result;while(results[resi]){result=results[resi];if(site.session.blacklistedAlbumArt[result.url]>=2){loggr.log(" -> Blacklisted image ("+site.session.blacklistedAlbumArt[result.url]+"): "+decodeURIComponent(result.url));resi++;}else{break;}}
-site.home.handleStationImage(decodeURIComponent(result.url));},function(){site.home.handleStationImage(site.session.currentstation.station_icon);},opts);}
+var resi=0;var result;while(results[resi]){result=results[resi];if(site.session.blacklistedAlbumArt[result]>=2){loggr.log(" -> Blacklisted image ("+site.session.blacklistedAlbumArt[result]+"): "+decodeURIComponent(result));resi++;}else{break;}}
+site.home.handleStationImage(decodeURIComponent(result));},function(){site.home.handleStationImage(site.session.currentstation.station_icon);},opts);}
 site.home.handleStationImage=function(src,isBigIcon){loggr.log("site.home.handleStationImage()");loggr.log(" > "+src);site.ui.showLoadbar();var station=site.session.currentstation;if(src==site.session.currentstation.station_icon&&!isBigIcon||src=="img/icons-80/ic_station_default.png"){loggr.log(" > It's an icon!");if(site.cookies.get("setting_showStationIcon")!=1){loggr.log(" > !setting_showStationIcon: "+site.cookies.get("setting_showStationIcon"));site.home.loadAlbumArt('img/bg_home_default.jpg');}
 var station=site.session.currentstation;if(station.station_icon_local){loggr.log(" -> Icon available, load..");$("#home .main .station_icon img").attr("src",station.station_icon_local);site.ui.hideLoadbar();}
 else if(!station.station_icon_local){loggr.log(" -> Download imagery..");site.chicon.downloadImagery(station,function(ok){site.home.handleStationImage(station.station_icon);},function(err){site.home.handleStationImage("img/icons-80/ic_station_default.png");});return;}

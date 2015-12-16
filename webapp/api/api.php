@@ -170,32 +170,6 @@ switch($action) {
 						}
 						$json["data"]["npechores"] = ($enjson["response"]["status"]["message"] == "Success" && $json["data"]["npartist"] && $json["data"]["nptitle"]);
 
-						// Track lookup..
-						// TODO: needed?
-						/*
-						if ($trackid) {
-							$echonest_requrl = $cfg["echonest_apiurl"] ."track/profile?"
-								."api_key=". $cfg["echonest_apikey"]
-								."&format=json"
-								."&id={$trackid}"
-								."&bucket=audio_summary"
-								;
-							$json["data"]["npechoreq_trackprofile"] = $echonest_requrl;
-
-							$enjsons = fg($echonest_requrl);
-							if ($enjsons) {
-
-								$enjson = json_decode($enjsons,true);
-								if ($enjson && $enjson["response"]["status"]["message"] == "Success") {
-
-
-
-								}
-
-							}
-						}
-						/**/
-
 					}
 
 					// Debug
@@ -277,6 +251,33 @@ switch($action) {
 				if (!$msgs) { error("Could not parse messages.json: {$msgs}"); }
 				$json["info"] = array();
 				$json["data"] = $msgs;
+				$jsons = gzencode(json_encode($json));
+				header('Content-Encoding: gzip');
+				echo $jsons;
+				break;
+
+			// -- EXTERNAL: Google Custom Search api
+
+			// Google Image Search (via Google Custom Search API)
+			case "gcisearch":
+				// Build url
+				$url = $cfg["gcs_url"]
+					."q=". rawurlencode($queryobj["search"])
+					."&searchType=image"
+					."&key=". $cfg["gcs_server_key"]
+					."&cx=". $cfg["gcs_cefs"]
+					;
+				// userIP if available
+				if ($queryobj["imgSize"]) {
+					$url .= "&imgSize=". $queryobj["imgSize"];
+				}
+				if ($_SERVER['REMOTE_ADDR']!="127.0.0.1") {
+					$url .= "&userIp=". $_SERVER['REMOTE_ADDR'];
+				}
+				$fg = fg($url);
+				$json["data"] = json_decode($fg,true);
+				$json["info"]["url"] = $url;
+				$jsons = json_encode($jsons);
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
 				echo $jsons;

@@ -19,4 +19,4 @@ site.webapi.cleanupAjaxRequests=function(ajaxReqIdentifier){loggr.debug("site.we
 var newAjaxRequests={};for(var id in site.webapi.ajaxRequests){if(id==ajaxReqIdentifier){continue;}
 if(!site.webapi.ajaxRequests[id]){continue;}
 newAjaxRequests[id]=site.webapi.ajaxRequests[id];}
-loggr.log(" > Before: "+site.helpers.countObj(site.webapi.ajaxRequests));loggr.log(" > After:  "+site.helpers.countObj(newAjaxRequests));site.webapi.ajaxRequests=newAjaxRequests;}
+site.webapi.ajaxRequests=newAjaxRequests;}

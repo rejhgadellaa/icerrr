@@ -45,6 +45,18 @@ site.detailstation.init = function(resultitem, forceRedraw, restoreLast) {
 	site.lifecycle.addOnPauseCb(site.detailstation.onpause);
 	site.lifecycle.addOnResumeCb(site.detailstation.onresume);
 
+	// Already drawn?
+	if (!forceRedraw && site.detailstation.station_id == site.detailstation.last_station_id && site.detailstation.last_station_updated_time) {
+		// we already have drawn this station.. check if update is needed..
+		var now = new Date().getTime();
+		if (site.detailstation.last_station_updated_time > now-(1000*60*1)) {
+			// drawn less than a minute ago, it's fine like this..
+			return;
+		}
+	}
+	site.detailstation.last_station_id = site.detailstation.station_id
+	site.detailstation.last_station_updated_time = new Date().getTime();
+
 	// Reset some stuff..
 	site.detailstation.hideRecentlyPlayed();
 
@@ -67,7 +79,9 @@ site.detailstation.onpause = function() {
 site.detailstation.onresume = function() {
 	loggr.log("site.detailstation.onresume()");
 	if (site.detailstation.loadedStationData && site.detailstation.loadedNowPlaying) {
-		site.detailstation.updatedata();
+		if (!site.detailstation.last_station_updated_time || site.detailstation.last_station_updated_time < now-(1000*60*1)) {
+			site.detailstation.updatedata();
+		}
 	}
 }
 

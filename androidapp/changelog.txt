@@ -1,3 +1,9 @@
+0.329
+  * Bugfixes, improvements
+
+0.328
+  * Migrated album art search to Google Custom Search API
+
 0.327
   * Fix for station details not always showing station icon
   * Minor fixes for cancelling chromecast playback

@@ -122,7 +122,7 @@ for i in range(0, len(listdirr)):
 	
 	# Do the work by file extension..
 	optimized = False
-	print(outfpath)
+	print(fpath)
 	
 	# Only if file basename is not in ignore list..
 	if not fbasename in cfg_ignore:

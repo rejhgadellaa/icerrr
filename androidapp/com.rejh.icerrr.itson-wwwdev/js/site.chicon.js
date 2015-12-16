@@ -50,10 +50,6 @@ site.chicon.init = function(station_id) {
 		+ "logo icon";
 
 	var opts = {
-		restrictions:[
-			[google.search.ImageSearch.RESTRICT_FILETYPE, google.search.ImageSearch.FILETYPE_PNG],
-			[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM]
-		],
 		maxresults:32
 	}
 
@@ -75,12 +71,12 @@ site.chicon.init = function(station_id) {
 				var result = results[i];
 
 				// How can result.url be undefined? Is google trolling me?
-				if (!result.url) { continue; }
+				if (!result) { continue; }
 
 				var resultitem = document.createElement("div");
 				resultitem.className = "resultitem_chicon shadow_z1 activatablel";
 				resultitem.innerHTML = '<div class="center_table"><div class="center_td">'
-					+ '<img class="resulticon_chicon" src="'+ result.url +'" '
+					+ '<img class="resulticon_chicon" src="'+ result +'" '
 						+'onerror="$(this.parentNode.parentNode.parentNode).remove();"'
 						+'/>'
 					+ '</div></div>'
@@ -128,8 +124,7 @@ site.chicon.init = function(station_id) {
 
 			// Append branding..
 			// results.getBranding(opt_element?, opt_orientation?)
-			var snip = site.helpers.getGoogleImageSearchBranding();
-			snip = "<div class='gsc-branding shadow_z1u'>Powered by <b>Google Image Search</b></div>";
+			var snip = "<div class='gsc-branding shadow_z1u'>Powered by <b>Google Image Search</b></div>";
 			$("#searchicon .main").append(snip);
 
 			// Center
