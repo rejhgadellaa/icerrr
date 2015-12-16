@@ -109,7 +109,7 @@ site.gcis.googleImageSearch = function(search, cb, cberr, opts) {
                 // ..
 
                 // TODO: temp logg
-                loggr.log(" > GCISearch imagesize: "+ ritem.image.width +" x "+ ritem.image.height);
+                // loggr.log(" > GCISearch imagesize: "+ ritem.image.width +" x "+ ritem.image.height);
 
                 // Add
                 filteredresults.push(ritem.link);

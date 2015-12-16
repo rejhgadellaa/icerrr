@@ -148,7 +148,7 @@ site.chicon.init = function(station_id) {
 			targ.onload = function(evt) {
 				site.chicon.save(this);
 			}
-			targ.src = "http://rejh.nl/icerrr/img/web_hi_res_512_002.png";
+			targ.src = "http://rejh.nl/icerrr/img/web_hi_res_512_002.jpg";
 
 		},
 		opts

@@ -41,7 +41,8 @@ if(!prefix){prefix="";}
 if(url.indexOf("/")>=0){filename=url.substr(url.lastIndexOf("/")+1);}else{filename=url;}
 if(filename.indexOf("?")>=0){filename=filename.substr(0,filename.lastIndexOf("?"));}
 if(isBase64){filename+=".base64";}
-filename=site.helpers.stripIllChars(filename);prefix=site.helpers.stripIllChars(prefix);if(onlyExtension){var ext=filename.substr(filename.lastIndexOf("."));filename=ext;}
+filename=site.helpers.stripIllChars(filename);prefix=site.helpers.stripIllChars(prefix);var ext=filename.substr(filename.lastIndexOf("."));var extIndex=filename.lastIndexOf(".");if(filename.lastIndexOf(":")>extIndex){filename=filename.substr(0,filename.lastIndexOf(":"));}
+if(onlyExtension){filename=ext;}
 if(!dontUseTimestamp&&prefix){filename=prefix+"_"+new Date().getTime()+"_"+filename;}else if(prefix){filename=prefix+"_"+filename;}
 return filename;}
 site.helpers.downloadImage=function(imgobj,filename,url,cb,cberr,cbprogress){loggr.log("site.helpers.downloadImage(): "+filename);site.webapi.download(url,site.cfg.paths.images,filename,function(fileEntry){if(imgobj){imgobj.src=fileEntry.fullPath+"?c="+new Date().getTime();}

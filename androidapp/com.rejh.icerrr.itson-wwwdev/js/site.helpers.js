@@ -220,31 +220,46 @@ site.helpers.imageUrlToFilename = function(url,prefix,isBase64,dontUseTimestamp,
 
 	var filename = "__noname__"+ new Date().getTime();
 
+	// Generate url if not valid
 	if (!url) { url = "__noname__"+ new Date().getTime(); }
 	if (!prefix) { prefix = ""; }
 
+	// Get filename
 	if (url.indexOf("/")>=0) {
 		filename = url.substr(url.lastIndexOf("/")+1);
 	} else {
 		filename = url;
 	}
 
+	// Check if ? trails filename
 	if (filename.indexOf("?")>=0) {
 		filename = filename.substr(0,filename.lastIndexOf("?"));
 	}
 
+	// Check base64
 	if (isBase64) {
 		filename += ".base64";
 	}
 
+	// Strip ill chars
 	filename = site.helpers.stripIllChars(filename);
 	prefix = site.helpers.stripIllChars(prefix);
 
+	// Extension..
+	var ext = filename.substr(filename.lastIndexOf("."));
+	var extIndex = filename.lastIndexOf(".");
+
+	// -> Extension: Twitter stuff :S
+	if (filename.lastIndexOf(":")>extIndex) {
+		filename = filename.substr(0, filename.lastIndexOf(":"));
+	}
+
+	// Only extension, replace filename
 	if (onlyExtension) {
-		var ext = filename.substr(filename.lastIndexOf("."));
 		filename = ext;
 	}
 
+	// Append timestamp
 	if (!dontUseTimestamp && prefix) { // default
 		filename = prefix +"_"+ new Date().getTime() +"_"+ filename;
 	} else if (prefix) {

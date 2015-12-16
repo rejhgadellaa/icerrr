@@ -10,7 +10,7 @@ for(var i=0;i<ritems.length;i++){ritem=ritems[i];if(!ritem.image){continue;}
 if(opts.imagesize&&!opts.imagesize.imgSize){var iw=ritem.image.width;var ih=ritem.image.height;var largestImageDim=(iw>ih)?iw:ih
 if(opts.imagesize.min>largestImageDim&&opts.imagesize.max<largestImageDim){continue;}}
 if(opts.maxresults&&filteredresults.length>opts.maxresults){break;}
-loggr.log(" > GCISearch imagesize: "+ritem.image.width+" x "+ritem.image.height);filteredresults.push(ritem.link);}
+filteredresults.push(ritem.link);}
 loggr.log(" > GCISearch filtered results: "+filteredresults.length);site.gcis.ajaxReqIdentifier=null
 cb(filteredresults);},function(errobj){site.gcis.ajaxReqIdentifier=null
 if(errobj&&errobj.textStatus&&errobj.textStatus!="abort"){loggr.error("site.gcis.googleImageSearch.Error: "+e);console.error(e);if(cberr){cberr([]);}}});}

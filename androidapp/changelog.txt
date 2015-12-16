@@ -1,3 +1,6 @@
+0.330
+  * Bugfixes, improvements
+
 0.329
   * Bugfixes, improvements
 
