@@ -420,10 +420,6 @@ site.chicon.downloadedImagery = function(station,cb,cberr) {
 
 			loggr.debug("site.chicon.downloadedImagery()");
 
-			if (site.session.currentstation.station_id == station.station_id) {
-				site.session.currentstation.station_id = station.station_id;
-			}
-
 			if (station.station_icon_local && station.station_image_local) {
 				if (cb) { cb(station); }
 			} else {

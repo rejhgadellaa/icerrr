@@ -124,6 +124,8 @@ site.chlist.ontabclick = function(tabObj) {
 	if (tab!=site.chlist.currenttab) {
 		site.vars.touch.tabObj = tabObj;
 		site.chlist.movetotab(posx);
+	} else {
+		site.chlist.drawResults(null,true);
 	}
 
 }
@@ -355,6 +357,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	// Check if needs to run..
 	if (!forcerun && !site.chedit.changesHaveBeenMade) {
 		if (site.session.chlist_pagenum || $("#channellist .main div").length > 0) {
+			loggr.log(" > No need to run, return");
 			site.ui.hackActiveCssRule();
 			return;
 		}
@@ -362,6 +365,7 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 
 	// TODO: Check if this code is needed..
 	if (site.chedit.changesHaveBeenMadeGotoStarred) {
+		loggr.log(" > Go to starred");
 		site.chedit.changesHaveBeenMadeGotoStarred = false; // need to do this here because we return..
 		pagenum = 0;
 		site.chlist.ontabclick($(".tab.activatablel.starred")[0]);
@@ -369,7 +373,9 @@ site.chlist.drawResults = function(pagenum,forcerun) {
 	}
 	/**/
 
-	forceRedraw = site.chedit.changesHaveBeenMade || site.chedit.changesHaveBeenMadeGotoStarred
+	if (!forcerun) {
+		forcerun = site.chedit.changesHaveBeenMade || site.chedit.changesHaveBeenMadeGotoStarred
+	}
 
 	site.chedit.changesHaveBeenMade = false;
 
