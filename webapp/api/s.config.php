@@ -1,6 +1,6 @@
 <?
 
-$cfg["icerrr_local_url"] = "http://94.209.13.221/icerrr/";
+$cfg["icerrr_local_url"] = "http://94.209.13.221:8082/icerrr/";
 $cfg["icerrr_remote_url"] = "http://www.rejh.nl/icerrr/";
 
 $cfg["echonest_apiurl"] = "http://developer.echonest.com/api/v4/";
