@@ -555,9 +555,9 @@ cc.run_nowplaying_poll = function() {
 			if (cc.currentstation.nowplaying) {
 
 				var opts = {
-					maxresults:1,
-					restrictions:[[google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_LARGE]]
-				}
+                    maxresults: 1,
+					imagesize: cc.gcis.IMAGESIZE_LARGE
+                }
 
 				// opts = { maxresults:1 }
 
@@ -583,10 +583,10 @@ cc.run_nowplaying_poll = function() {
                             image.crossOrigin = '';
 							image.onload = function() {
 								if ($("#main").css("background-image") && $("#main").css("background-image").indexOf(this.src)>=0) {
-									loggr.log(" > Found SAME album art: "+ res.url);
+									loggr.log(" > Found SAME album art: "+ res);
 									return;
 								}
-								loggr.log(" > Found album art: "+ res.url);
+								loggr.log(" > Found album art: "+ res);
 								$("#main").css("background-image","url('"+ this.src +"')");
                                 try {
                                     var vibrant = new Vibrant(this,32,10);
@@ -602,7 +602,7 @@ cc.run_nowplaying_poll = function() {
                                     if (e.stack) { loggr.error(e.stack.replace("\n","<br>")); }
                                     else { loggr.error(e); }
                                 }
-								cc.vars.background_image = res.url;
+								cc.vars.background_image = res;
 								cc.burnInProtector();
 							}
 							image.onerror = function() {
@@ -613,7 +613,7 @@ cc.run_nowplaying_poll = function() {
 							if (searchstr=="NPO Radio 3fm") {
 								image.src = "http://a1094.phobos.apple.com/us/r30/Purple5/v4/47/3a/5d/473a5dab-5ba6-9e1b-255b-dce76abdce54/mzl.lgbuvbki.png";
 							} else {
-                                var imgurl = decodeURIComponent(res.url);
+                                var imgurl = decodeURIComponent(res);
                                 var url = "http://www.rejh.nl/static/phpth/phpThumb.php?w=1280&h=1280&src="+ imgurl;
                                 //loggr.error(url);
 								image.src = url;
@@ -735,116 +735,237 @@ cc.burnInProtector = function(force) {
 
 }
 
-// Google Image Search
+// ==========================================
+// Webapi
 
-cc.helpers.googleImageSearch = function(searchstring,cb,errcb,opts,googleWasNull) {
+cc.webapi = {};
+
+cc.webapi.urls = {};
+cc.webapi.urls.api = "http://www.rejh.nl/icerrr/api/?";
+
+cc.webapi.ajaxRequests = {};
+
+cc.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
+
+	loggr.log("cc.webapi.exec()");
+
+	if (apiaction=="post") {
+		cc.webapi.post(apiaction,apiquerystr,cb,errcb);
+		return;
+	}
+
+	// Parse apiquerystr || TODO: Important: how to handle urlencoding.. doing it here.. now..
+	if (!apiquerystr) { apiquerystr = "{}"; }
+	var apiqueryobj = JSON.parse(apiquerystr);
+	var apiquery = encodeURIComponent(JSON.stringify(apiqueryobj));
+
+	var apiurl = cc.webapi.urls.api +"a="+ apiaction +"&q="+ apiquery +"&cache="+(new Date().getTime());
+	loggr.log(" > "+apiurl);
+	loggr.log(" > "+apiquerystr);
+
+	var ajaxReqIdentifier = (new Date().getTime()).toString(16);
+	var ajaxReq = $.getJSON(apiurl, function(results) {
+		// ok
+		if (results["error"]) {
+			errcb({code:-1,message:results["errormsg"]});
+			cc.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
+			return;
+		} else {
+			results.info.size_kb = Math.ceil((JSON.stringify(results).length*8)/1024/10);
+			loggr.log(" > cc.webapi.exec().results: ~"+ results.info.size_kb +" kb");
+			cb(results);
+			cc.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
+			return;
+		}
+	})
+	.error(function(jqXHR, textStatus, errorThrown) {
+		// error
+		loggr.error(" > cc.webapi.exec().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown);
+		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]});
+		cc.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
+	});
+
+	// Store apireq
+	cc.webapi.ajaxRequests[ajaxReqIdentifier] = ajaxReq;
+	return ajaxReqIdentifier;
+
+}
+
+// Cancel
+
+cc.webapi.abort = function(ajaxReqIdentifier) {
+
+	loggr.debug("cc.webapi.abort(): "+ajaxReqIdentifier);
+
+	loggr.log(" > Abort..");
+	var ajaxReq = cc.webapi.ajaxRequests[ajaxReqIdentifier];
+	if (!ajaxReq) { loggr.log(" > Ajax request does not exist (anymore)",{dontsave:true}); return; }
+	ajaxReq.abort();
+
+	loggr.log(" > Cleanup..");
+	cc.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
+
+}
+
+// Cleanup
+
+cc.webapi.cleanupAjaxRequests = function(ajaxReqIdentifier) {
+
+	loggr.debug("cc.webapi.cleanupAjaxRequests(): "+ajaxReqIdentifier);
+
+	var ajaxReq = cc.webapi.ajaxRequests[ajaxReqIdentifier];
+	if (!ajaxReq) { loggr.log(" > Ajax request does not exist (anymore)"); return; }
+
+	var newAjaxRequests = {};
+	for (var id in cc.webapi.ajaxRequests) {
+		if (id==ajaxReqIdentifier) { continue; }
+		if (!cc.webapi.ajaxRequests[id]) { continue; }
+		newAjaxRequests[id] = cc.webapi.ajaxRequests[id];
+	}
+
+	cc.webapi.ajaxRequests = newAjaxRequests;
+
+}
+
+// ==========================================
+// Google Custom Search
+
+cc.gcis = {};
+
+// ---> Const
+
+cc.gcis.IMAGESIZE_LARGE = {min:1280,max:2048*2,imgSize:"xxlarge"};
+cc.gcis.IMAGESIZE_MEDIUM = {min:640,max:1280,imgSize:"large"};
+cc.gcis.IMAGESIZE_SMALL = {min:320,max:640,imgSize:"medium"};
+
+// ---> Todos
+
+/*
+    * Docs:
+        https://developers.google.com/custom-search/json-api/v1/reference/cse/list
+    * Keep list of search results..
+
+*/
+
+// ---> Abort
+
+cc.gcis.abort = function() {
+    if (cc.gcis.ajaxReqIdentifier) {
+        loggr.debug("cc.gcis.abort()");
+        cc.webapi.abort(cc.gcis.ajaxReqIdentifier);
+        cc.gcis.ajaxReqIdentifier = null
+    }
+}
+
+// ---> Search
+
+cc.gcis.googleImageSearch = function(search, cb, cberr, opts) {
+
+    loggr.debug("cc.gcis.googleImageSearch(): "+ search);
+
+    cc.gcis.abort();
+
+    if (!opts) { opts = {}; }
+
+    // Build webapi query
+    // API?a=get&q={"get:"gcisearch","search":search}
+
+    var queryobj = {
+        "get":"gcisearch",
+        "search":search,
+    }
+    if (opts.imagesize) {
+        queryobj.imgSize = opts.imagesize.imgSize;
+    }
+
+    // Go!
+    var action = "get";
+    var querystr = JSON.stringify(queryobj);
+    cc.gcis.ajaxReqIdentifier = cc.webapi.exec(action,querystr,
+        function(data) {
+
+            // Check results..
+            if (!data.data || !data.data.items || data.data.items.length==0) {
+                loggr.log(JSON.stringify(data));
+                if (cberr) { cberr([]); }
+                return;
+            }
+
+            // Filter results..
+            filteredresults = [];
+            var ritems = data.data.items;
+
+            loggr.log(" > GCISearch total results: "+ ritems.length);
+            if (opts.imagesize) {
+                loggr.log(" > GCISearch opts.imagesize: "+ JSON.stringify(opts.imagesize));
+            }
+
+            for (var i=0; i<ritems.length; i++) {
+
+                // Get ritem
+                ritem = ritems[i];
+
+                // Check if image result
+                if (!ritem.image) { continue; }
+
+                // Imagesize opt
+                if (opts.imagesize && !opts.imagesize.imgSize) {
+
+                    // Get image dim
+                    var iw = ritem.image.width;
+                    var ih = ritem.image.height;
+                    var largestImageDim = (iw>ih) ? iw : ih
+
+                    // Min/max size..
+                    if (opts.imagesize.min > largestImageDim && opts.imagesize.max < largestImageDim) {
+                        continue;
+                    }
+
+                }
+                // Maxresults opt
+                if (opts.maxresults && filteredresults.length>opts.maxresults) {
+                    break;
+                }
+                // TODO: Aspect at least 2:1 or 1:2
+                // ..
+
+                // TODO: temp logg
+                // loggr.log(" > GCISearch imagesize: "+ ritem.image.width +" x "+ ritem.image.height);
+
+                // Add
+                filteredresults.push(ritem.link);
+
+            }
+
+            loggr.log(" > GCISearch filtered results: "+ filteredresults.length);
+            cc.gcis.ajaxReqIdentifier = null
+            cb(filteredresults);
+
+        },
+        function(errobj) {
+            cc.gcis.ajaxReqIdentifier = null
+            if (errobj && errobj.textStatus && errobj.textStatus!="abort") {
+                loggr.error("cc.gcis.googleImageSearch.Error: "+ e);
+                console.error(e);
+                if (cberr) { cberr([]); }
+            }
+        }
+    );
+
+}
+
+// Google Image Search (deprecated methods..)
+
+cc.helpers.googleImageSearch = function(searchstring,cb,cberr,opts,googleWasNull) {
 
 	loggr.debug("cc.helpers.googleImageSearch()");
 	loggr.log(" > Search: '"+searchstring+"'");
 
-	// HELP: https://developers.google.com/image-search/v1/devguide
-
-	// New imagesearch, get unique id
-	var searchid = (new Date().getTime()).toString(16);
-	if (!cc.thesearch) { cc.thesearch = {}; }
-	if (!cc.thesearchresults) { cc.thesearchresults = []; }
-	if (!cc.thesearchbusy) { cc.thesearchbusy = {}; }
-	cc.thesearch[searchid] = new google.search.ImageSearch();
-	cc.thesearchresults[searchid] = [];
-	cc.thesearchbusy[searchid] = true;
-
-	// Set some properties
-	// -> Restrictions
-	// ->> opts.restrictions = [ [google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM] ]
-	if (opts.restrictions) {
-		for (var i=0; i<opts.restrictions.length; i++) {
-			if (!opts.restrictions[i][0] || !opts.restrictions[i][1]) { continue; }
-			cc.thesearch[searchid].setRestriction(
-				opts.restrictions[i][0],
-				opts.restrictions[i][1]
-			);
-		}
-	}
-
-	// more opts
-	if (!opts) { opts = {}; }
-	if (!opts.maxresults) { opts.maxresults = 64; }
-
-	// Callback
-	cc.thesearch[searchid].setSearchCompleteCallback(this,
-		function() {
-
-			var thesearch = cc.thesearch[searchid];
-			var cursor = {};
-			var results = []
-
-			// Store results (if any)
-			if (cc.thesearch[searchid].results && cc.thesearch[searchid].results.length > 0) {
-				results = cc.thesearch[searchid].results;
-				for (var i in results) {
-					cc.thesearchresults[searchid].push(results[i]);
-				}
-			}
-
-			// Check for more results :D
-			if (thesearch.cursor) {
-				cursor = thesearch.cursor;
-				var currPage = cursor.currentPageIndex;
-				var pages = cursor.pages;
-				// loggr.log(" > "+ currPage +", out of "+ pages.length);
-				if (currPage < pages.length-1 && cc.thesearchresults[searchid].length < opts.maxresults) {
-					// get more...
-					// loggr.log(" > Getting more results... ("+pages.length+" page(s) total)");
-					thesearch.gotoPage(currPage+1);
-					return;
-				} else {
-					// return results..
-					// loggr.log(" > Results: "+ cc.thesearchresults[searchid].length);
-					cb(cc.thesearchresults[searchid]);
-					cc.thesearchbusy[searchid] = false;
-					cc.helpers.googleImageSearchCleanup();
-					return;
-				}
-			}
-
-			// Errcb
-			if (!cc.thesearchresults[searchid]) { cc.thesearchresults[searchid] = []; }
-			if (cc.thesearchresults[searchid].length<1) {
-				loggr.log(" > Search failed, no results");
-				errcb();
-				cc.thesearchbusy[searchid] = false;
-				cc.helpers.googleImageSearchCleanup();
-			}
-
-		},
-		null
-	);
-
-	// encodeURIComponent
-	searchstring = encodeURIComponent(searchstring);
-
-	// Execute
-	cc.thesearch[searchid].execute(searchstring);
+    cc.gcis.googleImageSearch(searchstring,cb,cberr,opts);
 
 }
 
-cc.helpers.googleImageSearchCleanup = function() {
-
-	// Check if searches are busy..
-	var anybusy = false;
-	for (var searchid in cc.thesearchbusy) {
-		if (cc.thesearchbusy[searchid]) { anybusy = true; break; }
-	}
-
-	// All done? destroy thesearch[]
-	if (!anybusy) {
-		//loggr.log("cc.helpers.googleImageSearchCleanup(): Cleanup...");
-		cc.thesearch = {};
-		cc.thesearchresults = [];
-		cc.thesearchbusy = {};
-	}
-
-}
+cc.helpers.googleImageSearchCleanup = function() {}
 
 // ==========================================
 // More...
