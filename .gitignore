@@ -64,6 +64,9 @@ webapp/json/
 webapp/api/data/analytics.json
 webapp/api/data/deviceids.json
 
+# webapp gcisearch cache
+cache.gcisearch.json.gz
+
 #webapp logs
 webapp/api/logs_users/
 webapp/api/stations_users/

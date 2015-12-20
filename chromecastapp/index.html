@@ -270,7 +270,7 @@ loggr.show = function() {
 	$(".debug").css("display","block");
 	if (loggr.timeout_hide) { clearTimeout(loggr.timeout_hide); }
 	loggr.timeout_hide = setTimeout(function(){
-		$(".debug").css("display","none");
+		//$(".debug").css("display","none");
 		//$(".debug").fadeOut(500,function(){ loggr.lines = []; });
 	},5000);
 }
@@ -552,86 +552,91 @@ cc.run_nowplaying_poll = function() {
 			cc.updateNowplaying(showBigUI);
 
 			// Search for artwork
-			if (cc.currentstation.nowplaying) {
+            if (cc.currentstation.nowplaying) {
+    			if (cc.currentstation.nowplaying != cc.currentstation.lastNowplaying) {
 
-				var opts = {
-                    maxresults: 1,
-					imagesize: cc.gcis.IMAGESIZE_LARGE
-                }
+    				var opts = {
+                        maxresults: 1,
+    					imagesize: cc.gcis.IMAGESIZE_LARGE
+                    }
 
-				// opts = { maxresults:1 }
+    				// opts = { maxresults:1 }
 
-				var searchstr = cc.currentstation.nowplaying.toLowerCase();
-				if (searchstr.indexOf("|")>0) { searchstr = searchstr.substr(0, searchstr.indexOf("|")-1); }
-				searchstr = searchstr.split("-").join("");
+    				var searchstr = cc.currentstation.nowplaying.toLowerCase();
+    				if (searchstr.indexOf("|")>0) { searchstr = searchstr.substr(0, searchstr.indexOf("|")-1); }
+    				searchstr = searchstr.split("-").join("");
 
-				if (cc.currentstation.nowplaying.toLowerCase()=="now playing: unknown") {
-					searchstr = cc.currentstation.station_name;
-				}
-				//searchstr += " album art"
+    				if (cc.currentstation.nowplaying.toLowerCase()=="now playing: unknown") {
+    					searchstr = cc.currentstation.station_name;
+    				}
+    				//searchstr += " album art"
 
-				cc.helpers.googleImageSearch(searchstr,
-					function(res) {
-						var res = res[0];
-						if (!res) {
-							loggr.log(" > No album art :(");
-							$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                            $("#main .color").css("background","none");
-						} else {
-
-							var image = new Image;
-                            image.crossOrigin = '';
-							image.onload = function() {
-								if ($("#main").css("background-image") && $("#main").css("background-image").indexOf(this.src)>=0) {
-									loggr.log(" > Found SAME album art: "+ res);
-									return;
-								}
-								loggr.log(" > Found album art: "+ res);
-								$("#main").css("background-image","url('"+ this.src +"')");
-                                try {
-                                    var vibrant = new Vibrant(this,32,10);
-                    				var swatches = vibrant.swatches();
-                    				if (swatches["Vibrant"]) {
-                                        $("#main .color").css("background",swatches["Vibrant"].getHex());
-                                        //loggr.error("Color: "+ swatches["Vibrant"].getHex());
-                                    } else {
-                                        $("#main .color").css("background","#FFC107");
-                                        //loggr.error("No color :(");
-                                    }
-                                } catch(e) {
-                                    if (e.stack) { loggr.error(e.stack.replace("\n","<br>")); }
-                                    else { loggr.error(e); }
-                                }
-								cc.vars.background_image = res;
-								cc.burnInProtector();
-							}
-							image.onerror = function() {
-								loggr.log(" > Found album art but loading failed: "+ this.src);
-								$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+    				cc.helpers.googleImageSearch(searchstr,
+    					function(res) {
+    						var res = res[0];
+    						if (!res) {
+    							loggr.log(" > No album art :(");
+    							$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
                                 $("#main .color").css("background","none");
-							}
-							if (searchstr=="NPO Radio 3fm") {
-								image.src = "http://a1094.phobos.apple.com/us/r30/Purple5/v4/47/3a/5d/473a5dab-5ba6-9e1b-255b-dce76abdce54/mzl.lgbuvbki.png";
-							} else {
-                                var imgurl = decodeURIComponent(res);
-                                var url = "http://www.rejh.nl/static/phpth/phpThumb.php?w=1280&h=1280&src="+ imgurl;
-                                //loggr.error(url);
-								image.src = url;
-							}
+    						} else {
 
-						}
-					},
-					function(err) {
-						$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                        $("#main .color").css("background","none");
-					},
-					opts
-				);
+    							var image = new Image;
+                                image.crossOrigin = '';
+    							image.onload = function() {
+    								if ($("#main").css("background-image") && $("#main").css("background-image").indexOf(this.src)>=0) {
+    									loggr.log(" > Found SAME album art: "+ res);
+    									return;
+    								}
+    								loggr.log(" > Found album art: "+ res);
+    								$("#main").css("background-image","url('"+ this.src +"')");
+                                    try {
+                                        var vibrant = new Vibrant(this,32,10);
+                        				var swatches = vibrant.swatches();
+                        				if (swatches["Vibrant"]) {
+                                            $("#main .color").css("background",swatches["Vibrant"].getHex());
+                                            //loggr.error("Color: "+ swatches["Vibrant"].getHex());
+                                        } else {
+                                            $("#main .color").css("background","#FFC107");
+                                            //loggr.error("No color :(");
+                                        }
+                                    } catch(e) {
+                                        if (e.stack) { loggr.error(e.stack.replace("\n","<br>")); }
+                                        else { loggr.error(e); }
+                                    }
+    								cc.vars.background_image = res;
+    								cc.burnInProtector();
+    							}
+    							image.onerror = function() {
+    								loggr.log(" > Found album art but loading failed: "+ this.src);
+    								$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                                    $("#main .color").css("background","none");
+    							}
+    							if (searchstr=="NPO Radio 3fm") {
+    								image.src = "http://a1094.phobos.apple.com/us/r30/Purple5/v4/47/3a/5d/473a5dab-5ba6-9e1b-255b-dce76abdce54/mzl.lgbuvbki.png";
+    							} else {
+                                    var imgurl = decodeURIComponent(res);
+                                    var url = "http://www.rejh.nl/static/phpth/phpThumb.php?w=1280&h=1280&src="+ imgurl;
+                                    //loggr.error(url);
+    								image.src = url;
+    							}
 
-			} else {
-				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                $("#main .color").css("background","none");
-			}
+    						}
+    					},
+    					function(err) {
+    						$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                            $("#main .color").css("background","none");
+    					},
+    					opts
+    				);
+
+    			} else {
+    				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                    $("#main .color").css("background","none");
+    			}
+
+            }
+
+            cc.currentstation.lastNowplaying = cc.currentstation.nowplaying;
 
 
 		}

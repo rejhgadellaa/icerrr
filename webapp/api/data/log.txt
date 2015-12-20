@@ -1,3 +1,15 @@
+2015-12-20 06:51:14    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 06:51:14    Cleanup json
+2015-12-20 06:51:11    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 06:51:11    Cleanup json
+2015-12-20 06:50:35    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 06:50:35    Cleanup json
+2015-12-20 06:49:58    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 06:49:58    Cleanup json
+2015-12-20 06:48:23    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 06:48:23    Cleanup json
+2015-12-20 06:44:52    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 06:44:51    Cleanup json
 2015-12-11 12:35:02    GET > {"get":"gcisearch","search":"Billie Jean"}
 2015-12-11 12:35:02    Cleanup json
 2015-12-11 12:34:56    Error: Error in query: '{"get":"gisearch","search":"Billie Jean"}', gisearch, Array

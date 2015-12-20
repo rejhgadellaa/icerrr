@@ -260,23 +260,64 @@ switch($action) {
 
 			// Google Image Search (via Google Custom Search API)
 			case "gcisearch":
-				// Build url
-				$url = $cfg["gcs_url"]
-					."q=". rawurlencode($queryobj["search"])
-					."&searchType=image"
-					."&key=". $cfg["gcs_server_key"]
-					."&cx=". $cfg["gcs_cefs"]
-					;
-				// userIP if available
-				if ($queryobj["imgSize"]) {
-					$url .= "&imgSize=". $queryobj["imgSize"];
+				// check cache
+				$cachekey = $queryobj["search"]."-size".$queryobj["imgSize"];
+				// > too big? filesize exceeds 8mb, flush it!
+				if (filesize("data/cache.gcisearch.json.gz")>1024*1024*8) {
+					@unlink("data/cache.gcisearch.json.gz");
 				}
-				if ($_SERVER['REMOTE_ADDR']!="127.0.0.1") {
-					$url .= "&userIp=". $_SERVER['REMOTE_ADDR'];
+				// > go
+				$gzcachejsons = fr("data/cache.gcisearch.json.gz");
+				if ($gzcachejsons) { $cachejsons = gzdecode($cachejsons); }
+				else { $cachejsons = "{}"; }
+				$cachejson = json_decode($cachejsons,true);
+				// > check size..
+				if (count($cachejson)>128) {
+					$newcachejson = array();
+					foreach ($cachejson as $k => $r) {
+						if ($r["valid_until_time"]>time()) {
+							$newcachejson[$k] = $r;
+						}
+					}
+					$cachejson = $newcachejson;
+					$gzcachejsons = gzencode(json_encode($cachejson));
+					fw("data/cache.gcisearch.json.gz",$gzcachejsons);
 				}
-				$fg = fg($url);
-				$json["data"] = json_decode($fg,true);
+				// New search..
+				if (!$cachejson[$cachekey] || $cachejson[$cachekey]["valid_until_time"] < time() ) {
+					// Build url
+					$url = $cfg["gcs_url"]
+						."q=". rawurlencode($queryobj["search"])
+						."&searchType=image"
+						."&key=". $cfg["gcs_server_key"]
+						."&cx=". $cfg["gcs_cefs"]
+						;
+					// userIP if available
+					if ($queryobj["imgSize"]) {
+						$url .= "&imgSize=". $queryobj["imgSize"];
+					}
+					if ($_SERVER['REMOTE_ADDR']!="127.0.0.1") {
+						$url .= "&userIp=". $_SERVER['REMOTE_ADDR'];
+					}
+					// get + parse json
+					$fg = fg($url);
+					$fgjson = json_decode($fg,true);
+					$json["data"] = $fgjson;
+					$json["data"]["valid_until_time"] = time() + (60*60*24*7); // valid for a week
+					// save to cache..
+					if (!$fgjson["error"]) {
+						$cachejson[$cachekey] = $json["data"];
+						$gzcachejsons = gzencode(json_encode($cachejson));
+						fw("data/cache.gcisearch.json.gz",$gzcachejsons);
+					}
+				}
+				// use cache..
+				else {
+					$json["data"] = $cachejson[$cachekey];
+					$json["info"]["cached"] = true;
+				}
 				$json["info"]["url"] = $url;
+				$json["info"]["cachekey"] = $cachekey;
 				$jsons = json_encode($jsons);
 				$jsons = gzencode(json_encode($json));
 				header('Content-Encoding: gzip');
