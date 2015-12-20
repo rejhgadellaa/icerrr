@@ -270,7 +270,7 @@ loggr.show = function() {
 	$(".debug").css("display","block");
 	if (loggr.timeout_hide) { clearTimeout(loggr.timeout_hide); }
 	loggr.timeout_hide = setTimeout(function(){
-		//$(".debug").css("display","none");
+		$(".debug").css("display","none");
 		//$(".debug").fadeOut(500,function(){ loggr.lines = []; });
 	},5000);
 }
@@ -553,6 +553,7 @@ cc.run_nowplaying_poll = function() {
 
 			// Search for artwork
             if (cc.currentstation.nowplaying) {
+
     			if (cc.currentstation.nowplaying != cc.currentstation.lastNowplaying) {
 
     				var opts = {
@@ -604,7 +605,6 @@ cc.run_nowplaying_poll = function() {
                                         else { loggr.error(e); }
                                     }
     								cc.vars.background_image = res;
-    								cc.burnInProtector();
     							}
     							image.onerror = function() {
     								loggr.log(" > Found album art but loading failed: "+ this.src);
@@ -630,14 +630,15 @@ cc.run_nowplaying_poll = function() {
     				);
 
     			} else {
-    				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                    $("#main .color").css("background","none");
-    			}
+                    cc.burnInProtector();
+                }
 
+                cc.currentstation.lastNowplaying = cc.currentstation.nowplaying;
+
+            } else {
+                $("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                $("#main .color").css("background","none");
             }
-
-            cc.currentstation.lastNowplaying = cc.currentstation.nowplaying;
-
 
 		}
 	})

@@ -1,3 +1,26 @@
+2015-12-20 09:16:06     > cachejson: 1, 2761 bytes
+2015-12-20 09:16:06    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 09:16:06    Cleanup json
+2015-12-20 09:15:16    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 09:15:16    Cleanup json
+2015-12-20 09:15:01    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 09:15:01    Cleanup json
+2015-12-20 09:14:28     > Write cache..
+2015-12-20 09:14:27     > cachejson: 0, 2759 bytes
+2015-12-20 09:14:27    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 09:14:27    Cleanup json
+2015-12-20 09:13:27     > Write cache..
+2015-12-20 09:13:27    0
+2015-12-20 09:13:27    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 09:13:27    Cleanup json
+2015-12-20 09:12:38    0
+2015-12-20 09:12:38    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 09:12:38    Cleanup json
+2015-12-20 09:11:55    0
+2015-12-20 09:11:55    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 09:11:55    Cleanup json
+2015-12-20 09:10:10    GET > {"get":"gcisearch","search":"npo 3fm"}
+2015-12-20 09:10:10    Cleanup json
 2015-12-20 06:51:14    GET > {"get":"gcisearch","search":"npo 3fm"}
 2015-12-20 06:51:14    Cleanup json
 2015-12-20 06:51:11    GET > {"get":"gcisearch","search":"npo 3fm"}
@@ -8243,5 +8266,4 @@
 2015-11-08 08:22:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
 2015-11-08 08:22:55    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":"80","station_path":"/radio10"}
 2015-11-08 08:22:55    Cleanup json
-2015-11-08 08:21:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
-2015-11-08 08:21:55    GET > {"get":"station_info
+2015-11-08 08:21:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php
