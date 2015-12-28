@@ -312,7 +312,7 @@ public class MediaStreamerService extends Service {
 					overrideOpts.put("actionPlayPauseTitle","Play");
 				} catch(Exception e) {}
 				shouldEnableWifi = false;
-				// audioMgr.abandonAudioFocus(afChangeListener);
+				audioMgr.abandonAudioFocus(afChangeListener);
 			} else if (cmd_pause_resume && sett.getBoolean("is_paused", false)) { // resume
 				Log.d(APPTAG," > cmd_pause_resume RESUME!");
 				settEditor.putBoolean("is_paused", false);
@@ -646,16 +646,20 @@ public class MediaStreamerService extends Service {
 	        		
 	        		// LastFocusState was LOSS_TRANSIENT so resume playback :D
 	        		if (lastFocusState==AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-		        		Log.d(APPTAG," >> Resume playback (from paused)");
+
+		        		Log.d(APPTAG, " >> Resume playback (from paused)");
+
+						// Reset flags
+						settEditor.putBoolean("is_paused", false);
+						settEditor.commit();
+
 		        		sendBroadcastSLS(nowplaying,lastnpverified,1);
+
 						mpMgr.resume();
+
 	        		} else {
 	        			Log.d(APPTAG," >> Do not resume playback, keep notification");
 	        		}
-	        		
-	        		// Reset flags
-	        		settEditor.putBoolean("is_paused", false);
-					settEditor.commit();
 					
 	        	}
 				
@@ -677,7 +681,7 @@ public class MediaStreamerService extends Service {
 	            // Stop playback
 	        	Log.d(APPTAG," > AUDIOFOCUS_LOSS");
 	        	
-	        	Log.d(APPTAG," > Pause the stream!");
+	        	Log.d(APPTAG, " > Pause the stream!");
 	        	settEditor.putBoolean("is_paused", true);
 				settEditor.commit();
 				sendBroadcastSLS(nowplaying,lastnpverified,2);
