@@ -1,4 +1,8 @@
-0.330
+0.332
+  * Fix: stream was resumed after call when paused by user
+  * Fix: app not getting passed splash screen on older android versions (<5.0)
+
+0.331
   * Bugfixes, improvements
 
 0.329

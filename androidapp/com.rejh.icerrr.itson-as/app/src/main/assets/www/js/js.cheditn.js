@@ -1,2 +1,0 @@
-if(!site){var site={};}
-site.chedit={};site.chedit.init=function(station_id_to_edit,askedAboutStationName,askedAboutNowplaying,checkedPlayability,isPlayable){loggr.debug("------------------------------------");loggr.debug("site.chedit.init()");site.ui.hideloading();site.lifecycle.add_section_history("#editstation");site.ui.gotosection("#editstation");}
