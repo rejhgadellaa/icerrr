@@ -17,16 +17,17 @@
 	},
 
     {
-        "id":"app332",
+        "id":"app333",
         "crit":"version",
-        "critvalue":0.331,
+        "critvalue":0.332,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.332 includes:",
+            "v0.333 includes:",
+            "* Ditched polymer icons for improved performance",
 			"* Migrated album art search to Google Custom Search API",
             "* Fixes and improvements"
             ],

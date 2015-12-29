@@ -1,3 +1,6 @@
+0.333
+  * Ditched polymer icons for improved performance
+
 0.332
   * Fix: stream was resumed after call when paused by user
   * Fix: app not getting passed splash screen on older android versions (<5.0)

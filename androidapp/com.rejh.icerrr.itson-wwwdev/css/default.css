@@ -129,22 +129,15 @@ section {
 		.actionbar .icon_app {
 			position:absolute;
 			top:0; left:0;
-			height:56px;
+			height:40px;
+			margin:8px;
+			border-radius:64px;
 		}
 
-			.actionbar .icon_app iron-icon {
-				margin:0;
-				padding:16px;
-				color:#fff;
-			}
-			.actionbar .icon_app paper-icon-button {
-				height:56px;
-				padding:0;
-				color:#fff;
-			}
-
-			.actionbar .icon_app img { /* TODO: deprecated polymer */
+			.actionbar .icon_app img {
+				display:block;
 				width:24px; height:24px;
+				padding:8px;
 			}
 
 		.actionbar .title {
@@ -164,26 +157,27 @@ section {
 			height:56px;
 		}
 
-			.actionbar .actions paper-icon-button {
-				float:right;
-				margin: 8px 16px 0 0;
-				padding:8px;
-			}
-			.actionbar .actions paper-icon-button.more-vert {
-				margin:8px 8px 0 -8px;
-			}
-
-			.actionbar .actions .action { /* TODO: deprecated polymer */
+			.actionbar .actions .action {
 				float:right;
 				width:24px;
 				height:24px;
-				margin-right:8px;
-				padding:16px;
+				margin:8px;
+				margin-right:16px;
+				padding:8px;
+				border-radius:64px;
 			}
 
-				.actionbar .actions .action img { /* TODO: deprecated polymer */
+				.actionbar .actions .action img {
 					width:24px; height:24px;
 				}
+
+				.actionbar .actions .action.more-vert {
+					width:12px;
+				}
+
+					.actionbar .actions .action.more-vert img {
+						width:12px;
+					}
 
 	.tabbar {
 		z-index:2;
@@ -1588,7 +1582,7 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 /* TODO: deprecated polymer ? */
 
 /**/
-.activatablel,.activatabled {
+.activatablel,.activatabled,.activatableb {
 	transition:background-color 250ms;
 }
 
@@ -1598,12 +1592,18 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 .activatabled:active {
 	background-color:rgba(69,90,100,0.25);
 }
+.activatableb:active {
+	background-color:rgba(0,0,0,0.25);
+}
 
 .activatablelh_active {
 	background-color:rgba(69,90,100,0.25);
 }
 .activatabledh_active {
 	background-color:rgba(69,90,100,0.25);
+}
+.activatablebh_active {
+	background-color:rgba(0,0,0,0.25);
 }
 /**/
 

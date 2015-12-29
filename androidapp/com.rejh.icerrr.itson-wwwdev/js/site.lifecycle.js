@@ -24,28 +24,9 @@ site.lifecycle.loadPolymer = function() {
 
 	loggr.debug("site.lifecycle.loadPolymer()");
 
-	var webComponentsSupported = ('registerElement' in document
-		&& 'import' in document.createElement('link')
-	    && 'content' in document.createElement('template'));
-
-	if (!webComponentsSupported) {
-		try {
-			loggr.log("-> !webComponentsSupported -> Load it") // can't use loggr yet...
-			var script = document.createElement('script');
-			script.async = true;
-			script.onload = site.lifecycle.onloadPolymer;
-			script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
-			document.getElementsByTagName('head')[0].appendChild(script);
-		} catch(e) {
-			var errstr = "site.lifecycle.loadPolymer().Error: "+e
-			if (e.stack) {
-				errstr += "\n"+ e.stack;
-			}
-			loggr.error(errstr);
-		}
-	} else {
-	 	site.lifecycle.onloadPolymer();
-	}
+	// TODO: removed polymer because performance hit and issues on older devices.
+	// REMOVE THIS CRAP
+	site.lifecycle.onloadPolymer();
 
 }
 
@@ -54,17 +35,16 @@ site.lifecycle.onloadPolymer = function() {
 	loggr.debug("site.lifecycle.onloadPolymer()");
 
 	// Check import
-	var link = document.querySelector('#polymerBundle');
-	if (link.import && link.import.readyState === 'complete') {
-		site.lifecycle.onloadedPolymer();
-	} else {
-		link.addEventListener('load', site.lifecycle.onloadedPolymer);
-	}
+	// TODO: removed polymer because performance hit and issues on older devices.
+	// REMOVE THIS CRAP
+	site.lifecycle.onloadedPolymer();
 
 }
 
 site.lifecycle.onloadedPolymer = function() {
 
+	// TODO: removed polymer because performance hit and issues on older devices.
+	// REMOVE THIS CRAP
 	loggr.debug("site.lifecycle.onloadedPolymer()");
 	site.lifecycle.loadedPolymer = true;
 	if (site.lifecycle.loaded && site.lifecycle.deviceReady && site.lifecycle.loadedPolymer) {
