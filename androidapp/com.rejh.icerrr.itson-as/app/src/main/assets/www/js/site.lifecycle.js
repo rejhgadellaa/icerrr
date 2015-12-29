@@ -1,6 +1,6 @@
 if(!site){var site={};}
 site.lifecycle={};site.session.lifecycle={};site.session.lifecycle.section_history=[];site.lifecycle.loaded=false;site.lifecycle.deviceReady=false;site.lifecycle.loadedPolymer=false;site.lifecycle.loadPolymer=function(){loggr.debug("site.lifecycle.loadPolymer()");var webComponentsSupported=('registerElement'in document&&'import'in document.createElement('link')&&'content'in document.createElement('template'));if(!webComponentsSupported){try{loggr.log("-> !webComponentsSupported -> Load it")
-var script=document.createElement('script');script.async=true;script.onload=site.lifecycle.onloadPolymer;script.src='bower_components/webcomponentsjs/webcomponents-lite.min.js';document.getElementsByTagName('head')[0].appendChild(script);}catch(e){var errstr="site.lifecycle.loadPolymer().Error: "+e
+var script=document.createElement('script');script.async=true;script.onload=site.lifecycle.onloadPolymer;script.src='bower_components/webcomponentsjs/webcomponents.min.js';document.getElementsByTagName('head')[0].appendChild(script);}catch(e){var errstr="site.lifecycle.loadPolymer().Error: "+e
 if(e.stack){errstr+="\n"+e.stack;}
 loggr.error(errstr);}}else{site.lifecycle.onloadPolymer();}}
 site.lifecycle.onloadPolymer=function(){loggr.debug("site.lifecycle.onloadPolymer()");var link=document.querySelector('#polymerBundle');if(link.import&&link.import.readyState==='complete'){site.lifecycle.onloadedPolymer();}else{link.addEventListener('load',site.lifecycle.onloadedPolymer);}}
