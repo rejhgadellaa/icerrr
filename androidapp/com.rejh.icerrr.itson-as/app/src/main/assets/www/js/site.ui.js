@@ -8,7 +8,7 @@ while(site.session.ui_pause_callbacks.length>0){var func=site.session.ui_pause_c
 if(!site.session.ui_resume_callbacks){site.session.ui_resume_callbacks=[];}
 while(site.session.ui_resume_callbacks.length>0){site.session.ui_resume_callbacks.shift();}
 if(site.timeouts.gotosection){clearTimeout(site.timeouts.gotosection);}
-$(".activatablel_active").removeClass("activatablel_active");$(".activatabled_active").removeClass("activatabled_active");if(selector!="#home"){$("#home").css("display","none");}
+$("*").removeClass("activatablelh_active");$("*").removeClass("activatabledh_active");$("*").removeClass("activatablebh_active");$("*").removeClass("activatablewh_active");if(selector!="#home"){$("#home").css("display","none");}
 if(site.vars.previousSection=="#splash"){$(site.vars.currentSection+" .main").css("height",$(window).height()-56);$(selector).css("display","block");$("#splash").on("transitionend webkitTransitionEnd",function(evt){$("#splash").off("transitionend webkitTransitionEnd");site.ui.fadeOut("#splash",250);});var translate="translate3d(0px,"+(-($(window).height()-$(".actionbar").height()))+"px,0px)";$("#splash").css({"transform":translate,"-webkit-transform":translate});}else{$("section").css("display","none");$(selector).css("display","block");}
 loggr.log(" > "+selector+" display: "+$(selector).css("display"));setTimeout(site.lifecycle.onResize,10);site.ui.setLongclickHelp();}
 site.ui.initFabScroll=function(selector){loggr.log("site.ui.initFabScroll()");if(!site.vars.fabscrolls){site.vars.fabscrolls={};}
@@ -75,7 +75,9 @@ site.ui.hackActiveCssRule=function(){loggr.log("site.ui.hackActiveCssRule()");tr
 versionStr=parseFloat(versionStr);if(versionStr>=5.0){loggr.log(" > Android 5.0 or higher, no hackCss required");return; }}catch(e){loggr.error(" > site.ui.hackActiveCssRule().err parsing android version: "+e);}
 var actls=$(".activatablel");for(var i=0;i<actls.length;i++){$(actls[i]).removeClass("activatablel");$(actls[i]).addClass("activatablelh");}
 var actds=$(".activatabled");for(var i=0;i<actds.length;i++){$(actds[i]).removeClass("activatabled");$(actds[i]).addClass("activatabledh");}
-$(".activatablelh,activatabledh").css("transition","none");var elems=[];elems=$(".activatablelh");for(var i in elems){var elem=elems[i];elem.ontouchstart=function(evt){if(!evt.target){return;}
+var actds=$(".activatableb");for(var i=0;i<actds.length;i++){$(actds[i]).removeClass("activatableb");$(actds[i]).addClass("activatablebh");}
+var actds=$(".activatablew");for(var i=0;i<actds.length;i++){$(actds[i]).removeClass("activatablew");$(actds[i]).addClass("activatablewh");}
+$(".activatablelh,activatabledh,activatablebh,activatablewh").css("transition","none");var elems=[];elems=$(".activatablelh");for(var i in elems){var elem=elems[i];elem.ontouchstart=function(evt){if(!evt.target){return;}
 var foundTheActualTarget=false;var thetarget=evt.target;var whilenum=0;while(!foundTheActualTarget){if(!thetarget){break;}
 if(thetarget.className){if(thetarget.className.indexOf("activatablel")>=0){foundTheActualTarget=true;break;}}
 thetarget=thetarget.parentNode;whilenum++;if(whilenum>256){break;}}
@@ -85,7 +87,7 @@ site.timeouts.activatablel_ontouchstart=setTimeout(function(){if($(thetarget).ha
 $(thetarget).addClass("activatablelh_active");},25);};elem.ontouchend=function(evt){if(site.timeouts.activatablel_ontouchstart){clearTimeout(site.timeouts.activatable_ontouchstart);}
 if(site.timeouts.activatabled_ontouchstart){clearTimeout(site.timeouts.activatabled_ontouchstart);}
 if(site.timeouts.activatablel_ontouchend){clearTimeout(site.timeouts.activatablel_ontouchend);}
-site.timeouts.activatablel_ontouchend=setTimeout(function(){$("*").removeClass("activatablelh_active");$("*").removeClass("activatabledh_active");$("*").removeClass("activatablebh_active");},250);};elem.ontouchcancel=elem.ontouchend;}
+site.timeouts.activatablel_ontouchend=setTimeout(function(){$("*").removeClass("activatablelh_active");$("*").removeClass("activatabledh_active");$("*").removeClass("activatablebh_active");$("*").removeClass("activatablewh_active");},250);};elem.ontouchcancel=elem.ontouchend;}
 elems=$(".activatabledh");for(var i in elems){var elem=elems[i];elem.ontouchstart=function(evt){if(!evt.target){return;}
 var foundTheActualTarget=false;var thetarget=evt.target;var whilenum=0;while(!foundTheActualTarget){if(!thetarget){break;}
 if(thetarget.className){if(thetarget.className.indexOf("activatabled")>=0){foundTheActualTarget=true;break;}}
@@ -96,7 +98,7 @@ site.timeouts.activatabled_ontouchstart=setTimeout(function(){if($(thetarget).ha
 $(thetarget).addClass("activatabledh_active");},25);};elem.ontouchend=function(evt){if(site.timeouts.activatablel_ontouchstart){clearTimeout(site.timeouts.activatable_ontouchstart);}
 if(site.timeouts.activatabled_ontouchstart){clearTimeout(site.timeouts.activatabled_ontouchstart);}
 if(site.timeouts.activatabled_ontouchend){clearTimeout(site.timeouts.activatabled_ontouchend);}
-site.timeouts.activatabled_ontouchend=setTimeout(function(){$("*").removeClass("activatablelh_active");$("*").removeClass("activatabledh_active");$("*").removeClass("activatablebh_active");},250);};elem.ontouchcancel=elem.ontouchend;}
+site.timeouts.activatabled_ontouchend=setTimeout(function(){$("*").removeClass("activatablelh_active");$("*").removeClass("activatabledh_active");$("*").removeClass("activatablebh_active");$("*").removeClass("activatablewh_active");},250);};elem.ontouchcancel=elem.ontouchend;}
 elems=$(".activatablebh");for(var i in elems){var elem=elems[i];elem.ontouchstart=function(evt){if(!evt.target){return;}
 var foundTheActualTarget=false;var thetarget=evt.target;var whilenum=0;while(!foundTheActualTarget){if(!thetarget){break;}
 if(thetarget.className){if(thetarget.className.indexOf("activatableb")>=0){foundTheActualTarget=true;break;}}
@@ -107,4 +109,15 @@ site.timeouts.activatabled_ontouchstart=setTimeout(function(){if($(thetarget).ha
 $(thetarget).addClass("activatablebh_active");},25);};elem.ontouchend=function(evt){if(site.timeouts.activatablel_ontouchstart){clearTimeout(site.timeouts.activatable_ontouchstart);}
 if(site.timeouts.activatabled_ontouchstart){clearTimeout(site.timeouts.activatabled_ontouchstart);}
 if(site.timeouts.activatabled_ontouchend){clearTimeout(site.timeouts.activatabled_ontouchend);}
-site.timeouts.activatabled_ontouchend=setTimeout(function(){$("*").removeClass("activatablelh_active");$("*").removeClass("activatabledh_active");$("*").removeClass("activatablebh_active");},250);};elem.ontouchcancel=elem.ontouchend;}}
+site.timeouts.activatabled_ontouchend=setTimeout(function(){$("*").removeClass("activatablelh_active");$("*").removeClass("activatabledh_active");$("*").removeClass("activatablebh_active");$("*").removeClass("activatablewh_active");},250);};elem.ontouchcancel=elem.ontouchend;}
+elems=$(".activatablewh");for(var i in elems){var elem=elems[i];elem.ontouchstart=function(evt){if(!evt.target){return;}
+var foundTheActualTarget=false;var thetarget=evt.target;var whilenum=0;while(!foundTheActualTarget){if(!thetarget){break;}
+if(thetarget.className){if(thetarget.className.indexOf("activatablew")>=0){foundTheActualTarget=true;break;}}
+thetarget=thetarget.parentNode;whilenum++;if(whilenum>256){break;}}
+if(site.timeouts.activatablel_ontouchstart){clearTimeout(site.timeouts.activatable_ontouchstart);}
+if(site.timeouts.activatabled_ontouchstart){clearTimeout(site.timeouts.activatabled_ontouchstart);}
+site.timeouts.activatabled_ontouchstart=setTimeout(function(){if($(thetarget).hasClass("activatablewh_active")){return;}
+$(thetarget).addClass("activatablewh_active");},25);};elem.ontouchend=function(evt){if(site.timeouts.activatablel_ontouchstart){clearTimeout(site.timeouts.activatable_ontouchstart);}
+if(site.timeouts.activatabled_ontouchstart){clearTimeout(site.timeouts.activatabled_ontouchstart);}
+if(site.timeouts.activatabled_ontouchend){clearTimeout(site.timeouts.activatabled_ontouchend);}
+site.timeouts.activatabled_ontouchend=setTimeout(function(){$("*").removeClass("activatablelh_active");$("*").removeClass("activatabledh_active");$("*").removeClass("activatablebh_active");$("*").removeClass("activatablewh_active");},250);};elem.ontouchcancel=elem.ontouchend;}}

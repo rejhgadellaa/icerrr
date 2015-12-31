@@ -1,3 +1,6 @@
+0.334
+  * Minor improvements
+
 0.333
   * Ditched polymer icons for improved performance
 

@@ -68,8 +68,11 @@ site.ui.gotosection = function(selector) {
 	// TODO: Settimeout is a workaround so that :active elements lose their active state..
 	if (site.timeouts.gotosection) { clearTimeout(site.timeouts.gotosection); }
 
-	$(".activatablel_active").removeClass("activatablel_active");
-	$(".activatabled_active").removeClass("activatabled_active");
+	// Remove activatable*h_active
+	$("*").removeClass("activatablelh_active");
+	$("*").removeClass("activatabledh_active");
+	$("*").removeClass("activatablebh_active");
+	$("*").removeClass("activatablewh_active");
 
 	// Hide home when needed (because it is shown by default so body.onload does load it)
 	if (selector!="#home") {
@@ -542,9 +545,19 @@ site.ui.hackActiveCssRule = function() {
 		$(actds[i]).removeClass("activatabled");
 		$(actds[i]).addClass("activatabledh");
 	}
+	var actds = $(".activatableb");
+	for (var i=0; i<actds.length; i++) {
+		$(actds[i]).removeClass("activatableb");
+		$(actds[i]).addClass("activatablebh");
+	}
+	var actds = $(".activatablew");
+	for (var i=0; i<actds.length; i++) {
+		$(actds[i]).removeClass("activatablew");
+		$(actds[i]).addClass("activatablewh");
+	}
 
 	// Reset transitions
-	$(".activatablelh,activatabledh").css("transition","none");
+	$(".activatablelh,activatabledh,activatablebh,activatablewh").css("transition","none");
 
 	// Work..
 
@@ -589,6 +602,7 @@ site.ui.hackActiveCssRule = function() {
 				$("*").removeClass("activatablelh_active");
 				$("*").removeClass("activatabledh_active");
 				$("*").removeClass("activatablebh_active");
+				$("*").removeClass("activatablewh_active");
 				//$(".activatablel,activatabled").css("transition","background-color 500ms");
 			},250);
 
@@ -635,6 +649,7 @@ site.ui.hackActiveCssRule = function() {
 				$("*").removeClass("activatablelh_active");
 				$("*").removeClass("activatabledh_active");
 				$("*").removeClass("activatablebh_active");
+				$("*").removeClass("activatablewh_active");
 				//$(".activatablel,activatabled").css("transition","background-color 500ms");
 			},250);
 		};
@@ -680,6 +695,53 @@ site.ui.hackActiveCssRule = function() {
 				$("*").removeClass("activatablelh_active");
 				$("*").removeClass("activatabledh_active");
 				$("*").removeClass("activatablebh_active");
+				$("*").removeClass("activatablewh_active");
+				//$(".activatablel,activatabled").css("transition","background-color 500ms");
+			},250);
+		};
+		elem.ontouchcancel = elem.ontouchend;
+	}
+
+	elems = $(".activatablewh");
+
+	for (var i in elems) {
+		var elem = elems[i];
+		elem.ontouchstart = function(evt) {
+			// Now we have to find the ACTUAL element that bound this event
+			// because somebody decided it's useful to not do this &$*((@^#))_
+			if (!evt.target) { return; }
+			var foundTheActualTarget = false;
+			var thetarget = evt.target;
+			var whilenum = 0;
+			while (!foundTheActualTarget) {
+				if (!thetarget) { break; }
+				if (thetarget.className) {
+					if (thetarget.className.indexOf("activatablew")>=0) {
+						foundTheActualTarget = true;
+						break;
+					}
+				}
+				thetarget = thetarget.parentNode;
+				whilenum++;
+				if (whilenum>256) { break; } // TODO: unless we intend to do this job in Reno, we're in Barney
+			}
+			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
+			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
+			site.timeouts.activatabled_ontouchstart = setTimeout(function(){
+				if ($(thetarget).hasClass("activatablewh_active")) { return; }
+				$(thetarget).addClass("activatablewh_active");
+				//setTimeout(function(){$(thetarget).css("transition","background-color 500ms");},1);
+			},25);
+		};
+		elem.ontouchend = function(evt) {
+			if (site.timeouts.activatablel_ontouchstart) { clearTimeout(site.timeouts.activatable_ontouchstart); }
+			if (site.timeouts.activatabled_ontouchstart) { clearTimeout(site.timeouts.activatabled_ontouchstart); }
+			if (site.timeouts.activatabled_ontouchend) { clearTimeout(site.timeouts.activatabled_ontouchend); }
+			site.timeouts.activatabled_ontouchend = setTimeout(function() {
+				$("*").removeClass("activatablelh_active");
+				$("*").removeClass("activatabledh_active");
+				$("*").removeClass("activatablebh_active");
+				$("*").removeClass("activatablewh_active");
 				//$(".activatablel,activatabled").css("transition","background-color 500ms");
 			},250);
 		};

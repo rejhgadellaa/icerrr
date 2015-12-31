@@ -1582,7 +1582,7 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 /* TODO: deprecated polymer ? */
 
 /**/
-.activatablel,.activatabled,.activatableb {
+.activatablel,.activatabled,.activatableb,.activatablew {
 	transition:background-color 250ms;
 }
 
@@ -1595,6 +1595,9 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 .activatableb:active {
 	background-color:rgba(0,0,0,0.25);
 }
+.activatablew:active {
+	background-color:rgba(255,255,255,0.25);
+}
 
 .activatablelh_active {
 	background-color:rgba(69,90,100,0.25);
@@ -1604,6 +1607,9 @@ http://stackoverflow.com/questions/25338174/android-webview-active-stays-on-when
 }
 .activatablebh_active {
 	background-color:rgba(0,0,0,0.25);
+}
+.activatablewh_active {
+	background-color:rgba(255,255,255,0.25);
 }
 /**/
 
