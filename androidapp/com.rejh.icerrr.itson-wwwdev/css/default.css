@@ -531,7 +531,7 @@ section {
 	}
 
 	#home .fab_play_wrap {
-		z-index:50;
+		z-index:2;
 		position:absolute;
 		left:50%; bottom:16px;
 		width:56px;
