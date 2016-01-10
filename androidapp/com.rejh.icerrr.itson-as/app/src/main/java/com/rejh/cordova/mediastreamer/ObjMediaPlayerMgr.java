@@ -373,13 +373,13 @@ public class ObjMediaPlayerMgr {
 			Log.d(LOGTAG," -> MP.OnInfo(" + code + ", " + extra + ")");
 			
 			// Check code/extra for 703/192
-			if (code==703) { // code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==192) {
-				Log.w(LOGTAG, " --> Code 701 after 703, restart stream");
+			if (code==701 && mediaPlayerInfoLastCode==703) { // code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==192) {
+				Log.w(LOGTAG, " --> Code 701 after 703, restart stream, errors: "+nrOfErrors);
 				if (nrOfErrors > 8) { initbackup(); return false; }
 				nrOfErrors++;
 				mediaPlayerInfoLastCode = -1;
 				mediaPlayerInfoLastExtra = -1;
-				init(getStreamUrl(),isAlarm);
+				//init(getStreamUrl(),isAlarm);
 				return false;
 			}
 			// Store code && extra..

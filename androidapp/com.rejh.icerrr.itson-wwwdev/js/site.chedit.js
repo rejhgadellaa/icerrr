@@ -665,7 +665,7 @@ site.chedit.check_station_icon = function(silent) {
 site.chedit.searchicon = function() {
 
 	loggr.log("site.chedit.searchicon()");
-	$("#editstation input[name='station_icon']")[0].value = "img/icons-80/ic_station_default.png";
+	$("#editstation input[name='station_icon']")[0].value = "http://www.rejh.nl/icerrr/img/web_hi_res_512_002.jpg";
 
 	// Auto check..
 	site.chedit.check();
