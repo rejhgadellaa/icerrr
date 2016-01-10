@@ -55,7 +55,6 @@ public class Icerrr extends DroidGap
 
     private final static int PERMISSION_REQ_READ_STORAGE = 1;
     private final static int PERMISSION_REQ_WRITE_STORAGE = 2;
-    private final static int PERMISSION_REQ_PHONE_STATE = 3;
 	
 	private SharedPreferences sett;
 	
@@ -252,8 +251,7 @@ public class Icerrr extends DroidGap
         if (grantResults.length > 0
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            // permission was granted, yay! Do the
-            // contacts-related task you need to do.
+            // permission was granted, yay!
             requestIcerrrPermissions();
 
         } else {

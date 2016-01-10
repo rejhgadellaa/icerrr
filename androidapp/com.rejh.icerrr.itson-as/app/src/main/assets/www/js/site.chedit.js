@@ -61,16 +61,7 @@ else{loggr.log(error);}});}
 site.chedit.check_station_icon=function(silent){loggr.log("site.chedit.check_station_icon()");var newentry=site.chedit.newentry;var station_name=$("#editstation input[name='station_name']")[0].value.trim();var station_url=$("#editstation input[name='station_url']")[0].value.trim();var station_icon=$("#editstation input[name='station_icon']")[0].value.trim();var img=document.createElement("img");img.onload=function(){site.ui.hideloading();$("#editstation img.station_icon").attr("src",$("#editstation input[name='station_icon']")[0].value.trim());newentry.station_icon_local=null;newentry.station_image_local=null;site.chicon.updateLockscreenArtworkData(newentry);site.chedit.changesHaveBeenMade=true;loggr.log(" > All good :D");site.chedit.save();}
 img.onerror=function(evt){if(station_name){loggr.log(" > Search the google :D");site.chedit.searchicon();}else{site.ui.hideloading();}}
 img.src=site.helpers.urlAddCachebust(station_icon)}
-site.chedit.searchicon=function(){loggr.log("site.chedit.searchicon()");if(!site.chedit.newentry){site.ui.showtoast("Cannot search without info");site.ui.hideloading();return;}
-if(!$("#editstation input[name='station_name']")[0].value.trim()){site.ui.showtoast("Cannot search without station name");return;}
-if(!site.chedit.newentry.station_url){site.ui.showtoast("Cannot search without station url");site.ui.hideloading();return;}
-var searchstring=""
-+'"'+$("#editstation input[name='station_name']")[0].value.trim()+'"'+" "
-+site.chedit.newentry.station_country+" "
-+"logo icon";var opts={restrictions:[[google.search.ImageSearch.RESTRICT_FILETYPE,google.search.ImageSearch.FILETYPE_PNG]]}
-site.helpers.googleImageSearch(searchstring,function(results){loggr.log(" > "+results.length+" result(s)");var theresult=false;for(var i=0;i<results.length;i++){var result=results[i];var aspect=site.helpers.calcImageAspect(result["width"],result["height"]);if(aspect<1.1){loggr.log(" > Found square(ish) result: "+aspect);theresult=result;break;}}
-if(!theresult){theresult=results[0];}
-loggr.log(" > Result info:");loggr.log(" >> tbw/tbh: "+result.tbWidth+" x "+result.tbHeight);loggr.log(" >> w/h: "+result.width+" x "+result.height);loggr.log(" > Pick: "+theresult.url);$("#editstation input[name='station_icon']")[0].value=theresult.url;site.chedit.check();},function(){loggr.log(" > No image found...");site.ui.showtoast("Could not find an icon on Google...");site.ui.hideloading();},opts);}
+site.chedit.searchicon=function(){loggr.log("site.chedit.searchicon()");$("#editstation input[name='station_icon']")[0].value="img/icons-80/ic_station_default.png";site.chedit.check();}
 site.chedit.parsePlaylist=function(station_url,station_name,cb,cberr){var apiqueryobj={"get":"parse_playlist","url":station_url}
 var apiaction="get";var apiquerystr=JSON.stringify(apiqueryobj);site.webapi.exec(apiaction,apiquerystr,function(data){var url=data["data"];if(url.toLowerCase().indexOf("<")>=0||url.toLowerCase().indexOf(">")>=0){site.ui.showtoast("Err: Icerrr cannot verify station url");site.ui.hideloading();if(cberr){cberr({error:1,message:"Unknown data"});}
 return;}

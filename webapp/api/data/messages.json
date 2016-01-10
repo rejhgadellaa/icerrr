@@ -17,16 +17,17 @@
 	},
 
     {
-        "id":"app334",
+        "id":"app335",
         "crit":"version",
-        "critvalue":0.333,
+        "critvalue":0.334,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.334 includes:",
+            "v0.335 includes:",
+            "* Fix for manually adding stations",
             "* Ditched polymer icons for improved performance",
 			"* Migrated album art search to Google Custom Search API",
             "* Fixes and improvements"

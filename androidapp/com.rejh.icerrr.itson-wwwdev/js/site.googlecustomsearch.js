@@ -105,6 +105,13 @@ site.gcis.googleImageSearch = function(search, cb, cberr, opts) {
                 if (opts.maxresults && filteredresults.length>opts.maxresults) {
                     break;
                 }
+                // Square(ish) Image
+                if (opts.square) {
+                    var aspect = site.helpers.calcImageAspect(ritem.image.width,ritem.image.height);
+        			if (aspect>1.1) {
+        				continue
+        			}
+                }
                 // TODO: Aspect at least 2:1 or 1:2
                 // ..
 

@@ -665,75 +665,10 @@ site.chedit.check_station_icon = function(silent) {
 site.chedit.searchicon = function() {
 
 	loggr.log("site.chedit.searchicon()");
+	$("#editstation input[name='station_icon']")[0].value = "img/icons-80/ic_station_default.png";
 
-	if (!site.chedit.newentry) {
-		site.ui.showtoast("Cannot search without info");
-		site.ui.hideloading();
-		return;
-	}
-	if (!$("#editstation input[name='station_name']")[0].value.trim()) {
-		site.ui.showtoast("Cannot search without station name");
-		return;
-	}
-	if (!site.chedit.newentry.station_url) {
-		site.ui.showtoast("Cannot search without station url");
-		site.ui.hideloading();
-		return;
-	}
-
-	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
-	var searchstring = ""
-		+ '"'+ $("#editstation input[name='station_name']")[0].value.trim() +'"' +" "
-		+ site.chedit.newentry.station_country +" "
-	//	+ site.chedit.newentry.station_url +" "
-		+ "logo icon";
-
-	var opts = {
-		restrictions:[
-			[google.search.ImageSearch.RESTRICT_FILETYPE, google.search.ImageSearch.FILETYPE_PNG]
-		]
-	}
-
-	// Search
-	site.helpers.googleImageSearch(searchstring,
-		function(results) {
-
-			loggr.log(" > "+ results.length +" result(s)");
-
-			// TODO: let user pick image? Nah, we're going with the first one for now
-			// --> Find square image(s)
-			var theresult = false;
-			for (var i=0; i<results.length; i++) {
-				var result = results[i];
-				var aspect = site.helpers.calcImageAspect(result["width"],result["height"]);
-				if (aspect<1.1) {
-					loggr.log(" > Found square(ish) result: "+ aspect);
-					theresult = result; break;
-				}
-
-			}
-			// Okat just use some image if we can't find a suitable one.. || TODO: fix this
-			if (!theresult) { theresult = results[0]; }
-
-			loggr.log(" > Result info:");
-			loggr.log(" >> tbw/tbh: "+ result.tbWidth +" x "+ result.tbHeight);
-			loggr.log(" >> w/h: "+ result.width +" x "+ result.height);
-
-			// Set src
-			loggr.log(" > Pick: "+theresult.url);
-			$("#editstation input[name='station_icon']")[0].value = theresult.url;
-
-			// Auto check..
-			site.chedit.check();
-
-		},
-		function() {
-			loggr.log(" > No image found...");
-			site.ui.showtoast("Could not find an icon on Google...");
-			site.ui.hideloading();
-		},
-		opts
-	);
+	// Auto check..
+	site.chedit.check();
 
 }
 

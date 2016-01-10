@@ -59,17 +59,6 @@ $("#channellist .main").append(fragment);var resultitem=document.createElement("
 site.chlist.selectstation=function(resultitem,dontgohome,dontStopPlaying){loggr.debug("site.chlist.selectstation()");loggr.log(" > "+resultitem.station_id);site.session.currentstation_id=resultitem.station_id;site.session.currentstation=site.data.stations[site.helpers.session.getStationIndexById(resultitem.station_id)];loggr.log(" > Send to MediaStreamer");window.mediaStreamer.storeStarredStations(site.session.starred,site.session.currentstation,function(res){loggr.log(" > Starred stations sent to MediaStreamer: "+res);site.helpers.storeSession();if(site.mp.isPlaying&&!dontStopPlaying){site.mp.stop(function(){$(".button_play_bufferAnim").css("display","block");site.mp.play();});}
 if(site.cast.session){site.cast.loadMedia();}
 if(!dontgohome){site.home.init();}},function(err){loggr.error(" > Error sending starred stations to MediaStreamer",{dontupload:true});loggr.error(err);});}
-site.chlist.imagesearch=function(station_data,fullSizeImage){loggr.debug("site.chlist.imagesearch()");if(!station_data.station_name){loggr.log(" > !station_data.station_data:");loggr.log(" > "+JSON.stringify(station_data));return;}
-var searchstring=""
-+station_data.station_name+" "
-+station_data.station_country+" "
-+"logo icon";var opts={restrictions:[[google.search.ImageSearch.RESTRICT_FILETYPE,google.search.ImageSearch.FILETYPE_PNG]]}
-site.helpers.googleImageSearch(searchstring,function(results){loggr.log(" > "+results.length+" result(s)");var theresult=false;for(var i=0;i<results.length;i++){var result=results[i];var aspect=site.helpers.calcImageAspect(result["width"],result["height"]);if(aspect<1.1){loggr.log(" > Found square(ish) result: "+aspect);theresult=result;break;}}
-if(!theresult){theresult=results[0];}
-loggr.log(" > Result info:");loggr.log(" >> tbw/tbh: "+result.tbWidth+" x "+result.tbHeight);loggr.log(" >> w/h: "+result.width+" x "+result.height);loggr.log(" > Pick: "+theresult.url);$("#chlist_resultitem_"+station_data.station_id+" .resulticon").attr("src",theresult.url);loggr.log(" >> "+$("#chlist_resultitem_"+station_data.station_id+" .resulticon").attr("src"));station_data.station_icon=theresult.tbUrl;if(!station_data.station_image){station_data.station_image=theresult.url;}
-var station_index=site.helpers.session.getStationIndexById(station_data.station_id);if(station_index<0){loggr.warn(" > !station_index");}
-site.data.stations[station_index]=jQuery.extend(true,{},station_data);site.storage.writefile(site.cfg.paths.json,"stations.json",JSON.stringify(site.data.stations),function(evt){site.helpers.flagdirtyfile(site.cfg.paths.json+"/stations.json");},function(e){alert("Error writing to filesystem: "+site.storage.getErrorType(e));loggr.log(site.storage.getErrorType(e));});},function(){loggr.log(" > No image found...");$("#chlist_resultitem_"+station_data.station_id+" .resulticon").attr("src","img/icons-80/ic_station_default.png");},opts);return;}
-site.chlist.imagesearch_cb=function(){alert("SHOULD NOT FIRE!");}
 site.chlist.readstations=function(customCB){loggr.debug("site.chlist.readstations()");if(!customCB){customCB=site.chlist.readstations_cb;}
 site.storage.readfile(site.cfg.paths.json,"stations.json",customCB,site.chlist.readstations_errcb)}
 site.chlist.readstations_cb=function(resultstr){loggr.debug("site.chlist.loadstations_cb()");loggr.log(" > "+resultstr.substr(0,64)+"...");resultjson=JSON.parse(resultstr);if(!resultjson){alert("site.chlist.readstations_cb().Error: !resultjson");}
