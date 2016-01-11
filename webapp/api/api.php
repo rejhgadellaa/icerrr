@@ -334,9 +334,14 @@ switch($action) {
 				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
 				$dirble_url = "http://api.dirble.com/v1/search/apikey/{$cfg['dirble_apikey']}/search/";
 				$dirble_query = rawurlencode("{$queryobj['search']}");
-				$fg = fg($dirble_url.$dirble_query);
-				if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
-				$json["data"] = json_decode($fg,true);
+				$data = getdirblecache($queryobj["get"], $dirble_query);
+				if (!$data) {
+					$fg = fg($dirble_url.$dirble_query);
+					if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
+					$data = json_decode($fg,true);
+					savedirblecache($queryobj["get"], $dirble_query, $data);
+				}
+				$json["data"] = $data;
 				$json["info"] = array();
 				// TODO: catch errors
 				$jsons = gzencode(json_encode($json));
@@ -351,44 +356,22 @@ switch($action) {
 				if (!$queryobj["search"]) { error("Error: 'search' not defined for get:{$queryobj['get']}"); }
 				$dirble_url = "http://api.dirble.com/v2/search/";
 				$dirble_query = rawurlencode("{$queryobj['search']}");
-				$drible_url = $dirble_url . $dirble_query . "?token={$cfg['dirble_apikey']}";
-				$searchresults = array();
-				$results_primary = array();
-				$results_secundary = array();
-				$page = 1;
 
-				// First query
-				$fg = fg($drible_url);
-				if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
-				$res = json_decode($fg,true);
-				if (!$res) { $res = array(); }
+				// Cache or new
+				$searchresults = getdirblecache($queryobj["get"], $dirble_query);
+				if (!$searchresults) {
 
-				// Add results
-				for ($i=0; $i<count($res); $i++) {
-					if (!$res[$i]) { continue; }
-					$namelower = strtolower($res[$i]["name"]);
-					$querylower = strtolower($queryobj['search']);
+					$drible_url = $dirble_url . $dirble_query . "?token={$cfg['dirble_apikey']}";
+					$searchresults = array();
+					$results_primary = array();
+					$results_secundary = array();
+					$page = 1;
 
-					// Primary/secundary results..
-					if (strpos($namelower,$querylower)!==FALSE) {
-						$results_primary[] = $res[$i];
-					} else {
-						$results_secundary[] = $res[$i];
-					}
-				}
-
-				// Keep getting results..
-				while(count($res)>0) {
-
-					$page++;
-					$fg = fg($drible_url . "&page={$page}");
+					// First query
+					$fg = fg($drible_url);
 					if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
 					$res = json_decode($fg,true);
 					if (!$res) { $res = array(); }
-
-					//header("Content-Type: text/plain");
-					//print_r($res);
-					// echo "oi<br>";
 
 					// Add results
 					for ($i=0; $i<count($res); $i++) {
@@ -404,14 +387,43 @@ switch($action) {
 						}
 					}
 
-					// Merge
-					$searchresults = array_merge($results_primary,$results_secundary);
+					// Keep getting results..
+					while(count($res)>0) {
 
-					// Count
-					if (count($searchresults)>=64) {
-						break;
+						$page++;
+						$fg = fg($drible_url . "&page={$page}");
+						if (!$fg) { error("Error running search on Dirble: '". $dirble_url.$dirble_query."'"); }
+						$res = json_decode($fg,true);
+						if (!$res) { $res = array(); }
+
+						//header("Content-Type: text/plain");
+						//print_r($res);
+						// echo "oi<br>";
+
+						// Add results
+						for ($i=0; $i<count($res); $i++) {
+							if (!$res[$i]) { continue; }
+							$namelower = strtolower($res[$i]["name"]);
+							$querylower = strtolower($queryobj['search']);
+
+							// Primary/secundary results..
+							if (strpos($namelower,$querylower)!==FALSE) {
+								$results_primary[] = $res[$i];
+							} else {
+								$results_secundary[] = $res[$i];
+							}
+						}
+
+						// Merge
+						$searchresults = array_merge($results_primary,$results_secundary);
+
+						// Count
+						if (count($searchresults)>=64) {
+							break;
+						}
+
 					}
-
+					savedirblecache($queryobj["get"], $dirble_query, $searchresults);
 				}
 				// Build response
 				$json["data"] = $searchresults;
@@ -426,9 +438,14 @@ switch($action) {
 				if (!$queryobj["dirble_id"]) { error("Error: 'dirble_id' not defined for get:{$queryobj['get']}"); }
 				$dirble_url = "http://api.dirble.com/v1/station/apikey/{$cfg['dirble_apikey']}/id/";
 				$dirble_query = rawurlencode("{$queryobj['dirble_id']}");
-				$fg = fg($dirble_url.$dirble_query);
-				if (!$fg) { error("Error running query on Dirble: '". $dirble_url.$dirble_query."'"); }
-				$json["data"] = json_decode($fg,true);
+				$data = getdirblecache($queryobj["get"], $dirble_query);
+				if (!$data) {
+					$fg = fg($dirble_url.$dirble_query);
+					if (!$fg) { error("Error running query on Dirble: '". $dirble_url.$dirble_query."'"); }
+					$data = json_decode($fg,true);
+					savedirblecache($queryobj["get"], $dirble_query, $data);
+				}
+				$json["data"] = $data;
 				$json["info"] = array();
 				// TODO: catch errors
 				$jsons = gzencode(json_encode($json));
@@ -440,9 +457,14 @@ switch($action) {
 				if (!$queryobj["dirble_id"]) { error("Error: 'dirble_id' not defined for get:{$queryobj['get']}"); }
 				$dirble_url = "http://api.dirble.com/v2/station/id/";
 				$dirble_query = rawurlencode("{$queryobj['dirble_id']}");
-				$fg = fg($dirble_url.$dirble_query);
-				if (!$fg) { error("Error running query on Dirble: '". $dirble_url.$dirble_query."'"); }
-				$json["data"] = json_decode($fg,true);
+				$data = getdirblecache($queryobj["get"], $dirble_query);
+				if (!$data) {
+					$fg = fg($dirble_url.$dirble_query);
+					if (!$fg) { error("Error running query on Dirble: '". $dirble_url.$dirble_query."'"); }
+					$data = json_decode($fg,true);
+					savedirblecache($queryobj["get"], $dirble_query, $data);
+				}
+				$json["data"] = $data;
 				$json["info"] = array();
 				// TODO: catch errors
 				$jsons = gzencode(json_encode($json));
@@ -455,9 +477,14 @@ switch($action) {
 				$dirble_url = "http://api.dirble.com/v2/station/";
 				$dirble_query = rawurlencode("{$queryobj['dirble_id']}");
 				$dirble_url = $dirble_url . $dirble_query . "?token={$cfg['dirble_apikey']}";
-				$fg = fg($dirble_url);
-				if (!$fg) { error("Error running query on Dirble: '". $dirble_url ."'"); }
-				$json["data"] = json_decode($fg,true);
+				$data = getdirblecache($queryobj["get"], $dirble_query);
+				if (!$data) {
+					$fg = fg($dirble_url);
+					if (!$fg) { error("Error running query on Dirble: '". $dirble_url ."'"); }
+					$data = json_decode($fg,true);
+					savedirblecache($queryobj["get"], $dirble_query, $data);
+				}
+				$json["data"] = $data;
 				$json["info"] = array();
 				// TODO: catch errors
 				$jsons = gzencode(json_encode($json));
@@ -471,9 +498,14 @@ switch($action) {
 				$dirble_url = "http://api.dirble.com/v2/station/";
 				$dirble_query = rawurlencode("{$queryobj['dirble_id']}") . "/song_history";
 				$dirble_url = $dirble_url . $dirble_query . "?token={$cfg['dirble_apikey']}";
-				$fg = fg($dirble_url);
-				if (!$fg) { error("Error running query on Dirble: '". $dirble_url ."'"); }
-				$json["data"] = json_decode($fg,true);
+				$data = getdirblecache($queryobj["get"], $dirble_query);
+				if (!$data) {
+					$fg = fg($dirble_url);
+					if (!$fg) { error("Error running query on Dirble: '". $dirble_url ."'"); }
+					$data = json_decode($fg,true);
+					savedirblecache($queryobj["get"], $dirble_query, $data);
+				}
+				$json["data"] = $data;
 				$json["info"] = array();
 				// TODO: catch errors
 				$jsons = gzencode(json_encode($json));

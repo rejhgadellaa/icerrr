@@ -27,9 +27,9 @@ function error($message) {
 // ---> Json
 
 function getJsonError($code) {
-	
+
 	switch($code) {
-		
+
 		case JSON_ERROR_NONE: return "JSON_ERROR_NONE";
 		case JSON_ERROR_DEPTH: return "JSON_ERROR_DEPTH";
 		case JSON_ERROR_STATE_MISMATCH: return "JSON_ERROR_STATE_MISMATCH";
@@ -40,9 +40,9 @@ function getJsonError($code) {
 		case JSON_ERROR_INF_OR_NAN: return "JSON_ERROR_INF_OR_NAN";
 		case JSON_ERROR_UNSUPPORTED_TYPE: return "JSON_ERROR_UNSUPPORTED_TYPE";
 		default: return "UNKNOWN";
-		
+
 	}
-	
+
 }
 
 // ---> Cleanup json
@@ -52,17 +52,17 @@ function cleanupjson() {
 	$dir = "../json/";
 	$files = rd($dir);
 	foreach($files as $fnum => $fname) {
-		
+
 		// Stuff..
 		$fpath = "{$dir}{$fname}";
 		if (is_dir($fpath)) { continue; }
-		
+
 		// Clear temp files...
 		if (strpos($fpath,"station_info.TMP.")!==FALSE) {
 			logg(" - TMP: {$fpath}");
 			unlink($fpath);
 		}
-		
+
 		// Clear old station_info files..
 		elseif (strpos($fpath,"station_info.")!==FALSE) {
 			$timeold = time() - (60*60*24); // 60s * 60m = 1 hour // -> calced in seconds
@@ -71,9 +71,63 @@ function cleanupjson() {
 				unlink($fpath);
 			}
 		}
-		
+
 	}
 	/**/
+}
+
+// ---> Dirble cache
+
+function getdirblecache($action, $query) {
+
+	$filename = "data/cache.dirble.json.gz";
+	$jsonsgz = fg($filename);
+	$jsons = gzdecode($jsonsgz);
+	$json = json_decode($jsons,true);
+
+	if ($json[$action][$query]["time"] >= time() && $json[$action][$query]["results"]) {
+		logg(" -> Dirble use cache: $action $query");
+		return $json[$action][$query]["results"];
+	} else {
+		logg(" -> Dirble no cache: $action $query");
+		return false;
+	}
+
+}
+
+function savedirblecache($action, $query, $results) {
+
+		$filename = "data/cache.dirble.json.gz";
+		$jsonsgz = fg($filename);
+		$jsons = gzdecode($jsonsgz);
+		$json = json_decode($jsons,true);
+
+		$timediff = 60*60; // 60 minutes default..
+		switch($action) {
+			case "search_dirble_v2":
+				$timediff = 30; // 30 secs
+				break;
+			case "station_info_dirble_v2":
+				$timediff = 60*60*24*7; // once per week more than enough, just needs dirble_id for ...
+				break;
+			case "playlist_dirble_v2":
+				$timediff = 60*5; // 5 minutes
+				break;
+		}
+
+		$entry = array(
+			"time" => time() + $timediff,
+			"results" => $results
+		);
+
+		$json[$action][$query] = $entry;
+
+		$jsons = json_encode($json);
+		$jsonsgz = gzencode($jsons);
+		fw($filename,$jsonsgz);
+
+		logg(" -> Dirble saved cache: $action $query");
+
 }
 
 // ---> Send email
@@ -116,7 +170,7 @@ function readJsonsFile($file) {
 	foreach($jsonslines as $linenum => $line) {
 		// remove comments > everything after // is removed
 		$comment_pos = strpos($line,"//");
-		if ($comment_pos!==FALSE) { 
+		if ($comment_pos!==FALSE) {
 			$line = substr($line,0,$comment_pos);
 			$line = str_replace("  "," ",$line);
 			if ($line=="" || $line==" ") { continue; }
@@ -134,7 +188,7 @@ function readJsonsFile($file) {
 }
 
 function getLastModifiedFileFromPath($path) {
-	
+
 	$rd = rd($path);
 	$tmparr = array();
 
@@ -143,15 +197,15 @@ function getLastModifiedFileFromPath($path) {
 		if (is_array($filepath)) { continue; } // skip folders
 		$tmparr[filemtime($filepath)] = $filepath;
 	}
-	
+
 	ksort($tmparr);
-	
+
 	foreach($rd as $fnum => $filename) {
 		$filepath = "{$path}/{$filename}";
 	}
-	
+
 	return $filepath;
-	
+
 }
 
 function rd($dir) {
@@ -184,7 +238,7 @@ function fr($file) {
 }
 
 function fg($f) {
-	
+
 	$fo = @fopen($f, "r");
 	if (!$fo) { @fclose($fo); return false; }
 	while($fg = @fgets($fo)) { $buffer .= $fg; }
