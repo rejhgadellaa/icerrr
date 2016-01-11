@@ -1,4 +1,4 @@
-0.335
+0.337
   * Fix for manually adding stations
   * Minor improvements
 

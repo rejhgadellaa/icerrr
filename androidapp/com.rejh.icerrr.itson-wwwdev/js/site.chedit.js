@@ -28,6 +28,9 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 
 	// Magic || TODO: move to function
 	$("#editstation input[name='station_url']")[0].onchange = function(evt) {
+		if ($("#editstation input[name='station_url']")[0].value && $("#editstation input[name='station_url']")[0].value.trim().indexOf("http")<0) {
+			$("#editstation input[name='station_url']")[0].value = "http://"+ $("#editstation input[name='station_url']")[0].value.trim();
+		}
 		site.chedit.askedAboutNowplaying = false;
 		site.chedit.checkedPlayability = false;
 		site.chedit.isPlayable = false;
