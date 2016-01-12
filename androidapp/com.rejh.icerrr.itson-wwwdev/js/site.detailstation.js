@@ -266,7 +266,7 @@ site.detailstation.updateDataStationData = function() {
 						subtitle += data[i].title +", ";
 					}
 					subtitle += "...";
-					$("#detailstation .recentlyplayed .subtitle").html(subtitle);
+					$("#detailstation .recentlyplayed .subtitle").html( site.helpers.capAll(subtitle) );
 
 					// Done..
 					site.detailstation.updatedDataStationData();
@@ -476,7 +476,7 @@ site.detailstation.buildRecentlyPlayedItem = function(inline_list,playlistItemDa
 	plspotify.stitle = encodeURI(playlistItemData["title"]);
 	plspotify.onclick = function() {
 		//console.error("CLICK!");
-		window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
+		window.open("spotify:search:"+ this.sartist +" "+ this.stitle,"_system");
 	};
 
 	var plsgpmusic = new Image();

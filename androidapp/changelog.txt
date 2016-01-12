@@ -1,3 +1,6 @@
+0.338
+  * Fix: spotify link in station details
+
 0.337
   * Fix for manually adding stations
   * Minor improvements
