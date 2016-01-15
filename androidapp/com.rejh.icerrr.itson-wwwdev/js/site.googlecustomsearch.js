@@ -46,6 +46,14 @@ site.gcis.googleImageSearch = function(search, cb, cberr, opts) {
 
     if (!opts) { opts = {}; }
 
+    // Modify search..
+    if (search && search.indexOf("|")>=0) {
+        search = search.split("|")[0];
+    }
+    if (search) {
+        search = search.trim();
+    }
+
     // Build webapi query
     // API?a=get&q={"get:"gcisearch","search":search}
 

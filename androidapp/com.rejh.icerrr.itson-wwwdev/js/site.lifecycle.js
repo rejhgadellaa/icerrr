@@ -479,9 +479,24 @@ site.lifecycle.onBackButton = function() {
 		""							: false // stop it
 	}
 
-	// TODO: needs some building in so we don't hit back in the middle of an operation..
-	if (thedonts[site.vars.currentSection]) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
-	if (site.vars.isLoading) { loggr.log(" > Ignore '<' button, we're working here..."); return; }
+	// Thedonts: ignore back button in these sections..
+	if (thedonts[site.vars.currentSection]) {
+		loggr.log(" > Ignore '<' button, we're working here...");
+		return;
+	}
+
+	// IsLoading: ignore?
+	if (site.vars.isLoading) {
+		// Exceptions..
+		if (site.vars.isTestingStation) {
+			site.chsearch.testStationCancel();
+		}
+		// Ignore..
+		else {
+			loggr.log(" > Ignore '<' button, we're working here...");
+			return;
+		}
+	}
 
 	var currentBackKey = site.lifecycle.get_section_history_item();
 	loggr.log(" > currentBackKey: "+ currentBackKey);

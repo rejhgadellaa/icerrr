@@ -28,7 +28,7 @@ mkdir com.rejh.icerrr.itson-as\app\src\main\assets\www
 cd py-web-optimizer
 %py3% optimizer.py
 cd ..
-goto setvars
+goto opticlean
 
 REM TODO NOT WORKING?
 if errorlevel 0 goto setvars
@@ -36,12 +36,16 @@ echo.
 echo Warning: Py-optimizer ran into an issue?
 echo Press 'C' to continue...
 choice /C C /N /T 10 /D C
-goto setvars
+goto opticlean
 
 :unoptimize
 rmdir com.rejh.icerrr.itson-as\app\src\main\assets\www /s /q
 mkdir com.rejh.icerrr.itson-as\app\src\main\assets\www
 xcopy /s /v /y /i com.rejh.icerrr.itson-wwwdev com.rejh.icerrr.itson-as\app\src\main\assets\www
+goto opticlean
+
+:opticlean
+del %cd%\py-web-optimizer\datas_compressed_images.json
 goto setvars
 
 :setvars
