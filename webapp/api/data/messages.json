@@ -53,6 +53,27 @@
         "action":"install-update",
         "message":[ ],
         "repeat":0
+    },
+
+    {
+        "id":"remove_station_intergalactic_galaxia",
+        "crit":"remove_station",
+        "critvalue":1,
+        "action":"remove_station",
+        "station_ids":[
+            "intergalactic_galaxia"
+            ],
+        "message":[ ],
+        "repeat":0
+    },
+
+    {
+        "id":"stations_database",
+        "crit":"install-update",
+        "critvalue":1452873810162,
+        "action":"install-update",
+        "message":[ ],
+        "repeat":0
     }
 
 ]
