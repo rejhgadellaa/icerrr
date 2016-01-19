@@ -581,7 +581,7 @@ public class MediaStreamerService extends Service {
 		}
 		
 		// MediaPlayer
-		if (mpMgr!=null) { mpMgr.destroy(); }
+		if (mpMgr!=null) { mpMgr.destroy(false); }
 		mpMgr = new ObjMediaPlayerMgr(context, connMgr, wifiMgr, this);
 		mpMgr.init(stream_url,isAlarm);
         
@@ -607,7 +607,7 @@ public class MediaStreamerService extends Service {
         
         // MediaPlayer
         if (mpMgr!=null) { 
-			mpMgr.destroy(); 
+			mpMgr.destroy(false);
 			mpMgr = null;
         }
         

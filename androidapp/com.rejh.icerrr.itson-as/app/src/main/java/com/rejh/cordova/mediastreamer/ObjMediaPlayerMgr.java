@@ -55,6 +55,12 @@ public class ObjMediaPlayerMgr {
 	private ConnectivityManager connMgr;
 	
 	private WifiManager wifiMgr;
+
+    private Runnable onErrorRunnable;
+    private Handler onErrorHandler;
+
+    private Runnable onDestroyRestartRunnable;
+    private Handler onDestroyRestartHandler;
 	
 	// Variables
 	
@@ -117,7 +123,7 @@ public class ObjMediaPlayerMgr {
 		             alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);               
 		         }
 		     }
-			destroy();
+			destroy(false);
 			try {
 			mp = new MediaPlayer();
 			mp.setDataSource(context, alert);
@@ -140,9 +146,10 @@ public class ObjMediaPlayerMgr {
 	public boolean init(String url, boolean _isAlarm) {
 		
 		if (mp!=null) {
-			Log.d(LOGTAG," -> MPMGR.Init() -> Destroy()");
-			destroy(); 
-			SystemClock.sleep(1000);  
+			Log.d(LOGTAG, " -> MPMGR.Init() -> Destroy()");
+            streamUrl = url;
+			destroy(true);
+            return false;
 		}
 		
 		Log.d(LOGTAG," -> MPMGR.Init()");
@@ -161,7 +168,7 @@ public class ObjMediaPlayerMgr {
 		// Is alarm?
 		isAlarm = _isAlarm;
 		
-		Log.d(LOGTAG," -> STREAM "+streamUrl);
+		Log.d(LOGTAG, " -> STREAM " + streamUrl);
 		
 		// Prepare MP
 		// Catch exceptions
@@ -242,27 +249,51 @@ public class ObjMediaPlayerMgr {
 		}
 	
 	// DESTROY
-	public void destroy() {
-		
-		Log.d(LOGTAG," -> MPMGR.Destroy()");
-		
-		// Stop & store
-		stopConnTypeChecker();
-		
-		if (mp!=null) { mp.release(); mp = null; }
-		
-		settEditor.putInt("mediaplayerState",MEDIA_NONE);
-		settEditor.putInt("mediastreamer_state",MEDIA_NONE);
-		settEditor.commit();
+	public void destroy(boolean restartStreamDelayed) {
 
-		// Notify
+        Log.d(LOGTAG, " -> MPMGR.Destroy()");
+
+        // Stop & store
+        stopConnTypeChecker();
+
+        if (onErrorHandler != null && onErrorRunnable != null) {
+            onErrorHandler.removeCallbacks(onErrorRunnable);
+        }
+        if (onDestroyRestartHandler != null && onDestroyRestartRunnable != null) {
+            onDestroyRestartHandler.removeCallbacks(onDestroyRestartRunnable);
+        }
+
+        if (mp != null) {
+            mp.release();
+            mp = null;
+        }
+
+        settEditor.putInt("mediaplayerState", MEDIA_NONE);
+        settEditor.putInt("mediastreamer_state", MEDIA_NONE);
+        settEditor.commit();
+
+        // Notify
 		/* TODO: Notification
 		Intent ni = new Intent(context, RecvNotifier.class);
 			ni.putExtra("cancel",true);
 		context.sendBroadcast(ni);
 		/**/
-		
-		}
+
+        // Restart delayed..
+        if (restartStreamDelayed) {
+
+            onDestroyRestartRunnable = new Runnable() {
+                public void run() {
+                    Log.d(LOGTAG, " -> Restarting stream...");
+                    init(getStreamUrl(), isAlarm);
+                }
+            };
+            onDestroyRestartHandler = new Handler();
+            onDestroyRestartHandler.postDelayed(onDestroyRestartRunnable, 1000);
+
+        }
+
+    }
 	
 	// PAUSE
 	public void pause() {
@@ -349,7 +380,7 @@ public class ObjMediaPlayerMgr {
 				nrOfErrors++;
 				Log.w(LOGTAG,"  -> Restarting stream...");
 				init(getStreamUrl(),isAlarm);
-				}
+			}
 			}
 		
 	};
@@ -413,13 +444,18 @@ public class ObjMediaPlayerMgr {
 			nrOfErrors++;
 			
 			settEditor.putInt("mediaplayerState",MEDIA_NONE);
-			settEditor.putInt("mediastreamer_state",MEDIA_NONE);
+			settEditor.putInt("mediastreamer_state", MEDIA_NONE);
 			settEditor.commit();
-			
-			SystemClock.sleep(1000);
-			
-			Log.d(LOGTAG," -> Restarting stream...");
-			init(getStreamUrl(),isAlarm);
+
+            if (onErrorHandler!=null && onErrorRunnable!=null) { onErrorHandler.removeCallbacks(onErrorRunnable); }
+			onErrorRunnable = new Runnable() {
+				public void run () {
+                    Log.d(LOGTAG, " -> Restarting stream...");
+                    init(getStreamUrl(),isAlarm);
+				}
+			};
+			onErrorHandler = new Handler();
+            onErrorHandler.postDelayed(onErrorRunnable, 1000);
 			
 			return false;
 			}
