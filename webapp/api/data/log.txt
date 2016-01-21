@@ -1,3 +1,19 @@
+2016-01-21 09:44:35     > cachejson: 2, 4622 bytes
+2016-01-21 09:44:35    GET > {"get":"gcisearch","search":"npo radio 2  ekdom in de ochtend  vara","imgSize":"medium"}
+2016-01-21 09:44:35    Cleanup json
+2016-01-21 09:33:25     > cachejson: 2, 4622 bytes
+2016-01-21 09:33:25    GET > {"get":"gcisearch","search":"npo radio 2  ekdom in de ochtend  vara","imgSize":"medium"}
+2016-01-21 09:33:25    Cleanup json
+2016-01-21 09:32:11     > cachejson: 2, 4622 bytes
+2016-01-21 09:32:11    GET > {"get":"gcisearch","search":"npo radio 2  ekdom in de ochtend  vara","imgSize":"medium"}
+2016-01-21 09:32:11    Cleanup json
+2016-01-21 09:32:03     > cachejson: 2, 4622 bytes
+2016-01-21 09:32:03    GET > {"get":"gcisearch","search":"npo radio 2  ekdom in de ochtend  vara","imgSize":"medium"}
+2016-01-21 09:32:03    Cleanup json
+2016-01-21 09:32:00     > Write cache..
+2016-01-21 09:31:58     > cachejson: 1, 2761 bytes
+2016-01-21 09:31:58    GET > {"get":"gcisearch","search":"npo radio 2  ekdom in de ochtend  vara","imgSize":"medium"}
+2016-01-21 09:31:58    Cleanup json
 2015-12-20 09:16:06     > cachejson: 1, 2761 bytes
 2015-12-20 09:16:06    GET > {"get":"gcisearch","search":"npo 3fm"}
 2015-12-20 09:16:06    Cleanup json
@@ -8266,4 +8282,4 @@
 2015-11-08 08:22:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=
 2015-11-08 08:22:55    GET > {"get":"station_info","station_id":"radio_10","station_host":"stream.radio10.nl","station_port":"80","station_path":"/radio10"}
 2015-11-08 08:22:55    Cleanup json
-2015-11-08 08:21:55     >> Read stream... 0 http://www.rejh.nl/icerrr/php
+2015-11-08 08:21:55   

@@ -232,7 +232,7 @@ site.ui.fadeIn = function(selector,timems,cb,opts) {
 
 			site.vars.fadeIns[selector].timeout = setTimeout(function(){
 
-				loggr.warn(" -> fadeIn "+ selector +" transitionend",{dontsave:true});
+				loggr.log(" -> fadeIn "+ selector +" transitionend",{dontsave:true});
 				if (jqobj.css("opacity")<=0.9) {
 					loggr.warn(" -> opacity<=0.9?! "+ selector +" transitionend",{dontsave:true});
 					//return;
@@ -301,7 +301,7 @@ site.ui.fadeOut = function(selector,timems,cb,opts) {
 
 		site.vars.fadeOuts[selector].timeout = setTimeout(function(){
 
-			loggr.warn(" -> fadeOut "+ selector +" transitionend",{dontsave:true});
+			loggr.log(" -> fadeOut "+ selector +" transitionend",{dontsave:true});
 			if (jqobj.css("opacity")>=0.1) {
 				loggr.warn(" -> opacity<=0.9?! "+ selector +" transitionend",{dontsave:true});
 				//return;

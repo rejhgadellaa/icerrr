@@ -262,31 +262,10 @@ switch($action) {
 			case "gcisearch":
 				// check cache
 				$cachekey = $queryobj["search"]."-size".$queryobj["imgSize"];
-				// > too big? filesize exceeds 8mb, flush it!
-				if (filesize("data/cache.gcisearch.json.gz")>1024*1024*8) {
-					logg.(" > Clear cache");
-					@unlink("data/cache.gcisearch.json.gz");
-				}
-				// > go
-				$gzcachejsons = fr("data/cache.gcisearch.json.gz");
-				if ($gzcachejsons) { $cachejsons = gzdecode($gzcachejsons); }
-				else { $cachejsons = "{}"; }
-				$cachejson = json_decode($cachejsons,true);
-				logg(" > cachejson: ". count($cachejson) .", ". filesize("data/cache.gcisearch.json.gz") ." bytes");
-				// > check size..
-				if (count($cachejson)>128) {
-					$newcachejson = array();
-					foreach ($cachejson as $k => $r) {
-						if ($r["valid_until_time"]>time()) {
-							$newcachejson[$k] = $r;
-						}
-					}
-					$cachejson = $newcachejson;
-					$gzcachejsons = gzencode(json_encode($cachejson));
-					fw("data/cache.gcisearch.json.gz",$gzcachejsons);
-				}
+				$cachedata = getGcisearchCache($cachekey);
 				// New search..
-				if (!$cachejson[$cachekey] || $cachejson[$cachekey]["valid_until_time"] < time() ) {
+
+				if (!$cachedata) {
 					// Build url
 					$url = $cfg["gcs_url"]
 						."q=". rawurlencode($queryobj["search"])
@@ -305,18 +284,12 @@ switch($action) {
 					$fg = fg($url);
 					$fgjson = json_decode($fg,true);
 					$json["data"] = $fgjson;
-					$json["data"]["valid_until_time"] = time() + (60*60*24*7); // valid for a week
 					// save to cache..
-					if (!$fgjson["error"]) {
-						logg(" > Write cache..");
-						$cachejson[$cachekey] = $json["data"];
-						$gzcachejsons = gzencode(json_encode($cachejson));
-						fw("data/cache.gcisearch.json.gz",$gzcachejsons);
-					}
+					saveGcisearchCache($json["data"]);
 				}
 				// use cache..
 				else {
-					$json["data"] = $cachejson[$cachekey];
+					$json["data"] = $cachedata;
 					$json["info"]["cached"] = true;
 				}
 				$json["info"]["url"] = $url;

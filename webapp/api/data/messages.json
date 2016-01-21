@@ -1,9 +1,9 @@
 [
 
 	{
-		"id":"app325-critical",
+		"id":"app330-critical",
 		"crit":"version",
-		"critvalue":0.320,
+		"critvalue":0.330,
 		"action":"url",
 		"url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
 		"title":"Time for an update?",
@@ -17,23 +17,24 @@
 	},
 
     {
-        "id":"app340",
+        "id":"app342",
         "crit":"version",
-        "critvalue":0.339,
+        "critvalue":0.341,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.340 includes:",
+            "v0.342 includes:",
+			"* Important bug fix for 0.341",
             "* Fix: spotify link in station details",
             "* Fix for manually adding stations",
             "* Fixes and improvements"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
-        "critical":0,
+        "critical":1,
         "onlyOnWifi":1
     },
 

@@ -76,6 +76,74 @@ function cleanupjson() {
 	/**/
 }
 
+// ---> Gcisearch cache
+
+function getGcisearchCache($cachekey) {
+
+	// too big? filesize exceeds 8mb, flush it!
+	if (filesize("data/cache.gcisearch.json.gz")>1024*1024*8) {
+		logg.(" > Clear gcisearch cache");
+		@unlink("data/cache.gcisearch.json.gz");
+	}
+
+	// read file
+	$gzcachejsons = fr("data/cache.gcisearch.json.gz");
+	if ($gzcachejsons) { $cachejsons = gzdecode($gzcachejsons); }
+	else { $cachejsons = "{}"; }
+	$cachejson = json_decode($cachejsons,true);
+	logg(" > cachejson: ". count($cachejson) .", ". filesize("data/cache.gcisearch.json.gz") ." bytes");
+
+	// cleanup items that are no longer valid..
+	$newcachejson = array();
+	foreach ($cachejson as $k => $r) {
+		if ($r["valid_until_time"]>time()) {
+			$newcachejson[$k] = $r;
+		}
+	}
+	if (count($newcachejson) != count($cachejson)) {
+		$cachejson = $newcachejson;
+		$gzcachejsons = gzencode(json_encode($cachejson));
+		fw("data/cache.gcisearch.json.gz",$gzcachejsons);
+	}
+
+	// check cache..
+	if ($cachejson[$cachekey] && $cachejson[$cachekey]["valid_until_time"] > time() ) {
+		return $cachejson[$cachekey];
+	} else {
+		return false;
+	}
+
+}
+
+function saveGcisearchCache($cachekey, $data) {
+
+	// check
+	if (!$data || $data["error"]) {
+		logg(" > Do NOT write cache (no data or error)");
+		return false;
+	}
+
+	// read file
+	$gzcachejsons = fr("data/cache.gcisearch.json.gz");
+	if ($gzcachejsons) { $cachejsons = gzdecode($gzcachejsons); }
+	else { $cachejsons = "{}"; }
+	$cachejson = json_decode($cachejsons,true);
+	logg(" > cachejson: ". count($cachejson) .", ". filesize("data/cache.gcisearch.json.gz") ." bytes");
+
+	// add valid time
+	$data["valid_until_time"] = time() + (60*60*24*7); // valid for a week
+
+	// write
+	logg(" > Write cache..");
+	$cachejson[$cachekey] = $data;
+	$gzcachejsons = gzencode(json_encode($cachejson));
+	fw("data/cache.gcisearch.json.gz",$gzcachejsons);
+
+	// return
+	return true;
+
+}
+
 // ---> Dirble cache
 
 function getdirblecache($action, $query) {

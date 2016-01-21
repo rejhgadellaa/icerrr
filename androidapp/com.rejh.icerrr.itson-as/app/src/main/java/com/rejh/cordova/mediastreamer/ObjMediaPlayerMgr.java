@@ -27,6 +27,7 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.WifiLock;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -288,7 +289,7 @@ public class ObjMediaPlayerMgr {
                     init(getStreamUrl(), isAlarm);
                 }
             };
-            onDestroyRestartHandler = new Handler();
+            onDestroyRestartHandler = new Handler(Looper.getMainLooper());
             onDestroyRestartHandler.postDelayed(onDestroyRestartRunnable, 1000);
 
         }
@@ -454,7 +455,7 @@ public class ObjMediaPlayerMgr {
                     init(getStreamUrl(),isAlarm);
 				}
 			};
-			onErrorHandler = new Handler();
+			onErrorHandler = new Handler(Looper.getMainLooper());
             onErrorHandler.postDelayed(onErrorRunnable, 1000);
 			
 			return false;
