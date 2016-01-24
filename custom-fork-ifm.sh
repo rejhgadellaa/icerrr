@@ -27,7 +27,16 @@ do
 done
 
 # search and replace files
-#TODO
+cd ifm-assets
+for i in *
+do
+    for j in `find ../*app -name $i`
+    do
+        cp -a $i $j
+    done
+done
+cd ..
+rm -rf ifm-assets
 
 # search and replace filenames
 #TODO
