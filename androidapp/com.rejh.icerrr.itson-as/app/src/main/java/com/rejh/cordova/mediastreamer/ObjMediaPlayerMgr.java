@@ -62,6 +62,8 @@ public class ObjMediaPlayerMgr {
 
     private Runnable onDestroyRestartRunnable;
     private Handler onDestroyRestartHandler;
+
+	private boolean isDestroyed = false;
 	
 	// Variables
 	
@@ -286,13 +288,16 @@ public class ObjMediaPlayerMgr {
             onDestroyRestartRunnable = new Runnable() {
                 public void run() {
                     Log.d(LOGTAG, " -> Restarting stream...");
+					if (isDestroyed) { Log.d(LOGTAG," -> Just kidding. isDestroyed==true"); return; }
                     init(getStreamUrl(), isAlarm);
                 }
             };
             onDestroyRestartHandler = new Handler(Looper.getMainLooper());
             onDestroyRestartHandler.postDelayed(onDestroyRestartRunnable, 1000);
 
-        }
+        } else {
+			isDestroyed = true;
+		}
 
     }
 	
@@ -452,6 +457,7 @@ public class ObjMediaPlayerMgr {
 			onErrorRunnable = new Runnable() {
 				public void run () {
                     Log.d(LOGTAG, " -> Restarting stream...");
+					if (isDestroyed) { Log.d(LOGTAG," -> Just kidding. isDestroyed==true"); return; }
                     init(getStreamUrl(),isAlarm);
 				}
 			};

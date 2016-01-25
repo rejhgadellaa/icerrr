@@ -272,11 +272,10 @@ site.lifecycle.initApp = function(force) {
 			"Show album art?",
 			"Yes,No"
 		);
-	}
-	// Check for messages
-	else {
-		site.lifecycle.checkMsgs();
-	}
+	} else {
+        // Check for updates..
+        site.lifecycle.checkMsgs();
+    }
 
 	// On update..
 	if (site.cookies.get("app_has_updated")!=0) {
@@ -397,6 +396,14 @@ site.lifecycle.onResume = function() {
 
 	// Stop! Resize!
 	site.lifecycle.onResize();
+
+	// Check for messages
+    loggr.log(" > Check for updates..?");
+    var lastMsgCheck = site.cookies.get("app_last_message_check");
+    if (lastMsgCheck==0 || new Date().getTime()>lastMsgCheck) {
+        site.lifecycle.checkMsgs();
+        site.cookies.put("app_last_message_check", new Date().getTime() + (1000*60*60));
+    }
 
 }
 
