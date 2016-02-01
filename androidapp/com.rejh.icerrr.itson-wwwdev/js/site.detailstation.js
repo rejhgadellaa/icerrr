@@ -49,8 +49,8 @@ site.detailstation.init = function(resultitem, forceRedraw, restoreLast) {
 	if (!forceRedraw && site.detailstation.station_id == site.detailstation.last_station_id && site.detailstation.last_station_updated_time) {
 		// we already have drawn this station.. check if update is needed..
 		var now = new Date().getTime();
-		if (site.detailstation.last_station_updated_time > now-(1000*60*1)) {
-			// drawn less than a minute ago, it's fine like this..
+		if (site.detailstation.last_station_updated_time > now-(1000*15)) {
+			// drawn less than 15 seconds ago, it's fine like this..
 			return;
 		}
 	}

@@ -179,8 +179,11 @@ site.webapi.exec = function(apiaction,apiquerystr,cb,errcb) {
 	})
 	.error(function(jqXHR, textStatus, errorThrown) {
 		// error
-		loggr.error(" > site.webapi.exec().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown);
-		errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown, extra_fields:["jqXHR","textStatus","errorThrown"]});
+        if (textStatus!="abort") {
+    		loggr.error(" > site.webapi.exec().Error: \nApi action: "+ apiaction +", "+ apiquerystr +"\n"+ textStatus +", "+ errorThrown);
+            errcb({jqXHR:jqXHR, textStatus:textStatus, errorThrown:errorThrown, code:-1, message:errorThrown,
+                extra_fields:["jqXHR","textStatus","errorThrown"]});
+        }
 		site.webapi.cleanupAjaxRequests(ajaxReqIdentifier);
 	});
 

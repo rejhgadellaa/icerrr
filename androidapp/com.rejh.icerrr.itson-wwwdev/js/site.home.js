@@ -624,6 +624,7 @@ site.home.getAlbumArt = function() {
 		site.home.handleStationImage(imgurl);
 		return;
 	}
+    /**/
 
 	// Prep data || TODO: need more info, 'radio 1' returns image for bbc radio 1
 	var searchstring = ""

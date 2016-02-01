@@ -1,3 +1,9 @@
+0.344
+  * Important bug fix for 0.341
+  * Fix: spotify link in station details
+  * Fix for manually adding stations
+  * Fixes and improvements
+
 0.339
   * Cancel 'validate station' by pressing back button
 
