@@ -516,6 +516,7 @@ site.home.formatNowPlaying = function(nowplaying) {
 		if (nowplaying.indexOf("&")>0) {
 			nowplaying = site.helpers.replaceAll("&"," & ",nowplaying);
 			nowplaying = site.helpers.replaceAll("  "," ",nowplaying);
+			nowplaying = site.helpers.replaceAll("& #4","",nowplaying);
 		}
 
 	}

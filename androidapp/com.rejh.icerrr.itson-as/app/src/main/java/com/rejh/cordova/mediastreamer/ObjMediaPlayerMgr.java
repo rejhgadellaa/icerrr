@@ -696,7 +696,7 @@ public class ObjMediaPlayerMgr {
                     init(getStreamUrl(), isAlarm);
                 }
             }
-        }, 2500); // 2.5 second delay (takes millis)
+        }, 5000); // 2.5 second delay (takes millis)
     }
 		
 		

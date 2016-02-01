@@ -825,8 +825,9 @@ public class MediaStreamerService extends Service {
 							nowplaying_new = "Now playing: Unknown"; 
 						}
 					}
-					nowplaying_new = nowplaying_new.replace("&", " & ");
-					nowplaying_new = nowplaying_new.replace("  ", " ");
+					nowplaying_new = nowplaying_new.replaceAll("&", " & ");
+					nowplaying_new = nowplaying_new.replaceAll("  ", " ");
+					nowplaying_new = nowplaying_new.replaceAll("& #4","");
 					nowplaying_new = nowplaying_new.trim();
 					
 					// Get echonest np
