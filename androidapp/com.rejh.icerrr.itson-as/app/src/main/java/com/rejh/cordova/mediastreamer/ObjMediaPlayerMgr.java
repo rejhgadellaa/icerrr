@@ -173,9 +173,6 @@ public class ObjMediaPlayerMgr {
 		// Is alarm?
 		isAlarm = _isAlarm;
 
-        // reset mediaPlayerInfoLastCode
-        mediaPlayerInfoLastCode = -1;
-
 		Log.d(LOGTAG, " -> STREAM " + streamUrl);
 		
 		// Prepare MP
@@ -415,11 +412,13 @@ public class ObjMediaPlayerMgr {
 			Log.d(LOGTAG," -> MP.OnInfo(" + code + ", " + extra + ")");
 			
 			// Check code/extra for 703/192
-			if (code==701 && mediaPlayerInfoLastCode==703) { // code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==192) {
+			if (code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==0) { // code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==192) {
 				Log.w(LOGTAG, " --> Code 701 after 703, restart stream, errors: "+nrOfErrors);
 				if (nrOfErrors > 8) { initbackup(); return false; }
 				nrOfErrors++;
-                checkPlayingDelayed();
+                mediaPlayerInfoLastCode = -1;
+                mediaPlayerInfoLastExtra = -1;
+                init(getStreamUrl(), isAlarm);
 			}
 			// Store code && extra..
 			mediaPlayerInfoLastCode = code;
@@ -679,23 +678,6 @@ public class ObjMediaPlayerMgr {
 	        }, 100); // 1 second delay (takes millis)
 
 	    }
-
-	// > Check playing
-
-    public void checkPlayingDelayed() {
-        Log.d(LOGTAG,"checkPlaying()");
-        final Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(LOGTAG,"checkPlaying() -> Delayed..");
-                if (mediaPlayerInfoLastCode==701 && !isDestroyed) {
-                    Log.w(LOGTAG,"checkPlaying() -> Delayed -> mediaPlayerInfoLastCode==701");
-                    init(getStreamUrl(), isAlarm);
-                }
-            }
-        }, 5000); // 2.5 second delay (takes millis)
-    }
 		
 		
 		
