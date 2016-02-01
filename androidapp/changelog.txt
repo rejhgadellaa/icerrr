@@ -1,3 +1,7 @@
+0.345
+  * Fixes for stream getting stuck in buffering state
+  * Fix for now playing info sometimes showing "& #4" at the end
+
 0.344
   * Important bug fix for 0.341
   * Fix: spotify link in station details
