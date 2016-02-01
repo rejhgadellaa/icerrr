@@ -63,6 +63,8 @@ public class ObjMediaPlayerMgr {
     private Runnable onDestroyRestartRunnable;
     private Handler onDestroyRestartHandler;
 
+	private Timer playPollTimer;
+
 	private boolean isDestroyed = false;
 	
 	// Variables
@@ -170,7 +172,10 @@ public class ObjMediaPlayerMgr {
 		
 		// Is alarm?
 		isAlarm = _isAlarm;
-		
+
+        // reset mediaPlayerInfoLastCode
+        mediaPlayerInfoLastCode = -1;
+
 		Log.d(LOGTAG, " -> STREAM " + streamUrl);
 		
 		// Prepare MP
@@ -414,10 +419,7 @@ public class ObjMediaPlayerMgr {
 				Log.w(LOGTAG, " --> Code 701 after 703, restart stream, errors: "+nrOfErrors);
 				if (nrOfErrors > 8) { initbackup(); return false; }
 				nrOfErrors++;
-				mediaPlayerInfoLastCode = -1;
-				mediaPlayerInfoLastExtra = -1;
-				//init(getStreamUrl(),isAlarm);
-				return false;
+                checkPlayingDelayed();
 			}
 			// Store code && extra..
 			mediaPlayerInfoLastCode = code;
@@ -677,6 +679,25 @@ public class ObjMediaPlayerMgr {
 	        }, 100); // 1 second delay (takes millis)
 
 	    }
+
+	// > Check playing
+
+    public void checkPlayingDelayed() {
+        Log.d(LOGTAG,"checkPlaying()");
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            private float time = 0.0f;
+            private float volume = 0.0f;
+
+            @Override
+            public void run() {
+                Log.d(LOGTAG,"checkPlaying() -> Delayed..");
+                if (mediaPlayerInfoLastCode==701 && !isDestroyed) {
+                    init(getStreamUrl(), isAlarm);
+                }
+            }
+        }, 2500); // 2.5 second delay (takes millis)
+    }
 		
 		
 		
