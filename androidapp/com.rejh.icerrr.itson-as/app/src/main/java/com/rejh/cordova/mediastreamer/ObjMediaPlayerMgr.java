@@ -686,13 +686,11 @@ public class ObjMediaPlayerMgr {
         Log.d(LOGTAG,"checkPlaying()");
         final Handler h = new Handler();
         h.postDelayed(new Runnable() {
-            private float time = 0.0f;
-            private float volume = 0.0f;
-
             @Override
             public void run() {
                 Log.d(LOGTAG,"checkPlaying() -> Delayed..");
                 if (mediaPlayerInfoLastCode==701 && !isDestroyed) {
+                    Log.w(LOGTAG,"checkPlaying() -> Delayed -> mediaPlayerInfoLastCode==701");
                     init(getStreamUrl(), isAlarm);
                 }
             }

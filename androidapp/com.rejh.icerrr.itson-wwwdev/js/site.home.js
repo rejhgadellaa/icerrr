@@ -465,8 +465,6 @@ site.home.run_station_updates = function() {
 
 			data["data"]["nowplaying"] = site.home.formatNowPlaying(data["data"]["nowplaying"]);
 
-			window.mediaStreamer.updateMetaData();
-
 			if (data["data"]["nowplaying"]=="Now playing: Unknown") {
 				// site.session.currentstation.station_name = site.helpers.capitalize(data["data"]["icy-name"]); // <- dont set it, keep the json value
 				site.session.currentstation.station_nowplaying = "Now playing: Unknown";
@@ -479,6 +477,8 @@ site.home.run_station_updates = function() {
 			}
 			$("#home .main .station_name").html(site.session.currentstation.station_name);
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
+
+			window.mediaStreamer.updateMetaData();
 
 		},
 		function(error) {
