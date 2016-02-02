@@ -17,9 +17,9 @@
 	},
 
     {
-        "id":"app345",
+        "id":"app346",
         "crit":"version",
-        "critvalue":0.344,
+        "critvalue":0.345,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
