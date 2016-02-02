@@ -285,7 +285,7 @@ switch($action) {
 					$fgjson = json_decode($fg,true);
 					$json["data"] = $fgjson;
 					// save to cache..
-					saveGcisearchCache($json["data"]);
+					saveGcisearchCache($cachekey, $json["data"]);
 				}
 				// use cache..
 				else {

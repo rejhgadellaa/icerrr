@@ -284,10 +284,14 @@ foreach($lines as $line) {
 
 }
 
-// Add title
+// Cleanup title
 $title = str_replace("& #4","",$title);
 $title = trim($title);
 $title = utf8_encode($title);
+$title = str_replace("& #4","",$title);
+$title = trim($title);
+
+// Add title
 $array["nowplaying"] = $title; // ." & #4";
 
 // Add station_id, timestamp

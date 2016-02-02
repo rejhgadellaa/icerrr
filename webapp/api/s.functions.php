@@ -120,6 +120,8 @@ function saveGcisearchCache($cachekey, $data) {
 	// check
 	if (!$data || $data["error"]) {
 		logg(" > Do NOT write cache (no data or error)");
+        logg(" >> ". $data);
+        logg(" >> ". $data["error"]);
 		return false;
 	}
 
