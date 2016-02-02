@@ -285,9 +285,11 @@ foreach($lines as $line) {
 }
 
 // Cleanup title
+$title = str_replace("  "," ",$title);
 $title = str_replace("& #4","",$title);
 $title = trim($title);
 $title = utf8_encode($title);
+$title = str_replace("  "," ",$title);
 $title = str_replace("& #4","",$title);
 $title = trim($title);
 
