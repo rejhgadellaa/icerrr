@@ -285,11 +285,10 @@ foreach($lines as $line) {
 }
 
 // Add title
+$title = str_replace("& #4","",$title);
+$title = trim($title);
 $title = utf8_encode($title);
-if (strpos($title,"& #4")!==false) {
-	$title = substr($title,0,strpos($title,"& #4")-1);
-}
-$array["nowplaying"] = $title;
+$array["nowplaying"] = $title ." & #4";
 
 // Add station_id, timestamp
 $array["station_id"] = $queryj["station_id"];

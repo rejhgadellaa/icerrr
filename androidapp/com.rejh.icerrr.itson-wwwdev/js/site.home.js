@@ -512,13 +512,9 @@ site.home.formatNowPlaying = function(nowplaying) {
 	if (!nowplaying || !nowplaying.trim()) {
 		nowplaying = "Now playing: Unknown";
 	} else {
-
-		if (nowplaying.indexOf("&")>0) {
-			nowplaying = site.helpers.replaceAll("&"," & ",nowplaying);
-			nowplaying = site.helpers.replaceAll("  "," ",nowplaying);
-			nowplaying = site.helpers.replaceAll("& #4","",nowplaying);
-		}
-
+		nowplaying = site.helpers.replaceAll("& #4","",nowplaying);
+		nowplaying = site.helpers.replaceAll("&"," & ",nowplaying);
+		nowplaying = site.helpers.replaceAll("  "," ",nowplaying);
 	}
 
 	return nowplaying.trim();

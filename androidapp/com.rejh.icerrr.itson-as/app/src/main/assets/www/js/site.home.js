@@ -42,7 +42,7 @@ else{loggr.log(error);}
 site.session.currentstation.station_nowplaying="Now playing: Unknown";$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);site.ui.hideLoadbar();});if(site.session.isPaused){site.ui.hideLoadbar();}
 if(site.mp.serviceRunning){site.mp.notif();}}
 site.home.formatNowPlaying=function(nowplaying){if(!nowplaying||nowplaying.trim()=="-"||nowplaying==" - "){nowplaying="Now playing: Unknown";}
-if(!nowplaying||!nowplaying.trim()){nowplaying="Now playing: Unknown";}else{if(nowplaying.indexOf("&")>0){nowplaying=site.helpers.replaceAll("&"," & ",nowplaying);nowplaying=site.helpers.replaceAll("  "," ",nowplaying);nowplaying=site.helpers.replaceAll("& #4","",nowplaying);}}
+if(!nowplaying||!nowplaying.trim()){nowplaying="Now playing: Unknown";}else{nowplaying=site.helpers.replaceAll("& #4","",nowplaying);nowplaying=site.helpers.replaceAll("&"," & ",nowplaying);nowplaying=site.helpers.replaceAll("  "," ",nowplaying);}
 return nowplaying.trim();}
 site.home.useDirbleNowPlaying=function(){loggr.debug("site.home.useDirbleNowPlaying()");}
 site.home.getAlbumArt=function(){loggr.debug("site.home.getAlbumArt()");if(site.cookies.get("setting_showAlbumArt")!=1){loggr.log(" > Disabled. Return.");site.home.loadAlbumArt('img/bg_home_default.jpg');site.home.handleStationImage(site.session.currentstation.station_icon);return;}
