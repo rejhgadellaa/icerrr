@@ -125,6 +125,10 @@ switch($action) {
 
 				if ($json["data"]["nowplaying"]) {
 
+                    $json["data"]["nowplaying"] = str_replace("& #4","",$json["data"]["nowplaying"]);
+                    $json["data"]["nowplaying"] = str_replace("&amp; #4","",$json["data"]["nowplaying"]);
+                    $json["data"]["nowplaying"] = str_replace("&#38; #4","",$json["data"]["nowplaying"]);
+
 					$npexpl = explode("-",$json["data"]["nowplaying"],2);
 					$npartist = trim($npexpl[0]);
 					$nptitle = trim($npexpl[1]);
