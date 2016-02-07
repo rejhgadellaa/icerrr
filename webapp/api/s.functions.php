@@ -101,6 +101,7 @@ function getGcisearchCache($cachekey) {
 		}
 	}
 	if (count($newcachejson) != count($cachejson)) {
+        logg(" >> update cachejson, now: ". count($newcachejson));
 		$cachejson = $newcachejson;
 		$gzcachejsons = gzencode(json_encode($cachejson));
 		fw("data/cache.gcisearch.json.gz",$gzcachejsons);
