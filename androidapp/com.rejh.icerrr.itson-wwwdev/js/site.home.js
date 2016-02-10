@@ -684,8 +684,8 @@ site.home.handleStationImage = function(src,isBigIcon) {
 
 		if (site.cookies.get("setting_showStationIcon")!=1) {
 			loggr.log(" > !setting_showStationIcon: "+ site.cookies.get("setting_showStationIcon"));
+			site.home.loadAlbumArt('img/bg_home_default.jpg');
 		}
-        site.home.loadAlbumArt('img/bg_home_default.jpg');
 
 		var station = site.session.currentstation;
 
