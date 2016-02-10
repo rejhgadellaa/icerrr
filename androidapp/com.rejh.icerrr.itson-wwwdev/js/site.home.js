@@ -487,6 +487,7 @@ site.home.run_station_updates = function() {
 			else { loggr.log(error); }
 			site.session.currentstation.station_nowplaying = "Now playing: Unknown";
 			$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);
+            site.home.handleStationImage(site.session.currentstation.station_icon);
 			site.ui.hideLoadbar();
 		}
 	);

@@ -39,7 +39,7 @@ data["data"]["nowplaying"]=site.home.formatNowPlaying(data["data"]["nowplaying"]
 site.session.currentstation.station_nowplaying=data["data"]["nowplaying"];site.home.getAlbumArt();}
 $("#home .main .station_name").html(site.session.currentstation.station_name);$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);window.mediaStreamer.updateMetaData();},function(error){site.vars.station_update_running=false;if(error.message){site.ui.showtoast(error.message);loggr.warn(error.message);}
 else{loggr.log(error);}
-site.session.currentstation.station_nowplaying="Now playing: Unknown";$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);site.ui.hideLoadbar();});if(site.session.isPaused){site.ui.hideLoadbar();}
+site.session.currentstation.station_nowplaying="Now playing: Unknown";$("#home .main .station_nowplaying").html(site.session.currentstation.station_nowplaying);site.home.handleStationImage(site.session.currentstation.station_icon);site.ui.hideLoadbar();});if(site.session.isPaused){site.ui.hideLoadbar();}
 if(site.mp.serviceRunning){site.mp.notif();}}
 site.home.formatNowPlaying=function(nowplaying){if(!nowplaying||nowplaying.trim()=="-"||nowplaying==" - "){nowplaying="Now playing: Unknown";}
 if(!nowplaying||!nowplaying.trim()){nowplaying="Now playing: Unknown";}else{nowplaying=site.helpers.replaceAll("& #4","",nowplaying);nowplaying=site.helpers.replaceAll("&"," & ",nowplaying);nowplaying=site.helpers.replaceAll("  "," ",nowplaying);}
