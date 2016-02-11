@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.cordova.api.LOG;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +63,9 @@ public class ObjMediaPlayerMgr {
 
     private Runnable onDestroyRestartRunnable;
     private Handler onDestroyRestartHandler;
+
+	private Handler mediaPlayerStuckHandler;
+	private Runnable mediaPlayerStuckRunnable;
 
 	private Timer playPollTimer;
 
@@ -267,6 +271,9 @@ public class ObjMediaPlayerMgr {
         if (onDestroyRestartHandler != null && onDestroyRestartRunnable != null) {
             onDestroyRestartHandler.removeCallbacks(onDestroyRestartRunnable);
         }
+        if (mediaPlayerStuckHandler !=null && mediaPlayerStuckRunnable != null) {
+            mediaPlayerStuckHandler.removeCallbacks(mediaPlayerStuckRunnable);
+        }
 
         if (mp != null) {
             mp.release();
@@ -412,13 +419,13 @@ public class ObjMediaPlayerMgr {
 			Log.d(LOGTAG," -> MP.OnInfo(" + code + ", " + extra + ")");
 			
 			// Check code/extra for 703/192
-			if (code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==0) { // code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==192) {
+			if (code==701 && mediaPlayerInfoLastCode==703) { // code==701 && mediaPlayerInfoLastCode==703 && mediaPlayerInfoLastExtra==192) {
 				Log.w(LOGTAG, " --> Code 701 after 703, restart stream, errors: "+nrOfErrors);
 				if (nrOfErrors > 8) { initbackup(); return false; }
 				nrOfErrors++;
                 mediaPlayerInfoLastCode = -1;
                 mediaPlayerInfoLastExtra = -1;
-                init(getStreamUrl(), isAlarm);
+                doMediaPlayerStuckCheck();
 			}
 			// Store code && extra..
 			mediaPlayerInfoLastCode = code;
@@ -678,6 +685,26 @@ public class ObjMediaPlayerMgr {
 	        }, 100); // 1 second delay (takes millis)
 
 	    }
+
+    private void  doMediaPlayerStuckCheck() {
+        Log.d(LOGTAG," -> MPMGR.doMediaPlayerStuckCheck()");
+        mediaPlayerStuckRunnable = new Runnable() {
+            public void run() {
+                Log.d(LOGTAG," -> MPMGR.doMediaPlayerStuckCheck().delayed()");
+                Log.d(LOGTAG," --> mediaPlayerInfoLastCode: "+ mediaPlayerInfoLastCode);
+                if (mediaPlayerInfoLastCode==701) {
+                    Log.w(LOGTAG, " --> Restarting stream...?");
+                    if (isDestroyed) {
+                        Log.d(LOGTAG, " --> Just kidding. isDestroyed==true");
+                        return;
+                    }
+                    init(getStreamUrl(), isAlarm);
+                }
+            }
+        };
+        mediaPlayerStuckHandler = new Handler(Looper.getMainLooper());
+        mediaPlayerStuckHandler.postDelayed(mediaPlayerStuckRunnable, 5000);
+    }
 		
 		
 		

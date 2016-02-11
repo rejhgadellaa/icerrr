@@ -17,19 +17,17 @@
 	},
 
     {
-        "id":"app347",
+        "id":"app348",
         "crit":"version",
-        "critvalue":0.346,
+        "critvalue":0.347,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.347 includes:",
-			"* Important bug fix for 0.341",
-            "* Fix: spotify link in station details",
-            "* Fix for manually adding stations",
+            "v0.348 includes:",
+            "* Fix for streams getting stuck sometimes",
             "* Fixes and improvements"
             ],
         "buttonLabels":"Yes,No",
