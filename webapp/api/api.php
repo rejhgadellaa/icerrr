@@ -105,7 +105,7 @@ switch($action) {
                         "path" => $queryobj["station_path"],
                         "user" => $queryobj["station_user"],
                         "pass" => $queryobj["station_pass"]
-                    )
+                    );
 					$id3_reader_q = urlencode(json_encode($id3_reader_q_a));
 					// retry this a couple of times..
 					$fgjson = false;

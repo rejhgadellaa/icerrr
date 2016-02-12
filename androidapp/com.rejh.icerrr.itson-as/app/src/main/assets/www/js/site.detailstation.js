@@ -27,7 +27,7 @@ site.ui.showtoast("Recently played not available :(");site.detailstation.updated
 else{loggr.log(error);}
 site.ui.showtoast("Recently played not available :(");site.detailstation.updatedDataStationData();});}
 site.detailstation.updatedDataStationData=function(){site.detailstation.loadedStationData=true;site.detailstation.updatedData();}
-site.detailstation.updateDataNowPlaying=function(){loggr.log("site.detailstation.updateDataNowPlaying()");site.ui.showLoadbar();var apiqueryobj={"get":"station_info","station_id":site.detailstation.station.station_id,"station_host":site.detailstation.station.station_host,"station_port":site.detailstation.station.station_port,"station_path":site.detailstation.station.station_path}
+site.detailstation.updateDataNowPlaying=function(){loggr.log("site.detailstation.updateDataNowPlaying()");site.ui.showLoadbar();var apiqueryobj={"get":"station_info","station_id":site.detailstation.station.station_id,"station_host":site.detailstation.station.station_host,"station_port":site.detailstation.station.station_port,"station_path":site.detailstation.station.station_path,"station_user":site.session.currentstation.station_path,"station_pass":site.session.currentstation.station_pass}
 var apiaction="get";var apiquerystr=JSON.stringify(apiqueryobj);site.detailstation.nowPlayingAjaxReqIdentifier=site.webapi.exec(apiaction,apiquerystr,function(data){$("#detailstation .station_nowplaying").html(site.home.formatNowPlaying(data["data"]["nowplaying"]));site.detailstation.updatedDataNowPlaying();var someinfo=""
 +"Server: "+data["data"]["server"]+", "
 +"Content-type: "+data["data"]["content-type"]+", "
