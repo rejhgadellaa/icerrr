@@ -180,7 +180,7 @@ if ($queryj["user"] && $queryj["pass"]) {
     $pass = $queryj["pass"];
     fputs($fsock, "GET / HTTP/1.0\r\n");
     fputs($fsock, "Authorization: basic ". base64_encode("{$user}:{$pass}") ."\r\n\r\n");
-    fpassthru($fsock);
+    //fpassthru($fsock);
 }
 
 // Start reading from socket (if not false)
