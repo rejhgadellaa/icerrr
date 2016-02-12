@@ -310,7 +310,7 @@ site.detailstation.updateDataNowPlaying = function() {
 		"station_host":site.detailstation.station.station_host,
 		"station_port":site.detailstation.station.station_port,
 		"station_path":site.detailstation.station.station_path,
-        "station_user":site.session.currentstation.station_path,
+        "station_user":site.session.currentstation.station_user,
         "station_pass":site.session.currentstation.station_pass
 	}
 

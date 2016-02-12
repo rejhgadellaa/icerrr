@@ -448,7 +448,7 @@ site.home.run_station_updates = function() {
 		"station_host":site.session.currentstation.station_host,
 		"station_port":site.session.currentstation.station_port,
 		"station_path":site.session.currentstation.station_path,
-        "station_user":site.session.currentstation.station_path,
+        "station_user":site.session.currentstation.station_user,
         "station_pass":site.session.currentstation.station_pass
 	}
 

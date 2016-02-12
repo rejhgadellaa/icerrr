@@ -1,6 +1,8 @@
 package com.rejh.cordova.mediastreamer;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,6 +34,7 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -78,6 +81,8 @@ public class ObjMediaPlayerMgr {
 	private final String streamUrlDefault = "http://icecast.omroep.nl/3fm-sb-mp3";
 	private String streamUrl;
 	private String streamedUrl;
+    private String username;
+    private String password;
 	
 	private boolean isAlarm;
 	
@@ -152,7 +157,10 @@ public class ObjMediaPlayerMgr {
 	}
 	
 	// INIT
-	public boolean init(String url, boolean _isAlarm) {
+    public boolean init(String url, boolean _isAlarm) {
+        return init(url, _isAlarm, null, null);
+    }
+	public boolean init(String url, boolean _isAlarm, String _username, String _password) {
 		
 		if (mp!=null) {
 			Log.d(LOGTAG, " -> MPMGR.Init() -> Destroy()");
@@ -200,8 +208,33 @@ public class ObjMediaPlayerMgr {
 			} else {
 				mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			}
-			
-			mp.setDataSource(streamUrl);
+
+            // Handle username/password
+            if (_username!=null && _password!=null) {
+                username = _username;
+                password = _password;
+            }
+
+            // Set data source: with or without auth
+			if (username!=null && password!=null) {
+
+                byte[] toEncrypt = (username + ":" + password).getBytes();
+                String encoded = Base64.encodeToString(toEncrypt, Base64.DEFAULT);
+
+                // create header
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization","Basic "+encoded);
+
+                // streamurl to uri..
+                Uri streamUri = Uri.parse(streamUrl);
+                mp.setDataSource(context, streamUri, headers);
+
+			} else {
+
+                // just set the damn stream..
+                mp.setDataSource(streamUrl);
+
+            }
 			
 			mp.setOnPreparedListener(onPreparedListener);
 			mp.setOnErrorListener(onErrorListener);
@@ -215,7 +248,7 @@ public class ObjMediaPlayerMgr {
 			
 			startConnTypeChecker();
 			
-			settEditor.putInt("mediaplayerState",MEDIA_STARTING);
+			settEditor.putInt("mediaplayerState", MEDIA_STARTING);
 			settEditor.putInt("mediastreamer_state",MEDIA_STARTING);
 			settEditor.commit();
 			

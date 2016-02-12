@@ -99,6 +99,8 @@ public class MediaStreamerService extends Service {
     private String station_host = null;
     private String station_port = null;
     private String station_path = null;
+    private String station_user = null;
+    private String station_pass = null;
     private String nowplaying = "...";
     
     private Thread nowPlayingPollThread;
@@ -226,6 +228,8 @@ public class MediaStreamerService extends Service {
 				station_host = intent.getStringExtra("station_host");
 				station_port = intent.getStringExtra("station_port");
 				station_path = intent.getStringExtra("station_path");
+                station_user = intent.hasExtra("station_user") ? intent.getStringExtra("station_user") : null;
+                station_pass = intent.hasExtra("station_pass") ? intent.getStringExtra("station_pass") : null;
 				
 				// Store
 				try {
@@ -235,6 +239,8 @@ public class MediaStreamerService extends Service {
 					station.put("station_host", station_host);
 					station.put("station_port", station_port);
 					station.put("station_path", station_path);
+                    station.put("station_user", station_user);
+                    station.put("station_pass", station_pass);
 					String stations = station.toString();
 					settEditor.putString("station_datas",stations);
 					settEditor.putString("currentstation_id", station_id);
@@ -261,6 +267,8 @@ public class MediaStreamerService extends Service {
 				station_host = station.getString("station_host");
 				station_port = station.getString("station_port");
 				station_path = station.getString("station_path");
+                station_user = station.has("station_user") ? station.getString("station_user") : null;
+                station_pass = station.has("station_pass") ? station.getString("station_pass") : null;
 			} catch(JSONException e) {
 				Log.e(APPTAG," > Could not get station jsonobject: "+e);
 				stopSelf();
@@ -521,7 +529,7 @@ public class MediaStreamerService extends Service {
         
         Log.d(APPTAG," > setup()");
         
-        // Stream url
+        // Stream url, auth
 	    String stream_url = null;
 	    
 	    // Is Alarm, stream_url and volume
@@ -531,22 +539,30 @@ public class MediaStreamerService extends Service {
         if (incomingIntent!=null) {
         	// incomingIntent = this.getIntent(); // sett.getString("mediastreamer_streamUrl",null);
         	stream_url = incomingIntent.getStringExtra("stream_url");
-        	isAlarm = incomingIntent.getBooleanExtra("isAlarm",false);
+        	isAlarm = incomingIntent.getBooleanExtra("isAlarm", false);
+			station_user = (incomingIntent.hasExtra("station_user")) ? incomingIntent.getStringExtra("station_user") : null;
+            station_pass = (incomingIntent.hasExtra("station_pass")) ? incomingIntent.getStringExtra("station_pass") : null;
         	volume = incomingIntent.getIntExtra("volume", -1);
         	Log.d(APPTAG," > IsAlarmStr: "+ isAlarm);
-        	settEditor.putString("mediastreamer_streamUrl",stream_url);
+        	settEditor.putString("mediastreamer_streamUrl", stream_url);
+			settEditor.putString("mediastreamer_username",station_user);
+			settEditor.putString("mediastreamer_password",station_pass);
         	settEditor.putBoolean("isAlarm", isAlarm);
         	settEditor.commit();
         } else {
         	Log.d(APPTAG," > !incomingIntent");
         	stream_url = sett.getString("mediastreamer_streamUrl",null); // fallback
         	isAlarm = sett.getBoolean("isAlarm", false);
+            station_user = sett.getString("mediastreamer_username",null);
+            station_pass = sett.getString("mediastreamer_password",null);
         	incomingIntentWasNull = true;
         }
         if (stream_url==null) {
         	Log.d(APPTAG," > !stream_url");
         	stream_url = sett.getString("mediastreamer_streamUrl",null); // fallback
         	isAlarm = sett.getBoolean("isAlarm", false);
+            station_user = sett.getString("mediastreamer_username",null);
+            station_pass = sett.getString("mediastreamer_password", null);
         	incomingIntentWasNull = true;
         }
 		
@@ -556,7 +572,7 @@ public class MediaStreamerService extends Service {
         
         // Check
         if (stream_url==null) { shutdown(); return false; }
-        if (stream_url==stream_url_active && !force && !incomingIntentWasNull) { 
+        if (stream_url.equals(stream_url_active) && !force && !incomingIntentWasNull) {
             Log.d(APPTAG," -> stream already running: "+ stream_url_active);
             return true; 
         }
@@ -583,7 +599,7 @@ public class MediaStreamerService extends Service {
 		// MediaPlayer
 		if (mpMgr!=null) { mpMgr.destroy(false); }
 		mpMgr = new ObjMediaPlayerMgr(context, connMgr, wifiMgr, this);
-		mpMgr.init(stream_url,isAlarm);
+		mpMgr.init(stream_url,isAlarm, station_user, station_pass);
         
         stream_url_active = stream_url;
         
@@ -776,7 +792,9 @@ public class MediaStreamerService extends Service {
 						+"\"station_id\":\""+station_id+"\","
 						+"\"station_host\":\""+station_host+"\","
 						+"\"station_port\":\""+station_port+"\","
-						+"\"station_path\":\""+station_path+"\""
+						+"\"station_path\":\""+station_path+"\","
+                        +"\"station_user\":\""+station_user+"\","
+                        +"\"station_pass\":\""+station_pass+"\""
 						+"}";
 				
 				// Encode query
@@ -1317,6 +1335,8 @@ public class MediaStreamerService extends Service {
 		restartIntent.putExtra("station_host",station.getString("station_host"));
 		restartIntent.putExtra("station_port",station.getString("station_port"));
 		restartIntent.putExtra("station_path",station.getString("station_path"));
+        restartIntent.putExtra("station_user", station.has("station_user") ? station.getString("station_user") : null);
+        restartIntent.putExtra("station_pass", station.has("station_pass") ? station.getString("station_pass") : null);
         context.startService(restartIntent);
         
     }

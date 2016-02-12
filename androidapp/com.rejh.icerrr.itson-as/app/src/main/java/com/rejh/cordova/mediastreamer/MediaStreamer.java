@@ -270,8 +270,11 @@ public class MediaStreamer extends CordovaPlugin {
         String station_host = args.getString(5);
         String station_port = args.getString(6);
         String station_path = args.getString(7);
+		String station_user = args.getString(8);
+		String station_pass = args.getString(9);
         
         Log.d(APPTAG," > "+ station_host +", "+ station_port +", "+ station_path);
+        Log.w(APPTAG," > "+ station_user +", "+ station_pass);
         
         // Start
         // Prep some stuff..
@@ -287,6 +290,8 @@ public class MediaStreamer extends CordovaPlugin {
         serviceIntent.putExtra("station_host",station_host);
         serviceIntent.putExtra("station_port",station_port);
         serviceIntent.putExtra("station_path",station_path);
+        serviceIntent.putExtra("station_user",station_user);
+        serviceIntent.putExtra("station_pass",station_pass);
         
         // Resume?
         if (sett.getBoolean("is_paused", false)) {

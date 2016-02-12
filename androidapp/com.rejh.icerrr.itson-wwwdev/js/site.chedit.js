@@ -514,6 +514,8 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 								site.chedit.newentry.station_host = station_host;
 								site.chedit.newentry.station_port = station_port;
 								site.chedit.newentry.station_path = station_path;
+                                site.chedit.newentry.station_user = station_user;
+                                site.chedit.newentry.station_pass = station_pass;
 
 								// TODO: Fixme: remove this data before saving it, it's useless because outdated..
 								site.chedit.newentry.tmp = {};
@@ -600,6 +602,8 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 				site.chedit.newentry.station_host = data["data"]["queryj"]["host"];
 				site.chedit.newentry.station_port = data["data"]["queryj"]["port"];
 				site.chedit.newentry.station_path = data["data"]["queryj"]["path"];
+				site.chedit.newentry.station_user = data["data"]["queryj"]["user"];
+				site.chedit.newentry.station_pass = data["data"]["queryj"]["pass"];
 
 				// TODO: Fixme: remove this data before saving it, it's useless because outdated..
 				site.chedit.newentry.tmp = {};
@@ -743,10 +747,11 @@ site.chedit.getStationHostPortAndPath = function(station_name, station_url) {
 
     // Check '@' (means we have username/password in the url..)
     if (station_host.indexOf("@")>0 && station_host.indexOf(":") < station_host.indexOf("@")) {
-        var userandpass = station_host.substr(0,station_host.indexOf("@")).split(":");
-        station_user = userandpass[0];
-        station_pass = userandpass[1];
-        station_host = station_host.substr(userandpass.length+1);
+        var userandpasss = station_host.substr(0,station_host.indexOf("@"))
+        var userandpassa = userandpasss.split(":");
+        station_user = userandpassa[0];
+        station_pass = userandpassa[1];
+        station_host = station_host.substr(userandpasss.length+1);
     }
 
     // Figure path (and port end if present)

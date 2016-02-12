@@ -535,10 +535,11 @@ site.chsearch.getHostPortAndPathFromUrl = function(station_url) {
 
     // Check '@' (means we have username/password in the url..)
     if (station_host.indexOf("@")>0 && station_host.indexOf(":") < station_host.indexOf("@")) {
-        var userandpass = station_host.substr(0,station_host.indexOf("@")).split(":");
-        station_user = userandpass[0];
-        station_pass = userandpass[1];
-        station_host = station_host.substr(userandpass.length+1);
+        var userandpasss = station_host.substr(0,station_host.indexOf("@"))
+        var userandpassa = userandpasss.split(":");
+        station_user = userandpassa[0];
+        station_pass = userandpassa[1];
+        station_host = station_host.substr(userandpasss.length+1);
     }
 
     // Figure path (and port end if present)
