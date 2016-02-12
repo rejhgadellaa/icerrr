@@ -309,7 +309,9 @@ site.detailstation.updateDataNowPlaying = function() {
 		"station_id":site.detailstation.station.station_id,
 		"station_host":site.detailstation.station.station_host,
 		"station_port":site.detailstation.station.station_port,
-		"station_path":site.detailstation.station.station_path
+		"station_path":site.detailstation.station.station_path,
+        "station_user":site.session.currentstation.station_path,
+        "station_pass":site.session.currentstation.station_pass
 	}
 
 	var apiaction = "get";

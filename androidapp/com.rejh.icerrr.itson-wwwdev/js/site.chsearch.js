@@ -175,6 +175,8 @@ site.chsearch.resultsToStationData = function(results) {
 			station_host:hostPortAndPath[0],
 			station_port:hostPortAndPath[1],
 			station_path:hostPortAndPath[2],
+            station_user:hostPortAndPath[3],
+            station_pass:hostPortAndPath[4],
 			station_country:result.country,
 			station_bitrate: bitrate,
 			station_data:result
@@ -520,12 +522,26 @@ site.chsearch.getHostPortAndPathFromUrl = function(station_url) {
 	var station_port = 80; // logic, since it should have http:// in front of it?
 	var station_path = "";
 
+    // Opt: username, password
+    var station_user = false;
+    var station_pass = false;
+
+    // First: remove http(s):// if present..
 	if (station_host.indexOf("http://")>=0) {
 		station_host = station_host.substr("http://".length);
 	} else if (station_host.indexOf("https://")>=0) {
 		station_host = station_host.substr("https://".length);
 	}
 
+    // Check '@' (means we have username/password in the url..)
+    if (station_host.indexOf("@")>0 && station_host.indexOf(":") < station_host.indexOf("@")) {
+        var userandpass = station_host.substr(0,station_host.indexOf("@")).split(":");
+        station_user = userandpass[0];
+        station_pass = userandpass[1];
+        station_host = station_host.substr(userandpass.length+1);
+    }
+
+    // Figure path (and port end if present)
 	if (station_host.indexOf("/")>0 && station_host.indexOf(":")>0) {
 		station_port_end = station_host.indexOf("/")-station_host.indexOf(":")-1;
 		station_path = station_host.substr(station_host.indexOf("/"));
@@ -536,6 +552,7 @@ site.chsearch.getHostPortAndPathFromUrl = function(station_url) {
 		station_port_end = station_host.length-station_host.indexOf(":")-1;
 	}
 
+    // More path/port
 	if (station_host.indexOf(":")>=0) {
 		station_port = station_host.substr(station_host.indexOf(":")+1,station_port_end);
 		station_host = station_host.substr(0,station_host.indexOf(":"));
@@ -547,8 +564,9 @@ site.chsearch.getHostPortAndPathFromUrl = function(station_url) {
 	loggr.log(" > Host: "+ station_host);
 	loggr.log(" > Port: "+ station_port);
 	loggr.log(" > Path: "+ station_path);
+    loggr.log(" > User: "+ station_user);
 
-	return [station_host,station_port,station_path];
+	return [station_host,station_port,station_path,station_user,station_pass];
 
 }
 

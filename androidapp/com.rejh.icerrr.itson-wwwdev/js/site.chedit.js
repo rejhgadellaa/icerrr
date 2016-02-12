@@ -447,6 +447,8 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 	var station_host = stationHostPortAndPath.host;
 	var station_port = stationHostPortAndPath.port;
 	var station_path = stationHostPortAndPath.path;
+    var station_user = stationHostPortAndPath.user;
+    var station_pass = stationHostPortAndPath.pass;
 
 	// Do api call
 	var apiqueryobj = {
@@ -454,7 +456,9 @@ site.chedit.check_station_url = function(station_name, station_url, silent, play
 		"station_id":"TMP."+site.helpers.genUniqueStationId(station_name).replace(" ","_"),
 		"station_host":station_host,
 		"station_port":station_port,
-		"station_path":station_path
+		"station_path":station_path,
+        "station_user":station_user,
+        "station_pass":station_pass
 	}
 
 	var apiaction = "get";
@@ -726,12 +730,26 @@ site.chedit.getStationHostPortAndPath = function(station_name, station_url) {
 	var station_port = 80; // logic, since it should have http:// in front of it?
 	var station_path = "";
 
+    // Opt: username, password
+    var station_user = false;
+    var station_pass = false;
+
+    // First: remove http(s):// if present..
 	if (station_host.indexOf("http://")>=0) {
 		station_host = station_host.substr("http://".length);
 	} else if (station_host.indexOf("https://")>=0) {
 		station_host = station_host.substr("https://".length);
 	}
 
+    // Check '@' (means we have username/password in the url..)
+    if (station_host.indexOf("@")>0 && station_host.indexOf(":") < station_host.indexOf("@")) {
+        var userandpass = station_host.substr(0,station_host.indexOf("@")).split(":");
+        station_user = userandpass[0];
+        station_pass = userandpass[1];
+        station_host = station_host.substr(userandpass.length+1);
+    }
+
+    // Figure path (and port end if present)
 	if (station_host.indexOf("/")>0 && station_host.indexOf(":")>0) {
 		station_port_end = station_host.indexOf("/")-station_host.indexOf(":")-1;
 		station_path = station_host.substr(station_host.indexOf("/"));
@@ -742,6 +760,7 @@ site.chedit.getStationHostPortAndPath = function(station_name, station_url) {
 		station_port_end = station_host.length-station_host.indexOf(":")-1;
 	}
 
+    // More path/port
 	if (station_host.indexOf(":")>=0) {
 		station_port = station_host.substr(station_host.indexOf(":")+1,station_port_end);
 		station_host = station_host.substr(0,station_host.indexOf(":"));
@@ -753,8 +772,9 @@ site.chedit.getStationHostPortAndPath = function(station_name, station_url) {
 	loggr.log(" > Host: "+ station_host);
 	loggr.log(" > Port: "+ station_port);
 	loggr.log(" > Path: "+ station_path);
+    loggr.log(" > User: "+ station_user);
 
-	return {"host":station_host,"port":station_port,"path":station_path};
+	return {"host":station_host,"port":station_port,"path":station_path, "user":station_user, "pass":station_pass};
 
 }
 
