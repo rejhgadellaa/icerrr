@@ -1,3 +1,6 @@
+0.349
+  * Added beta support for basic authentication for streams ('http://user:pass@server.com')
+
 0.348
   * Fix for streams getting stuck sometimes (info code 703, 701)
 
