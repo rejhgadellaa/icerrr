@@ -174,16 +174,6 @@ $timebgn = time();
 // Open a socket
 $fsock = @fsockopen($queryj["host"],$queryj["port"],$errno,$errstr,5);
 
-// Basic auth..?
-if ($queryj["user"] && $queryj["pass"]) {
-    $user = $queryj["user"];
-    $pass = $queryj["pass"];
-    $path = $queryj["path"];
-    fputs($fsock, "GET / HTTP/1.0\r\n");
-    fputs($fsock, "Authorization: Basic ". base64_encode("{$user}:{$pass}") ."\r\n\r\n");
-    //fpassthru($fsock);
-}
-
 // Start reading from socket (if not false)
 if (!$fsock) {
 
@@ -230,7 +220,17 @@ if (!$fsock) {
 }
 
 // Create http_request
-$request = "GET ".$queryj["path"]." HTTP/1.0\r\nIcy-MetaData:1\r\n\r\n";
+$request = "GET ".$queryj["path"]." HTTP/1.0\r\n";
+
+// http_request: Basic auth..?
+if ($queryj["user"] && $queryj["pass"]) {
+    $user = $queryj["user"];
+    $pass = $queryj["pass"];
+    $request .= "Authorization: Basic ". base64_encode("{$user}:{$pass}") ."\r\n";
+}
+
+// http_request: icy metadata..
+$request .= "Icy-MetaData:1\r\n\r\n";
 
 // Request a-go-go
 $res = $querys."\n\n";
