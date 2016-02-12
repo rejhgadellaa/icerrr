@@ -7,7 +7,7 @@
 
 error_reporting(E_ERROR | E_PARSE);
 
-$localserver = "http://94.209.13.221:8082/icerrr/php/tests/test-readid3.php?q=";
+$localserver = "http://94.209.13.221:80/icerrr/php/tests/test-readid3.php?q=";
 
 // Function: fw
 function fw($path,$content,$append=false) {
