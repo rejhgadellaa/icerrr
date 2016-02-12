@@ -178,7 +178,7 @@ $fsock = @fsockopen($queryj["host"],$queryj["port"],$errno,$errstr,5);
 if ($queryj["user"] && $queryj["pass"]) {
     $user = $queryj["user"];
     $pass = $queryj["pass"];
-    fputs($fsock, "GET {$queryj['path']} HTTP/1.0\r\n");
+    fputs($fsock, "GET / HTTP/1.0\r\n");
     fputs($fsock, "Authorization: Basic ". base64_encode("{$user}:{$pass}") ."\r\n\r\n");
     //fpassthru($fsock);
 }
