@@ -98,7 +98,15 @@ switch($action) {
 						$id3_reader_url = $cfg["icerrr_remote_url"] . "php/tests/test-readid3.php?q=";
 					}
 					// "http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=";
-					$id3_reader_q = urlencode('{"station_id":"'. $queryobj["station_id"] .'","host":"'. $queryobj["station_host"] .'","port":'. $queryobj["station_port"] .',"path":"'. $queryobj["station_path"] .'"}');
+                    $id3_reader_q_a = array(
+                        "station_id" => $queryobj["station_id"],
+                        "host" => $queryobj["station_host"],
+                        "port" => $queryobj["station_port"],
+                        "path" => $queryobj["station_path"],
+                        "user" => $queryobj["station_user"],
+                        "pass" => $queryobj["station_pass"]
+                    )
+					$id3_reader_q = urlencode(json_encode($id3_reader_q_a));
 					// retry this a couple of times..
 					$fgjson = false;
 					$whilenum = 0;
