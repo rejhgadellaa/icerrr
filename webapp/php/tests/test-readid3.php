@@ -315,6 +315,7 @@ $array["time_read"] = time()-$timebgn;
 // $array["read-id3-host"] = $_SESSION["HOST"];
 
 $array["auth_user"] = "$user";
+$array["auth_thng"] = "Authorization: Basic ". base64_encode("{$user}:{$pass}");
 
 // Write file
 $filename = $queryj["station_id"].".json";
