@@ -55,7 +55,7 @@ site.cast.onerror = function(errorCode, errorDescription, errorData) {
 		msg = errorDescription;
 	}
 
-	site.ui.showtoast("Cast error: "+ msg);
+	site.ui.showtoast("Cast error: "+ msg, 0, true);
 
 	site.cast.destroy(true);
 
@@ -180,7 +180,7 @@ site.cast.requestSession = function() {
 	// chk
 	if (site.cast.session) {
 		loggr.log(" > Session already running, stopping...");
-		site.ui.showtoast("Stopping Chromecast session...");
+		site.ui.showtoast("Stopping Chromecast session...", 0, true);
 		site.cast.destroy();
 		site.cast.updateicon(1);
 		return; // <- important :)
@@ -368,7 +368,7 @@ site.cast.onVolumeUp = function() {
 	level = (level+0.1>0.95) ? 1.0 : level+0.1;
 	site.cast.setVolume(level,
 		function() {
-			site.ui.showtoast("Volume: "+ Math.round(level*100) +"%");
+			site.ui.showtoast("Volume: "+ Math.round(level*100) +"%", 0, true);
 		},
 		function(err) {
 			loggr.log(" > Volume UP FAILED");
@@ -383,7 +383,7 @@ site.cast.onVolumeDown = function() {
 	level = (level-0.1<0.05) ? 0.0 : level-0.1;
 	site.cast.setVolume(level,
 		function() {
-			site.ui.showtoast("Volume: "+ Math.round(level*100) +"%");
+			site.ui.showtoast("Volume: "+ Math.round(level*100) +"%", 0, true);
 		},
 		function(err) {
 			loggr.log(" > Volume DOWN FAILED");
@@ -423,7 +423,7 @@ site.cast.destroy = function(silent) {
 
 	try {
 		if (site.cast.session) {
-			if (!silent) { site.ui.showtoast("Cast: Session.stop()"); }
+			if (!silent) { site.ui.showtoast("Cast: Session.stop()", 0, true); }
 			site.cast.updateicon(1);
 			site.cast.session.stop();
 			site.cast.session = null;

@@ -1,5 +1,7 @@
 0.349
   * Added basic http authentication support for streams (beta, usage: 'http://user:pass@server.com')
+  * Fix: streams that used any other port than 80 couldn't be manually added
+  * A pinch of left over love from valentine's day
 
 0.348
   * Fix for streams getting stuck sometimes (info code 703, 701)

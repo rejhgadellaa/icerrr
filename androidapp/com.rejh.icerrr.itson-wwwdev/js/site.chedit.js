@@ -50,7 +50,7 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 	// No changes yet, right?
 	site.chedit.stationUrlChanged = false;
 
-	// Set station_id hidden field
+	// Set station_id hidden field (in case we're editing an existing station)
 	if (station_id_to_edit) {
 		site.chedit.isNewStation = false;
 		var station_info = site.data.stations[site.helpers.session.getStationIndexById(station_id_to_edit)]; // station_id_to_edit
@@ -81,6 +81,8 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 			station_host: station_info.station_host,
 			station_port: station_info.station_port,
 			station_path: station_info.station_path,
+			station_user: station_info.station_user,
+			station_pass: station_info.station_pass,
 			station_country: station_info.station_country,
 			station_bitrate: station_info.station_bitrate
 		}
@@ -89,6 +91,7 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 			loggr.error(" > chicon.init()",{dontupload:true});
 			site.chicon.init($("#editstation input[name='station_id']")[0].value.trim());
 		}
+	// We're creating a new station..
 	} else if (station_id_to_edit===false) { // clean
 		site.chedit.isNewStation = true;
 		$("#editstation .actions .save").css("display","none");
@@ -109,6 +112,7 @@ site.chedit.init = function(station_id_to_edit, askedAboutStationName, askedAbou
 			site.chedit.searchicon();
 		}
 		site.chedit.newentry = {};
+	// Not sure what we're doing..
 	} else { // continue but make sure the station_id is cleared
 		loggr.warn(" > !station_id_to_edit but it's not false?");
 		$("#editstation .actions .save").css("display","none");
