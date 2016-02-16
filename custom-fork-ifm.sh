@@ -9,6 +9,7 @@ then
 fi
 
 # make copy and go to destination
+rm -rf webapp/rgt/cache/*
 cd ..
 cp -a icerrr interrrgalacticfm
 cd interrrgalacticfm
@@ -53,6 +54,7 @@ do
         if [ `echo $j|grep icerrr|wc -l` != 0 ]
         then
         jj=`echo $j|sed -e 's/icerrr/interrrgalacticfm/g'`
+        echo $j
         mv $j $jj
         else
         jj=$j
@@ -67,6 +69,7 @@ do
             if [ `echo $k|grep icerrr|wc -l` != 0 ]
             then
             kk=`echo $k|sed -e 's/icerrr/interrrgalacticfm/g'`
+            echo $k
             mv $k $kk
             else
             kk=$k
@@ -81,6 +84,7 @@ do
                 if [ `echo $l|grep icerrr|wc -l` != 0 ]
                 then
                 ll=`echo $l|sed -e 's/icerrr/interrrgalacticfm/g'`
+                echo $l
                 mv $l $ll
                 else
                 ll=$l

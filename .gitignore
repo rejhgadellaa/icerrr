@@ -71,6 +71,9 @@ cache.gcisearch.json.gz
 webapp/api/logs_users/
 webapp/api/stations_users/
 
+#webapp rgt cache
+webapp/rgt/cache/*
+
 # nowplaying debug files
 outp.header.txt
 outp.meta.txt

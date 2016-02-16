@@ -276,8 +276,8 @@ switch($action) {
 				$cachekey = $queryobj["search"]."-size".$queryobj["imgSize"];
 				$cachedata = getGcisearchCache($cachekey);
 				// New search..
-
 				if (!$cachedata) {
+                    logg(" > New search...");
 					// Build url
 					$url = $cfg["gcs_url"]
 						."q=". rawurlencode($queryobj["search"])
@@ -301,6 +301,7 @@ switch($action) {
 				}
 				// use cache..
 				else {
+                    logg(" > Use cache...");
 					$json["data"] = $cachedata;
 					$json["info"]["cached"] = true;
 				}
