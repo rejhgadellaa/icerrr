@@ -32,8 +32,7 @@
             "* New: option to disable Chromecast support (frees up resources)",
             "* Added basic http authentication support for streams (beta, usage: 'http://user:pass@server.com')",
             "* Fix: streams that used any other port than 80 couldn't be manually added",
-            "* Fix: Issue selecting station via details screen after install", 
-            "* A pinch of left over love from valentine's day"
+            "* Fix: Issue selecting station via details screen after fresh install"
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
