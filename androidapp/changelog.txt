@@ -1,3 +1,6 @@
+0.351
+  * Fix: Issue selecting station via details screen after install
+
 0.350
   * New: option to disable Chromecast support (frees up resources)
 

@@ -1,35 +1,38 @@
 [
 
-	{
-		"id":"app330-critical",
-		"crit":"version",
-		"critvalue":0.330,
-		"action":"url",
-		"url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
-		"title":"Time for an update?",
-		"message":[
-			"It looks like you're running a really old version of Icerrr. Please consider updating now so you can enjoy the latest and greatest!\n\n",
+    {
+        "id":"app350-critical",
+        "crit":"version",
+        "critvalue":0.330,
+        "action":"install-update-app",
+        "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
+        "title":"Time for an update?",
+        "message-no":[],
+        "message":[
+            "It looks like you're running a really old version of Icerrr. Please consider updating now so you can enjoy the latest and greatest!\n\n",
             "Update now?"
-			],
-		"buttonLabels":"Yes,No",
-		"repeat":1,
-		"onlyOnWifi":1
-	},
+            ],
+        "buttonLabels":"Yes,No",
+        "repeat":1,
+        "critical":1,
+        "onlyOnWifi":0
+    },
 
     {
-        "id":"app350",
+        "id":"app351",
         "crit":"version",
-        "critvalue":0.349,
+        "critvalue":0.350,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.349 includes:",
+            "v0.351 includes:",
             "* New: option to disable Chromecast support (frees up resources)",
             "* Added basic http authentication support for streams (beta, usage: 'http://user:pass@server.com')",
             "* Fix: streams that used any other port than 80 couldn't be manually added",
+            "* Fix: Issue selecting station via details screen after install", 
             "* A pinch of left over love from valentine's day"
             ],
         "buttonLabels":"Yes,No",
