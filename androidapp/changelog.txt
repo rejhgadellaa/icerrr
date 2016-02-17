@@ -1,3 +1,6 @@
+0.350
+  * New: option to disable Chromecast support (frees up resources)
+
 0.349
   * Added basic http authentication support for streams (beta, usage: 'http://user:pass@server.com')
   * Fix: streams that used any other port than 80 couldn't be manually added

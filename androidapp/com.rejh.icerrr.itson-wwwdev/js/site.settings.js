@@ -137,6 +137,11 @@ site.settings.registerListeners = function() {
 		}
 	);
 
+	// Enable Chromecast Support
+	var enableCC = site.cookies.get("setting_enableCC")
+	if (enableCC==1) { $("#settings input[name='enableCC']").attr("checked",true); }
+	else { $("#settings input[name='enableCC']").attr("checked",false); }
+
 	// Use Flat Icon
 	window.mediaStreamer.getSetting("bool","useFlatIcon",
 		function(res) {
@@ -239,6 +244,17 @@ site.settings.registerListeners = function() {
 		if ((targ.checked)) {
 			alert("Don't forget to set SAA's ringtone to 'silent'!");
 		}
+	});
+
+	// Use SAA
+	$("#settings input[name='enableCC']").off("change");
+	$("#settings input[name='enableCC']").on("change",function(evt) {
+        var targ = evt.currentTarget;
+		loggr.log(" > Setting: enableCC: "+ (targ.checked)?1:0,{toconsole:true});
+		site.cookies.put("setting_enableCC",(targ.checked)?1:0);
+        if (confirm("Icerrr needs to restart to commit this change. Restart now?")) {
+            window.location.reload();
+        }
 	});
 
 	// Use Flat Icon

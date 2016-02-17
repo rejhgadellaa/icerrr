@@ -14,17 +14,15 @@ site.cast = {};
 // ---> Config
 
 site.cast.cfg = {};
-
 site.cast.cfg.apiCfg = {}
+
+site.cast.routes = [];
 
 // ---> Init
 
 site.cast.setup = function() {
 
 	loggr.debug("site.cast.setup()");
-
-	// Prep
-	site.cast.routes = [];
 
 	// Setup
 	execute('setup', function(err) {

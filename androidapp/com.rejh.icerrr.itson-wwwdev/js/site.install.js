@@ -152,7 +152,7 @@ site.installer.update = function() {
 	}
 
 	// Specific updates: 0.166
-	if (site.cookies.get("app_version")<=0.166) {
+	if (site.cookies.get("app_version")<0.166) {
 
 		loggr.error(" > Update to 0.166..",{dontupload:true});
 
@@ -162,7 +162,7 @@ site.installer.update = function() {
 	}
 
 	// Specific updates: 0.193
-	if (site.cookies.get("app_version")<=0.192) {
+	if (site.cookies.get("app_version")<0.192) {
 
 		loggr.error(" > Update to 0.193..",{dontupload:true});
 
@@ -172,7 +172,7 @@ site.installer.update = function() {
 	}
 
 	// Specific updates: 0.207
-	if (site.cookies.get("app_version")<=0.206) {
+	if (site.cookies.get("app_version")<0.206) {
 
 		loggr.error(" > Update to 0.207..",{dontupload:true});
 
@@ -183,7 +183,7 @@ site.installer.update = function() {
 	}
 
 	// Specific updates: 0.249
-	if (site.cookies.get("app_version")<=0.249 && site.installer.isUpdate) {
+	if (site.cookies.get("app_version")<0.249 && site.installer.isUpdate) {
 
 		loggr.error(" > Update to 0.250..",{dontupload:true});
 
@@ -194,7 +194,7 @@ site.installer.update = function() {
 	}
 
 	// Specific updates: 0.256
-	if (site.cookies.get("app_version")<=0.255) {
+	if (site.cookies.get("app_version")<0.255) {
 
 		loggr.error(" > Update to 0.256..",{dontupload:true});
 
@@ -204,7 +204,7 @@ site.installer.update = function() {
 	}
 
 	// Specific updates: 0.316
-	if (site.cookies.get("app_version")<=0.315) {
+	if (site.cookies.get("app_version")<0.315) {
 
 		loggr.error(" > Update to 0.316..",{dontupload:true});
 
@@ -213,8 +213,28 @@ site.installer.update = function() {
 
 	}
 
+	// Specific updates: 0.316
+	if (site.cookies.get("app_version")<0.315) {
+
+		loggr.error(" > Update to 0.316..",{dontupload:true});
+
+		loggr.log(" >> Setting: 'turnOnScreenForAlarms' = true");
+		window.mediaStreamer.setting("bool","turnOnScreenForAlarms",true,function(res){loggr.log(" > Stored: "+ res);},function(error){loggr.error(error);});
+
+	}
+
+	// Specific updates: 0.350
+	if (site.cookies.get("app_version")<0.349) {
+
+		loggr.error(" > Update to 0.350..",{dontupload:true});
+
+		loggr.log(" >> Setting: 'enableCC' = true");
+		site.cookies.put("setting_enableCC",1)
+
+	}
+
 	// Specific updates: installed + 0.175
-	if (site.cookies.get("app_is_installed") && site.cookies.get("app_version")<=0.175) {
+	if (site.cookies.get("app_is_installed") && site.cookies.get("app_version")<0.175) {
 
 		loggr.error(" > Update to 0.176..",{dontupload:true});
 

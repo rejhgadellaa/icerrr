@@ -1,6 +1,6 @@
 if(!site){var site={};}
 site.cast={};site.cast.cfg={};site.cast.cfg.apiCfg={}
-site.cast.setup=function(){loggr.debug("site.cast.setup()");site.cast.routes=[];execute('setup',function(err){if(!err){chrome.cast.isAvailable=true;site.cast.init();}else{throw new Error('Unable to setup chrome.cast API'+err);}});}
+site.cast.routes=[];site.cast.setup=function(){loggr.debug("site.cast.setup()");execute('setup',function(err){if(!err){chrome.cast.isAvailable=true;site.cast.init();}else{throw new Error('Unable to setup chrome.cast API'+err);}});}
 site.cast.onerror=function(errorCode,errorDescription,errorData){loggr.warn("CHROMECAST: Error: "+errorCode+", "+errorDescription);loggr.warn(errorCode);loggr.warn(errorData);console.warn(errorCode,errorDescription,errorData);var msg;if(errorCode.message){msg=errorCode.message;}else if(errorDescription){msg=errorDescription;}
 site.ui.showtoast("Cast error: "+msg,0,true);site.cast.destroy(true);}
 site.cast.init=function(){loggr.debug("site.cast.init()");if(!site.cast.session){site.cast.session=(site.cookies.get("cast_session"))?JSON.parse(site.cookies.get("cast_session")):null;}

@@ -137,8 +137,10 @@ site.home.init = function() {
 	site.lifecycle.addOnPauseCb(site.home.onpause);
 	site.lifecycle.addOnResumeCb(site.home.onresume);
 
-	// Test: chromecast
-	site.cast.setup();
+    // Test: chromecast
+    if (site.cookies.get("setting_enableCC")==1) {
+        site.cast.setup();
+    }
 
 	// Save to mediastreamer
 	station.station_port = ""+station.station_port;
