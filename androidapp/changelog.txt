@@ -1,3 +1,6 @@
+0.352
+  * New: control radio with intents (from apps like Tasker)
+
 0.351
   * Fix: Issue selecting station via details screen after install
 

@@ -25,6 +25,7 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
 	
 	private Intent intent;
 	private Intent serviceIntent;
+
 	
 	// --------------------------------------------------
 	// Receive
@@ -51,46 +52,64 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
         Log.d(APPTAG," > Intent action: "+ action);
 		
 		// --> Handle actions
+
+		// EXT_INTENT_RECEIVER
+
+		// Start radio
+		if (intent.hasExtra("start_radio")) {
+			startRadio(false);
+		}
+		// Start alarm
+		if (intent.hasExtra("start_alarm")) {
+			startRadio(true);
+		}
+		// Pause radio
+		if (intent.hasExtra("pause_radio")) {
+			pauseRadio();
+		}
+		// Stop radio
+		if (intent.hasExtra("stop_radio")) {
+			stopRadio();
+		}
+
+		// Headphone unplugged
+		if (action.equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
+
+			if (isServiceRunning(MediaStreamerService.class)) {
+				Intent recvIntent = new Intent(context, MediaStreamerReceiver.class);
+				recvIntent.putExtra("cmd", "pause");
+				context.sendBroadcast(recvIntent);
+			}
+
+		}
         
-        // Sleep As Android..
-        if (sett.getBoolean("useSAA",false)) {
-        	
-        	Log.d(APPTAG," > UseSAA: true");
-        
-	        // SAA: start alarm
-	        if (action.equals("com.urbandroid.sleep.alarmclock.ALARM_ALERT_START")) {
-	        	startAlarm();
-	        }
-	        
-	        // SAA: stop alarm
-	        if (action.equals("com.urbandroid.sleep.alarmclock.ALARM_ALERT_DISMISS")) {
-	        	stopAlarm();
-	        }
-	        
-	        // SAA: snooze
-	        if (action.equals("com.urbandroid.sleep.alarmclock.ALARM_SNOOZE_CLICKED_ACTION")) {
-	        	stopAlarm();
-	        }
-	        
-        }
-        
-        // Headphone unplugged
-        if (action.equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
-        	
-        	if (isServiceRunning(MediaStreamerService.class)) {
-        		Intent recvIntent = new Intent(context, MediaStreamerReceiver.class);
-            	recvIntent.putExtra("cmd", "pause");
-            	context.sendBroadcast(recvIntent);
-        	}
-        	
-        }
+        // Others (Sleep As Android..?)
+		if (sett.getBoolean("useSAA", false)) {
+
+			Log.d(APPTAG, " > UseSAA: true");
+
+			// SAA: start alarm
+			if (action.equals("com.urbandroid.sleep.alarmclock.ALARM_ALERT_START")) {
+				startRadio(true);
+			}
+
+			// SAA: stop alarm
+			if (action.equals("com.urbandroid.sleep.alarmclock.ALARM_ALERT_DISMISS")) {
+				stopRadio();
+			}
+
+			// SAA: snooze
+			if (action.equals("com.urbandroid.sleep.alarmclock.ALARM_SNOOZE_CLICKED_ACTION")) {
+				stopRadio();
+			}
+		}
 
 	}
 	
 	// --------------------------------------------------
 	// SAA Handlers
 	
-	public void startAlarm() {
+	public void startRadio(boolean isAlarm) {
 		
 		Log.d(APPTAG," > StartAlarm()");
 		
@@ -117,9 +136,9 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
 			si.putExtra("station_id", station_id);
 			si.putExtra("station_name", station_name);
 			si.putExtra("station_host", station_host);
-			si.putExtra("station_port", station_host);
+			si.putExtra("station_port", station_port);
 			si.putExtra("station_path", station_path);
-			si.putExtra("isAlarm", true);
+			si.putExtra("isAlarm", isAlarm);
 			si.putExtra("stream_url",station_url);
 			
 			// Start it..
@@ -131,10 +150,15 @@ public class MediaStreamerExtIntentReceiver extends BroadcastReceiver {
 		
 		
 	}
+
+	public void pauseRadio() {
+		Intent si = new Intent(context, MediaStreamerService.class);
+		si.putExtra("pause", true);
+	}
 	
-	public void stopAlarm() {
+	public void stopRadio() {
 		
-		Log.d(APPTAG," > StopAlarm()");
+		Log.d(APPTAG," > StopRadio()");
 		
 		// Create intent
 		Intent si = new Intent(context, MediaStreamerService.class);

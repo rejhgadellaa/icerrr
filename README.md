@@ -30,6 +30,7 @@ Features
 * artwork: now playing album art, stream icon, locked screen
 * integration: [Android Wear](https://android.com/wear), [Sleep as Android](https://play.google.com/store/apps/details?id=com.urbandroid.sleep) (hence [Phillips Hue](http://meethue.com))
 * settings management: auto upgrade, JSON export, JSON import
+* [control playback](https://github.com/rejhgadellaa/icerrr/wiki/Advanced-features#control-with-intents) via intents using apps like Tasker
 
 Get the app!
 -------------

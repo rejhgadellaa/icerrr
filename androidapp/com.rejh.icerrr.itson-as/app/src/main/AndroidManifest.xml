@@ -103,7 +103,7 @@
         
         <receiver android:name="com.rejh.cordova.mediastreamer.MediaStreamerExtIntentReceiver">
             <intent-filter>
-                <action android:name="com.rejh.cordova.mediastreamer.actions.EXT_INTENT_RECEIVER" />
+                <action android:name="com.rejh.icerrr.actions.EXT_INTENT_RECEIVER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.urbandroid.sleep.alarmclock.ALARM_ALERT_START" />
