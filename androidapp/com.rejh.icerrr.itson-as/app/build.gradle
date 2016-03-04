@@ -9,8 +9,8 @@ android {
         resConfigs "en"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 352
-        versionName "0.352"
+        versionCode 353
+        versionName "0.353"
     }
 
     buildTypes {
@@ -22,7 +22,10 @@ android {
 }
 
 dependencies {
-    compile 'com.google.android.gms:play-services-cast:8.3.0'
+
+    wearApp files('appwear-release.apk')
+    compile 'com.google.android.gms:play-services-wearable:8.4.0'
+    compile 'com.google.android.gms:play-services-cast:8.4.0'
     compile 'com.android.support:mediarouter-v7:23.0.1'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile files('libs/cordova-2.7.0.jar')

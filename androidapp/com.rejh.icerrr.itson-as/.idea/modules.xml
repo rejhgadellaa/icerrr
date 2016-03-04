@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appwear/appwear.iml" filepath="$PROJECT_DIR$/appwear/appwear.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.rejh.icerrr.itson-as.iml" filepath="$PROJECT_DIR$/com.rejh.icerrr.itson-as.iml" />
     </modules>
   </component>

@@ -94,6 +94,12 @@
         </activity-alias>
         
         <service android:name="com.rejh.cordova.mediastreamer.MediaStreamerService" android:launchMode="singleTask" />
+
+        <service android:name=".ListenerServiceFromWear">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
     	
         <receiver android:name="com.rejh.cordova.mediastreamer.RemoteControlReceiver" android:enabled="true">
 		</receiver>

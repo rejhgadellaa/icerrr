@@ -7,7 +7,7 @@
 
 # Android Studio
 .idea/workspace.xml
-.idea/libraries
+.idea/libraries/
 
 # files for the dex VM
 *.dex
@@ -45,6 +45,7 @@ Thumbs.db
 # Intellij IDEA (see https://intellij-support.jetbrains.com/entries/23393067)
 .idea/workspace.xml
 androidapp/com.rejh.icerrr.itson-as/.idea/workspace.xml
+androidapp/com.rejh.icerrr.itson-as/.idea/libraries/*
 .idea/tasks.xml
 .idea/datasources.xml
 .idea/dataSources.ids

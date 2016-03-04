@@ -1,3 +1,6 @@
+0.353
+  * New: On Android Wear, say "OK Google, Open radio"
+
 0.352
   * New: control radio with intents (from apps like Tasker)
 

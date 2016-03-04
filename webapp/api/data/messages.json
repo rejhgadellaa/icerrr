@@ -19,16 +19,17 @@
     },
 
     {
-        "id":"app352",
+        "id":"app353",
         "crit":"version",
-        "critvalue":0.351,
+        "critvalue":0.352,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.352 includes:",
+            "v0.353 includes:",
+            "* New: On Android Wear, say "OK Google, Open radio",
             "* New: control radio with intents (from apps like Tasker)",
             "* New: option to disable Chromecast support (frees up resources)",
             "* Added basic http authentication support for streams (beta, usage: 'http://user:pass@server.com')"
