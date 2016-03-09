@@ -38,27 +38,6 @@ header("Access-Control-Allow-Origin: *");
 // Actions
 switch($action) {
 
-	// APP UPDATE
-
-	case "checkappupdate":
-		if (!$query) { error("GET['query'] is not defined for action '$action'"); }
-		$queryobj = json_decode($query,true);
-		$version_user = $queryobj["version"];
-		$version_latest = floatval(fr("data/version.txt"));
-		$res = array();
-		if ($version_user < $version_latest) {
-			$res["url"] = "http://{$_SERVER['HTTP_HOST']}/rookmelder/apks/RookAlarm.apk";
-			$res["version_user"] = $version_user;
-			$res["version_latest"] = $version_latest;
-			$res["updateAvailable"] = 1;
-		} else {
-			$res["updateAvailable"] = 0;
-		}
-		$jsons = gzencode(json_encode($res));
-		header('Content-Encoding: gzip');
-		echo $jsons;
-		break;
-
 	// GET
 	case "get":
 
@@ -589,7 +568,7 @@ switch($action) {
 				$jsons = json_encode($json);
 				logg($jsons);
 				echo $jsons;
-				sendEmail_log("http://www.rejh.nl/icerrr/api/{$filenamehtml}");
+				sendEmail_log("https://www.rejh.nl/icerrr/api/{$filenamehtml}");
 				break;
 
 			case "stations":

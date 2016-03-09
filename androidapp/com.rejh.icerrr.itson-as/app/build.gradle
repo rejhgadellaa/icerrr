@@ -9,8 +9,8 @@ android {
         resConfigs "en"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 353
-        versionName "0.353"
+        versionCode 354
+        versionName "0.354"
     }
 
     buildTypes {

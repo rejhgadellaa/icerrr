@@ -46,9 +46,10 @@
     <!-- Javascript: Things :D -->
     <script>
 	if (window.location.hostname.indexOf("www.rejh.nl")<0 && window.location.hostname.indexOf("localhost")<0 && window.location.hostname.indexOf("192.168.")<0) {
-		window.location.href = "http://www.rejh.nl/icerrr/"; // for prod
+		window.location.href = "https://www.rejh.nl/icerrr/"; // for prod
 	}
-	</script>
+    if (window.location.protocol != "https:" && window.location.hostname.indexOf("localhost")<0 && window.location.hostname.indexOf("192.168.")<0)
+        window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
 	</script>
 
     <!-- Style / base -->
@@ -59,7 +60,7 @@
 	<link rel="stylesheet" type="text/css" href="css/size.phone.css?c=<?=time();?>" media="screen and (max-width: 960px)" />
 
     <!-- Webfonts -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,200,300,400' rel='stylesheet' type='text/css'>
 
     <!--[if lt IE 9]>
     	<script src="js/plugs/html5shiv.js"></script>
@@ -149,7 +150,7 @@
                 <!-- Legal -->
                 <div class="legal">
                     <div class="item_wrap">Icerrr is open source and distributed under the MIT license</div>
-                    <div class="item_wrap">Copyright &copy; 2015 <a href="http://www.rejh.nl/" target="_blank">REJH Gadellaa</a></div>
+                    <div class="item_wrap">Copyright &copy; 2015 <a href="https://www.rejh.nl/" target="_blank">REJH Gadellaa</a></div>
 
                 </div>
 

@@ -1,3 +1,6 @@
+0.354
+  * Secure communication with Icerrr API via https
+
 0.353
   * New: On Android Wear, say "OK Google, Open radio"
 

@@ -786,7 +786,7 @@ public class MediaStreamerService extends Service {
 			public void run(){
 				
 				// Url, query
-				String url = "http://rejh.nl/icerrr/api/?a=get&q=";
+				String url = "https://rejh.nl/icerrr/api/?a=get&q=";
 				String query = "{"
 						+"\"get\":\"station_info\","
 						+"\"station_id\":\""+station_id+"\","
