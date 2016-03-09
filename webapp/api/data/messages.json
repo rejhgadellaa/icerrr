@@ -30,10 +30,7 @@
             "An update for Icerrr is availabe. Do you want to install it now?\n",
             "v0.354 includes:",
             "* Secure communication with Icerrr API via https",
-            "* New: On Android Wear, say \"OK Google, Open radio\"",
-            "* New: control radio with intents (from apps like Tasker)",
-            "* New: option to disable Chromecast support (frees up resources)",
-            "* Added basic http authentication support for streams (beta, usage: 'http://user:pass@server.com')"
+            "* New: On Android Wear, say \"OK Google, Open radio\""
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,
