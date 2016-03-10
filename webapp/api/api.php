@@ -112,6 +112,7 @@ switch($action) {
 
 				if ($json["data"]["nowplaying"]) {
 
+                    $json["data"]["nowplaying"] = str_replace("  "," ",$json["data"]["nowplaying"]);
                     $json["data"]["nowplaying"] = str_replace("& #4","",$json["data"]["nowplaying"]);
                     $json["data"]["nowplaying"] = str_replace("&amp; #4","",$json["data"]["nowplaying"]);
                     $json["data"]["nowplaying"] = str_replace("&#38; #4","",$json["data"]["nowplaying"]);
@@ -165,8 +166,6 @@ switch($action) {
 
 					// Debug
 					$json["data"]["npechoreq_songsearch"] = $echonest_requrl;
-
-
 
 				}
 
