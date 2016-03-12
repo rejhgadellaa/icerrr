@@ -407,7 +407,7 @@ section {
 	#home .main .station_image_color {
 		position:absolute;
 		top:0; left:0; right:0; bottom:0;
-		background:none;
+		background:#607D8B;
 		/* transition: background 500ms; */
 		opacity:0.5;
 	}

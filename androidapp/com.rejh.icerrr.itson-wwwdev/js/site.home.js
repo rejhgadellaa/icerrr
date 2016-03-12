@@ -69,7 +69,7 @@ site.home.init = function() {
 
 	// Pre-handle some image/settings related stuff
 	if (site.cookies.get("setting_showAlbumArt")!=1 || site.home.lastStationId!=site.session.currentstation.station_id) {
-		$("#home .station_image_color").css("background","none");
+		$("#home .station_image_color").css("background","#607D8B");
 		site.home.loadAlbumArt('img/bg_home_default.jpg');
 	}
 
@@ -860,7 +860,7 @@ site.home.loadAlbumArt = function(localpath) {
 
 		// No colorize..
 		if (this.src.indexOf('img/bg_home_default.jpg')>=0) {
-			$("#home .station_image_color").css("background","none");
+			$("#home .station_image_color").css("background","#607D8B");
 		}
 
 		// Image loaded, set as background
@@ -885,11 +885,11 @@ site.home.loadAlbumArt = function(localpath) {
 					else { $("#home .footer").css("background","#2D6073"); }
 					/**/
 				} else {
-					$("#home .station_image_color").css("background","none");
+					$("#home .station_image_color").css("background","#607D8B");
 					$("#home .fab_play").css("background","#FF5722");
 				}
 			} else {
-				$("#home .station_image_color").css("background","none");
+				$("#home .station_image_color").css("background","#607D8B");
 					$("#home .fab_play").css("background","#FF5722");
 			}
 		}
