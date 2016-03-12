@@ -58,6 +58,9 @@ _apks/*
 _tmp/
 cache/
 
+# Optimized www
+/androidapp/com.rejh.icerrr.itson-as/app/src/main/assets/www/
+
 # webapp jsons
 webapp/json/
 !webapp/json/stations.json
