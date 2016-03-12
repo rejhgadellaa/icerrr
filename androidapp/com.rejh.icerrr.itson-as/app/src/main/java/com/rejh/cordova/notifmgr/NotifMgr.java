@@ -34,6 +34,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.support.v4.app.NotificationCompat;
@@ -162,6 +163,7 @@ public class NotifMgr extends CordovaPlugin {
         	//String intentClassName = obj.has("intentClassName") ? obj.getString("intentClassName") : null; // TODO: should be able to use 'com.rejh.icerr.doirdapp.MAIN_ACTIVITY'
         	
         	// Optional
+			boolean isMedia = obj.has("isMedia") ? obj.getBoolean("isMedia") : false;
         	String color = obj.has("color") ? obj.getString("color") : "#999999";
         	String largeicon = obj.has("largeicon") ? obj.getString("largeicon") : null;
         	String ticker = obj.has("ticker") ? obj.getString("ticker") : title;
@@ -206,6 +208,12 @@ public class NotifMgr extends CordovaPlugin {
 	        builder.setContentIntent(notifPendingIntent);
 	        
 	        // > Optionals
+
+			// Media
+			if (isMedia && Build.VERSION.SDK_INT>=21) {
+				// TODO: builder.setStyle(new Notification.MediaStyle());
+                // http://developer.android.com/guide/topics/ui/notifiers/notifications.html#controllingMedia
+			}
 	        
 	        // Color (5.0)
 	        builder.setColor(Color.parseColor(color));
