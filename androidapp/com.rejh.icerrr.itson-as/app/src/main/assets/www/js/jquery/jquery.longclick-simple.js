@@ -1,2 +1,0 @@
-(function($){$.fn.longClick=function(callback,timeout){var timer;timeout=timeout||500;$(this).mousedown(function(ev){for(key in ev.originalEvent){}
-timer=setTimeout(function(){callback(ev.originalEvent.target);},timeout);return false;});$(document).mouseup(function(){clearTimeout(timer);return false;});};})(jQuery);

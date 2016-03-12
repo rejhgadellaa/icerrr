@@ -113,9 +113,14 @@ switch($action) {
 				if ($json["data"]["nowplaying"]) {
 
                     $json["data"]["nowplaying"] = str_replace("  "," ",$json["data"]["nowplaying"]);
+                    $json["data"]["nowplaying"] = str_replace("&  #4","",$json["data"]["nowplaying"]);
                     $json["data"]["nowplaying"] = str_replace("& #4","",$json["data"]["nowplaying"]);
                     $json["data"]["nowplaying"] = str_replace("&amp; #4","",$json["data"]["nowplaying"]);
                     $json["data"]["nowplaying"] = str_replace("&#38; #4","",$json["data"]["nowplaying"]);
+
+                    if (strpos($json["data"]["nowplaying"]," #4")>0 && strpos($json["data"]["nowplaying"],"&")>0) {
+                        $json["data"]["nowplaying"] = substr($json["data"]["nowplaying"], 0, strrpos($json["data"]["nowplaying"],"&"));
+                    }
 
 					$npexpl = explode("-",$json["data"]["nowplaying"],2);
 					$npartist = trim($npexpl[0]);
@@ -604,12 +609,15 @@ switch($action) {
 				$filepath = "../static/uploaded/{$filename}";
 				$filetmp = $_FILES['file']['tmp_name'];
 
+                /*
+                // redundant check. this is easily faked..
 				$postkey = $_POST["key"];
 				$getkey = $queryobj["key"];
 				if ($postkey!=$getkey) {
 					http_response_code(403);
 					error("Access denied'");
 				}
+                /**/
 
 				$devicess = fr("data/deviceids.json");
 				$devices = json_decode($devicess,true);
@@ -621,7 +629,7 @@ switch($action) {
 				$moved = move_uploaded_file($filetmp, $filepath);
 				if (!$moved) {
 					http_response_code(500);
-					error("Could not move file to '{$filepath}'");
+					error("Could not move file '{$filetmp}' to '{$filepath}'");
 				} else {
 					http_response_code(200);
 					echo json_encode(array("info"=>array(), "data"=>array("post"=>"ok", "filename"=>$filename)));

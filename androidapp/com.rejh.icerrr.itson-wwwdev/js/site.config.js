@@ -22,6 +22,7 @@ site.cfg.debugging = true; // TODO: Deprecated, see option in settings
 site.cfg.urls = {};
 site.cfg.urls.webapp = "https://www.rejh.nl/icerrr/";
 site.cfg.urls.api = "https://www.rejh.nl/icerrr/api/?";
+site.cfg.urls.apiNoHttps = "http://www.rejh.nl/icerrr/api/?";
 // site.cfg.urls.api = "http://66.249.81.202/icerrr/api/?"; // debug
 
 // Paths (local storage)
