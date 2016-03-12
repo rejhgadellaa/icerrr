@@ -37,7 +37,8 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
-import android.support.v4.app.NotificationCompat;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v7.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
@@ -164,6 +165,7 @@ public class NotifMgr extends CordovaPlugin {
         	
         	// Optional
 			boolean isMedia = obj.has("isMedia") ? obj.getBoolean("isMedia") : false;
+			Object mediaSessionAsObject = obj.has("mediaSession") ? (Object) obj.getJSONObject("mediaSession") : null;
         	String color = obj.has("color") ? obj.getString("color") : "#999999";
         	String largeicon = obj.has("largeicon") ? obj.getString("largeicon") : null;
         	String ticker = obj.has("ticker") ? obj.getString("ticker") : title;
@@ -213,6 +215,14 @@ public class NotifMgr extends CordovaPlugin {
 			if (isMedia && Build.VERSION.SDK_INT>=21) {
 				// TODO: builder.setStyle(new Notification.MediaStyle());
                 // http://developer.android.com/guide/topics/ui/notifiers/notifications.html#controllingMedia
+                /*
+                if (mediaSessionAsObject!=null) {
+                    MediaSessionCompat mediaSession = (MediaSessionCompat) mediaSessionAsObject;
+                    builder.setStyle(new NotificationCompat.MediaStyle().setMediaSession(mediaSession));
+                } else {
+                    builder.setStyle(new NotificationCompat.MediaStyle());
+                }
+                /**/
 			}
 	        
 	        // Color (5.0)
