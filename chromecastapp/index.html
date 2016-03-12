@@ -48,7 +48,7 @@
 		section#launch {
 			z-index:90;
 			display:block;
-			background:#607D8B;
+			background:#FF5722;
 			-webkit-transition: opacity 500ms;
 			transition: opacity 1000ms;
 		}
@@ -70,11 +70,12 @@
             #main .color {
                 position:absolute;
                 top:0; left:0; right:0; bottom:0;
+                background:#607D8B;
                 opacity:0.5;
             }
 
 			#main .debug {
-				display:block;
+				display:none;
 				z-index:99;
 				position:absolute;
 				top:0; left:0; right:0;
@@ -128,6 +129,7 @@
 
 			#main .nowplaying .icon img {
 				width:128px; height:128px;
+                border-radius: 128px;
 			}
 
 			#main .nowplaying .title {
@@ -198,7 +200,7 @@
 
 <!-- Section: launch -->
 <section id="launch">
-	<img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.png" />
+	<img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/icon_white.png" />
 </section>
 
 <!-- Section: main -->
@@ -215,7 +217,7 @@
 
 	<div class="nowplaying">
 		<div class="wrap">
-	    	<div class="icon"><img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.png" /></div>
+	    	<div class="icon"><img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/ic_launcher_flat.png" /></div>
     		<div class="subtitle">Loading...</div>
         	<div class="title"></div>
 		</div>
@@ -261,7 +263,7 @@ loggr.log = function(msg) {
 	//loggr.show();
 }
 loggr.show = function() {
-	$(".debug").css("display","block");
+	//$(".debug").css("display","block");
 	if (loggr.timeout_hide) { clearTimeout(loggr.timeout_hide); }
 	loggr.timeout_hide = setTimeout(function(){
 		$(".debug").css("display","none");
@@ -423,12 +425,12 @@ cc.init = function() {
 				//loggr.log(" > Icon: "+ event.data['media']['metadata']['images'][0].url);
 				$(".nowplaying .icon img").attr("src",event.data['media']['metadata']['images'][0].url);
 			} else {
-				$(".nowplaying .icon img").attr("src","https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.jpg");
+				$(".nowplaying .icon img").attr("src","https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/ic_launcher_flat.png");
 			}
 
 			// Image
 			$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-            $("#main .color").css("background","none");
+            $("#main .color").css("background","#607D8B");
 
 			// Update!
             if (cc.capabilities.display_supported) {
@@ -501,7 +503,7 @@ cc.run_nowplaying_poll = function() {
 	var apiaction = "get";
 	var apiquerystr = encodeURIComponent(JSON.stringify(apiqueryobj));
 
-	var apiurl = "http://www.rejh.nl/icerrr/api/?a=get&q="+ apiquerystr +"&cache="+(new Date().getTime());
+	var apiurl = "https://www.rejh.nl/icerrr/api/?a=get&q="+ apiquerystr +"&cache="+(new Date().getTime());
 
 	loggr.log(" > "+ apiurl);
 
@@ -551,7 +553,7 @@ cc.run_nowplaying_poll = function() {
     			if (cc.currentstation.nowplaying != cc.currentstation.lastNowplaying) {
 
     				var opts = {
-                        maxresults: 1,
+                        maxresults: 24,
     					imagesize: cc.gcis.IMAGESIZE_LARGE
                     }
 
@@ -567,12 +569,13 @@ cc.run_nowplaying_poll = function() {
     				//searchstr += " album art"
 
     				cc.helpers.googleImageSearch(searchstr,
-    					function(res) {
-    						var res = res[0];
+    					function(searchresults) {
+                            var triedresnum = 0;
+    						var res = searchresults[triedresnum];
     						if (!res) {
     							loggr.log(" > No album art :(");
     							$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                                $("#main .color").css("background","none");
+                                $("#main .color").css("background","#607D8B");
     						} else {
 
     							var image = new Image;
@@ -591,7 +594,7 @@ cc.run_nowplaying_poll = function() {
                                             $("#main .color").css("background",swatches["Vibrant"].getHex());
                                             //loggr.error("Color: "+ swatches["Vibrant"].getHex());
                                         } else {
-                                            $("#main .color").css("background","#FFC107");
+                                            $("#main .color").css("background","#FF5722");
                                             //loggr.error("No color :(");
                                         }
                                     } catch(e) {
@@ -601,24 +604,31 @@ cc.run_nowplaying_poll = function() {
     								cc.vars.background_image = res;
     							}
     							image.onerror = function() {
-    								loggr.log(" > Found album art but loading failed: "+ this.src);
-    								$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                                    $("#main .color").css("background","none");
+                                    loggr.log(" > Found album art but loading failed: "+ this.src);
+                                    triedresnum++;
+                                    if (triedresnum>=searchresults.length) {
+    								    loggr.log(" > No more results..");
+    								    $("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                                        $("#main .color").css("background","#607D8B");
+                                    } else {
+                                        loggr.log(" > Try next result ("+ triedresnum +")..");
+                                        res = searchresults[triedresnum];
+                                        var imgurl = decodeURIComponent(res);
+        								image.src = imgurl;
+                                    }
     							}
     							if (searchstr=="NPO Radio 3fm") {
     								image.src = "http://a1094.phobos.apple.com/us/r30/Purple5/v4/47/3a/5d/473a5dab-5ba6-9e1b-255b-dce76abdce54/mzl.lgbuvbki.png";
     							} else {
                                     var imgurl = decodeURIComponent(res);
-                                    var url = "http://www.rejh.nl/static/phpth/phpThumb.php?w=1280&h=1280&src="+ imgurl;
-                                    //loggr.error(url);
-    								image.src = url;
+    								image.src = imgurl;
     							}
 
     						}
     					},
     					function(err) {
     						$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                            $("#main .color").css("background","none");
+                            $("#main .color").css("background","#607D8B");
     					},
     					opts
     				);
@@ -631,7 +641,7 @@ cc.run_nowplaying_poll = function() {
 
             } else {
                 $("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                $("#main .color").css("background","none");
+                $("#main .color").css("background","#607D8B");
             }
 
 		}
@@ -649,7 +659,7 @@ cc.updateNowplaying = function(showBigUI,dontUpdateIcon) {
 	if (!cc.currentstation.nowplaying) { cc.currentstation.nowplaying = "Now playing: Unknown"; }
 
 	var title_bigui = cc.currentstation.nowplaying;
-	var title_smallui = "<div>ICERRR: "+cc.currentstation.station_name +" - "+ cc.currentstation.nowplaying+"</div>";
+	var title_smallui = "<div>"+cc.currentstation.station_name +" - "+ cc.currentstation.nowplaying+"</div>";
 
 	$("#main .nowplaying .subtitle").html(title_bigui);
 	if (title_smallui!=$("#main .nowplayingsmall .title").html()) {
@@ -723,7 +733,7 @@ cc.burnInProtector = function(force) {
                 $("#main .color").css("background","none");
 			} else {
 				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
-                $("#main .color").css("background","none");
+                $("#main .color").css("background","#607D8B");
 			}
 
 			cc.burnInProtector(true);
@@ -741,7 +751,7 @@ cc.burnInProtector = function(force) {
 cc.webapi = {};
 
 cc.webapi.urls = {};
-cc.webapi.urls.api = "http://www.rejh.nl/icerrr/api/?";
+cc.webapi.urls.api = "https://www.rejh.nl/icerrr/api/?";
 
 cc.webapi.ajaxRequests = {};
 
@@ -918,7 +928,7 @@ cc.gcis.googleImageSearch = function(search, cb, cberr, opts) {
 
                     // Min/max size..
                     if (opts.imagesize.min > largestImageDim && opts.imagesize.max < largestImageDim) {
-                        continue;
+                        //continue;
                     }
 
                 }
