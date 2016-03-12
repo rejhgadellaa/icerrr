@@ -1,1 +1,0 @@
-(function($){$.fn.bounceback=function(){return this.each(function(){var el=$(this);el.scroll(function(){if(el[0].scrollHeight-el.scrollTop()===el.outerHeight()){console.log("bottom"+el.height());el.height(el.height()+44);}});});};}(jQuery));
