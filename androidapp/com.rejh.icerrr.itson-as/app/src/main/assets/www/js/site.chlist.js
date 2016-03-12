@@ -1,6 +1,6 @@
 if(!site){var site={};}
 site.chlist={};site.chlist.init=function(forceRedraw){loggr.debug("------------------------------------");loggr.debug("site.chlist.init()");site.ui.hideloading();if(site.cookies.get("upgrade_starred_stations")==1){loggr.error(" > Upgrade starred stations",{dontupload:true});site.chlist.upgradeStarred();site.cookies.put("upgrade_starred_stations",0);}
-site.lifecycle.add_section_history("#channellist");site.ui.gotosection("#channellist");if(!site.data.stations){site.chlist.readstations();return; }
+site.lifecycle.add_section_history("#channellist");site.ui.gotosection("#channellist");if(!site.data.stations){site.chlist.readstations();return;}
 site.vars.touch={};site.chlist.currenttab=site.session.chlist_currenttab;if(!site.chlist.currenttab){site.chlist.currenttab="stations";}
 site.chlist.main_scrollTop=site.session.chlist_main_scrollTop;if(!site.chlist.main_scrollTop){site.chlist.main_scrollTop=0;}
 if(site.chlist.currenttab=="stations"){$("#channellist .tabbar .tab").removeClass("active");$("#channellist .tabbar .tab.stations").addClass("active");$("#channellist .tabbar .tabline").css({"transform":"translate3d(0px,0px,0px)","-webkit-transform":"translate3d(0px,0px,0px)"});}else{$("#channellist .tabbar .tab").removeClass("active");$("#channellist .tabbar .tab.starred").addClass("active");$("#channellist .tabbar .tabline").css({"transform":"translate3d("+Math.round($(window).width()/2)+"px,0px,0px)","-webkit-transform":"translate3d("+Math.round($(window).width()/2)+"px,0px,0px)"});}

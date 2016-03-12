@@ -58,7 +58,7 @@ loggr.log(" > Nr of files: "+fileNamesSorted.length+", max: "+site.cfg.files.max
 loggr.log(" > Remove: "+name);site.storage.deletefile(path,name,function(){},function(error){loggr.error(" > Could not delete '"+name+"'",{dontupload:true});loggr.error(" > "+site.storage.getErrorType(error));});removed++;}
 loggr.log(" > Removed "+removed+" file(s)");}
 site.helpers.calcImageAspect=function(imageObjOrWidth,height){var width;if(imageObjOrWidth instanceof Object){width=imageObjOrWidth.width;height=imageObjOrWidth.height;}else{width=imageObjOrWidth;}
-if(width==height){return 1.0;} 
+if(width==height){return 1.0;}
 else if(width>height){return width/height;}
 else{return height/width;}}
 site.helpers.calcAutoByteStr=function(nrOfBytes){if(nrOfBytes<1024){return nrOfBytes+" bytes";}

@@ -1,7 +1,7 @@
 if(!site){var site={};}
 site.webapi={};site.webapi.ajaxRequests={};site.vars.downloadsInProgress={};site.webapi.download=function(url,targetPath,targetFile,cb,errcb,progressCb){loggr.log("site.webapi.download()");loggr.log(" > "+url);if(!site.helpers.isConnected()){errcb({code:-1,message:"No connection available"});}
 if(targetPath.indexOf("file://")>=0){targetPath=targetPath.substr(targetPath.indexOf("file://"));var res={fullPath:targetPath+"/"+targetFile,name:targetFile};cb(res);}
-targetPath=encodeURI(targetPath);targetFile=targetFile;site.storage.getFolderEntry(targetPath,function(folderEntry){if(site.vars.downloadsInProgress[url]==targetFile){loggr.error(" -> Already downloading: "+url+" to "+targetFile);return; }
+targetPath=encodeURI(targetPath);targetFile=targetFile;site.storage.getFolderEntry(targetPath,function(folderEntry){if(site.vars.downloadsInProgress[url]==targetFile){loggr.error(" -> Already downloading: "+url+" to "+targetFile);return;}
 site.vars.downloadsInProgress[url]=targetFile;loggr.log(" > Init download...");var fileTransfer=new FileTransfer();var dest=encodeURI(folderEntry.fullPath+"/"+targetFile)
 var uri=url;var url_decoded=decodeURI(url);if(url==url_decoded){loggr.log(" -> Url needs encoding..");uri=encodeURI(url);}
 loggr.log(" >> "+uri);if(progressCb){fileTransfer.onprogress=function(progressEvent){progressCb(progressEvent);}}

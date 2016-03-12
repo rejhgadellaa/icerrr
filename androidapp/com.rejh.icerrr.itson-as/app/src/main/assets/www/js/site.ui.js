@@ -72,7 +72,7 @@ if(!obj.title){return;}
 if(!site.vars.vibrateBusy){site.vars.vibrateBusy=true;navigator.notification.vibrate(50);setTimeout(function(){site.vars.vibrateBusy=false;},50);}
 try{site.ui.showtoast("Info: "+obj.title);}catch(e){loggr.warn(" > Attribute missing: 'title' on "+obj);}},250);}}
 site.ui.hackActiveCssRule=function(){loggr.log("site.ui.hackActiveCssRule()");try{var versionStr=device.version;loggr.log(" -> Android: "+versionStr);if(versionStr.split(".").length>2){versionStr=versionStr.substr(0,versionStr.lastIndexOf("."));loggr.log(" --> Parsed: "+versionStr);}
-versionStr=parseFloat(versionStr);if(versionStr>=5.0){loggr.log(" > Android 5.0 or higher, no hackCss required");return; }}catch(e){loggr.error(" > site.ui.hackActiveCssRule().err parsing android version: "+e);}
+versionStr=parseFloat(versionStr);if(versionStr>=5.0){loggr.log(" > Android 5.0 or higher, no hackCss required");return;}}catch(e){loggr.error(" > site.ui.hackActiveCssRule().err parsing android version: "+e);}
 var actls=$(".activatablel");for(var i=0;i<actls.length;i++){$(actls[i]).removeClass("activatablel");$(actls[i]).addClass("activatablelh");}
 var actds=$(".activatabled");for(var i=0;i<actds.length;i++){$(actds[i]).removeClass("activatabled");$(actds[i]).addClass("activatabledh");}
 var actds=$(".activatableb");for(var i=0;i<actds.length;i++){$(actds[i]).removeClass("activatableb");$(actds[i]).addClass("activatablebh");}

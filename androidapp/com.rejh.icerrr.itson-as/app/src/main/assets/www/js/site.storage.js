@@ -23,16 +23,16 @@ var queue_item=site.session.storage.queue[0];var action=queue_item.action;var ar
 site.timeouts.storage_queue=setTimeout(function(){site.storage.runqueue();},1000);if(!site.storage.isBusy){switch(action){case"createfolder":site.storage.createfolder(args.path,args.cb,args.errcb);break;case"readfolder":site.storage.readfolder(args.path,args.cb,args.errcb,args.opts);break;case"writefile":site.storage.writefile(args.path,args.filename,args.data,args.cb,args.errcb,args.opts);break;case"readfile":site.storage.readfile(args.path,args.filename,args.cb,args.errcb,args.opts);break;case"getmetadata":site.storage.getmetadata(args.path,args.fileOrFolder,args.cb,args.errcb,args.opts);break;default:alert("site.storage.runqueue().Error: invalid value for 'action': "+action);loggr.log("site.storage.runqueue().Error: invalid value for 'action': "+action);loggr.log(action+", "+JSON.stringify(args));break;}
 site.session.storage.queue.shift();}}
 site.storage.runqueue_cb=function(){}
-site.storage.removefolder=function(path,cb,errcb,opts){loggr.debug("site.storage.removefolder(): "+path);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.createfolder().Error: Will not write outside of root directory: '"+path+"'"});return; }
+site.storage.removefolder=function(path,cb,errcb,opts){loggr.debug("site.storage.removefolder(): "+path);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.createfolder().Error: Will not write outside of root directory: '"+path+"'"});return;}
 if(path.lastIndexOf("/")==path.length-1){path=path.substr(0,path.length-1);loggr.log(" > "+path);}
 if(!opts){opts={};}
 window.requestFileSystem(LocalFileSystem.PERSISTENT,0,function(fileSystem){fileSystem.root.getDirectory(path,{create:false},function(entry){if(opts.recursively){entry.removeRecursively(cb,errcb);}
 else{entry.remove(cb,errcb);}
 site.storage.isBusy=false;},function(error){site.storage.isBusy=false;errcb(error);});},function(){site.storage.isBusy=false;errcb();});}
-site.storage.createfolder=function(path,cb,errcb){loggr.debug("site.storage.createfolder(): "+path);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.createfolder().Error: Will not write outside of root directory: '"+path+"'"});return; }
+site.storage.createfolder=function(path,cb,errcb){loggr.debug("site.storage.createfolder(): "+path);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.createfolder().Error: Will not write outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){var args={path:path,cb:cb,errcb:errcb};}
 site.storage.isBusy=true;window.requestFileSystem(LocalFileSystem.PERSISTENT,0,function(fileSystem){fileSystem.root.getDirectory(path,{create:true},function(entry){site.storage.isBusy=false;cb(entry);},function(error){site.storage.isBusy=false;errcb(error);});},function(error){site.storage.isBusy=false;errcb(error);});}
-site.storage.readfolder=function(path,cb,errcb,opts){loggr.debug("site.storage.readfolder(): "+path);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.readfolder().Error: Will not read outside of root directory: '"+path+"'"});return; }
+site.storage.readfolder=function(path,cb,errcb,opts){loggr.debug("site.storage.readfolder(): "+path);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.readfolder().Error: Will not read outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){var args={path:path,cb:cb,errcb:errcb,opts:opts};}
 site.storage.isBusy=true;if(!opts){opts={};}
 if(!opts.path){opts.path={};}
@@ -43,7 +43,7 @@ window.requestFileSystem(LocalFileSystem.PERSISTENT,0,function(fileSystem){fileS
 if(opts.mode==2&&fileAndDirectoryEntries[i].isFile){continue;}
 res.push(fileAndDirectoryEntries[i]);}
 site.storage.isBusy=false;cb(res);},function(error){site.storage.isBusy=false;errcb(error);});},function(error){site.storage.isBusy=false;errcb(error);});},function(error){site.storage.isBusy=false;errcb(error);});}
-site.storage.writefile=function(path,filename,data,cb,errcb,opts){loggr.debug("site.storage.writefile(): "+path+", "+filename+", ~"+site.helpers.calcStringToKbytes(data)+" kb");if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.writefile().Error: Will not write outside of root directory: '"+path+"'"});return; }
+site.storage.writefile=function(path,filename,data,cb,errcb,opts){loggr.debug("site.storage.writefile(): "+path+", "+filename+", ~"+site.helpers.calcStringToKbytes(data)+" kb");if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.writefile().Error: Will not write outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){var args={path:path,filename:filename,data:data,cb:cb,errcb:errcb,opts:opts};}
 site.storage.isBusy=true;if(!opts){opts={};}
 if(!opts.path){opts.path={};}
@@ -53,7 +53,7 @@ if(!opts.file){opts.file={};}
 if(opts.file.create!==false){opts.file.create=true;}
 if(opts.file.exclusive!==true){opts.file.exclusive=false;}
 window.requestFileSystem(LocalFileSystem.PERSISTENT,0,function(fileSystem){fileSystem.root.getDirectory(path,opts.path,function(directoryEntry){directoryEntry.getFile(filename,opts.file,function(fileEntry){var fileWriter=fileEntry.createWriter(function(fileWriter){fileWriter.onwrite=function(evt){site.storage.isBusy=false;cb(evt);};fileWriter.onabort=function(error){site.storage.isBusy=false;errcb(error);};fileWriter.onerror=function(error){site.storage.isBusy=false;errcb(error);};fileWriter.write(data);},function(error){site.storage.isBusy=false;errcb(error);});},function(error){site.storage.isBusy=false;errcb(error);});},function(error){site.storage.isBusy=false;errcb(error);});},function(error){site.storage.isBusy=false;errcb(error);});}
-site.storage.deletefile=function(path,filename,cb,errcb,opts){loggr.debug("site.storage.deletefile(): "+path+", "+filename);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.deletefile().Error: Will not read outside of root directory: '"+path+"'"});return; }
+site.storage.deletefile=function(path,filename,cb,errcb,opts){loggr.debug("site.storage.deletefile(): "+path+", "+filename);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.deletefile().Error: Will not read outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){}
 site.storage.isBusy=true;if(!opts){opts={};}
 if(!opts.path){opts.path={};}
@@ -64,7 +64,7 @@ if(opts.file.create!==true){opts.file.create=false;}
 if(opts.file.exclusive!==true){opts.file.exclusive=false;}
 if(opts.file.readAsDataUrl!==true){opts.file.readAsDataUrl=false;}
 site.storage.getFileEntry(path,filename,function(fileEntry){fileEntry.remove(cb,errcb);},function(error){errcb(error);},{path:{create:true},file:{create:true}});}
-site.storage.readfile=function(path,filename,cb,errcb,opts){loggr.debug("site.storage.readfile(): "+path+", "+filename);if(path.indexOf(site.cfg.paths.root)<0&&opts&&opts.readOutsideRoot!==true){errcb({code:-1,message:"site.storage.readfile().Error: Will not read outside of root directory: '"+path+"'"});return; }
+site.storage.readfile=function(path,filename,cb,errcb,opts){loggr.debug("site.storage.readfile(): "+path+", "+filename);if(path.indexOf(site.cfg.paths.root)<0&&opts&&opts.readOutsideRoot!==true){errcb({code:-1,message:"site.storage.readfile().Error: Will not read outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){var args={path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};}
 site.storage.isBusy=true;if(!opts){opts={};}
 if(!opts.path){opts.path={};}
@@ -80,7 +80,7 @@ fileReader.onerror=function(error){site.storage.preCbErr(errcb,error,timeoutID);
 if(opts.file.readAsBinaryString){fileReader.readAsBinaryString(file);}
 if(opts.file.readAsBinaryString){fileReader.readAsArrayBuffer(file);}
 else{fileReader.readAsText(file);}},function(error){site.storage.preCbErr(errcb,error,timeoutID);});},function(error){site.storage.preCbErr(errcb,error,timeoutID);});},function(error){site.storage.preCbErr(errcb,error,timeoutID);});},function(error){site.storage.preCbErr(errcb,error,timeoutID);});}
-site.storage.copyfile=function(path,filename,destpath,destfilename,cb,errcb,opts){loggr.log("site.storage.getFileEntry(): "+path+", "+filename);if(path.indexOf(site.cfg.paths.root)<0&&opts&&opts.readOutsideRoot!==true){errcb({code:-1,message:"site.storage.getFileEntry().Error: Will not read outside of root directory: '"+path+"'"});return; }
+site.storage.copyfile=function(path,filename,destpath,destfilename,cb,errcb,opts){loggr.log("site.storage.getFileEntry(): "+path+", "+filename);if(path.indexOf(site.cfg.paths.root)<0&&opts&&opts.readOutsideRoot!==true){errcb({code:-1,message:"site.storage.getFileEntry().Error: Will not read outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){var args={path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};}
 site.storage.isBusy=true;if(!opts){opts={};}
 if(!opts.path){opts.path={};}
@@ -91,7 +91,7 @@ if(opts.file.create!==true){opts.file.create=false;}
 if(opts.file.exclusive!==true){opts.file.exclusive=false;}
 if(opts.file.readAsDataUrl!==true){opts.file.readAsDataUrl=false;}
 var timeoutID=site.storage.addTimeout("copyfile",null,{path:path,filename:filename,cb:cb,errcb:errcb,opts:opts});site.storage.getFileEntry(path,filename,function(fileEntry){fileEntry.copyTo(destpath,destfilename,function(fileEntry){site.storage.preCb(cb,fileEntry,timeoutID);},function(error){site.storage.preCbErr(errcb,error,timeoutID);});},function(error){site.storage.preCbErr(errcb,error,timeoutID);});}
-site.storage.getFileEntry=function(path,filename,cb,errcb,opts){loggr.log("site.storage.getFileEntry(): "+path+", "+filename);if(path.indexOf(site.cfg.paths.root)<0&&opts&&opts.readOutsideRoot!==true){errcb({code:-1,message:"site.storage.getFileEntry().Error: Will not read outside of root directory: '"+path+"'"});return; }
+site.storage.getFileEntry=function(path,filename,cb,errcb,opts){loggr.log("site.storage.getFileEntry(): "+path+", "+filename);if(path.indexOf(site.cfg.paths.root)<0&&opts&&opts.readOutsideRoot!==true){errcb({code:-1,message:"site.storage.getFileEntry().Error: Will not read outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){var args={path:path,filename:filename,cb:cb,errcb:errcb,opts:opts};}
 site.storage.isBusy=true;if(!opts){opts={};}
 if(!opts.path){opts.path={};}
@@ -102,7 +102,7 @@ if(opts.file.create!==true){opts.file.create=false;}
 if(opts.file.exclusive!==true){opts.file.exclusive=false;}
 if(opts.file.readAsDataUrl!==true){opts.file.readAsDataUrl=false;}
 var timeoutID=site.storage.addTimeout("getFileEntry",null,{path:path,filename:filename,cb:cb,errcb:errcb,opts:opts});window.requestFileSystem(LocalFileSystem.PERSISTENT,0,function(fileSystem){loggr.log(" > Get directory entry: "+path);fileSystem.root.getDirectory(path,opts.path,function(directoryEntry){loggr.log(" > Get file entry: "+path+", "+filename);directoryEntry.getFile(filename,opts.file,function(fileEntry){loggr.log(" > Got file: "+fileEntry.fullPath);site.storage.preCb(cb,fileEntry,timeoutID);},function(error){loggr.error(" > Err on getFile",{dontupload:true});site.storage.preCbErr(errcb,error,timeoutID);});},function(error){loggr.error(" > Err on getDirectory",{dontupload:true});site.storage.preCbErr(errcb,error,timeoutID);});},function(error){site.storage.preCbErr(errcb,error,timeoutID);});}
-site.storage.getFolderEntry=function(path,cb,errcb,opts){loggr.log("site.storage.getFolderEntry(): "+path);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.getFolderEntry().Error: Will not read outside of root directory: '"+path+"'"});return; }
+site.storage.getFolderEntry=function(path,cb,errcb,opts){loggr.log("site.storage.getFolderEntry(): "+path);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.getFolderEntry().Error: Will not read outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){}
 site.storage.isBusy=true;if(!opts){opts={};}
 if(!opts.path){opts.path={};}
@@ -110,7 +110,7 @@ if(opts.path.create!==true){opts.path.create=false;}
 if(opts.path.exclusive!==true){opts.path.exclusive=false;}
 var timeoutID=site.storage.addTimeout("getFolderEntry",null,{path:path,cb:cb,errcb:errcb,opts:opts});window.requestFileSystem(LocalFileSystem.PERSISTENT,0,function(fileSystem){fileSystem.root.getDirectory(path,opts.path,function(directoryEntry){site.storage.preCb(cb,directoryEntry,timeoutID);},function(error){site.storage.preCbErr(errcb,error,timeoutID);});},function(error){site.storage.preCbErr(errcb,error,timeoutID);});}
 site.storage.listfiles=function(path,cb,errcb,opts){loggr.debug("site.storage.getFolderSize()");var hasSubFolder=false;var size=0;var entries=[];site.storage.getFolderEntry(path,function(folderEntry){loggr.log(" > Got folderEntry: "+folderEntry.fullPath);var reader=folderEntry.createReader();reader.readEntries(function(entries){cb(entries);return;},function(error){alert(error);errcb(error);});},function(error){alert(error);errcb(error);},{path:{create:true}});}
-site.storage.getmetadata=function(path,fileOrFolder,cb,errcb,opts){loggr.debug("site.storage.getmetadata(): "+path+", "+fileOrFolder);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.getmetadata().Error: Will not read outside of root directory: '"+path+"'"});return; }
+site.storage.getmetadata=function(path,fileOrFolder,cb,errcb,opts){loggr.debug("site.storage.getmetadata(): "+path+", "+fileOrFolder);if(path.indexOf(site.cfg.paths.root)<0){errcb({code:-1,message:"site.storage.getmetadata().Error: Will not read outside of root directory: '"+path+"'"});return;}
 if(site.storage.isBusy){var args={path:path,fileOrFolder:fileOrFolder,cb:cb,errcb:errcb,opts:opts};}
 site.storage.isBusy=true;if(!opts){opts={};}
 if(!opts.path){opts.path={};}

@@ -1,5 +1,5 @@
 if(!site){var site={};}
-site.home={};site.home.init=function(){loggr.debug("------------------------------------");loggr.debug("site.home.init();");$("#version_string").html("You're currently rocking version "+site.helpers.formatFloat(site.cfg.app_version,3));if(!site.session.currentstation_id){loggr.log(site.session.currentstation_id);site.ui.showtoast("Please choose a station");site.chlist.init();return; }
+site.home={};site.home.init=function(){loggr.debug("------------------------------------");loggr.debug("site.home.init();");$("#version_string").html("You're currently rocking version "+site.helpers.formatFloat(site.cfg.app_version,3));if(!site.session.currentstation_id){loggr.log(site.session.currentstation_id);site.ui.showtoast("Please choose a station");site.chlist.init();return;}
 site.session.currentstation=site.helpers.session.getStationById(site.session.currentstation_id);var station=site.session.currentstation;if(station){var currentStationIndex=site.helpers.session.getStationIndexById(station.station_id,site.data.stations);if(currentStationIndex>=0){site.session.currentstation=site.data.stations[currentStationIndex];station=site.session.currentstation;}}
 if(site.session.starred){for(var i=0;i<site.session.starred.length;i++){var index=site.helpers.session.getStationIndexById(site.session.starred[i].station_id,site.data.stations);if(index>=0){site.session.starred[i]=site.data.stations[index];}}}
 site.lifecycle.clear_section_history();site.ui.gotosection("#home");site.mp.init();site.home.init_ui_updates();if(site.cookies.get("setting_showAlbumArt")!=1||site.home.lastStationId!=site.session.currentstation.station_id){$("#home .station_image_color").css("background","none");site.home.loadAlbumArt('img/bg_home_default.jpg');}
@@ -77,7 +77,7 @@ else{site.session.blacklistedAlbumArt[src]+=1;}}});});}},1000);}}
 site.home.loadAlbumArt=function(localpath){if(!site.vars.currentAlbumArtPath){site.vars.currentAlbumArtPath="";}
 loggr.debug("site.home.loadAlbumArt()");loggr.log(" > "+localpath);if(!localpath){loggr.error(" > 'localpath' is undefined or false?!");return;}
 if(localpath.indexOf("http")==0){loggr.error(" > 'localpath' is an url! -> "+localpath);return;}
-if(site.vars.currentAlbumArtPath==localpath){loggr.log(" -> Image already loaded. Return.");return; }
+if(site.vars.currentAlbumArtPath==localpath){loggr.log(" -> Image already loaded. Return.");return;}
 site.vars.currentAlbumArtPath=localpath;var img=new Image();img.onerror=function(e){loggr.warn("site.home.loadAlbumArt().OnError: "+this.src+", "+e,{dontsave:true});$("#home .main .station_image").css("background-image","url('img/bg_home_default.jpg')");site.vars.currentAlbumArtPath='img/bg_home_default.jpg';}
 img.onload=function(){if(this.src.indexOf('img/bg_home_default.jpg')>=0){$("#home .station_image_color").css("background","none");}
 loggr.log("site.home.loadAlbumArt().OnLoad: "+this.src);$("#home .main .station_image").css("background-image","url('"+this.src+"')");if(this.src.indexOf('img/bg_home_default.jpg')<0){window.mediaStreamer.updateMetaData();}else{}

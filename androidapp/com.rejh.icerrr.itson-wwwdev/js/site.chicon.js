@@ -560,7 +560,7 @@ site.chicon.uploadImagery = function(imagePath) {
 	}
 	loggr.log(" -> Query: "+ JSON.stringify(apiquery));
 	var apiquerys = encodeURIComponent(JSON.stringify(apiquery));
-	var apiurl = site.cfg.urls.api +"a=post&q="+ apiquerys +"&apikey=REJH_ICERRR_APIKEY-"+ site.helpers.getUniqueID() +"&cache="+(new Date().getTime());
+	var apiurl = site.cfg.urls.apiNoHttps +"a=post&q="+ apiquerys +"&apikey=REJH_ICERRR_APIKEY-"+ site.helpers.getUniqueID() +"&cache="+(new Date().getTime());
 
 	// Params
 	var params = {

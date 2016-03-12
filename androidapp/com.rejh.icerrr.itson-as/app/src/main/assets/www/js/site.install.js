@@ -25,7 +25,7 @@ site.installer.createfolders_init=function(){if(!site.installer.isUpdate){site.i
 else{site.installer.logger("Check folders...");}
 site.installer.createfolders_next();}
 site.installer.createfolders_next=function(){loggr.debug("site.installer.createfolders_next()");if(!site.installer.vars.pathNum&&site.installer.vars.pathNum!==0){site.installer.vars.pathNum=-1;}
-site.installer.vars.pathNum++;currentpath=site.installer.cfg.createfolders_folders[site.installer.vars.pathNum];loggr.log(" > currentpath: "+currentpath);if(!currentpath){site.installer.deletefiles_init();return; }
+site.installer.vars.pathNum++;currentpath=site.installer.cfg.createfolders_folders[site.installer.vars.pathNum];loggr.log(" > currentpath: "+currentpath);if(!currentpath){site.installer.deletefiles_init();return;}
 site.storage.createfolder(currentpath,function(dirEntry){if(site.cfg.nomediapaths.indexOf(currentpath)>=0){site.storage.writefile(currentpath,".nomedia","/* this directory should not be scanned by android media scanner */",function(fileEntry){loggr.log(" -> Created .nomedia file");site.installer.createfolders_cb(dirEntry);},function(error){loggr.error(" -> Failed creating .nomedia file in "+currentpath);site.installer.createfolders_errcb(error);});}else{site.installer.createfolders_cb(dirEntry);}},site.installer.createfolders_errcb);}
 site.installer.createfolders_cb=function(directoryEntry){loggr.debug("site.installer.createfolders_cb()");site.installer.createfolders_next();}
 site.installer.createfolders_errcb=function(error){loggr.debug("site.installer.createfolders_errcb()");site.installer.logger(" ERR",{use_br:false,is_e:true});site.installer.logger("&nbsp;&gt; "+site.storage.getErrorType(error)+"",{is_e:true});}
@@ -35,8 +35,8 @@ site.installer.downloadjson_init=function(){if(!site.installer.isUpdate){site.in
 else{site.installer.logger("Update station data...");}
 site.installer.downloadjson_next();}
 site.installer.downloadjson_next=function(){loggr.debug("site.installer.downloadjson_next()");if(!site.installer.vars.jsonNum&&site.installer.vars.jsonNum!==0){site.installer.vars.jsonNum=-1;}
-site.installer.vars.jsonNum++;currentjob=site.installer.cfg.downloadjson_files[site.installer.vars.jsonNum];loggr.log(" > currentjob: "+currentjob.query);if(!currentjob.query){site.installer.finishup();return; }
-if(currentjob.query=="{}"){site.installer.downloadjson_next();return; }
+site.installer.vars.jsonNum++;currentjob=site.installer.cfg.downloadjson_files[site.installer.vars.jsonNum];loggr.log(" > currentjob: "+currentjob.query);if(!currentjob.query){site.installer.finishup();return;}
+if(currentjob.query=="{}"){site.installer.downloadjson_next();return;}
 var apiquerystr=currentjob.query;var apiaction="get";site.webapi.exec(apiaction,apiquerystr,site.installer.downloadjson_cb,site.installer.downloadjson_errcb);}
 site.installer.downloadjson_cb=function(res){loggr.debug("site.installer.downloadjson_cb(): "+site.helpers.countObj(res["data"]));site.datatemp=res;site.installer.downloadjson_read();}
 site.installer.downloadjson_errcb=function(error){loggr.debug("site.installer.downloadjson_errcb()");site.installer.logger(" ERR",{use_br:false,is_e:true});site.installer.logger("&nbsp;&gt; "+error["message"]+"",{is_e:true});if(site.installer.isUpdate){site.installer.finishup();}
