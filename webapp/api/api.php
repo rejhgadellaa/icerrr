@@ -112,16 +112,6 @@ switch($action) {
 
 				if ($json["data"]["nowplaying"]) {
 
-                    $json["data"]["nowplaying"] = str_replace("  "," ",$json["data"]["nowplaying"]);
-                    $json["data"]["nowplaying"] = str_replace("&  #4","",$json["data"]["nowplaying"]);
-                    $json["data"]["nowplaying"] = str_replace("& #4","",$json["data"]["nowplaying"]);
-                    $json["data"]["nowplaying"] = str_replace("&amp; #4","",$json["data"]["nowplaying"]);
-                    $json["data"]["nowplaying"] = str_replace("&#38; #4","",$json["data"]["nowplaying"]);
-
-                    if (strpos($json["data"]["nowplaying"]," #4")>0 && strpos($json["data"]["nowplaying"],"&")>0) {
-                        $json["data"]["nowplaying"] = substr($json["data"]["nowplaying"], 0, strrpos($json["data"]["nowplaying"],"&"));
-                    }
-
 					$npexpl = explode("-",$json["data"]["nowplaying"],2);
 					$npartist = trim($npexpl[0]);
 					$nptitle = trim($npexpl[1]);

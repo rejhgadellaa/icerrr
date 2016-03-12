@@ -266,7 +266,7 @@ while (!feof($fsock)) {
 	if (strpos($res,"StreamTitle") && $headerFound) {
 		// got meta?
 		$bgn = strpos($line,"StreamTitle='")+strlen("StreamTitle='");
-		$end = strpos($line,";",$bgn)-1;
+		$end = strpos($line,"';",$bgn);
 		$len = $end - $bgn;
 		$title = substr($line,$bgn,$len);
 		fw("outp.meta.txt",$title);
@@ -298,6 +298,7 @@ foreach($lines as $line) {
 
 // Cleanup title
 $title = str_replace("  "," ",$title);
+$title = str_replace("&#40;","(",$title);
 $title = str_replace("& #4","",$title);
 $title = trim($title);
 $title = utf8_encode($title);
