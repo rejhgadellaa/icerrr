@@ -298,7 +298,7 @@ foreach($lines as $line) {
 
 // Cleanup title
 $title = str_replace("  "," ",$title);
-$title = str_replace("&#40;","(",$title);
+$title = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); }, title);
 $title = str_replace("& #4","",$title);
 $title = trim($title);
 $title = utf8_encode($title);
