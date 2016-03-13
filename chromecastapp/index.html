@@ -86,6 +86,7 @@
 			}
 
 			#main .topbar {
+                display:none;
 				position:absolute;
 				top:0; left:0; right:0;
 				width:100%; height:50%;
@@ -129,7 +130,7 @@
 
 			#main .nowplaying .icon img {
 				width:128px; height:128px;
-                border-radius: 128px;
+                border-radius: 256px;
 			}
 
 			#main .nowplaying .title {
@@ -464,8 +465,10 @@ cc.init = function() {
 	// -- DONE
 
 	// Show #main
-	$("section#launch").css("opacity",0);
-	$("section#main").css("display","block");
+    setTimeout(function() {
+    	$("section#launch").css("opacity",0);
+    	$("section#main").css("display","block");
+    },1000);
 
 	// Start ReceiverManager
 	cc.castReceiverManager.start();
@@ -621,6 +624,7 @@ cc.run_nowplaying_poll = function() {
     								image.src = "http://a1094.phobos.apple.com/us/r30/Purple5/v4/47/3a/5d/473a5dab-5ba6-9e1b-255b-dce76abdce54/mzl.lgbuvbki.png";
     							} else {
                                     var imgurl = decodeURIComponent(res);
+                                    imgurl = "http://www.rejh.nl/static/phpth/phpThumb.php?w=1280&h=1280&src=" + encodeURIComponent(imgurl);
     								image.src = imgurl;
     							}
 
