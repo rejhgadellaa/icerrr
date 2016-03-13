@@ -80,7 +80,7 @@
 				position:absolute;
 				top:0; left:0; right:0;
 				padding:32px;
-				text-align:right;
+				text-align:left;
 				font-size:10pt;
 				xbackground:rgba(0,0,0,0.25);
 			}
@@ -241,7 +241,7 @@
 
 var loggr = {};
 loggr.lines = [];
-loggr.maxlines = 8;
+loggr.maxlines = 16;
 loggr.error = function(msg) {
 	loggr.lines.push("<span style='color:#fc0;'>"+ msg +"</span>");
 	while (loggr.lines.length>loggr.maxlines) { loggr.lines.shift(); }
@@ -267,7 +267,7 @@ loggr.show = function() {
 	//$(".debug").css("display","block");
 	if (loggr.timeout_hide) { clearTimeout(loggr.timeout_hide); }
 	loggr.timeout_hide = setTimeout(function(){
-		$(".debug").css("display","none");
+		//$(".debug").css("display","none");
 		//$(".debug").fadeOut(500,function(){ loggr.lines = []; });
 	},5000);
 }
@@ -508,7 +508,7 @@ cc.run_nowplaying_poll = function() {
 
 	var apiurl = "https://www.rejh.nl/icerrr/api/?a=get&q="+ apiquerystr +"&cache="+(new Date().getTime());
 
-	loggr.log(" > "+ apiurl);
+	// loggr.log(" > "+ apiurl);
 
 	$.getJSON(apiurl, function(results) {
 		// ok
@@ -540,9 +540,9 @@ cc.run_nowplaying_poll = function() {
 			}
 
 			// Debug
-			loggr.log(" > New: "+ results["data"]["nowplaying"]);
-			loggr.log(" > Old: "+ cc.currentstation.nowplaying);
-			loggr.log(" > Big: "+ showBigUI +", nrOfTimesPollHasRun: "+ cc.nrOfTimesPollHasRun);
+			//loggr.log(" > New: "+ results["data"]["nowplaying"]);
+			//loggr.log(" > Old: "+ cc.currentstation.nowplaying);
+			//loggr.log(" > Big: "+ showBigUI +", nrOfTimesPollHasRun: "+ cc.nrOfTimesPollHasRun);
 
 			// Store
 			cc.currentstation.nowplaying = results["data"]["nowplaying"];
@@ -606,8 +606,8 @@ cc.run_nowplaying_poll = function() {
                                     }
     								cc.vars.background_image = res;
     							}
-    							image.onerror = function() {
-                                    loggr.log(" > Found album art but loading failed: "+ this.src);
+    							image.onerror = function(e) {
+                                    loggr.error(" > Album art failed loading: "+ this.src);
                                     triedresnum++;
                                     if (triedresnum>=searchresults.length) {
     								    loggr.log(" > No more results..");
@@ -616,15 +616,16 @@ cc.run_nowplaying_poll = function() {
                                     } else {
                                         loggr.log(" > Try next result ("+ triedresnum +")..");
                                         res = searchresults[triedresnum];
-                                        var imgurl = decodeURIComponent(res);
+                                        var imgurl = res; // decodeURIComponent(res);
+                                        imgurl = "https://static.rejh.nl/rgt/rgt.php?w=1280&h=1280&src=" + encodeURIComponent(imgurl);
         								image.src = imgurl;
                                     }
     							}
     							if (searchstr=="NPO Radio 3fm") {
     								image.src = "http://a1094.phobos.apple.com/us/r30/Purple5/v4/47/3a/5d/473a5dab-5ba6-9e1b-255b-dce76abdce54/mzl.lgbuvbki.png";
     							} else {
-                                    var imgurl = decodeURIComponent(res);
-                                    imgurl = "https://www.rejh.nl/static/phpth/phpThumb.php?w=1280&h=1280&src=" + encodeURIComponent(imgurl);
+                                    var imgurl = res; // decodeURIComponent(res);
+                                    imgurl = "https://static.rejh.nl/rgt/rgt.php?w=1280&h=1280&src=" + encodeURIComponent(imgurl);
     								image.src = imgurl;
     							}
 
@@ -1020,6 +1021,13 @@ cc.helpers.getIndents = function(depth,char) {
 	if (!char) { char = "&nbsp;"; }
 	for (var i=0; i<depth; i++) { res += char+char+char+char; }
 	return res;
+}
+
+window.onerror = function(message, file, line, column, errorObj) {
+    loggr.error(message+"\n > "+file+" at line "+line);
+	if (errorObj) {
+		loggr.error(errorObj.stack);
+	}
 }
 
 </script>
