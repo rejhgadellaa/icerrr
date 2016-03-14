@@ -485,8 +485,8 @@ site.detailstation.buildRecentlyPlayedItem = function(inline_list,playlistItemDa
 	plsgpmusic.className = "playlist_item_gpmusic activatablel";
 	plsgpmusic.src = "img/icons-48/ic_googleplaymusic_black.png";
 	plsgpmusic.title = "Search track on Google Play Music";
-	plsgpmusic.sartist = encodeURI(playlistItemData["name"]);
-	plsgpmusic.stitle = encodeURI(playlistItemData["title"]);
+	plsgpmusic.sartist = encodeURIComponent(playlistItemData["name"]);
+	plsgpmusic.stitle = encodeURIComponent(playlistItemData["title"]);
 	plsgpmusic.onclick = function() {
 		//console.error("CLICK!");
 		window.open("https://play.google.com/store/search?c=music&q="+ this.sartist +" "+ this.stitle,"_system");
