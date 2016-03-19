@@ -222,7 +222,6 @@ section {
 		position:relative;
 		top:56px; left:0; right:0; bottom:0;
 		width:100%;
-		xheight:*; /* TODO: smart way to set height dynamically so it uses all available space? */
 	}
 
 		.main .block {
@@ -710,8 +709,10 @@ section {
 	}
 
 #detailstation {
-
 }
+
+    #detailstation .main {
+    }
 
 	#detailstation .main .header {
 		position:absolute;
@@ -729,19 +730,6 @@ section {
 			background: -webkit-linear-gradient(rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.50) 50%, rgba(0,0,0,0.25) 100%);
 		}
 
-		#detailstation .main .header .station_icon {
-			display:none;
-			position:absolute;
-			top:0; left:0;
-		}
-
-			#detailstation .main .header .station_icon img {
-				width:40px;
-				height:40px;
-				margin:16px;
-				border-radius:40px;
-			}
-
 		#detailstation .main .header .station_image {
 			position:absolute;
 			top:50%; left:50%;
@@ -752,32 +740,8 @@ section {
 			#detailstation .main .header .station_image img {
 				width:128px;
 				height:128px;
-				border-radius:128px;
+				border-radius:100%;
 			}
-
-		#detailstation .main .header .station_name {
-			display:none;
-			position:absolute;
-			top:12px; left:71px; right:72px;
-			overflow:hidden;
-			white-space: nowrap;
-			text-overflow:ellipsis;
-			font-size:20pt;
-			font-weight:300;
-			color:rgba(255,255,255,0.87);
-		}
-
-		#detailstation .main .header .station_nowplaying {
-			display:none;
-			position:absolute;
-			top:41px; left:72px; right:72px;
-			overflow:hidden;
-			white-space: nowrap;
-			text-overflow:ellipsis;
-			font-size:12pt;
-			/* font-weight:300; */
-			color:rgba(255,255,255,0.87);
-		}
 
 		#detailstation .main .header .station_starred {
 			position:absolute;
@@ -789,10 +753,54 @@ section {
 				padding:24px;
 			}
 
+		#detailstation .main  .header_station {
+			position:absolute;
+			bottom:-72px; left:0; right:0; height:72px;
+			background-color:#455A64;
+		}
+
+			#detailstation .main .header_station .station_name {
+				position:absolute;
+				top:13px; left:16px; right:72px;
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
+				font-size:18pt;
+				font-weight:300;
+				color:rgba(255,255,255,0.87);
+			}
+
+			#detailstation .main .header_station .station_nowplaying {
+				position:absolute;
+				top:39px; left:16px; right:24px;
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow:ellipsis;
+				font-size:12pt;
+				/* font-weight:300; */
+				color:rgba(255,255,255,0.87);
+			}
+
+        #detailstation .header_fab {
+            position:absolute;
+            bottom:-28px; right:16px;
+            width:56px;
+            height:56px;
+            border-radius:50%;
+            background:#FF5722;
+            transition:bottom 250ms;
+        }
+
+            #detailstation .header_fab img {
+                width:24px;
+                height:24px;
+                margin:16px;
+            }
+
 	#detailstation .main .content,
 	#detailstation .main .content_loading {
 		position:absolute;
-		top:192px; left:0; right:0; bottom:0;
+		top:264px; left:0; right:0; bottom:0;
 	}
 
 	#detailstation .main .content_loading {
@@ -808,35 +816,6 @@ section {
 			font-size:16pt;
 			font-weight:300;
 		}
-
-		#detailstation .main .content .content_header,
-		#detailstation .main .content_loading .content_header {
-			position:relative;
-			top:0; left:0; right:0; height:72px;
-			background-color:#455A64;
-		}
-
-			#detailstation .main .content_header .station_name {
-				position:absolute;
-				top:13px; left:16px; right:72px;
-				overflow:hidden;
-				white-space: nowrap;
-				text-overflow:ellipsis;
-				font-size:18pt;
-				font-weight:300;
-				color:rgba(255,255,255,0.87);
-			}
-
-			#detailstation .main .content_header .station_nowplaying {
-				position:absolute;
-				top:39px; left:16px; right:24px;
-				overflow:hidden;
-				white-space: nowrap;
-				text-overflow:ellipsis;
-				font-size:12pt;
-				/* font-weight:300; */
-				color:rgba(255,255,255,0.87);
-			}
 
 		#detailstation .main .content .content_item {
 			overflow:hidden;
@@ -966,22 +945,6 @@ section {
 					#detailstation .main .content .content_item .inline_list .playlist_item_gpmusic {
 
 					}
-
-	#detailstation .fab_header {
-		position:absolute;
-		top:164px; right:16px;
-		width:56px;
-		height:56px;
-		border-radius:50%;
-		background:#FF5722;
-		transition:bottom 250ms;
-	}
-
-		#detailstation .fab_header img {
-			width:24px;
-			height:24px;
-			margin:16px;
-		}
 
 #editstation, #searchstation, #searchstation_results {
 

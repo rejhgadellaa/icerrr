@@ -191,8 +191,8 @@ site.detailstation.updatedata = function() {
 
 	// For now just do play button -> selectstation
 	// TODO: yea, do stuff..
-	$("#detailstation .fab_header").off("click");
-	$("#detailstation .fab_header").on("click",function(evt) {
+	$("#detailstation .header_fab").off("click");
+	$("#detailstation .header_fab").on("click",function(evt) {
 		var tmpobj = {station_id:site.detailstation.station_id};
 		site.chlist.selectstation(tmpobj);
 	});

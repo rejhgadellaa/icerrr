@@ -115,9 +115,10 @@
 	<link rel="stylesheet" type="text/css" href="css/add.cast.css" />
 
 	<!-- Style / responsive -->
-	<link rel="stylesheet" type="text/css" href="css/size.tablet.css" media="screen and (min-width: 599px) and (max-aspect-ratio: 13/9)" />
-	<link rel="stylesheet" type="text/css" href="css/default.css" media="screen and (min-width: 959px) and (min-aspect-ratio: 13/9)" />
-	<link rel="stylesheet" type="text/css" href="css/size.phone-landscape.css" media="screen and (max-width: 599px) and (min-aspect-ratio: 13/9)" />
+	<link rel="stylesheet" type="text/css" href="css/size.tablet.css" media="screen and (min-width: 599px) and (max-aspect-ratio: 13/9)" /> <!-- tablet -->
+	<link rel="stylesheet" type="text/css" href="css/default.css" media="screen and (min-width: 959px) and (min-aspect-ratio: 13/9)" /> <!-- tablet landscape -->
+	<link rel="stylesheet" type="text/css" href="css/size.tablet-landscape.css" media="screen and (min-width: 959px) and (min-aspect-ratio: 13/9)" /> <!-- tablet landscape -->
+	<link rel="stylesheet" type="text/css" href="css/size.phone-landscape.css" media="screen and (max-width: 599px) and (min-aspect-ratio: 13/9)" /> <!-- phone landscape -->
 
 </head>
 
@@ -295,36 +296,31 @@
 		<!-- header/hero -->
 		<div class="header">
 			<div class="overlay"></div>
-			<div class="station_icon"><img src="img/icons-80/ic_station_default.png" /></div>
 			<div class="station_image"><img src="img/web_hi_res_512_002.png" onload="site.detailstation.handleColorize(this);" /></div>
-			<div class="station_name textshadow25">NPO Radio 3FM</div>
-			<div class="station_nowplaying textshadow25">Now playing: Unknown</div>
 			<div class="station_starred"><img src="img/icons-48/ic_starred_orange.png" /></div>
+
+			<div class="header_station">
+				<div class="station_name">[Station name]</div>
+				<div class="station_nowplaying">Now playing: Unknown</div>
+			</div>
+
+    		<!-- fab_header -->
+    		<div class="header_fab shadow_z5"><img src="img/icons-48/ic_check_white.png" /></div>
+
 		</div>
 
 		<!-- content:loading -->
 		<div class="content_loading">
 
-			<div class="content_header">
-
-				<div class="station_name">[Station name]</div>
-				<div class="station_nowplaying">Now playing: Unknown</div>
-			</div>
-
 			<div class="content_loading_message">
-				Loading...			</div>
+				Loading...
+            </div>
 
 			<!-- psssh -->
 		</div>
 
 		<!-- content -->
 		<div class="content">
-
-			<div class="content_header">
-
-				<div class="station_name textshadow25">[Station name]</div>
-				<div class="station_nowplaying textshadow25">Now playing: Unknown</div>
-			</div>
 
 			<div class="content_item recentlyplayed">
 				<div class="icon"><img src="img/icons-48/ic_recentlyplayed_black.png" /></div>
@@ -352,9 +348,6 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- fab_header -->
-		<div class="fab_header shadow_z5"><img src="img/icons-48/ic_check_white.png" /></div>
 
 	</div>
 

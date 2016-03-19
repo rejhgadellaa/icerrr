@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+
+	ICERRR - tablet css
+	This css is targeted at tablets following most Material Design guidelines at http://goo.gl/8640JE
+
+*/
+
+/* -- SECTIONS */
+
+/* Common */
+
+/* Specific */
+
+#detailstation {
+    xdisplay:block;
+}
+
+    #detailstation .main {
+        xheight:100%;
+    }
+
+    #detailstation .main .header {
+        right:50%; bottom:72px;
+        height:auto;
+    }
+
+        #detailstation .main .header .overlay {
+            height:100%;
+        }
+
+        #detailstation .main .header .station_image {
+            margin:-128px 0 0 -128px;
+        }
+
+            #detailstation .main .header .station_image img {
+                width:256px; height:256px;
+            }
+
+    #detailstation .main .content,
+	#detailstation .main .content_loading {
+        overflow:auto;
+		position:absolute;
+		top:0px; left:50%; right:0; bottom:0;
+	}
