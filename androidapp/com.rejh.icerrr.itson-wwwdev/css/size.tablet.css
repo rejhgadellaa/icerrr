@@ -31,7 +31,7 @@ section { }
 		}
 
 			.actionbar .actions .action {
-				margin:12px 16px;
+				margin:12px 8px 12px 8px;
 			}
 
 	.tabbar {
@@ -54,6 +54,10 @@ section { }
 /* Specific */
 
 #home {}
+
+    #home .actionbar .title {
+        left:24px;
+    }
 
 	#home .main .station_info_wrap {
 		/* top:4px; left:4px; right:4px; */

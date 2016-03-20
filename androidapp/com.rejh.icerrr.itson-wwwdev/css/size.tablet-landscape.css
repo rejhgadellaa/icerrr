@@ -15,11 +15,9 @@
 /* Specific */
 
 #detailstation {
-    xdisplay:block;
 }
 
     #detailstation .main {
-        xheight:100%;
     }
 
     #detailstation .main .header {
@@ -32,7 +30,7 @@
         }
 
         #detailstation .main .header .station_image {
-            margin:-128px 0 0 -128px;
+            margin:-129px 0 0 -129px;
         }
 
             #detailstation .main .header .station_image img {

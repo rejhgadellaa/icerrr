@@ -1,3 +1,6 @@
+0.356
+  * Landscape mode for station details screen
+
 0.355
   * Fix for importing icons
   * Minor style tweak

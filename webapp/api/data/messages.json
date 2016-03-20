@@ -19,19 +19,18 @@
     },
 
     {
-        "id":"app355",
+        "id":"app356",
         "crit":"version",
-        "critvalue":0.354,
+        "critvalue":0.355,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.355 includes:",
-            "* Fix for importing icons",
-            "* Secure communication with Icerrr API via https",
-            "* New: On Android Wear, say \"OK Google, Open radio\""
+            "v0.356 includes:",
+            "* Landscape mode for station details screen",
+            "* New: On Android Wear, say \"OK Google, open radio\""
             ],
         "buttonLabels":"Yes,No",
         "repeat":1,

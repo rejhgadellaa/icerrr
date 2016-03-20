@@ -19,7 +19,7 @@ section { }
 	}
 
 		.actionbar .icon_app {
-			margin:4px;
+			margin:4px 8px 4px 8px;
 		}
 
 		.actionbar .title {
@@ -31,7 +31,7 @@ section { }
 		}
 
 			.actionbar .actions .action { /* TODO: deprecated polymer */
-				margin:4px 16px;
+				margin:4px 8px 4px 8px;
 			}
 
 	.tabbar {
@@ -62,6 +62,35 @@ section { }
 
 	#channellist .main {
 		top:96px;
+	}
+
+#detailstation {
+}
+
+    #detailstation .main {
+    }
+
+    #detailstation .main .header {
+        right:360px; bottom:72px;
+        height:auto;
+    }
+
+        #detailstation .main .header .overlay {
+            height:100%;
+        }
+
+        #detailstation .main .header .station_image {
+        }
+
+            #detailstation .main .header .station_image img {
+            }
+
+    #detailstation .main .content,
+	#detailstation .main .content_loading {
+        overflow:auto;
+		position:absolute;
+		top:0px; left:auto; right:0; bottom:0;
+        width:360px;
 	}
 
 #editstation, #searchstation, #searchstation_results {

@@ -161,8 +161,7 @@ section {
 				float:right;
 				width:24px;
 				height:24px;
-				margin:8px;
-				margin-right:16px;
+				margin:8px 8px 8px 8px;
 				padding:8px;
 				border-radius:64px;
 			}
@@ -367,6 +366,17 @@ section {
 #home {
 	display:block;
 }
+
+    #home .actionbar {
+    }
+
+        #home .actionbar .icon_app {
+            display:none;
+        }
+
+        #home .actionbar .title {
+            left:16px;
+        }
 
 	#home .main {
 		overflow:hidden;
@@ -733,13 +743,15 @@ section {
 		#detailstation .main .header .station_image {
 			position:absolute;
 			top:50%; left:50%;
-			margin-left:-64px; margin-top:-64px;
+			margin-left:-65px; margin-top:-65px;
 
 		}
 
 			#detailstation .main .header .station_image img {
 				width:128px;
 				height:128px;
+                background:#fff;
+                border:2px solid #fff;
 				border-radius:100%;
 			}
 
@@ -811,7 +823,7 @@ section {
 			position:absolute;
 			top:50%; left:50%;
 			width:200px;
-			margin-top:16px; margin-left:-100px;
+			margin-top:-4px; margin-left:-100px;
 			text-align:center;
 			font-size:16pt;
 			font-weight:300;
