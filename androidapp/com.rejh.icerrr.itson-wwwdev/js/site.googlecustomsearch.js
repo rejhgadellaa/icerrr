@@ -133,7 +133,11 @@ site.gcis.googleImageSearch = function(search, cb, cberr, opts) {
 
             loggr.log(" > GCISearch filtered results: "+ filteredresults.length);
             site.gcis.ajaxReqIdentifier = null
-            cb(filteredresults);
+            if (filteredresults.length>0) {
+                cb(filteredresults);
+            } else {
+                if (cberr) { cberr([]); }
+            }
 
         },
         function(errobj) {

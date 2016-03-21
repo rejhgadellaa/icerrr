@@ -80,8 +80,8 @@ function cleanupjson() {
 
 function getGcisearchCache($cachekey) {
 
-	// too big? filesize exceeds 8mb, flush it!
-	if (filesize("data/cache.gcisearch.json.gz")>1024*1024*8) {
+	// too big? filesize exceeds 32 MB, flush it!
+	if (filesize("data/cache.gcisearch.json.gz")>1024*1024*32) {
 		logg.(" > Clear gcisearch cache");
 		@unlink("data/cache.gcisearch.json.gz");
 	}
