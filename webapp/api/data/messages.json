@@ -1,6 +1,20 @@
 [
 
     {
+        "id":"april-1st-2016",
+        "crit":"time",
+        "critvalue":1459583030258,
+        "action":"default",
+		"title":"New: Radio YOU!",
+		"message":[
+			"Great news for anyone who always dreamt of having their own radio station! Icerrr will now broadcast everything your device is recording live on the internet!\n\n",
+			"Your friends, family and fans will never have to miss a moment of your life. Whether your watching a movie, eating, sleeping, they'll be able to listen in! You don't even have to remember to post it because it does all that for you, silently and in the background!\n\n",
+			"Yeah. Enjoy your April's fools day :D"
+			],
+		"repeat":0
+    },
+
+    {
         "id":"app350-critical",
         "crit":"version",
         "critvalue":0.330,
@@ -41,15 +55,6 @@
     {
         "id":"stations_database",
         "crit":"install-update",
-        "critvalue":1445186392636,
-        "action":"install-update",
-        "message":[ ],
-        "repeat":0
-    },
-
-    {
-        "id":"stations_database",
-        "crit":"install-update",
         "critvalue":1001,
         "action":"install-update",
         "message":[ ],
@@ -64,15 +69,6 @@
         "station_ids":[
             "intergalactic_galaxia"
             ],
-        "message":[ ],
-        "repeat":0
-    },
-
-    {
-        "id":"stations_database",
-        "crit":"install-update",
-        "critvalue":1452873810162,
-        "action":"install-update",
         "message":[ ],
         "repeat":0
     }
