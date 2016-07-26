@@ -163,15 +163,9 @@ public class AlarmMgrOnBoot extends BroadcastReceiver {
 						}
 						
 						// Handle no repeat
-						if (!doRepeat && Build.VERSION.SDK_INT >= 19) {
+						if (Build.VERSION.SDK_INT >= 19) {
 							Log.w(APPTAG," -> No repeat and SDK >= 19, use isExact");
 							isExact = true;
-						}
-						
-						// Handle exact: repeat && sdk
-						if (isExact && doRepeat) {
-							Log.w(APPTAG," -> Using exact alarm (SDK>=19), using workaround for repeat..");
-							//isExact = false;
 						}
 						if(isExact && Build.VERSION.SDK_INT < 19) {
 							Log.w(APPTAG," -> Exact alarm only needed when SDK < 19");

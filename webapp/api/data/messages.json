@@ -33,16 +33,17 @@
     },
 
     {
-        "id":"app356",
+        "id":"app357",
         "crit":"version",
-        "critvalue":0.355,
+        "critvalue":0.356,
         "action":"install-update-app",
         "url":"https://drive.google.com/uc?export=download&id=0Bx7goBW0WLHiQU9udXYyVUZGdXM",
         "title":"Update available",
         "message-no":[],
         "message":[
             "An update for Icerrr is availabe. Do you want to install it now?\n",
-            "v0.356 includes:",
+            "v0.357 includes:",
+            "* Fix for repeating alarms sometimes not properly set",
             "* Landscape mode for station details screen",
             "* New: On Android Wear, say \"OK Google, open radio\""
             ],
