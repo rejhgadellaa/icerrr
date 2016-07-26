@@ -98,7 +98,13 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     		} else if (repeat.equals("custom")) {
     			// TODO: This is gonna cause 99 probz
     			// repeatMillis already set...
+				doRepeat = true;
     		}
+
+			if (Build.VERSION.SDK_INT >= 19) {
+				Log.w(APPTAG," -> No repeat and SDK >= 19, use isExact");
+				isExact = true;
+			}
     		
     		// Handle exact + repeat (re-set alarm..)
     		if (isExact && doRepeat && Build.VERSION.SDK_INT >= 19) {
@@ -124,12 +130,12 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     			int daynow = calnow.get(Calendar.DAY_OF_MONTH);
     			int hournow = calnow.get(Calendar.HOUR_OF_DAY);
     			int minnow = calnow.get(Calendar.MINUTE);
-    			
-    			if (day == daynow && hour < hournow || day == daynow && hour <= hournow && minute <= minnow) {
-    				Log.d(APPTAG," --> Set alarm one day in future");
-    				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+1);
-    			}
-    			timeMillis = cal.getTimeInMillis();
+
+				if (day == daynow && hour < hournow || day == daynow && hour <= hournow && minute <= minnow) {
+					Log.d(APPTAG," -> Set alarm one day in future");
+					cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+1);
+				}
+				timeMillis = cal.getTimeInMillis();
     			
     			// Handle intent
     			Intent intent = new Intent(context, com.rejh.cordova.alarmmgr.AlarmMgrReceiver.class);
@@ -142,13 +148,11 @@ public class AlarmMgrReceiver extends BroadcastReceiver {
     			// Create alarm...
     			if (Build.VERSION.SDK_INT >= 23) {
 					Log.d(APPTAG," -> Once, exact and while idle: "+ calToString(cal));
-					alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
-    			} else {
+					alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMillis, pintent);
+    			} else if (Build.VERSION.SDK_INT >= 19) {
     				Log.d(APPTAG," --> Once, exact: "+ calToString(cal));
-    				alarmMgr.setExact(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
+    				alarmMgr.setExact(AlarmManager.RTC_WAKEUP, timeMillis, pintent);
     			}
-				
-    			
     			
     		}
     		

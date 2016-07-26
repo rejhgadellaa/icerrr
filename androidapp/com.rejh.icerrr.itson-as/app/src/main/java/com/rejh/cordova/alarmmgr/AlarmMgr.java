@@ -198,15 +198,9 @@ public class AlarmMgr extends CordovaPlugin {
 		}
 		
 		// Handle no repeat
-		if (!doRepeat && Build.VERSION.SDK_INT >= 19) {
+		if (Build.VERSION.SDK_INT >= 19) {
 			Log.w(APPTAG," -> No repeat and SDK >= 19, use isExact");
 			isExact = true;
-		}
-		
-		// Handle exact: repeat && sdk
-		if (isExact && doRepeat) {
-			Log.w(APPTAG," -> Using exact alarm (SDK>=19), using workaround for repeat..");
-			//isExact = false;
 		}
 		if(isExact && Build.VERSION.SDK_INT < 19) {
 			Log.w(APPTAG," -> Exact alarm only needed when SDK < 19");
@@ -234,10 +228,10 @@ public class AlarmMgr extends CordovaPlugin {
 			alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, timeMillis, repeatMillis, pintent);
 		} else if (isExact && Build.VERSION.SDK_INT >= 23) {
 			Log.d(APPTAG," -> Once, exact and while idle: "+ calToString(cal));
-			alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
+			alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMillis, pintent);
 		} else if (isExact && Build.VERSION.SDK_INT >= 19) {
 			Log.d(APPTAG," -> Once, exact: "+ calToString(cal));
-			alarmMgr.setExact(AlarmManager.RTC_WAKEUP,  timeMillis, pintent);
+			alarmMgr.setExact(AlarmManager.RTC_WAKEUP, timeMillis, pintent);
 		} else {
 			Log.d(APPTAG," -> Once");
 			alarmMgr.set(AlarmManager.RTC_WAKEUP, timeMillis, pintent);
