@@ -57,7 +57,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 
 			// Prep ..
 			var fileTransfer = new FileTransfer();
-			var dest = encodeURI(folderEntry.fullPath +"/"+ targetFile)
+			var dest = encodeURI(folderEntry.fullPath +"/"+ targetFile);
 
 			// Test encoding.. (url)
 			var uri = url;
@@ -72,7 +72,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 			if (progressCb) {
 				fileTransfer.onprogress = function(progressEvent) {
 					progressCb(progressEvent);
-				}
+				};
 			}
 
 			// A-go-go
@@ -88,7 +88,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 					loggr.error("download error source " + error.source, {dontupload:true});
 					loggr.error("download error target " + error.target, {dontupload:true});
 					loggr.error("download error code " + error.code, {dontupload:true});
-					loggr.error(" > "+ site.storage.getFileTransferErrorType(error));
+					loggr.error(" > "+ site.storage.getFileTransferErrorType(error), {dontupload:true});
 					site.vars.downloadsInProgress[url] = false;
 					if (errcb) { errcb(error); }
 				},
@@ -104,7 +104,7 @@ site.webapi.download = function(url,targetPath,targetFile,cb,errcb,progressCb) {
 		}
 	);
 
-}
+};
 
 // ---> Ajax request
 
@@ -137,7 +137,7 @@ site.webapi.getajax = function(url,dataType,cb,errcb) {
 	site.webapi.ajaxRequests[ajaxReqIdentifier] = ajaxReq;
 	return ajaxReqIdentifier;
 
-}
+};
 
 // ---> Stuff
 
