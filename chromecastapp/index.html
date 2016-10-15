@@ -22,7 +22,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/mediaplayer/0.7.0/media_player.js"></script>
 
-    <script type="text/javascript" src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="https://github.com/jariz/vibrant.js/releases/download/1.0/Vibrant.min.js"></script>
 
     <style>
@@ -61,7 +61,7 @@
 			}
 
 		section#main {
-			background-image:url(https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg);
+			background-image:url(bg_home_default.jpg);
 			background-position:center;
 			background-repeat:no-repeat;
 			background-size:cover;
@@ -201,7 +201,7 @@
 
 <!-- Section: launch -->
 <section id="launch">
-	<img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/icon_white.png" />
+	<img src="icon_white.png" />
 </section>
 
 <!-- Section: main -->
@@ -212,13 +212,13 @@
 	<div class="debug">---Begin log</div>
 
 	<div class="topbar">
-    	<div class="topbar_watermark"><img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/watermark.png" /></div>
+    	<div class="topbar_watermark"><img src="watermark.png" /></div>
         <div class="topbar_title">ICERRR</div>
     </div>
 
 	<div class="nowplaying">
 		<div class="wrap">
-	    	<div class="icon"><img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/ic_launcher_flat.png" /></div>
+	    	<div class="icon"><img src="ic_launcher_flat.png" /></div>
     		<div class="subtitle">Loading...</div>
         	<div class="title"></div>
 		</div>
@@ -226,7 +226,7 @@
 
 	<div class="nowplayingsmall">
 		<div class="wrap">
-			<div class="icon"><img src="https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.jpg" /></div>
+			<div class="icon"><img src="splash.jpg" /></div>
 			<div class="title"></div>
 		</div>
 	</div>
@@ -426,11 +426,11 @@ cc.init = function() {
 				//loggr.log(" > Icon: "+ event.data['media']['metadata']['images'][0].url);
 				$(".nowplaying .icon img").attr("src",event.data['media']['metadata']['images'][0].url);
 			} else {
-				$(".nowplaying .icon img").attr("src","https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/ic_launcher_flat.png");
+				$(".nowplaying .icon img").attr("src","ic_launcher_flat.png");
 			}
 
 			// Image
-			$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+			$("#main").css("background-image","url('bg_home_default.jpg')");
             $("#main .color").css("background","#607D8B");
 
 			// Update!
@@ -577,7 +577,7 @@ cc.run_nowplaying_poll = function() {
     						var res = searchresults[triedresnum];
     						if (!res) {
     							loggr.log(" > No album art :(");
-    							$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+    							$("#main").css("background-image","url('bg_home_default.jpg')");
                                 $("#main .color").css("background","#607D8B");
     						} else {
 
@@ -611,7 +611,7 @@ cc.run_nowplaying_poll = function() {
                                     triedresnum++;
                                     if (triedresnum>=searchresults.length) {
     								    loggr.log(" > No more results..");
-    								    $("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+    								    $("#main").css("background-image","url('bg_home_default.jpg')");
                                         $("#main .color").css("background","#607D8B");
                                     } else {
                                         loggr.log(" > Try next result ("+ triedresnum +")..");
@@ -632,7 +632,7 @@ cc.run_nowplaying_poll = function() {
     						}
     					},
     					function(err) {
-    						$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+    						$("#main").css("background-image","url('bg_home_default.jpg')");
                             $("#main .color").css("background","#607D8B");
     					},
     					opts
@@ -645,7 +645,7 @@ cc.run_nowplaying_poll = function() {
                 cc.currentstation.lastNowplaying = cc.currentstation.nowplaying;
 
             } else {
-                $("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+                $("#main").css("background-image","url('bg_home_default.jpg')");
                 $("#main .color").css("background","#607D8B");
             }
 
@@ -733,11 +733,11 @@ cc.burnInProtector = function(force) {
 			loggr.debug("cc.burnInProtector() > timed out > run");
 
 			// Toggle background..
-			if ($("#main").css("background-image").indexOf("https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg")>=0) {
-				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/splash.jpg')");
+			if ($("#main").css("background-image").indexOf("bg_home_default.jpg")>=0) {
+				$("#main").css("background-image","url('splash.jpg')");
                 $("#main .color").css("background","none");
 			} else {
-				$("#main").css("background-image","url('https://googledrive.com/host/0Bx7goBW0WLHieTRzdnR4dHdwUlU/bg_home_default.jpg')");
+				$("#main").css("background-image","url('bg_home_default.jpg')");
                 $("#main .color").css("background","#607D8B");
 			}
 
