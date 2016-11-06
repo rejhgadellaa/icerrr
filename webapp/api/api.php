@@ -73,7 +73,7 @@ switch($action) {
 					if (!$queryobj["station_port"]) { $queryobj["station_port"] = 80; }
 					// $id3_reader_url = "http://". $_SERVER['HTTP_HOST'] ."/icerrr/php/tests/test-readid3.php?q="; // TODO: rejh.nl only opens fsock on port 80
 					$id3_reader_url = $cfg["icerrr_local_url"] . "php/tests/test-readid3.php?q=";
-					if ($queryobj["station_port"]==80) {
+					if ($queryobj["station_port"]==80 || $queryobj["station_port"]=="80") {
 						$id3_reader_url = $cfg["icerrr_remote_url"] . "php/tests/test-readid3.php?q=";
 					}
 					// "http://www.rejh.nl/icerrr/php/tests/test-readid3.php?q=";
@@ -130,7 +130,7 @@ switch($action) {
 						."&bucket=id:spotify&bucket=tracks"
 						;
 
-					$enjsons = fg($echonest_requrl);
+					//$enjsons = fg($echonest_requrl);
 					if ($enjsons && $npartist && $nptitle) {
 
 						// Song search..
@@ -160,7 +160,7 @@ switch($action) {
 					}
 
 					// Debug
-					$json["data"]["npechoreq_songsearch"] = $echonest_requrl;
+					$json["data"]["npechoreq_songsearch"] = "None"; // $echonest_requrl;
 
 				}
 
